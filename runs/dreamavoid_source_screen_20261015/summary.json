@@ -1,0 +1,105 @@
+{
+  "status": "source_only_not_ready_for_matched_clean",
+  "repository": "https://github.com/XianzheFan/DreamAvoid",
+  "revision": "2202027291c0416dd35d418a9c031c8d23f4af30",
+  "checked_scope": {
+    "official_recursive_tree_entries": 85,
+    "tree_truncated": false,
+    "core_files_cached": 5,
+    "official_releases": 0,
+    "checkpoint_downloads": 0,
+    "model_calls": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "network_accounting": {
+      "caller_initiated_public_gets": 9,
+      "web_tool_github_repository_open": 1,
+      "python_github_api_commit_get": 1,
+      "python_github_api_recursive_tree_get": 1,
+      "python_pinned_raw_source_gets": 5,
+      "python_github_api_releases_get": 1,
+      "all_completed": true,
+      "note": "Counts requested GET operations in this subtask; internal web-tool fetching or HTTP redirect hops are not exposed and are not inferred. These are public source/metadata requests, not model API calls."
+    }
+  },
+  "question": "Does a goal-conditioned plan get interpreted as fixed-action risk, and is there a matching public clean execution resource?",
+  "value_temporal_scope": {
+    "finding": "Not endpoint-only: current observation plus all provided future frames enter a temporal Transformer, with separate action, task and state features. The server supplies video_np[1:].",
+    "sources": [
+      {
+        "path": "DreamDojo-da/examples/value_model.py",
+        "lines": "88-104",
+        "url": "https://github.com/XianzheFan/DreamAvoid/blob/2202027291c0416dd35d418a9c031c8d23f4af30/DreamDojo-da/examples/value_model.py#L88-L104"
+      },
+      {
+        "path": "DreamDojo-da/examples/dreamdojo_server.py",
+        "lines": "278-286",
+        "url": "https://github.com/XianzheFan/DreamAvoid/blob/2202027291c0416dd35d418a9c031c8d23f4af30/DreamDojo-da/examples/dreamdojo_server.py#L278-L286"
+      }
+    ],
+    "readme_training_claim": "README describes progress-delta labels with an in-horizon failure penalty. Training implementation was not examined in this bounded screen."
+  },
+  "goal_input_scope": {
+    "source_supported": "GenerateRequest has independent prompt and task fields. The fixed-action world-generation call passes prompt and action together; the value call separately passes task. This is a native service schema, not an implemented attack.",
+    "sources": [
+      {
+        "path": "DreamDojo-da/examples/dreamdojo_server.py",
+        "lines": "25-40,170-183,247-256,280-285",
+        "url": "https://github.com/XianzheFan/DreamAvoid/blob/2202027291c0416dd35d418a9c031c8d23f4af30/DreamDojo-da/examples/dreamdojo_server.py#L25-L40"
+      }
+    ],
+    "not_established": [
+      "Actual text conditioning inside the external cosmos_predict2 model was not inspected; guidance defaults to0 and its exact convention was not inferred.",
+      "The native deployment caller passes task_description to _dreamdojo_generate, but the imported agilex_infer_dinov2_value_switch.py helper is absent from the complete published tree. Therefore the mapping of task_description into prompt/task and its native per-request defaults is not verified.",
+      "No fixed-action goal-invariance premise, forecast contamination or task harm is established."
+    ],
+    "caller_source": {
+      "path": "openpi-da/agilex/agilex_infer_dream_trigger.py",
+      "lines": "23,127-163",
+      "url": "https://github.com/XianzheFan/DreamAvoid/blob/2202027291c0416dd35d418a9c031c8d23f4af30/openpi-da/agilex/agilex_infer_dream_trigger.py#L127-L163"
+    }
+  },
+  "resource_gate": {
+    "matching_bundle_found": false,
+    "checked_channels": [
+      "Pinned official recursive repository tree",
+      "Pinned README",
+      "Official GitHub releases endpoint (empty list)"
+    ],
+    "missing_matching_artifacts": [
+      "Task-specific base/SDE policy weights and normalization assets",
+      "Dream Trigger checkpoint",
+      "DreamDojo task checkpoint and action stats",
+      "Value checkpoint and required adjacent task_to_id.json",
+      "Matched simulation environment and complete runnable end-to-end request helper"
+    ],
+    "qualification": "No claim that these assets do not exist elsewhere; no author contact or external weight search/download was performed. Generic DINOv2 backbone access does not qualify the task-specific policy/value/world-model bundle.",
+    "simulation_finding": "The inspected deployment is ROS AgileX, importing RosOperator and get_ros_observation and publishing arm controls. A LIBERO policy adapter exists in the tree, but no corresponding DreamAvoid simulation evaluator/task bundle was found.",
+    "sources": [
+      {
+        "path": "openpi-da/agilex/agilex_infer_dream_trigger.py",
+        "lines": "22-23,92-100,205-221,431-440,608-616",
+        "url": "https://github.com/XianzheFan/DreamAvoid/blob/2202027291c0416dd35d418a9c031c8d23f4af30/openpi-da/agilex/agilex_infer_dream_trigger.py#L431-L440"
+      },
+      {
+        "path": "DreamDojo-da/examples/value_model.py",
+        "lines": "145-165",
+        "url": "https://github.com/XianzheFan/DreamAvoid/blob/2202027291c0416dd35d418a9c031c8d23f4af30/DreamDojo-da/examples/value_model.py#L145-L165"
+      }
+    ]
+  },
+  "bounded_integration_observation": {
+    "finding": "The full server instantiates ServerValueModel(checkpoint_path=...), while its checked class constructor accepts ckpt_path, so this exact full-server value path requires a compatibility correction before it can run. This is a source integration defect, not a proposed security mechanism.",
+    "sources": [
+      {
+        "path": "DreamDojo-da/examples/dreamdojo_server.py",
+        "lines": "366-368"
+      },
+      {
+        "path": "DreamDojo-da/examples/value_model.py",
+        "lines": "145-152"
+      }
+    ]
+  },
+  "decision": "Do not acquire weights or launch a pilot for this lead now. Endpoint-only evaluation is excluded by source; the independent prompt field is a source-level interface lead but incomplete native routing and absent matched task assets prevent a low-cost decisive clean test. No accepted new mechanism."
+}

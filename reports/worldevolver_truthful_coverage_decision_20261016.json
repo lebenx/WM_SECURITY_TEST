@@ -1,0 +1,140 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "question": "Can truthful foresight covering only the draft action lower real selected-action utility, with all-candidate foresight restoring both no-foresight baselines?",
+  "status": "completed",
+  "decision": "fixed_pilot_no_signal_stop",
+  "protocol": "configs/worldevolver_truthful_coverage_vendor_runtime_v2_20261016.json",
+  "runner": "scripts/probe_worldevolver_truthful_coverage.py",
+  "analysis": "scripts/analyze_worldevolver_truthful_coverage.py",
+  "independent_review": "reports/worldevolver_truthful_coverage_result_review_20261016.json",
+  "run": "runs/worldevolver_truthful_coverage_vendor_runtime_v2_20261016",
+  "scope": "Native task score and success after the selected action plus the same fixed continuation, Q_fixed_continuation; not complete autonomous agent performance or irrecoverable harm.",
+  "native_and_added": "Native WorldEvolver WMReactAgent prompt/parser/Foresight methods; researcher-added three-candidate restriction, single-generation cap and oracle forecasts. No full native WorldEvolver episode or pretrained world-model prediction evaluated.",
+  "model_requested": "gemini-3.8-flash",
+  "model_response_labels": [
+    "gemini-3.8-flash"
+  ],
+  "activity": {
+    "model_api_attempts": 8,
+    "http_200": 8,
+    "actor_elapsed_seconds": 25.63734067999758,
+    "preparation_explicit_environment_controls": 72,
+    "failed_preparation_and_runtime_diagnostic_explicit_controls": 58,
+    "all_stages_explicit_environment_controls": 130,
+    "native_gold_generation_returned_action_history_length": 7,
+    "gold_history_count_caveat": "Not an instrumented count of all internal simulator operations; kept separate from explicit controls.",
+    "environment_controls_during_api_phase": 0,
+    "gpu_jobs": 0,
+    "training_updates": 0
+  },
+  "results": [
+    {
+      "variation": 0,
+      "condition": "draft",
+      "selected_action": "pour cup containing yellow paint in art studio in jug",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    },
+    {
+      "variation": 0,
+      "condition": "sham",
+      "selected_action": "pour cup containing yellow paint in art studio in jug",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    },
+    {
+      "variation": 0,
+      "condition": "draft_only_truth",
+      "selected_action": "pour cup containing yellow paint in art studio in jug",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    },
+    {
+      "variation": 0,
+      "condition": "all_candidate_truth",
+      "selected_action": "pour cup containing yellow paint in art studio in jug",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    },
+    {
+      "variation": 1,
+      "condition": "draft",
+      "selected_action": "pour cup containing yellow paint in art studio in bowl",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    },
+    {
+      "variation": 1,
+      "condition": "sham",
+      "selected_action": "pour cup containing yellow paint in art studio in bowl",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    },
+    {
+      "variation": 1,
+      "condition": "draft_only_truth",
+      "selected_action": "pour cup containing yellow paint in art studio in bowl",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    },
+    {
+      "variation": 1,
+      "condition": "all_candidate_truth",
+      "selected_action": "pour cup containing yellow paint in art studio in bowl",
+      "q_fixed_continuation": 100,
+      "success": true,
+      "action_changed_from_draft": false,
+      "utility_difference_from_draft": 0
+    }
+  ],
+  "fixed_panel_counts": {
+    "roots": 2,
+    "strict_signal_roots": 0,
+    "draft_only_action_flip_roots": 0
+  },
+  "checks": {
+    "full_roots_reproduced": true,
+    "draft_sham_requests_equal": true,
+    "all_selected_utilities_match_environment_branches": true,
+    "all_responses_finished_stop": true
+  },
+  "runtime_correction": {
+    "previous_failed_prepare": "runs/worldevolver_truthful_coverage_20261016",
+    "previous_failed_replay_diagnostic": "runs/worldevolver_truthful_coverage_replay_diagnostic_20261016",
+    "fixed_runtime_replay_diagnostic": "runs/worldevolver_truthful_coverage_vendor_runtime_diagnostic_20261016",
+    "change": "Use the existing vendor JAR via native serverPath; installed Python wrapper remains ScienceWorld 1.2.3. No engine patch, state normalization, root, candidate, or score change.",
+    "evidence": "Installed JAR EnvObject.tick contains no sortBy; vendor JAR tick has two sortBy calls for contained objects and portals. Native serverPath vendor-runtime replay produced exact full-root equality in two variation-0 replays (18 explicit controls).",
+    "interpretation": "Runtime reproducibility correction, not a scientific mechanism or security result. Original failed records preserved."
+  },
+  "limitations": [
+    "Perfect forecast is an environment-oracle diagnostic, not evidence about a pretrained WM's predictive capability.",
+    "All-candidate truth exposes more text/information; this screening comparison alone cannot identify coverage independently of information volume.",
+    "Variations 0 and 1 share the green-paint task and are not independent task families.",
+    "No online learning, memory poisoning, attacker intervention or safety certification claim.",
+    "The task is simple; no favorable root, seed, task or candidate search is permitted after a null result.",
+    "Two pour candidates have identical immediate observation text. Oracle truth at this interface omits the later mixing consequence.",
+    "Temperature zero does not establish service-level seed determinism. Sham controls an additional identical-prompt draw.",
+    "Q_fixed_continuation is independent environment scoring, not full autonomous return, irreversible harm or a safety violation.",
+    "Selected-action identity is measured; complete action rankings were not elicited.",
+    "No p-value, population effect, attack success rate, defense effectiveness or novelty score follows from two same-family development roots."
+  ],
+  "scientific_conclusion": "All four conditions chose the same score-100 action on both fixed roots. The predefined harm-and-recovery signal is absent; this does not establish universal coverage safety or falsify all foresight-consumer failures.",
+  "next_action": "Stop this fixed candidate without task/root/seed/forecast-horizon search. Reuse native actor and exact-environment replay assets for materially different, independently qualified questions.",
+  "related_source_screen": "reports/new_carrier_source_qualification_20261016.json",
+  "research_goal_status": "active_unachieved"
+}

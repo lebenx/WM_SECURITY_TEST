@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "no_go_for_rejected_branch_cache_contamination_candidate",
+  "research_goal_status": "active_unachieved",
+  "question": "Can an unexecuted JOWA search branch modify the cache or observation history used for the factual branch or next real decision through storage aliasing?",
+  "source": {
+    "repository": "https://github.com/CJReinforce/JOWA",
+    "revision": "8cb02c5e6768a948c566a9012ac8a4fc420c6970",
+    "local_path": "vendor/JOWA",
+    "resource_audit": "reports/jowa_native_interface_feasibility_20261015.json"
+  },
+  "contract_and_scope": {
+    "required_invariant": "Given the same real observation/action history, merely evaluating and discarding a hypothetical branch must not append its imagined tokens to the factual history or mutate another branch's cache through shared storage.",
+    "not_required": "Search scores and the selected real action may legitimately depend on hypothetical branch forecasts. This ordinary planning effect is not history contamination.",
+    "permission_status": "This is a source-level reachability screen. No separately deployed multi-tenant query service or attacker permission to mutate internal caches was established or added.",
+    "goal_bus_boundary": "The native environment/game identifier selects Atari task context, including the dynamics/action vocabulary. It is not an independently writable preference-only Goal. Swapping it would not inherit a fixed-physics Goal-invariance contract.",
+    "deduplication": "JOWA was not in the existing mechanism registry. Unlike the already tested TD-MPC warm-start and OPINE global-memory paths, this candidate specifically concerned native search-branch cache ownership; replacing the carrier alone would not establish novelty."
+  },
+  "native_decision_path": {
+    "forecast_consumed": true,
+    "evidence_level": "pinned_source_only",
+    "path": "For horizon greater than zero, native beam search expands predicted observation tokens and rewards, reads successor Q values, ranks nodes by discounted cumulative predicted reward plus terminal max Q, and returns the winning path's first action. Horizon zero selects the root Q maximum.",
+    "source_paths": [
+      "vendor/JOWA/src/agent.py",
+      "vendor/JOWA/src/envs/world_model_env.py",
+      "vendor/JOWA/src/utils.py"
+    ],
+    "native_clean_task_reproduced": false
+  },
+  "decisive_code_facts": [
+    "Every native planning call creates a new WorldModelEnv and deep-copies its initial cache for the root node.",
+    "concate_kv and split_kv allocate new cache storage and copy valid prefixes; they do not expose shared branch prefix storage.",
+    "WorldModelEnv.obs_tokens initially may view the factual token buffer, but step rebinds it to a new torch.cat result rather than writing the imagined tokens into that buffer.",
+    "The persistent Agent token buffer is updated with encoded actual observations and the action passed to the real environment, not with discarded forecast tokens."
+  ],
+  "cpu_probe": {
+    "script": "scripts/probe_jowa_cache_isolation.py",
+    "result": "runs/jowa_cache_isolation_20261015/summary.json",
+    "status": "passed_cpu_cache_unit_checks",
+    "assertions_passed": 23,
+    "assertions_are_not_independent_task_samples": true,
+    "method": "Directly import upstream cache classes. Exercise deepcopy, concatenation, splitting, pruning, prefix writes and size changes with small CPU sentinel tensors. Compile the unchanged upstream step method with a synthetic parameter-free token producer and lightweight readout/decoder.",
+    "positive_control": "A deliberately aliased reference changes its owner, confirming the detector can observe a write. This artificial control is not a native defect.",
+    "observed": "Native copy operations preserve root and sibling valid prefixes and sizes. An explicit step cache advances from 2 to 5 tokens while the member root remains at 2; observation rebinding preserves the factual token buffer.",
+    "limits": "No checkpoint, learned prediction, Atari episode, full Agent/MCTS execution, two-successive-plan integration, concurrency or shared-model/RNG-state test. This excludes the inspected storage-aliasing path, not every possible JOWA dependency."
+  },
+  "separate_mcts_correctness_issue": {
+    "source": "vendor/JOWA/src/agent.py",
+    "line": 344,
+    "finding": "MCTS passes deepcopy(parent.kv_cache) to step, but afterwards saves deepcopy(wm_env.keys_values_wm) into the child. The explicit cache is advanced while the environment member cache is not, so the child receives the stale initialization prefix.",
+    "confirmation_scope": "Pinned call-site inspection plus execution of the original step method on synthetic tensors confirms the ownership mismatch; the complete MCTS algorithm and trained model were not executed.",
+    "classification": "ordinary_search_state_correctness_bug_not_established_security_mechanism",
+    "task_harm_measured": false,
+    "upstream_source_modified": false,
+    "reason_not_attack_success": "No adversarial operation or trust-boundary violation has been demonstrated. A stale search prefix is different from an unexecuted branch overwriting factual history."
+  },
+  "activity": {
+    "new_source_checkouts": 1,
+    "ordinary_tracked_zip_acquired_with_checkout": "vendor/JOWA/fine_tuning_dataset.zip",
+    "zip_unpacked_or_used": false,
+    "checkpoint_downloads": 0,
+    "pretrained_model_loads": 0,
+    "neural_model_forwards": 0,
+    "synthetic_step_token_producer_calls": 3,
+    "task_environment_steps": 0,
+    "training_updates": 0,
+    "model_api_requests": 0,
+    "gpu_jobs_started": 0,
+    "cpu_unit_probe_runs": 1
+  },
+  "unmeasured_outcomes": {
+    "forecast_error": null,
+    "action_ranking_flip_rate": null,
+    "selected_action_real_utility": null,
+    "defense_recovery": null
+  },
+  "go_no_go": {
+    "source_level_native_forecast_to_action_path": "go",
+    "rejected_branch_storage_aliasing_candidate": "no_go_inspected_native_path_isolated",
+    "download_weights_and_run_clean_for_this_candidate": "no_go_causal_path_not_supported",
+    "mcts_implementation_correctness_issue": "confirmed_in_source_and_method_unit_probe_not_task_harm",
+    "general_decision_level_goal_bus_claim": "no_go_evidence_still_incomplete",
+    "overall_goal_complete": false
+  },
+  "reopen_condition": "A materially different, reachable state-writing path or new evidence contradicting the observed isolation, with an explicit contract and proposed decisive native utility test. A generic MCTS correctness fix, new carrier name or mere forecast difference is not sufficient.",
+  "review": "Two independent source reviewers agreed with the bounded candidate No-Go. One separately identified the remaining full-plan/RNG/model-state integration limits. No claim of universal system safety is made."
+}

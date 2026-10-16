@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "status": "source_and_primary_literature_screen_no_new_scientific_run_qualified",
+  "goal_status": "active_unachieved",
+  "question": "After the fixed SafeDreamer mode gate stopped, is there a distinct native forecast-to-decision interface with an identifiable counterfactual invariance contract and independent real-utility evaluation?",
+  "activity": {
+    "new_checkpoint_downloads": 0,
+    "new_model_loads": 0,
+    "new_model_forward_calls": 0,
+    "new_environment_resets": 0,
+    "new_environment_steps": 0,
+    "new_training_updates": 0,
+    "model_api_calls": 0,
+    "exclusive_gpu_requested": false,
+    "public_source_and_metadata_requests": true,
+    "evidence_type": "Code, existing result summaries and primary literature only; not a new negative attack experiment."
+  },
+  "retained_evidence": {
+    "specification": "configs/goal_bus_physical_invariance_spec.json",
+    "worldagen": "The task-agnostic isolation contract and corrected single-episode forecast-error observations remain supported within their existing scope. Its frozen native policy does not consume the forecast for action selection.",
+    "worldagen_result": "runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json",
+    "cosmos": "The known fixed root has independent 16-control future truth, increased Swap visual error, a successful-to-unsuccessful candidate ranking change and restoration with true future. The completed output-factorial test supports local visual-input dependence. These are stronger than divergence alone, but do not establish a unique mechanism, effective deployable defense or independent generalization.",
+    "cosmos_truth_result": "reports/cosmos_first_query_truth_decision_20261015.json",
+    "cosmos_modality_result": "reports/cosmos_future_modality_factorial_decision_20261016.json",
+    "cosmos_population_gate": "Clean29/30 and Swap28/30 fail the frozen extension criterion. No extra root, seed or outcome metric was selected in this screen.",
+    "safedreamer": "The completed first-query sampling intervention has safe counts462 and449, both above50; fixed mode-crossing gate stopped. This is a measured negative gate, unlike the source-only candidates below.",
+    "safedreamer_result": "reports/safedreamer_mode_mediator_gate_20261016.json"
+  },
+  "invariance_contract": {
+    "physical_layer": "For fixed augmented physical state, actual low-level controls and duration through the target time, other actors and exogenous noise, preference-only query Goal cannot alter a goal-independent physical target when absent from the transition and sensor equations.",
+    "prediction_layer": "The same physical state does not establish the same conditional belief from partial model inputs. Goal or a candidate set may convey hidden-state information. Interpreting dependence as physical forecast error needs an appropriate information/intervention contract and support. A model-specific explicit input-isolation promise can separately be audited at fixed valid inputs without first proving training-distribution sufficiency.",
+    "stochastic_layer": "An interventional invariance claim normally concerns output distributions. Equal seeds provide a paired implementation probe, not a proof that distributions differ.",
+    "goal_sensitive_outputs": [
+      "reward",
+      "value",
+      "success",
+      "termination",
+      "goal-relative semantics"
+    ],
+    "do_not_claim": "Neither same-scene BDDL equality nor forecast divergence alone resolves hidden-state priors, training support, or attacker write permissions."
+  },
+  "candidates": [
+    {
+      "id": "safedreamer_goal_marker",
+      "decision": "not_selected_identifiability_gap",
+      "source_facts": "Goal geometry is non-colliding and unconstrained; hazard cost reads robot-hazard distance. Native relocation also changes layout, consumes RNG and performs mj_forward. Native reward and goal-completion behavior change with the goal.",
+      "why_not_run": "SafeDreamer receives image/image2, not an independent Goal field. Rendering a relocated marker changes evidence and potentially occlusion; placement itself is constrained by the physical layout. Physical cost equality would not isolate a Goal-semantic violation from ordinary visual robustness or belief changes.",
+      "boundary": "A clone-only rendering/cost branch would be added research instrumentation. No physical invariance replay or model intervention was executed for this candidate.",
+      "sources": [
+        ".venv-safedreamer/lib/python3.9/site-packages/safety_gymnasium/assets/geoms/goal.py",
+        ".venv-safedreamer/lib/python3.9/site-packages/safety_gymnasium/assets/geoms/hazards.py",
+        ".venv-safedreamer/lib/python3.9/site-packages/safety_gymnasium/bases/base_task.py",
+        "vendor/SafeDreamer/SafeDreamer/agent.py"
+      ]
+    },
+    {
+      "id": "safedreamer_counterfactual_state_commit",
+      "decision": "proposed_native_writer_not_found_in_inspected_path",
+      "finding": "Imagined states are copied/local; planner mean/std and real posterior carry are explicitly returned to the owner. Planning score reads do not establish persistent normalizer, optimizer or posterior writes. The shared RNG advances, but that is the previously known RNG/warm-start family.",
+      "qualification": "create=False alone is not a read-only guarantee; this conclusion depends on the inspected policy/imagine/score call chain.",
+      "sources": [
+        "vendor/SafeDreamer/SafeDreamer/agent.py",
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py",
+        "vendor/SafeDreamer/SafeDreamer/jaxagent.py",
+        "vendor/SafeDreamer/SafeDreamer/embodied/core/driver.py"
+      ]
+    },
+    {
+      "id": "ma_wam_other_agent_action_promise",
+      "decision": "proposed_native_ownership_boundary_absent",
+      "finding": "The inspected native worker generates and executes a selected joint action for all agents. There is no separate low-trust other-agent promise promoted to guaranteed do(action). First-step legality is applied to both the WM one-hot representation and executor indices.",
+      "source": "runs/ma_wam_source_feasibility_v1/run_scripts/plan_eval_paired.py",
+      "revision": "c620525bf180ef3d9e0b9f2f8a964a3c233dab65"
+    },
+    {
+      "id": "forecast_risk_veto_of_corrective_sensing",
+      "decision": "no_native_veto_found_in_inspected_consumers",
+      "finding": "SafeDreamer always takes actual environment feedback through encoder and obs_step. GenSafeNav updates real visibility/history before GST; prediction_valid checks origin consistency, not predicted risk. Motion affecting later FOV is not an independent risk-controlled observation veto.",
+      "sources": [
+        "vendor/SafeDreamer/SafeDreamer/embodied/core/driver.py",
+        "vendor/SafeDreamer/SafeDreamer/agent.py",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_var_num.py",
+        "vendor/GenSafeNav/rl/vec_env/vec_pretext_normalize.py",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py"
+      ]
+    },
+    {
+      "id": "world4scorer_goal_and_candidate_context",
+      "decision": "native_consumer_found_no_qualified_security_pilot",
+      "source_report": "runs/world4scorer_source_screen_20261016/summary.json",
+      "new_fact": "A released native candidate scorer contains cross-candidate self-attention in its predicted-state trunk. Generated64, logged1 and bank16 queries use the same predictor in distinct contexts.",
+      "goal_route": "Ego command/velocity/acceleration affect proposal generation and are added before scoring; the future predictor has no independent Goal input. Changing route does not implement the requested fixed-action/score Goal intervention.",
+      "identification": "Other candidate tokens can convey ego information omitted from the direct scene input. The latent is outcome-supervised and has a separate logged-future visual readout; it is not a uniquely defined physical state. The paper explicitly preserves different candidate contexts and does not promise query partition invariance.",
+      "hypothetical_control_not_executed": "If studied as architecture robustness, fix all64 unique actions and compare joint evaluation with one fixed4x16 partition; chunked queries retaining full per-layer K/V would control actual execution partitioning. This does not make context deletion semantically equivalent or a security attack.",
+      "utility_warning": "Independent candidate outcomes require a fixed evaluator reference. NAVSIM progress normalization and B2D route bonuses can otherwise introduce candidate-set effects outside the WM. No matched local single-scene plus metric-cache bundle was qualified.",
+      "writer_boundary": "Native proposals are internal. Rebuilding forecast pools is an added research intervention, not an established external write interface.",
+      "primary_sources": [
+        "https://arxiv.org/html/2609.36438v1",
+        "https://github.com/World4Scorer/World4Scorer",
+        "https://huggingface.co/pei2333/World4Scorer"
+      ]
+    },
+    {
+      "id": "worlddrive_native_future_consumer",
+      "decision": "native_hidden_future_consumer_found_no_independent_goal_write_path",
+      "source_report": "runs/worlddrive_source_screen_20261016/summary.json",
+      "finding": "The distilled hidden future is consumed at inference to score top-k trajectories. The returned visual projection is computed after the choice, so modifying that output alone cannot mediate the choice. The refiner folds alternatives into batch rows and has no cross-candidate attention at that stage.",
+      "qualification": "No matching model/input/independent-utility runtime was set up. A route change affects upstream candidates; no branch-only Goal experiment is qualified.",
+      "primary_source": "https://github.com/TabGuigui/WorldDrive"
+    },
+    {
+      "id": "inverse_action_verifier_blindspot",
+      "decision": "directly_covered_by_revised_primary_work_not_new_claim",
+      "finding": "ACID v2 explicitly distinguishes action-explainable error from the orthogonal component missed by inverse dynamics. Its residual and bounds concern the former. A zero inverse residual with nonzero orthogonal error is already analyzed, not a new refutation of its stated theorem.",
+      "version": "2607.02403v2, revised2026-10-08",
+      "scope": "Sections3.2 and AppendixA.1-A.4 inspected; no ACID experiment reproduced. WAV additionally uses state plausibility and real-outcome acquisition; inverse-only failure would not defeat the full method.",
+      "sources": [
+        "https://arxiv.org/html/2607.02403v2",
+        "https://world-action-verifier.github.io/"
+      ]
+    },
+    {
+      "id": "frozen_planner_attack_checkpoint_lead",
+      "decision": "public_asset_lead_without_verified_method_or_evaluation_runner",
+      "source_report": "runs/frozen_planner_attack_source_screen_20261016/assessment.json",
+      "finding": "The public checkpoint repository and revision are real. Its only Python file verifies download hashes/sizes; the bounded primary-source search did not locate a linked paper or attack/causal evaluation implementation. Model-family overlap alone neither establishes mechanism overlap nor supplies a ready experiment.",
+      "qualification": "Not found in the inspected sources does not mean nonexistent or false. No checkpoint was downloaded.",
+      "primary_source": "https://huggingface.co/mohendy/world-model-attack-checkpoints"
+    },
+    {
+      "id": "action_suffix_nonanticipativity",
+      "decision": "existing_sensitivity_not_sufficient_no_new_qualified_native_consumer",
+      "source_report": "reports/action_suffix_causal_consumer_screen_20261016.json",
+      "finding": "Later control interventions cannot change earlier physical outcome distributions at a fixed belief and equal actual control prefix. Same-seed diffusion sensitivity is not a distributional violation. Waypoint suffixes can change early actual controls through lookahead or interpolation.",
+      "prior_scope": "The general observational-policy versus intervention confusion has direct prior art. Local A2World sensitivity is historical; no new model probe was run.",
+      "resource_boundary": "The checked Drive-WM release does not complete action-conditioned weights. Vista exposes whole-video reward computation but no qualified native early-forecast decision and real-utility loop was found. This bounded search does not assert that such systems cannot exist.",
+      "primary_sources": [
+        "https://arxiv.org/html/2002.02836",
+        "https://github.com/BraveGroup/Drive-WM/blob/eabe3c63bf362a2edf0fb6cbcb908424d2e18980/README.md",
+        "https://github.com/OpenDriveLab/Vista/blob/cc9821b4253ca7987c32757613d2fc2448fa9f5d/reward_utils.py"
+      ]
+    }
+  ],
+  "secondary_endpoint_not_selected": {
+    "candidate": "Cosmos collateral-object terminal fall",
+    "schema_only_result": "Saved initial/settled/final arrays contain time,qpos,qvel; eef_path and per-step logs lack per-step object state. Terminal object positions could potentially be decoded with matching task models, but cannot establish ever-fall or equal-exposure risk.",
+    "decision": "No safety outcomes were inspected or computed. Do not select a new endpoint on the closed30-root panel to rescue its failed gate."
+  },
+  "go_no_go": {
+    "go": "Preserve local Cosmos causal evidence and corrected WorldAgen isolation evidence; retain newly verified native scorer source paths for a future justified question.",
+    "no_go": "No new attack run, pretrained setup, independent-GPU request, broad Goal-invariance claim or publishable-core claim follows from this screen.",
+    "remaining": "A materially distinct and identifiable mechanism, justified intervention interface, useful native Clean, independent actual-utility loss, causal recovery and held-out generalization remain required."
+  },
+  "next_action": "No new scientific run is qualified. Retain the pinned source and prior measured results. Continue only from a substantively distinct intervention contract, native consumer and independent utility plan; do not repeat closed roots/seeds, full Clean setups, candidate regrouping or suffix probes merely to obtain a signal.",
+  "independent_review": {
+    "reviewer": "reach_wall_analysis_review",
+    "scope": "Two draft reports, targeted native source,20 direct local paths; source-only review, not model-result reproduction.",
+    "result": "passed_with_one_wording_correction_applied",
+    "correction": "Explicit architecture isolation audits do not first require a proof of training-distribution observation sufficiency."
+  },
+  "validation_report": "reports/goal_bus_causal_interface_screen_validation_20261016.json"
+}

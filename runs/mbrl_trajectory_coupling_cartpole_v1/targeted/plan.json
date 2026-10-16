@@ -1,0 +1,23 @@
+{
+  "arguments": {
+    "output": "runs/mbrl_trajectory_coupling_cartpole_v1/targeted",
+    "model": "runs/mbrl_coupling_cartpole_v0/model",
+    "particles": 10,
+    "condition": "targeted",
+    "seeds": [
+      702,
+      703
+    ]
+  },
+  "hashes": {
+    "scripts/pilot_mbrl_trajectory_coupling.py": "1979f884b4a405822db92f7da6378d13cc8f6d5aa079ee72d28e86ba7ff712cb",
+    "src/wm_security/trajectory_coupling.py": "381f4e3b340580a37dada38ea0f65dd75af236574c2e72cf2f49b861776b6164",
+    "scripts/pilot_mbrl_coupling.py": "94efc7153a724f3f853cfb1630c02ef2432a10b6343ee9a1f7d8fc582b640f97"
+  },
+  "stage": "Whole-trajectory follow-up after stepwise targeted heuristic failed; fresh predetermined seeds 702/703.",
+  "model": "Same frozen five-member learned GaussianMLP checkpoint as v0; no new training or validation-based model selection.",
+  "operation": "Project full H*N*D noise onto the model-derived smooth-survival sensitivity, then replace its standard-normal coordinate with a coupled normal quantile. Choose phases from 20 fixed candidates using a 64-point surrogate integration grid.",
+  "scope": "Native MBRL-Lib dynamics, ModelEnv rollout and CEM; attacker surrogate affects only noise coupling. Not a deployment vulnerability or full PETS reproduction.",
+  "api_requests": 0,
+  "gpu_work": false
+}

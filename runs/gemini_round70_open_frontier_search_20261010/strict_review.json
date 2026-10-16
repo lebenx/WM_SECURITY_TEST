@@ -1,0 +1,28 @@
+{
+  "overall_verdict": "KEEP_NONE",
+  "reviews": [
+    {
+      "candidate": "Forward-Inverse Consistency Decoupling via Dual-Path Optimization Incommensurability",
+      "carrier_match": 1,
+      "novelty": 3,
+      "specificity": 4,
+      "breadth": 3,
+      "actionability": 2,
+      "verdict": "REJECT",
+      "reason": "载体代码核对完全不匹配。TD-MPC2 的 WorldModel 仅包含 encoder、dynamics MLP、reward MLP、pi 与 ensemble Q，根本不存在所谓的反动力学模型（inverse model）、正反向对偶路径目标，也没有隐式奇异向量流形投影约束。此外，策略更新直接截断了 Q 的动力学反传路径（detached Q），所声称的 ∇_z L_dyn 与 ∇_z L_Q 互信息瓶颈流形退化属于无载体支持的虚构机制。",
+      "minimal_test": "检查 TD-MPC2 的 common/world_model.py 与 tdmpc2.py，确认是否存在 inverse dynamics 模块以及价值损失与动力学损失在潜在状态 z 上的联合反传梯度。"
+    },
+    {
+      "candidate": "Diffusion Denoising Timestep Aliasing in Continuous Action-Conditioned Rollouts",
+      "carrier_repo": "eloicamp/diamond",
+      "carrier_match": 2,
+      "novelty": 3,
+      "specificity": 3,
+      "breadth": 4,
+      "actionability": 3,
+      "verdict": "REJECT",
+      "reason": "载体代码与威胁模型失配。DIAMOND 的 InnerModel 基于 2D UNet，仅将离散动作/观测条件展平并与 Fourier 噪声嵌入拼接/加和，根本不存在跨帧时序交叉注意力机制（temporal cross-attention），亦无动作频率基底；且该问题本质上是常见的高频动作扰动引发的外推误差，所谓‘去噪时间步与动作嵌入在交叉注意力的频率混叠’系凭空构想的机制。",
+      "minimal_test": "查看 src/models/diffusion.py 及 denoiser 结构，检索动作调节是否经过时间域交叉注意力层，并测试输入正弦动作扰动是否仅诱发了常规的自回归复合误差而非去噪步奈奎斯特混叠。"
+    }
+  ]
+}

@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "compatibility_fixed_forward_verified_clean_resource_deferred_at_original_deadline",
+  "research_goal_status": "active_unachieved",
+  "confirmed_bug": {
+    "cause": "Legacy mujoco_py parses the first CUDA_VISIBLE_DEVICES item using int(), including when software rendering is selected. A GPU UUID raises ValueError before the first render.",
+    "source": ".venv-jepa-native/lib/python3.11/site-packages/mujoco_py/mjrendercontext.pyx:110",
+    "failed_probe": "runs/nanowm_shared_capacity_v1/summary.json",
+    "failed_probe_model_rollouts": 0,
+    "failed_probe_environment_steps": 0,
+    "failed_probe_strict_checkpoint_load_passed": true
+  },
+  "fix": {
+    "scripts": [
+      "scripts/pilot_nanowm_heldout_clean.py",
+      "scripts/probe_nanowm_shared_capacity.py"
+    ],
+    "cuda_visible_devices": "0",
+    "gpu_uuid": "GPU-5e6f1afb-d1c8-f7ac-9f06-fd6d3622ec5b",
+    "device_identity": "The single installed GPU is physical index0; masking it as 0 maps Torch logical cuda:0 to the same device. UUID remains in audit records.",
+    "GPUS_environment_override_at_launch": null,
+    "scientific_change": false,
+    "model_budget_precision_tasks_and_seeds_changed": false,
+    "cpu_renderer_check": "runs/nanowm_numeric_device_smoke_v1/summary.json",
+    "cpu_renderer_result": "Exact frozen initial state and RGB image; CUDA uninitialized; no model load, rollout or environment step.",
+    "smoke_setup_error": "The first smoke invocation omitted VAE_MODEL_PATH and failed at configuration preflight before environment/model construction. Its log is retained at runs/nanowm_numeric_device_smoke_v1/preflight_error.log; the test then used the same local VAE setting as both actual runners."
+  },
+  "wait_continuation": {
+    "original_run": "runs/nanowm_heldout_clean_v1/summary.json",
+    "original_terminal_status": "technical_error",
+    "original_exception": "KeyboardInterrupt",
+    "root_interruption_reason": "Confirmed renderer compatibility bug; stopped only our own waiting process before any model construction or task execution. This was not an observation-timeout restart.",
+    "original_first_wait_sample_utc": "2026-10-15T02:23:58Z",
+    "original_budget_seconds": 1800,
+    "continuation_deadline_utc": "2026-10-15T02:53:58Z",
+    "continuation_deadline_local": "2026-10-15 10:53:58 Asia/Shanghai",
+    "deadline_rule": "Take the lesser of a new 1800s maximum and remaining time to the supplied absolute cutoff; a busy GPU at cutoff defers. An idle first sample may proceed even if the supplied cutoff has elapsed.",
+    "preservation": "Keep both v1 directories and source snapshots; v2 uses separate outputs. No protocol model/task budget is reset or changed.",
+    "reproduction_command": ".venv-jepa-native/bin/python -u scripts/pilot_nanowm_heldout_clean.py --out-dir runs/nanowm_heldout_clean_v2 --gpu-wait-deadline-utc 2026-10-15T02:53:58Z",
+    "reproduction_limit": "Use a new output directory when reproducing; archived paths reject overwrite. The historic absolute cutoff should only be reused for this interrupted attempt.",
+    "independent_deadline_check": {
+      "method": "Read-only AST-isolated mocked boundary checks by a second agent; no model or environment execution.",
+      "passed": [
+        "Expired cutoff with busy GPU defers immediately without sleep",
+        "Expired cutoff with idle GPU proceeds",
+        "Near cutoff shortens wait to60s",
+        "Far cutoff remains capped at1800s"
+      ],
+      "actual_v2_wait_budget_seconds": 296.6289246082306,
+      "semantic_limit": "This bounds waiting while busy, not a hard latest-start time: any sampled idle GPU may proceed before the timeout branch, including the final sample."
+    }
+  },
+  "shared_capacity_probe": {
+    "summary": "runs/nanowm_shared_capacity_v2/summary.json",
+    "session_id": 27225,
+    "terminal_exit_code": 0,
+    "reason_for_v2": "v1 failed before inference at a confirmed bug. The corrected attempt completes the originally intended single measurement, not a best-of timing search.",
+    "cost_probe": {
+      "status": "completed_single_native_rollout",
+      "instance": 0,
+      "seed": 42,
+      "candidates": 16,
+      "rollout_calls": 1,
+      "elapsed_seconds": 15.939124268013984,
+      "output_shape": [
+        16,
+        6,
+        4096
+      ],
+      "finite": true,
+      "peak_allocated_bytes": 3662922240,
+      "peak_reserved_bytes": 5010096128,
+      "estimated_two_plan_rollout_seconds": 6694.432192565873,
+      "estimate_excludes": "Goal encoding, rendering, environment, logging and control overhead; not a certified bound",
+      "clean_episode": false,
+      "task_success": null,
+      "reference_actions_loaded": false
+    },
+    "other_compute_processes": [
+      {
+        "pid": 397107,
+        "process_name": "/home/xhj/WM_Security/.venv-a2world/bin/python",
+        "memory_mib": "2940"
+      },
+      {
+        "pid": 397108,
+        "process_name": "/home/xhj/WM_Security/.venv-a2world/bin/python",
+        "memory_mib": "2596"
+      }
+    ],
+    "within_registered_2700_second_estimate": false,
+    "decision": "Do not run the native Clean panel under this observed shared load or change the exclusive-GPU policy. One rollout extrapolates to about111.57min/root, above45min. Timing is not intrinsic model cost, an observed episode time or a certified bound.",
+    "clean_task_episodes": 0,
+    "environment_steps": 0,
+    "other_processes_modified": false
+  },
+  "clean_execution": {
+    "summary": "runs/nanowm_heldout_clean_v2/summary.json",
+    "session_id": 5073,
+    "observed_status": "resource_deferred",
+    "observed_at_utc": "2026-10-15T02:54:16.049458+00:00",
+    "wait_policy": {
+      "maximum_wait_seconds": 1800,
+      "this_attempt_wait_budget_seconds": 296.6289246082306,
+      "supplied_deadline_utc": "2026-10-15T02:53:58+00:00",
+      "effective_deadline_utc": "2026-10-15T02:53:58.000015+00:00",
+      "idle_first_sample_may_proceed": true
+    },
+    "clean_completed": 0,
+    "clean_gate_passed": null,
+    "terminal_exit_code": 0,
+    "finished_utc": "2026-10-15T02:53:58Z",
+    "reason": "Shared GPU remained occupied until the bounded wait deadline",
+    "model_loaded": false,
+    "all_instance_statuses": [
+      "not_run",
+      "not_run",
+      "not_run"
+    ],
+    "last_gpu_wait_sample": {
+      "gpu_index": 0,
+      "uuid": "GPU-5e6f1afb-d1c8-f7ac-9f06-fd6d3622ec5b",
+      "name": "NVIDIA GeForce RTX 4090",
+      "memory_total_mib": "24564",
+      "memory_used_mib": "5846",
+      "utilization_percent": "100",
+      "other_compute_processes": [
+        {
+          "pid": 397107,
+          "process_name": "/home/xhj/WM_Security/.venv-a2world/bin/python",
+          "memory_mib": "2940"
+        },
+        {
+          "pid": 397108,
+          "process_name": "/home/xhj/WM_Security/.venv-a2world/bin/python",
+          "memory_mib": "2852"
+        }
+      ],
+      "wait_seconds": 296.7000140590244,
+      "utc": "2026-10-15T02:53:58Z"
+    }
+  },
+  "scientific_decision": {
+    "resource_and_native_forward": "go",
+    "clean_capability": "unmeasured",
+    "decision_level_security_harm": "no_go_evidence_insufficient",
+    "scope": "NanoWM image Goal enters the native scoring objective, not fixed-action forecasts; this carrier is not a Goal-Bus interface. A timing success supplies no task success, ranking harm or causal defense evidence.",
+    "next_action": "Native Clean capability remains unmeasured. Resume the same fixed panel only after materially changed resource availability and an explicit new bounded execution decision. Do not automatically requeue or relax planner budgets, and do not begin a security panel without Clean evidence."
+  },
+  "new_activity_this_fix": {
+    "model_rollout_calls": 1,
+    "clean_task_episodes": 0,
+    "environment_steps": 0,
+    "model_api_requests": 0
+  }
+}

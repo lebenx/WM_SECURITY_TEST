@@ -1,0 +1,10 @@
+{
+  "verdict": "Reject in current framing; salvageable as an algorithmic vulnerability note if strictly repositioned from 'world-model security' to 'sampler-level optimizer manipulation in particle-based MPC'.",
+  "novelty_score": 5.5,
+  "strongest_claim": "In sample-based trajectory optimizers evaluating candidate actions via shared stochastic rollouts, an adversarial sampler can alter the joint coupling across candidates while preserving exact marginal predictive distributions, distorting the empirical argmax selection process without modifying model parameters, planner objectives, or true marginal rollout statistics.",
+  "threat_model_limit": "Requires adversary control inside the inference runtime's random number generator or batch-sampling service layer; does not apply to true black-box query settings, deterministic world models, or continuous-space planners where candidate evaluations are evaluated via strictly independent streams or closed-form expectations.",
+  "closest_prior_overlap": "Well-studied properties of Common Random Numbers (CRN) variance reduction and sample path sensitivity in simulation optimization, combined with established seed-dependence and ranking jitter in Cross-Entropy Method (CEM) / PETS trajectory sampling.",
+  "decisive_missing_evidence": "Demonstration that the vulnerability persists under standard continuous-control MPC architectures (e.g., failed on HalfCheetah, Pusher, TD-MPC2) when scaling particle counts beyond minimal toy regimes (K=4, 16) or against trivial defense baselines such as independent per-candidate PRNG seeding.",
+  "paper_strategy": "Pivot the narrative completely away from general 'world-model security' and rebrand as a theoretical analysis of 'Adversarial Coupling in Monte Carlo Planners'. Formalize the exact bias introduced into empirical argmax estimators under dependent sampling, identify the theoretical variance threshold required for the attack to succeed, and evaluate on a second task where stochastic branching is native and non-trivial (e.g., stochastic MuJoCo or discrete POMDPs) paired with an independent-seed verification defense.",
+  "stop_or_run": "Run"
+}

@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-10",
+  "status": "rejected_no_horizon_specific_replication",
+  "claim_cn": "与原生规划时域同步的合法周期动作轨迹可能在保持一步误差较低时干扰 TD-MPC2 的多步价值 bootstrap，从而造成 planner-specific 损害。",
+  "review": {
+    "source": "runs/gemini_fourth_mechanism_search_20261010T0000Z/calls.jsonl",
+    "novelty_score": 7.1,
+    "decision": "screen only; candidate was generated as bellman_target_horizon_shadowing"
+  },
+  "operation": "Authentic cheetah-run simulator trajectories with sinusoidal period 5, matching the native TD-MPC2 rollout horizon; compare random and equal-RMS dither controls under the same 120 native full updates.",
+  "carrier": "official TD-MPC2 mt30-48M, native MPPI and model updates",
+  "runs": {
+    "walker_run_seed11": {
+      "source": "runs/tdmpc_horizon_shadowing_gate_period5_v0/status.json",
+      "random_return_300": 370.95993992500007,
+      "period5_return_300": 359.58910644147545,
+      "equal_rms_dither_return_300": 374.1745573300868,
+      "random_one_step_error": 0.00033054398954845965,
+      "period5_one_step_error": 0.00027940591098740697,
+      "random_planner_std_ratio": 0.31805419587460865,
+      "period5_planner_std_ratio": 0.3234575082765019,
+      "decision": "Small single-seed return drop, no planner-variance collapse."
+    },
+    "walker_run_seed12": {
+      "source": "runs/tdmpc_horizon_shadowing_gate_period5_seed12_v0/status.json",
+      "random_return_300": 327.6047708177939,
+      "period5_return_300": 374.1768710333854,
+      "equal_rms_dither_return_300": 343.5174819882959,
+      "random_one_step_error": 0.00033054398954845965,
+      "period5_one_step_error": 0.00027940591098740697,
+      "random_planner_std_ratio": 0.3296913472393614,
+      "period5_planner_std_ratio": 0.3183848725614331,
+      "decision": "Effect reverses; equal-RMS control is the lower-return arm."
+    },
+    "walker_run_seed11_dose300": {
+      "source": "runs/tdmpc_horizon_shadowing_gate_period5_dose300_v0/status.json",
+      "updates": 300,
+      "random_return_300": 377.70560032874346,
+      "period5_return_300": 375.4762280937284,
+      "equal_rms_dither_return_300": 399.76284123025835,
+      "random_one_step_error": 0.00033054398954845965,
+      "period5_one_step_error": 0.00027940591098740697,
+      "random_planner_std_ratio": 0.3167263365836427,
+      "period5_planner_std_ratio": 0.3137835949200121,
+      "decision": "Dose escalation did not recover harm; period5 is slightly below random but equal-RMS dither is substantially higher, so no horizon-specific effect."
+    }
+  },
+  "decision": "Reject as a main claim. The period-5 trajectory has low one-step error, but task harm is absent/reverses across seeds and dose escalation does not create a horizon-specific planner signature. No second task or scale-up."
+}

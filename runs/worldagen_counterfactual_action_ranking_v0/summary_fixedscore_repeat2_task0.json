@@ -1,0 +1,280 @@
+{
+  "status": "completed_worldagen_counterfactual_action_ranking",
+  "planner": "independent_forecast_driven_clip_text_score",
+  "native_worldagen_policy_uses_forecast": false,
+  "candidate_set_frozen_across_conditions": true,
+  "candidate_source": "recorded",
+  "selection_target_fixed_to_original_goal": true,
+  "selection_score_text": "clean task goal for every condition",
+  "clip_reconstruction": "global_minmax",
+  "future_observation_used_for_selection": false,
+  "actual_utility_source": "fresh LIBERO replay cumulative sparse reward, success, and environment steps",
+  "replay_repeats": 2,
+  "replay_repeat_protocol": "independent fresh environment per repeat; top-level metrics are means when repeats > 1",
+  "evaluate_all_candidates": false,
+  "conditions": [
+    "clean",
+    "goal_swap_offset_1",
+    "goal_swap_offset_1_bus_cut",
+    "goal_swap_offset_1_control_cut"
+  ],
+  "goal_offsets": [
+    1
+  ],
+  "rows": [
+    {
+      "suite": "libero_10",
+      "task_id": 0,
+      "task": "put both the alphabet soup and the tomato sauce in the basket",
+      "goal_texts": {
+        "1": "put both the cream cheese box and the butter in the basket"
+      },
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_data_root": "/tmp/worldagen_actions_merged3",
+      "candidate_task_index": 5,
+      "candidate_episode": 8,
+      "scores": {
+        "clean": [
+          0.2056099772453308,
+          0.21130859851837158,
+          0.20961828529834747,
+          0.21522507071495056,
+          0.20891106128692627,
+          0.2087293565273285,
+          0.20827311277389526,
+          0.21264885365962982
+        ],
+        "goal_swap_offset_1": [
+          0.20609578490257263,
+          0.2098192572593689,
+          0.20954670011997223,
+          0.20887717604637146,
+          0.20852148532867432,
+          0.20805983245372772,
+          0.20999357104301453,
+          0.20947469770908356
+        ],
+        "goal_swap_offset_1_bus_cut": [
+          0.20731548964977264,
+          0.21007829904556274,
+          0.2058166116476059,
+          0.21143096685409546,
+          0.21166256070137024,
+          0.208513081073761,
+          0.20676285028457642,
+          0.2041434943675995
+        ],
+        "goal_swap_offset_1_control_cut": [
+          0.20609578490257263,
+          0.2098192572593689,
+          0.20954670011997223,
+          0.20887717604637146,
+          0.20852148532867432,
+          0.20805983245372772,
+          0.20999357104301453,
+          0.20947469770908356
+        ]
+      },
+      "selected": {
+        "clean": 3,
+        "goal_swap_offset_1": 6,
+        "goal_swap_offset_1_bus_cut": 4,
+        "goal_swap_offset_1_control_cut": 6
+      },
+      "ranking_flip_rate": {
+        "goal_swap_offset_1": 0.39285714285714285,
+        "goal_swap_offset_1_bus_cut": 0.4642857142857143,
+        "goal_swap_offset_1_control_cut": 0.39285714285714285
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30.0,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.4402393716054094,
+          "eef_approach_progress": -0.16448887038756138,
+          "repeat_results": [
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.4402393716054094,
+              "eef_approach_progress": -0.16448887038756138
+            },
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.4402393716054094,
+              "eef_approach_progress": -0.16448887038756138
+            }
+          ],
+          "replay_count": 2,
+          "success_rate": 0.0,
+          "forecast_error_mse": 1.6673825979232788,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30.0,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.5797768383507891,
+          "eef_approach_progress": -0.3040263371329411,
+          "repeat_results": [
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.5797768383507891,
+              "eef_approach_progress": -0.3040263371329411
+            },
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.5797768383507891,
+              "eef_approach_progress": -0.3040263371329411
+            }
+          ],
+          "replay_count": 2,
+          "success_rate": 0.0,
+          "forecast_error_mse": 1.6670671701431274,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30.0,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.21904569108235766,
+          "eef_approach_progress": 0.056704810135490336,
+          "repeat_results": [
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.21904569108235766,
+              "eef_approach_progress": 0.056704810135490336
+            },
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.21904569108235766,
+              "eef_approach_progress": 0.056704810135490336
+            }
+          ],
+          "replay_count": 2,
+          "success_rate": 0.0,
+          "forecast_error_mse": 1.630297303199768,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30.0,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.5797768383507891,
+          "eef_approach_progress": -0.3040263371329411,
+          "repeat_results": [
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.5797768383507891,
+              "eef_approach_progress": -0.3040263371329411
+            },
+            {
+              "cumulative_reward": 0.0,
+              "max_reward": 0.0,
+              "success": false,
+              "environment_steps": 30,
+              "true_progress_initial": -0.3389768479462802,
+              "true_progress_final": -0.33897747897271757,
+              "true_progress_delta": -6.310264373809993e-07,
+              "eef_approach_distance_initial": 0.275750501217848,
+              "eef_approach_distance_final": 0.5797768383507891,
+              "eef_approach_progress": -0.3040263371329411
+            }
+          ],
+          "replay_count": 2,
+          "success_rate": 0.0,
+          "forecast_error_mse": 1.6670671701431274,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_offset_1_bus_cut": false,
+        "goal_swap_offset_1_control_cut": false
+      }
+    }
+  ],
+  "scope": "Minimal independent planner test; no claim about native WorldAgen action selection."
+}

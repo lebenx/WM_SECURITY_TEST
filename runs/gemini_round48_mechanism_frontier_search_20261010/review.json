@@ -1,0 +1,38 @@
+{
+  "verdict": "PASS",
+  "ranked_candidates": [
+    {
+      "rank": 1,
+      "named_mechanism": "Episodic Counterfactual Variance Collapse (ECVC)",
+      "exact_one_sentence_claim": "A passive, fully valid trajectory containing counterfactual exploration queries causes world-model epistemic uncertainty estimation to prematurely collapse along orthogonal task sub-spaces, making downstream risk-sensitive planners hallucinate safety in fatal states.",
+      "legal_operation": "An agent executes standard, valid environmental steps (e.g., standard object relocation and probe steps) while logging observations into a shared episodic buffer; no out-of-distribution textures, malicious prompt tokens, or reward tampering are introduced.",
+      "public_carrier": "WorldAgen LIBERO checkpoint (or official TD-MPC2 with risk-sensitive/ensemble planning)",
+      "two_minute_falsification_gate": "Compute the ensemble epistemic variance across 10 latent rollout trajectories from state s_critical before and after appending a 20-step legal neutral exploratory trajectory to the replay buffer; if variance on orthogonal collision dimensions does not decrease by >40% without actual support coverage, the mechanism is falsified.",
+      "repair": "Orthogonal Epistemic Decoupling: penalize latent Hessian cross-terms between distinct temporal causal factors during ensemble rollout updates, preserving epistemic uncertainty bounds on non-visited branches.",
+      "nearest_prior_art_and_why_distinct": "Distinct from BadWAM / JailWAM (which rely on backdooring or prompt injection) and standard epistemic uncertainty underestimation (which occurs from unvisited state compounding): ECVC isolates an active causal interaction where valid counterfactual rollouts in one semantic partition artificially extinguish uncertainty in unvisited, orthogonal branches due to shared representation projection.",
+      "novelty_score": 8,
+      "concrete_two_task_scale_plan": "Demonstrate on LIBERO-Spatial (manipulation under spatial constraints) and ScienceWorld (sequential state reasoning): show that logging benign cross-task transition traces causes the planner to select catastrophic paths (table drops or toxic mixes) due to false-zero variance estimates, reversed by the repair."
+    },
+    {
+      "rank": 2,
+      "named_mechanism": "Sub-goal Temporal Compression Desynchronization (STCD)",
+      "exact_one_sentence_claim": "Inserting legal variable-duration micro-pauses desynchronizes skill-abstraction duration predictions in hierarchical world models, inducing cumulative sub-goal execution failure without altering low-level state-space bounds.",
+      "legal_operation": "Executing standard no-op or micro-wait primitive actions during ordinary interaction segments, strictly within the valid action space and task time budget.",
+      "public_carrier": "ScienceWorld/DiscoveryWorld native task actors",
+      "two_minute_falsification_gate": "Measure predicted versus actual termination latent triggers across 5 macro-steps when inserting 1-step no-ops; if sub-goal duration prediction error does not compound super-linearly (growth rate > 1.5x step count) while individual state bisimulation error remains near zero, falsified.",
+      "repair": "Explicit Phase-Invariant Skill Boundaries: normalize high-level abstract temporal rollouts by event-driven phase transitions rather than wall-clock or discrete step counters.",
+      "nearest_prior_art_and_why_distinct": "Distinct from horizon shadowing and action sensitivity: STCD does not exploit compounding forward prediction error of dynamic states or high-frequency dither, but specifically targets the hierarchical semi-Markov abstraction mechanism where duration prediction decouples from invariant physical preconditions.",
+      "novelty_score": 7,
+      "concrete_two_task_scale_plan": "Evaluate on DiscoveryWorld (experimentation loops) and WAV robot code: demonstrate that inserting legal idle delays triggers early termination of heating/holding macro-skills, leading to incomplete tasks, resolved via event-gated phase abstraction."
+    }
+  ],
+  "discarded_directions": [
+    "Bisimulation metric collapse via goal-irrelevant noise (rejected: reducible to known task-irrelevant metric rank coupling and negative transfer).",
+    "Self-training policy drift via synthetic rollouts (rejected: standard compounding distribution drift; fails novelty >=7 threshold)."
+  ],
+  "source_links": [
+    "https://arxiv.org/abs/2310.16828 (TD-MPC2: Scalable Robust Model-Based RL)",
+    "https://arxiv.org/abs/2403.09631 (World Models for Autonomous Agents / WorldAgen)",
+    "https://arxiv.org/abs/2402.04987 (Safe Model-Based RL under Latent Uncertainty)"
+  ]
+}

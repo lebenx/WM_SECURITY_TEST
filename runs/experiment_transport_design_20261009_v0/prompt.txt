@@ -1,0 +1,27 @@
+Give one constructive, mathematically coherent research design, not a list of generic ideas. We need an implementable learning operation for sharing scientific experience between agents. The goal is a broad one-sentence concept with substantial novelty, and a short falsifiable pilot before scaling. You are a design critic, not an evidence source. Do not invent citations or experimental results.
+
+Candidate under scrutiny: transfer an experiment's ability to discriminate mechanisms, rather than transferring its observed conclusion or copying its action sequence. A source agent has actual experiment requests, actual responses, and candidate executable world models. A target agent may have different mechanics, actuator semantics, and observation interfaces. Primitive actions remain fixed. Target experiment construction must be learned or inferred from public interactions, not hand-written using the hidden law. Merely sending a source recipe and asking an LLM to adapt it does not constitute a novel algorithm.
+
+Concrete available carrier: the unmodified DiscoverPhysics simulator. Its two-particle interface accepts p1,p2,pos2,velocity2,measurement_times and returns positions and velocities. Other worlds expose five movable probes with probe_positions,probe_velocities,probe_masses and full trajectories. The source of truth is a local simulator; learner code can only consume experiment requests/responses. World configurations and hidden force formulas cannot enter the learner. We can fit small numeric models on CPU and call an LLM for proposals. One RTX4090 is available but long GPU training is prohibited until the claim has support. Native symbolic Baba, ScienceWorld and DiscoveryWorld are also installed, but we will not revisit retired fixed curricula without a different mechanism.
+
+Relevant prior operations that must be distinguished, not dismissed merely because a general formalism exists:
+* Bayesian experimental design / MDA: propose structures, maintain posteriors, choose information-gain experiments, use predictive checks to expand the model class, and choose observation models.
+* Learning to Outgrow a Theory (Oct 2026 preprint): jointly learns structural-edit/experiment pairs; one shared parameterization must fit all experiments; sequential class-rejection evidence; transfers learned pairings across mechanism combinations, parameter ranges and costs.
+* Causal Curiosity / GalilAI: learn informative action sequences to reveal causal factors and detect task shifts.
+* Wide Learning: learns how to realize a diagnostic with fixed primitives. Its controlled example learns an affine descriptor-to-address map from calibration pairs.
+* VERDI: probes model fingerprints, retrieves prior optimization strategies as hypotheses, validates them on the target, evolves probes after contradictions.
+* Predictive-state representations, bisimulation, Blackwell comparison of statistical experiments, causal abstraction, program synthesis and option models are established formalisms. A useful new computational operation can use them; just renaming one is insufficient.
+
+Our previous candidate failures:
+* Transporting all source-consistent repairs and acting on their consensus exactly reproduced ordinary target version-space inference with the same hypothesis family.
+* A nine-family symbolic-regression baseline solved most Reactor tasks; fixed or lazy measurement templates had no distinctive source-learned operator and did not improve a strong matched baseline.
+* A proposal using cloned learners with identical inputs did not produce meaningful counterfactual distinctions; a future-feature normalization was not a valid joint law.
+* Rejected Baba updates do change classes by design, but our fixed published candidates had no mature sample support under 4096-step native warmup. No learning harm was established.
+
+Please answer in at most 1800 words, with:
+1. One exact candidate operation: specify the source-learned artifact, target-side inputs, update/compilation equation or executable pseudocode, and which term is absent from the closest baseline. If no distinct candidate can be justified, state that explicitly and explain the obstruction rather than pretending.
+2. A fully worked tiny numerical example where the operation changes a target experimental choice relative to both target-only optimal design using its stated current model family and copied-source-protocol transfer. Do not give our method hidden information that a matched baseline should receive. State when the difference is only an initialization/computation advantage.
+3. An explicit failure case (e.g. parameter-role reversal or absent target affordance) and a target-data check that can detect it without consulting the hidden law. Account for the cost of that check.
+4. A minimal native DiscoverPhysics pilot that tests the actual distinguishing operation, not merely the existence of source-to-target distribution shift. Clearly name any researcher-supplied mappings, functional priors, or experiment templates that would limit the claim.
+
+Avoid proposing additional controls, a benchmark, a survey, a scoring protocol, or an attack taxonomy as the main contribution. Do not claim a novelty score is established by this response.

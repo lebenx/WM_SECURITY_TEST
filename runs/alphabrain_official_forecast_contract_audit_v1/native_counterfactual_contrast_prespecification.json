@@ -1,0 +1,40 @@
+{
+  "status": "contrast_prespecified_before_official_forecast_experiment",
+  "not_a_result": true,
+  "original": {
+    "task_key": "libero_goal:0",
+    "goal": "open the middle drawer of the cabinet",
+    "embedding_shape": [
+      1,
+      512,
+      1024
+    ],
+    "embedding_dtype": "torch.bfloat16",
+    "embedding_raw_sha256": "77b6c114287d4de57ff201dd428a2cd7fce7ad3d860926cdb4cc735620ad2dc1"
+  },
+  "swapped_world_goal": {
+    "task_key": "libero_goal:1",
+    "goal": "put the bowl on the stove",
+    "embedding_shape": [
+      1,
+      512,
+      1024
+    ],
+    "embedding_dtype": "torch.bfloat16",
+    "embedding_raw_sha256": "388f4b9c7dbadac00e74c6797790fa9d9ba32f8d8e1870cd557b6310d455eb3c"
+  },
+  "selection_rule": "Task indices0->1 fixed from same-scene metadata before observing official model goal-swap outputs; no effect-size screening",
+  "scene_audit": "runs/cosmos_libero_scene_compatibility_v1/goal_scene_compatibility.json",
+  "scene_audit_sha256": "0c0d2b83cf920b2875a6c74369f25b64a2793334d00bf993a5e56915d89ccb93",
+  "physical_contract_sha256": "79f1481f9486946dba775e33c47d9d108aab7a740a07351462aa1a0083f31ba3",
+  "fixed_environment": "Always task0 BDDL, original task0 init file/index0 and saved settled full simulator state; never swap environment goal or task1 init",
+  "candidate_generation": "N=2 native actions under original goal only, seeds31 and32, each16x7; cache full generated action latent and decoded controls; identical candidates for each condition",
+  "routing": {
+    "policy": "original goal",
+    "future_call": "original or fixed alternate goal only",
+    "value_call": "original goal",
+    "environment_reward_success": "original task0 goal"
+  },
+  "physical_target": "Identical replayed environment consequences under fixed full state and complete action horizon; metric definitions and intervention/cut choices require precommit before experimental execution",
+  "claim_scope": "Internal world-call context intervention at native split-call interface. External attacker access not established; goal-conditioned partial-observation posterior can legitimately vary. Divergence alone is not an attack or decision damage."
+}

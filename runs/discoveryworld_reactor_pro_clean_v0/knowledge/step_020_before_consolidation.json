@@ -1,0 +1,160 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated crystal reactor (uuid: 8549). Crystal 2 (uuid: 21559) is installed in activated crystal reactor (uuid: 51739).",
+      "step": 1
+    },
+    {
+      "measurement": "Crystal 3 (uuid: 24678) was on table (uuid: 57306), then picked up, and finally installed into crystal reactor (uuid: 33120), which is now uncalibrated.",
+      "step": 9
+    },
+    {
+      "measurement": "Spectrometer (uuid: 24266) is available on table (uuid: 58937) and was used on Crystal 3. Output: Channel 1: 57.38, Channel 5: 19.67, other channels 0.00.",
+      "step": 7
+    },
+    {
+      "measurement": "Crystal reactor (uuid: 33120) containing Crystal 3 reports current resonance frequency 5000 Hz, allowable range 0-10000 Hz, and identifies as Crystal Reactor #3.",
+      "step": 10
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is currently 33% activated.",
+      "step": 1
+    },
+    {
+      "hypothesis": "If a crystal is analyzed with the spectrometer while in inventory or directly in front of the agent, then the spectrometer outputs channel values that indicate the crystal's correct reactor frequency.",
+      "status": "confirmed",
+      "step": 7,
+      "supporting evidence": "Crystal 3 was successfully analyzed after being picked up, producing non-zero values on Channels 1 and 5."
+    },
+    {
+      "hypothesis": "If Crystal 3 is installed in reactor (uuid: 33120) and the reactor is calibrated to the correct frequency derived from spectrometer channels, then the reactor will activate and the generator core activation will increase.",
+      "status": "pending",
+      "step": 9,
+      "supporting evidence": "Crystal 3 is installed but reactor is uncalibrated. Spectrometer readings are 57.38 and 19.67; reactor range is 0-10000 Hz."
+    },
+    {
+      "hypothesis": "If spectrometer channel values are scaled by 100, then the resulting frequencies (5738 Hz and 1967 Hz) are plausible calibration candidates for Crystal 3's reactor.",
+      "status": "pending",
+      "step": 11,
+      "supporting evidence": "Both scaled values fall within the reactor's allowable range of 0-10000 Hz."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 5000 Hz, with an allowable range of 0 to 10,000 Hz.",
+      "step": 12
+    },
+    {
+      "measurement": "The dialog with Crystal Reactor #3 requires selecting a dialog option with an integer value of at least 1; option 0 is invalid.",
+      "step": 12
+    },
+    {
+      "hypothesis": "If the correct dialog option is selected when talking to Crystal Reactor #3 (uuid: 33120), then the reactor will provide a way to set its resonance frequency to the target value derived from the spectrometer readings for Crystal 3.",
+      "status": "pending",
+      "step": 12,
+      "supporting evidence": "The reactor is in dialog mode and reports its current frequency and allowable range, but no frequency-setting controls have been accessed yet."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) dialog option 1 increases the resonance frequency by 1000 Hz. After selecting option 1, the frequency changed from 5000 Hz to 6000 Hz.",
+      "step": 13
+    },
+    {
+      "measurement": "The dialog options for Crystal Reactor #3 (uuid: 33120) are: 1=Increase by 1000 Hz, 2=Increase by 100 Hz, 3=Increase by 10 Hz, 4=Increase by 1 Hz, 5=Decrease by 1000 Hz, 6=Decrease by 100 Hz, 7=Decrease by 10 Hz, 8=Decrease by 1 Hz, 9=Exit.",
+      "step": 13
+    },
+    {
+      "hypothesis": "If I select dialog options to decrease the frequency by 100 Hz (option 6) twice from 6000 Hz, then the frequency will be 5800 Hz, which is close to the scaled spectrometer value of 5738 Hz.",
+      "status": "pending",
+      "step": 13,
+      "supporting evidence": "Current frequency is 6000 Hz. Scaled spectrometer Channel 1 value is 5738 Hz. Decreasing by 100 Hz twice gives 5800 Hz, then decreasing by 10 Hz six times and 1 Hz two times would give 5738 Hz."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) dialog option 9 exits the reactor controls. After selecting option 9, the dialog ended with the message 'Exiting crystal reactor controls.'",
+      "step": 14
+    },
+    {
+      "hypothesis": "If the reactor frequency is set to 5738 Hz (Channel 1 scaled by 100), then Crystal Reactor #3 (uuid: 33120) will activate and the generator core activation will increase.",
+      "status": "pending",
+      "step": 14,
+      "supporting evidence": "Spectrometer Channel 1 for Crystal 3 was 57.38, which scales to 5738 Hz. The reactor's allowable range is 0-10000 Hz. The current frequency is 6000 Hz, so decreasing by 262 Hz would reach 5738 Hz."
+    },
+    {
+      "hypothesis": "If the reactor frequency is set to 1967 Hz (Channel 5 scaled by 100), then Crystal Reactor #3 (uuid: 33120) will activate and the generator core activation will increase.",
+      "status": "pending",
+      "step": 14,
+      "supporting evidence": "Spectrometer Channel 5 for Crystal 3 was 19.67, which scales to 1967 Hz. The reactor's allowable range is 0-10000 Hz."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 6000 Hz after selecting dialog option 1 (increase by 1000 Hz) from 5000 Hz.",
+      "step": 15
+    },
+    {
+      "measurement": "Talking to Crystal Reactor #3 (uuid: 33120) re-enters the dialog mode, and it again reports the current resonance frequency as 6000 Hz with allowable range 0 to 10,000 Hz.",
+      "step": 15
+    },
+    {
+      "hypothesis": "If I select dialog option 6 (decrease by 100 Hz) twice, option 7 (decrease by 10 Hz) six times, and option 8 (decrease by 1 Hz) twice while talking to Crystal Reactor #3 (uuid: 33120), then the frequency will change from 6000 Hz to 5738 Hz.",
+      "status": "pending",
+      "step": 15,
+      "supporting evidence": "Current frequency is 6000 Hz. Target frequency is 5738 Hz based on spectrometer Channel 1 value (57.38 scaled by 100). The required decrease is 262 Hz, achievable via the available dialog options."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 5900 Hz after selecting dialog option 6 (decrease by 100 Hz) from 6000 Hz.",
+      "step": 16
+    },
+    {
+      "hypothesis": "If I continue selecting dialog option 6 (decrease by 100 Hz) once more, then option 7 (decrease by 10 Hz) six times, and option 8 (decrease by 1 Hz) twice, then the frequency will change from 5900 Hz to 5738 Hz.",
+      "status": "pending",
+      "step": 16,
+      "supporting evidence": "Current frequency is 5900 Hz after one decrease of 100 Hz. Target frequency is 5738 Hz based on spectrometer Channel 1 value (57.38 scaled by 100). The remaining decrease needed is 162 Hz, achievable via the available dialog options."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 5800 Hz after selecting dialog option 6 (decrease by 100 Hz) from 5900 Hz.",
+      "step": 17
+    },
+    {
+      "hypothesis": "If I select dialog option 7 (decrease by 10 Hz) six times and option 8 (decrease by 1 Hz) twice while talking to Crystal Reactor #3 (uuid: 33120), then the frequency will change from 5800 Hz to 5738 Hz.",
+      "status": "pending",
+      "step": 17,
+      "supporting evidence": "Current frequency is 5800 Hz after two decreases of 100 Hz from 6000 Hz. Target frequency is 5738 Hz based on spectrometer Channel 1 value (57.38 scaled by 100). The remaining decrease needed is 62 Hz, achievable via option 7 six times (-60 Hz) and option 8 twice (-2 Hz)."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 5790 Hz after selecting dialog option 7 (decrease by 10 Hz) from 5800 Hz.",
+      "step": 18
+    },
+    {
+      "hypothesis": "If I select dialog option 7 (decrease by 10 Hz) five more times and option 8 (decrease by 1 Hz) twice while talking to Crystal Reactor #3 (uuid: 33120), then the frequency will change from 5790 Hz to 5738 Hz.",
+      "status": "pending",
+      "step": 18,
+      "supporting evidence": "Current frequency is 5790 Hz after one decrease of 10 Hz from 5800 Hz. Target frequency is 5738 Hz based on spectrometer Channel 1 value (57.38 scaled by 100). The remaining decrease needed is 52 Hz, achievable via option 7 five times (-50 Hz) and option 8 twice (-2 Hz)."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 5780 Hz after selecting dialog option 7 (decrease by 10 Hz) from 5790 Hz.",
+      "step": 19
+    },
+    {
+      "hypothesis": "If I select dialog option 7 (decrease by 10 Hz) four more times and option 8 (decrease by 1 Hz) twice while talking to Crystal Reactor #3 (uuid: 33120), then the frequency will change from 5780 Hz to 5738 Hz.",
+      "status": "pending",
+      "step": 19,
+      "supporting evidence": "Current frequency is 5780 Hz after two decreases of 10 Hz from 5800 Hz. Target frequency is 5738 Hz based on spectrometer Channel 1 value (57.38 scaled by 100). The remaining decrease needed is 42 Hz, achievable via option 7 four times (-40 Hz) and option 8 twice (-2 Hz)."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 5770 Hz after selecting dialog option 7 (decrease by 10 Hz) from 5780 Hz.",
+      "step": 20
+    },
+    {
+      "hypothesis": "If I select dialog option 7 (decrease by 10 Hz) three more times and option 8 (decrease by 1 Hz) twice while talking to Crystal Reactor #3 (uuid: 33120), then the frequency will change from 5770 Hz to 5738 Hz.",
+      "status": "pending",
+      "step": 20,
+      "supporting evidence": "Current frequency is 5770 Hz after three decreases of 10 Hz from 5800 Hz. Target frequency is 5738 Hz based on spectrometer Channel 1 value (57.38 scaled by 100). The remaining decrease needed is 32 Hz, achievable via option 7 three times (-30 Hz) and option 8 twice (-2 Hz)."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) reports its current resonance frequency as 5760 Hz after selecting dialog option 7 (decrease by 10 Hz) from 5770 Hz.",
+      "step": 21
+    },
+    {
+      "hypothesis": "If I select dialog option 7 (decrease by 10 Hz) two more times and option 8 (decrease by 1 Hz) twice while talking to Crystal Reactor #3 (uuid: 33120), then the frequency will change from 5760 Hz to 5738 Hz.",
+      "status": "pending",
+      "step": 21,
+      "supporting evidence": "Current frequency is 5760 Hz after four decreases of 10 Hz from 5800 Hz. Target frequency is 5738 Hz based on spectrometer Channel 1 value (57.38 scaled by 100). The remaining decrease needed is 22 Hz, achievable via option 7 two times (-20 Hz) and option 8 twice (-2 Hz)."
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+### Score (1-10)
+**3 / 10** (Clear Reject)
+
+---
+
+### Genuinely Distinct Security Mechanism vs. Repackaged Concept
+This is a **repackaging of Common Random Numbers (CRN) / correlated sampling artifacts**, dressed in adversarial and copula terminology. 
+
+In Model Predictive Control (MPC) utilizing Monte Carlo rollouts (e.g., CEM or MPPI), the optimizer optimizes over the joint empirical distribution of candidate evaluations. Altering the coupling across parallel evaluations without altering marginals is the textbook definition of changing the joint sampling distribution (the foundational principle of variance reduction via CRN or antithetic variates). If a sampler adaptively introduces an unfavorable joint dependency conditioned on realized rollouts, it simply induces an adversarial co-dependence that degrades optimizer argmax/ranking performance. Framing this standard sampling coupling dynamic as a "sampler-service copula integrity attack" does not introduce a fundamentally new physical or algorithmic failure mode.
+
+---
+
+### Nearest Prior
+1. **Simulation Optimization via Common Random Numbers / Correlated Sampling**: Decades of literature on ranking and selection (e.g., Clark 1961, Nelson & Matejcik 1995) establish that joint dependencies across candidate evaluations dictate the probability of correct selection ($P(CS)$), even when marginal evaluations are completely unbiased.
+2. **Coupled-World Sampling in Model-Based RL**: Literature analyzing cross-trajectory correlation in trajectory optimization (e.g., MPPI variance analysis, and the referenced *WorldKernel* work on cross-world off-diagonal coupling).
+
+---
+
+### Exact Novelty Boundary
+The strict novelty boundary is narrow:
+* **What is standard:** Shuffling or correlating random seeds/draws across candidate evaluations alters the variance of the difference $\text{Var}(\hat{J}(a_i) - \hat{J}(a_j))$, shifting ranking order without altering the marginal distributions $\mathbb{P}(\hat{J}(a_i))$.
+* **The specific contribution here:** A 2-wise independent, 3-wise dependent discrete coupling (via an even/odd parity construction) applied specifically to an externalized rollout service to evade pairwise moment/distributional validation checks while perturbing 3-way ranking comparisons.
+
+This is an incremental construction on statistical sampling theory rather than a distinct world-model vulnerability.
+
+---
+
+### Breadth and Validity of the One-Sentence Claim
+The claim is **not broad enough, and empirically overstated**:
+* It is framed as an attack on "stochastic world-model planning," but the vulnerability is entirely housed within the **trajectory optimizer's aggregation/argmax rule**, not the world model itself. The world model's transition dynamics $\mathcal{T}(s' \mid s, a)$ are irrelevant; the same mathematical phenomenon occurs if one optimizes an ensemble of static black-box stochastic functions.
+* The empirical basis is fragile: CartPole performance only dropped on 2 out of 4 seeds (seeds 704/705 showed degradation; seeds 706/707 showed 200/200 ceiling performance, zero degradation). Prior rank-coupling attempts failed completely on benchmark environments (HalfCheetah, Pusher, TD-MPC2). The claim presents an optimizer variance pathology on an under-sampled toy task as a general threat to world models.
+
+---
+
+### Minimum Decisive Experiment
+To prove this is a non-trivial, generalizable mechanism rather than an under-sampled optimizer artifact on toy CartPole:
+
+1. **Defeat the Nominal Optimizer Across Standard Benchmarks:**
+   Demonstrate statistically significant degradation across at least 20 random seeds on standard continuous control benchmarks (e.g., TD-MPC2 on Humanoid or Dog tasks, or standard MBPO/PETS benchmarks on HalfCheetah/Pusher) where sample budgets reflect production deployments (e.g., $N \ge 500$ trajectories, multiple iterations).
+2. **Isolate 3-Wise Coupling from Optimizer Noise:**
+   Compare the 3-wise parity attack against:
+   * A pure independent sampler baseline.
+   * A standard CRN sampler baseline.
+   * A worst-case pairwise copula attack.
+   Show analytically and empirically that the failure mode requires an adversary evading strict 2-wise marginal tests, and that the performance drop cannot be fully mitigated by simply re-sampling or applying standard permutation-invariant rank estimators (e.g., Borda count adjustments or basic independent re-ranking passes).

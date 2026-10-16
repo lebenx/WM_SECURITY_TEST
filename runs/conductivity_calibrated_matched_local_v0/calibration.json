@@ -1,0 +1,95 @@
+{
+  "setup": [
+    {
+      "action": "open door to workshop",
+      "observation": "The door is already open."
+    },
+    {
+      "action": "go to workshop",
+      "observation": "You move to the workshop."
+    },
+    {
+      "action": "pick up unknown substance",
+      "observation": "You move the unknown substance B to the inventory."
+    },
+    {
+      "action": "focus on unknown substance",
+      "observation": "You focus on the unknown substance B."
+    },
+    {
+      "action": "drop unknown substance",
+      "observation": "You move the unknown substance B to the workshop."
+    },
+    {
+      "action": "look around",
+      "observation": "This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)"
+    },
+    {
+      "action": "connect battery anode to blue wire terminal 1",
+      "observation": "anode on battery is now connected to terminal 1 on blue wire"
+    },
+    {
+      "action": "connect battery cathode to black wire terminal 1",
+      "observation": "cathode on battery is now connected to terminal 1 on black wire"
+    },
+    {
+      "action": "connect blue wire terminal 2 to cathode in red light bulb",
+      "observation": "terminal 2 on blue wire is now connected to cathode on red light bulb"
+    },
+    {
+      "action": "connect orange wire terminal 2 to anode in red light bulb",
+      "observation": "terminal 2 on orange wire is now connected to anode on red light bulb"
+    },
+    {
+      "action": "connect unknown substance B terminal 1 to black wire terminal 2",
+      "observation": "terminal 1 on unknown substance B is now connected to terminal 2 on black wire"
+    },
+    {
+      "action": "connect unknown substance B terminal 2 to orange wire terminal 1",
+      "observation": "terminal 2 on unknown substance B is now connected to terminal 1 on orange wire"
+    },
+    {
+      "action": "activate switch",
+      "observation": "The switch is now activated."
+    }
+  ],
+  "record": {
+    "state": "The switch is now activated.\nIn your inventory, you see:\n\tan orange\n",
+    "action": "look at red light bulb",
+    "observation": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+    "prediction": {
+      "prediction": "Prediction: The red light bulb is off. It requires a complete electrical circuit to turn on. The bulb has two terminals, one connected to a battery and the other connected to a switch. The switch is currently activated, but the circuit is not yet complete.",
+      "foresight": "Prediction: The red light bulb is off. It requires a complete electrical circuit to turn on. The bulb has two terminals, one connected to a battery and the other connected to a switch. The switch is currently activated, but the circuit is not yet complete.",
+      "mean_logprob": null,
+      "system": "## Retrieved similar past transitions\n\nCurrent state: cathode on battery is now connected to terminal 1 on black wire\nIn your inventory, you see:\n\tan orange\nAction: connect blue wire terminal 2 to cathode in red light bulb\nNext state: terminal 2 on blue wire is now connected to cathode on red light bulb\n\nCurrent state: terminal 2 on blue wire is now connected to cathode on red light bulb\nIn your inventory, you see:\n\tan orange\nAction: connect orange wire terminal 2 to anode in red light bulb\nNext state: terminal 2 on orange wire is now connected to anode on red light bulb\n\nCurrent state: You move the unknown substance B to the workshop.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You decide to wait for 1 iterations.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 4,
+      "retrieved_indices": [
+        8,
+        9,
+        5,
+        14
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+        "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+        "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+        "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box."
+      ],
+      "episodic_store_size": 16,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.15420233830809593,
+      "embedder_failed": false,
+      "n_rules": 0,
+      "active_rules": 0,
+      "rendered_rules": 0,
+      "total_prompt_tokens": 739,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 355,
+      "semantic_block_tokens": 0,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 45,
+      "prediction_token_source": "whitespace"
+    },
+    "update_completed": true
+  }
+}

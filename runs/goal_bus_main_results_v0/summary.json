@@ -1,0 +1,347 @@
+{
+  "status": "completed_goal_bus_main_results_aggregate",
+  "claim": "Instruction text can enter physical future prediction through shared action tokens; edge-cut restores goal-invariant world prediction while retaining policy sensitivity.",
+  "rows": [
+    {
+      "carrier": "WorldAgen",
+      "evidence": "expanded_real_input_goal_swap",
+      "physical_windows": 30,
+      "episodes": 10,
+      "native_world_relative_l2": 0.2999131125612509,
+      "edge_cut_world_relative_l2": 0.0,
+      "edge_cut_policy_relative_l2": 0.17595844904041993,
+      "native_recorded_primary_mse": 1.422800612449646,
+      "edge_cut_recorded_primary_mse": 1.4841117858886719,
+      "native_swapped_minus_recorded_mse": 0.07315070668888092,
+      "scope": "30 physical windows from public LIBERO-10; repeated goal offsets are not used here."
+    },
+    {
+      "carrier": "WorldAgen",
+      "evidence": "worldagen_legal_offset_matrix",
+      "physical_windows": 30,
+      "legal_offsets": 9,
+      "paired_rows": 270,
+      "native_world_relative_l2": 0.3246719682747652,
+      "native_world_cluster_bootstrap_ci95": [
+        0.28603607262170794,
+        0.36125445228822206
+      ],
+      "edge_cut_world_exact_zero_fraction": 1.0,
+      "edge_cut_policy_relative_l2": 0.20002983899728732,
+      "swapped_minus_recorded_mse": 0.07790650129318237,
+      "scope": "Same expanded real LIBERO windows crossed with nine legal goal offsets; repeated offsets clustered by physical window."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "real_input_one_step",
+      "physical_windows": 7,
+      "episodes": 7,
+      "native_world_delta": 0.031053274603826658,
+      "edge_cut_world_delta": 0.0,
+      "edge_cut_policy_delta": 0.016289271414279938,
+      "scope": "Recorded 16-step executed actions fixed; one frozen DiT forward; no rollout."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "official_sampler_legal_offsets",
+      "physical_windows": 3,
+      "repeated_rows": 9,
+      "task_offsets": [
+        1,
+        5,
+        9
+      ],
+      "native_world_delta": 0.07451874980082114,
+      "edge_cut_world_delta": 0.0,
+      "edge_cut_policy_delta": 0.04669071894346012,
+      "native_world_cluster_bootstrap_ci95": [
+        0.028453793687125046,
+        0.10800166676441829
+      ],
+      "scope": "Nine rows clustered by three physical episodes; two-step reverse-ODE sampler."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "held_out_forecast",
+      "physical_windows": 7,
+      "episodes": 7,
+      "native_world_forecast_mse": 0.5409645778792245,
+      "edge_cut_world_forecast_mse": 0.6083342262676784,
+      "repair_forecast_mse_delta": 0.0673696483884539,
+      "repair_forecast_mse_delta_bootstrap_ci95": [
+        0.04777675015585763,
+        0.08599654734134672
+      ],
+      "zero_context_world_forecast_mse": 0.6083342262676784,
+      "scope": "Observed same-episode frame +16 encoded as held-out latent target; zero context is diagnostic, not a trained goal-free head.",
+      "cut_mode": "fixed_action_world",
+      "edge_cut_world_forecast_mse_bootstrap_ci95": [
+        0.5774150916508266,
+        0.6496265400733265
+      ],
+      "edge_cut_world_forecast_mse_old_full_cut": 0.6225302985736302,
+      "repair_forecast_mse_delta_positive_fraction": 1.0,
+      "action_control_world_delta_mean": 0.08714936471854647
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "short_control_fixed_action",
+      "task_families": [
+        "libero_spatial",
+        "libero_object",
+        "libero_goal"
+      ],
+      "episodes": 3,
+      "steps_per_episode": 32,
+      "native_successes": 0,
+      "fixed_action_world_cut_successes": 0,
+      "native_action_norm_mean": 0.41516702125469845,
+      "fixed_action_world_cut_action_norm_mean": 0.6533310463031133,
+      "scope": "One task0 initial state per family; corrected fixed-action world cut; deliberately short control sanity check, not task-success benchmark."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "full_control_pilot",
+      "suite": "libero_spatial",
+      "episodes": 1,
+      "horizon_steps": 608,
+      "native_successes": 0,
+      "fixed_action_world_cut_successes": 0,
+      "scope": "One fixed initial state; full 608-step pilot; clean task gate negative, no task-harm attribution."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "noise_seed2_replicate",
+      "episodes": 3,
+      "sampler_seed": 2,
+      "native_world_delta": 0.06269635011752446,
+      "fixed_action_world_cut_delta": 0.0,
+      "repair_mse_delta_mean": -0.0007915894190470377,
+      "scope": "Same fixed physical windows as action control; independent sampler noise seed; mechanism replication, not new checkpoint/task benchmark."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "expanded_forecast_matrix",
+      "physical_windows": 21,
+      "episodes": 7,
+      "windows_per_episode": 3,
+      "sampler_seed": 1,
+      "native_world_delta": 0.05317268627030509,
+      "native_world_cluster_bootstrap_ci95": [
+        0.04511929906549909,
+        0.06179988171373094
+      ],
+      "fixed_action_world_cut_world_delta": 0.0,
+      "repair_mse_delta": 0.04899482216153826,
+      "repair_mse_cluster_bootstrap_ci95": [
+        0.03320588476601101,
+        0.06798216810538654
+      ],
+      "scope": "Three time points per episode across seven real LIBERO episodes; repeated windows clustered by episode."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "noise_seed3_replicate_matrix",
+      "episodes": 3,
+      "physical_windows": 3,
+      "sampler_seed": 3,
+      "native_world_delta_mean": 0.12544094771146774,
+      "fixed_action_world_cut_delta_mean": 0.0,
+      "repair_mse_delta_mean": -0.03820428252220154,
+      "scope": "Three fixed real LIBERO image/state/action windows (episodes 3,4,5; frame 30), independent sampler noise seed; mechanism replicate, not a task benchmark."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "expanded_forecast_by_task",
+      "physical_windows": 24,
+      "unique_task_a": 5,
+      "episodes_seed1_and_seed3": "7 + 3 overlapping physical episodes",
+      "native_task_group_nonzero_all": true,
+      "fixed_action_world_cut_exact_zero_all": true,
+      "source": "runs/alphabrain_cosmos_policy_real_input_sampler_forecast_by_task_v0/aggregate.json",
+      "scope": "Descriptive task-stratified aggregate over seed-1 21-window matrix and seed-3 3-window replicate; repeated frames are not independent physical worlds."
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "learned_goal_free_context_comparator",
+      "train_episodes": [
+        3,
+        4,
+        5
+      ],
+      "eval_episodes": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "train_windows": 3,
+      "eval_windows": 4,
+      "steps": 8,
+      "learning_rate": 0.001,
+      "zero_context_eval_mse": 0.585190162062645,
+      "learned_context_eval_mse": 0.46214917302131653,
+      "relative_change": -0.210267,
+      "scope": "Frozen released DiT and VAE; only one shared 512x1024 context optimized on disjoint episodes; two independent seeds; one-step latent forecast comparator, not a full dynamics-head or task benchmark.",
+      "source": "runs/alphabrain_goal_free_context_v1/summary.json",
+      "replicate_sources": [
+        "runs/alphabrain_goal_free_context_v1/summary.json",
+        "runs/alphabrain_goal_free_context_v2/summary.json"
+      ],
+      "seeds": [
+        17,
+        23
+      ],
+      "learned_context_eval_mse_replicates": [
+        0.46214917302131653,
+        0.4621938094496727
+      ],
+      "learned_context_eval_mse_mean": 0.4621714912354946,
+      "relative_change_mean": -0.2103,
+      "multi_timepoint_check": {
+        "source": "runs/alphabrain_goal_free_context_v3/summary.json",
+        "train_windows": 9,
+        "eval_windows": 12,
+        "frames": [
+          30,
+          60,
+          90
+        ],
+        "seed": 29,
+        "zero_context_eval_mse": 0.6019700939456621,
+        "learned_context_eval_mse": 0.47851500908533734,
+        "episode_cluster_delta_ci95": [
+          -0.18414124,
+          -0.01298855
+        ]
+      }
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "corrected_official_preprocess_full_control_pilot",
+      "suite": "libero_spatial",
+      "episodes": 1,
+      "horizon_steps": 608,
+      "sampler_num_steps": 5,
+      "native_successes": "0/1",
+      "fixed_action_world_cut_successes": "0/1",
+      "native_action_norm_mean": 0.2578478992769593,
+      "fixed_action_world_cut_action_norm_mean": 0.29310163737911926,
+      "scope": "Same initial state with official image JPEG/center-crop preprocessing and proprio min-max normalization; clean-task capability gate only, no task-harm attribution.",
+      "source": "runs/alphabrain_cosmos_libero_full_control_v2/spatial_600.json"
+    },
+    {
+      "carrier": "WorldAgen",
+      "evidence": "activation_mediation_matrix",
+      "physical_windows": 21,
+      "episodes": 7,
+      "layers": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        23
+      ],
+      "world_residual_fraction_mean_by_layer": {
+        "4": 0.2062089907992777,
+        "8": 0.19979582192466186
+      },
+      "policy_residual_fraction_mean_by_layer": {
+        "4": 0.955522728350052,
+        "8": 0.9642912978128823
+      },
+      "middle_layer_world_moves_toward_recorded_all": true,
+      "scope": "Internal activation mediation diagnostic on fixed real LIBERO windows; patch replaces only action-token hidden states, no training or rollout.",
+      "source": "runs/worldagen_goal_bus_activation_patch_v1/summary.json",
+      "world_residual_fraction_cluster_bootstrap_ci95_by_layer": {
+        "4": [
+          0.1677956501814463,
+          0.24818147027891618
+        ],
+        "8": [
+          0.17963719131380765,
+          0.22023966386787364
+        ]
+      },
+      "policy_residual_fraction_cluster_bootstrap_ci95_by_layer": {
+        "4": [
+          0.9350258388659226,
+          0.9724886600978162
+        ],
+        "8": [
+          0.9480957414109331,
+          0.977856348002858
+        ]
+      },
+      "base_frames": [
+        30,
+        60,
+        90
+      ]
+    },
+    {
+      "carrier": "WorldAgen",
+      "evidence": "worldagen_task_stratified",
+      "physical_windows": 30,
+      "unique_recorded_tasks": 6,
+      "native_nonzero_all_groups": true,
+      "cut_exact_zero_all_groups": true,
+      "native_group_means": [
+        0.25569813063263547,
+        0.09717202442695522,
+        0.26027061849682326,
+        0.2706068251920581,
+        0.5791925996425915,
+        0.16008654656210233
+      ],
+      "scope": "Descriptive semantic grouping of the existing 30-window WorldAgen probe; repeated frames remain clustered within physical episodes.",
+      "source": "runs/worldagen_goal_bus_task_groups_v0/summary.json"
+    },
+    {
+      "carrier": "WorldAgen",
+      "evidence": "worldagen_matched_edge_cut_control",
+      "physical_windows": 30,
+      "episodes": 10,
+      "native_world_relative_l2_mean": 0.2999131125612509,
+      "primary_bus_cut_world_relative_l2_max": 0.0,
+      "primary_bus_cut_policy_relative_l2_mean": 0.17595844904041993,
+      "policy_only_cut_world_relative_l2_mean": 0.2999131125612509,
+      "policy_only_cut_world_nonzero_all": true,
+      "policy_only_cut_policy_relative_l2_mean": 0.03218672626338432,
+      "scope": "Matched nine-edge control: primary cut removes goal-to-input-action carrier edges; control removes nine goal-to-future-action policy edges, keeping the carrier intact.",
+      "source": "runs/worldagen_goal_bus_edge_cut_controls_v0/summary.json"
+    },
+    {
+      "carrier": "AlphaBrain CosmosPolicy",
+      "evidence": "goal_vs_alternate_action_effect_size",
+      "physical_windows": 3,
+      "episodes": [
+        3,
+        6,
+        8
+      ],
+      "goal_world_effect_mean": 0.07137396559119225,
+      "alternate_action_world_effect_mean": 0.08714936471854647,
+      "goal_to_action_scale_ratio": 0.8189843474097406,
+      "scope": "Descriptive paired effect-size comparison at frame 30; not a three-episode significance test.",
+      "source": "runs/alphabrain_goal_vs_action_effect_v0/summary.json"
+    }
+  ],
+  "interpretation": "Across two released carriers, native goal swaps change world prediction and matched edge cuts restore exact or numerical invariance. WorldAgen now covers 270 legal-goal pairs over 30 physical windows and six recorded task groups (all native nonzero, all cut exact zero); AlphaBrain covers 21 windows plus independent seed-2/3 controls, five task-stratified groups, and a two-seed disjoint-episode learned goal-free-context comparator plus a 3-timepoint held-out check. A matched nine-edge policy-only cut leaves the WorldAgen world leak unchanged, while the carrier cut restores exact invariance. Action-to-world sensitivity is preserved in direct control on both carriers: WorldAgen cut mean 0.1655 over 30 windows and AlphaBrain mean 0.08715 over three windows. Held-out forecast cost is sampler-seed-dependent and secondary. The learned context comparator improves a bounded one-step held-out MSE but is not a full trained dynamics head. Official-preprocess 608-step AlphaBrain spatial control and matching 304-step LIBERO-Goal task0 control remain 0/1 for both native and cut; task-level clean success remains unestablished. A WorldAgen 21-window activation matrix further localizes mediation: replacing recorded-goal action-token states at middle layers moves swapped-goal world outputs toward the recorded-goal output in all windows while leaving policy residuals near one. The matched three-episode AlphaBrain action control gives a descriptive goal-to-alternate-action world-effect ratio of 0.819, showing goal effect size is on the scale of a real action intervention.",
+  "training_resource_audit": {
+    "source": "runs/alphabrain_training_resource_audit_v0/summary.json",
+    "base_inference_artifacts_present": true,
+    "official_trainer_loader_present": true,
+    "compatible_cosmos_policy_training_dataset_found": false,
+    "interpretation": "No full matched goal-free dynamics-head fine-tune is claimed; learned context remains a bounded forecast comparator."
+  },
+  "artifacts": {
+    "bounded_goal_free_context_figure": "reports/figures/goal_free_context_baseline.svg",
+    "alphabrain_matching_goal_task_pilot": "runs/alphabrain_cosmos_libero_goal_control_v0/aggregate_summary.json"
+  },
+  "core_task_boundary": {
+    "alphabrain_matching_goal_304_step": "0/3 native and 0/3 corrected fixed-action world cut successes across Goal-suite tasks 0-2; dataset_mix=libero_goal; official preprocessing and five-step sampler"
+  }
+}

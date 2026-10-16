@@ -1,0 +1,186 @@
+{
+  "status": "no_go_existing_saturation_alias_carrier_in_published_native_path",
+  "date": "2026-10-15",
+  "scope": "Read-only feasibility of transferring the existing DINO action-saturation alias mechanism to the published Dubins simulation controller; not a new mechanism or novelty claim.",
+  "official_repository": "https://github.com/CMU-IntentLab/latent_cbf",
+  "revision": "d644309db5d46d414ac70b18bed085b030ff9e5c",
+  "lead": "vendor/latent-safety/README.md identifies this repository as its successor.",
+  "conclusion": {
+    "native_policy_to_safety_filter_component_boundary_exists": true,
+    "native_nominal_input_is_clipped_before_filter_and_world_model_history": true,
+    "native_current_candidate_is_rolled_forward_by_world_model_for_acceptance": false,
+    "existing_dino_style_saturation_alias_reaches_native_filter": false,
+    "directly_reusable_released_checkpoint_bundle_identified": false,
+    "decision": "Exclude this published native path for the existing saturation-alias pilot. No model or environment run is justified by this source lead."
+  },
+  "exact_call_path": [
+    {
+      "path": "src/latent_cbf/controllers/factory.py",
+      "line_anchors": [
+        59,
+        60,
+        61,
+        62
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/factory.py#L59",
+      "finding": "The native factory instantiates DiffusionController and wraps that specific controller with FilteredDiffusionController when WM filtering is enabled."
+    },
+    {
+      "path": "src/latent_cbf/controllers/diffusion_controller.py",
+      "line_anchors": [
+        240,
+        242,
+        244,
+        245,
+        247,
+        253,
+        257,
+        258,
+        259
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L240",
+      "finding": "Diffusion outputs are converted to float32, denormalized and queued; the chosen scalar is then explicitly clipped to [-2,2] before compute_action returns."
+    },
+    {
+      "path": "src/latent_cbf/configs/presets.py",
+      "line_anchors": [
+        81,
+        85,
+        88,
+        109,
+        113,
+        114
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/configs/presets.py#L81",
+      "finding": "The diffusion preset fixes the physical environment max_angular_velocity to 2.0; diffusion_wm builds on the same diffusion configuration."
+    },
+    {
+      "path": "src/latent_cbf/controllers/diffusion_controller.py",
+      "line_anchors": [
+        426,
+        427,
+        429,
+        433,
+        437,
+        451,
+        452,
+        453,
+        454,
+        455,
+        456
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L426",
+      "finding": "The filter receives the already-clipped scalar, stores it in nominal-action history, reconstructs the latest RSSM latent from historical observations/actions, and divides the current scalar by ac_max for safety scoring. The current nominal is excluded from the history action slice [-H-1:-1]."
+    },
+    {
+      "path": "dreamerv3_torch/networks.py",
+      "line_anchors": [
+        127,
+        132,
+        133,
+        136,
+        143,
+        174,
+        195,
+        205,
+        206,
+        208,
+        216
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/dreamerv3_torch/networks.py#L127",
+      "finding": "RSSM observe performs posterior reconstruction with prior transitions for historical actions. This is a real learned dynamics path, but not a rollout of each current candidate for online CBF acceptance."
+    },
+    {
+      "path": "src/latent_cbf/controllers/diffusion_controller.py",
+      "line_anchors": [
+        409,
+        412,
+        459,
+        460,
+        461,
+        464,
+        465,
+        467,
+        468,
+        471,
+        472,
+        475,
+        476,
+        477,
+        479
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L409",
+      "finding": "CBF acceptance is a direct learned Q-critic call at one repeated latent for the normalized nominal plus 25 fixed grid actions. The nominal is accepted if its relative Q passes the threshold; otherwise a closest valid grid action is chosen and scaled by ac_max. No current-action img_step/imagine call occurs here."
+    },
+    {
+      "path": "src/latent_cbf/scripts/collect_trajs.py",
+      "line_anchors": [
+        138,
+        139,
+        140,
+        141,
+        142,
+        150,
+        153
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/scripts/collect_trajs.py#L138",
+      "finding": "Collection selects the filtered element of the (filtered,nominal) result and passes that action to env.step."
+    },
+    {
+      "path": "src/latent_cbf/dubins/dubins_env.py",
+      "line_anchors": [
+        80,
+        81,
+        82,
+        83,
+        84,
+        159,
+        160,
+        163,
+        172,
+        268,
+        276,
+        286,
+        319,
+        320
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/dubins/dubins_env.py#L80",
+      "finding": "The executor clips again to its action_space before both RK4 dynamics and reward, including the angular-velocity penalty. Under the official diffusion preset that range is also [-2,2]."
+    }
+  ],
+  "equivalence_reason": {
+    "operation": "For finite upstream nominal requests u and v with clip(u,-2,2)==clip(v,-2,2), the native DiffusionController supplies the identical clipped scalar to the filter.",
+    "implication": "The saturated out-of-range magnitude is discarded before both current safety scoring and stored nominal-action history. With otherwise matched state and randomness, the filter has no representation difference from this operation to distinguish.",
+    "remaining_scope": "This is a source-level exclusion of the existing saturation-alias operation in the official pipeline, not a numerical model experiment or a proof of general safety-filter robustness.",
+    "filter_boundary_caveat": "FilteredDiffusionController itself does not revalidate/clip arbitrary controller return values. An alternative controller or a post-clip writer could bypass the native provider contract, but such a writer/interface is not present in the inspected factory path; replacing it would be a separately introduced integration.",
+    "normalization_caveat": "The concrete ac_max/ac_min files are not published in the checked tree. The normalized range and fallback-grid physical bounds therefore cannot be verified numerically. This does not undo the pre-filter scalar clipping of native nominal requests. No changed environment bound or guessed normalization was used to invent an alias."
+  },
+  "resource_gate": {
+    "checked_published_surface": [
+      "README at the fixed revision",
+      "GitHub recursive tree, 152 entries, truncated=false",
+      "official GitHub releases",
+      "configs/paths.py and .gitignore"
+    ],
+    "official_releases_url": "https://github.com/CMU-IntentLab/latent_cbf/releases",
+    "tree_url": "https://api.github.com/repos/CMU-IntentLab/latent_cbf/git/trees/d644309db5d46d414ac70b18bed085b030ff9e5c?recursive=1",
+    "resource_review_by": "/root/reach_wall_analysis_review",
+    "finding": "No released .ckpt/.pt/.pth/.safetensors weights or concrete ob_norm/ac_norm files were identified; no GitHub releases were available. README lists generated training outputs and local paths, not a downloadable task bundle.",
+    "required_assets": [
+      "diffusion checkpoint and agent_config.yaml/exp_config.yaml/ob_norm.json/ac_norm.json",
+      "RSSM checkpoint",
+      "GP or no-GP safety critic/actor policy checkpoint"
+    ],
+    "not_inferred": "This does not claim that the authors lack private assets or that the model cannot be trained. Training and obtaining unreleased assets are outside this narrow check."
+  },
+  "activity": {
+    "model_calls": 0,
+    "environment_steps": 0,
+    "gpu_calls": 0,
+    "model_api_calls": 0,
+    "weight_downloads": 0,
+    "training_runs": 0,
+    "full_repository_clones": 0,
+    "network_access": "Official GitHub HTML/API and selected text source files only. Selected source copies cached under /tmp/latent_cbf_readonly_d644309; no source execution."
+  }
+}

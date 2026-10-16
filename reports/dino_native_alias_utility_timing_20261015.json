@@ -1,0 +1,437 @@
+{
+  "schema_version": 1,
+  "status": "completed_existing_trace_utility_timing_decomposition",
+  "source_paths": [
+    "runs/dino_native_alias_pair_20261015/summary.json",
+    "runs/dino_native_alias_pair_20261015/clean_identity_copy/trace.jsonl",
+    "runs/dino_native_alias_pair_20261015/canonical_request/trace.jsonl",
+    ".venv-a2world/lib/python3.11/site-packages/metaworld/envs/sawyer_reach_v3.py",
+    "scripts/pilot_dino_native_alias_pair.py"
+  ],
+  "environment_reward_contract": {
+    "implementation": "Observed MetaWorld sawyer_reach_v3.py with reward_function_version=v2, as required by the original runner.",
+    "reward": "10*tolerance(TCP-target distance, bounds=(0,.05), margin=norm(hand_init_pos-target), sigmoid=long_tail)",
+    "success": "TCP-target distance <=.05; every recorded successful control has reward exactly10.",
+    "fixed_exposure": "Both arms have99 policy controls plus the same one-control warmup; no success-based truncation. All decomposition sums exclude that shared warmup.",
+    "source_scope": "Source text and recorded trace checks only; no environment import, fresh reward recomputation, or source-file hash audit."
+  },
+  "per_arm": {
+    "clean_identity_copy": {
+      "full_episode": {
+        "controls": 99,
+        "first_policy_step": 1,
+        "last_policy_step": 99,
+        "reward_sum": 786.998547077179,
+        "mean_reward": 7.949480273506858,
+        "successful_controls": 24,
+        "mean_reach_distance": 0.09844522268630115
+      },
+      "first_success_policy_step": 56,
+      "final_success": false,
+      "ever_success": true,
+      "terminal_reward": 9.806612968444824,
+      "final_reach_distance": 0.06366712546756458,
+      "success_region": {
+        "controls": 24,
+        "first_policy_step": 56,
+        "last_policy_step": 93,
+        "reward_sum": 240.0,
+        "mean_reward": 10.0,
+        "successful_controls": 24,
+        "mean_reach_distance": 0.044529725155617796
+      },
+      "non_success_region": {
+        "controls": 75,
+        "first_policy_step": 1,
+        "last_policy_step": 99,
+        "reward_sum": 546.998547077179,
+        "mean_reward": 7.293313961029053,
+        "successful_controls": 0,
+        "mean_reach_distance": 0.11569818189611984
+      },
+      "before_own_first_success": {
+        "controls": 55,
+        "first_policy_step": 1,
+        "last_policy_step": 55,
+        "reward_sum": 347.5680727958679,
+        "mean_reward": 6.319419505379416,
+        "successful_controls": 0,
+        "mean_reach_distance": 0.13839842805613467
+      },
+      "from_own_first_success_inclusive": {
+        "controls": 44,
+        "first_policy_step": 56,
+        "last_policy_step": 99,
+        "reward_sum": 439.43047428131104,
+        "mean_reward": 9.98705623366616,
+        "successful_controls": 24,
+        "mean_reach_distance": 0.048503715974009265
+      }
+    },
+    "canonical_request": {
+      "full_episode": {
+        "controls": 99,
+        "first_policy_step": 1,
+        "last_policy_step": 99,
+        "reward_sum": 702.1983199119568,
+        "mean_reward": 7.092912322342998,
+        "successful_controls": 33,
+        "mean_reach_distance": 0.1129407618738519
+      },
+      "first_success_policy_step": 53,
+      "final_success": false,
+      "ever_success": true,
+      "terminal_reward": 9.983182907104492,
+      "final_reach_distance": 0.05399451826056728,
+      "success_region": {
+        "controls": 33,
+        "first_policy_step": 53,
+        "last_policy_step": 85,
+        "reward_sum": 330.0,
+        "mean_reward": 10.0,
+        "successful_controls": 33,
+        "mean_reach_distance": 0.0417028211633011
+      },
+      "non_success_region": {
+        "controls": 66,
+        "first_policy_step": 1,
+        "last_policy_step": 99,
+        "reward_sum": 372.1983199119568,
+        "mean_reward": 5.639368483514497,
+        "successful_controls": 0,
+        "mean_reach_distance": 0.1485597322291273
+      },
+      "before_own_first_success": {
+        "controls": 52,
+        "first_policy_step": 1,
+        "last_policy_step": 52,
+        "reward_sum": 232.57498025894165,
+        "mean_reward": 4.472595774210417,
+        "successful_controls": 0,
+        "mean_reach_distance": 0.17385454717796775
+      },
+      "from_own_first_success_inclusive": {
+        "controls": 47,
+        "first_policy_step": 53,
+        "last_policy_step": 99,
+        "reward_sum": 469.62333965301514,
+        "mean_reward": 9.991985950064151,
+        "successful_controls": 33,
+        "mean_reach_distance": 0.04554678664376626
+      }
+    }
+  },
+  "full_return_effect": {
+    "clean_return": 786.998547077179,
+    "canonical_return": 702.1983199119568,
+    "canonical_minus_clean_return": -84.80022716522217,
+    "relative_return_drop": 0.1077514405587664,
+    "shared_warmup_reward_excluded": 1.4143532514572144
+  },
+  "common_clock_windows": {
+    "rule": "1..min(first_success_policy_step)-1 and the remaining controls. Defined from observed hit times, not optimized to maximize the return contrast.",
+    "earliest_first_success_policy_step": 53,
+    "windows": {
+      "before_either_first_success": {
+        "start_policy_step": 1,
+        "end_policy_step": 52,
+        "arms": {
+          "clean_identity_copy": {
+            "controls": 52,
+            "first_policy_step": 1,
+            "last_policy_step": 52,
+            "reward_sum": 317.61874628067017,
+            "mean_reward": 6.108052813089811,
+            "successful_controls": 0,
+            "mean_reach_distance": 0.1433100194256333
+          },
+          "canonical_request": {
+            "controls": 52,
+            "first_policy_step": 1,
+            "last_policy_step": 52,
+            "reward_sum": 232.57498025894165,
+            "mean_reward": 4.472595774210417,
+            "successful_controls": 0,
+            "mean_reach_distance": 0.17385454717796775
+          }
+        },
+        "canonical_minus_clean_return": -85.04376602172852
+      },
+      "from_earliest_first_success_inclusive": {
+        "start_policy_step": 53,
+        "end_policy_step": 99,
+        "arms": {
+          "clean_identity_copy": {
+            "controls": 47,
+            "first_policy_step": 53,
+            "last_policy_step": 99,
+            "reward_sum": 469.3798007965088,
+            "mean_reward": 9.986804272266145,
+            "successful_controls": 24,
+            "mean_reach_distance": 0.048807575230018795
+          },
+          "canonical_request": {
+            "controls": 47,
+            "first_policy_step": 53,
+            "last_policy_step": 99,
+            "reward_sum": 469.62333965301514,
+            "mean_reward": 9.991985950064151,
+            "successful_controls": 33,
+            "mean_reach_distance": 0.04554678664376626
+          }
+        },
+        "canonical_minus_clean_return": 0.24353885650634766
+      }
+    }
+  },
+  "success_region_delta_decomposition": {
+    "success_region": 90.0,
+    "non_success_region": -174.80022716522217
+  },
+  "single_step_largest_loss": {
+    "minimum_canonical_minus_clean_reward": -4.4980788230896,
+    "ties": 1,
+    "tie_rule": "Report every exact minimum in policy-step order.",
+    "records": [
+      {
+        "policy_step": 35,
+        "environment_step": 36,
+        "canonical_minus_clean_reward": -4.4980788230896,
+        "clean_reward": 8.610467910766602,
+        "canonical_reward": 4.112389087677002,
+        "clean_success": false,
+        "canonical_success": false,
+        "clean_reach_distance": 0.08909706843337054,
+        "canonical_reach_distance": 0.16645167070007144,
+        "clean_planning_call": 3,
+        "canonical_planning_call": 3
+      }
+    ]
+  },
+  "planning_stage_groups": [
+    {
+      "clean_planning_call": 1,
+      "canonical_planning_call": 1,
+      "first_policy_step": 1,
+      "last_policy_step": 15,
+      "arms": {
+        "clean_identity_copy": {
+          "controls": 15,
+          "first_policy_step": 1,
+          "last_policy_step": 15,
+          "reward_sum": 31.041362047195435,
+          "mean_reward": 2.0694241364796957,
+          "successful_controls": 0,
+          "mean_reach_distance": 0.2458332124413115
+        },
+        "canonical_request": {
+          "controls": 15,
+          "first_policy_step": 1,
+          "last_policy_step": 15,
+          "reward_sum": 30.07258892059326,
+          "mean_reward": 2.0048392613728843,
+          "successful_controls": 0,
+          "mean_reach_distance": 0.24864568181306637
+        }
+      },
+      "canonical_minus_clean_return": -0.9687731266021729
+    },
+    {
+      "clean_planning_call": 2,
+      "canonical_planning_call": 2,
+      "first_policy_step": 16,
+      "last_policy_step": 30,
+      "arms": {
+        "clean_identity_copy": {
+          "controls": 15,
+          "first_policy_step": 16,
+          "last_policy_step": 30,
+          "reward_sum": 81.93547558784485,
+          "mean_reward": 5.462365039189657,
+          "successful_controls": 0,
+          "mean_reach_distance": 0.14205138463209457
+        },
+        "canonical_request": {
+          "controls": 15,
+          "first_policy_step": 16,
+          "last_policy_step": 30,
+          "reward_sum": 56.06817603111267,
+          "mean_reward": 3.737878402074178,
+          "successful_controls": 0,
+          "mean_reach_distance": 0.17678261928043806
+        }
+      },
+      "canonical_minus_clean_return": -25.867299556732178
+    },
+    {
+      "clean_planning_call": 3,
+      "canonical_planning_call": 3,
+      "first_policy_step": 31,
+      "last_policy_step": 45,
+      "arms": {
+        "clean_identity_copy": {
+          "controls": 15,
+          "first_policy_step": 31,
+          "last_policy_step": 45,
+          "reward_sum": 135.79395484924316,
+          "mean_reward": 9.052930323282878,
+          "successful_controls": 0,
+          "mean_reach_distance": 0.0797749163614631
+        },
+        "canonical_request": {
+          "controls": 15,
+          "first_policy_step": 31,
+          "last_policy_step": 45,
+          "reward_sum": 81.75386500358582,
+          "mean_reward": 5.450257666905721,
+          "successful_controls": 0,
+          "mean_reach_distance": 0.14224585052019417
+        }
+      },
+      "canonical_minus_clean_return": -54.04008984565735
+    },
+    {
+      "clean_planning_call": 4,
+      "canonical_planning_call": 4,
+      "first_policy_step": 46,
+      "last_policy_step": 60,
+      "arms": {
+        "clean_identity_copy": {
+          "controls": 15,
+          "first_policy_step": 46,
+          "last_policy_step": 60,
+          "reward_sum": 148.79728031158447,
+          "mean_reward": 9.919818687438966,
+          "successful_controls": 5,
+          "mean_reach_distance": 0.055955664376307813
+        },
+        "canonical_request": {
+          "controls": 15,
+          "first_policy_step": 46,
+          "last_policy_step": 60,
+          "reward_sum": 144.6803503036499,
+          "mean_reward": 9.645356686909993,
+          "successful_controls": 8,
+          "mean_reach_distance": 0.05790493391755035
+        }
+      },
+      "canonical_minus_clean_return": -4.11693000793457
+    },
+    {
+      "clean_planning_call": 5,
+      "canonical_planning_call": 5,
+      "first_policy_step": 61,
+      "last_policy_step": 75,
+      "arms": {
+        "clean_identity_copy": {
+          "controls": 15,
+          "first_policy_step": 61,
+          "last_policy_step": 75,
+          "reward_sum": 149.97460556030273,
+          "mean_reward": 9.998307037353516,
+          "successful_controls": 1,
+          "mean_reach_distance": 0.051108383515079576
+        },
+        "canonical_request": {
+          "controls": 15,
+          "first_policy_step": 61,
+          "last_policy_step": 75,
+          "reward_sum": 150.0,
+          "mean_reward": 10.0,
+          "successful_controls": 15,
+          "mean_reach_distance": 0.03863004428283364
+        }
+      },
+      "canonical_minus_clean_return": 0.025394439697265625
+    },
+    {
+      "clean_planning_call": 6,
+      "canonical_planning_call": 6,
+      "first_policy_step": 76,
+      "last_policy_step": 90,
+      "arms": {
+        "clean_identity_copy": {
+          "controls": 15,
+          "first_policy_step": 76,
+          "last_policy_step": 90,
+          "reward_sum": 150.0,
+          "mean_reward": 10.0,
+          "successful_controls": 15,
+          "mean_reach_distance": 0.04311738314264344
+        },
+        "canonical_request": {
+          "controls": 15,
+          "first_policy_step": 76,
+          "last_policy_step": 90,
+          "reward_sum": 149.9694309234619,
+          "mean_reward": 9.997962061564127,
+          "successful_controls": 10,
+          "mean_reach_distance": 0.04768970276366555
+        }
+      },
+      "canonical_minus_clean_return": -0.030569076538085938
+    },
+    {
+      "clean_planning_call": 7,
+      "canonical_planning_call": 7,
+      "first_policy_step": 91,
+      "last_policy_step": 99,
+      "arms": {
+        "clean_identity_copy": {
+          "controls": 9,
+          "first_policy_step": 91,
+          "last_policy_step": 99,
+          "reward_sum": 89.4558687210083,
+          "mean_reward": 9.939540969000923,
+          "successful_controls": 3,
+          "mean_reach_distance": 0.05316254210114606
+        },
+        "canonical_request": {
+          "controls": 9,
+          "first_policy_step": 91,
+          "last_policy_step": 99,
+          "reward_sum": 89.65390872955322,
+          "mean_reward": 9.961545414394802,
+          "successful_controls": 0,
+          "mean_reach_distance": 0.055850326316124
+        }
+      },
+      "canonical_minus_clean_return": 0.19804000854492188
+    }
+  ],
+  "identity_checks": {
+    "absolute_tolerance": 1e-09,
+    "all_passed": true,
+    "checks": {
+      "common_window_deltas_sum_to_full_delta": true,
+      "region_deltas_sum_to_full_delta": true,
+      "pointwise_deltas_sum_to_full_delta": true,
+      "planning_stage_deltas_sum_to_full_delta": true,
+      "clean_identity_copy_region_sum": true,
+      "clean_identity_copy_own_hit_segment_sum": true,
+      "canonical_request_region_sum": true,
+      "canonical_request_own_hit_segment_sum": true
+    }
+  },
+  "interpretation": [
+    "The recorded native dense-return loss remains valid; fixed exposure rules out unequal episode lengths as its source.",
+    "The common-clock decomposition localizes the observed net loss to the interval before either arm first succeeds; the remaining interval has a small positive canonical-minus-clean return.",
+    "Canonicalization gains successful-region reward through more successful controls, while losing more reward outside the success region. This is not reduced successful occupancy.",
+    "Earlier first attainment, successful-control count and final distance are distinct utilities from integrated dense return; neither set should be suppressed or substituted for the registered primary endpoint."
+  ],
+  "limits": [
+    "Post hoc descriptive decomposition of one development physical root. The99 steps and7 planning stages are correlated observations, not independent experimental samples; no significance test or confidence interval.",
+    "Own-first-success segments and success/non-success subsets are endogenous to each arm and have unequal membership/length. Their differences are accounting identities, not causal effects within comparable state populations.",
+    "Common-clock contrasts also compare downstream trajectories with different states/actions. Timing localization is not identification of a causal mediator or a same-state candidate-ranking effect.",
+    "No prediction-error mediation, full-horizon objective attribution, goal-attainment harm, generalization or novel defense is established. Existing return/recovery evidence and paper-level No-Go are unchanged.",
+    "Successful occupancy is reported as discrete observed control counts, not independently measured continuous dwell time."
+  ],
+  "activity": {
+    "model_calls": 0,
+    "environment_steps": 0,
+    "api_requests": 0,
+    "new_trajectories": 0,
+    "hashes_recomputed": 0
+  },
+  "reproduction": "/home/xhj/miniconda3/bin/python scripts/analyze_dino_native_alias_utility_timing.py --verify-only"
+}

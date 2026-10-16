@@ -1,0 +1,652 @@
+{
+  "status": "completed_affine_boundary_numerical_probe",
+  "started_at_utc": "2026-10-15T23:48:04.698992+00:00",
+  "protocol": "configs/jepa_affine_query_boundary_20261016.json",
+  "scope": "Numerical qualification of real-encoder and native joint-predictor affine constraints; not a GRASP run, Clean task test, attack or defense experiment.",
+  "prior_inspection_disclosure": "Before this protocol, the root agent performed one read-only checkpoint deserialization to inspect keys and shapes. No model inference from that inspection is claimed. This protocol is frozen before this probe's inference outputs.",
+  "activity": {
+    "checkpoint_loads": 2,
+    "encode_calls": 3,
+    "visual_encoder_forwards": 3,
+    "proprio_encoder_forwards": 3,
+    "unroll_calls": 3,
+    "predictor_forwards": 9,
+    "environment_steps": 0,
+    "environment_resets": 0,
+    "planner_calls": 0,
+    "gradient_steps": 0,
+    "training_updates": 0,
+    "model_api_calls": 0,
+    "network_attempts": 0
+  },
+  "completed_calls": {
+    "encode_calls": 3,
+    "unroll_calls": 3,
+    "visual_encoder_forwards": 3,
+    "proprio_encoder_forwards": 3,
+    "predictor_forwards": 9
+  },
+  "checkpoint_files": [
+    {
+      "path": "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "bytes": 88283115
+    },
+    {
+      "path": "/home/xhj/WM_Security/models/JEPA_WM/mw_jepa-wm.pth.tar",
+      "bytes": 211687551
+    }
+  ],
+  "roots": [
+    {
+      "seed": 1,
+      "source": "runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/setup.npz",
+      "status": "completed",
+      "hybrid_label": "native_style_hybrid_not_actual_GRASP_execution",
+      "real": {
+        "encoder": {
+          "count": 512,
+          "max_abs": 1.2339193870003484e-06,
+          "rms": 4.3458428652910527e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        },
+        "predictor": {
+          "count": 512,
+          "max_abs": 0.002173930336823019,
+          "rms": 0.0015553900863587544,
+          "above_tolerance": 512,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 512
+        },
+        "union": {
+          "count": 512,
+          "max_abs": 1.2339193870003484e-06,
+          "rms": 4.3458428652910527e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        }
+      },
+      "rollout": {
+        "encoder": {
+          "count": 2048,
+          "max_abs": 0.007137435601201947,
+          "rms": 0.003010562644262224,
+          "above_tolerance": 1535,
+          "fraction_above_tolerance": 0.74951171875,
+          "at_or_above_tolerance": 1535
+        },
+        "predictor": {
+          "count": 2048,
+          "max_abs": 0.0005097886544508789,
+          "rms": 0.0002412182483964088,
+          "above_tolerance": 512,
+          "fraction_above_tolerance": 0.25,
+          "at_or_above_tolerance": 512
+        },
+        "union": {
+          "count": 2048,
+          "max_abs": 1.2339193870003484e-06,
+          "rms": 2.17353138731676e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        }
+      },
+      "virtual": {
+        "encoder": {
+          "count": 256,
+          "max_abs": 0.027258345302961118,
+          "rms": 0.010354270925299676,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        },
+        "predictor": {
+          "count": 256,
+          "max_abs": 0.0005522834450060923,
+          "rms": 0.0004830699568272178,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        },
+        "union": {
+          "count": 256,
+          "max_abs": 0.0005522834450060923,
+          "rms": 0.00047334915372772475,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        }
+      },
+      "native_style_hybrid": {
+        "encoder": {
+          "count": 1536,
+          "max_abs": 0.007137435601201947,
+          "rms": 0.0034762982970964968,
+          "above_tolerance": 1535,
+          "fraction_above_tolerance": 0.9993489583333334,
+          "at_or_above_tolerance": 1535
+        },
+        "predictor": {
+          "count": 1536,
+          "max_abs": 0.00051155965265053,
+          "rms": 0.00048694814119738285,
+          "above_tolerance": 1536,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 1536
+        },
+        "union": {
+          "count": 1536,
+          "max_abs": 0.00051155965265053,
+          "rms": 0.00047751051243996205,
+          "above_tolerance": 1535,
+          "fraction_above_tolerance": 0.9993489583333334,
+          "at_or_above_tolerance": 1535
+        }
+      },
+      "feature_shapes": {
+        "real_visual": [
+          2,
+          1,
+          1,
+          16,
+          16,
+          384
+        ],
+        "real_proprio": [
+          2,
+          1,
+          256,
+          16
+        ],
+        "rollout_visual": [
+          4,
+          2,
+          1,
+          16,
+          16,
+          384
+        ],
+        "rollout_proprio": [
+          4,
+          2,
+          256,
+          16
+        ]
+      }
+    },
+    {
+      "seed": 2,
+      "source": "runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/setup.npz",
+      "status": "completed",
+      "hybrid_label": "native_style_hybrid_not_actual_GRASP_execution",
+      "real": {
+        "encoder": {
+          "count": 512,
+          "max_abs": 1.1660996195317352e-06,
+          "rms": 4.1868455058512727e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        },
+        "predictor": {
+          "count": 512,
+          "max_abs": 0.0016027183698914113,
+          "rms": 0.001162441474116218,
+          "above_tolerance": 512,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 512
+        },
+        "union": {
+          "count": 512,
+          "max_abs": 1.1660996195317352e-06,
+          "rms": 4.1868455058512727e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        }
+      },
+      "rollout": {
+        "encoder": {
+          "count": 2048,
+          "max_abs": 0.007481043915166907,
+          "rms": 0.0030949101843090942,
+          "above_tolerance": 1533,
+          "fraction_above_tolerance": 0.74853515625,
+          "at_or_above_tolerance": 1533
+        },
+        "predictor": {
+          "count": 2048,
+          "max_abs": 0.0005072923802792949,
+          "rms": 0.0002409329888314384,
+          "above_tolerance": 512,
+          "fraction_above_tolerance": 0.25,
+          "at_or_above_tolerance": 512
+        },
+        "union": {
+          "count": 2048,
+          "max_abs": 1.1652663070016445e-06,
+          "rms": 2.156676622294687e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        }
+      },
+      "virtual": {
+        "encoder": {
+          "count": 256,
+          "max_abs": 0.02849050358623595,
+          "rms": 0.010099470706617885,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        },
+        "predictor": {
+          "count": 256,
+          "max_abs": 0.0005411930829789344,
+          "rms": 0.0004812107426353334,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        },
+        "union": {
+          "count": 256,
+          "max_abs": 0.0005411930829789344,
+          "rms": 0.0004747645703998927,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        }
+      },
+      "native_style_hybrid": {
+        "encoder": {
+          "count": 1536,
+          "max_abs": 0.007481043915166907,
+          "rms": 0.003573694447382667,
+          "above_tolerance": 1533,
+          "fraction_above_tolerance": 0.998046875,
+          "at_or_above_tolerance": 1533
+        },
+        "predictor": {
+          "count": 1536,
+          "max_abs": 0.0005121953199105048,
+          "rms": 0.00048777164191311556,
+          "above_tolerance": 1536,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 1536
+        },
+        "union": {
+          "count": 1536,
+          "max_abs": 0.0005121953199105048,
+          "rms": 0.000474667134501051,
+          "above_tolerance": 1533,
+          "fraction_above_tolerance": 0.998046875,
+          "at_or_above_tolerance": 1533
+        }
+      },
+      "feature_shapes": {
+        "real_visual": [
+          2,
+          1,
+          1,
+          16,
+          16,
+          384
+        ],
+        "real_proprio": [
+          2,
+          1,
+          256,
+          16
+        ],
+        "rollout_visual": [
+          4,
+          2,
+          1,
+          16,
+          16,
+          384
+        ],
+        "rollout_proprio": [
+          4,
+          2,
+          256,
+          16
+        ]
+      }
+    },
+    {
+      "seed": 3,
+      "source": "runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/setup.npz",
+      "status": "completed",
+      "hybrid_label": "native_style_hybrid_not_actual_GRASP_execution",
+      "real": {
+        "encoder": {
+          "count": 512,
+          "max_abs": 1.6808409530888468e-06,
+          "rms": 4.3712426921553813e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        },
+        "predictor": {
+          "count": 512,
+          "max_abs": 0.0020399199259492897,
+          "rms": 0.0014627318719976296,
+          "above_tolerance": 512,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 512
+        },
+        "union": {
+          "count": 512,
+          "max_abs": 1.6808409530888468e-06,
+          "rms": 4.3712426921553813e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        }
+      },
+      "rollout": {
+        "encoder": {
+          "count": 2048,
+          "max_abs": 0.007464843047561676,
+          "rms": 0.0028400282599095154,
+          "above_tolerance": 1534,
+          "fraction_above_tolerance": 0.7490234375,
+          "at_or_above_tolerance": 1534
+        },
+        "predictor": {
+          "count": 2048,
+          "max_abs": 0.000509804088552264,
+          "rms": 0.00024170766676894336,
+          "above_tolerance": 512,
+          "fraction_above_tolerance": 0.25,
+          "at_or_above_tolerance": 512
+        },
+        "union": {
+          "count": 2048,
+          "max_abs": 1.6808409530888468e-06,
+          "rms": 2.1393271649897884e-07,
+          "above_tolerance": 0,
+          "fraction_above_tolerance": 0.0,
+          "at_or_above_tolerance": 0
+        }
+      },
+      "virtual": {
+        "encoder": {
+          "count": 256,
+          "max_abs": 0.028604240080580823,
+          "rms": 0.010591507432584106,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        },
+        "predictor": {
+          "count": 256,
+          "max_abs": 0.000551629981293566,
+          "rms": 0.00048338263795042017,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        },
+        "union": {
+          "count": 256,
+          "max_abs": 0.000551629981293566,
+          "rms": 0.00047879372851572565,
+          "above_tolerance": 256,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 256
+        }
+      },
+      "native_style_hybrid": {
+        "encoder": {
+          "count": 1536,
+          "max_abs": 0.007464843047561676,
+          "rms": 0.0032793821514283082,
+          "above_tolerance": 1534,
+          "fraction_above_tolerance": 0.9986979166666666,
+          "at_or_above_tolerance": 1534
+        },
+        "predictor": {
+          "count": 1536,
+          "max_abs": 0.0005121623748211455,
+          "rms": 0.0004875682054326806,
+          "above_tolerance": 1536,
+          "fraction_above_tolerance": 1.0,
+          "at_or_above_tolerance": 1536
+        },
+        "union": {
+          "count": 1536,
+          "max_abs": 0.0005121623748211455,
+          "rms": 0.00047150193324533283,
+          "above_tolerance": 1534,
+          "fraction_above_tolerance": 0.9986979166666666,
+          "at_or_above_tolerance": 1534
+        }
+      },
+      "feature_shapes": {
+        "real_visual": [
+          2,
+          1,
+          1,
+          16,
+          16,
+          384
+        ],
+        "real_proprio": [
+          2,
+          1,
+          256,
+          16
+        ],
+        "rollout_visual": [
+          4,
+          2,
+          1,
+          16,
+          16,
+          384
+        ],
+        "rollout_proprio": [
+          4,
+          2,
+          256,
+          16
+        ]
+      }
+    }
+  ],
+  "qualification_gate": {
+    "real_union_max": 1.6808409530888468e-06,
+    "rollout_union_max": 1.6808409530888468e-06,
+    "virtual_patches_above_tolerance": 768,
+    "virtual_fraction_above_tolerance": 1.0,
+    "native_style_hybrid_patches_above_tolerance": 4602,
+    "native_style_hybrid_fraction_above_tolerance": 0.9986979166666666,
+    "real_passed": true,
+    "rollout_passed": true,
+    "virtual_signal_present": true,
+    "native_style_hybrid_signal_present": true,
+    "synthetic_consumer_signal_present": true,
+    "passed": true
+  },
+  "actual_utility": null,
+  "attack_success": null,
+  "native_grasp_queries": 0,
+  "elapsed_seconds": 7.6791234239935875,
+  "runtime": {
+    "python": "3.11.13 (main, Sep 18 2025, 19:46:39) [Clang 20.1.4 ]",
+    "executable": "/home/xhj/WM_Security/.venv-jepa-native/bin/python",
+    "torch": "2.6.0+cu124",
+    "numpy": "1.26.4",
+    "threads": 4,
+    "device": "cpu"
+  },
+  "strict_load": {
+    "strict_loads": [
+      {
+        "class": "DinoVisionTransformer",
+        "loaded_tensors": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "VisionTransformerAdaLN",
+        "loaded_tensors": 92,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      }
+    ],
+    "parameters": 39687136,
+    "all_parameters_float32": true,
+    "model_action_dimension": 20,
+    "model_forward_calls": 0,
+    "normalization": {
+      "action_dim": 4,
+      "proprio_dim": 4,
+      "state_dim": 39,
+      "action_mean": [
+        0.005723577458411455,
+        0.15735651552677155,
+        -0.1396457850933075,
+        0.1998193860054016
+      ],
+      "action_std": [
+        0.7359239459037781,
+        0.73408043384552,
+        0.7182977199554443,
+        0.743205726146698
+      ],
+      "proprio_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929
+      ],
+      "proprio_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074
+      ],
+      "state_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929,
+        0.008108077570796013,
+        0.6766929626464844,
+        0.09434457868337631,
+        0.3859776258468628,
+        -0.050619181245565414,
+        0.03434790298342705,
+        0.4750967025756836,
+        0.017891764640808105,
+        0.04413251578807831,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        -0.0029707495123147964,
+        0.6529995203018188,
+        0.1545131504535675,
+        0.6445063948631287,
+        0.008061803877353668,
+        0.6762475371360779,
+        0.09425390511751175,
+        0.3860057294368744,
+        -0.050728388130664825,
+        0.03427530452609062,
+        0.4753906726837158,
+        0.017830422148108482,
+        0.04414031654596329,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        0.015675902366638184,
+        0.7268462181091309,
+        0.12401046603918076
+      ],
+      "state_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074,
+        0.1050795242190361,
+        0.10192868858575821,
+        0.0880839079618454,
+        0.4468156695365906,
+        0.18397848308086395,
+        0.14911998808383942,
+        0.47220379114151,
+        0.06688503921031952,
+        0.16022595763206482,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.10383506864309311,
+        0.11242222785949707,
+        0.07946359366178513,
+        0.2625894844532013,
+        0.10486840456724167,
+        0.10173390805721283,
+        0.08810629695653915,
+        0.4467460811138153,
+        0.18375301361083984,
+        0.14870719611644745,
+        0.4721624553203583,
+        0.0666341558098793,
+        0.16022934019565582,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.14182789623737335,
+        0.12113576382398605,
+        0.09631838649511337
+      ]
+    }
+  },
+  "native_contract": {
+    "predictor": "AdaLN",
+    "normalize_reps": false,
+    "proprio_mode": "predict_proprio",
+    "grid_size": 16,
+    "action_dim": 20,
+    "proprio_encoding": "feature"
+  },
+  "constraints": {
+    "encoder": {
+      "normal_l2": 1.0,
+      "null_absolute": 8.59777956785638e-15,
+      "null_relative": 7.813762302589389e-16,
+      "largest_singular_value": 11.003379978691155,
+      "smallest_singular_value": 2.9061309624280987e-16
+    },
+    "predictor": {
+      "normal_l2": 1.0,
+      "null_absolute": 3.275123027735048e-15,
+      "null_relative": 3.6659361123217154e-16,
+      "largest_singular_value": 8.933933727668927,
+      "smallest_singular_value": 1.92845450081904e-18
+    },
+    "arithmetic": "float64",
+    "residual_shape_rule": "batch,time,patch",
+    "tolerance": 1e-05
+  },
+  "interpretation": "Passing only establishes sampled numerical coverage of complete paired joint encoder/rollout outputs and sensitivity to at least one synthetic consumer construction. It does not prove coverage for every possible input or caller, native planner competence, harm, or novelty."
+}

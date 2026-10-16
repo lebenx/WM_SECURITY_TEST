@@ -1,0 +1,2763 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-15T01:05:40.971085+00:00",
+  "status": "completed_read_only_resource_inventory",
+  "repository_root": "/home/xhj/WM_Security",
+  "path_convention": "Relative paths resolve against repository_root; one external DINOv2 cache path is absolute.",
+  "purpose": "Practical map of reusable models, inference paths, task evidence and integration limits. This is not a new experiment or a mandate to finish every panel.",
+  "evidence_policy": [
+    "Existing correct reports and local metadata are authoritative. Historical raw outputs remain preserved but are not automatically current claims.",
+    "Presence and sizes are checked now; listed SHA256 values are explicitly attributed to earlier provenance and were not rehashed.",
+    "No large weights were deserialized, no environments or model calls ran, no API endpoint was probed.",
+    "No credential-bearing configuration section was read or copied. API keys and provider secrets are excluded.",
+    "Partial, OOM and user-stopped episodes are not task failures.",
+    "Validated native decision use, extra planner paths and Goal-only-in-score paths are distinguished."
+  ],
+  "models": [
+    {
+      "id": "worldagen",
+      "name": "WorldAgen released LIBERO-38",
+      "code_paths": [
+        "vendor/WorldAgen",
+        "scripts/pilot_worldagen_libero_closed_loop.py"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/WorldAgen/libero-38.pth",
+          "exists": true,
+          "bytes": 1490125586,
+          "recorded_sha256": "028a32f4b91809fc84c3133031d07300ce04876c716ef8932c019e1bfcb8e770",
+          "sha_source": "models/WorldAgen/provenance.json",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/WorldAgen/mae_pretrain_vit_base.pth",
+          "exists": true,
+          "bytes": 343249461,
+          "recorded_sha256": "aec5f0b68e5f3193a00b07bc65a37440db549c15b36b8bea242606cc40c4bc5d",
+          "sha_source": "models/WorldAgen/mae_pretrain_vit_base.pth.provenance.json",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/WorldAgen/ViT-B-32.pt",
+          "exists": true,
+          "bytes": 353976522,
+          "recorded_sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af",
+          "sha_source": "models/WorldAgen/ViT-B-32.pt.provenance.json",
+          "hash_recomputed_in_this_archive": false
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "observations": "Primary and wrist RGB; Euler xyz proprio and previous binary gripper command",
+        "actions": "Three fp16-representable low-level actions per chunk; two-context wrapper history",
+        "goal": "Text is a model input; direct masking does not establish total Goal isolation",
+        "target_codec": "Raw camera orientation, released CLIP image_processor, native patchify without extra patch whitening"
+      },
+      "forecast_used_by_native_decisions": {
+        "direct_forecast_to_frozen_policy": false,
+        "path": "Native wrapper step_agent emits actions; step_world_model records executed action history and predicts images, which frozen control does not consume. TTT is a separate shared-parameter path; local LIBERO trainer is a reconstruction, not evidence of an online writable Goal branch.",
+        "added_planners": "Historical CLIP forecast rankers are additional planners with retired codec/action protocols. Proposed corrected image-goal planner has no runner/config and was not executed."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/worldagen_native_task_gate_matched30_v1/summary.json",
+          "result": "224 camera: 19/30 successes; original >=21 gate failed"
+        },
+        {
+          "source": "runs/worldagen_native_task_gate_camera128_matched30_v2/summary.json",
+          "result": "128 camera: 21/30 successes; distinguish this input configuration from 224 cache"
+        },
+        {
+          "source": "runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json",
+          "result": "One source episode, six correlated physical transitions; corrected prediction-only evidence, not task harm"
+        }
+      ],
+      "known_integration_failures": [
+        "Old rotated-image/patch-whitened planner evidence remains historical.",
+        "Native official shell has incompatible constructor/gripper options; present adapter reuses released wrapper rather than claiming full untouched official CLI.",
+        "Physical prefix replay does not itself restore wrapper history.",
+        "No native frozen-policy forecast-selection route; do not infer action damage from corrected forecast error."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_worldagen_native_task_gate.py",
+        "scripts/pilot_worldagen_prediction_contract.py",
+        "scripts/analyze_worldagen_prediction_contract.py",
+        "scripts/run_worldagen_low_memory.py",
+        "scripts/worldagen_unused_visual.py"
+      ],
+      "caches": [
+        "runs/worldagen_native_task_gate_confirm_v1",
+        "runs/worldagen_prediction_contract_cpu_v2",
+        "runs/worldagen_cached_metadata_aggregate_swap_v2",
+        "data/worldagen_goal_probe",
+        "data/worldagen_goal_probe_extra"
+      ],
+      "limitations": [
+        "Corrected cache roots 0/30/90 share one successful task0/init0 episode; existing three-step task utilities all tie at zero.",
+        "Task0 cached adaptation Frozen1/3, no-lang adaptation3/3, swapped adaptation3/3 does not establish damage; see current report and aggregate.",
+        "Do not resume platform-restricted adaptive metadata work through another route.",
+        "Source endpoint image would be an extra image-goal privilege; no independent expert target is claimed."
+      ],
+      "recommended_reuse_status": "Reuse current corrected cache and native task traces for analysis; new execution only if a minimum decisive hypothesis requires it."
+    },
+    {
+      "id": "alphabrain",
+      "name": "AlphaBrain CosmosPolicy LIBERO-Goal checkpoint",
+      "code_paths": [
+        "vendor/AlphaBrain",
+        "scripts/alphabrain_checkpoint_inference.py"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/AlphaBrain/cosmos_policy_libero/model.safetensors",
+          "exists": true,
+          "bytes": 4166715188,
+          "recorded_sha256": "eb42e370072464037744075c8b72ebbb7b0a8b0533575589942c0f598268eb0b",
+          "sha_source": "runs/alphabrain_native_task_gate_corrected_v1/summary.json#provenance",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/AlphaBrain/Cosmos-Predict2-2B-Video2World/vae/diffusion_pytorch_model.safetensors",
+          "exists": true,
+          "bytes": 507591892
+        },
+        {
+          "path": "models/AlphaBrain/cosmos_policy_libero/libero_t5_embeddings.pkl",
+          "exists": true,
+          "bytes": 41957938
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "observations": "Two images and normalized gripper2+EEF xyz3+quaternion4",
+        "action_forecast": "Joint denoising predicts action and future image/state slots",
+        "goal": "T5 task text conditions joint generation; not a demonstrated isolated forecast-only external interface",
+        "codec": "Corrected adapter loads checkpoint embedded native WanVAE including all three normalization buffers; camera flip/JPEG/crop and action codec are recorded in provenance"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Joint future/action slots share native DiT computation. This is not an independently validated forecast score consuming loop, and a fixed-action readout is a different call.",
+        "added_planners": "Historical future-image CLIP ranking is explicitly an added planner.",
+        "classification": "Joint computational path; isolated forecast-to-action causal contribution is unproved."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/alphabrain_native_task_gate_corrected_v1/summary.json",
+          "result": "Corrected adapter: 1/1 native success, LIBERO-Goal task0/init0, maximum300 controls; one-example capability only"
+        }
+      ],
+      "known_integration_failures": [
+        "Earlier stale/incorrect VAE, preprocessing and action adapters yielded failed pilots; do not merge them with corrected result.",
+        "runs/alphabrain_native_task_gate_corrected_3x3_v1/summary.json: CUDA OOM before any result; not 0/9 task success.",
+        "Repository name all4suite does not prove training on four suites; pinned model card says LIBERO-Goal."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_alphabrain_native_task_gate.py",
+        "scripts/alphabrain_checkpoint_inference.py"
+      ],
+      "caches": [
+        "runs/alphabrain_native_task_gate_corrected_v1",
+        "runs/alphabrain_native_task_gate_corrected_3x3_v1",
+        "runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1",
+        "runs/alphabrain_forecast_planner_replicates_v1",
+        "runs/alphabrain_training_resource_audit_v0"
+      ],
+      "limitations": [
+        "No current multi-instance corrected Clean health panel.",
+        "Old physical slot perturbations do not establish forecast accuracy or task harm.",
+        "Do not substitute NVIDIA CosmosPolicy checkpoint/results for this checkpoint."
+      ],
+      "recommended_reuse_status": "Retain corrected codec and single successful trace; no automatic expansion.",
+      "latest_cosmos_action_entry_diagnostic": {
+        "report": "reports/cosmos_action_text_route_decision_20261015.json",
+        "summary": "runs/cosmos_action_text_route_gate_20261015/summary.json",
+        "protocol": "configs/cosmos_action_text_route_gate_20261015.json",
+        "review": "reports/cosmos_action_text_route_review_20261015.json",
+        "status": "completed_calibrated_local_direct_entry_gate_failed",
+        "selection_by_condition": {
+          "clean": 1,
+          "swap": 0,
+          "clean_action_swap": 1,
+          "swap_action_clean": 0,
+          "clean_proprio_swap": 1,
+          "swap_proprio_clean": 1
+        },
+        "calibration_checks_passed": 20,
+        "activity": {
+          "checkpoint_loads": 2,
+          "future_sampler_calls": 14,
+          "value_sampler_calls": 14,
+          "noise_calls": 28,
+          "policy_sampler_calls": 0,
+          "vae_encodes": 0,
+          "vae_decodes": 0,
+          "environment_resets": 0,
+          "environment_steps": 0,
+          "model_api_calls": 0,
+          "network_requests": 0,
+          "training_updates": 0
+        },
+        "execution": {
+          "session_id": 25831,
+          "exit_code": 0,
+          "terminal_chunk_id": "ffd4ed",
+          "elapsed_seconds": 7.396065242006443,
+          "peak_cuda_reserved_bytes": 4292870144
+        },
+        "finding": "Direct action-position text replacement neither induces the bad choice from Clean nor repairs Swap. The equal-token proprio repair does restore the good choice. The fixed bidirectional action-position selectivity gate fails.",
+        "limits": "One known post-hoc root; actual utilities come from previously executed two branches. Internal source routing, not full Bus-Cut, deployed access, independent defense or population estimate. Other-token-to-action paths remain untested."
+      }
+    },
+    {
+      "id": "cosmos_policy",
+      "name": "NVIDIA Cosmos Policy LIBERO Predict2-2B",
+      "code_paths": [
+        "scripts/cosmos_policy_torch_compat.py",
+        "scripts/cosmos_policy_codecs.py",
+        "scripts/cosmos_policy_wan_vae.py",
+        "vendor/AlphaBrain"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "exists": true,
+          "bytes": 3913017345,
+          "recorded_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "sha_source": "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json#provenance",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "exists": true,
+          "bytes": 507609880,
+          "recorded_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "sha_source": "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json#provenance",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/CosmosPolicy/libero_t5_embeddings.pkl",
+          "exists": true,
+          "bytes": 41957938
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "observations": "Official two-camera/proprio codecs; cached task T5 embeddings",
+        "actions": "Native 16-action chunks; policy5/future1/value1 denoise settings in recorded adapter",
+        "goal": "Original Goal enters policy, future and value calls; experimental branch Goal isolation is researcher instrumentation"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Native best-of-N: generated action -> conditioned future -> predicted value -> argmax selected action. N=1 still generates future/value and is not a world-model-free policy.",
+        "source": "reports/cosmos_native_interface_audit_20261014.json"
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+          "result": "Native N2: 29/30 successes on fixed10tasks×3initial states"
+        },
+        {
+          "source": "runs/cosmos_policy_native_task_gate_clean_n1_matched30_v1/summary.json",
+          "result": "Native N1: 28/30; compute differs, not isolated forecast contribution"
+        },
+        {
+          "source": "runs/cosmos_first_candidate_utility_recovery_analysis_v1/analysis.json",
+          "result": "All60 real first-candidate continuations: native/fixed0/fixed1/uniform expectation29/30, oracle30/30. No net success benefit from first-query ranking; registered contribution gate failed."
+        }
+      ],
+      "known_integration_failures": [
+        "Official JAX/TE stack is adapted to torch; preserve recorded source revision/codecs.",
+        "Shortened action horizon deque can execute suffix rather than prefix; separate shared executor issue, not current H16 attack evidence.",
+        "Goal-Swap matched30 lost one task (29 to28), below fixed multi-task harm gate."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_cosmos_policy_native_task_gate.py",
+        "scripts/pilot_cosmos_policy_branch_offload_task_gate.py",
+        "scripts/aggregate_cosmos_native_clean_gate.py",
+        "scripts/analyze_cosmos_candidate_context_contrasts.py",
+        "scripts/replay_cosmos_first_query_truth.py",
+        "scripts/probe_cosmos_first_query_truth.py",
+        "scripts/analyze_cosmos_first_query_truth.py",
+        "scripts/probe_cosmos_forecast_coupling_gate.py"
+      ],
+      "caches": [
+        "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2",
+        "runs/cosmos_policy_native_task_gate_clean_n1_matched30_v1",
+        "runs/cosmos_first_candidate_utility_recovery_analysis_v1",
+        "runs/cosmos_native_goal_intervention_matched30_analysis_v1",
+        "runs/cosmos_counterfactual_evaluation_v1",
+        "runs/cosmos_first_query_truth_replay_20261015",
+        "runs/cosmos_first_query_truth_inference_20261015",
+        "runs/cosmos_forecast_coupling_gate_20261015"
+      ],
+      "limitations": [
+        "Healthy task policy does not establish ranking contribution or Goal-Bus damage.",
+        "Recovered60-branch panel preserves original50 plus10 transparent recovery; not unchanged original run.",
+        "Partial download and .parts files remain alongside complete checkpoint; they are not load targets.",
+        "Published world/value training uses environment replays of demonstrations including successful and failed episodes. Value targets are gamma=0.99 discounted terminal rewards, not constant success labels or calibrated success probabilities; see reports/cosmos_value_training_audit_20261014.json.",
+        "The K8 forecast-coupling pilot on one known posthoc root has strictly separated candidate score supports and zero coupling leverage. It is an added empirical-bank protocol with fixed per-candidate Value seeds; it does not preserve the original native cross-stage seed law or certify the full diffusion distribution. No seed/Value/budget retuning is accepted after this frozen null."
+      ],
+      "recommended_reuse_status": "Reuse correct-codec cached evidence and reproducible diagnostics. Fixed direct-entry and full-layer sender-specificity gates both failed; no layer/seed/root search or panel expansion to rescue this mechanism.",
+      "first_query_truth_countercheck": {
+        "report": "reports/cosmos_first_query_truth_decision_20261015.json",
+        "protocol": "configs/cosmos_first_query_truth_countercheck_20261015.json",
+        "review": "reports/cosmos_first_query_truth_review_20261015.json",
+        "scope": "One post-hoc known harmful task3/init2; new exact16-control prefix replays and calibrated model regeneration, with historical original-Goal full-continuation utilities. Not a new attack panel or full recovery episode.",
+        "scores": {
+          "clean": [
+            0.17903518676757812,
+            0.17970061302185059
+          ],
+          "swap": [
+            0.17313751578330994,
+            0.17247232794761658
+          ],
+          "true_future": [
+            0.17573776841163635,
+            0.17722132802009583
+          ]
+        },
+        "selected_indices": {
+          "clean": 1,
+          "swap": 0,
+          "true_future": 1
+        },
+        "any_exact_tie": false,
+        "visual_latent_mse": [
+          {
+            "candidate_index": 0,
+            "clean": 0.008557686596105977,
+            "swap": 0.08875399329517543,
+            "swap_over_clean": 10.371260071099279
+          },
+          {
+            "candidate_index": 1,
+            "clean": 0.008974830140297993,
+            "swap": 0.08526915426155271,
+            "swap_over_clean": 9.500921235120055
+          }
+        ],
+        "historical_utilities": [
+          {
+            "candidate_index": 0,
+            "success": false,
+            "steps": 300,
+            "capped_steps": 300
+          },
+          {
+            "candidate_index": 1,
+            "success": true,
+            "steps": 170,
+            "capped_steps": 170
+          }
+        ],
+        "calibration_all_passed": true,
+        "new_explicit_task_controls": 32,
+        "new_explicit_settling_controls": 20,
+        "sampler_calls": 12,
+        "vae_encodes": 3,
+        "full_new_episodes": 0,
+        "api_calls": 0,
+        "training_updates": 0,
+        "replay_elapsed_seconds": 15.213660854962654,
+        "inference_elapsed_seconds": 7.219195979007054,
+        "peak_cuda_reserved_bytes": 5481955328,
+        "conclusion": "Local future-conditioned ranking effect is supported: Swap errors rise on both candidates, ranking reverses, and actual-future substitution restores the successful candidate ranking. Does not exclude off-truth Value errors or establish full mediation, defense, permission boundary or generalization.",
+        "expansion_gate": "Original30-root >=3 losses / >=2tasks gate remains failed; no relabeling of known root as independent evidence."
+      },
+      "forecast_coupling_finite_bank_followup": {
+        "report": "reports/cosmos_forecast_coupling_gate_decision_20261015.json",
+        "protocol": "configs/cosmos_forecast_coupling_gate_20261015.json",
+        "summary": "runs/cosmos_forecast_coupling_gate_20261015/summary.json",
+        "status": "completed_pretrained_finite_bank_negative_no_expansion",
+        "root": {
+          "task_id": 3,
+          "init_id": 2,
+          "selection": "previously known posthoc harmful root",
+          "new_independent_roots": 0
+        },
+        "bank_size_per_candidate": 8,
+        "native_vs_added": "Use released pretrained Cosmos Future and Value functions. Keeping the two existing actions and Value seeds fixed while drawing new Future seeds defines an ADDED finite-bank query protocol. Native best_of_n shares each candidate seed across Action/Future/Value; its original joint law is NOT preserved by this protocol.",
+        "minimum_success_candidate_score_minus_maximum_failure_candidate_score": 0.00041410326957702637,
+        "independent_pairs_selecting_candidate1": 64,
+        "independent_product_pairs": 64,
+        "maximum_added_bad_selection_probability": 0.0,
+        "calibration_exact_checks_passed": 4,
+        "activity": {
+          "checkpoint_loads": 2,
+          "future_sampler_calls": 18,
+          "value_sampler_calls": 18,
+          "policy_sampler_calls": 0,
+          "vae_encodes": 0,
+          "vae_decodes": 0,
+          "environment_steps": 0,
+          "api_calls": 0,
+          "training_updates": 0
+        },
+        "elapsed_seconds": 7.631398209021427,
+        "feasibility_gate_passed": false,
+        "limits": [
+          "Bounds cover this observed K8 empirical bank, not full diffusion support or the original native cross-stage seed law.",
+          "Historical real continuation outcomes supply the utilities; no new physical episode, recovery or success-rate experiment was executed.",
+          "One posthoc root; 16 samples and 64 pairs are not independent task replications.",
+          "Does not negate prior CartPole harm or the separate Cosmos Goal-Swap case; no ASR, generalization, effective defense or qualified core claim."
+        ],
+        "decision": "Stop this bank after the frozen scientific null. No new seeds, roots, candidate expansion, Value/denoising changes or full closed-loop panel to seek an effect.",
+        "peak_cuda_reserved_bytes": 4290772992,
+        "independent_review": "reports/cosmos_forecast_coupling_gate_review_20261015.json",
+        "table": "reports/cosmos_forecast_coupling_gate_decision_20261015.csv"
+      },
+      "future_output_factorial_followup": {
+        "report": "reports/cosmos_future_modality_factorial_decision_20261016.json",
+        "protocol": "configs/cosmos_future_modality_factorial_20261016.json",
+        "status": "completed_local_visual_slot_selection_effect",
+        "model_forwards": 18,
+        "all_other_model_stages": 0,
+        "new_environment_steps": 0,
+        "scope": "One post-hoc known harmful root; original cached context/candidates/true encodings and historical full continuations. Not new Clean competence, task panel or effective defense."
+      },
+      "decoded_observation_calibration": {
+        "report": "reports/cosmos_decoded_future_observation_20261016.json",
+        "run": "runs/cosmos_cached_decode_gate_20261016_resume1/summary.json",
+        "native_vae_loads": 1,
+        "native_vae_decodes": 6,
+        "task_episodes": 0,
+        "result": "Truth reconstruction35.376–36.204dB; Swap decoded RGB MSE7.772–11.917 timesClean on four candidate/camera rows. No calibrated physical-state or error-mediated-harm claim.",
+        "source_cache": "runs/cosmos_first_query_truth_inference_20261015"
+      },
+      "action_sender_donor_followup": {
+        "report": "reports/cosmos_action_sender_decision_20261016.json",
+        "table": "reports/cosmos_action_sender_decision_20261016.csv",
+        "summary": "runs/cosmos_action_sender_gate_20261016/summary.json",
+        "protocol": "configs/cosmos_action_sender_gate_20261016.json",
+        "review": "reports/cosmos_action_sender_review_20261016.json",
+        "status": "completed_calibrated_sender_specificity_gate_failed",
+        "selection_by_condition": {
+          "clean": 1,
+          "swap": 0,
+          "clean_action_swap": 1,
+          "swap_action_clean": 0,
+          "clean_proprio_swap": 1,
+          "swap_proprio_clean": 1
+        },
+        "calibration_checks_passed": 22,
+        "activity": {
+          "checkpoint_loads": 2,
+          "future_sampler_calls": 14,
+          "value_sampler_calls": 14,
+          "noise_calls": 28,
+          "policy_sampler_calls": 0,
+          "vae_encodes": 0,
+          "vae_decodes": 0,
+          "environment_resets": 0,
+          "environment_steps": 0,
+          "model_api_calls": 0,
+          "network_requests": 0,
+          "training_updates": 0
+        },
+        "execution": {
+          "session_id": 52042,
+          "exit_code": 0,
+          "terminal_chunk_id": "821c93",
+          "elapsed_seconds": 53.5252689239569,
+          "peak_cuda_reserved_bytes": 4292870144
+        },
+        "finding": "Full-layer action sender K/V donor replacement neither induces the bad choice nor repairs Swap; equal-size proprio repair restores candidate1 ranking. Strict bidirectional action-specific gate fails.",
+        "limits": "One posthoc root; internal same-candidate Clean/Swap donor intervention. Historical real continuations only; no newly executed task recovery, native attacker permission, unique mediator, deployable defense or generalization. Different edge from the prior failed direct-entry test; both failures retained."
+      }
+    },
+    {
+      "id": "jepa_wm",
+      "name": "JEPA-WM PointMaze and MetaWorld",
+      "code_paths": [
+        "vendor/jepa-wms"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/JEPA_WM/mz_jepa-wm.pth.tar",
+          "exists": true,
+          "bytes": 211639615,
+          "recorded_sha256": "a01d99c4592fbedf44af076cf4c339de230c56f9f377c7559f584b97569b59bc",
+          "sha_source": "models/JEPA_WM/mz_jepa-wm.pth.tar.provenance.json",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/JEPA_WM/mw_jepa-wm.pth.tar",
+          "exists": true,
+          "bytes": 211687551,
+          "recorded_sha256": "c3297772c7af4e84c28bd0c0937e22398a888848305014bb3ab3f1508a310bd8",
+          "sha_source": "reports/jepa_metaworld_reach_wall_resource_audit_20261015.json#sources",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+          "exists": true,
+          "bytes": 88283115
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "forecast": "Current image/context + candidate actions + proprio, latent autoregressive predictor",
+        "goal": "Goal image/proprio enters CEM scoring, not fixed-action latent forecast",
+        "metaworld": "AdaLN predictor, actual224 resolution despite r256 filename; ImageNet mean/std; external DINOv2 encoder"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Native GC_Agent/CEM evaluates predicted latent goal cost to select action sequences. This is native forecast-driven planning, but not original Goal-in-forecast premise."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/jepa_native_microbatch_ep2_v1/summary.json",
+          "result": "PointMaze nontrivial seed3 completed failure: final distance0.5649689 versus0.5 success threshold; single planning call with native no-feedback protocol plus microbatch adapter"
+        },
+        {
+          "source": "runs/jepa_metaworld_reach_wall_cpu_v1/summary.json",
+          "result": "Strict checkpoint load and12 CPU control branches completed; noop0/3, straight servo1/3, wall-aware servo1/3; this is not native-model task success"
+        },
+        {
+          "source": "runs/jepa_metaworld_reach_wall_native_v1/summary.json",
+          "result": "User-priority stop: seed1 completed native failure (distance0.172385m, reward414.0679); seed2 interrupted, seed3 not run. Summary KeyboardInterrupt, gate null."
+        }
+      ],
+      "known_integration_failures": [
+        "PointMaze first two official cases were trivial already-successful states; not health evidence.",
+        "PointMaze microbatch25 vs fullGPU300 numerical equivalence remains unproved.",
+        "Missing optional visualization decoder; latent-only runner explicitly disables decoder/plots.",
+        "Python3.11/Torch2.6/vision0.21 differ from upstream declared versions; MuJoCo3.3 isolated."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_jepa_native_task_gate.py",
+        "scripts/pilot_jepa_microbatch_task_gate_v1.py",
+        "scripts/pilot_jepa_metaworld_reach_wall.py",
+        "scripts/pilot_jepa_metaworld_reach_wall_native.py",
+        "scripts/analyze_jepa_metaworld_reach_wall_native.py"
+      ],
+      "caches": [
+        "runs/jepa_native_microbatch_ep2_v1",
+        "runs/jepa_metaworld_reach_wall_cpu_v1",
+        "runs/jepa_metaworld_reach_wall_native_v1",
+        "reports/jepa_reach_wall_user_priority_stop_20261015.json"
+      ],
+      "limitations": [
+        "No qualified normal task panel; unexecuted/partial episodes are not failures.",
+        "Reach-wall training task membership is not verified.",
+        "No accepted matching security mechanism; interrupted panel is not to be completed merely for its own sake."
+      ],
+      "recommended_reuse_status": "Archive partial panel and reuse evidence only; stop further normal-only compute under updated user priority."
+    },
+    {
+      "id": "dino_wm",
+      "name": "DINO-WM MetaWorld baseline reproduced by JEPA-WMs",
+      "code_paths": [
+        "vendor/jepa-wms"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/DINO_WM/mw_dino-wm.pth.tar",
+          "exists": true,
+          "bytes": 280902699,
+          "recorded_sha256": "eab6e241f732db986f98ad224115ed7949ab4ff3f6cc8bc8f95b273cdb9e5d13",
+          "sha_source": "models/DINO_WM/mw_dino-wm.pth.tar.provenance.json",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+          "exists": true,
+          "bytes": 88283115
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "forecast": "Observed image/proprio context and candidate actions; 224 input, mean/std0.5/0.5",
+        "goal": "Goal only enters terminal/planning score, not fixed-action predictor"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Native GC_Agent/CEM300 candidates×15 iterations,10 elites,H6,nas3,context2,5 physical controls/macro,FP32. It uses latent forecasts to select actions."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/dino_metaworld_mujoco330_analysis_v1/analysis.json",
+          "result": "3.3.0 engine: Clean final success2/3 versus noop0/3; fixed small resource gate passed"
+        },
+        {
+          "source": "runs/dino_metaworld_servo_analysis_v1/analysis.json",
+          "result": "Matched P5 held-action servo final0/3 but ever-success3/3 and higher cumulative reward all3; Clean has final-success advantage only"
+        }
+      ],
+      "known_integration_failures": [
+        "Old MuJoCo2.3.7 Clean1/3 failed; state/image differences prevent a same-state causal engine comparison.",
+        "First full native GPU attempt OOM; preserved. Expandable allocator version completed without changing candidate batch/precision.",
+        "Vendored adaptation is JEPA-WMs reproduced baseline, not untouched original Apple DINO-WM repository."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_dino_metaworld_clean_gate.py",
+        "scripts/analyze_dino_metaworld_clean_gate.py",
+        "scripts/pilot_dino_metaworld_servo_baseline.py",
+        "scripts/analyze_dino_metaworld_servo_baseline.py",
+        "scripts/probe_dino_action_saturation_gate.py",
+        "scripts/analyze_dino_action_saturation_gate.py",
+        "scripts/probe_dino_action_saturation_exploratory.py",
+        "scripts/analyze_dino_alias_exploratory.py",
+        "scripts/analyze_dino_true_future_objective.py",
+        "scripts/pilot_dino_native_alias_pair.py",
+        "scripts/analyze_dino_native_alias_pair.py",
+        "scripts/pilot_dino_native_alias_recovery.py",
+        "scripts/analyze_dino_native_alias_forecast.py",
+        "scripts/plot_dino_native_alias_pair.py",
+        "scripts/analyze_dino_native_alias_recovery.py",
+        "scripts/analyze_dino_native_alias_forecast_gpu.py",
+        "scripts/analyze_dino_native_alias_utility_timing.py",
+        "scripts/analyze_dino_first_query_two_mean_ranking.py",
+        "scripts/replay_dino_first_query_full_horizon.py",
+        "scripts/analyze_dino_first_query_terminal_truth.py",
+        "scripts/analyze_dino_first_query_objective_decomposition.py"
+      ],
+      "caches": [
+        "runs/dino_metaworld_mujoco330_clean_v1",
+        "runs/dino_metaworld_mujoco330_analysis_v1",
+        "runs/dino_metaworld_servo_baseline_v1",
+        "runs/dino_metaworld_servo_analysis_v1",
+        "reports/dino_native_interface_screen_20261015.json",
+        "runs/dino_action_saturation_gate_20261015",
+        "runs/dino_action_saturation_exploratory_20261015",
+        "runs/dino_native_alias_pair_20261015",
+        "runs/dino_native_alias_forecast_20261015",
+        "runs/dino_native_alias_recovery_20261015",
+        "runs/dino_native_alias_forecast_gpu_20261015",
+        "reports/dino_alias_writer_boundary_20261015.json",
+        "reports/dino_native_alias_utility_timing_20261015.json",
+        "reports/dino_first_query_two_mean_ranking_20261015.json",
+        "reports/dino_first_query_two_mean_protocol_20261015.json",
+        "runs/dino_first_query_full_horizon_20261015",
+        "runs/dino_first_query_terminal_truth_20261015",
+        "reports/dino_first_query_terminal_truth_decision_20261015.json",
+        "reports/dino_first_query_full_horizon_20261015.json",
+        "reports/dino_first_query_terminal_truth_20261015.json",
+        "reports/dino_first_query_native_objective_decomposition_20261015.json"
+      ],
+      "limitations": [
+        "Tiny development panel, not general health or causal forecast benefit.",
+        "No demonstrated controllable forecast-only Goal interface or new accepted security mechanism.",
+        "3.3 compatibility fix changes physical initial state; preserve both engine panels.",
+        "The completed native alias pair and recovery use a researcher-added request writer/binding hook. The inspected native local forecast call has no identified independent restricted writer; externally reachable exploitation is unestablished."
+      ],
+      "recommended_reuse_status": "Reusable clean replay/control assets; no new execution without a distinct decision-relevant hypothesis.",
+      "native_privacy_input_check": {
+        "report": "reports/dino_private_goal_observability_20261015.json",
+        "render_probe": "runs/dino_goal_observability_20261015/summary.json",
+        "encoder_probe": "runs/dino_goal_latent_observability_20261015/summary.json",
+        "result": "Native current visual latent depends on the visible target marker at fixed mechanical state; proprio remains equal. No claim of recoverable goal accuracy or task harm.",
+        "forecast_interface": "unroll(z_ctxt, act_suffix) has no explicit Goal, but its initial latent is not goal-independent in this native marker task."
+      },
+      "action_saturation_feasibility": {
+        "report": "reports/dino_action_saturation_feasibility_20261015.json",
+        "status": "read_only_source_and_existing_trace_count_no_new_model_or_environment_execution"
+      },
+      "action_saturation_experiment": {
+        "report": "reports/dino_action_saturation_decision_20261015.json",
+        "status": "completed_exact_replays_strict_bank_gate_failed",
+        "result": "Released weights loaded once each onCPU;450controlsteps,8nativeencodingcalls,1H6B5unroll,6predictorforwards. Clean selects nearoptimal candidate; alias forecasts/harm/recovery remain unmeasured.",
+        "scope": "Added fixedbank selector; does not supersede native fullClean2/3 or establish general capabilityfailure."
+      },
+      "action_alias_exploratory_result": {
+        "report": "reports/dino_action_alias_exploratory_decision_20261015.json",
+        "normal_baseline_scope": "Existing native full Clean2/3 unchanged; separate bank Clean near-optimal, old strict oracle gate still failed.",
+        "result": "Fixed +2 leaves utility unchanged; canonicalization and actual-future native goal scoring select the same low-utility candidate. No native CEM attack/defense episodes.",
+        "activity": "Three CPU unrolls: one exact replay and two new alias batches;18 predictor forwards, zero encodes/env/API/GPU. One additional cached native objective call."
+      },
+      "native_alias_pair": {
+        "status": "completed",
+        "protocol": "configs/dino_native_alias_pair_20261015.json",
+        "run": "runs/dino_native_alias_pair_20261015",
+        "new_results": {
+          "clean_return": 786.998547077179,
+          "canonical_return": 702.1983199119568,
+          "relative_return_drop": 0.1077514405587664,
+          "final_success": [
+            false,
+            false
+          ],
+          "ever_success": [
+            true,
+            true
+          ],
+          "independent_roots": 1,
+          "recovery_measured": true
+        },
+        "report": "reports/dino_native_alias_decision_20261015.json"
+      },
+      "native_alias_forecast_diagnostic": {
+        "report": "reports/dino_native_alias_forecast_decision_20261015.json",
+        "status": "invalid_numerical_calibration",
+        "scope": "Frozen CPU-to-GPU elementwise encoder check failed; does not establish native forecast error direction or general CPU invalidity.",
+        "same_gpu_revision": {
+          "report": "reports/dino_native_alias_forecast_gpu_decision_20261015.json",
+          "status": "completed_calibration_passed",
+          "scope": "Mean matched prefix feature error lower24.95%/6.58%; full native candidate-ranking/horizon attribution unmeasured."
+        }
+      },
+      "native_alias_recovery": {
+        "report": "reports/dino_native_alias_recovery_decision_20261015.json",
+        "status": "completed",
+        "return99": 786.998547077179,
+        "all99_trace_rows_exact_to_clean": true,
+        "scope": "Same-root trusted input binding, no new defense or generalization."
+      },
+      "native_alias_writer_boundary": {
+        "report": "reports/dino_alias_writer_boundary_20261015.json",
+        "status": "native_decision_sensitivity_measured_restricted_native_writer_not_identified",
+        "native_path": "GC_Agent passes local model.unroll into CEM; Planner.cost_function supplies the original candidate tensor to unroll and then to the objective/elite path. No independent least-privilege request writer was identified in this inspected path.",
+        "research_added": "The isolated request copy, constrained canonical writer and trusted candidate binding were introduced by the research runners; their assertions are not an arbitrary-Python security sandbox.",
+        "supported_result": "One native seed4 pair lost 10.775% cumulative dense return; trusted binding restored all99 trace rows and return exactly. Both arms retained ever-success and ended without final success; canonical terminal distance/reward were better.",
+        "scope": "The missing deployed writer does not invalidate the bounded native experiment. It limits the claim to instrumented representation/decision sensitivity and a conditional integration hazard, not a discovered externally reachable native vulnerability.",
+        "source_anchors": [
+          "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py:60",
+          "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:49",
+          "scripts/pilot_dino_native_alias_pair.py:313",
+          "scripts/pilot_dino_native_alias_recovery.py:176"
+        ]
+      },
+      "utility_timing_decomposition": {
+        "report": "reports/dino_native_alias_utility_timing_20261015.json",
+        "script": "scripts/analyze_dino_native_alias_utility_timing.py",
+        "scope": "Post hoc arithmetic on one fixed reach-v3/reward-v2 native pair; no new trajectories or forecast calls.",
+        "delta_return": -84.80022716522217,
+        "before_either_first_success_delta": -85.04376602172852,
+        "remaining_delta": 0.24353885650634766,
+        "success_region_delta": 90.0,
+        "non_success_region_delta": -174.80022716522217,
+        "decision": "Unequal episode exposure and reduced successful occupancy do not explain the dense-return loss. Preserve real integrated-return harm and improved success endpoints; timing decomposition is not candidate-ranking or prediction-error mediation."
+      },
+      "first_query_fixed_two_mean_ranking": {
+        "report": "reports/dino_first_query_two_mean_ranking_20261015.json",
+        "protocol": "reports/dino_first_query_two_mean_protocol_20261015.json",
+        "script": "scripts/analyze_dino_first_query_two_mean_ranking.py",
+        "scope": "One shared initial context, original goal and two post-hoc selected full native returned means. Fixed native terminal objective on cached forecasts; real utility from each existing15-control prefix. Not the complete CEM bank or a new trajectory experiment.",
+        "ranking_flip": true,
+        "cost_matrix": [
+          [
+            0.8484280705451965,
+            1.1141307353973389
+          ],
+          [
+            1.5804330110549927,
+            1.2356951236724854
+          ]
+        ],
+        "candidate_order": [
+          "clean_identity_copy",
+          "canonical_request"
+        ],
+        "selected_real_15_control_return_delta": -0.9687731266021729,
+        "terminal_success_loss": false,
+        "prediction_horizon_controls": 30,
+        "actual_utility_horizon_controls": 15,
+        "full_closed_loop_mediation_established": false,
+        "goal_swap_test": false,
+        "population_inference": false
+      },
+      "first_query_full_horizon_truth": {
+        "report": "reports/dino_first_query_terminal_truth_decision_20261015.json",
+        "real_replay_report": "reports/dino_first_query_full_horizon_20261015.json",
+        "truth_report": "reports/dino_first_query_terminal_truth_20261015.json",
+        "objective_components_report": "reports/dino_first_query_native_objective_decomposition_20261015.json",
+        "control_horizon": 30,
+        "post_hoc_candidates": 2,
+        "independent_roots": 1,
+        "ranking_flip": true,
+        "rows": [
+          {
+            "candidate": "clean_identity_copy",
+            "original_forecast_cost": 0.8484280705451965,
+            "canonical_forecast_cost": 1.5804330110549927,
+            "true_future_native_cost": 1.7012925148010254,
+            "original_forecast_weighted_mse": 1.565622674029562,
+            "canonical_forecast_weighted_mse": 0.5292098190610094,
+            "controls": 30,
+            "terminal_native_reward": 5.2479071617126465,
+            "cumulative_native_reward": 95.84182262420654,
+            "terminal_reach_distance": 0.14261315432355678,
+            "terminal_success": false,
+            "ever_success": false,
+            "successful_controls": 0,
+            "first_success_control": null
+          },
+          {
+            "candidate": "canonical_request",
+            "original_forecast_cost": 1.1141307353973389,
+            "canonical_forecast_cost": 1.2356951236724854,
+            "true_future_native_cost": 1.3794702291488647,
+            "original_forecast_weighted_mse": 0.9585290969128817,
+            "canonical_forecast_weighted_mse": 0.45830340372250067,
+            "controls": 30,
+            "terminal_native_reward": 3.347029447555542,
+            "cumulative_native_reward": 76.03699398040771,
+            "terminal_reach_distance": 0.18721491785066868,
+            "terminal_success": false,
+            "ever_success": false,
+            "successful_controls": 0,
+            "first_success_control": null
+          }
+        ],
+        "cost_gap_decomposition": {
+          "original": {
+            "candidate1_minus_candidate0_cost": 0.26570266485214233,
+            "difference_from_true_cost_gap": 0.587524950504303,
+            "selected_candidate": "clean_identity_copy"
+          },
+          "canonical": {
+            "candidate1_minus_candidate0_cost": -0.3447378873825073,
+            "difference_from_true_cost_gap": -0.02291560173034668,
+            "selected_candidate": "canonical_request"
+          },
+          "true_future": {
+            "candidate1_minus_candidate0_cost": -0.32182228565216064,
+            "difference_from_true_cost_gap": 0.0,
+            "selected_candidate": "canonical_request"
+          }
+        },
+        "selected_real_return_delta": -19.804828643798828,
+        "selected_terminal_reward_delta": -1.9008777141571045,
+        "canonical_forecast_error_decreases_for_both_candidates": true,
+        "true_future_native_objective_also_selects_lower_reward_candidate": true,
+        "limits": "Fixed two-mean open-loop bank on one known root; native executes15 then replans. Not full CEM-population mediation, success-rate loss, Goal-Swap, independent generalization or training-support proof. Error direction may still mediate selection; no claim that all forecast-error effects are excluded.",
+        "decision": "Retain local representation-to-selection effect and measured physical loss; reject prediction-degradation attribution on this bank. Do not expand this construct without a distinct mechanism."
+      }
+    },
+    {
+      "id": "tdmpc2",
+      "name": "TD-MPC2 multitask30 48M",
+      "code_paths": [
+        "vendor/tdmpc2",
+        "src/wm_security/tdmpc_native.py"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/tdmpc2/mt30-48M.pt",
+          "exists": true,
+          "bytes": 291104400,
+          "recorded_sha256": "bacb9ae1891a9b03dc3942a287080beb573220ea9d0263c5efd7a94a5c2ec419",
+          "sha_source": "reports/tdmpc_mechanism_reassessment_20261015.json#provenance_and_execution_boundary",
+          "hash_recomputed_in_this_archive": false
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "forecast": "Encoded real observation, candidate action and task embedding; latent dynamics, reward/Q and actor prior",
+        "goal": "Task identifier is native context, not a natural-language preference-only Goal channel",
+        "latent_coordinate_contract": "The observation encoder and dynamics are task-conditioned; consistency targets are encoded under the same task. Shared weights, dimensions and SimNorm do not impose common cross-task latent coordinates."
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Native MPC uses latent dynamics, predicted rewards and terminal Q; actor-prior comparator can bypass online planning. Preserve native eval_mode, RNG and action selection."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "configs/tdmpc_dynamics_reliance_screen.json",
+          "result": "Paired normal screen: walker-walk native975.511 vs actor-prior500.246/action-blind80.221; reacher-easy native972 vs prior973; cup-catch native994 vs prior996. WM/planning value is task dependent."
+        },
+        {
+          "source": "runs/tdmpc_cascade_heldout_matched_v1/results.json",
+          "result": "Full500-step clean walker-run returns657.617/660.947 and cup-catch994/922; actual adaptation outcomes retained"
+        }
+      ],
+      "known_integration_failures": [
+        "Earlier shortened-horizon defense changed non-native argmax/reset semantics and is invalid as selective native repair.",
+        "SimNorm temperature2 destroyed Clean and random controls; not useful defense.",
+        "Permuting action vectors regenerates different state/transition datasets; cannot identify pure learning-order causality."
+      ],
+      "reusable_entrypoints": [
+        "src/wm_security/tdmpc_native.py",
+        "scripts/pilot_tdmpc_gate.py",
+        "scripts/probe_tdmpc_dynamics_reliance.py",
+        "scripts/pilot_tdmpc_adaptation.py",
+        "scripts/pilot_tdmpc_frozen_head_loss_control.py",
+        "scripts/analyze_tdmpc_frozen_head_loss_control.py"
+      ],
+      "caches": [
+        "runs/tdmpc_cascade_heldout_matched_v1",
+        "runs/tdmpc_order_controls_v0",
+        "runs/tdmpc_order_controls_cheetah_seed22_v0",
+        "runs/tdmpc_window_composition_h1_v0",
+        "reports/tdmpc_mechanism_reassessment_20261015.json",
+        "reports/tdmpc_task_latent_contract_20261015.json",
+        "runs/tdmpc_frozen_head_loss_control_20261015",
+        "reports/tdmpc_frozen_head_loss_control_decision_20261015.json"
+      ],
+      "limitations": [
+        "Source23 walker-run loss exists, but source22 reverses direction; shared-data negative transfer remains an alternative explanation.",
+        "The historical dynamics-only adapter optimized latent consistency only. A new matched frozen-head reward/value loss control is complete; it reduced the source gap without passing selective recovery.",
+        "One-step latent MSE is not general transition accuracy or task-harm proof.",
+        "A next-only task swap lacks a demonstrated common latent/physical-readout contract; raw cross-task latent differences alone cannot establish corruption of task-independent physics."
+      ],
+      "recommended_reuse_status": "Strong existing native control/physics resource; reuse exact saved controls and reassessment before proposing any new minimal experiment.",
+      "task_latent_contract": {
+        "report": "reports/tdmpc_task_latent_contract_20261015.json",
+        "status": "completed_source_only_contract_review_no_next_only_task_swap_execution",
+        "training_contract": "F_t(E_t(o),a) is trained against E_t(o_next); F_d(E_v(o),a) has no established contract to produce victim-coordinate E_v(o_next). Native planning consistently passes one task through encoding, dynamics, prior, reward and Q.",
+        "interpretation_limit": "Mechanically equivalent walker tasks do not imply identical raw latent predictions. This source permits a representation mismatch; it does not demonstrate that the checkpoint uses different coordinates or measure task-swap harm.",
+        "additional_native_path_issue": "A global model.next override also changes policy-prior rollout, so fixed policy weights/task do not ensure a fixed candidate bank.",
+        "resource_gap": "No native physical decoder or separately validated cross-task alignment was identified in the inspected architecture. Such a contract is needed before interpreting raw task-swap latent differences as physical forecast error.",
+        "source_anchors": [
+          "vendor/tdmpc2/tdmpc2/common/world_model.py:88",
+          "vendor/tdmpc2/tdmpc2/common/world_model.py:114",
+          "vendor/tdmpc2/tdmpc2/tdmpc2.py:259",
+          "vendor/tdmpc2/tdmpc2/tdmpc2.py:153"
+        ]
+      },
+      "adaptation_loss_control": {
+        "report": "reports/tdmpc_frozen_head_loss_control_decision_20261015.json",
+        "independent_review": "reports/tdmpc_frozen_head_loss_control_review_20261015.json",
+        "source_seed": 23,
+        "evaluation_seed": 31,
+        "four_real_returns": {
+          "consistency_random": 612.082555025816,
+          "consistency_cascade": 495.2163214981556,
+          "task_loss_random": 563.6214331835508,
+          "task_loss_cascade": 543.6217695474625
+        },
+        "selective_recovery": false,
+        "scope": "One reused development root; not new Clean panel or Goal-Swap."
+      }
+    },
+    {
+      "id": "a2world",
+      "name": "A2World pretrained multiview action-conditioned denoiser",
+      "code_paths": [
+        "vendor/A2World"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/A2World/a2world-pretrained.pt",
+          "exists": true,
+          "bytes": 5054966852
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "forecast": "Latent video, text, timestep, camera/view metadata and flattened20-step action condition",
+        "goal": "Task text is conditioning; no separately qualified decision consumer audited"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Local probes stop at denoiser output; native task selection/closed-loop integration is unqualified."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/a2world_fixed_noise_suffix_v0/summary.json",
+          "result": "All learned tensors loaded; fixed-noise latent forward completed. Early-slot mean absolute change0.1779199 when suffix changes; no decoded future or task outcome."
+        }
+      ],
+      "known_integration_failures": [
+        "Probe omits tokenizer/video decode and downstream controller.",
+        "Nonlocal action conditioning is not by itself a temporal-physics violation or decision damage."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_a2world_global_action_condition.py",
+        "scripts/pilot_a2world_fixed_noise_suffix.py"
+      ],
+      "caches": [
+        "runs/a2world_global_action_condition_v0",
+        "runs/a2world_fixed_noise_suffix_v0"
+      ],
+      "limitations": [
+        "Checkpoint file exists; task competence unmeasured.",
+        "Do not launch decoder/planner work solely to enlarge a carrier list."
+      ],
+      "recommended_reuse_status": "Keep structural probe only; not currently a task carrier."
+    },
+    {
+      "id": "mosim",
+      "name": "MoSim released cheetah checkpoint",
+      "code_paths": [
+        "vendor/MoSim"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/mosim/cheetah_ckpt_450M.pth",
+          "exists": true,
+          "bytes": 2305594
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "forecast": "One-step continuous state/current action/time interval; no future action suffix input"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Local test uses one-step simulator only; no verified native decision consumer."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/mosim_nonanticipation_v0/summary.json",
+          "result": "32-state one-step identical-input check max difference0; excludes proposed future-suffix carrier, not a task capability test"
+        }
+      ],
+      "known_integration_failures": [
+        "Unused circular tools import bypassed in isolated inference adapter.",
+        "Suffix nonanticipation route structurally inapplicable."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_mosim_nonanticipation.py"
+      ],
+      "caches": [
+        "runs/mosim_nonanticipation_v0"
+      ],
+      "limitations": [
+        "Small2.3MB checkpoint is an actual file; size does not indicate invalidity.",
+        "No task return/success panel."
+      ],
+      "recommended_reuse_status": "Retain one-step model and structural exclusion; do not revive rejected suffix hypothesis."
+    },
+    {
+      "id": "fact",
+      "name": "FACT RoboTwin world-action model",
+      "code_paths": [
+        "vendor/FACT"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/FACT/transformer/config.json",
+          "exists": true,
+          "bytes": 592
+        },
+        {
+          "path": "models/FACT/norm_stats_delta.json",
+          "exists": true,
+          "bytes": 5146
+        }
+      ],
+      "checkpoint_availability": "Incomplete: configuration/statistics plus a partial download; no complete transformer weights qualified locally.",
+      "forecast_inputs": {
+        "forecast": "Source audit: Stage1 action from state/reference/text; Stage2 future/value from generated action. Training uses clean teacher-forced gt_action."
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Two-stage action then future/value pipeline inspected; no local closed-loop task inference."
+      },
+      "validated_clean_evidence": [],
+      "known_integration_failures": [
+        "Only config/stats/readme and a partial .incomplete download present; no complete transformer weight in models/FACT.",
+        "Required Wan base checkpoint and RoboTwin task integration are not locally qualified.",
+        "Action-authority hypothesis rejected as exposure-bias/ordinary negative-transfer overlap in historical review."
+      ],
+      "reusable_entrypoints": [],
+      "caches": [
+        "runs/fact_action_authority_source_audit_round69"
+      ],
+      "limitations": [
+        "Config and normalization files are not a usable checkpoint.",
+        "No clean task evidence."
+      ],
+      "recommended_reuse_status": "Source-only audit; no download/training/inference recommended without a distinct accepted experiment."
+    },
+    {
+      "id": "mbrl_lib",
+      "name": "MBRL-Lib local Gaussian ensemble assets",
+      "code_paths": [
+        "vendor/mbrl-lib"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "runs/mbrl_coupling_cartpole_v0/model/model.pth",
+          "exists": true,
+          "bytes": 104753
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "forecast": "Gaussian ensemble next-state/reward from state/action, used by local CEM adapters"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Native model rollout primitive with explicit added CEM/risk/ownership experiment adapters; not a published large pretrained task checkpoint."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "configs/world_model_temporal_correlation_screen.json",
+          "result": "Mean-risk temporal coupling mixed direction (+32/-30); CVaR four native/intervention CartPole episodes all200; mechanism gate failed"
+        },
+        {
+          "source": "configs/world_model_terminal_ownership_screen.json",
+          "result": "Two-seed short native CEM and routing variants all50; no harm"
+        },
+        {
+          "source": "runs/mbrl_action_mean_coupling_20261015_v2/summary.json",
+          "result": "Native strong-CEM optimizer with matched K8 sampler, locally pretrained CartPole model: Clean200 and action-mean coupling200 on fixed seed708. One paired development comparison; no observed task harm."
+        }
+      ],
+      "known_integration_failures": [
+        "Small locally trained component experiments must not be counted as independently pretrained model generalization."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_mbrl_coupling.py",
+        "scripts/pilot_mbrl_temporal_risk.py",
+        "scripts/pilot_mbrl_terminal_ownership.py"
+      ],
+      "caches": [
+        "runs/mbrl_coupling_cartpole_v0/model"
+      ],
+      "limitations": [
+        "Multiple retired sampling/ownership ideas share this asset; consult configs rather than rescale them."
+      ],
+      "recommended_reuse_status": "Useful cheap component comparator only."
+    },
+    {
+      "id": "dmo",
+      "name": "DMO official network on local cartpole data",
+      "code_paths": [
+        "vendor/DMO_code"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "runs/dmo_jacobian_gate_v0/clean_model.pt",
+          "exists": true,
+          "bytes": 1097669
+        }
+      ],
+      "checkpoint_availability": "See per-file presence; presence alone is not model health",
+      "forecast_inputs": {
+        "forecast": "DMO MLP dynamics on standardized cartpole state/action in added adapter"
+      },
+      "forecast_used_by_native_decisions": {
+        "path": "Necessary-condition Jacobian probe only; DFlex actor/native task control not reproduced."
+      },
+      "validated_clean_evidence": [],
+      "known_integration_failures": [
+        "Pre-registered lambda grid all failed dev forward-MSE gate.",
+        "Local train/dev/test adapter and newly trained small checkpoint are not official pretrained DMO control."
+      ],
+      "reusable_entrypoints": [
+        "scripts/pilot_dmo_jacobian_gate.py"
+      ],
+      "caches": [
+        "runs/dmo_jacobian_gate_v0"
+      ],
+      "limitations": [
+        "Clean Jacobian reference valid does not establish clean actor task performance."
+      ],
+      "recommended_reuse_status": "Retain data/probe; rejected mechanism, no scale-up."
+    },
+    {
+      "id": "nanowm_pointmaze",
+      "name": "Nano World Models (NanoWM-B/2 PointMaze 30k)",
+      "status": "heldout_clean_partial_rollouts_resource_deferred_memory_policy_ready",
+      "code_paths": [
+        "vendor/nano-world-model",
+        "scripts/probe_nanowm_pointmaze_resources.py",
+        "scripts/pilot_nanowm_pointmaze_clean.py"
+      ],
+      "source_revision": "cc1f151a9d8c7d7afd0cdc5de6a9ae220a7c90c0",
+      "checkpoint_paths": [
+        {
+          "path": "models/nanowm_pointmaze/model.safetensors",
+          "exists": true,
+          "bytes": 634416296,
+          "repository": "https://huggingface.co/knightnemo/nanowm-b2-dino-wm-point-maze-30k",
+          "revision": "b84303b7151cbd1836841c3a87bf095e1015b150",
+          "revision_source": "models/nanowm_pointmaze/.cache/huggingface/download/model.safetensors.metadata",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/nanowm_pointmaze/config.yaml",
+          "exists": true,
+          "bytes": 2784,
+          "repository": "https://huggingface.co/knightnemo/nanowm-b2-dino-wm-point-maze-30k",
+          "revision": "b84303b7151cbd1836841c3a87bf095e1015b150",
+          "revision_source": "models/nanowm_pointmaze/.cache/huggingface/download/config.yaml.metadata"
+        },
+        {
+          "path": "models/nanowm_sd_vae/diffusion_pytorch_model.safetensors",
+          "exists": true,
+          "bytes": 334643276,
+          "repository": "https://huggingface.co/stabilityai/sd-vae-ft-mse",
+          "revision": "31f26fdeee1355a5c34592e401dd41e45d25a493",
+          "revision_source": "models/nanowm_sd_vae/source_revision.json",
+          "hash_recomputed_in_this_archive": false
+        },
+        {
+          "path": "models/nanowm_sd_vae/config.json",
+          "exists": true,
+          "bytes": 547,
+          "revision_source": "models/nanowm_sd_vae/source_revision.json"
+        }
+      ],
+      "checkpoint_availability": "Released model and configured SD-VAE available. Strict FP32 loading, one v4 cost probe and117 Clean microbatch rollouts passed. No complete plan or physical Clean action has been executed.",
+      "forecast_inputs": {
+        "observations": "Native PointMaze RGB resized to checkpoint 256x256 and normalized to [-1,1], encoded through the matched SD-VAE with native posterior sampling and scaling.",
+        "actions": "Normalized ten-dimensional blocks: five chronological two-dimensional physical actions per model step. Training-only mean/std are repeated five times; environment clips denormalized physical actions to [-1,1].",
+        "goal": "Image goal enters final-frame latent-MSE scoring, not the fixed-action diffusion rollout.",
+        "sampling": "Pinned planning protocol uses full_sequence, 20 DDIM steps, eta=0, native stochastic VAE/initial/context sampling and microbatch16. Fixed global seeds supplement planning.seed, which alone does not initialize all RNGs."
+      },
+      "forecast_used_by_native_decisions": {
+        "source_confirmed": true,
+        "local_clean_task_reproduced": false,
+        "path": "Upstream CEM samples action sequences, rolls out predicted latent futures, ranks them by final-frame goal-latent MSE, refits the top-10 distribution and executes the mean action sequence. This is an existing native forecast-driven planner, not a newly added semantic planner.",
+        "adapter_boundary": "Local runner adds fail-closed resource/statistics checks, complete RNG seeding, logging and disclosed microbatch16 execution; it reuses native model, rollout, objective, CEM and environment."
+      },
+      "validated_clean_evidence": [],
+      "validated_resource_evidence": [
+        {
+          "source": "runs/nanowm_resource_gate_v1/summary.json",
+          "result": "Native CPU PointMaze reset/render/12-step replay passed twice with exact recorded state and pixels; the overall v1 resource run then failed on HTTP403 while obtaining dataset metadata. No model or task-capability test."
+        },
+        {
+          "source": "runs/nanowm_resource_gate_v2/summary.json",
+          "result": "Reused the successful native environment probe and completed training-statistics reconstruction from only actions/sequence lengths in the official PointMaze archive; no video download or model inference in this resource check."
+        },
+        {
+          "source": "runs/nanowm_pointmaze_timing_v1/summary.json",
+          "result": "Strict model loading plus exactly one native horizon5 rollout for 16 candidates, output shape [16,6,4096], completed in 5.560271191992797 seconds. Peak allocated memory3662922240 bytes, reserved5010096128 bytes. This is forward/resource evidence only."
+        }
+      ],
+      "runtime": {
+        "interpreter": ".venv-jepa-native/bin/python",
+        "runtime_overlay": ".deps/nanowm_runtime",
+        "actual_torch_version": "2.6.0+cu124",
+        "actual_torch_package": ".venv-a2world/lib/python3.11/site-packages/torch",
+        "binding": "The interpreter reuses the .venv-a2world Torch installation through its environment path configuration.",
+        "official_torch_version": "2.7.1",
+        "official_version_source": "vendor/nano-world-model/pyproject.toml",
+        "environment": "Native PointMaze using mujoco-py and CPU OSMesa rendering; resource replay evidence is in resource_gate_v1/v2.",
+        "parameter_precision": "Float32 model and VAE in the recorded single rollout.",
+        "rollout_batch_size": 16,
+        "full_batch_bitwise_equivalence_established": false,
+        "scheduling_mode": "full_sequence, explicitly prescribed by the upstream planning guide and point_maze planning shell; the checkpoint training config uses sequential.",
+        "version_limit": "This is not the fully matched official Torch2.7.1 training environment or proof of full-stack numerical parity."
+      },
+      "action_statistics": {
+        "cache_path": "runs/nanowm_resource_gate_v2/data/point_maze/wm_stats_cache/action_train_6b5d3fb557871782.pt",
+        "recorded_sha256": "22364394a20a37aa0d63349b5829a43e022720930a2ca0803e110f62615fa7fe",
+        "sha_source": "runs/nanowm_resource_gate_v2/summary.json",
+        "hash_recomputed_in_this_archive": false,
+        "split_path": "runs/nanowm_resource_gate_v2/trajectory_split.json",
+        "train_trajectories": 1800,
+        "validation_trajectories": 200,
+        "train_valid_actions": 180000,
+        "split_seed": 42,
+        "split_ratio": 0.9,
+        "raw_mean": [
+          -0.0001961888774530962,
+          0.00022854165581520647
+        ],
+        "raw_std": [
+          0.5764825940132141,
+          0.5776174664497375
+        ],
+        "repeat_for_packed_action": 5,
+        "reconstruction_scope": "Exact pinned native split/statistics computation on the public actions and lengths, including native float32 standard deviation plus epsilon. Original author training cache was not published or compared.",
+        "failure_policy": "No missing or ambiguous cache fallback; upstream otherwise chooses the first action_train cache and can silently skip denormalization."
+      },
+      "bounded_cost_result": {
+        "source": "runs/nanowm_pointmaze_timing_v1/summary.json",
+        "protocol": "reports/nanowm_clean_gate_protocol_20261015.json",
+        "estimated_full_budget_rollout_seconds_per_root": 11676.569503184874,
+        "estimate_scope": "5.560271191992797 * ceil(100/16) * 30 * 10; approximately3.24hours per root at the maximum episode budget. Excludes goal encoding, rendering, environment and logging; not measured episode duration or a certified bound.",
+        "registered_cost_threshold_seconds_per_root": 1800,
+        "decision": "Root agent declined long Clean execution after the cost threshold was exceeded. No reduction of candidate count, optimization iterations, DDIM steps or task horizon was used to manufacture a cheap competence result.",
+        "clean_episodes_executed": 0,
+        "clean_gate_passed": null,
+        "passive_zero_control": {
+          "seeds": [
+            42,
+            43,
+            44
+          ],
+          "successes": 0,
+          "episodes": 3,
+          "real_steps_each": 250,
+          "scope": "Triviality/passive-inertia control only. Zero failures are not model failures, Clean successes or evidence that the model is needed."
+        }
+      },
+      "known_integration_failures": [
+        "The first metadata retrieval failed with HTTP403; it is preserved separately from successful v2 resource reconstruction.",
+        "Native single-directory dataset-goal sampling does not apply the training/validation trajectory split. The registered gate uses fixed random_state seeds42/43/44 instead.",
+        "planning.seed alone does not control Torch/VAE/diffusion randomness, and eta0 does not make the full computation deterministic.",
+        "Native PointMaze success is XY distance<0.5 at native checkpoints; state_dist is four-dimensional position-plus-velocity distance. Internal environment reward is not sampled image-goal utility.",
+        "Legacy mujoco_py parses CUDA_VISIBLE_DEVICES as an integer; UUID selection failed before render. Fixed both runners to numeric0, verified frozen render/state and one native rollout. Old failed attempts retained."
+      ],
+      "reusable_entrypoints": [
+        "scripts/probe_nanowm_pointmaze_resources.py",
+        "scripts/pilot_nanowm_pointmaze_clean.py",
+        "vendor/nano-world-model/src/experiments/planning_experiment.py"
+      ],
+      "caches": [
+        "runs/nanowm_resource_gate_v1",
+        "runs/nanowm_resource_gate_v2",
+        "runs/nanowm_pointmaze_timing_v1",
+        "models/nanowm_pointmaze",
+        "models/nanowm_sd_vae"
+      ],
+      "limitations": [
+        "No local Clean planning success, candidate-ranking utility, security harm or defense evidence exists in this entry. Capability remains unmeasured, not failed.",
+        "The upstream registry mentions PointMaze2/5 success; this is an author-reported development number, not a local reproduction or pooled result.",
+        "Microbatch16 preserves the registered total candidate/elite/optimization/DDIM budget but not a proven bitwise match to native full-batch execution.",
+        "No new security intervention or lower-privilege interface is established by source matching and forward health."
+      ],
+      "recommended_reuse_status": "preserve_matched_native_resource_no_automatic_experiment",
+      "latest_progress": {
+        "report": "reports/nanowm_runtime_task_reassessment_20261015.json",
+        "cpu_task_gate": "runs/nanowm_heldout_pointmaze_tasks_v1/summary.json",
+        "component_profile": "runs/nanowm_component_profile_v1/summary.json",
+        "clean_protocol": "reports/nanowm_heldout_clean_protocol_20261015.json",
+        "clean_runner": "scripts/pilot_nanowm_heldout_clean.py",
+        "task_gate_passed": true,
+        "fixed_instances": 3,
+        "zero_success_count": 1,
+        "clean_gate_passed_at_launch": null,
+        "budget_correction": "Official PointMaze-specific dset/max10 model steps is two plans; earlier random-state/max50 was generic base configuration. Both scopes and all old results are retained.",
+        "runtime_compatibility_fix": "reports/nanowm_runtime_compatibility_fix_20261015.json",
+        "shared_capacity_probe": "runs/nanowm_shared_capacity_v2/summary.json",
+        "clean_observed_status": "resource_deferred",
+        "clean_observed_at_utc": "2026-10-15T09:32:45Z",
+        "completed_clean_episodes": 0,
+        "latest_execution_summary": "runs/nanowm_heldout_clean_v4/summary.json",
+        "security_readiness_decision": "reports/nanowm_security_readiness_decision_20261015.json",
+        "completed_clean_microbatch_rollouts": 117,
+        "completed_clean_physical_steps": 0,
+        "resource_policy_amendment": "reports/nanowm_heldout_clean_shared_memory_protocol_20261015.json",
+        "resource_amendment_gpu_validated": false,
+        "resumption_decision": "reports/nanowm_clean_capability_resumption_20261015.json"
+      }
+    },
+    {
+      "id": "jowa",
+      "name": "JOWA: jointly optimized world-action model",
+      "status": "native_forecast_path_source_confirmed_cache_candidate_no_go_weights_not_downloaded",
+      "code_paths": [
+        "vendor/JOWA"
+      ],
+      "source_revision": "8cb02c5e6768a948c566a9012ac8a4fc420c6970",
+      "checkpoint_paths": [
+        {
+          "path": "vendor/JOWA/checkpoints/JOWA/JOWA_40M.pt",
+          "exists": true,
+          "bytes": 133,
+          "is_lfs_pointer": true,
+          "declared_weight_bytes": 76485274
+        },
+        {
+          "path": "vendor/JOWA/checkpoints/JOWA/tokenizer.pt",
+          "exists": true,
+          "bytes": 133,
+          "is_lfs_pointer": true,
+          "declared_weight_bytes": 75162490
+        }
+      ],
+      "checkpoint_availability": "Official repository contains LFS pointers; no actual JOWA/tokenizer weights downloaded, loaded or verified in this screen.",
+      "forecast_inputs": {
+        "observations": "Tokenized actual history plus hypothetical action tokens.",
+        "task_context": "Native environment/game identifier affects dynamics and action vocabulary; not an independently writable preference-only Goal."
+      },
+      "forecast_used_by_native_decisions": {
+        "source_confirmed": true,
+        "local_clean_task_reproduced": false,
+        "path": "H>0 native beam expands predicted observations/rewards and ranks discounted rewards plus successor max Q; H=0 chooses root Q directly."
+      },
+      "validated_clean_evidence": [],
+      "validated_resource_evidence": [
+        {
+          "source": "runs/jowa_cache_isolation_20261015/summary.json",
+          "result": "23 CPU unit assertions passed for real cache operators and isolated original step method with synthetic outputs. No learned model inference or task competence evidence."
+        }
+      ],
+      "known_integration_failures": [
+        "Default eval has num_envs=16 but planning asserts num_envs==1; explicit override would be needed.",
+        "Atari runtime/ROM not found in bounded inspected local locations; official older dependency stack not reproduced.",
+        "Tokenizer construction requests pretrained VGG16 and LPIPS assets; implicit downloads would require explicit handling.",
+        "Parent seed set after environment processes start; ALE state/seed pairing not established.",
+        "AgentEnv applies updated done mask before accumulating terminal reward; an independent raw-reward recorder would be needed.",
+        "MCTS saves unchanged member root cache after advancing an explicit copy; no complete MCTS/task effect measured."
+      ],
+      "reusable_entrypoints": [
+        "scripts/probe_jowa_cache_isolation.py",
+        "vendor/JOWA/eval/eval.sh"
+      ],
+      "caches": [
+        "runs/jowa_cache_isolation_20261015"
+      ],
+      "limitations": [
+        "Only source and CPU semantics verified; not model health or Clean capability.",
+        "Storage-copy exclusion does not address every full-model/RNG/concurrency dependency.",
+        "Do not interpret a game-identity swap as preference-only Goal-Swap."
+      ],
+      "recommended_reuse_status": "Preserve source and pointer metadata; do not start weights/runtime setup for the excluded cache-aliasing candidate.",
+      "sources": [
+        "reports/jowa_rejected_branch_decision_20261015.json",
+        "reports/jowa_native_interface_feasibility_20261015.json"
+      ]
+    },
+    {
+      "id": "gensafenav",
+      "name": "GenSafeNav: pretrained GST with conformal-input navigation actor",
+      "status": "native_clean_reproduced_distinct_uncertainty_expansion_contact_gate_negative",
+      "code_paths": [
+        "vendor/GenSafeNav"
+      ],
+      "source_revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+      "checkpoint_paths": [
+        {
+          "path": "vendor/GenSafeNav/trained_models/Ours_GST/checkpoints/05207.pt",
+          "exists": true,
+          "bytes": 10026423,
+          "is_lfs_pointer": false
+        },
+        {
+          "path": "vendor/GenSafeNav/gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+          "exists": true,
+          "bytes": 827916,
+          "is_lfs_pointer": false
+        }
+      ],
+      "checkpoint_availability": "Two exact official matched Git blobs downloaded and strict-loaded: Ours_GST05207 actor and configured _rand epoch100 GST. No nonrand substitution.",
+      "forecast_inputs": {
+        "observations": "Recent per-human trajectories and sampled visibility masks.",
+        "task_context": "No independent Goal or candidate robot-action conditioning."
+      },
+      "forecast_used_by_native_decisions": {
+        "source_confirmed": true,
+        "local_clean_task_reproduced": true,
+        "path": "GST future positions plus five per-human/horizon conformity radii feed the native17-dimensional pedestrian features and recurrent RL actor."
+      },
+      "validated_clean_evidence": [
+        {
+          "source": "runs/gensafenav_feedback_selection_gate_20261015/summary.json",
+          "case": 0,
+          "seed": 42,
+          "success": true,
+          "collision": false,
+          "physical_steps": 119,
+          "native_wrapped_return": 30.18506645015441,
+          "elapsed_seconds": 9.074042633990757,
+          "scope": "One CPU case only; not a population capability estimate."
+        }
+      ],
+      "validated_resource_evidence": [
+        "runs/gensafenav_resources_20261015/provenance.json",
+        "runs/gensafenav_resources_20261015/runtime_import_gate.json",
+        "runs/gensafenav_resources_20261015/runtime_provenance.json"
+      ],
+      "known_integration_failures": [
+        "Saved GST device must match actor backend.",
+        "Native unregistered constant_std bias hard-codes CUDA; probe CPU adapter preserves values/type/forward. First failure before physical actions is retained.",
+        "Native valid-event residual indexing is not physical-time alignment; preserved in Clean, corrected only in shadows.",
+        "Human replacement after observation construction can produce invalid sorted-row assignments; primary forecasts require exact GST-to-consumed identity."
+      ],
+      "reusable_entrypoints": [
+        "scripts/fetch_gensafenav_resources.py",
+        "scripts/probe_gensafenav_feedback_selection.py",
+        "scripts/analyze_gensafenav_feedback_selection.py",
+        "scripts/probe_gensafenav_uncertainty_expansion.py"
+      ],
+      "caches": [
+        "runs/gensafenav_feedback_selection_gate_20261015",
+        "runs/gensafenav_resources_20261015",
+        "runs/gensafenav_uncertainty_expansion_20261016"
+      ],
+      "limitations": [
+        "Forecasting navigation agent, not a candidate-action-conditioned WM or independent Goal-Swap confirmation.",
+        "Only one actual Clean episode; three shadow calibrators are not three policy or recovery rollouts.",
+        "Fixed first-reentry qualification failed against the same-count control; no attacker, harm, defense or generalization."
+      ],
+      "recommended_reuse_status": "Reuse verified assets for a distinct supported question; do not expand the failed fixed candidate.",
+      "sources": [
+        "reports/gensafenav_feedback_selection_decision_20261015.json",
+        "reports/gensafenav_feedback_selection_review_20261015.json"
+      ],
+      "additional_consumer_evidence": [
+        {
+          "report": "reports/cross_question_pilot_decision_20261016.json",
+          "run": "runs/gensafenav_uncertainty_expansion_20261016",
+          "status": "completed_fixed_same_state_safety_panel_no_new_contact",
+          "scope": "119-state shadow policy uncertainty expansion; exact original physical trace; independent one-interval geometry. No complete shadow task, attacker, defense or generalization claim."
+        }
+      ]
+    }
+  ],
+  "vendor_resources": [
+    {
+      "id": "A2World",
+      "code_path": "vendor/A2World",
+      "status": "see_detailed_model_entry",
+      "model_id": "a2world"
+    },
+    {
+      "id": "ActSWM",
+      "code_path": "vendor/ActSWM",
+      "status": "source_audited",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Action-conditioned JEPA with CEM goal ranking; single-zero-anchor hypothesis rejected as contrastive underconstraint.",
+      "sources": [
+        "runs/actswm_anchor_contrast_source_audit_round71/summary.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "AlphaBrain",
+      "code_path": "vendor/AlphaBrain",
+      "status": "see_detailed_model_entry",
+      "model_id": "alphabrain"
+    },
+    {
+      "id": "BabaInWonderland",
+      "code_path": "vendor/BabaInWonderland",
+      "status": "native_repair_and_feedback_pilots",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Native puzzle/program history and feedback experiments; no pretrained neural-WM task checkpoint qualified.",
+      "sources": [
+        "configs/baba_rejection_learning_screen.json",
+        "scripts/pilot_baba_native_repair.py"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "BabaInWonderland_coverage_probe",
+      "code_path": "vendor/BabaInWonderland_coverage_probe",
+      "status": "separate_probe_worktree",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Preserve coverage-probe distinction from native baseline.",
+      "sources": [
+        "configs/baba_rejection_learning_screen.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "BabaInWonderland_demo",
+      "code_path": "vendor/BabaInWonderland_demo",
+      "status": "separate_worktree_or_demo",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Preserve its identity; not an independent model.",
+      "sources": [
+        "configs/baba_rejection_learning_screen.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "CausalGame",
+      "code_path": "vendor/CausalGame",
+      "status": "native_capability_gate_failed",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Antenna_trap seed2 hybrid actor reached703/1000 below75% gate, no attack result.",
+      "sources": [
+        "configs/causalgame_feasibility.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "DMO_code",
+      "code_path": "vendor/DMO_code",
+      "status": "see_detailed_model_entry",
+      "model_id": "dmo"
+    },
+    {
+      "id": "DiscoverPhysics",
+      "code_path": "vendor/DiscoverPhysics",
+      "status": "native_interface_and_comparator_pilots",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Existing interface/contrast-transfer and same-data power baseline caches; no new large WM checkpoint qualified.",
+      "sources": [
+        "runs/discoverphysics_interface_prepare_v1",
+        "runs/discoverphysics_same_data_power_baseline_v0"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "DiscoveryWorld",
+      "code_path": "vendor/DiscoveryWorld",
+      "status": "environment_and_api_agent_pilots",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Native science environment traces and calibration/relocation tests; consult corresponding screens before reuse.",
+      "sources": [
+        "configs/discoveryworld_success_calibration_screen.json",
+        "configs/discoveryworld_plant_relocation_screen.json",
+        "scripts/pilot_discoveryworld_native.py"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "FACT",
+      "code_path": "vendor/FACT",
+      "status": "see_detailed_model_entry",
+      "model_id": "fact"
+    },
+    {
+      "id": "Feedback_World_Model",
+      "code_path": "vendor/Feedback_World_Model",
+      "status": "presentation_site_only",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Inspected checkout has project page but no model/weights/dataset/evaluator implementation.",
+      "sources": [
+        "runs/feedback_world_model_source_audit_20261010/summary.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "FlowEvo",
+      "code_path": "vendor/FlowEvo",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "HeXA",
+      "code_path": "vendor/HeXA",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "LIBERO",
+      "code_path": "vendor/LIBERO",
+      "status": "environment_used_by_core_models",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Physical check_success, BDDL/init files, raw multiview camera; seeds and controllers require exact replay rather than sim state alone.",
+      "sources": [
+        "scripts/pilot_worldagen_prediction_contract.py",
+        "scripts/pilot_cosmos_policy_native_task_gate.py"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "MBDPO",
+      "code_path": "vendor/MBDPO",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "MoSim",
+      "code_path": "vendor/MoSim",
+      "status": "see_detailed_model_entry",
+      "model_id": "mosim"
+    },
+    {
+      "id": "OpenWAM",
+      "code_path": "vendor/OpenWAM",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "SafePred",
+      "code_path": "vendor/SafePred",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "Risk forecasts feed filtering and official WASP persistent plan updates; consumer source confirmed at pinned commit. CPU operator probe preserves native methods but substitutes model and external services.",
+      "note": "Native task Clean and matched environment remain unqualified. Source files omitted by sparse checkout are present in the fixed git tree. Synthetic CPU routing evidence is not model/task execution.",
+      "sources": [
+        "reports/safepred_branch_ownership_decision_20261015.json",
+        "runs/safepred_branch_ownership_probe_20261015/summary.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "ScienceWorld",
+      "code_path": "vendor/ScienceWorld",
+      "status": "environment_validated",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Official boiling sequence score100 demonstrates environment setup, not model-agent success.",
+      "sources": [
+        "configs/scienceworld_dependencies.txt",
+        "scripts/pilot_scienceworld.py"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "WorldAgen",
+      "code_path": "vendor/WorldAgen",
+      "status": "see_detailed_model_entry",
+      "model_id": "worldagen"
+    },
+    {
+      "id": "WorldEvolver",
+      "code_path": "vendor/WorldEvolver",
+      "status": "native_modules_with_local_environment_adapter",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Original prediction/rule extraction/retrieval/update modules called through local adapters; confidence gate disabled in early measurements, not full published task reproduction.",
+      "sources": [
+        "src/wm_security/native.py",
+        "scripts/pilot_scienceworld.py",
+        "reports/research_progress.html"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "WorldMind",
+      "code_path": "vendor/WorldMind",
+      "status": "partial_native_agent_adapter",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Native reflection/storage/retrieval plus WMReactAgent adapter exercised; word-overlap retrieval fallback, not full native embedding retrieval benchmark.",
+      "sources": [
+        "runs/worldmind_retrieval_official_actor_v1/status.json",
+        "scripts/pilot_worldmind_process_replay.py",
+        "scripts/pilot_worldmind_retrieval_actor.py"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "WorldMind_selected",
+      "code_path": "vendor/WorldMind_selected",
+      "status": "selected_source_subset",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Selected native agent modules; see main WorldMind adapter limits.",
+      "sources": [
+        "src/wm_security/worldmind_native.py"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "arc_public_envs",
+      "code_path": "vendor/arc_public_envs",
+      "status": "environment_dependency",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Public ARC environments used by exploration resources; no model health inferred.",
+      "sources": [
+        "configs/opine_state_synchronization_screen.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "diamond",
+      "code_path": "vendor/diamond",
+      "status": "source_audited",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "2D U-Net previous observation/action conditioning; proposed temporal-attention route absent. No local task checkpoint qualified.",
+      "sources": [
+        "runs/diamond_source_audit_round64/summary.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "dm_alchemy",
+      "code_path": "vendor/dm_alchemy",
+      "status": "environment_and_local_relation_compiler",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Native environment plus preparation/relation-compilation adapters, not a new neural WM checkpoint.",
+      "sources": [
+        "configs/alchemy_relation_compiler_screen.json",
+        "configs/alchemy_preparation_screen.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "dr-well",
+      "code_path": "vendor/dr-well",
+      "status": "screened_agent_resource",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Success-credit pilot and dependency manifest retained; no new task health claim in this inventory.",
+      "sources": [
+        "configs/drwell_success_credit_screen.json",
+        "configs/drwell_dependencies.txt"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "interphyre",
+      "code_path": "vendor/interphyre",
+      "status": "native_environment_program_search_pilots",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "API/program/continuous search variants exist; no qualified pretrained task policy identified here.",
+      "sources": [
+        "configs/interphyre_program_search_screen.json",
+        "configs/interphyre_continuous_search_screen.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "jepa-wms",
+      "code_path": "vendor/jepa-wms",
+      "status": "see_detailed_model_entry",
+      "model_id": "jepa_wm"
+    },
+    {
+      "id": "latent-cbf",
+      "code_path": "vendor/latent-cbf",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "latent-safety",
+      "code_path": "vendor/latent-safety",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "le-wm",
+      "code_path": "vendor/le-wm",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "mbrl-lib",
+      "code_path": "vendor/mbrl-lib",
+      "status": "see_detailed_model_entry",
+      "model_id": "mbrl_lib"
+    },
+    {
+      "id": "neuronbench",
+      "code_path": "vendor/neuronbench",
+      "status": "native_environment_with_added_forecaster",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Full-voltage shared forecaster solves two noiseless development instances by conventional system identification, not complete MDA or security claim.",
+      "sources": [
+        "configs/neuronbench_mechanism_screen.json",
+        "src/wm_security/neuron_forecaster.py"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "opine-world",
+      "code_path": "vendor/opine-world",
+      "status": "actual_postreset_roots_qualified_one_fresh_native_planner_no_plan",
+      "checkpoint_availability": "Two author-released learned program artifacts available; no new neural model. Actual native L6 snapshots now qualified.",
+      "native_decision_path": "Native plan_from_model delegates to the learned generated game_engine planner and validates its proposed plan; the generic BFS helper is not called on this entry path.",
+      "note": "实际L6根已取得：658进入后至784共127帧全像素精确，四个真实环境快照可复用；旧完整prefix失配保留。round086 fresh原生规划组件在root762默认40层/30秒下调用174次transition后0.420秒返回无计划；0真实候选执行，return/success均未测，不扩展该固定干预。旧factual-prefix初始化不能直接当原生planner记忆。",
+      "sources": [
+        "configs/opine_state_synchronization_screen.json",
+        "reports/opine_native_planner_contract_correction_20261015.json",
+        "reports/opine_native_root_gate_20261015.json"
+      ],
+      "recommended_reuse_status": "Reuse qualified snapshots and code without repeating prefix replay. Do not expand the failed fixed native Clean condition; distinguish new factual-memory assimilation or planner components explicitly.",
+      "reusable_artifacts": [
+        "runs/opine_query_memory_v0/round_063/game_engine.py",
+        "runs/opine_query_memory_v0/round_086/game_engine.py",
+        "runs/opine_level_reset_replay_snapshotfix_20261015",
+        "scripts/probe_opine_level_reset_replay.py",
+        "scripts/probe_opine_native_clean_root.py"
+      ]
+    },
+    {
+      "id": "runtime",
+      "code_path": "vendor/runtime",
+      "status": "binary_dependency",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "MuJoCo2.1.0 runtime directory; not model code.",
+      "sources": [
+        "vendor/runtime/mujoco210"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "tdmpc2",
+      "code_path": "vendor/tdmpc2",
+      "status": "see_detailed_model_entry",
+      "model_id": "tdmpc2"
+    },
+    {
+      "id": "unified-world-model",
+      "code_path": "vendor/unified-world-model",
+      "status": "source_audited",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Official config observations0-1/actions1-16/targets17-18 predicts after action segment; cannot test earlier-output/later-action suffix premise. No local checkpoint qualified.",
+      "sources": [
+        "reports/research_progress.html"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "wav_minigrid",
+      "code_path": "vendor/wav_minigrid",
+      "status": "oracle_and_added_selector_probe",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "World Action Verifier MiniGrid resources; local selector is an added composition, not full verifier reproduction.",
+      "sources": [
+        "configs/world_model_wav_alias_screen.json"
+      ],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "world-action-planner",
+      "code_path": "vendor/world-action-planner",
+      "status": "source_present_not_qualified_in_this_archive",
+      "checkpoint_availability": "unknown_or_not_applicable; no complete local task checkpoint qualified here",
+      "native_decision_path": "See cited source; otherwise not audited in this archive",
+      "note": "Code directory exists. No completed matching Clean task evidence or usable model checkpoint was verified in this archive. Do not equate checkout presence with availability.",
+      "sources": [],
+      "recommended_reuse_status": "Read existing evidence only; do not launch new model/setup work solely to fill this inventory."
+    },
+    {
+      "id": "nano-world-model",
+      "code_path": "vendor/nano-world-model",
+      "status": "see_detailed_model_entry",
+      "model_id": "nanowm_pointmaze",
+      "source_revision": "cc1f151a9d8c7d7afd0cdc5de6a9ae220a7c90c0"
+    },
+    {
+      "id": "jowa",
+      "code_path": "vendor/JOWA",
+      "status": "see_detailed_model_entry",
+      "model_id": "jowa",
+      "source_revision": "8cb02c5e6768a948c566a9012ac8a4fc420c6970"
+    },
+    {
+      "id": "gensafenav",
+      "code_path": "vendor/GenSafeNav",
+      "status": "pinned_partial_runtime_snapshot_all186_files_git_blob_verified",
+      "model_id": "gensafenav",
+      "source_revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767"
+    }
+  ],
+  "additional_remote_candidate": {
+    "id": "unizero",
+    "status": "bounded_public_checkpoint_search_failed",
+    "source": "reports/unizero_resource_feasibility_20261014.json",
+    "decision": "MCTS learned forecasts are relevant in source, but no matching usable checkpoint was located in the audited official resources. This is not proof of worldwide absence. No model/env run."
+  },
+  "environments": {
+    "virtualenvs": [
+      {
+        "path": ".venv-a2world",
+        "python_version_recorded_in_pyvenv_cfg": "3.11.13",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-alchemy",
+        "python_version_recorded_in_pyvenv_cfg": "3.11.13",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-causalgame",
+        "python_version_recorded_in_pyvenv_cfg": "3.12.3",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-discoverphysics",
+        "python_version_recorded_in_pyvenv_cfg": "3.12.3",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-discoveryworld",
+        "python_version_recorded_in_pyvenv_cfg": "3.12.3",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-drwell",
+        "python_version_recorded_in_pyvenv_cfg": "3.14.4",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-interphyre",
+        "python_version_recorded_in_pyvenv_cfg": "3.11.13",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-jepa-native",
+        "python_version_recorded_in_pyvenv_cfg": "3.11.13",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-native-local",
+        "python_version_recorded_in_pyvenv_cfg": "3.14.4",
+        "includes_system_site_packages": "true",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-neuronbench",
+        "python_version_recorded_in_pyvenv_cfg": "3.11.13",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-opine",
+        "python_version_recorded_in_pyvenv_cfg": "3.12.9",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-scienceworld",
+        "python_version_recorded_in_pyvenv_cfg": "3.12.3",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-worldagen",
+        "python_version_recorded_in_pyvenv_cfg": "3.11.13",
+        "includes_system_site_packages": "false",
+        "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      }
+    ],
+    "core_bindings": [
+      {
+        "models": [
+          "worldagen",
+          "alphabrain",
+          "cosmos_policy"
+        ],
+        "runtime": ".venv-worldagen",
+        "environment": "vendor/LIBERO + recorded robosuite/MuJoCo stack; EGL and exact native action dtype matter",
+        "source": "reports/worldagen_native_inference_audit_20261014.json"
+      },
+      {
+        "models": [
+          "jepa_wm",
+          "dino_wm"
+        ],
+        "runtime": ".venv-jepa-native",
+        "environment": "MetaWorld native runner with PYTHONPATH=/home/xhj/WM_Security/.deps/dino_mujoco330; separate old2.3.7 results retained",
+        "source": "reports/dino_metaworld_mujoco330_runtime_independent_audit_20261015.json"
+      },
+      {
+        "models": [
+          "tdmpc2"
+        ],
+        "runtime": "Historical execution package versions bound in per-run provenance; do not infer from .venv-worldagen audit interpreter",
+        "environment": "DMControl real episodes; installed engine/control versions affect replay",
+        "source": "reports/tdmpc_mechanism_reassessment_20261015.json"
+      },
+      {
+        "models": [
+          "a2world"
+        ],
+        "runtime": ".venv-a2world",
+        "environment": "Denoiser-only probe; no complete control environment qualified",
+        "source": "scripts/pilot_a2world_fixed_noise_suffix.py"
+      },
+      {
+        "models": [
+          "nanowm_pointmaze"
+        ],
+        "runtime": ".venv-jepa-native with .venv-a2world Torch2.6.0+cu124 and .deps/nanowm_runtime overlay",
+        "environment": "Native PointMaze/mujoco-py CPU OSMesa; no Clean planner task capability established",
+        "source": "runs/nanowm_resource_gate_v2/summary.json"
+      }
+    ]
+  },
+  "shared_interfaces": {
+    "api_client_code": "src/wm_security/client.py",
+    "api_health": "Not checked during archive. Historical API-backed agents/results are not evidence of present endpoint availability.",
+    "secret_policy": "Only existing client code path is indexed; endpoint credentials and their storage are intentionally omitted.",
+    "normalization_and_provenance": "Reuse model-specific codec and provenance helpers; no universal image/action conversion is valid across these models."
+  },
+  "interrupted_new_planner": {
+    "status": "not_implemented_not_executed",
+    "proposed_name": "WorldAgen corrected image-goal Clean development planner",
+    "runner_file_created": false,
+    "config_file_created": false,
+    "model_calls": 0,
+    "environment_calls": 0,
+    "reason": "User changed priority to systematic archiving and minimum sufficient experiments before any file or run was created.",
+    "unexecuted_design_limits": [
+      "Same-source321-step endpoint adds image-goal privilege, not an independent expert demonstration.",
+      "Three roots from one successful episode are correlated.",
+      "Candidate0 must restore full native wrapper history and reproduce source remainder.",
+      "Always-candidate1 must also be reported; beating candidate0 and uniform alone can be explained by always choosing the perturbation."
+    ]
+  },
+  "activity": {
+    "model_loads": 0,
+    "model_forwards": 0,
+    "environment_instances": 0,
+    "api_calls": 0,
+    "training_updates": 0,
+    "large_file_hashes_recomputed": 0,
+    "existing_files_modified": 0
+  },
+  "coverage": {
+    "models_top_level_directories_observed": [
+      "A2World",
+      "AlphaBrain",
+      "CosmosPolicy",
+      "DINO_WM",
+      "FACT",
+      "JEPA_WM",
+      "WorldAgen",
+      "mosim",
+      "nanowm_pointmaze",
+      "nanowm_sd_vae",
+      "tdmpc2"
+    ],
+    "vendor_top_level_directories_covered": 44,
+    "detailed_model_entries": 14,
+    "not_exhaustive_claim": "This maps every current models/, checkpoints/ and vendor/ top-level directory, plus selected reusable run-local models. It is not an exhaustive checkpoint search across all run/cache trees.",
+    "checkpoints_top_level_directories_observed": [
+      "clip"
+    ],
+    "remote_resource_lead_entries": 7,
+    "remote_resource_lead_scope": "Separately listed source/resource leads; not counted as downloaded local models or validated Clean capability."
+  },
+  "additional_checkpoint_resources": [
+    {
+      "path": "checkpoints/clip/ViT-B-32.pt",
+      "exists": true,
+      "bytes": 353976522,
+      "role": "Separate top-level CLIP ViT-B/32 resource path used by the original WorldAgen constructor fallback. Current native build helper redirects clip.load to models/WorldAgen/ViT-B-32.pt.",
+      "relation_to_model_path": {
+        "path": "models/WorldAgen/ViT-B-32.pt",
+        "same_size": true,
+        "same_filesystem_inode": true,
+        "byte_identity_verified_in_this_archive": false
+      },
+      "recorded_sha256": null,
+      "limitation": "Both paths currently resolve to the same filesystem inode. The earlier models/WorldAgen provenance is available, but this archive does not refresh the hash or independently validate current weight contents.",
+      "recommended_reuse_status": "Prefer the existing provenance-bound models/WorldAgen path for native execution."
+    }
+  ],
+  "remote_resource_leads": [
+    {
+      "id": "ma_wam_remote",
+      "name": "MA-WAM + CoFlow native joint-action planner",
+      "availability": "Published remote checkpoints and source; not downloaded or evaluated locally",
+      "paper": "https://arxiv.org/html/2609.31281v1",
+      "code": "https://github.com/ma-wam/MA-WAM",
+      "world_model_checkpoint_repository": "https://huggingface.co/ma-wam/MA-WAM",
+      "policy_checkpoint_repository": "https://huggingface.co/coflow-project/CoFlow-checkpoints",
+      "native_decision_path": "Frozen policy proposes joint actions; routed dynamics/reward predicts returns; native selector executes the first complete joint action and replans.",
+      "published_manifest": {
+        "world_model_files": 30,
+        "uncompressed_bytes": 131031434,
+        "weight_bytes_not_downloaded": true
+      },
+      "source_paths": [
+        "runs/ma_wam_source_feasibility_v1/summary.json",
+        "runs/ma_wam_source_feasibility_v1/world_model/moe_dynamics.py",
+        "runs/ma_wam_source_feasibility_v1/world_model/moe_reward.py",
+        "runs/ma_wam_source_feasibility_v1/run_scripts/plan_eval_paired.py"
+      ],
+      "mechanism_screen": "Candidate axis remains batch-isolated; agent-token mixing is intentional within one joint state. No independent low-trust metadata input found in the inspected planner.",
+      "limitations": [
+        "Published clean gains and matched-candidate results are author reports, not local replication.",
+        "Checkpoint variants, task shapes, policy seed/step and normalizers need matching if a justified experiment is accepted.",
+        "Physical remoteness alone does not imply unchanged observations, future interactions or joint reward.",
+        "No new security mechanism accepted; no resource installation or capability panel justified merely by resource availability."
+      ],
+      "goal_message_source_followup_20261015": {
+        "source_revision": "c620525bf180ef3d9e0b9f2f8a964a3c233dab65",
+        "finding": "Inspected dynamics forward(obs, act), reward forward(obs, act, next_obs), and native planning calls have no separate Goal or message argument. Joint-agent feature mixing is intentional; changing another agent observation/action changes physical joint conditioning, not an established preference-only metadata channel.",
+        "source_paths": [
+          "runs/ma_wam_source_feasibility_v1/world_model/moe_dynamics.py",
+          "runs/ma_wam_source_feasibility_v1/world_model/moe_reward.py",
+          "runs/ma_wam_source_feasibility_v1/run_scripts/plan_eval_paired.py"
+        ],
+        "source_lines": {
+          "moe_dynamics.forward": 84,
+          "moe_reward.forward": 59,
+          "plan_eval_paired.rollout_calls": 181
+        },
+        "scope": "Only the three pinned source files already cached; not a claim about every repository interface. No new weight download, installation, model execution or environment run."
+      }
+    },
+    {
+      "id": "latent_cbf_remote",
+      "name": "latent_cbf native diffusion-policy latent safety filter (Dubins simulation)",
+      "availability": "Official source inspected at a fixed revision; no directly reusable checkpoint/normalizer bundle found in the checked README, complete repository tree and GitHub releases. No local model qualification.",
+      "code": "https://github.com/CMU-IntentLab/latent_cbf",
+      "revision": "d644309db5d46d414ac70b18bed085b030ff9e5c",
+      "native_decision_path": "Diffusion proposal is denormalized and clipped to [-2,2] before the filter. RSSM observe reconstructs a latent from historical observations/actions; the current nominal plus25 grid actions are scored directly by a learned safety Q critic. The selected control is passed to an executor whose official diffusion preset also clips to [-2,2]. There is no current-candidate world-model future rollout in this acceptance path.",
+      "published_manifest": {
+        "tree_entries": 152,
+        "tree_truncated": false,
+        "checked_channels": [
+          "fixed-revision official README and recursive tree",
+          "official GitHub releases",
+          "configs/paths.py and .gitignore"
+        ],
+        "released_task_weights_or_norm_files_identified": false,
+        "required_unavailable_bundle": [
+          "diffusion checkpoint plus agent/experiment configs and ob_norm/ac_norm",
+          "RSSM checkpoint",
+          "GP or no-GP safety actor/critic checkpoint"
+        ],
+        "weight_bytes_downloaded": false,
+        "scope": "No .ckpt/.pt/.pth/.safetensors or concrete ob_norm/ac_norm files were found in those published surfaces; README describes generated training outputs. This is not a claim that authors have no private assets."
+      },
+      "source_paths": [
+        "vendor/latent-safety/README.md",
+        "reports/latent_cbf_alias_carrier_screen_20261015.json",
+        "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/factory.py#L59",
+        "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L256",
+        "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L426",
+        "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/dubins/dubins_env.py#L159",
+        "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/configs/presets.py#L81",
+        "https://github.com/CMU-IntentLab/latent_cbf/releases"
+      ],
+      "mechanism_screen": "No-Go for transferring the existing DINO saturation-alias operation through this official native provider: upstream finite requests with the same [-2,2] clip become the same scalar before safety scoring/history. This is a carrier-feasibility exclusion, not a new mechanism or general safety guarantee.",
+      "limitations": [
+        "FilteredDiffusionController does not independently clip arbitrary replacement-controller outputs; the inspected factory supplies the bounded native DiffusionController. A new post-clip writer or replacement provider must not be presented as an existing restricted input interface.",
+        "Concrete ac_max/ac_min files were unavailable, so normalized/fallback-grid physical bounds were not numerically qualified. This does not remove the native nominal pre-clipping fact.",
+        "No model, environment, safety outcome or local Clean capability was evaluated; no weights downloaded, repository cloned or training started."
+      ],
+      "applied_action_feedback_screen": {
+        "report": "reports/latent_cbf_action_feedback_contract_20261015.json",
+        "route_result": "runs/latent_cbf_action_feedback_20261015/summary.json",
+        "finding": "Conditional nominal/applied mismatch in native history, source and synthetic method routing confirmed; no task consequence or new mechanism claim. Matched pretrained bundle still unavailable in checked channels."
+      }
+    },
+    {
+      "id": "unisafe",
+      "name": "UNISafe latent safety filtering",
+      "availability": "Official pretrained archive link present and public file metadata HTTP200; archive not downloaded or validated",
+      "code": "https://github.com/CMU-IntentLab/UNISafe",
+      "paper": "https://arxiv.org/abs/2505.00779",
+      "source_revision_isaaclab": "ab0fdf87f38edefa48b54a291ec5b7156c17b6e0",
+      "source_revision_dubins": "ae65b959d3d4ee35a6cfe228d8777a13927f8ef3",
+      "native_decision_path": "Actual posterior plus nominal candidate → dynamics.img_step → next feature → minimum safety critics → threshold → nominal or safety-policy action. Filtered action feeds subsequent belief.",
+      "mechanism_screen": "No nominal-versus-executed history mismatch in either checked IsaacLab entry point. In-place mutation updates shared policy history as well.",
+      "checkpoint_scope": "Linked IsaacLab bundle cannot be assumed to contain matching Dubins weights; complete Dubins tree has no learned checkpoint.",
+      "limitations": [
+        "No local model load, native Clean, unsafe acceptance or real environment replay.",
+        "IsaacLab quantitative entry references missing config_filter_normal.yaml; action_denom absent from public config.",
+        "No runtime installation or weight download for this excluded feedback operation."
+      ],
+      "source_paths": [
+        "reports/unisafe_action_feedback_source_screen_20261015.json",
+        "reports/action_feedback_candidate_decision_20261015.json",
+        "runs/unisafe_source_feasibility_20261015/primary_weight_link_metadata.json",
+        "runs/unisafe_source_feasibility_20261015/dubins_source_record.json"
+      ]
+    },
+    {
+      "id": "ladiwm_remote",
+      "name": "LaDiWM forward imagination-conditioned diffusion policy",
+      "availability": "Pinned native source reviewed; official weight-bundle HTML preview returned200, binary contents/access/size and compatibility unvalidated. No local weights or Clean evaluation.",
+      "report": "reports/ladiwm_native_carrier_screen_20261015.json",
+      "code": "https://github.com/GuHuangAI/LaDiWM",
+      "paper": "https://proceedings.mlr.press/v305/huang25a.html",
+      "source_revision": "d9927c72b1be23870de034417d3a4fb7a8f358dc",
+      "source_paths": [
+        "reports/ladiwm_native_carrier_screen_20261015.json",
+        "runs/ladiwm_source_feasibility_20261015/source_metadata.json",
+        "runs/ladiwm_source_feasibility_20261015/tree.json"
+      ],
+      "native_decision_path": "Four real observation frames and six proposed actions condition a WM called with task_emb=None. Six imagined feature steps are appended locally to real features and consumed by a forward diffusion policy; one of seven generated actions executes and six condition the next forecast.",
+      "native_path_qualification": "Source-confirmed forecast consumer, not measured causal action effect or local task competence.",
+      "mechanism_screen": {
+        "backward_action_optimization": "Absent in inspected native path: policy/WM sampling uses no_grad and detached forecasts; diffusion sampling is not planning by world-model action gradients.",
+        "imagined_to_factual_history": "Not found in default path: persistent queues receive real inputs, imagined concatenation is local, and loop_times defaults to0 in the checked evaluator.",
+        "independent_forecast_goal": "Absent in inspected caller: instruction conditions policy, but WM receives observation history, None and proposed actions."
+      },
+      "published_weight_preview": {
+        "url": "https://drive.google.com/file/d/1E3X_RfdZISwOW2l5SWuMUSiJmRnX-0Dg/view",
+        "http_status": 200,
+        "filename": "weight_10demo.zip",
+        "metadata": "runs/ladiwm_source_feasibility_20261015/weight_preview_metadata.json",
+        "binary_download_permission_verified": false,
+        "contents_size_compatibility_verified": false
+      },
+      "ablation_control_requirement": "Step0 masks imagined content after WM sampling. WM and policy share global Torch RNG; any future removal ablation must control changed random draws. This is a source-level control requirement, not a new mechanism or measured effect.",
+      "limits": [
+        "No checkpoint download/load, model/environment execution, installation or local Clean qualification.",
+        "No newly accepted security experiment; source exclusions apply to the inspected native/default paths, not every possible future deployment.",
+        "HTTP200 public preview is neither verified binary access nor proof of denial; no gated-access request was made."
+      ],
+      "reuse_status": "Retain source-qualified forward-consumer lead; do not download the bundle or establish a Clean panel for the excluded mechanisms."
+    },
+    {
+      "id": "adwm_remote",
+      "name": "AD-WM simulation world models and native CEM",
+      "availability": "Official public listing has15 checkpoints across five tasks and three seeds; displayed repository size1.16GB. No local weight download/load or Clean qualification.",
+      "report": "reports/prior_scope_and_carrier_refresh_20261015.json",
+      "code": "https://github.com/ad-wm/ad-wm-code",
+      "paper": "https://arxiv.org/html/2609.30264v2",
+      "model_repository": "https://huggingface.co/ad-wm/ad-wm",
+      "source_revision_scope": "Official current main source retrieved on 2026-10-15; not an immutable source revision or local runtime validation.",
+      "native_decision_path": "Native CEM evaluates predicted terminal latent goal distance, selects an action block and replans; auxiliary inverse/action-recovery heads are discarded at deployment.",
+      "published_manifest": {
+        "url": "https://huggingface.co/ad-wm/ad-wm/blob/main/MANIFEST.csv",
+        "checkpoint_count": 15,
+        "tasks": [
+          "Cube",
+          "Reacher",
+          "TwoRoom",
+          "PushT",
+          "Scene"
+        ],
+        "seeds": [
+          3072,
+          4096,
+          6144
+        ],
+        "repository_size_displayed": "1.16 GB",
+        "size_is_remote_metadata": true,
+        "real_robot_assets_included": false
+      },
+      "mechanism_screen": "Inspected rollout flattens candidate axis into batch and scores terminal MSE per candidate; time-axis attention/feature-local LayerNorm and fixed dataset scaling supply no candidate-set-dependent scoring interface. This does not reopen wm_rejected_future.",
+      "source_paths": [
+        "reports/prior_scope_and_carrier_refresh_20261015.json"
+      ],
+      "limits": [
+        "Read current official main source, not an immutable revision or local runtime test.",
+        "Realized diagnostic cost is the model encoder distance at an actually executed endpoint, not environment reward.",
+        "No new attack mechanism or execution experiment accepted; resource availability alone is insufficient."
+      ],
+      "reuse_status": "Public simulation resource lead only; no download or capability panel scheduled."
+    },
+    {
+      "id": "badwam_remote",
+      "name": "BadWAM LIBERO IDM-WAM and joint-WAM resource leads",
+      "availability": "Public metadata lists gated model.pt and dataset statistics for two12GB models; no weights downloaded and no access request made.",
+      "report": "reports/prior_scope_and_carrier_refresh_20261015.json",
+      "code": "https://github.com/LiQiiiii/BadWAM",
+      "paper": "https://arxiv.org/html/2607.15207v2",
+      "collection": "https://huggingface.co/collections/LIQIIIII/badwam",
+      "native_decision_path_scope": "Paper describes future-to-IDM action decoding versus joint world/action generation. The released implementation was not fully audited or executed in this refresh.",
+      "published_resources": {
+        "libero_idm": {
+          "model_card": "https://huggingface.co/LIQIIIII/badwam-libero-idm-wam",
+          "files": [
+            "model.pt",
+            "dataset_stats.json",
+            "model_index.json"
+          ],
+          "weight_size_displayed": "12 GB",
+          "dataset_stats_size_displayed": "40.9 kB",
+          "access": "gated"
+        },
+        "libero_joint": {
+          "model_card": "https://huggingface.co/LIQIIIII/badwam-libero-joint-wam",
+          "files": [
+            "model.pt",
+            "dataset_stats.json",
+            "model_index.json"
+          ],
+          "weight_size_displayed": "12 GB",
+          "dataset_stats_size_displayed": "41 kB",
+          "access": "gated"
+        }
+      },
+      "source_paths": [
+        "reports/prior_scope_and_carrier_refresh_20261015.json"
+      ],
+      "security_scope": "Published research permission is bounded camera-tensor replacement. Imagination-preserving objective penalizes forecast distance rather than enforcing exact full-law or candidate-marginal equality; it does not establish a new independent Future-only writer here.",
+      "limits": [
+        "Displayed file sizes and listings are remote metadata, not locally measured or validated checkpoints.",
+        "Local compatibility, runtime cost and Clean ability are untested; paper attack evaluations are simulations, not physical robot trials.",
+        "A code-only GitHub repository does not imply linked weights are absent."
+      ],
+      "gated_access_requested": false,
+      "reuse_status": "Concrete gated resource lead only; no accepted experiment justifies an access request in this round."
+    },
+    {
+      "id": "worldscape_policy_remote",
+      "name": "WorldScape Policy 2.0 reasoning-memory WAM",
+      "availability": "Pinned native source cached; no weights downloaded, loaded or locally qualified.",
+      "report": "runs/worldscape_memory_source_20261015/summary.json",
+      "code": "https://github.com/manifoldai-research/WorldScape-Policy",
+      "commit": "2d60a5c0986df1d95d207586cc46bfd60b9a4035",
+      "source_cache": "runs/worldscape_memory_source_20261015",
+      "source_paths": [
+        "runs/worldscape_memory_source_20261015/summary.json",
+        "runs/worldscape_memory_source_20261015/source_files.json",
+        "runs/worldscape_memory_source_20261015/revision.json"
+      ],
+      "native_decision_path_scope": "Auto reasoning/perception event memory conditions native WAM action generation. PolicyRuntime separates committed memory from one pending output; execution precedes commit, and discard does not advance committed memory.",
+      "rejected_forecast_memory_screen": {
+        "status": "source_blocks_proposed_rejected_forecast_memory_operation",
+        "cache_protection": "Wan22 sample forks recursive KV/cross-attention state; predicted-video denoising does not retain KV updates. Later visual prefill uses actual observation latents.",
+        "partial_execution": "RoboTwin may execute a prefix of the24-control output. commit has no executed-count trimming parameter. Protection instead comes from not retaining generated-video KV or the unexecuted action suffix; success/step-limit discards pending output, otherwise the prefix is executed before commit.",
+        "reasoning_token_limit": "Current perception/planning tokens can persist after a committed prefix. This is reasoning history, not demonstrated ingestion of the unexecuted physical future as factual observation or assertion of subgoal completion.",
+        "client_acknowledgement_limit": "Websocket commit is a client acknowledgement, not physical execution attestation. False commit is outside the tested discard contract; no independent restricted attacker permission or multi-client isolation proof is inferred."
+      },
+      "published_resource_scope": "README advertises pretrained and RoboTwin posttrained checkpoints. Their files, compatibility, size, local Clean and runtime cost were not independently checked because the proposed mechanism was blocked at the source gate.",
+      "limits": [
+        "Source-only conclusion for this operation; no model/env or CPU operator test.",
+        "Not a blanket safety result, a new security family, or a revival of OPINE/JOWA."
+      ],
+      "reuse_status": "Retain as a negative source followup and explicit transaction-isolation example; no weight download or Clean experiment justified by this rejected-memory hypothesis."
+    },
+    {
+      "id": "dreamavoid_remote",
+      "name": "DreamAvoid critical-phase forecast/value action screening",
+      "availability": "Pinned source only; matched task assets and complete deployment helper not found in bounded official channels.",
+      "report": "reports/risk_forecast_consumer_screen_20261015.json",
+      "source_summary": "runs/dreamavoid_source_screen_20261015/summary.json",
+      "source_revision": "2202027291c0416dd35d418a9c031c8d23f4af30",
+      "code": "https://github.com/XianzheFan/DreamAvoid",
+      "source_cache": "runs/dreamavoid_source_screen_20261015",
+      "native_path": "Dream trigger -> SDE action proposals -> DreamDojo candidate rollouts -> whole-future value -> chosen action.",
+      "goal_boundary": "Independent service prompt/task fields, but missing native request helper and uninspected guidance semantics prevent a verified end-to-end Goal intervention contract.",
+      "checkpoint_loaded": false,
+      "local_clean_measured": false,
+      "reuse_status": "Keep source-only lead; no accepted mechanism or task pilot."
+    },
+    {
+      "id": "safedreamer_remote",
+      "name": "SafeDreamer native safety-cost CCE planner",
+      "availability": "Pinned official source, checkpoint, CUDA11/JAX0.3.25 runtime and official Safety-Gymnasium1.2.0 available locally. Native first seeded reset/rendering and six-round GPU query succeeded; full Clean task capability remains unmeasured.",
+      "report": "reports/native_safety_consumer_screen_20261016.json",
+      "source_summary": "runs/safedreamer_source_screen_20261016/summary.json",
+      "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+      "independent_review": "reports/safedreamer_source_review_20261016.json",
+      "code": "https://github.com/PKU-Alignment/SafeDreamer",
+      "source_cache": "runs/safedreamer_source_screen_20261016",
+      "checkpoint_repository": "https://huggingface.co/Weidong-Huang/SafeDreamer",
+      "checkpoint_revision": "80ef19ee7a7a8a105489100c1dc6e1681df2c97b",
+      "checkpoint_metadata_bytes": {
+        "osrp_vector_pointgoal1_seed0": 26564352,
+        "osrp_pointgoal1_seed0": 391867080
+      },
+      "native_path": "Evaluation selects CCE output; imagined cost controls a batch safe-count switch and elite action mean execution.",
+      "variant_boundary": "Vector geometric cost is nonnegative with strict threshold0, so the checked configuration never takes the safe-reward branch. Ordinary OSRP has threshold2 and a signed learned cost head; its safety gate is reachable in source.",
+      "confounds": [
+        "nonzero size padding duplicates index0",
+        "executed smoothed elite mean is not independently cost-checked"
+      ],
+      "permission_boundary": "Internal sampler; forecast-only writer would be a new research hook. No independent native Goal writer or external sampling control established.",
+      "checkpoint_loaded": true,
+      "local_clean_measured": false,
+      "accepted_new_experiment": false,
+      "reuse_status": "Runtime and calibrated caches reusable; fixed sampling safety-mode test stopped at preregistered no-crossing result. No seed/query/threshold sweeps or unqualified physical panel.",
+      "runtime_screen": "runs/safedreamer_runtime_screen_20261016/summary.json",
+      "runtime_readiness": "Native GPU first query23.765s, peak5122MiB; exact two final-round replays9.046s, peak4498MiB. First physical seed0 reset with both cameras succeeded. No actual action or full Clean episode.",
+      "evaluation_reproduction_requirements": [
+        "Explicit checkpoint variable-tree compatibility verification",
+        "Native-equivalent camera preprocessing and matched environment version",
+        "Physical initial-state seed/snapshot binding",
+        "Actual reward/cost recorder with driver action/reward time alignment",
+        "Separately count or disable only report inference"
+      ],
+      "code_paths": [
+        "vendor/SafeDreamer",
+        "scripts/probe_safedreamer_mode_gate.py",
+        "scripts/replay_safedreamer_mode_gate.py"
+      ],
+      "checkpoint_paths": [
+        {
+          "path": "models/SafeDreamer/osrp_pointgoal1_seed0.ckpt",
+          "exists": true,
+          "bytes": 391867080,
+          "sha256": "d201bde42bdc0959a3bdd98962df1982ee01681f128f199a4ebe8f14a818a6b5",
+          "sha_source": "runs/safedreamer_mode_mediator_gate_20261016/asset_fetch.json",
+          "verified_once_during_download": true,
+          "loaded": true
+        }
+      ],
+      "experiment_scope": "Only frozen first-query safety-mode feasibility gate and its registered dependent qualification; no automatic full panel.",
+      "latest_mode_gate": {
+        "report": "reports/safedreamer_mode_mediator_gate_20261016.json",
+        "protocol": "configs/safedreamer_mode_mediator_gate_20261016.json",
+        "status": "completed_fixed_native_mode_gate_no_crossing_stop",
+        "scientific_gate": "measured_no_mode_crossing_fixed_operation_stopped",
+        "scope": "One frozen first-query final-CEM intervention on the official pretrained OSRP model. Exact independent calibration; native/common safe counts462/449, both reward mode; zero actual actions. This is a fixed reachability null, not task safety or universal impossibility.",
+        "native_safe_count": 462,
+        "shared_safe_count": 449,
+        "threshold": 50,
+        "mode_crossing": false,
+        "native_query": "runs/safedreamer_mode_mediator_gate_20261016/native_query_attempt1/summary.json",
+        "replays": "runs/safedreamer_mode_mediator_gate_20261016/replay_attempt1/summary.json",
+        "independent_review": "reports/safedreamer_mode_actual_result_review_20261016.json",
+        "table": "reports/safedreamer_mode_mediator_gate_20261016.csv",
+        "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+        "environment_revision": "ae966e511b9927f06b39c727ca5c650136a4e696",
+        "full_clean_measured": false,
+        "actual_harm_measured": false,
+        "defense_measured": false,
+        "decision": "No query/root/seed/threshold/horizon/coupling search or physical expansion after the frozen null."
+      }
+    },
+    {
+      "id": "lgwm_runtime_verifier",
+      "name": "LGWM pretrained GUI transition verifier",
+      "status": "official_source_and_manifest_available_weight_metadata_verified_inference_unmeasured",
+      "world_model_bytes": 691486920,
+      "harm_head_bytes": 37200,
+      "source_paths": [
+        "reports/lgwm_verifier_candidate_decision_20261016.json",
+        "runs/lgwm_resource_qualification_20261016/model.json",
+        "runs/lgwm_resource_qualification_20261016/dataset.json"
+      ],
+      "repository": "https://github.com/jiamingzhang94/lgwm",
+      "weights": "https://huggingface.co/jiamingzz/lgwm",
+      "weights_downloaded": false
+    }
+  ],
+  "updated_on": "2026-10-16",
+  "incremental_updates": [
+    {
+      "date": "2026-10-15",
+      "model_id": "nanowm_pointmaze",
+      "scope": "Existing resource/benchmark records and local size/revision/runtime metadata; no new experiment, model forward, environment execution or large-file hash by this archive update. Original inventory activity fields remain historical.",
+      "status": "resource_and_forward_ready_clean_deferred_by_cost"
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "nanowm_pointmaze",
+      "scope": "Actual component timing, heldout task CPU gate, official-task budget correction and active native Clean launch; no new weight download or checkpoint hashing.",
+      "report": "reports/nanowm_runtime_task_reassessment_20261015.json"
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "jowa",
+      "scope": "Pinned official source checkout plus real-cache CPU unit probe; ordinary tracked dataset zip arrived with checkout but was unused. No checkpoint download, model inference, Atari execution or training.",
+      "report": "reports/jowa_rejected_branch_decision_20261015.json"
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "dino_wm",
+      "report": "reports/dino_private_goal_observability_20261015.json",
+      "scope": "One fixed-state paired render gate and4 CPU observation encodes through strictly loaded existing weights; no new forecast/controller evaluation."
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "dino_wm",
+      "report": "reports/dino_action_saturation_decision_20261015.json",
+      "scope": "Exact physical aliases plus one native forecast batch against true observations; frozen bank Clean gate failed, so no intervention forecasts."
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "dino_wm",
+      "report": "reports/dino_action_alias_exploratory_decision_20261015.json",
+      "scope": "Exploratory frozen-bank representation contrasts and actual-future objective diagnostic. No new training, environment replay or full native planning."
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "dino_wm",
+      "report": "reports/dino_alias_writer_boundary_20261015.json",
+      "scope": "Source-only native writer-boundary clarification; preserves completed native return-loss, exact recovery and cached accuracy evidence. No new inference or environment execution.",
+      "status": "bounded_native_effect_preserved_no_restricted_native_writer_identified"
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "tdmpc2",
+      "report": "reports/tdmpc_task_latent_contract_20261015.json",
+      "scope": "Source-only task-conditioned encoder/target contract and policy-prior scope; no common cross-task raw-latent or physical-readout contract assumed. No task-swap experiment.",
+      "status": "source_contract_limits_physical_invariance_interpretation"
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "latent_cbf_remote",
+      "report": "reports/latent_cbf_alias_carrier_screen_20261015.json",
+      "scope": "Pinned official text sources and published-resource surface only; native pre-clipping blocks this saturation-alias transfer. No model/environment/API or weight download.",
+      "status": "source_only_alias_carrier_no_go_published_bundle_not_identified"
+    },
+    {
+      "date": "2026-10-15",
+      "model_ids": [
+        "latent_cbf_remote",
+        "unisafe"
+      ],
+      "report": "reports/action_feedback_candidate_decision_20261015.json",
+      "scope": "Native applied-action history source screen and one recording-stub route reproduction; no learned-model/env execution."
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "tdmpc2",
+      "report": "reports/tdmpc_frozen_head_loss_control_decision_20261015.json",
+      "status": "completed_bounded_loss_control_no_selective_recovery",
+      "summary": "同一source23/seed31四条件控制：旧两臂300条学习日志及500步回报均精确复现；恢复冻结reward/value头的输入梯度后random回报612.083→563.621、cascade495.216→543.622，差距缩小82.89%，但random下降7.92%且cascade增益不足半个原差，选择性恢复门未过。只证明更新方式敏感，不证明新机制或有效防御。"
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "opine-world",
+      "report": "reports/opine_native_root_gate_20261015.json",
+      "status": "actual_postreset_roots_qualified_single_fresh_native_planner_no_plan",
+      "summary": "实际L6根已取得：658进入后至784共127帧全像素精确，四个真实环境快照可复用；旧完整prefix失配保留。round086 fresh原生规划组件在root762默认40层/30秒下调用174次transition后0.420秒返回无计划；0真实候选执行，return/success均未测，不扩展该固定干预。旧factual-prefix初始化不能直接当原生planner记忆。"
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "cosmos_policy",
+      "report": "reports/cosmos_forecast_coupling_gate_decision_20261015.json",
+      "scope": "One fixed K8 empirical forecast-bank test using calibrated pretrained functions and historical real utilities; no new physical episodes.",
+      "status": "completed_finite_bank_negative_no_expansion"
+    },
+    {
+      "date": "2026-10-15",
+      "model_ids": [
+        "ladiwm_remote",
+        "adwm_remote",
+        "badwam_remote"
+      ],
+      "source_paths": [
+        "reports/ladiwm_native_carrier_screen_20261015.json",
+        "reports/prior_scope_and_carrier_refresh_20261015.json"
+      ],
+      "status": "source_and_resource_refresh_no_experiment_accepted",
+      "scope": "LaDiWM forward-consumer source gate and AD-WM/BadWAM resource metadata only; no weight/model/environment execution or gated-access request."
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "worldscape_policy_remote",
+      "report": "runs/worldscape_memory_source_20261015/summary.json",
+      "status": "source_blocks_rejected_forecast_memory_no_clean_expansion",
+      "scope": "Pinned native predict/commit/discard, cache fork and partial-execution source review only; no weights, model, environment, API inference or tests executed."
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "gensafenav",
+      "report": "reports/gensafenav_feedback_selection_decision_20261015.json",
+      "status": "single_native_clean_success_feedback_selection_no_go",
+      "scope": "New matched public assets and one real CPU Clean; no neural training or model API."
+    },
+    {
+      "date": "2026-10-15",
+      "model_id": "tdmpc2",
+      "report": "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+      "status": "same_task_null_action_logs_real_utility_gate_failed",
+      "scope": "Reused official mt30 checkpoint and existing real data; one load,120 dynamics-only updates,2600 actual controls,0 API. No new model download or exclusive resource request."
+    },
+    {
+      "date": "2026-10-16",
+      "model_id": "safedreamer_remote",
+      "report": "reports/native_safety_consumer_screen_20261016.json",
+      "status": "native_safety_gate_source_confirmed_no_task_pilot",
+      "scope": "Four official source/config files and checkpoint metadata; zero model/environment/API calls."
+    },
+    {
+      "date": "2026-10-16",
+      "model_id": "safedreamer_remote",
+      "report": "reports/native_safety_consumer_screen_20261016.json",
+      "runtime_summary": "runs/safedreamer_runtime_screen_20261016/summary.json",
+      "status": "runtime_gaps_and_recording_contract_source_confirmed_candidate_not_selected",
+      "scope": "Eleven additional source/doc fetches and bounded installed-package metadata; no runtime imports, installs, model or environment."
+    },
+    {
+      "date": "2026-10-16",
+      "model_id": "cosmos_policy",
+      "report": "reports/cosmos_future_modality_factorial_decision_20261016.json",
+      "status": "cached_future_output_factorial_completed_local_visual_selection_effect",
+      "scope": "Existing checkpoint, cached original predictions/true encodings and real continuations;18Value calls only. No new model assets, Future/VAE/Policy/environment/API."
+    },
+    {
+      "date": "2026-10-16",
+      "model_id": "safedreamer_remote",
+      "report": "reports/safedreamer_mode_mediator_gate_20261016.json",
+      "protocol": "configs/safedreamer_mode_mediator_gate_20261016.json",
+      "status": "resource_setup_stopped_before_model_query",
+      "scientific_gate": "unmeasured",
+      "scope": "Fixed first-query final-CEM safety-mode mediator test of existing sampling family; source/checkpoint/core runtime available, exact official environment installation incomplete. Zero model or environment execution.",
+      "checkpoint_bytes": 391867080,
+      "setup_seconds": 886.565196,
+      "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+      "environment_revision": "ae966e511b9927f06b39c727ca5c650136a4e696"
+    },
+    {
+      "date": "2026-10-16",
+      "model_ids": [
+        "gensafenav",
+        "wog_source_only_20261016",
+        "dila_source_only_20261016"
+      ],
+      "report": "reports/native_decision_interface_followup_20261016.json",
+      "status": "bounded_source_feasibility_completed_no_new_task_experiment",
+      "scope": "Eleven newly cached source files; no checkpoint download/load, model/environment/API execution, training or GPU request. GenSafeNav t32 cache lacks recurrent/calibration state and zero-interval control duplicates the original."
+    },
+    {
+      "date": "2026-10-16",
+      "model_id": "cosmos_policy",
+      "report": "reports/cosmos_decoded_future_observation_20261016.json",
+      "status": "native_cached_decode_observation_calibration_completed",
+      "scope": "One VAE load,six decodes,zeroFuture/Value/Policy/environment/API. No new checkpoint download or task-harm estimate."
+    },
+    {
+      "date": "2026-10-16",
+      "type": "native_action_sender_donor_diagnostic",
+      "report": "reports/cosmos_action_sender_decision_20261016.json",
+      "summary": "14 Future+14 Value,22 exact calibrations; action selectivity No-Go; zero new physical controls/API."
+    }
+  ],
+  "additional_source_screens": [
+    {
+      "id": "gensafenav_source_only",
+      "report": "reports/forecast_feedback_binding_screen_20261015.json",
+      "source_root": "runs/gensafenav_feasibility_20261015/sources",
+      "resource_metadata": "runs/gensafenav_feasibility_20261015/resource_source_metadata.json",
+      "checkpoint_loaded": false,
+      "clean_executed": false,
+      "status": "prediction_agent_resource_with_ordinary_time_attribution_defect_no_task_pilot",
+      "later_executed_followup": {
+        "report": "reports/gensafenav_feedback_selection_decision_20261015.json",
+        "model_entry": "gensafenav",
+        "checkpoint_loaded": true,
+        "clean_executed": true,
+        "note": "Earlier source-only fields remain historical; the distinct feedback-selection qualification now executed and failed its same-count control."
+      }
+    },
+    {
+      "id": "world4scorer_source_only_20261016",
+      "report": "runs/world4scorer_source_screen_20261016/summary.json",
+      "checkpoint_loaded": false,
+      "clean_executed": false,
+      "accepted_security_experiment": false,
+      "status": "native_cross_candidate_forecast_scorer_verified_no_qualified_invariance_operation"
+    },
+    {
+      "id": "worlddrive_source_only_20261016",
+      "report": "runs/worlddrive_source_screen_20261016/summary.json",
+      "checkpoint_loaded": false,
+      "clean_executed": false,
+      "accepted_security_experiment": false,
+      "status": "native_distilled_hidden_future_consumer_verified_no_independent_goal_input"
+    },
+    {
+      "id": "frozen_planner_attack_assets_20261016",
+      "report": "runs/frozen_planner_attack_source_screen_20261016/assessment.json",
+      "checkpoint_loaded": false,
+      "clean_executed": false,
+      "accepted_security_experiment": false,
+      "status": "public_checkpoint_asset_lead_method_and_evaluation_code_not_located_in_bounded_search"
+    },
+    {
+      "id": "wog_source_only_20261016",
+      "report": "runs/wog_source_screen_20261016/summary.json",
+      "source_revision": "872d1df6055c0dc5d2504d4d6a5fb71c2bae3e6c",
+      "implementation_status": "repository_self_described_unofficial_implementation",
+      "checkpoint_loaded": false,
+      "clean_executed": false,
+      "accepted_security_experiment": false,
+      "status": "native_future_supervised_cognition_consumed_no_isolated_physical_forecast_contract"
+    },
+    {
+      "id": "dila_source_only_20261016",
+      "report": "runs/dila_source_screen_20261016/summary.json",
+      "source_revision": "adac869cc6d3a480b5e3b08694bf3f2f1013ff2d",
+      "checkpoint_loaded": false,
+      "clean_executed": false,
+      "accepted_security_experiment": false,
+      "status": "native_action_conditioned_mpc_content_memory_local_no_persistent_rejected_branch_writer"
+    },
+    {
+      "id": "diamond_actor_memory",
+      "source_snapshot": "runs/diamond_actor_memory_source_screen_20261016/summary.json",
+      "report": "reports/post_sender_alternative_screen_20261016.json",
+      "checkpoint_downloaded": false,
+      "native_clean_measured": false,
+      "decision": "Inspected explicit recurrent state path does not provide imagined-query writeback into factual actor state."
+    }
+  ]
+}

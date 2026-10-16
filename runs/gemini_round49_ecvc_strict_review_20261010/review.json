@@ -1,0 +1,19 @@
+{
+  "verdict": "REJECT",
+  "novelty_score": 3,
+  "decision": "REJECT_ALL",
+  "overlap_risks": [
+    "Re-labeling of out-of-distribution uncertainty overconfidence / representational collapse in deep ensembles under non-uniform coverage.",
+    "Prior rejected screen 'mbrl_epistemic_collapse_screen' (generic uncertainty attack via ensemble synchronization).",
+    "Confounding with standard catastrophic forgetting / capacity interference where gradient updates on one manifold degrade unregularized orthogonal subspace estimates.",
+    "Indistinguishable from standard inductive bias artifacts in neural network generalization (e.g., spectral bias, shared feature representation collapse across task partitions without explicit adversarial construction)."
+  ],
+  "minimum_gate": "Pre-registered paired counterfactual isolation test: In a partitioned environment with strictly orthogonal dynamics dimensions (Subspace A and Subspace B), feed a passive, native-support trajectory strictly in Subspace A to an online GaussianMLP ensemble. Compare uncertainty (ensemble variance $\\sigma^2_B$) against: (1) an untracked static ensemble, (2) an ensemble updated with equivalent uniform Gaussian noise, and (3) a replay buffer subjected to standard capacity forgetting (evaluating empirical loss $\\mathcal{L}_B$). ECVC passes if and only if: (a) $\\sigma^2_B$ drops by $>50\\%$ relative to prior while empirical prediction error on B $\\mathcal{L}_B$ strictly increases or remains OOD (variance collapse without coverage), AND (b) the drop in $\\sigma^2_B$ cannot be explained by gradient norm leakage or shared weight norm drift (partial correlation $r(\\Delta \\sigma^2_B, \\text{drift}) < 0.2$), AND (c) fatal states in Subspace B are selected by a risk-sensitive planner (e.g., PETS with $\\mu - \\lambda \\sigma$) at a statistically significant rate ($p < 0.001$) over uniform exploration controls.",
+  "repair": "Strip framing from passive 'adversarial attack' or novel threat vector; reframe strictly as a structural failure mode of shared-representation deep epistemic estimators in MBRL. Formalize the exact spectral conditions under which shared representations in GaussianMLP ensembles induce off-manifold shrinkage (e.g., NTK alignment across partitions). Decouple evaluation from generic planning failure by demonstrating the collapse occurs specifically under native Bayesian/ensemble epistemic heads where epistemic and aleatoric uncertainties are theoretically disentangled.",
+  "falsifiers": [
+    "Ensemble variance along unvisited branch B decreases merely as an artifact of global weight decay or learning rate decay, rather than the input structure of trajectory A.",
+    "The collapse disappears when using random feature priors, deep ensembles with separate feature backbones, or anchored ensembles (confirming the phenomenon is simply standard parameter coupling/shared representation leakage, not an episodic attack mechanism).",
+    "A standard replay buffer with uniform sampling or reservoir buffer eliminates the variance reduction on B, confirming standard replay priority starvation/imbalance.",
+    "Planning harm in fatal states is driven by mean prediction drift (inaccurate $\\mu$) rather than variance suppression (diminished $\\sigma$)."
+  ]
+}

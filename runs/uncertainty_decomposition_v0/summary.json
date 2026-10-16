@@ -1,0 +1,129 @@
+{
+  "status": "native_exact_forecast_preservation_gate_failed",
+  "rows": [
+    {
+      "alpha": 0.0,
+      "between_member_variance_fraction": 1.0,
+      "native_gaussian_family": {
+        "mean_max_abs_error": 5.421010862427522e-20,
+        "diagonal_variance_max_abs_error": 0.0,
+        "full_covariance_max_abs_error": 0.0,
+        "coordinate_cdf_max_gap_on_grid": 1.1102230246251565e-16,
+        "coordinate_cdf_mean_sup_gap_on_grid": 4.336808689942018e-19,
+        "coordinates_above_1e_3": 0,
+        "coordinates_evaluated": 256
+      },
+      "nested_mixture_family": {
+        "cdf_max_abs_error_on_grid": 0.0,
+        "marginal_law_identity": "mean_i(q_i)=mean_i(p_i) algebraically for every outcome, not only this grid.",
+        "native_interface_compatible": true,
+        "limitation": "For alpha>0 an outer member is generally a Gaussian mixture, whereas the native API returns one diagonal Gaussian per member."
+      }
+    },
+    {
+      "alpha": 0.25,
+      "between_member_variance_fraction": 0.5625,
+      "native_gaussian_family": {
+        "mean_max_abs_error": 1.734723475976807e-18,
+        "diagonal_variance_max_abs_error": 2.0328790734103208e-20,
+        "full_covariance_max_abs_error": 6.381719106836046e-06,
+        "coordinate_cdf_max_gap_on_grid": 0.012290533099487633,
+        "coordinate_cdf_mean_sup_gap_on_grid": 0.0007655654940521278,
+        "coordinates_above_1e_3": 52,
+        "coordinates_evaluated": 256
+      },
+      "nested_mixture_family": {
+        "cdf_max_abs_error_on_grid": 4.440892098500626e-16,
+        "marginal_law_identity": "mean_i(q_i)=mean_i(p_i) algebraically for every outcome, not only this grid.",
+        "native_interface_compatible": false,
+        "limitation": "For alpha>0 an outer member is generally a Gaussian mixture, whereas the native API returns one diagonal Gaussian per member."
+      }
+    },
+    {
+      "alpha": 0.5,
+      "between_member_variance_fraction": 0.25,
+      "native_gaussian_family": {
+        "mean_max_abs_error": 8.673617379884035e-19,
+        "diagonal_variance_max_abs_error": 2.0328790734103208e-20,
+        "full_covariance_max_abs_error": 1.0940089897433222e-05,
+        "coordinate_cdf_max_gap_on_grid": 0.017304263097347117,
+        "coordinate_cdf_mean_sup_gap_on_grid": 0.0010935794909192696,
+        "coordinates_above_1e_3": 74,
+        "coordinates_evaluated": 256
+      },
+      "nested_mixture_family": {
+        "cdf_max_abs_error_on_grid": 2.220446049250313e-16,
+        "marginal_law_identity": "mean_i(q_i)=mean_i(p_i) algebraically for every outcome, not only this grid.",
+        "native_interface_compatible": false,
+        "limitation": "For alpha>0 an outer member is generally a Gaussian mixture, whereas the native API returns one diagonal Gaussian per member."
+      }
+    },
+    {
+      "alpha": 0.75,
+      "between_member_variance_fraction": 0.0625,
+      "native_gaussian_family": {
+        "mean_max_abs_error": 1.0842021724855044e-19,
+        "diagonal_variance_max_abs_error": 2.0328790734103208e-20,
+        "full_covariance_max_abs_error": 1.367511237179153e-05,
+        "coordinate_cdf_max_gap_on_grid": 0.01889003397723954,
+        "coordinate_cdf_mean_sup_gap_on_grid": 0.00120262193874444,
+        "coordinates_above_1e_3": 77,
+        "coordinates_evaluated": 256
+      },
+      "nested_mixture_family": {
+        "cdf_max_abs_error_on_grid": 2.220446049250313e-16,
+        "marginal_law_identity": "mean_i(q_i)=mean_i(p_i) algebraically for every outcome, not only this grid.",
+        "native_interface_compatible": false,
+        "limitation": "For alpha>0 an outer member is generally a Gaussian mixture, whereas the native API returns one diagonal Gaussian per member."
+      }
+    },
+    {
+      "alpha": 1.0,
+      "between_member_variance_fraction": 0.0,
+      "native_gaussian_family": {
+        "mean_max_abs_error": 0.0,
+        "diagonal_variance_max_abs_error": 1.3552527156068805e-20,
+        "full_covariance_max_abs_error": 1.4586786529910965e-05,
+        "coordinate_cdf_max_gap_on_grid": 0.019099317740207955,
+        "coordinate_cdf_mean_sup_gap_on_grid": 0.0012232670646227942,
+        "coordinates_above_1e_3": 80,
+        "coordinates_evaluated": 256
+      },
+      "nested_mixture_family": {
+        "cdf_max_abs_error_on_grid": 0.0,
+        "marginal_law_identity": "mean_i(q_i)=mean_i(p_i) algebraically for every outcome, not only this grid.",
+        "native_interface_compatible": false,
+        "limitation": "For alpha>0 an outer member is generally a Gaussian mixture, whereas the native API returns one diagonal Gaussian per member."
+      }
+    }
+  ],
+  "temporal_counterexample": {
+    "one_step_both": {
+      "-1": 0.5,
+      "1": 0.5
+    },
+    "two_step_persistent_identity": {
+      "-2": 0.5,
+      "0": 0.0,
+      "2": 0.5
+    },
+    "two_step_resampled_identity": {
+      "-2": 0.25,
+      "0": 0.5,
+      "2": 0.25
+    },
+    "two_step_total_variation": 0.5,
+    "meaning": "Identical one-step ensemble mixtures do not imply identical multi-step forecasts. This is the established PETS TS-infinity versus TS1 distinction, not a new mechanism.",
+    "scope": "Constructed exact probability calculation, not native task execution."
+  },
+  "interpretation": "Reducing ensemble disagreement while keeping mean and diagonal variance fixed changes the native learned predictive law. Exact repartition is possible by adding an inner mixture, but that changes the native output family; resampling that identity can also change trajectory laws. Generic uncertainty manipulation is prior work. No uncertainty-driven planner attack is justified by this screen.",
+  "model_hash": "06f5b4a4625ff4306bbf4ec6a186be299e3760e849606a8bd4a26fd274126fc2",
+  "model_unchanged": true,
+  "learned_ensemble_forward_calls": 1,
+  "queried_transitions": 64,
+  "training_updates": 0,
+  "environment_steps": 0,
+  "api_requests": 0,
+  "gpu_use": false,
+  "elapsed_s": 0.11783310305327177
+}

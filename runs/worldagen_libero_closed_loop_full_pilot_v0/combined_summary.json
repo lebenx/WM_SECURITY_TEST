@@ -1,0 +1,93 @@
+{
+  "status": "completed_worldagen_libero_full_horizon_control_pilot",
+  "sources": [
+    "runs/worldagen_libero_closed_loop_full_pilot_v0/summary.json",
+    "runs/worldagen_libero_closed_loop_full_pilot_v1/summary.json"
+  ],
+  "model": "WorldAgen released LIBERO-38",
+  "suites": [
+    "libero_goal",
+    "libero_object",
+    "libero_spatial"
+  ],
+  "conditions": [
+    "native",
+    "edge_cut"
+  ],
+  "steps_per_episode": 600,
+  "episodes": 6,
+  "results": [
+    {
+      "suite": "libero_spatial",
+      "task": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "condition": "native",
+      "success": false,
+      "environment_steps": 600,
+      "action_norm_mean": 1.7623204326629638,
+      "action_norm_max": 1.8750255107879639
+    },
+    {
+      "suite": "libero_spatial",
+      "task": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "condition": "edge_cut",
+      "success": false,
+      "environment_steps": 600,
+      "action_norm_mean": 1.758380852341652,
+      "action_norm_max": 1.9101132154464722
+    },
+    {
+      "suite": "libero_object",
+      "task": "pick up the alphabet soup and place it in the basket",
+      "condition": "native",
+      "success": false,
+      "environment_steps": 600,
+      "action_norm_mean": 1.786672627925873,
+      "action_norm_max": 2.006181001663208
+    },
+    {
+      "suite": "libero_object",
+      "task": "pick up the alphabet soup and place it in the basket",
+      "condition": "edge_cut",
+      "success": false,
+      "environment_steps": 600,
+      "action_norm_mean": 1.7991418898105622,
+      "action_norm_max": 1.92860746383667
+    },
+    {
+      "suite": "libero_goal",
+      "task": "open the middle drawer of the cabinet",
+      "condition": "native",
+      "success": false,
+      "environment_steps": 600,
+      "action_norm_mean": 1.7922260862588884,
+      "action_norm_max": 1.9847198724746704
+    },
+    {
+      "suite": "libero_goal",
+      "task": "open the middle drawer of the cabinet",
+      "condition": "edge_cut",
+      "success": false,
+      "environment_steps": 600,
+      "action_norm_mean": 1.8238314896821977,
+      "action_norm_max": 2.0211963653564453
+    }
+  ],
+  "aggregate": {
+    "native": {
+      "successes": 0,
+      "episodes": 3,
+      "success_rate": 0.0,
+      "action_norm_mean_mean": 1.7804063822825749,
+      "action_norm_max_mean": 1.9553087949752808
+    },
+    "edge_cut": {
+      "successes": 0,
+      "episodes": 3,
+      "success_rate": 0.0,
+      "action_norm_mean_mean": 1.793784743944804,
+      "action_norm_max_mean": 1.953305681546529
+    }
+  },
+  "finding": "Native and edge-cut both failed the clean task gate on all three one-seed suites; edge-cut action norms remain close to native. This is control-preservation evidence only, not a task-harm result.",
+  "scope": "Frozen WorldAgen LIBERO control pilot at the official 600-environment-step horizon; one initial state per suite, no task-harm inference."
+}

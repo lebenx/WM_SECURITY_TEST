@@ -1,0 +1,94 @@
+{
+  "status": "completed_same_scene_goal_crossing_analysis",
+  "source": "runs/worldagen_same_scene_goal_v1/summary.json",
+  "states": 3,
+  "goals": 10,
+  "clean_goal_index": 3,
+  "actions": 4,
+  "physical_replays": 120,
+  "initial_state_exact_count": 120,
+  "future_replay_exact_count": 120,
+  "native_goal_effect_nonclean_mean_mse": 0.49133069247559263,
+  "native_goal_effect_nonzero_fraction": 1.0,
+  "bus_cut_goal_exact_all_states": true,
+  "control_cut_world_exact_all_states": true,
+  "bus_cut_goal_variance_max_mse": 6.202658795384421e-15,
+  "control_cut_world_effect_max_abs": 0.0,
+  "bus_cut_action_sensitivity_nonzero_fraction": 1.0,
+  "native_target_mse_delta_vs_clean_mean": 0.08687765002250672,
+  "native_target_mse_delta_vs_clean_min": -0.16097009181976318,
+  "native_target_mse_delta_vs_clean_max": 0.20056235790252686,
+  "native_nonclean_target_mse_delta_vs_clean_mean": 0.09653072224722968,
+  "native_nonclean_target_mse_delta_vs_clean_by_state": [
+    0.06148713164859348,
+    0.12599722213215298,
+    0.10210781296094258
+  ],
+  "native_nonclean_target_mse_delta_vs_clean_state_cluster_bootstrap_ci95": [
+    0.06148713164859348,
+    0.12599722213215298
+  ],
+  "native_nonclean_target_mse_delta_positive_state_fraction": 1.0,
+  "bus_cut_target_mse_cost_vs_native_clean_mean": 0.08835409084955852,
+  "bus_cut_target_mse_cost_vs_native_clean_by_state": [
+    0.05296558141708374,
+    0.14251059293746948,
+    0.06958609819412231
+  ],
+  "native_nonclean_target_mse_delta_by_goal_mean": [
+    0.12021392583847046,
+    0.12137242158253987,
+    0.08186272780100505,
+    0.0881810983022054,
+    0.12411449352900188,
+    0.00983967383702596,
+    0.08862584829330444,
+    0.11392700672149658,
+    0.1206393043200175
+  ],
+  "native_nonclean_target_mse_delta_by_goal_state_matrix": [
+    [
+      0.07092082500457764,
+      0.07183092832565308,
+      0.044885098934173584,
+      0.047081828117370605,
+      0.07344591617584229,
+      0.03867948055267334,
+      0.056256890296936035,
+      0.06169700622558594,
+      0.08858621120452881
+    ],
+    [
+      0.15054303407669067,
+      0.15153855085372925,
+      0.12097746133804321,
+      0.13420099020004272,
+      0.15424710512161255,
+      -0.01822611689567566,
+      0.13066887855529785,
+      0.14939731359481812,
+      0.16062778234481812
+    ],
+    [
+      0.13917791843414307,
+      0.1407477855682373,
+      0.07972562313079834,
+      0.08326047658920288,
+      0.14465045928955078,
+      0.0090656578540802,
+      0.07895177602767944,
+      0.1306867003440857,
+      0.11270391941070557
+    ]
+  ],
+  "interpretation": [
+    "All legal LIBERO-Goal BDDL files share the same physical scene definition after removing language, goal, and object-of-interest fields; only the task predicate differs.",
+    "Fresh replays with the same full simulator state and fixed action are exact across Goal labels, establishing an environment-side conditional invariance control.",
+    "The native WorldAgen forecast varies with Goal while the matched Bus-Cut is invariant; target-error changes are reported separately and need not have one sign.",
+    "At the state-cluster level, a uniformly sampled non-Clean legal Goal has a positive target-MSE delta in every shared initial state; this is descriptive evidence against the clean Goal being an unbiased physical target comparator, not a universal harm claim."
+  ],
+  "scope_limits": [
+    "The same-scene crossing addresses the simulator counterfactual and does not prove the model observed every physical hidden variable during training.",
+    "Forecasts are compared at the first primary-view chunk; no task-success claim is made."
+  ]
+}

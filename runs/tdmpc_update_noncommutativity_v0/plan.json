@@ -1,0 +1,22 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "random_source": "runs/tdmpc_order_controls_v0/random_source.pt",
+  "cascade_source": "runs/tdmpc_order_controls_v0/cascade_source.pt",
+  "reverse_source": "runs/tdmpc_order_controls_v0/reverse_cascade_source.pt",
+  "shuffled_source": "runs/tdmpc_order_controls_v0/shuffled_cascade_source.pt",
+  "pairs": 8,
+  "batch": 4,
+  "pair_stride": 19,
+  "pair_gap": 7,
+  "step_size": 0.01,
+  "output": "runs/tdmpc_update_noncommutativity_v0",
+  "operation": "Native TD-MPC2 dynamics gradients on identical source-window indices; finite small-step A/B versus B/A update commutator.",
+  "conditions": [
+    "random",
+    "cascade",
+    "reverse_cascade",
+    "shuffled_cascade"
+  ],
+  "interpretation": "A structural diagnostic. It does not establish task harm or novelty unless cascade has a selective excess and the matching controls agree.",
+  "api_requests": 0
+}

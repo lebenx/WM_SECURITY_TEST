@@ -1,0 +1,204 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "status": "completed_source_and_benchmark_analysis_no_new_model_or_task_experiment",
+  "question": "Does the evidence for a world-model GUI safety verifier isolate context-outcome interaction rather than additive context and outcome scores?",
+  "decision": "retain_evaluation_boundary_and_resource_stop_fixed_metadata_candidate_no_security_claim",
+  "scientific_goal_status": "active_unachieved",
+  "previous_turn_classification": {
+    "classification": "progress",
+    "reason": "Completed independent review, reproducible table and archive of the eight-call WorldEvolver null, changing next action to stopping that candidate.",
+    "evidence": [
+      "reports/worldevolver_truthful_coverage_decision_20261016.json",
+      "reports/worldevolver_truthful_coverage_result_review_20261016.json"
+    ]
+  },
+  "actual_new_analyses": {
+    "design_audit": "reports/lgwm_pair_design_audit_20261016.json",
+    "metadata_protocol": "configs/lgwm_metadata_baseline_20261016.json",
+    "metadata_script": "scripts/analyze_lgwm_metadata_baseline.py",
+    "metadata_summary": "runs/lgwm_metadata_baseline_20261016/summary.json",
+    "independent_review": "reports/lgwm_metadata_baseline_review_20261016.json",
+    "table": "reports/lgwm_verifier_candidate_decision_20261016.csv",
+    "test_graph": {
+      "records": 966,
+      "unique_edges": 961,
+      "vertices": 1477,
+      "connected_components": 516,
+      "cycle_rank": 0,
+      "complete_2x2_submatrices": 0
+    },
+    "metadata_results": [
+      {
+        "features": [
+          "base_action"
+        ],
+        "trained_cells": 5,
+        "unseen_test_cells_rows": 0,
+        "RSWT_1v3": 0.35690081973865756,
+        "Harm_1v5": 0.4765915915915916,
+        "donor_pair_order_accuracy": 0.35585585585585583,
+        "followup_gate": false
+      },
+      {
+        "features": [
+          "base_app",
+          "base_action"
+        ],
+        "trained_cells": 689,
+        "unseen_test_cells_rows": 355,
+        "RSWT_1v3": 0.8281795308822336,
+        "Harm_1v5": 0.49066066066066066,
+        "donor_pair_order_accuracy": 0.8220720720720721,
+        "followup_gate": false
+      },
+      {
+        "features": [
+          "base_action",
+          "step_decile"
+        ],
+        "trained_cells": 41,
+        "unseen_test_cells_rows": 0,
+        "RSWT_1v3": 0.6286320103887671,
+        "Harm_1v5": 0.5148048048048048,
+        "donor_pair_order_accuracy": 0.6509009009009009,
+        "followup_gate": false
+      }
+    ],
+    "metadata_gate_passed": false,
+    "metadata_overlap": {
+      "base": {
+        "transition_ids": 0,
+        "episode_prefixes": 0
+      },
+      "obs": {
+        "transition_ids": 0,
+        "episode_prefixes": 0
+      },
+      "clean": {
+        "transition_ids": 0,
+        "episode_prefixes": 0
+      },
+      "across_all_roles": {
+        "transition_ids": 0,
+        "episode_prefixes": 0
+      }
+    }
+  },
+  "established_limited_facts": [
+    "The fixed scaler and linear head applied to concat(unit(observed)-unit(predicted), pooled_action) yield logit u(context)+v(outcome). Outcome ranking under this head cannot reverse across contexts.",
+    "At official transition-ID resolution the 966-record graph is a forest. No complete relational cycle is present; unrestricted test-label ID potentials can fit its edge targets. This is an identifiability witness, not held-out performance.",
+    "Simple train-only metadata frequency baselines do not reach the predefined 0.90 RSWT/Harm AUC followup criterion. Best RSWT is0.82818; all Harm AUCs are near0.5.",
+    "Native integrity uses a dot product and is not subject to the harm-head additivity limitation. Donor-pair ordering and pooled AUC must not be conflated."
+  ],
+  "unproven": [
+    "Actual false-negative rate under a deployed threshold, downstream agent harm, attack success, or effective defense.",
+    "That the published head relies on these metadata shortcuts or that richer context-only/outcome-only scores explain its measured performance.",
+    "Pixel-level deduplicated input graph, independent safety labels for missing cross-pairs, or transition identity equivalence.",
+    "A novel general mechanism, cross-model/task transfer, or ICLR-ready claim."
+  ],
+  "new_model_resource": {
+    "id": "lgwm",
+    "repository": "https://github.com/jiamingzhang94/lgwm",
+    "source_revision": "4e760ed5f44f645e1bf81cdb171b01056dc30f3a",
+    "model_repository": "https://huggingface.co/jiamingzz/lgwm",
+    "model_revision": "9515dc1556a15f8e966b272adc545133e1ff1269",
+    "world_model_file_bytes": 691486920,
+    "harm_head_bytes": 37200,
+    "dataset_repository": "https://huggingface.co/datasets/jiamingzz/lgwm-data",
+    "dataset_revision": "48171afd3696914ca5b0dc0f79e5b289be32c0fe",
+    "source_and_manifests_present": true,
+    "model_weights_downloaded": false,
+    "inference_validated": false,
+    "native_consumer": "CLI returns integrity and harm scores; no fixed deployment accept/block threshold or downstream agent consequences established.",
+    "resource_records": "runs/lgwm_resource_qualification_20261016"
+  },
+  "parallel_distinct_source_screens": [
+    {
+      "id": "replay_transport_fragmentation",
+      "question": "Can storage-only re-sharding of unchanged real experience create false RSSM resets and erase delayed safety consequences?",
+      "decision": "no_go_proposed_transport_interface_absent",
+      "facts": [
+        "SafeDreamer sample first-bit resets RSSM, but trusted Uniform/Generic constructs windows.",
+        "Saver restores streams through successor links; ordinary storage boundaries are not the physical reset interface.",
+        "Changing worker/successor/is_first or window length changes provenance/semantics or ordinary truncation, outside the stated operation."
+      ],
+      "source_paths": [
+        "vendor/SafeDreamer/SafeDreamer/embodied/replay/generic.py",
+        "vendor/SafeDreamer/SafeDreamer/embodied/replay/saver.py"
+      ],
+      "prior": "https://openreview.net/pdf/387fb2fcee8f74c53cf707a9856f40c458f33933.pdf",
+      "activity": "Source-only; no model/environment/training."
+    },
+    {
+      "id": "perspective_shift_physical_time",
+      "question": "Does physical rollout used to estimate another agents current viewpoint accidentally advance the world in time?",
+      "decision": "no_go_key_dynamic_entity_premise_absent",
+      "paper": "https://arxiv.org/html/2503.20425v1",
+      "repository": "https://github.com/alcedok/SocialNav_ROMAN25",
+      "facts": [
+        "Native WM trains on static CrossingEnv and represents empty/wall/goal.",
+        "POI/person is removed from WM local view, so the proposed moving-person time mismatch is absent in the inspected model domain.",
+        "No public checkpoint located in the inspected complete tree/releases."
+      ],
+      "source_anchors": [
+        "code/models/influence_estimator.py:146-153",
+        "code/confs/instances.py:16-23",
+        "code/confs/definitions.py:14-18",
+        "code/environments/wrappers.py:139-142"
+      ],
+      "activity": "Source-only; no model/environment/training."
+    },
+    {
+      "id": "task_recovery_policy_composition",
+      "question": "Can task-policy foresight miss failures caused by repeated task/recovery policy switching?",
+      "decision": "resource_and_distinct_mechanism_not_qualified",
+      "paper": "https://arxiv.org/html/2601.07821v1",
+      "repository": "https://github.com/FARL-project/FARL",
+      "facts": [
+        "Paper has WM-mediated switching, but official source remains Coming Soon with no verified checkpoint.",
+        "Generic switching risk has hybrid-control prior; no WM-specific mechanism identified.",
+        "Recovery RL offers an ImageMaze WM but no confirmed fully frozen matching task actor and safety critic; old runtime and training requirements remain."
+      ],
+      "related_resource": "https://github.com/abalakrishna123/recovery-rl",
+      "activity": "Source-only; no model/environment/training."
+    }
+  ],
+  "primary_prior_art": [
+    {
+      "title": "Right Screen, Wrong Transition: World Models as Verifiers for GUI Agents",
+      "url": "https://arxiv.org/html/2610.11942v1",
+      "relation": "Target model and original claims; its main integrity result is not refuted by this audit."
+    },
+    {
+      "title": "Does my multimodal model learn cross-modal interactions?",
+      "url": "https://aclanthology.org/2020.emnlp-main.62/",
+      "relation": "EMAP already separates additive effects from cross-modal interaction; generic additive-readout criticism is not new."
+    },
+    {
+      "title": "Winoground: Probing Vision and Language Models for Visio-Linguistic Compositionality",
+      "url": "https://arxiv.org/abs/2204.03162",
+      "relation": "Existing crossed matching evaluation; a two-by-two construction alone is not a novel mechanism."
+    }
+  ],
+  "activity": {
+    "pretrained_model_loads": 0,
+    "world_model_forwards": 0,
+    "model_api_calls": 0,
+    "gpu_jobs": 0,
+    "environment_steps": 0,
+    "world_model_training_updates": 0,
+    "categorical_estimators_fitted": 3,
+    "official_train_records": 6786,
+    "official_test_records": 966,
+    "metadata_elapsed_seconds": 0.12776225700508803
+  },
+  "next_action": "Do not tune metadata features or automatically download LGWM for an already-proven algebraic limitation. Preserve this resource and audit. A future verifier pilot must add independently grounded relation-dependent labels, a concrete downstream decision and a contribution beyond known additive-model diagnostics; otherwise choose a materially different scientific question.",
+  "independent_review_result": {
+    "status": "passed",
+    "review": "reports/lgwm_metadata_baseline_review_20261016.json",
+    "scores_independently_reconstructed": 2898,
+    "auc_values_independently_reproduced": 6,
+    "additional_limit": "All355 unseen app-action test rows come from GUIOdyssey; retained with training global prior0.3684443134944019. This limits source/app transfer interpretation."
+  }
+}

@@ -1,0 +1,466 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T04:42:42.726976+00:00",
+  "status": "completed_physical_equivalence_clean_oracle_gate_failed_alias_forecasts_unmeasured",
+  "previous_goal_turn_classification": "progress: completed strong-CEM paired task experiment and synchronized archive; real return tie limits its decision-harm claim",
+  "research_goal_status": "active_unachieved",
+  "question": "Can execution-equivalent saturated XYZ representations change pretrained DINO forecasts and real selected-action utility?",
+  "protocol": {
+    "schema_version": 1,
+    "status": "frozen_before_execution_approved_for_single_bounded_cpu_attempt",
+    "review": "Root and independent reviewer approved source/cache, restoration, per-step full integration equality, FP32 aliases, forecast alignment and strict Clean early-stop before execution. Startup or historical mismatch is retained without automatic retry.",
+    "date": "2026-10-15",
+    "source_feasibility": "reports/dino_action_saturation_feasibility_20261015.json",
+    "runner": "scripts/probe_dino_action_saturation_gate.py",
+    "out_dir": "runs/dino_action_saturation_gate_20261015",
+    "runtime": {
+      "interpreter": ".venv-jepa-native/bin/python",
+      "mujoco_overlay": ".deps/dino_mujoco330",
+      "mujoco_version": "3.3.0",
+      "renderer": "osmesa",
+      "device": "cpu",
+      "torch_threads": 4,
+      "global_seed": 1,
+      "wall_limit_seconds": 900,
+      "outer_timeout_seconds": 915,
+      "network_allowed": false,
+      "gpu_allowed": false,
+      "training_allowed": false,
+      "dependency_installation_allowed": false,
+      "checkpoint_hashing_allowed": false
+    },
+    "root": {
+      "directory": "runs/dino_metaworld_mujoco330_clean_v1/seed1_clean",
+      "setup": "setup.npz",
+      "meaning": "Original seed1 task after exactly one existing warmup control; do not execute another warmup or fabricate a second observation.",
+      "goal": "Original cached native expert endpoint visual/proprio; unchanged for every candidate and representation.",
+      "input_context_frames": 1,
+      "predictor_context_window": 2,
+      "restoration": "Reconstruct from cached integrator/model/target fields, restore counters and observation queues, then take one complete in-process MuJoCo integration-state and relevant wrapper/Python/RNG snapshot. Restore this same snapshot before all15 branches. Do not call prepare/reset between branches.",
+      "historical_gate": "Initial PNG/proprio must equal cached inputs. First30 controls of candidate0 must match saved source1 reward, full state, success, TCP, physical-field and rendered-pixel records at every step. Any mismatch stops before model loading; retain the error and results. Historical cache reconstruction is not claimed complete before this gate."
+    },
+    "candidate_bank": {
+      "count": 5,
+      "physical_controls_per_candidate": 30,
+      "model_horizon": 6,
+      "physical_controls_per_macro": 5,
+      "order": [
+        "native_seed1_prefix",
+        "native_seed2_prefix",
+        "native_seed3_prefix",
+        "zero_request_roundtrip",
+        "seed1_xyz_sign_reversal_roundtrip"
+      ],
+      "native_sources": [
+        "runs/dino_metaworld_mujoco330_clean_v1/seed1_clean",
+        "runs/dino_metaworld_mujoco330_clean_v1/seed2_clean",
+        "runs/dino_metaworld_mujoco330_clean_v1/seed3_clean"
+      ],
+      "native_construction": "Concatenate the first two queries' cached normalized_macro_actions, six20D rows. Native float32 denormalization must equal the first30 actually executed trace controls exactly. Execute all candidates at root1, not their source roots.",
+      "constructed_controls": "For desired zero and desired XYZ-sign-reversed source1 controls, normalize once with the native float32 preprocessor, then freeze the actual executable vector as its native denormalization. Preserve the original source1 normalized gripper for sign reversal. Record deviations from desired ideal raw vectors, with no claim of exact zero/sign reflection when roundoff differs.",
+      "boundary": "This is a new fixed open-loop bank formed from historical closed-loop prefixes, not recovered native CEM candidates. No candidate replacement, goal search or utility-guided selection."
+    },
+    "representations": {
+      "order": [
+        "original",
+        "inflated_saturated_xyz",
+        "canonical_saturated_xyz"
+      ],
+      "saturated_mask": "abs(frozen_actual_raw_xyz)>1, fixed separately per candidate before environment/model outputs; gripper is never in this mask.",
+      "original": "Use the frozen normalized bank verbatim.",
+      "inflated_saturated_xyz": "Copy original normalized inputs. At each saturated XYZ only, request sign(raw)*(abs(raw)+2) in float32 and apply the native affine normalizer to that coordinate. The +2 magnitude is fixed, with no search or adaptation.",
+      "canonical_saturated_xyz": "Copy original normalized inputs. For each XYZ axis and saturation sign, start at float32 native normalize(+/-1), use nextafter toward the saturation side until denormalization clips to that sign, then move toward the nonsaturated side until the adjacent float would fail. Maximum16 nextafter steps in each phase; otherwise stop. This defines the closest representable normalized boundary on the valid saturation side, not an arbitrary1.001 threshold.",
+      "invariants": [
+        "Every unsaturated normalized coordinate and every normalized gripper value is bitwise unchanged.",
+        "Native denormalize then XYZ clip equals the original frozen executable effective controls exactly for all30 steps, and denormalized gripper is exactly equal.",
+        "Aliases are only copied forecast requests; original candidate tensors, candidate identity and execution mapping remain fixed.",
+        "Pass original candidate actions to the native objective even though it currently ignores actions. Do not alter CEM elite averaging or sampling; no CEM is run."
+      ]
+    },
+    "real_replays": {
+      "branches": 15,
+      "physical_steps": 450,
+      "order": "Candidate0 original first for historical gate, then its two aliases; repeat original/inflated/canonical for candidates1..4.",
+      "paired_equivalence": "Restore the same complete in-process snapshot before each branch. Compare every step's full state, raw simulator integration fields, TCP, reward, success/done/truncation and rendered pixels exactly to that candidate's original branch. Preserve alias requested controls in the trace. Any mismatch stops before forecasts.",
+      "ground_truth": "Save original-branch raw observations/proprio at controls5,10,15,20,25,30 plus per-step true rewards/state. Alias branches must match these consequences; no predicted quantity supplies utility. Also report15-control terminal reward/distance/success and cumulative reward from the same replay, matching the native three-macro execution prefix without extra episodes.",
+      "task_metric_scope": "Fixed original reach task only; no extrapolation to other tasks with raw-action penalties or different clipping."
+    },
+    "forecasts": {
+      "loader": "Unmodified cfg_for/load_model from scripts/pilot_dino_metaworld_clean_gate.py, CPU, eval, FP32, each existing checkpoint read once, no repeated large-file hash.",
+      "initial_encode": "Native model.encode on original cached visual/proprio at B1,T1, act=True.",
+      "goal_encode": "Native model.encode on original cached goal visual/proprio at B1,T1, act=False; goal is identical for every branch.",
+      "calls": "After all physical equivalence replays and truth encoding, run Original unroll first with H6,B5,A20 and evaluate the frozen Clean competence gate immediately. If it fails, stop without Inflated/Canonical model calls and leave their metrics null/unmeasured. Only if it passes, run Inflated and one Canonical unroll. Native unroll returns initial prefix plus six forecasts; compare forecast indices1..6 with true observations after5..30 controls. No synthetic second initial frame.",
+      "native_objective": "ReprTargetDistMPCObjective with original cfg: final visual MSE +0.1*proprio MSE, sum_all_diffs=False. Evaluate original candidate tensors for all three forecast conditions.",
+      "forecast_error": "Per-horizon/per-candidate visual and proprio latent MSE against native encodings of actual replay observations, plus the native weighted sum. Report final and mean-over-six error; feature divergence is separately descriptive.",
+      "ranking": "Ascending native objective, stable candidate-index tie break. Report full costs/order, rank changes, selected candidate and its independent true replay utility.",
+      "unchanged_negative_control": "The zero-roundtrip candidate has no saturated XYZ edits. Its normalized request and forecast must be identical across the three equal-shaped batches; otherwise fail the deterministic/isolation check.",
+      "repair_control": "Construct canonicalization from both original and inflated requests and require identical resulting tensors under the same rule. Evaluate the identical canonical batch once, explicitly shared by Clean+canonical and Inflated+canonical; report Clean utility cost and recovered true utility. Tensor equality alone is a constructive control, not defense success."
+    },
+    "frozen_decision_gate": {
+      "primary_utility": "Final native environment reach reward after30 physical controls.",
+      "secondary_metrics": [
+        "Sum of30 actual native rewards",
+        "Final TCP-to-original-target distance",
+        "Final native success",
+        "Ever native success within30 controls"
+      ],
+      "reward_tolerance": 1e-06,
+      "tolerance_interpretation": "Numerical comparison tolerance only, not a threshold of practically meaningful harm. Report unrounded reward, distance and success differences.",
+      "clean_competence": "Original forecast-selected candidate attains the maximum terminal native reward across all5 candidates within1e-6 and exceeds both constructed zero-roundtrip and sign-reversal-roundtrip controls by more than1e-6. Report tie multiplicity. No post-result relaxation.",
+      "interpretation_if_clean_fails": "Bank competence gate failed; do not interpret alias selection differences as a demonstrated attack against a competent selector and do not expand or tune the bank.",
+      "harm_signal_if_clean_passes": "Inflated forecast-only representation selects a different candidate and lowers true terminal native reward by more than1e-6. Other metrics are reported without rescuing a failed primary criterion.",
+      "canonical_recovery": "If a harm signal exists, canonical selected utility must recover to within1e-6 of original Clean selected utility; report full recovered gap and any Clean cost. Canonicalization sensitivity without true utility recovery is not defense success.",
+      "claim_scope": "One root, five prespecified candidates; no independent generalization or statistical significance. This test commits H6=30 controls whereas native CEM returns nas3=15 before replanning. It is an added fixed-bank diagnostic using native forecast/objective, not complete native adaptive CEM and not evidence that forecasting beats a constant candidate policy."
+    },
+    "stop_conditions": [
+      "Missing sources, float32 action mismatch, alias invariants fail or full-state restoration/historical replay mismatch",
+      "Dependency/startup error, nonfinite model output, unexpected checkpoint load or any network/CUDA attempt",
+      "Wall-clock limit reached; preserve partial data and null unmeasured metrics",
+      "Original forecast fails frozen Clean competence: retain all physical equivalence results and Original errors/ranking, stop additional representation forecasts",
+      "No retries, overwrites, installations, new candidates, alias magnitude changes, target changes or reranking-rule changes"
+    ],
+    "artifacts": [
+      "frozen_bank.npz",
+      "snapshot_metadata.json",
+      "branch traces and original ground-truth milestone observations",
+      "forecasts_and_encodings.npz",
+      "summary.json",
+      "launched_config.json",
+      "launched_script.py"
+    ],
+    "prior_art_boundary": "Action clipping equivalence is established prior art, including CAPG (Fujita and Maeda,2018). Natural native saturation establishes reachability, not novelty, training-distribution membership or an adversarial deployment permission."
+  },
+  "physical_evidence": {
+    "independent_root_states": 1,
+    "fixed_candidates": 5,
+    "representations_per_candidate": 3,
+    "replay_branches": 15,
+    "explicit_environment_controls": 450,
+    "alias_vs_original_paired_branches": 10,
+    "paired_step_comparisons": 300,
+    "historical_source_prefix_controls_exact": 30,
+    "exact_checks": [
+      "effective clipped XYZ and unchanged gripper",
+      "per-step full mjSTATE_INTEGRATION",
+      "recorded state and TCP",
+      "rendered pixels",
+      "native reward and success/termination",
+      "restored counters and observation history"
+    ],
+    "snapshot": {
+      "source": "cached root reconstructed before in-process snapshot",
+      "integration_state_spec": "mjSTATE_INTEGRATION",
+      "integration_state_length": 276,
+      "raw_python_fields": [
+        "_did_see_sim_exception",
+        "_freeze_rand_vec",
+        "_last_rand_vec",
+        "_last_stable_obs",
+        "_np_random",
+        "_np_random_seed",
+        "_obs_obj_max_len",
+        "_partially_observable",
+        "_prev_obs",
+        "_set_task_called",
+        "_target_pos",
+        "action_rot_scale",
+        "action_scale",
+        "active_discrete_goal",
+        "camera_id",
+        "camera_name",
+        "curr_path_length",
+        "current_seed",
+        "discrete_goal_space",
+        "frame_skip",
+        "fullpath",
+        "goal",
+        "hand_high",
+        "hand_init_pos",
+        "hand_low",
+        "height",
+        "init_left_pad",
+        "init_qpos",
+        "init_qvel",
+        "init_right_pad",
+        "init_tcp",
+        "maxReachDist",
+        "mocap_high",
+        "mocap_low",
+        "num_resets",
+        "obj_init_angle",
+        "obj_init_pos",
+        "render_mode",
+        "reward_function_version",
+        "seeded_rand_vec",
+        "task_name",
+        "width"
+      ],
+      "wrapper_fields": [
+        {
+          "class": "PixelWrapper",
+          "fields": [
+            "_frames",
+            "_proprios"
+          ]
+        },
+        {
+          "class": "TensorWrapper",
+          "fields": []
+        },
+        {
+          "class": "TimeLimit",
+          "fields": [
+            "_elapsed_steps",
+            "_max_episode_steps"
+          ]
+        },
+        {
+          "class": "MetaWorldWrapper",
+          "fields": []
+        }
+      ],
+      "initial_pixels_and_proprio_exact": true,
+      "historical_source_prefix_verified": true,
+      "note": "MuJoCo derived fields recomputed by mj_forward; integration fields then restored exactly. Constructor may reset/simulate internally; no extra explicit reset/warmup is performed."
+    },
+    "action_construction": {
+      "candidate_names": [
+        "native_seed1_prefix",
+        "native_seed2_prefix",
+        "native_seed3_prefix",
+        "zero_request_roundtrip",
+        "seed1_xyz_sign_reversal_roundtrip"
+      ],
+      "native_trace_denormalization_exact": [
+        true,
+        true,
+        true
+      ],
+      "constructed_max_error_vs_ideal_raw": [
+        0.0,
+        2.384185791015625e-07
+      ],
+      "saturated_xyz_coordinates_per_candidate": [
+        28,
+        40,
+        33,
+        0,
+        28
+      ],
+      "boundary_normalized_values": {
+        "axis0_sign-1": -1.366613507270813,
+        "axis0_sign1": 1.3510586023330688,
+        "axis1_sign-1": -1.5766072273254395,
+        "axis1_sign1": 1.1478898525238037,
+        "axis2_sign-1": -1.197768211364746,
+        "axis2_sign1": 1.5865925550460815
+      },
+      "unchanged_normalized_coordinates_exact": true,
+      "effective_xyz_and_gripper_exact": true,
+      "clean_and_inflated_canonical_inputs_exact": true,
+      "scope": "Fixed new open-loop bank; all requests frozen before environment/model outputs"
+    },
+    "scope": "One fixed reach root with equal committed controls. The environment constructor may simulate internally;450 counts explicit step calls only. Branches are related, not15 independent tasks."
+  },
+  "candidate_results": [
+    {
+      "candidate": 0,
+      "name": "native_seed1_prefix",
+      "clean_native_cost": 0.8195656538009644,
+      "clean_predicted_rank": 2,
+      "clean_selected": false,
+      "terminal_native_reward_30": 7.989218711853027,
+      "summed_native_reward_30": 110.1521805524826,
+      "final_reach_distance_30": 0.09875076719367057,
+      "final_success_30": false,
+      "ever_success_30": false,
+      "terminal_native_reward_15": 2.9017961025238037,
+      "summed_native_reward_15": 29.303298354148865,
+      "final_reach_distance_15": 0.20198192679083782,
+      "final_success_15": false,
+      "ever_success_15": false,
+      "clean_final_weighted_feature_forecast_error": 1.4074183702468872
+    },
+    {
+      "candidate": 1,
+      "name": "native_seed2_prefix",
+      "clean_native_cost": 1.3444838523864746,
+      "clean_predicted_rank": 3,
+      "clean_selected": false,
+      "terminal_native_reward_30": 1.8297232389450073,
+      "summed_native_reward_30": 47.77828586101532,
+      "final_reach_distance_30": 0.25534155076118015,
+      "final_success_30": false,
+      "ever_success_30": false,
+      "terminal_native_reward_15": 1.5778785943984985,
+      "summed_native_reward_15": 22.01789700984955,
+      "final_reach_distance_15": 0.27450454018316484,
+      "final_success_15": false,
+      "ever_success_15": false,
+      "clean_final_weighted_feature_forecast_error": 1.2913556098937988
+    },
+    {
+      "candidate": 2,
+      "name": "native_seed3_prefix",
+      "clean_native_cost": 0.7811169028282166,
+      "clean_predicted_rank": 1,
+      "clean_selected": true,
+      "terminal_native_reward_30": 7.699375629425049,
+      "summed_native_reward_30": 109.05741345882416,
+      "final_reach_distance_30": 0.10311855346181165,
+      "final_success_30": false,
+      "ever_success_30": false,
+      "terminal_native_reward_15": 3.081171989440918,
+      "summed_native_reward_15": 30.021395087242126,
+      "final_reach_distance_15": 0.19561611935844886,
+      "final_success_15": false,
+      "ever_success_15": false,
+      "clean_final_weighted_feature_forecast_error": 1.117754340171814
+    },
+    {
+      "candidate": 3,
+      "name": "zero_request_roundtrip",
+      "clean_native_cost": 2.303743362426758,
+      "clean_predicted_rank": 4,
+      "clean_selected": false,
+      "terminal_native_reward_30": 1.39305579662323,
+      "summed_native_reward_30": 41.632548689842224,
+      "final_reach_distance_30": 0.2915413014790292,
+      "final_success_30": false,
+      "ever_success_30": false,
+      "terminal_native_reward_15": 1.3924533128738403,
+      "summed_native_reward_15": 20.663751006126404,
+      "final_reach_distance_15": 0.2916020051920697,
+      "final_success_15": false,
+      "ever_success_15": false,
+      "clean_final_weighted_feature_forecast_error": 0.3122628629207611
+    },
+    {
+      "candidate": 4,
+      "name": "seed1_xyz_sign_reversal_roundtrip",
+      "clean_native_cost": 2.9246826171875,
+      "clean_predicted_rank": 5,
+      "clean_selected": false,
+      "terminal_native_reward_30": 0.48128002882003784,
+      "summed_native_reward_30": 24.230171352624893,
+      "final_reach_distance_30": 0.4821569704071686,
+      "final_success_30": false,
+      "ever_success_30": false,
+      "terminal_native_reward_15": 0.7513625025749207,
+      "summed_native_reward_15": 15.902349948883057,
+      "final_reach_distance_15": 0.3909300468408246,
+      "final_success_15": false,
+      "ever_success_15": false,
+      "clean_final_weighted_feature_forecast_error": 0.5166099667549133
+    }
+  ],
+  "clean_decision": {
+    "selected_candidate": 2,
+    "oracle_best30_candidate": 0,
+    "selected_terminal_reward30": 7.699375629425049,
+    "oracle_terminal_reward30": 7.989218711853027,
+    "terminal_reward30_regret": 0.2898430824279785,
+    "regret_fraction_of_best30_reward": 0.03627927747152037,
+    "selected_beats_both_constructed_controls": true,
+    "oracle_best15_candidate": 2,
+    "selected_is_best15": true,
+    "interpretation": "Clean selects the second-best30-control candidate, near the oracle and above both controls. It is also best by the predeclared secondary15-control terminal reward. This does not pass the frozen30-control oracle-optimality gate;15-control results do not replace the primary endpoint. Gate failure is not evidence of general model/controller incompetence."
+  },
+  "gate": {
+    "clean_competence_passed": false,
+    "bank_terminal_rewards": [
+      7.989218711853027,
+      1.8297232389450073,
+      7.699375629425049,
+      1.39305579662323,
+      0.48128002882003784
+    ],
+    "bank_best_terminal_reward_ties_within_tolerance": 1,
+    "inflated_selected_index_changed": null,
+    "harm_signal_conditioned_on_clean": null,
+    "canonical_recovery_if_harm": null,
+    "inflated_minus_clean_terminal_reward": null,
+    "canonical_minus_clean_terminal_reward": null,
+    "canonical_minus_inflated_terminal_reward": null,
+    "canonical_controls": "Canonical inputs from Clean/Inflated are identical by construction; if Clean passes, both share one measured canonical forecast batch with actual replay-derived utility. Otherwise no canonical forecast was executed.",
+    "unchanged_zero_forecast_exact": null,
+    "skipped_forecasts": [
+      "inflated_saturated_xyz",
+      "canonical_saturated_xyz"
+    ],
+    "stop_reason": "Frozen Clean bank competence gate failed; no alias/canonical model calls",
+    "tolerance": 1e-06,
+    "tolerance_is_practical_harm_threshold": false,
+    "scope": "One root, added H6=30-control open-loop bank selector; not native CEM (which executes15 before replanning), not independent generalization or statistical significance."
+  },
+  "statistics": {
+    "independent_roots": 1,
+    "significance_tests": null,
+    "confidence_intervals": null,
+    "reason": "One deliberately constructed development bank; no independent statistical sample or population claim."
+  },
+  "scientific_decision": {
+    "physical_equivalence": "Go for this exact finite action bank and reach root: paired future states, images and utilities are equal.",
+    "current_decision_harm_claim": "No-Go: frozen Clean oracle gate failed, so intervention/canonical forecasts were not evaluated.",
+    "not_a_negative_attack_result": "Unmeasured alias ranking/harm/recovery are null, not zero. This run does not show that aliases are harmless or canonicalization ineffective.",
+    "native_scope": "Released pretrained DINO-WM model/unroll and native objective, but an added fixed open-loop selector. Full native CEM uses15-step execution before replanning; no CEM or whole task episode was run here.",
+    "conditional_prediction_limit": "Same real state and executed control establishes paired intervention equivalence, not universal alias invariance of observational Bayes P(Y|O,A) under partial observability and behavior-policy confounding.",
+    "threat_model_limit": "A forecast-request-only action representation writer is a proposed restricted permission. The inspected system directly calls local unroll; no deployed low-trust writer was identified.",
+    "novelty": "No numerical novelty rating is justified. Clipping equivalence and model exploitation are established prior art; even a later positive fixed-bank result would not close native-harm, deployed-interface or generalization gaps.",
+    "next_action": "Preserve the exact alias/replay harness. Do not retune this bank, magnitude, metric or gate using its results. A later alias study requires a concrete representation-writer contract and a separately frozen native execution protocol; oracle optimality is a stricter gate than ordinary competence and is not a universal safety prerequisite. Without that new basis, screen a materially different native decision interface before another task run."
+  },
+  "activity": {
+    "environment_steps": 450,
+    "unroll_calls": 1,
+    "predictor_forwards": 6,
+    "native_encodes": 8,
+    "network_attempts": 0,
+    "planner_calls": 0,
+    "training_updates": 0,
+    "checkpoint_loads": {
+      "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth": 1,
+      "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar": 1
+    },
+    "elapsed_seconds": 49.96383093899931,
+    "original_unroll_seconds": 2.2851425659900997,
+    "gpu_initialized": false,
+    "model_api_requests": 0,
+    "new_training": 0,
+    "new_checkpoint_downloads": 0,
+    "new_large_weight_hashes": 0
+  },
+  "primary_sources": [
+    {
+      "title": "Clipped Action Policy Gradient",
+      "url": "https://proceedings.mlr.press/v80/fujita18a/fujita18a.pdf",
+      "checked_scope": "section3 equations4–6 and section3.4",
+      "relevance": "Prior clipping-equivalence assumptions and raw-action reward exception; not our experiment."
+    },
+    {
+      "title": "World Models",
+      "url": "https://worldmodels.github.io/#cheating-the-world-model",
+      "checked_scope": "Cheating the World Model section",
+      "relevance": "Prior learned-model exploitation; not our experiment."
+    },
+    {
+      "title": "When to Trust Your Model: Model-Based Policy Optimization",
+      "url": "https://arxiv.org/html/1906.08253",
+      "checked_scope": "sections4 and6",
+      "relevance": "Prior model-error/distribution-shift and exploitation analysis; not our experiment."
+    }
+  ],
+  "artifacts": {
+    "run": "runs/dino_action_saturation_gate_20261015",
+    "summary": "runs/dino_action_saturation_gate_20261015/summary.json",
+    "candidate_table": "runs/dino_action_saturation_gate_20261015/candidate_results.csv",
+    "frozen_bank": "runs/dino_action_saturation_gate_20261015/frozen_bank.npz",
+    "forecasts_and_truth": "runs/dino_action_saturation_gate_20261015/forecasts_and_encodings.npz",
+    "runner": "scripts/probe_dino_action_saturation_gate.py",
+    "analysis": "scripts/analyze_dino_action_saturation_gate.py"
+  },
+  "reproduction": {
+    "experiment": ".venv-jepa-native/bin/python scripts/probe_dino_action_saturation_gate.py --out /absolute/path/to/new_output",
+    "analysis": "python scripts/analyze_dino_action_saturation_gate.py",
+    "note": "Experiment refuses existing output directories. The analysis reads cached traces/summary only and makes no model/environment/API calls."
+  }
+}

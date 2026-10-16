@@ -1,0 +1,26 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "cascade_source": "runs/tdmpc_cascade_heldout_matched_v1/cascade_source.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "validation_seed": 33,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "source_steps": 300,
+  "eval_steps": 500,
+  "updates": 300,
+  "learning_seed": 31,
+  "output": "runs/tdmpc_joint_order_controls_v0",
+  "operation": "Permute actuator coordinates of the same legal cascade action envelope, replay each in the simulator, and adapt only native TD-MPC2 dynamics.",
+  "conditions": [
+    "random",
+    "cascade",
+    "joint_reverse",
+    "joint_rotate"
+  ],
+  "gate": "A cross-actuator phase-order mechanism requires cascade harm against random and both coordinate controls, with one-step error <=1.05x random.",
+  "api_requests": 0
+}

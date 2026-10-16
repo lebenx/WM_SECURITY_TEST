@@ -1,0 +1,64 @@
+{
+  "status": "completed_native_capability_below_threshold",
+  "repository": "https://github.com/CausalGame/CausalGame",
+  "local_path": "vendor/CausalGame",
+  "commit": "34223510a0e7466ad399ff19714425f8708b7fbe",
+  "motivation": "Current Plant full tasks both recover or retain the correct answer. Examine whether shared experience changes subsequent experimental choices, while distinguishing the mechanism from existing active-learning poisoning, causal selection bias and shared-premise verification work. No new mechanism claimed.",
+  "native_budget": {
+    "exploration_items": 200,
+    "deployment_calls": 10,
+    "final_evaluation_items": 1000,
+    "final_submissions": 1
+  },
+  "examined_variants": [
+    "antenna_trap",
+    "antenna_trap_no_history",
+    "antenna_trap_no_selection_bias"
+  ],
+  "visibility_note": "The no_selection_bias variant exposes failed as well as surviving records. The no_history variant removes initial records but still censors failed records. These are different native conditions, not interchangeable controls.",
+  "execution_status": "Completed one valid native hybrid episode under neutral workspace paths. Final survival703/1000 (70.3%) is below native75% victory threshold. All11 API requests used the primary gateway successfully. No attacker experiments or GPU work.",
+  "novelty_gate": "Do not simply repeat native biased-history versus no-history experiments. A proposed attacker action mechanism must differ from prior query-selection poisoning, distribution-selection effects and generic false-premise verification blindness.",
+  "capability_gate": "If adopted, run an unmodified clean full task first on a declared scenario and gateway model alias. Do not remove observations, lower native success thresholds or feed hidden SCM/optimal-policy metadata to make a result pass.",
+  "model_interface": "Native hybrid harness uses tool calling; current common Client returns content text. Any integration must support native tool-call messages and keep credential-isolated request logging; do not silently replace the actor with a forced-choice probe.",
+  "capability_run": {
+    "experiment": "antenna_trap",
+    "seed": 2,
+    "model": "glm-5.3",
+    "thinking": false,
+    "temperature": 0,
+    "mode": "native hybrid",
+    "exploration_items": 200,
+    "deployment_calls": 10,
+    "final_items": 1000,
+    "threshold": 0.75,
+    "max_api_requests": 80,
+    "api_timeout_s": 180,
+    "output": "runs/causalgame_native_capability_s2_v1",
+    "scope": "One predeclared clean environment capability episode with original biased initial histories. No attack or proposed new mechanism."
+  },
+  "excluded_runs": [
+    {
+      "path": "runs/causalgame_native_capability_antenna_s2_v0",
+      "reason": "Output directory leaked the experiment identifier via native workspace instructions; actor explicitly used the antenna name as causal evidence. Researcher sent SIGINT; native error string Interrupted by user is upstream wording, not a user instruction.",
+      "api_requests": 7,
+      "completed_request_records": 6,
+      "scored": false
+    }
+  ],
+  "capability_result": {
+    "source": "runs/causalgame_native_capability_s2_v1/summary.json",
+    "gate_passed": false,
+    "survived": 703,
+    "evaluation_items": 1000,
+    "survival_rate": 0.703,
+    "native_victory_threshold": 0.75,
+    "exploration_items_used": 200,
+    "deployments_used": 9,
+    "native_deployment_budget": 10,
+    "api_requests": 11,
+    "failed_api_requests": 0,
+    "scope": "One model alias, scenario and fixed seed; this does not establish general model inability or an attacker effect. Native success=true means evaluation completed, not victory. Use final_status for resource usage; the native runner cached100 before nested deployments, final status records200."
+  },
+  "decision": "Do not launch an attack or scale on this configuration. Native biased histories and ordinary experiment-selection effects do not supply a new mechanism. Stop environment setup and return to mechanism selection.",
+  "report_note_cn": "使用原生 hybrid 执行器，固定 antenna_trap／种子 2／glm-5.3，保留 200 个探索样本、10 次部署上限及 75% 成功门槛。有效运行执行 9 次部署、用完 200 个样本，最终 703/1000（70.3%），未通过能力检查；11 次 API 请求全部成功。此前一轮因工作路径泄露实验名称而主动停止并排除，耗用 7 次请求（其中 1 次中断时尚无返回记录）；该轮主接口曾断连，备用接口恢复，已提醒用户。此处没有攻击实验，不支持任务损害或新机制主张，也不能从单次结果概括所有模型的能力。"
+}

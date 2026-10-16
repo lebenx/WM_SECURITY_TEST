@@ -1,0 +1,69 @@
+### (1) One-sentence concept
+
+**Successor-Fingerprint Pooling (SFP) learns a shared world model by grouping states from different agents according to their empirically measured short-horizon action consequences, rather than according to appearance, raw coordinates, or fitted model parameters.**
+
+### (2) Operator and update
+
+Represent each observation as predicates or object attributes \(x\). Fix a small probe set \(P\) of ordinary available actions and horizon \(H\) (e.g. \(P=\{a_1,a_2,a_3\},H=2\)). From real rollouts, compute a successor fingerprint
+
+\[
+q(x)=\Big[
+\phi(x),
+\phi(x_{1}^{a_1}),\ldots,\phi(x_{H}^{a_1}),
+\ldots,
+\phi(x_{1}^{a_{|P|}}),\ldots,\phi(x_{H}^{a_{|P|}})
+\Big],
+\]
+
+where \(\phi\) contains task-relevant predicates such as object state, temperature range, opened/closed, or inventory—not agent identity or room coordinates.
+
+Maintain an online quotient assignment
+
+\[
+z(x)=\arg\min_k d(q(x),\mu_k),
+\]
+
+creating a new cluster only when \(d(q(x),\mu_k)>\epsilon\). For every real transition \((x,a,x')\), update a shared transition table/model
+
+\[
+\hat T(z(x),a)\leftarrow
+(1-\alpha)\hat T(z(x),a)+\alpha\,\phi(x'),
+\]
+
+and update the cluster fingerprint center \(\mu_{z(x)}\). The predicted next state is decoded as
+
+\[
+\hat x'=\operatorname{Decode}\big(\hat T(z(x),a),\,x\big),
+\]
+
+where only state components proven environment-specific are copied from \(x\); shared causal components come from \(\hat T\). A target agent therefore contributes observations to the same operator only after its states exhibit the same measured action-consequence fingerprint.
+
+This is an actual learning update, not merely a new replay label: the probe rollouts determine the state quotient on which parameter sharing occurs.
+
+### (3) Difference from the strongest baseline
+
+The closest baseline is target-only fitting with the shortest-coefficient rule, or ordinary pooled model fitting in raw state coordinates. Those methods choose parameters from target evidence or average observations indexed by raw state.
+
+SFP instead performs **behavioral state identification before pooling**. Under identical evidence, outputs can differ:
+
+- Agent A observes a red reactor at \(40^\circ\) in room 1; agent B observes a blue reactor at \(40^\circ\) in room 2. If the same probes produce identical fingerprints, SFP assigns one quotient state and transfers the learned action effects.
+- Two visually identical reactors have different hidden valve states. Their probe fingerprints differ, so SFP keeps separate models; raw pooling incorrectly shares them.
+
+This is not variable projection: no paired samples are subtracted, and no linear nuisance parameter is eliminated.
+
+### (4) Natural phenomenon and rejection experiment
+
+Natural phenomenon: **the same affordance configuration recurs across rooms, object identities, and procedural layouts, while visually similar states can differ in hidden operational state.**
+
+Use two DiscoveryWorld or ScienceWorld procedural layouts. Collect 20 short real episodes from three agents, reserving one layout as target. Use three ordinary probe actions and \(H=2\); no learned model is used to generate probes. Compare:
+
+1. target-only shortest-coefficient fitting;
+2. ordinary pooled transition model;
+3. SFP;
+4. TD-MPC2 frozen encoder plus a small target adapter.
+
+Evaluate five-step planning return and predicate-transition accuracy on 30 held-out target tasks. Reject SFP if it does not improve both metrics over target-only fitting, or if it creates more than 10% false state merges. This is CPU-feasible with tabular/predicate models.
+
+### (5) Biggest novelty risk
+
+The mechanism may reduce to a known form of bisimulation or successor-feature state abstraction once formalized. Its defensible novelty would therefore depend on the specific **online cross-agent quotient-and-update procedure** and evidence that it improves transfer under partial observability, rather than merely renaming behavioral abstraction.

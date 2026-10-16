@@ -1,0 +1,72 @@
+{
+  "status": "technical_failure_retained",
+  "activity": {
+    "actor_calls": 1,
+    "gst_calls": 1,
+    "physical_steps": 0,
+    "physical_resets": 1,
+    "actor_calls_completed": 0,
+    "gst_calls_completed": 1,
+    "physical_steps_completed": 0,
+    "checkpoint_loads": 2,
+    "checkpoint_loads_completed": 2,
+    "actual_robot_controls": 0,
+    "talk2env_calls": 1,
+    "post_terminal_talk2env_calls": 0
+  },
+  "scope": "One native case-0 Clean trace; passive feedback records, no attack or shadow intervention",
+  "revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+  "resource_manifest": {
+    "path": "/home/xhj/WM_Security/runs/gensafenav_resources_20261015/provenance.json",
+    "sha256": "f3abb5f15cdf43454c1cac45f7e998e1b972f73b4f1b25ac3206d935f29cd467",
+    "files_verified": 186
+  },
+  "runtime": {
+    "python": "/home/xhj/WM_Security/.venv-gensafenav/bin/python",
+    "torch": "2.2.0+cu121",
+    "numpy": "1.26.4",
+    "device": "cpu"
+  },
+  "scientific_settings": {
+    "actor": "trained_models/Ours_GST/checkpoints/05207.pt",
+    "gst": "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+    "seed": 42,
+    "test_case": 0,
+    "time_step": 0.25,
+    "time_limit": 50,
+    "horizons": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "known_native_time_join_bug_preserved": true,
+    "shadow_calibration_feeds_actor": false,
+    "device_adaptation": "Only saved GST device made consistent with actor backend",
+    "pred_interval": 1
+  },
+  "weights": {
+    "trained_models/Ours_GST/checkpoints/05207.pt": 10026423,
+    "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt": 827916
+  },
+  "checkpoint_load_paths": [
+    "/home/xhj/WM_Security/vendor/GenSafeNav/gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+    "/home/xhj/WM_Security/vendor/GenSafeNav/trained_models/Ours_GST/checkpoints/05207.pt"
+  ],
+  "initial_case_selection": {
+    "test_case": 0,
+    "case_counter": {
+      "train": 0,
+      "test": 0,
+      "val": 0
+    },
+    "thisSeed": 42,
+    "explicit_headless_case_selection": true
+  },
+  "strict_actor_load_passed": true,
+  "actor_training_mode": true,
+  "error": "RuntimeError('Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!')",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/xhj/WM_Security/scripts/probe_gensafenav_feedback_selection.py\", line 372, in main\n    run(args, out, summary)\n  File \"/home/xhj/WM_Security/scripts/probe_gensafenav_feedback_selection.py\", line 297, in run\n    _, action, _, hidden = actor.act(obs, hidden, masks, deterministic=True)\n                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/GenSafeNav/rl/networks/model.py\", line 64, in act\n    dist = self.dist(actor_features)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-worldagen/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1511, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-worldagen/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1520, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/GenSafeNav/rl/networks/distributions.py\", line 94, in forward\n    action_logstd = self.logstd(zeros)\n                    ^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-worldagen/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1511, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-worldagen/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1520, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/GenSafeNav/rl/networks/network_utils.py\", line 45, in forward\n    return x + bias\n           ~~^~~~~~\nRuntimeError: Expected all tensors to be on the same device, but found at least two devices, cuda:0 and cpu!\n",
+  "elapsed_seconds": 3.4129799130023457
+}

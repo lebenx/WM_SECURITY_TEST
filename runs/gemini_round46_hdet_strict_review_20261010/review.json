@@ -1,0 +1,18 @@
+{
+  "verdict": "REJECT",
+  "novelty_score": 2,
+  "decision": "REJECT_ALL",
+  "overlap_risks": [
+    "Classical finite-horizon truncation pathology (the well-known 'cliff-fall' effect where finite-horizon optimal control defers costs beyond step H).",
+    "Missing terminal value function / terminal set constraint (Lyapunov/viability kernel failure well documented since 1980s MPC literature).",
+    "Direct relabeling of rejected 'TD-MPC2 period-5 horizon-shadowing' and 'hard-boundary stiffness' via physical metaphors ('irreversible transition energy', 'boundary residual').",
+    "Conflation of environment irreversibility (dynamics reachability boundary) with world-model-specific vulnerabilities."
+  ],
+  "minimum_gate": "Demonstrate that the failure is uniquely driven by a latent generative world-model vulnerability rather than baseline MPC myopic control: specifically, execute a true environment model (analytical dynamics) under identical horizon H and show that HD-ET *only* occurs in the learned world model under nominal Q/value estimates while the ground-truth model avoids the trap, without relying on task-level terminal cost absence.",
+  "repair": "Strip the generic physical terminology ('energy trapping') and formalize it as a latent-space value estimation divergence specific to world-model representations: a model-based adversarial blind-spot where the latent transition model preserves local predictive fidelity while shifting the latent distribution into a deficient terminal value region that the critic fails to penalize. Include explicit control proofs eliminating standard finite-horizon terminal cost truncation.",
+  "falsifiers": [
+    "Ground-truth dynamics MPC with horizon H experiences the identical post-horizon drop/irreversible state transition (proves it is classical horizon truncation, not a world model phenomenon).",
+    "Adding an accurate learned terminal value function V(s_{t+H}) removes the failure mode without modifying the transition model (confirms missing terminal cost).",
+    "Metric of 'residual energy' is linearly correlated with standard cumulative rollout divergence or known boundary OOD shifts across test seeds."
+  ]
+}

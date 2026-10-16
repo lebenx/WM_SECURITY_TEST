@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "completed_read_only_evidence_and_gate_correction",
+  "previous_goal_turn": "progress: operator exclusion and archive consolidation changed authoritative evidence",
+  "changed_registries": [
+    "reports/research_archive/mechanisms.json",
+    "reports/research_archive/next_experiment_gate.json"
+  ],
+  "principle": "Separate demonstrated harm, mechanism attribution, deployability and novelty. A comparator or prior-art overlap is not a universal veto on systems-security evidence.",
+  "corrected_empirical_fact": {
+    "mechanism": "wm_parity_coupling",
+    "rows": [
+      {
+        "seed": 706,
+        "attack_return": 200,
+        "control_return": 200
+      },
+      {
+        "seed": 707,
+        "attack_return": 200,
+        "control_return": 160
+      }
+    ],
+    "source_paths": [
+      "runs/mbrl_parity_cartpole_v1/parity_attack/summary.json",
+      "runs/mbrl_parity_cartpole_v1/parity_control/summary.json"
+    ],
+    "meaning": "One tie and one improvement, not two ties. Reinforces unstable effects; does not reopen an attack by itself."
+  },
+  "source_controls": [
+    "scripts/pilot_branch_provenance.py:228",
+    "scripts/pilot_mbrl_rank_coupling.py:38",
+    "scripts/screen_opine_query_memory.py:113",
+    "configs/opine_query_memory_screen.json:77"
+  ],
+  "limits": [
+    "No prior raw result or frozen config edited.",
+    "No new attack success, defense result or novelty score.",
+    "Current native-task and generalization failures remain valid."
+  ],
+  "new_model_api_requests": 0,
+  "new_environment_steps": 0
+}

@@ -1,0 +1,111 @@
+{
+  "schema_version": 1,
+  "status": "completed_bounded_source_and_prior_art_screen_no_pilot_qualified",
+  "date": "2026-10-16",
+  "previous_goal_turn": {
+    "classification": "progress",
+    "reason": "Completed and independently verified the fixed Cosmos full-layer sender diagnostic; negative specificity gate changed next action to close that route.",
+    "source": "reports/cosmos_action_sender_decision_20261016.json"
+  },
+  "current_turn_classification": "source_qualification_and_prior_art_progress_no_runtime_experiment",
+  "question": "After closing the action-sender explanation, does a distinct candidate have a concrete decision path and sufficient novelty to justify a new actual-task pilot?",
+  "candidates": [
+    {
+      "id": "imagined_observation_actor_memory_writeback",
+      "proposed_claim": "An unexecuted imagined observation can persist through an actor recurrent state into later real control even when world-model branch caches are isolated.",
+      "difference_from_prior": "Actor decision-history state, rather than JOWA transformer KV ownership or TD-MPC2 CEM proposal warm start.",
+      "paper_lead": {
+        "title": "RolloutFaith: Auditing Persistent Internal Interventions in Visual World Model",
+        "url": "https://arxiv.org/html/2609.36843v1",
+        "read_scope": "Relevant paper sections, not an independent experiment reproduction.",
+        "finding": "The described persistence tests concern fixed-action forecast interventions. Real-trajectory actor use does not itself establish an imagination-to-real-actor writeback interface.",
+        "resource_limit": "The bounded lookup did not locate author experiment code or matched downloadable weights; this is not proof that no release exists."
+      },
+      "native_source": {
+        "repository": "https://github.com/eloialonso/diamond",
+        "commit": "5bcd1599755b4f2fae8e5e079e02f0728e174965",
+        "snapshot": "runs/diamond_actor_memory_source_screen_20261016/summary.json",
+        "source_facts": [
+          {
+            "path": "runs/diamond_actor_memory_source_screen_20261016/actor_critic.py",
+            "lines": "68-73",
+            "fact": "predict_act_value receives hx_cx explicitly, computes LSTM outputs, and returns them; the inspected method does not assign them to module hidden-state fields."
+          },
+          {
+            "path": "runs/diamond_actor_memory_source_screen_20261016/env_loop.py",
+            "lines": "18-19,31,49,65",
+            "fact": "Each loop factory invocation owns local hx/cx. Normal steps assign returned states; final-observation and end-of-chunk bootstrap value queries discard returned states."
+          },
+          {
+            "path": "runs/diamond_actor_memory_source_screen_20261016/agent.py",
+            "lines": "28-62",
+            "fact": "The inspected assembly/training/checkpoint interface does not expose the proposed online rejected-candidate writeback path."
+          }
+        ]
+      },
+      "decision": "No-Go for this proposed writer in the inspected native path; no checkpoint download or task pilot.",
+      "limits": "Not an exhaustive proof about every shared buffer, uninspected caller, model version or recurrent agent. No native Clean or attack was run."
+    },
+    {
+      "id": "function_preserving_adaptation_geometry",
+      "proposed_claim": "A provider can preserve current predictions while changing how later factual world-model updates affect the model and agent.",
+      "primary_sources": [
+        {
+          "title": "Removing Information Content Does Not Certify Tamper Resistance in Open-Weight Models",
+          "url": "https://arxiv.org/html/2610.09004v1",
+          "scope": "Section3 Proposition3.2 and Corollary3.3; a function-preserving parameter transform changes the pulled-back gradient-descent preconditioner. Optimizer and trainable-block assumptions matter."
+        },
+        {
+          "title": "Distribution-Specific Curvature Control with Finite-Sample Guarantees for Open-Weight Safety",
+          "url": "https://arxiv.org/html/2607.22929v1",
+          "scope": "Function-preserving spectral deformation targets subsequent learning curvature; this paper was already present in the local literature registry."
+        }
+      ],
+      "decision": "Do not launch a world-model transplant based only on unchanged forward outputs and altered update geometry; that generic mechanism has direct primary prior art.",
+      "limits": "This is a novelty-screen decision, not a proof that all world-model adaptation questions are covered, nor a measured attack/defense result. No numeric novelty score."
+    },
+    {
+      "id": "existing_native_time_unit_history_interfaces",
+      "decision": "No distinct supported writer qualified in the checked TD-MPC2 and SafeDreamer sources.",
+      "source_facts": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "lines": "153 onward",
+          "fact": "Native controller encodes current observation and has the previously tested proposal warm-start state; no newly identified equivalent time/unit/history input interface."
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/envs/dmcontrol.py",
+          "lines": "54",
+          "fact": "Action repeat is fixed; changing it changes the transition modeled, rather than supplying an equivalent representation."
+        },
+        {
+          "path": "vendor/SafeDreamer/SafeDreamer/agent.py",
+          "lines": "56 onward",
+          "fact": "Native policy uses previous action and recurrent state; is_first is semantically an episode-boundary input, not arbitrary equivalent formatting."
+        },
+        {
+          "path": "vendor/SafeDreamer/SafeDreamer/behaviors.py",
+          "lines": "344 onward",
+          "fact": "CCE action_mean can persist across driver reset without explicit is_first clearing; this is a proposal-cache reset issue, not a newly established attack mechanism."
+        }
+      ],
+      "limits": "The TD-MPC2 fixed query-interference result remains972.41→973.11, no harm. SafeDreamer still lacks a measured full Clean episode here. No new model/env query."
+    }
+  ],
+  "actual_activity": {
+    "new_local_source_files": 3,
+    "captured_source_bytes": 9334,
+    "model_loads": 0,
+    "model_forward_calls": 0,
+    "model_api_calls": 0,
+    "environment_resets": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "public_source_and_literature_access": true
+  },
+  "interpretation": "This screen excludes the specified next operations from immediate execution. It supplies no new harm signal, defense, generalization, population rate or ICLR-ready claim.",
+  "research_goal_status": "active_unachieved",
+  "core_security_claim": null,
+  "future_scope_correction": "Equivalent-input or Goal-invariance contracts are required only when that proposed mechanism relies on equivalence. They are not a universal prerequisite for all security research. A new bounded attacker permission may be stated as a researcher-defined threat model, but must not be misreported as a deployed interface. Actual causal contribution, strong controls and novelty remain necessary.",
+  "next_action": "Seek a materially different security operation tied to an actual prediction-to-agent path and task consequence. Do not repeat closed source schedules, Goal/seed/root sweeps, cache aliasing or generic reparameterization under a new name. A new candidate must state why the previous negative evidence does not decide it before any checkpoint or runtime work."
+}

@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-09",
+  "candidate_id": "H_action_contrast_routing",
+  "one_sentence_claim": "A world model might preserve the batch-level marginal law of one-step predictions while losing the action-to-outcome correspondence that counterfactual planners require.",
+  "status": "rejected_structured_routing_did_not_harm_short_cem",
+  "model": "Frozen native MBRL-Lib five-member GaussianMLP trained from 3000 CartPole transitions.",
+  "operation": "Within each CEM candidate's five-particle block, permute native next-state outputs across action rows after the model has produced them; the output multiset and its empirical moments are unchanged.",
+  "controls": ["native", "reverse action-rank routing", "cyclic routing", "random routing"],
+  "short_gate": {
+    "settings": "CartPole, population20, two CEM iterations, horizon8, five particles, seed810, 50-step cap.",
+    "returns": {
+      "native": 50.0,
+      "reverse": 50.0,
+      "rotate": 50.0,
+      "random": 25.0
+    },
+    "model_hash_unchanged": true,
+    "training_updates": 0,
+    "api_requests": 0,
+    "gpu_work": false
+  },
+  "closest_prior": "https://arxiv.org/abs/2609.30264",
+  "decision_cn": "结构化的反向排序和循环路由没有造成短 CEM 损害，只有随机路由退化；因此不能把随机扰动的失败归因于动作反事实对应关系。暂不升级或扩大。",
+  "next_requirement": "A future candidate must survive structured-routing, random-routing, and ordinary action-perturbation controls before any multi-task run.",
+  "accepted_claim": null
+}

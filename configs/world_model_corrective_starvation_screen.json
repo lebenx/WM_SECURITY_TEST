@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-10",
+  "candidate_id": "H_planner_induced_corrective_data_starvation",
+  "candidate_claim_cn": "合法源经验造成的规划偏置可能让受害者只收集模型选择的真实轨迹，缺少纠正支持并在后续 full update 中保持损失；混入随机真实数据应恢复。",
+  "carrier": "official TD-MPC2 mt30-48M; native planner; truthful victim trajectories; no label or observation edits",
+  "run": "runs/tdmpc_corrective_starvation_gate_v0/status.json",
+  "protocol": {
+    "source_task": "cheetah-run",
+    "target_task": "walker-run",
+    "source_updates": 40,
+    "continuation_updates": 20,
+    "victim_steps": 200,
+    "seed": 41,
+    "arms": ["clean_mpc", "random_source_mpc", "cascade_source_mpc"],
+    "continuations": ["mpc_only", "mixed_random"]
+  },
+  "results": {
+    "clean_mpc": {"pre": 188.2387177348137, "mpc_only_post": 246.23724964261055, "mixed_random_post": 182.82865303754807},
+    "random_source_mpc": {"pre": 181.25969368219376, "mpc_only_post": 269.56101790070534, "mixed_random_post": 260.0037693679333},
+    "cascade_source_mpc": {"pre": 233.91199204325676, "mpc_only_post": 228.1391817331314, "mixed_random_post": 148.20575559139252},
+    "action_covariance_rank": {"clean": 6, "random_source": 6, "cascade_source": 6}
+  },
+  "decision": "rejected_no_handoff_harm_or_support_specific_recovery",
+  "interpretation": "The cascade handoff was higher-return than the random-source arm at this dose; MPC-only continuation did not show a distinctive persistent loss, and mixed random data did not recover it. No two-seed or scale-up.",
+  "api_requests": 0,
+  "gpu_work": "188.7 seconds bounded CUDA screen; no long training"
+}

@@ -1,0 +1,106 @@
+{
+  "schema_version": 1,
+  "status": "completed_source_and_cached_evidence_reassessment",
+  "research_goal_status": "active_unachieved",
+  "activity": {
+    "new_model_calls": 0,
+    "new_environment_controls": 0,
+    "new_model_api_calls": 0,
+    "new_training_updates": 0,
+    "exclusive_gpu_requested": false
+  },
+  "scope": "New offline cross-system diagnostic and concrete source/cached-trace qualification. Not new task-harm trials, independent generalization, or a new mechanism.",
+  "ranking_diagnostic": {
+    "script": "scripts/analyze_counterfactual_action_ranking.py",
+    "report": "reports/counterfactual_action_ranking_audit_20261016.json",
+    "table": "reports/counterfactual_action_ranking_audit_20261016.csv",
+    "review": "reports/counterfactual_action_ranking_review_20261016.json",
+    "principle": "Keep environment utility, native score at encoded measured futures, and native score at forecasts separate. Signed forecast-selection difference may be negative. The identity is descriptive, not a mediation estimator."
+  },
+  "source_reassessment": [
+    {
+      "system": "OPINE",
+      "proposal": "Initialize the unchanged native root762 planner with the real prior L6 action/observation prefix, using its default40-depth/30-second budget.",
+      "decision": "not_run_source_action_support_insufficient",
+      "new_source_facts": [
+        "Allowed historical initialization is model-belief assimilation; the recorded after-frame was used for evaluation, not an observation update of hidden globals.",
+        "The default L6 action enumerator omits the button (51,26) that consumes the identified hidden-cycle state. Its two click coordinates are no-ops at the fixed root.",
+        "Fresh40/30 already exhausted174 transitions in0.42 seconds. Previously primed depth4/3s searches also found no plan; primed40/30 remains unexecuted.",
+        "Correct hypothetical-branch state ownership would require memory in queue nodes and the deduplication key. This is more than restoring globals around the existing planner."
+      ],
+      "limits": "Does not prove no primed planner can work. No new run is justified for this unchanged mechanism/root, and adding actions or changing state semantics is a new system.",
+      "sources": [
+        "vendor/opine-world/src/opine_world/synth_loop/prompts/synthesizer/frames/main.md",
+        "runs/opine_query_memory_v0/round_086/game_engine.py",
+        "scripts/screen_opine_query_memory.py",
+        "reports/opine_native_root_gate_20261015.json"
+      ]
+    },
+    {
+      "system": "TD-MPC2",
+      "question": "Can existing caches support the same fixed-candidate truth-score diagnostic without new inference or physical replay?",
+      "decision": "not_identifiable_from_current_cached_scores",
+      "facts": [
+        "The512-candidate H3 ranking run saves only aggregates; per-candidate actions, true next observations, native scores and scoring RNG are absent.",
+        "Four frozen-head evaluation.pt traces contain matched initial observations and actual actions/observations/rewards, but their500-step returns follow different later policies. Those returns cannot be attributed to a shared three-step action bank.",
+        "A new post-hoc prefix bank would require model forwards and an explicitly new stochastic score realization; it would not reconstruct the original native CEM ranking.",
+        "Full-update and actor-restore results use300-step truncated evaluation with full_episode=false; frozen-head control uses500-step complete episodes."
+      ],
+      "sources": [
+        "scripts/pilot_tdmpc_planner_ranking.py",
+        "runs/tdmpc_planner_ranking_v3/plan.json",
+        "runs/tdmpc_frozen_head_loss_control_20261015/summary.json",
+        "runs/tdmpc_full_update_order_controls_v0/status.json",
+        "runs/tdmpc_full_update_actor_restore_v0/status.json"
+      ]
+    },
+    {
+      "system": "GenSafeNav",
+      "question": "Does reordering spatial_edges without visible_masks misbind forecast entities in the actual actor?",
+      "source_decision": "proposed_mask_consumer_absent",
+      "facts": [
+        "The actor consumes spatial_edges and separately ordered conformity_scores, plus detected_human_num; it does not consume visible_masks or aggressiveness_factor.",
+        "GST histories preserve entity IDs, spatial_edges are sorted after prediction, and talk2Env separately sorts human objects by true center distance.",
+        "A narrower visible-versus-all-entity order mismatch must be checked in the cached actual trace; it is not a consequence of pure physical entity relabeling."
+      ],
+      "trace_audit": "reports/gensafenav_entity_binding_audit_20261016.json",
+      "sources": [
+        "vendor/GenSafeNav/rl/vec_env/vec_pretext_normalize.py",
+        "vendor/GenSafeNav/rl/networks/selfAttn_srnn_temp_node.py",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py"
+      ],
+      "cached_result": {
+        "issue_frames": 119,
+        "human_rows": 2380,
+        "ordering_mismatch_frames": 5,
+        "mismatched_visible_current_points": 24,
+        "mismatched_gst_eligible_rows_rejected": 21,
+        "accepted_gst_same_id_exact": 939,
+        "accepted_gst_not_same_id_exact": 0,
+        "new_task_harm": null
+      }
+    }
+  ],
+  "go_no_go": {
+    "go": "Retain the local Cosmos actual-utility loss and input-channel causal evidence, DINO measured proxy mismatch, and qualified historical real outcomes. Use the common audit to avoid mixing different causal explanations.",
+    "no_go": "No new qualified general security mechanism, deployable Bus-Cut recovery, matched Control-Cut defense or independent generalization. Do not restart the closed old panels or request an exclusive GPU on this evidence.",
+    "next_experiment_requirement": "A distinct native writable interface, useful Clean, an observable prediction-to-decision path, and a fixed intervention with independently measured utility. Do not turn source-only candidates into negative task experiments."
+  },
+  "previous_goal_turn_classification": {
+    "classification": "source_feasibility_progress_no_new_scientific_experiment",
+    "report": "reports/goal_bus_causal_interface_screen_20261016.json"
+  },
+  "current_goal_turn_classification": "cached_evidence_diagnostic_and_source_correction_no_new_task_experiment",
+  "measurement_corrections": {
+    "gensafenav_clearance": {
+      "report": "reports/gensafenav_entity_binding_audit_20261016.json",
+      "prior_exact_claim_withdrawn": true,
+      "source_supported_sampled_bound": [
+        0.2492767517487371,
+        0.4492767517487371
+      ],
+      "historical_values_preserved_in_corrected_reports": true
+    },
+    "tdmpc_full_update_horizon": "Progress page now explicitly states300-control truncation/full_episode=false, separate from500-control frozen-head evaluation."
+  }
+}

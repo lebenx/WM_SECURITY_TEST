@@ -1,0 +1,88 @@
+{
+  "status": "completed_bounded_source_screen",
+  "decision": "NONE for the proposed isolated forecast intervention: online future-supervised cognition does drive actions, but no separately exposed Goal/action-conditioned physical-forecast contract was identified",
+  "scope": "Five small repository source/document files plus GitHub and Hugging Face metadata. No claim about uninspected implementations or the complete paper architecture.",
+  "repository": {
+    "url": "https://github.com/Selen-Suyue/WoG",
+    "commit": "872d1df6055c0dc5d2504d4d6a5fb71c2bae3e6c",
+    "commit_date": "2026-04-28T06:14:41Z",
+    "created_at": "2026-02-26T14:13:55Z",
+    "readme_implementation_status": "README.md line 6 explicitly calls this an unofficial implementation based on open-source frameworks and datasets.",
+    "advertised_paper": "https://arxiv.org/abs/2602.22010",
+    "paper_text_checked_in_this_screen": false,
+    "metadata_paths": [
+      "runs/wog_source_screen_20261016/repository_metadata.json",
+      "runs/wog_source_screen_20261016/pinned_commit.json",
+      "runs/wog_source_screen_20261016/pinned_tree.json"
+    ]
+  },
+  "read_files": [
+    {"path": "README.md", "bytes": 8267},
+    {"path": "vla/vla.py", "bytes": 17626},
+    {"path": "deploy/wog_policy_sim.py", "bytes": 10079},
+    {"path": "action_model/action_model.py", "bytes": 2419},
+    {"path": "action_model/models.py", "bytes": 11324}
+  ],
+  "source_cache_root": "runs/wog_source_screen_20261016/source",
+  "source_url_template": "https://github.com/Selen-Suyue/WoG/blob/872d1df6055c0dc5d2504d4d6a5fb71c2bae3e6c/{path}#L{line}",
+  "online_path": {
+    "deployment": "deploy/wog_policy_sim.py:107-136 receives a current RGB image and task_description and calls predict_action(image,instruction). Changing the description resets policy state at lines 122-124.",
+    "model": "vla/vla.py:302-370 formats the instruction into the VLM prompt, processes the image, obtains one VLM cognition feature, then calls action_model.inference(cognition_features). No v_enc, qformer, or oformer call appears in this inference method.",
+    "action_sampler": "action_model/action_model.py:56-75 samples Gaussian action noise and integrates the action flow over num_steps=10 grid points (nine updates), calling net(x,t,z) without a future/perceptual tensor.",
+    "stage_two": "action_model/action_model.py:38-40 sets use_per_attn=False when train_venc=False. action_model/models.py:220-226 constructs the perceptual embedder only when use_per_attn is true; lines 295-301 consume per_token only on that branch.",
+    "execution": "The default action chunk contains 16 seven-dimensional actions. deploy/wog_policy_sim.py:138-187 optionally temporally ensembles the chunk, selects the first resulting action, scales translation/rotation, and applies gripper processing. The ensemble implementation was not read.",
+    "explicit_future_reconstruction_tensor_online_generated": false,
+    "explicit_forecast_tensor_consumed_by_online_action_sampler": false,
+    "future_supervised_cognition_z_consumed_by_online_action_sampler": true,
+    "training_can_change_action_representation": true,
+    "interpretation": "The shared VLM is trained with future-feature auxiliary supervision, and its online cognition z is actually consumed by the action flow. This is a real native future-supervised representation-to-action route, consistent with condition-space world guidance; it must not be described as world modeling being entirely unused at inference. Only the explicit future reconstruction branch is absent from the checked inference call path. The missing property is a separately exposed physical-future/Goal/candidate-action intervention contract, not absence of any learned world-guidance consumer."
+  },
+  "training_path": {
+    "truth_features": "vla/vla.py:160-172 encodes provided future_pixel_values with frozen FutureEnc plus qformer.",
+    "stage_one": "The encoded future features are passed to the action loss at lines 175-181; train_venc=True enables the action model's perceptual attention.",
+    "stage_two_auxiliary": "When train_venc=False, vla/vla.py:185-192 computes oformer(obs_ins), cosine-aligns it to detached encoded future targets, and adds 0.3 times this auxiliary loss. This supervises the shared VLM from which online cognition z is extracted; z then enters the native action flow. The explicit oformer output itself is not passed to predict_action or ActionModel.inference in the inspected source. The source does not establish that z is a calibrated physical state or candidate-action-conditioned rollout.",
+    "not_an_inference_do_action_contract": "Training targets are demonstrated future observations. The online entrypoint accepts no candidate future action sequence to condition a physical prediction on. Its action-flow x is a noisy generated action sequence, not a physical state forecast."
+  },
+  "contract_assessment": {
+    "independent_goal_branch": "Not found in the inspected path. One instruction feeds the shared VLM cognition representation used by action generation. Editing it changes the task condition; no separately protected policy Goal versus forecast Goal is exposed.",
+    "current_observation": "The public inference argument is a current PIL image. The deploy wrapper stores image_history but passes only image to predict_action.",
+    "forecast_action_condition": "None exposed: predict_action accepts image, instruction, normalization key and generation kwargs, with no candidate action input to an explicit world forecast.",
+    "forecast_time_alignment": "No online forecast frames/states or timestamped physical rollout are returned. The 16-action chunk is not evidence of a 16-frame physical forecast or a known wall-clock prediction horizon.",
+    "candidate_scores_or_ranking": "No forecast-based candidate scoring/selection found in the inspected action generation path.",
+    "new_security_mechanism": "None identified. Adding an explicit forecast consumer or arbitrary internal feature writer would create a new system/interface; this screen does not justify doing so."
+  },
+  "checkpoint_metadata": {
+    "url": "https://huggingface.co/selensu/WoG",
+    "metadata_url": "https://huggingface.co/api/models/selensu/WoG?blobs=true",
+    "revision": "7d1e73937c07ab9e35fb4b70d8f04097a55b7019",
+    "created_at": "2026-03-05T12:34:56.000Z",
+    "last_modified": "2026-03-23T11:45:43.000Z",
+    "private": false,
+    "gated": false,
+    "files": [
+      {"path": "WoG-A/checkpoints/50k-1229.pt", "bytes": 31833629582},
+      {"path": "WoG-V/checkpoints/step-100000-epoch-07-loss=0.1041.pt", "bytes": 32237059754}
+    ],
+    "config_and_dataset_statistics_listed": true,
+    "metadata_path": "runs/wog_source_screen_20261016/hf_model_metadata.json",
+    "validation": "Only publication metadata checked. No checkpoint/config tensor contents, compatibility, model capability, inference time or VRAM requirement were validated. Listed bytes are file sizes, not measured GPU memory."
+  },
+  "static_readiness_caveats": [
+    "The inspected standalone WoGSimInference constructor does not assign cfg_scale/use_ddim/num_ddim_steps although step references them at lines 133-135. An uninspected caller could set them; the provided class itself is not evidence of a successfully executed deployment.",
+    "vla/vla.py:278 loads action_model with strict=False and lines 286-297 can leave qformer initialized when checkpoint keys do not match. No strict inference compatibility was tested.",
+    "These ordinary implementation/readiness issues are not security findings and are not the principal exclusion reason; a native future-supervised z-to-action path exists, but the proposed separate physical-forecast intervention contract is absent from the checked path."
+  ],
+  "activity": {
+    "repository_files_fetched": 5,
+    "repository_source_bytes": 49715,
+    "metadata_network_requests": 4,
+    "web_repository_page_read": true,
+    "checkpoint_downloads": 0,
+    "installs": 0,
+    "model_calls": 0,
+    "environment_calls": 0,
+    "external_llm_calls": 0,
+    "training_updates": 0
+  },
+  "next_action": "Stop this carrier screen; no model download, runtime setup, Clean run or Goal-Swap experiment proposed."
+}

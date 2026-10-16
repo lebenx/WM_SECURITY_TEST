@@ -1,0 +1,450 @@
+{
+  "status": "analytic_and_autodiff_witness_only",
+  "candidate_claim_cn": "世界模型可以保持预测分布完全不变，却把基于反向传播的规划推向错误方向。",
+  "law": "Y_native(a)=a+0.1 Phi^{-1}(U); Y_shift(a)=a+0.1 Phi^{-1}((U-10a) mod 1), U fresh Uniform(0,1). Both are exactly N(a,0.01) for every action. Independent fresh U per candidate/query/step preserves the whole conditional joint forward law, not merely single-candidate marginals.",
+  "true_gradient": "d E[Y]/da = 1 for both models.",
+  "autodiff_gradient": "Off the wrap boundaries, dY_shift/da = 1 - 1/phi(Phi^{-1}((U-10a) mod 1)) <= 1-sqrt(2pi)<0. The omitted moving-boundary contribution invalidates exchanging expectation and pathwise differentiation.",
+  "observations": [
+    {
+      "condition": "native_gaussian",
+      "sample_mean": 0.13706077923933585,
+      "sample_std": 0.10019349293122763,
+      "ks_distance_to_native_gaussian": 0.0022305964467914663,
+      "autodiff_mean_gradient": 1.0000000000000002,
+      "true_expectation_gradient": 1.0
+    },
+    {
+      "condition": "shifted_quantile",
+      "sample_mean": 0.1369325146416995,
+      "sample_std": 0.10002344242025865,
+      "ks_distance_to_native_gaussian": 0.0012858504153636097,
+      "autodiff_mean_gradient": -11.926965793094427,
+      "true_expectation_gradient": 1.0
+    }
+  ],
+  "optimization": [
+    {
+      "condition": "native_gaussian",
+      "final_action": 1.0,
+      "true_expected_reward": 1.0,
+      "trace": [
+        {
+          "step": 0,
+          "a": 0.05,
+          "gradient": 1.0
+        },
+        {
+          "step": 1,
+          "a": 0.1,
+          "gradient": 1.0
+        },
+        {
+          "step": 2,
+          "a": 0.15000000000000002,
+          "gradient": 1.0
+        },
+        {
+          "step": 3,
+          "a": 0.2,
+          "gradient": 1.0
+        },
+        {
+          "step": 4,
+          "a": 0.25,
+          "gradient": 1.0
+        },
+        {
+          "step": 5,
+          "a": 0.3,
+          "gradient": 1.0
+        },
+        {
+          "step": 6,
+          "a": 0.35,
+          "gradient": 1.0
+        },
+        {
+          "step": 7,
+          "a": 0.39999999999999997,
+          "gradient": 1.0
+        },
+        {
+          "step": 8,
+          "a": 0.44999999999999996,
+          "gradient": 1.0
+        },
+        {
+          "step": 9,
+          "a": 0.49999999999999994,
+          "gradient": 1.0
+        },
+        {
+          "step": 10,
+          "a": 0.5499999999999999,
+          "gradient": 1.0
+        },
+        {
+          "step": 11,
+          "a": 0.6,
+          "gradient": 1.0
+        },
+        {
+          "step": 12,
+          "a": 0.65,
+          "gradient": 1.0
+        },
+        {
+          "step": 13,
+          "a": 0.7000000000000001,
+          "gradient": 1.0
+        },
+        {
+          "step": 14,
+          "a": 0.7500000000000001,
+          "gradient": 1.0
+        },
+        {
+          "step": 15,
+          "a": 0.8000000000000002,
+          "gradient": 1.0
+        },
+        {
+          "step": 16,
+          "a": 0.8500000000000002,
+          "gradient": 1.0
+        },
+        {
+          "step": 17,
+          "a": 0.9000000000000002,
+          "gradient": 1.0
+        },
+        {
+          "step": 18,
+          "a": 0.9500000000000003,
+          "gradient": 1.0
+        },
+        {
+          "step": 19,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 20,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 21,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 22,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 23,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 24,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 25,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 26,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 27,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 28,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 29,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 30,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 31,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 32,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 33,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 34,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 35,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 36,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 37,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 38,
+          "a": 1.0,
+          "gradient": 1.0
+        },
+        {
+          "step": 39,
+          "a": 1.0,
+          "gradient": 1.0
+        }
+      ]
+    },
+    {
+      "condition": "shifted_quantile",
+      "final_action": -1.0,
+      "true_expected_reward": -1.0,
+      "trace": [
+        {
+          "step": 0,
+          "a": -0.2471801206512356,
+          "gradient": -4.943602413024712
+        },
+        {
+          "step": 1,
+          "a": -0.43514579697206723,
+          "gradient": -3.7593135264166326
+        },
+        {
+          "step": 2,
+          "a": -0.9978243712700989,
+          "gradient": -11.253571485960633
+        },
+        {
+          "step": 3,
+          "a": -1.0,
+          "gradient": -4.79457223719392
+        },
+        {
+          "step": 4,
+          "a": -1.0,
+          "gradient": -6.184069925943807
+        },
+        {
+          "step": 5,
+          "a": -1.0,
+          "gradient": -3.6505852330616566
+        },
+        {
+          "step": 6,
+          "a": -1.0,
+          "gradient": -4.7254388082307734
+        },
+        {
+          "step": 7,
+          "a": -1.0,
+          "gradient": -50.17285330197021
+        },
+        {
+          "step": 8,
+          "a": -1.0,
+          "gradient": -4.844709912111409
+        },
+        {
+          "step": 9,
+          "a": -1.0,
+          "gradient": -4.021604586028349
+        },
+        {
+          "step": 10,
+          "a": -1.0,
+          "gradient": -2.6737599074883502
+        },
+        {
+          "step": 11,
+          "a": -1.0,
+          "gradient": -5.474748853365502
+        },
+        {
+          "step": 12,
+          "a": -1.0,
+          "gradient": -9.133219310628935
+        },
+        {
+          "step": 13,
+          "a": -1.0,
+          "gradient": -2.8871677691636326
+        },
+        {
+          "step": 14,
+          "a": -1.0,
+          "gradient": -5.0797920424232865
+        },
+        {
+          "step": 15,
+          "a": -1.0,
+          "gradient": -6.259202521925885
+        },
+        {
+          "step": 16,
+          "a": -1.0,
+          "gradient": -9.979298225091965
+        },
+        {
+          "step": 17,
+          "a": -1.0,
+          "gradient": -9.147182754776852
+        },
+        {
+          "step": 18,
+          "a": -1.0,
+          "gradient": -3.3661043524935206
+        },
+        {
+          "step": 19,
+          "a": -1.0,
+          "gradient": -4.244364413178543
+        },
+        {
+          "step": 20,
+          "a": -1.0,
+          "gradient": -3.2621309852472145
+        },
+        {
+          "step": 21,
+          "a": -1.0,
+          "gradient": -8.656262214256557
+        },
+        {
+          "step": 22,
+          "a": -1.0,
+          "gradient": -5.248569223331726
+        },
+        {
+          "step": 23,
+          "a": -1.0,
+          "gradient": -2.818361176238442
+        },
+        {
+          "step": 24,
+          "a": -1.0,
+          "gradient": -3.5680547041407973
+        },
+        {
+          "step": 25,
+          "a": -1.0,
+          "gradient": -3.455876667938555
+        },
+        {
+          "step": 26,
+          "a": -1.0,
+          "gradient": -5.40091777882353
+        },
+        {
+          "step": 27,
+          "a": -1.0,
+          "gradient": -5.684807742513418
+        },
+        {
+          "step": 28,
+          "a": -1.0,
+          "gradient": -12.264581743341592
+        },
+        {
+          "step": 29,
+          "a": -1.0,
+          "gradient": -4.648967864009297
+        },
+        {
+          "step": 30,
+          "a": -1.0,
+          "gradient": -4.229492981194256
+        },
+        {
+          "step": 31,
+          "a": -1.0,
+          "gradient": -6.621448653133304
+        },
+        {
+          "step": 32,
+          "a": -1.0,
+          "gradient": -109.75786113864419
+        },
+        {
+          "step": 33,
+          "a": -1.0,
+          "gradient": -3.526181973493495
+        },
+        {
+          "step": 34,
+          "a": -1.0,
+          "gradient": -7.164664069838064
+        },
+        {
+          "step": 35,
+          "a": -1.0,
+          "gradient": -3.613864737641629
+        },
+        {
+          "step": 36,
+          "a": -1.0,
+          "gradient": -5.248095961449476
+        },
+        {
+          "step": 37,
+          "a": -1.0,
+          "gradient": -5.645558640472618
+        },
+        {
+          "step": 38,
+          "a": -1.0,
+          "gradient": -4.075723873443785
+        },
+        {
+          "step": 39,
+          "a": -1.0,
+          "gradient": -7.24302907646527
+        }
+      ]
+    }
+  ],
+  "independent_sample_finite_difference_gradient": 0.9936303452630441,
+  "finite_difference_step": 0.01,
+  "interpretation": "A constructed one-step mathematical witness of a known discontinuous-reparameterization issue, not native world-model task evidence or novelty proof. No custom backward/straight-through override or prediction editing was used. The existing Gaussian weights would remain unchanged, but sampler-code execution is a stronger/different permission from input-only poisoning.",
+  "closest_prior": "https://proceedings.neurips.cc/paper_files/paper/2018/file/b096577e264d1ebd6b41041f392eec23-Paper.pdf",
+  "native_environment_steps": 0,
+  "api_requests": 0,
+  "gpu_work": false,
+  "training_updates": 0,
+  "candidate_next_gate": "Identify an existing differentiable stochastic world-model controller with strong native performance; test genuine native task loss and a correct gradient/derivative-free control. Reject merely presenting missing boundary terms as a new theorem."
+}

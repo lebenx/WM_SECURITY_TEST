@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "status": "passed_independent_saved_artifact_review",
+  "scope": "Read-only independent verification of the fixed metadata screening analysis; only this review report was written. No API, pretrained model, world-model forward, environment, GPU or new baseline search.",
+  "checks": [
+    {
+      "name": "saved_prediction_reconstruction",
+      "status": "pass",
+      "detail": "Independently reconstructed all 2898 saved predictions from the training manifest using categorical counts, Laplace pseudocounts and train-only global fallback; absolute errors below 1e-15. No original analysis main() rerun."
+    },
+    {
+      "name": "auc_definition",
+      "status": "pass",
+      "detail": "Independently used sorted score groups and negative-below counts to reproduce all six AUCs exactly. RSWT is pooled hijack-versus-legitimate AUC; Harm is pooled hijack-versus-benign-misplace AUC. Both use half credit for ties. Neither is donor pair accuracy."
+    },
+    {
+      "name": "donor_pair_metric",
+      "status": "pass",
+      "detail": "Verified 222 donors, exactly one hijack and one legitimate record per donor, and independently reproduced all three pair-order accuracies with half credit for ties."
+    },
+    {
+      "name": "predictor_feature_boundary",
+      "status": "pass",
+      "detail": "The three configured feature sets contain only base_action, base_app, and clipped floor(10*step_frac). No cls, label, donor, attack category, sid, pair_id, observed/clean transition reference or other prohibited construction field enters predictions. cls supplies supervised training labels and metric grouping; donor_id only groups evaluation pairs."
+    },
+    {
+      "name": "training_test_boundary",
+      "status": "pass",
+      "detail": "Cell frequencies and fallback are computed only from 6786 training rows; test labels do not enter fitting. Independently confirmed zero train/test transition-ID and episode-prefix overlap for base, obs, clean and the union across roles. This is not a pixel-deduplication or statistical-independence certificate."
+    },
+    {
+      "name": "configured_estimator",
+      "status": "pass",
+      "detail": "The binary target is 1_hijack versus all other classes, matching the native harm-head target. Positive smoothing is (cell_positive+1)/(cell_total+2). Unseen cells use (2500+1)/(6786+2)=0.3684443134944019, with no test-time refit."
+    },
+    {
+      "name": "followup_gate",
+      "status": "pass",
+      "detail": "Every configured RSWT/Harm point estimate is below the fixed 0.90 threshold. No sign inversion, extra feature group or tuned threshold was introduced in this review."
+    },
+    {
+      "name": "execution_scope",
+      "status": "pass",
+      "detail": "The reviewed baseline script imports standard-library modules only and contains no model/API/environment/GPU execution. This source audit does not independently reconstruct all historical process activity."
+    }
+  ],
+  "verified_results": [
+    {
+      "features": [
+        "base_action"
+      ],
+      "trained_cells": 5,
+      "unseen_test_cells_rows": 0,
+      "RSWT_1v3": 0.35690081973865756,
+      "Harm_1v5": 0.4765915915915916,
+      "donor_pair_order_accuracy": 0.35585585585585583,
+      "followup_gate": false
+    },
+    {
+      "features": [
+        "base_app",
+        "base_action"
+      ],
+      "trained_cells": 689,
+      "unseen_test_cells_rows": 355,
+      "RSWT_1v3": 0.8281795308822336,
+      "Harm_1v5": 0.49066066066066066,
+      "donor_pair_order_accuracy": 0.8220720720720721,
+      "followup_gate": false
+    },
+    {
+      "features": [
+        "base_action",
+        "step_decile"
+      ],
+      "trained_cells": 41,
+      "unseen_test_cells_rows": 0,
+      "RSWT_1v3": 0.6286320103887671,
+      "Harm_1v5": 0.5148048048048048,
+      "donor_pair_order_accuracy": 0.6509009009009009,
+      "followup_gate": false
+    }
+  ],
+  "verified_overlap": {
+    "base": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    },
+    "obs": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    },
+    "clean": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    },
+    "across_all_roles": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    }
+  },
+  "app_action_unseen_cell_analysis": {
+    "unseen_rows": 355,
+    "all_test_rows": 966,
+    "unseen_fraction": 0.36749482401656314,
+    "unseen_rows_by_class": {
+      "1_hijack": 81,
+      "2_paired_safe": 81,
+      "3_legit_cred": 6,
+      "4_surprising": 145,
+      "5_benign_misplace": 42
+    },
+    "unseen_rows_by_base_source": {
+      "gui_odyssey": 355
+    },
+    "fallback_score": 0.3684443134944019,
+    "interpretation": "The reported app-action AUC includes every unseen row at the global training prior; rows were not dropped or backfilled using test labels. Coverage is uneven across classes and sources, so 0.82818 RSWT should not be interpreted as transfer of an app-specific detector to all test apps. No alternative fallback was evaluated."
+  },
+  "interpretation": {
+    "supported": "These three fixed train-only metadata baselines do not pass the registered screening gate. App-action metadata yields a moderate RSWT point estimate but approximately chance Harm discrimination on this fixed test set.",
+    "not_supported": [
+      "No claim that the trained LGWM verifier uses metadata shortcuts or that its integrity or harm-head metrics are invalid.",
+      "No conclusion that richer learned context-only representations cannot explain benchmark performance.",
+      "No deployment detector, false-negative operating point, attack success, security injury or environment consequence is measured.",
+      "No significance or population-generalization claim is warranted by these point estimates.",
+      "The additive harm-head representational observation remains separate; this metadata screening result neither proves nor removes that architectural limitation."
+    ]
+  },
+  "limitations": [
+    "The test manifest structure was inspected before the fixed baseline protocol; treat this as development screening, not blind confirmatory testing.",
+    "The recorded protocol timing is consistent with the supplied account but cannot be independently established from current file contents alone.",
+    "base_app and normalized step_frac are dataset metadata, not demonstrated runtime inputs. step_frac may require episode-length information unavailable online.",
+    "The native training set contains paired hijack/safe contexts and is imbalanced; matching its target does not make these categorical estimators equivalent to the learned residual head.",
+    "ID overlap checks do not establish visual deduplication, semantic independence or absence of pretraining overlap.",
+    "Report hashes bind this review to current files; no saved executed-script snapshot was supplied for independent historical version verification."
+  ],
+  "artifact_sha256": {
+    "configs/lgwm_metadata_baseline_20261016.json": "18446d31cfbb81bc330f4cba8503fcf7fcfebacfb219c037d2e982858b521349",
+    "scripts/analyze_lgwm_metadata_baseline.py": "93f93650301c6e6df13587984d14a8252a86edd5c070d8f1d66722d46672b816",
+    "runs/lgwm_metadata_baseline_20261016/summary.json": "66adc162aa77af16551bc528ac18aaf4e762ee3a1b73600a2fe98bd6fcfbc57b",
+    "runs/lgwm_metadata_baseline_20261016/scores.jsonl": "b5674f844d9c0a8a5008f458611d39c951f996e2b54150502358456943fd6285",
+    "runs/lgwm_resource_qualification_20261016/source/benchmark/rswt_bench_train.jsonl": "0bc7fa9698a4dec824cc75f28fa8e9149dd868c9887bf8457fc69fdb7111a8f2",
+    "runs/lgwm_resource_qualification_20261016/source/benchmark/rswt_bench_test.jsonl": "5f22f4848b5221970142babb7abc572b68cb1119f770266f787a786817dcb707"
+  }
+}

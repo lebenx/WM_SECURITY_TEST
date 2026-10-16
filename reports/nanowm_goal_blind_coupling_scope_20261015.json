@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "conditional_read_only_feasibility_no_intervention_implemented",
+  "prerequisite": "Security-operation readiness and available compute must both be established before resuming the fixed native Clean gate; credible native Clean capability is required before any task-harm panel.",
+  "native_clean_summary": "runs/nanowm_heldout_clean_v2/summary.json",
+  "conditional_construction": {
+    "operation": "Keep the fixed observation and candidate actions. Change only diffusion-initialization noise from independent across candidate rows to a shared full tensor across rows. Draw fresh tensors for each generation chunk and each CEM query.",
+    "private_goal_access": false,
+    "untouched": "Goal encoding, every candidate observation-VAE sample, context-stabilization samples, CPU CEM proposal randomness, model weights, objective and real dynamics.",
+    "full_trajectory_argument": "For a fixed query and candidate i, write Y_i=F_i(O,A_i,V_i,C_i,Z_i1,Z_i2,E_i), where V is observation-VAE randomness, C is context stabilization and E includes the remaining native draws. The independent and shared conditions assign the same full within-candidate random-tape distribution; Z_1 and Z_2 remain fresh independent tensors. Thus each complete Y_i marginal is unchanged under the ideal sampler construction. The joint law across i changes. This is a structural argument, not an executed implementation proof.",
+    "excluded_shortcuts": "Do not reuse one scalar across time/channel/space or one noise tensor across the two autoregressive chunks or across queries. Do not replace posterior.sample with posterior.mode. Fixed per-candidate marginal moments alone do not establish the full-trajectory claim.",
+    "batch_separability_assumption": "The pushforward argument assumes native per-candidate execution does not mix candidate rows. The inspected NanoWM tensor axes support this assumption; a future adapter must preserve it and check implementation behavior before claiming an executed law-preservation result."
+  },
+  "implementation_confounds_to_control": [
+    "Native H5 produces two generation chunks. Coupling would need a query/chunk identity spanning the seven native microbatches; independent per-microbatch sharing is a different specified joint law.",
+    "Separate the CPU action-proposal stream, planner-private goal VAE stream, candidate observation-VAE stream, context-noise stream and selected initial-diffusion stream.",
+    "Eta zero still consumes randn_like draws in DDIM. Even unused noise can shift later global randomness, so equal outputs at one site are not enough to establish matched conditions.",
+    "A frozen candidate query can use identical candidates; full native CEM trajectories will generally acquire different later candidate sets as a consequence of prior selections. Do not describe adaptive end-to-end CEM as an everywhere-fixed-candidate test."
+  ],
+  "permission_boundary": "The native rollout interface has no caller noise argument. A researcher-added sampler hook with cross-candidate control is an explicit additional supply-chain permission; it is not a discovered public deployment interface, legal-action-only manipulation, or a process isolation guarantee.",
+  "potential_controls": "Independent sampling versus shared sampling, with identical model call/particle/horizon/optimizer budgets. Restoring trusted independent sampling is a permission-removal control, not a certified defense if the compromised provider can ignore client seeds. Extra samples or bank-mean aggregation cannot be silently counted as same-budget recovery.",
+  "native_decision_boundary": {
+    "finding": "CEM executes the final elite-action mean, not the best individual candidate or the first iteration ranking.",
+    "current_cache_limit": "The prepared Clean adapter would save RNG, returned actions and loss history, not every candidate or final forecast bank. Both attempted Clean runs are terminal before model/task execution; no cached native final-query counterfactual is available.",
+    "minimum_evidence_if_revisited": "Use an explicitly captured fixed final CEM query or a clearly labeled added decision experiment; evaluate the actual selected mean action sequence through matched real-environment replay. Ranking changes alone do not establish utility loss."
+  },
+  "primary_prior_art": {
+    "url": "https://arxiv.org/html/2605.04732v1",
+    "title": "Using Common Random Numbers for Simulation-based Planning with Rollouts",
+    "verified_scope": "Primary HTML abstract, Section1.2 including Proposition1 and its proof, Section2 statement and assumptions of Theorem2; not a full empirical reproduction.",
+    "finding": "The paper explicitly gives cases where dependent sampling increases relative-value variance, and a depth-based construction with a variance guarantee under a shared-tail policy assumption. Therefore a generic claim that coupling changes action-comparison uncertainty is prior art.",
+    "limit": "Its shared-tail transition-sampling theorem is not automatically a guarantee for this diffusion-video CEM interface. A shared-noise condition can improve or harm planning; no direction or malicious selection ability is established here."
+  },
+  "decision": "Keep this as conditional sampler-sensitivity feasibility only. Do not automatically resume expensive Clean from GPU availability alone; see the subsequent root security-readiness decision. No intervention or task outcome is established.",
+  "source_paths": [
+    "vendor/nano-world-model/src/planning/diffusion_world_model.py",
+    "vendor/nano-world-model/src/diffusion/gaussian_diffusion.py",
+    "vendor/nano-world-model/src/planning/cem_planner.py",
+    "scripts/pilot_nanowm_heldout_clean.py"
+  ],
+  "model_forwards": 0,
+  "environment_steps": 0,
+  "model_api_calls": 0,
+  "subsequent_decision": "reports/nanowm_security_readiness_decision_20261015.json"
+}

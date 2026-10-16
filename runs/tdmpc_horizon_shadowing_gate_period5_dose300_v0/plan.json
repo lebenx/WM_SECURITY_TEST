@@ -1,0 +1,23 @@
+{
+  "source_task": "cheetah-run",
+  "victim_task": "walker-run",
+  "source_seed": 21,
+  "eval_seed": 11,
+  "source_steps": 300,
+  "updates": 300,
+  "eval_steps": 300,
+  "phase_period": 5.0,
+  "output": "runs/tdmpc_horizon_shadowing_gate_period5_dose300_v0",
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "conditions": [
+    "clean",
+    "random",
+    "phase_cycle",
+    "equal_rms_dither"
+  ],
+  "operation": "Legal simulator-generated phase-locked bounded actuator cycle; no observation/reward/label edits.",
+  "controls": "Random legal actions and equal-RMS alternating legal actions; matched source length and updates.",
+  "gate": "Promote only if phase_cycle lowers native MPPI std ratio and victim return against both controls while source one-step error stays within 5% of random.",
+  "gpu_training": true,
+  "api_requests": 0
+}

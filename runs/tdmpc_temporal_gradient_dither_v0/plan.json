@@ -1,0 +1,20 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "walker-walk-backwards",
+  "victim_task": "walker-walk",
+  "source_steps": 150,
+  "updates": 40,
+  "victim_seed": 12,
+  "conditions": [
+    "clean",
+    "native_mpc_source",
+    "high_frequency_dither",
+    "equal_rms_white_noise"
+  ],
+  "attacker_operation": "Legal alternating +/-1 actuator commands in source task, authentic observations/rewards, ordinary native full updates.",
+  "controls": "White-noise legal commands with equal action range and native MPC source trajectory; clean victim-only branch.",
+  "gate": "Proceed only if dither causes >=100 lower native victim return than both white-noise and native-source controls while source one-step error remains finite.",
+  "scope": "One source/victim task pair, two-minute development screen; no long training or population claim.",
+  "api_requests": 0,
+  "gpu_training": true
+}

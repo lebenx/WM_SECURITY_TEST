@@ -1,0 +1,73 @@
+{
+  "date": "2026-10-09",
+  "status": "indirect_goal_dependence_confirmed_not_promoted_as_main_claim",
+  "accepted_main_claim": false,
+  "candidate": "Direct attention masking does not imply goal-independent dynamics when contextualized input-action tokens carry goals across layers.",
+  "source": "runs/worldagen_goal_invariance_v0/summary.json",
+  "structural_source": "runs/worldagen_goal_paths_v0/summary.json",
+  "script": "scripts/pilot_worldagen_goal_invariance.py",
+  "report_note_cn": "WorldAgen 发布权重的 CPU 冻结短测已完成：固定 3 个 LIBERO 轨迹片段的图像、状态、动作和随机种子，只换目标指令，预测图像相对 L2 差异为 31.82%、29.40%、14.15%。原生掩码禁止目标直达图像预测，却允许目标经输入动作 token 间接传入；仅删除 9 条目标到动作 token 的连接后，换目标或空目标引起的预测差异全部为 0，而策略输出仍随目标变化。同输入重复完全一致，参数摘要前后相同。共 24 次原生前向、约 36.08 秒 CPU，无训练、环境步或 GPU。官方评测入口的夹爪维度不一致，本测明确采用模型支持的二值夹爪模式，未复现完整 LIBERO 评测；也未证明预测更准确、任务损害或论文级新意。",
+  "metrics": [
+    {
+      "episode": 0,
+      "task_index": 0,
+      "native_goal_swap_world_rmse": 0.26053996774921745,
+      "native_goal_swap_world_relative_l2": 0.31818519035844733,
+      "cut_goal_swap_world_rmse": 0.0,
+      "cut_empty_goal_world_rmse": 0.0,
+      "repeat_world_rmse": 0.0,
+      "cut_goal_swap_policy_rmse": 0.017593750722038365,
+      "cut_on_recorded_goal_world_rmse": 0.24517654957897728
+    },
+    {
+      "episode": 1,
+      "task_index": 1,
+      "native_goal_swap_world_rmse": 0.2511102423735618,
+      "native_goal_swap_world_relative_l2": 0.294028931464012,
+      "cut_goal_swap_world_rmse": 0.0,
+      "cut_empty_goal_world_rmse": 0.0,
+      "repeat_world_rmse": 0.0,
+      "cut_goal_swap_policy_rmse": 0.017530170386082466,
+      "cut_on_recorded_goal_world_rmse": 0.2811330922188387
+    },
+    {
+      "episode": 2,
+      "task_index": 2,
+      "native_goal_swap_world_rmse": 0.1434783902803098,
+      "native_goal_swap_world_relative_l2": 0.14150623723199515,
+      "cut_goal_swap_world_rmse": 0.0,
+      "cut_empty_goal_world_rmse": 0.0,
+      "repeat_world_rmse": 0.0,
+      "cut_goal_swap_policy_rmse": 0.040063411555737276,
+      "cut_on_recorded_goal_world_rmse": 0.21803837184026284
+    }
+  ],
+  "native_forward_calls": 24,
+  "cpu_elapsed_s": 36.076287413947284,
+  "gpu_use": false,
+  "training_updates": 0,
+  "environment_steps": 0,
+  "api_requests": 0,
+  "weights_unchanged": true,
+  "mask_restored": true,
+  "compatibility_limit": "Unchanged native forward and exact released learned weights, but gripper_width=False rather than the incompatible released gripper_width=True evaluation wrapper. Encoders independently loaded from official verified weights. LeRobot state/image conversion is not byte-identical to author data.",
+  "meaning": "Goal-to-input-action-to-world influence exists numerically in released weights. Cutting it restores conditional invariance in this probe, not accuracy or safety. Policy outputs are expected to remain goal-dependent.",
+  "security_limit": "Native online policy does not consume its decoded world prediction in ordinary action inference. No harmful action, TTT update, persistence, or benchmark return has been established.",
+  "novelty_limit": "Instruction Leakage and a Goal-Free Dynamics Fix already establishes generic goal leakage and goal-free dynamics. This direct-mask failure is a bounded architecture/implementation finding, not by itself a broad 7–7.5 novelty mechanism.",
+  "next_requirement": "Treat indirect goal influence as a bounded released-weight counterexample, not the main research claim. Generic instruction leakage already has direct prior art. A further security mechanism must establish substantive novelty, a reproducible competent native controller, attacker permissions, and causal task harm before scale-up; do not silently substitute a custom planner or treat mask reachability as success.",
+  "rejected_adjacent_path": "JEPA-TTT updates from executed actions and real observations, not arbitrary prediction queries. Its persistent optimizer does not supply a new query-only operation; optimizer-state transfer also has direct prior art.",
+  "references": [
+    {
+      "title": "WorldAgen: Unified State-Action Prediction with Test-Time World Model Training",
+      "url": "https://arxiv.org/html/2609.08162v1"
+    },
+    {
+      "title": "Grounding Spatial Relations in a Compact World Model: Instruction Leakage and a Goal-Free Dynamics Fix",
+      "url": "https://arxiv.org/html/2607.06925v1"
+    },
+    {
+      "title": "JEPA-TTT: Persistent Test-Time Training of Latent World Models for Planning under Dynamics Shifts",
+      "url": "https://arxiv.org/html/2610.00722v1"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-08",
+  "status": "source_review_no_accepted_mechanism",
+  "claim_status": "unproven",
+  "api_requests": 0,
+  "gpu_work": false,
+  "candidates": [
+    {
+      "id": "acquisition_suppression",
+      "idea": "Authentic contributions suppress another learner's information acquisition while its executed forecasts remain accurate.",
+      "decision": "Reject the generic novelty claim; no experiment launched.",
+      "reason": "Correctly labelled inputs manipulating query selection and wasting a limited acquisition budget are already explicit in Adversarial Active Learning (2014). Clean-label uncertainty poisoning and acquisition-targeted backdoor attacks further constrain novelty. Accurate executed forecasts do not establish accuracy on unvisited choices.",
+      "sources": [
+        "https://istc-cc.cmu.edu/publications/papers/2014/aisec14-active.pdf",
+        "https://experts.illinois.edu/en/publications/manipulating-out-domain-uncertainty-estimation-in-deep-neural-net/",
+        "https://arxiv.org/abs/2508.05681"
+      ]
+    },
+    {
+      "id": "correct_knowledge_transfer_denial",
+      "idea": "Authentic client-specific exceptions cause useful, correct rules to be withheld from mutually compatible honest clients.",
+      "decision": "Protocol-level lead only; not an accepted claim or executable native pilot.",
+      "native_path": "FedWorld M3 infers shared, cluster, private or unresolved scope; M4 excludes unresolved rules from execution and protects existing reliable local knowledge.",
+      "limitations": "No public implementation was found in the inspected paper or the agents' searches. The paper already formalizes the protection-transfer tradeoff. A single exception need not deny transfer: source eligibility, cluster scopes and local-first decisions may confine its effect.",
+      "gate": "Require an executable intended sharing mechanism and a measured clean transfer benefit. Test loss of otherwise valid transfers between honest clients; increased abstention alone is insufficient. Do not invent thresholds or call a replacement implementation a native reproduction.",
+      "sources": [
+        "https://arxiv.org/html/2608.01561v1"
+      ]
+    },
+    {
+      "id": "truthful_shared_curiosity_depletion",
+      "idea": "Correctly learned shared dynamics extinguish exploration incentives still needed by another agent to acquire a capability.",
+      "decision": "Rejected at native-path gate for the inspected MACE and Plan2Explore implementations; no experiment.",
+      "MACE": "Agents keep separate visit counts or RND novelty and exchange novelty scalars. A contributor does not update the victim own visit count; the victim own novelty remains in its reward. No shared dynamics model exists in this inspected path.",
+      "Plan2Explore": "Official DreamerV2 continuation uses one Agent with its world model, exploration actor and task actor. Parallel environments do not establish independent contributors sharing a learning protocol. Normal training updates the task actor via world-model imagination after world-model updates; artificially freezing that actor would not test the intended loop.",
+      "feasibility": "The inspecting agent found no checkpoint in the checked official source packages or README links. This is a bounded search finding, not a claim that none exists anywhere. No short task-harm test is available from these paths.",
+      "sources": [
+        "https://github.com/SigmaBM/MACE/blob/main/src/runner/base.py",
+        "https://github.com/SigmaBM/MACE/blob/main/src/utils/buffer.py",
+        "https://github.com/danijar/dreamerv2/blob/main/dreamerv2/agent.py",
+        "https://github.com/danijar/dreamerv2/blob/main/dreamerv2/expl.py"
+      ]
+    }
+  ],
+  "next_gate": "Accept a new candidate only after establishing its native causal path and a distinction from acquisition poisoning or conservative aggregation. No additional capability-only API runs or long GPU work are justified by this review.",
+  "report_note_cn": "本轮候选复核尚未形成新机制证据。“真实经验压制探索”与已有主动学习攻击、不确定性投毒直接重叠，不接受其泛化新颖性主张。FedWorld 提供了正确规则因适用范围判断而停止共享的协议线索，但原论文已分析保护与迁移的权衡，且本轮未找到公开实现；单个例外也可能被客户端资格和分组机制隔离。因此暂不构造替代协议或启动新的能力测试。本轮没有付费 API 请求或 GPU 实验。 对“真实共享知识耗尽其他代理探索激励”的进一步源码检查也未通过：MACE 保留各代理自己的计数或 RND 新颖度；Plan2Explore 没有这里需要的独立贡献者共享协议，且原生训练会继续通过想象轨迹训练任务策略。不能通过新增共享机制或冻结任务策略来冒充原生结果。Gamma-World 的后续只读可行性复查被自动安全审核拒绝，提示可能涉及网络安全风险；该分支未完成，也没有实验结果。",
+  "incomplete_followup": {
+    "candidate": "Gamma-World shared generative-world integrity",
+    "status": "followup_agent_rejected_by_automatic_safety_review",
+    "reason": "The agent service flagged possible cybersecurity risk during the requested read-only feasibility follow-up.",
+    "scope": "The first source survey was returned; hardware feasibility and a task-grounded evaluation are unverified. No experiment, model download or installation occurred; no mechanism claim accepted."
+  }
+}

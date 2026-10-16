@@ -1,0 +1,220 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "universe",
+      "id": "UNIVERSE_ROOT"
+    },
+    {
+      "node_type": "episode",
+      "id": "source:EPISODE_STATUS"
+    },
+    {
+      "node_type": "task",
+      "id": "source:Block_1"
+    },
+    {
+      "node_type": "template",
+      "id": "source:Block_1_template_0"
+    },
+    {
+      "node_type": "instance",
+      "id": "source:Block_1_template_0_instance_0"
+    },
+    {
+      "node_type": "template",
+      "id": "source:Block_1_template_1"
+    },
+    {
+      "node_type": "instance",
+      "id": "source:Block_1_template_1_instance_0"
+    }
+  ],
+  "edges": [
+    {
+      "source": "UNIVERSE_ROOT",
+      "target": "source:EPISODE_STATUS"
+    },
+    {
+      "source": "source:EPISODE_STATUS",
+      "target": "source:Block_1"
+    },
+    {
+      "source": "source:Block_1",
+      "target": "source:Block_1_template_0"
+    },
+    {
+      "source": "source:Block_1",
+      "target": "source:Block_1_template_1"
+    },
+    {
+      "source": "source:Block_1_template_0",
+      "target": "source:Block_1_template_0_instance_0"
+    },
+    {
+      "source": "source:Block_1_template_1",
+      "target": "source:Block_1_template_1_instance_0"
+    }
+  ],
+  "universe_data": {
+    "name": "UNIVERSE",
+    "stats": {
+      "num_episodes": 1,
+      "episodes_completed": 1,
+      "episode_completion_rate": 1.0,
+      "episode_min_time": 29,
+      "episode_max_time": 29,
+      "episode_avg_time": 29.0,
+      "task_stats": {
+        "Block_1": {
+          "seen": 1,
+          "completes": 1,
+          "times": [
+            29
+          ],
+          "completion_rate": 1.0,
+          "min_time": 29,
+          "max_time": 29,
+          "avg_time": 29.0
+        }
+      }
+    },
+    "episodes": {
+      "source": {
+        "episode_data": {
+          "completed": true,
+          "max_timestep": 29,
+          "total_blocks": 1,
+          "completed_blocks": 1,
+          "remaining_blocks": 0,
+          "completed_blocks_order": [
+            [
+              "Block_1",
+              29,
+              1
+            ]
+          ],
+          "incomplete_blocks": []
+        },
+        "task_data": {
+          "Block_1": {
+            "templates": {
+              "Wait": {
+                "instances": [
+                  {
+                    "agent_id": "agent_0",
+                    "task_name": "Block_1",
+                    "plan": [
+                      "Wait 30"
+                    ],
+                    "start_step": 0,
+                    "all_agents_commitments": {
+                      "agent_0": "Block_1",
+                      "agent_1": "Block_1"
+                    },
+                    "success": true,
+                    "end_step": 29,
+                    "communication_type": "fixed_source_commitment"
+                  }
+                ]
+              },
+              "MoveToBlock -> Rendezvous -> Push": {
+                "instances": [
+                  {
+                    "agent_id": "agent_1",
+                    "task_name": "Block_1",
+                    "plan": [
+                      "MoveToBlock 1 left",
+                      "Rendezvous 1 left 1 5",
+                      "Push 1 6"
+                    ],
+                    "start_step": 0,
+                    "all_agents_commitments": {
+                      "agent_0": "Block_1",
+                      "agent_1": "Block_1"
+                    },
+                    "success": true,
+                    "end_step": 25,
+                    "communication_type": "fixed_source_commitment"
+                  }
+                ]
+              }
+            },
+            "final_success": true,
+            "completion_time": 29,
+            "completion_order": 1
+          }
+        },
+        "node_positions": {
+          "EPISODE_STATUS": [
+            0,
+            0
+          ],
+          "Block_1": [
+            10.0,
+            0.0
+          ],
+          "Block_1_template_0": [
+            15.813474530263868,
+            -1.4844237555271376
+          ],
+          "Block_1_template_0_instance_0": [
+            19.204668006251126,
+            -2.3503376129179676
+          ],
+          "Block_1_template_1": [
+            15.813474530263868,
+            1.4844237555271376
+          ],
+          "Block_1_template_1_instance_0": [
+            19.204668006251126,
+            2.3503376129179676
+          ]
+        },
+        "node_labels": {
+          "EPISODE_STATUS": "EPISODE COMPLETED\nFinal Timestep: 29\nTotal Blocks: 1\nCompleted (1): 1.Block_1@T29\nIncomplete (0): None",
+          "Block_1": "Block_1\nCOMPLETED\nOrder: #1\nTime: T29",
+          "Block_1_template_0": "Wait",
+          "Block_1_template_0_instance_0": "Agent: agent_0\nPlan: Wait 30\nSteps: 0-29\nCommitments: agent_0:Block_1, agent_1:Block_1\nStatus: SUCCESS\nContext: fixed_sour",
+          "Block_1_template_1": "MoveToBlock\nRendezvous\nPush",
+          "Block_1_template_1_instance_0": "Agent: agent_1\nPlan: MoveToBlock 1 left -> Rendezvous 1 le...\nSteps: 0-25\nCommitments: agent_0:Block_1, agent_1:Block_1\nStatus: SUCCESS\nContext: fixed_sour"
+        }
+      }
+    },
+    "views": {
+      "COG": {
+        "Block_1|bucket=0-10|k=2": {
+          "attempts": 2,
+          "successes": 2,
+          "avg_t": 27.0,
+          "min_t": 25,
+          "max_t": 29,
+          "comms": {
+            "fixed_source_commitment": 2
+          },
+          "cr": 1.0
+        }
+      },
+      "COG_kstar": {
+        "Block_1|bucket=0-10": 2
+      },
+      "TCG": {
+        "Block_1|bucket=0-10|k=2|comms=fixed_source_commitment|template=Wait": {
+          "attempts": 1,
+          "successes": 1,
+          "avg_t": 29,
+          "cr": 1.0
+        },
+        "Block_1|bucket=0-10|k=2|comms=fixed_source_commitment|template=MoveToBlock -> Rendezvous -> Push": {
+          "attempts": 1,
+          "successes": 1,
+          "avg_t": 25,
+          "cr": 1.0
+        }
+      },
+      "PDG": {}
+    }
+  }
+}

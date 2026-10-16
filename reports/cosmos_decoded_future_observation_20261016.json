@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "status": "completed_native_cached_decode_observation_calibration",
+  "research_goal_status": "active_unachieved",
+  "previous_goal_turn_classification": "progress: pinned WoG/DiLA source checks and GenSafeNav feasibility findings changed which experiments were qualified; no task experiment in that previous turn",
+  "current_goal_turn_classification": "progress: six native VAE decodes add observable-RGB evidence and calibrated reconstruction controls; not a new task-harm experiment",
+  "sources": {
+    "protocol": "configs/cosmos_cached_decode_gate_20261016.json",
+    "launched_protocol": "runs/cosmos_cached_decode_gate_20261016_resume1/launched_config.json",
+    "summary": "runs/cosmos_cached_decode_gate_20261016_resume1/summary.json",
+    "executed_script": "runs/cosmos_cached_decode_gate_20261016_resume1/launched_script.py",
+    "runner": "scripts/probe_cosmos_cached_decode.py",
+    "analysis": "scripts/analyze_cosmos_cached_decode.py",
+    "latent_and_measured_rgb_source": "runs/cosmos_first_query_truth_inference_20261015",
+    "previous_value_factorial": "reports/cosmos_future_modality_factorial_decision_20261016.json"
+  },
+  "scope": "One post-hoc known harmful root, two candidates. Decode/observation-readout calibration only, not new harm, style/content isolation, state reconstruction, defense or generalization.",
+  "method": {
+    "native_path": "Restore latent slots0/1/4/5, decode all9 packed slots using the native BF16 VAE, use FP32 RGB postprocessing for all conditions, take frames21/25.",
+    "truth_calibration": "Restored truth Value input equals joint measured-future VAE encoding in the BF16 prefix consumed by both future images. Placeholder restoration leaves the complete joint truth encoding unchanged.",
+    "reference": "Saved raw33 uint8 images already contain native camera flip, JPEG95, resize and center crop. No repeat preprocessing or image editing.",
+    "time": "The33 frames are modality packaging, not physical timesteps. Both future cameras correspond to the same endpoint after16 controls.",
+    "unit": "RGB errors in0..255 pixel units; PSNR from255^2/MSE. No physical-state or utility interpretation."
+  },
+  "rows": [
+    {
+      "candidate": 0,
+      "camera": "wrist",
+      "truth_psnr_db": 35.38038594279606,
+      "clean_psnr_db": 28.50420613490364,
+      "swap_psnr_db": 17.74259291244343,
+      "truth_pixel_mse": 18.8383025085034,
+      "clean_pixel_mse": 91.76134008290816,
+      "swap_pixel_mse": 1093.5057464392007,
+      "swap_over_clean_pixel_mse": 11.916845868327522
+    },
+    {
+      "candidate": 0,
+      "camera": "primary",
+      "truth_psnr_db": 36.20424443827248,
+      "clean_psnr_db": 35.44260371972919,
+      "swap_psnr_db": 26.423271241725573,
+      "truth_pixel_mse": 15.583173894557824,
+      "clean_pixel_mse": 18.570345716411566,
+      "swap_pixel_mse": 148.16759672619048,
+      "swap_over_clean_pixel_mse": 7.978720428195754
+    },
+    {
+      "candidate": 1,
+      "camera": "wrist",
+      "truth_psnr_db": 35.37605387676649,
+      "clean_psnr_db": 28.123135330861814,
+      "swap_psnr_db": 17.882432000425514,
+      "truth_pixel_mse": 18.85710299744898,
+      "clean_pixel_mse": 100.17672459608843,
+      "swap_pixel_mse": 1058.8566313244048,
+      "swap_over_clean_pixel_mse": 10.569886723624718
+    },
+    {
+      "candidate": 1,
+      "camera": "primary",
+      "truth_psnr_db": 36.13426743703538,
+      "clean_psnr_db": 35.47012782490353,
+      "swap_psnr_db": 26.56458889865212,
+      "truth_pixel_mse": 15.836296237244898,
+      "clean_pixel_mse": 18.453025350765305,
+      "swap_pixel_mse": 143.4238812712585,
+      "swap_over_clean_pixel_mse": 7.772377620741211
+    }
+  ],
+  "findings": {
+    "all_truth_reconstruction_psnr_db": [
+      35.37605387676649,
+      36.20424443827248
+    ],
+    "all_four_camera_candidate_swap_mse_exceeds_clean": true,
+    "swap_over_clean_pixel_mse_range": [
+      7.772377620741211,
+      11.916845868327522
+    ],
+    "supported": "The fixed Swap discrepancy is visible in decoded observation space and is not merely a numerical difference in unused latent coordinates. Truth reconstruction is a separately measured codec baseline.",
+    "not_supported": "No isolation of physical content versus appearance/representation, no calibrated drawer/bowl/robot state estimate from predicted images, and no evidence that these pixel errors specifically mediate the ranking reversal."
+  },
+  "available_physical_truth": {
+    "existing_cache": "Actual per-step EEF pose, gripper joint positions, actions and success/reward are logged. Both16-control endpoints have success=false and reward0.",
+    "missing": "No endpoint full simulator state, named drawer joint, bowl pose, contacts or camera calibration is saved. candidate*_states.npz contains only initial/settled states from before the candidate controls.",
+    "source": "scripts/replay_cosmos_first_query_truth.py",
+    "interpretation": "Gripper joint position is not contact truth; decoded images are not independent simulator state."
+  },
+  "contact_sheet": "runs/cosmos_cached_decode_gate_20261016_resume1/contact_sheet.png",
+  "csv": "reports/cosmos_decoded_future_observation_20261016.csv",
+  "execution": {
+    "activity": {
+      "vae_loads": 1,
+      "vae_decodes": 6,
+      "vae_encodes": 0,
+      "policy_calls": 0,
+      "future_calls": 0,
+      "value_calls": 0,
+      "environment_steps": 0,
+      "api_calls": 0
+    },
+    "elapsed_seconds": 8.79724152002018,
+    "peak_cuda_reserved_bytes": 1117782016,
+    "dedicated_gpu_requested": false,
+    "successful_session": {
+      "session_id": 89946,
+      "exit_code": 0,
+      "terminal_chunk_id": "280d07"
+    },
+    "prior_technical_attempt": {
+      "summary": "runs/cosmos_cached_decode_gate_20261016/summary.json",
+      "session_id": 58018,
+      "exit_code": 1,
+      "reason": "Missing torchvision in the initially selected environment;0model loads/0decodes.",
+      "handling": "Preserved failed attempt; used the original Torch2.2/numpy1.26 environment. All decode input arguments changed to FP32 before any decode was performed, removing a review-detected postprocessing confound."
+    },
+    "source_review": "Independent review confirmed native mapping/placeholder restoration and identified the dtype confound before the successful run. No duplicate model execution."
+  },
+  "other_bounded_feasibility_checks_this_turn": [
+    {
+      "topic": "Cosmos content/style countercheck",
+      "result": "No identifiable separation from existing cached latents. Round-trip decoding, filtering or averaging cannot be assumed content-preserving; no Value calls launched."
+    },
+    {
+      "topic": "Native private-goal interface",
+      "result": "Existing JEPA PointMaze hides the marker and scores the goal separately, but its sole tested nontrivial task failed. DINO MetaWorld's competent tiny Clean panel is goal-observable. No privacy or normal-task run launched.",
+      "source": "runs/jepa_native_microbatch_ep2_v1/summary.json"
+    },
+    {
+      "topic": "DINO PointMaze public resource lead",
+      "result": "Official upstream lists a separate reproduced PointMaze checkpoint (about275MB), not currently validated here. Public metadata is not native competence or a new privacy mechanism; no download.",
+      "url": "https://github.com/facebookresearch/jepa-wms"
+    },
+    {
+      "topic": "World4Scorer multiplicity",
+      "result": "Training samples unsafe candidates and fills small valid pools with replacement; duplicate frequency can encode sampling/support information. Unequal duplication is an added candidate-assembly intervention, not a proven physical-invariance violation. No matched real scene/metric-cache bundle is locally qualified; no model run.",
+      "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py"
+    }
+  ],
+  "decision": {
+    "go": "Reuse the calibrated native image decoder for future independently grounded physical-content tests; retain the prior local Cosmos utility evidence.",
+    "no_go": "No new security mechanism, actual harm, effective defense or independent generalization established. The failed30-root expansion gate and all previous stop rules remain in force.",
+    "next_decisive_gap": "A calibrated physical readout plus separately controlled content/appearance variables would be needed to attribute the local selection loss to physical forecast error. Large latent or pixel MSE alone is insufficient."
+  },
+  "reproduce": {
+    "table_only": "python scripts/analyze_cosmos_cached_decode.py",
+    "decode_to_fresh_directory": ".venv-worldagen/bin/python scripts/probe_cosmos_cached_decode.py --output runs/cosmos_cached_decode_reproduction"
+  }
+}

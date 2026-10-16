@@ -1,0 +1,33 @@
+{
+  "date": "2026-10-09",
+  "status": "tested_gaussian_redistribution_not_promoted",
+  "source": "runs/uncertainty_decomposition_v0/summary.json",
+  "script": "scripts/screen_uncertainty_decomposition.py",
+  "candidate": "Steer uncertainty-aware decisions by moving uncertainty between learned-model disagreement and within-model randomness while retaining predictive behavior.",
+  "report_note_cn": "本轮检验“不改变预测分布、只改变不确定性来源”的候选：复用已训练的 MBRL-Lib 五成员模型，在预先固定的 64 条验证转移上查询一次，CPU 约 0.118 秒。把成员间分歧压为零并补回各维方差，均值及对角方差误差接近机器精度，但 256 个状态/输出坐标中有 80 个的累计概率差超过 0.001，最大差约 0.01910；完整协方差也变化。因此该原生高斯构造不保持预测分布。嵌套混合能精确保持一步分布，但超出原生每成员单高斯接口；两步解析例子还说明重采样模型身份会改变轨迹分布。未运行规划攻击、训练或 GPU 实验，不把本候选作为主贡献。",
+  "evidence": {
+    "fixed_recorded_transitions": 64,
+    "output_coordinates": 256,
+    "native_model_calls": 1,
+    "cpu_elapsed_s": 0.11783310305327177,
+    "full_collapse": {
+      "mean_max_abs_error": 0.0,
+      "diagonal_variance_max_abs_error": 1.3552527156068805e-20,
+      "full_covariance_max_abs_error": 1.4586786529910965e-05,
+      "coordinate_cdf_max_gap_on_grid": 0.019099317740207955,
+      "coordinate_cdf_mean_sup_gap_on_grid": 0.0012232670646227942,
+      "coordinates_above_1e_3": 80,
+      "coordinates_evaluated": 256
+    },
+    "nested_mixture_cdf_max_gap": 4.440892098500626e-16,
+    "temporal_example_tv": 0.5,
+    "model_unchanged": true
+  },
+  "scope": "One frozen learned ensemble and exact constructed probability controls. This rejects the tested preservation construction, not every possible uncertainty attack or model family. No task return, attack success, or paper-level novelty is established.",
+  "known_prior": "PETS explicitly distinguishes persistent versus resampled ensemble identities and moment matching; Ledda et al. already target uncertainty independently of prediction correctness. General uncertainty manipulation is insufficient novelty.",
+  "next_requirement": "Continue seeking a substantively distinct world-model security mechanism with explicit feasible attacker control and a competent native decision loop. Exact forecast-law preservation was a proposed distinction for this candidate, not a user requirement and not a mandatory gate for future ideas. New ideas may change predictions, but must establish more than generic poisoning, uncertainty manipulation, or an isolated implementation defect; require decisive causal controls and native task harm before expanding to multiple core families and strong baselines.",
+  "training_updates": 0,
+  "environment_steps": 0,
+  "api_requests": 0,
+  "gpu_use": false
+}

@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "purpose": "Bounded source qualification of new carriers for materially distinct World Model + Security questions.",
+  "overall_decision": "NO_GO_FOR_PROMOTING_THE_SCREENED_MECHANISMS",
+  "interpretation": "Source qualification only: no distinct executable WM security mechanism established. Neither empirical failure nor an absolute novelty judgment.",
+  "scope": {
+    "performed": [
+      "Read project/archive, primary sources and metadata; write report only"
+    ],
+    "checkpoint_downloads": 0,
+    "model_inference_calls": 0,
+    "environment_experiment_runs": 0,
+    "gemini_calls": 0,
+    "runtime_qualification": "Not performed; no native Clean competence or experimental harm measured.",
+    "related_work_boundary": "WorldEvolver probe is separate and excluded.",
+    "source_version_caveat": "Unpinned branch anchors may change. Advertised resources do not establish download, loadability or inference."
+  },
+  "archive_context": {
+    "source": "reports/research_archive/mechanisms.json",
+    "relevant_entry": "collective_learning_screen",
+    "prior_disposition": "archived_no_expansion_without_new_mechanism",
+    "constraint": "Native sharing alone does not establish novelty beyond known acquisition and communication attacks.",
+    "excluded_reopening": "No access-blocked Gamma-World rerouting or archived long experiment restart."
+  },
+  "carriers": [
+    {
+      "id": "ma_wam_joint_control_authority",
+      "question": "Does a joint-trajectory WM planner treat another independently controlled agent's proposed future actions as enforceable commitments, thereby selecting falsely safe actions?",
+      "sources": {
+        "paper": "https://arxiv.org/abs/2609.31281",
+        "repository": "https://github.com/ma-wam/MA-WAM",
+        "native_evaluator": "https://raw.githubusercontent.com/ma-wam/MA-WAM/main/run_scripts/plan_eval_paired.py",
+        "wm_weights": "https://huggingface.co/ma-wam/MA-WAM",
+        "policy_weights": "https://huggingface.co/coflow-project/CoFlow-checkpoints"
+      },
+      "resource_facts": {
+        "wm_bundle": "Public model repository lists MA-WAM-weights.zip, approximately 121 MB, containing 30 checkpoints.",
+        "required_policy": "Separate matching CoFlow task/quality/seed/step policy required; matching steps do not establish identical weights.",
+        "native_entry": "run_scripts/plan_eval_paired.py:planning_eval"
+      },
+      "source_evidence": [
+        {
+          "anchor": "run_scripts/plan_eval_paired.py:155-181",
+          "finding": "Restores WM state_dict; scores summed predicted joint rewards."
+        },
+        {
+          "anchor": "run_scripts/plan_eval_paired.py:229-258",
+          "finding": "Frozen policy/inverse dynamics generate complete joint-action candidates."
+        },
+        {
+          "anchor": "run_scripts/plan_eval_paired.py:280-288",
+          "finding": "Selected joint action is executed by env.step; all selected agents are centrally controlled."
+        }
+      ],
+      "mechanism_gate": "FAIL_NATIVE_INTERFACE",
+      "reason": "Native evaluator executes the joint actions it chooses. An independently controlled untrusted teammate would add a new deployment boundary.",
+      "closest_primary_prior": [
+        {
+          "url": "https://arxiv.org/abs/2207.10295",
+          "constraint": "Ordinary learned-model planning optimism is insufficient novelty."
+        },
+        {
+          "url": "https://par.nsf.gov/servlets/purl/10332619",
+          "title": "Multi-Agent Trajectory Optimization Against Plan-Deviation Attacks using Co-Observations and Reachability Constraints",
+          "constraint": "Direct prior on teammate plan deviation."
+        }
+      ],
+      "decision": "Retain pretrained resource lead; do not run the rejected authority-mismatch hypothesis."
+    },
+    {
+      "id": "aid_future_coverage_intent",
+      "question": "Can one peer's false future sampling commitment make honest agents omit valuable measurements while all shared actual measurements remain truthful?",
+      "sources": {
+        "paper": "https://arxiv.org/abs/2512.02535",
+        "repository": "https://github.com/marmotlab/AID",
+        "worker": "https://raw.githubusercontent.com/marmotlab/AID/main/execution/worker/eval_diffusion_worker.py",
+        "predictor": "https://raw.githubusercontent.com/marmotlab/AID/main/classes/util/predictor.py",
+        "intent_features": "https://raw.githubusercontent.com/marmotlab/AID/main/classes/util/utils.py"
+      },
+      "resource_facts": {
+        "native_entry": "python script/run.py --config-name eval_ft_ppo_diffusion_unet_gpipp_delta_rigtreedata.yaml --config-dir config/eval",
+        "policy_checkpoint": "logs/finetune/gp_ipp_delta_ft_diffusion_unet_img_tp8_ta2_td20_tdf10/ft_rigtreedata/checkpoint/state_290.pt",
+        "policy_checkpoint_bytes_from_tree": 23506571,
+        "baseline_checkpoint": "logs/rl/gp_ipp_rl_ppo_maipp/intentmaipp/checkpoint/state_170.pt",
+        "baseline_checkpoint_bytes_from_tree": 7191482,
+        "wm_scope": "Environmental WM is a GP. Pretrained neural model is a diffusion policy, not neural dynamics."
+      },
+      "source_evidence": [
+        {
+          "anchor": "execution/worker/eval_diffusion_worker.py:118-121,163-166,223-225",
+          "finding": "Agents publish and read peer future-path Gaussian mean/covariance."
+        },
+        {
+          "anchor": "classes/util/utils.py:36-48; execution/worker/eval_diffusion_worker.py:258-259",
+          "finding": "Normalized intent density is a policy node feature."
+        },
+        {
+          "anchor": "execution/worker/eval_diffusion_worker.py:169; classes/util/predictor.py:7-17,40-45",
+          "finding": "Predictor receives virtual_measurements=[]. Later zero-valued fantasies use own candidate sample locations; peer intent does not directly update GP or become factual evidence."
+        },
+        {
+          "anchor": "execution/worker/eval_diffusion_worker.py:214,244-245",
+          "finding": "Executes env.step_coord; computes RMSE/F1 against environment ground_truth."
+        }
+      ],
+      "mechanism_gate": "FAIL_WM_SPECIFIC_CAUSAL_PATH_AND_NOVELTY_GATE",
+      "reason": "Native intent consumer exists, but peer promises do not become factual GP evidence. Remaining hypothesis is policy deception through coordination messages, without a distinct WM mechanism.",
+      "closest_primary_prior": [
+        {
+          "url": "https://arxiv.org/abs/2303.05351",
+          "title": "Intent-based Deep Reinforcement Learning for Multi-agent Informative Path Planning",
+          "constraint": "Native baseline addresses intent-conditioned planning and imperfect intent."
+        },
+        {
+          "url": "https://arxiv.org/html/2206.11789",
+          "title": "Probabilistically Resilient Multi-Robot Informative Path Planning",
+          "anchor": "Section III-A",
+          "constraint": "Section III-A attacks sensor values while assuming high-level plans are obeyed. Different threat model alone is insufficient novelty."
+        },
+        {
+          "url": "https://par.nsf.gov/servlets/purl/10332619",
+          "constraint": "Plan-deviation security is an additional close comparator."
+        }
+      ],
+      "decision": "Retain cheap coordination resource lead; no experiment justified by this WM mechanism."
+    },
+    {
+      "id": "anysafe_constraint_representation",
+      "question": "Can changing a nuisance heading in the semantic constraint representation alter a learned safety filter while the physical forbidden position set remains unchanged?",
+      "sources": {
+        "paper": "https://arxiv.org/abs/2509.19555v1",
+        "repository": "https://github.com/CMU-IntentLab/AnySafeReachability/tree/dubins",
+        "readme": "https://raw.githubusercontent.com/CMU-IntentLab/AnySafeReachability/dubins/README.md",
+        "native_evaluator": "https://raw.githubusercontent.com/CMU-IntentLab/AnySafeReachability/dubins/scripts/eval_dubins_ddpg_wm.py"
+      },
+      "evidence_provenance": "Primary-source findings supplied by parallel evaluation reviewer/root; no AnySafe inference here.",
+      "resource_facts": {
+        "checkpoint_access": "README:47-66 advertises WM/semantic encoder/filter Google Drive links; retrieval, integrity and runtime unverified.",
+        "native_entry": "scripts/eval_dubins_ddpg_wm.py; README:76-85.",
+        "config_from_review": "configs.yaml: RSSM dimensions 512+32, 128-pixel RGB observations, v=1, omega=1.25, dt=0.05."
+      },
+      "source_evidence": [
+        {
+          "anchor": "scripts/eval_dubins_ddpg_wm.py:107-122",
+          "finding": "Native evaluator loads WM and data."
+        },
+        {
+          "anchor": "scripts/eval_dubins_ddpg_wm.py:233-241",
+          "finding": "Native evaluator loads the safety filter."
+        },
+        {
+          "anchor": "scripts/eval_dubins_ddpg_wm.py:400",
+          "finding": "env.get_success_rate(policy) provides an environment execution endpoint; no success rate was measured here."
+        },
+        {
+          "anchor": "arXiv 2509.19555v1:130-132 and Section V-C",
+          "finding": "Paper calibrates semantic similarity, explicitly not approximate value; Section V-C already studies calibration-to-control."
+        }
+      ],
+      "mechanism_gate": "FAIL_DISTINCT_SECURITY_MECHANISM_GATE",
+      "reason": "Nuisance-heading sensitivity currently amounts to ordinary representation robustness. No distinct security mechanism beyond existing calibration-to-control analysis established.",
+      "decision": "Retain resources; neither new attack qualification nor empirical failure."
+    }
+  ],
+  "next_gate": "Require a native limited-authority input, distinct WM causal path and primary-prior comparison, then a bounded paired test using independent executed consequences."
+}

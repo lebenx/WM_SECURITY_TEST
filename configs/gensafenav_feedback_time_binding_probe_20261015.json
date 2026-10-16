@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_operator_execution",
+  "source_commit": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+  "question": "Does native Human.update_aci pair a forecast's actual issue time plus horizon with the observed label time after a validity gap?",
+  "scope": "Synthetic CPU operator diagnostic only; not a learned predictor, physical environment, trained actor, attack-success or defense experiment.",
+  "source_root": "runs/gensafenav_feasibility_20261015/sources",
+  "source_method": "crowd_sim/envs/utils/human.py:Human.update_aci",
+  "query_times": [0, 1, 2, 3],
+  "time_step_seconds": 0.25,
+  "trajectory": "x(t_index)=0.25*t_index, y=0; exact constant velocity 1 m/s",
+  "forecast": "Perfect five-step future table at each issued query: x=0.25*(issue_index+horizon), horizon=0..5",
+  "conditions": {
+    "continuous_valid": [true, true, true, true],
+    "two_step_validity_gap": [true, false, false, true]
+  },
+  "native_order": "On a valid query, append its forecast; after the next physical time index append the matching true position and call the unmodified native update_aci method. Invalid queries append neither and do not reset prior lists, only if source caller confirms this behavior.",
+  "reference": "Timestamp join of actually issued predictions and observed valid labels: update each available pair only when issue_index+horizon==label_index. Never fabricate labels at invalid times.",
+  "protected": ["same underlying synthetic positions", "same perfect forecast function", "same five horizons", "unchanged native method", "same valid-label schedule between gapped native and timestamp reference"],
+  "recorder": "ACI sink records actual residual inputs only; no simulated adaptation or claimed uncertainty/collision effect.",
+  "max_native_update_aci_calls": 6,
+  "max_models_or_environment_or_api_calls": 0,
+  "stop_rules": [
+    "Do not execute if caller resets history on invalid gaps or otherwise guarantees consecutive issue times.",
+    "Stop after this one frozen four-query panel, regardless of result.",
+    "Any mismatch establishes only forecast-label time attribution error; no pretrained policy harm or novelty follows."
+  ],
+  "output": "runs/gensafenav_feedback_time_binding_probe_20261015"
+}

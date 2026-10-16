@@ -1,0 +1,100 @@
+{
+  "schema_version": 1,
+  "review_id": "safedreamer_mode_replay_review_20261016",
+  "status": "independent_static_pass_replay_unexecuted_by_reviewer",
+  "scope": "Independent read-only source review of the two frozen final-iteration replays. No model, environment, API, runtime import, checkpoint loading, hash audit or installation was performed.",
+  "source_paths": [
+    "configs/safedreamer_mode_mediator_gate_20261016.json",
+    "scripts/replay_safedreamer_mode_gate.py",
+    "scripts/probe_safedreamer_mode_gate.py",
+    "vendor/SafeDreamer/SafeDreamer/behaviors.py",
+    "vendor/SafeDreamer/SafeDreamer/agent.py",
+    "vendor/SafeDreamer/SafeDreamer/nets.py",
+    "vendor/SafeDreamer/SafeDreamer/ninjax.py",
+    "vendor/SafeDreamer/SafeDreamer/jaxutils.py"
+  ],
+  "launch_verdict": {
+    "static_pass": true,
+    "remaining_material_blockers": [],
+    "conditional_on": "A completed, non-padding-contaminated first native GPU query with matching frozen scientific fields; the replay script enforces this condition before loading the checkpoint."
+  },
+  "checked_contracts": [
+    {
+      "id": "native_loop_arithmetic",
+      "result": "pass",
+      "source": "scripts/replay_safedreamer_mode_gate.py:41",
+      "finding": "The replay extracts the original CCE loop body, restores last-round mean/std and the exact Ninjax RNG plus reserved keys, and retains native proposal generation, critic scoring, mode selection, top_k, and momentum update. The frozen mixture coefficient is zero."
+    },
+    {
+      "id": "calibration_before_intervention",
+      "result": "pass",
+      "source": "scripts/replay_safedreamer_mode_gate.py:307",
+      "finding": "The independent replay must exactly match the complete cached trajectory tree, full 16-by-500-by-2 actions, costs, returns, safe count, elite indices, mean/std and returned action before common sampling is installed. Shape, dtype, finiteness and values are checked. Failure prevents the common replay; no tolerance relaxation exists."
+    },
+    {
+      "id": "protected_posterior_and_proposals",
+      "result": "pass",
+      "source": "scripts/replay_safedreamer_mode_gate.py:234",
+      "finding": "The cached initial deter/stoch/logit are verified identical across all candidates and to the actual policy posterior. Common replay checks these initial states, the full action bank, all captured prior keys, and final RNG/reserve against independent replay. Earlier CEM rounds and factual observation assimilation are not rerun or changed."
+    },
+    {
+      "id": "candidate_marginal_trajectory_law",
+      "result": "pass_by_construction_not_empirical_distribution_test",
+      "source": "scripts/replay_safedreamer_mode_gate.py:77",
+      "finding": "Only prior categorical sampling is replaced by vmap of the unchanged native OneHotDist.sample over each candidate logits[48,48], using the same fresh native per-time key across candidate rows. The native unimix logits and per-candidate 48-coordinate categorical law remain unchanged. Each step consumes one original prior key, rather than copying one realized category between differing logits.",
+      "proof_scope": "Under the native sampler/PRNG probability semantics, fixed initial posterior and fixed action sequence give identical per-candidate transition kernels at every time; induction preserves each complete candidate trajectory marginal. Across-candidate dependence changes. A single deterministic seed does not empirically establish a distributional equality. The native proposal policy depends on fixed mean/std and its own keys, not on candidate imagined states; full proposal equality is checked."
+    },
+    {
+      "id": "same_forecasts_mode_control",
+      "result": "pass",
+      "source": "scripts/replay_safedreamer_mode_gate.py:41",
+      "finding": "Always-minimum-cost uses top_k of the same computed negative cost vector and the same forecast action tensor, then the same native 0.1 old mean plus 0.9 elite mean. It performs no additional forecast. In an already-minimum-cost arm, action/mean/std must exactly equal the native branch. The script does not force a reward branch with too few safe candidates."
+    },
+    {
+      "id": "padding_validity",
+      "result": "pass",
+      "source": "scripts/replay_safedreamer_mode_gate.py:328",
+      "finding": "When safe_count>=50, selected filtered-array positions >=safe_count are classified as padding; candidate zero is not automatically treated as padding. Original candidate IDs are mapped from ordered valid indices. Padding in either arm blocks pure mode-switch attribution."
+    },
+    {
+      "id": "finite_budget_and_runtime",
+      "result": "pass",
+      "source": "scripts/replay_safedreamer_mode_gate.py:111",
+      "finding": "There are at most two replay evaluations, each 15 RSSM batch steps and 7500 candidate transitions, with one 180-second total replay alarm. There are no environment, encoder, full-policy, training or API calls. Runtime versions must match the native query; FP16 is retained; consumed parameter schemas must match the native manifest; create=False and modify=False prohibit new/changed Ninjax state. CUDA11 re-exec paths match first-query startup and are set before output creation or JAX import."
+    },
+    {
+      "id": "stop_and_partial_semantics",
+      "result": "pass",
+      "source": "scripts/replay_safedreamer_mode_gate.py:344",
+      "finding": "No threshold/root/coupling search follows a failed switch or padded elite. Partial completed counts exclude an interrupted active replay and explicitly leave its internal completion unknown. A positive switch is marked Clean-unqualified, not task harm."
+    }
+  ],
+  "resource_notes": {
+    "gpu_free_required_mib": 8192,
+    "allocator_budget_gib": 5,
+    "process_stop_budget_gib": 6,
+    "replays_max": 2,
+    "rssm_batch_steps_max": 30,
+    "candidate_transitions_max": 15000,
+    "replay_alarm_seconds": 180,
+    "outer_timeout_recommendation": "Use the same small-grace external hard timeout as the first-query launcher because Python signals may be delayed by native XLA/CUDA work. The memory monitor is a stop budget, not an OS-enforced hard cap."
+  },
+  "scientific_limits": [
+    "Static passage does not establish successful checkpoint execution or numerical replay calibration; actual runtime outputs remain necessary.",
+    "Changing batched versus row-vmapped categorical sampling may change numerical compilation details; the mandatory independent exact calibration cannot be replaced by approximate agreement or an extra selected root.",
+    "The law-preserving claim concerns each candidate forecast distribution, not equality of joint forecasts or preservation of finite-sample safe counts.",
+    "A mode switch or a returned-action difference is not evidence of physical safety harm. A separately qualified native Clean episode and separately frozen physical continuation controls remain necessary.",
+    "The sampler permission is an added constrained research hook, not evidence of a deployed low-trust writer or a new sampling-mechanism family.",
+    "One preselected development root supports no ASR, population significance or independent generalization claim."
+  ],
+  "reviewer_activity": {
+    "model_calls": 0,
+    "environment_calls": 0,
+    "api_calls": 0,
+    "checkpoint_loads": 0,
+    "runtime_imports": 0,
+    "hash_checks": 0,
+    "installs": 0
+  },
+  "execution_evidence": "No scientific execution result is asserted by this static review; parent owns execution status and reports."
+}

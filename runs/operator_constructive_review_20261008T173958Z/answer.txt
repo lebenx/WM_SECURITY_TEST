@@ -1,0 +1,76 @@
+## Proposal: Fork–Test–Merge World Models (FTM)
+
+**Core idea:** when an observation is truthful but causes a large forecast error, do not immediately update the shared world model. Temporarily fork the model into competing *mechanism contexts*, use an intervention to distinguish them, and merge only the causal components that remain invariant across contexts. This treats contamination as a latent environmental mechanism rather than as bad data.
+
+### State
+
+Maintain:
+
+- a shared transition model \(p_\theta(s',o\mid s,a)\);
+- a set of context-specific adapters \(\phi_c\), one per currently plausible mechanism context;
+- a context posterior \(q(c\mid h_t)\);
+- a replay buffer whose records include the context in which they were collected.
+
+The adapter is not a scalar confidence or data weight. It is a separate mechanism capable of changing predicted effects of actions or observations. For example, in Reactor Lab it can represent a radiation-dependent measurement channel while the crystal law remains in \(\theta\).
+
+### Exact update
+
+For a new transition \(x_t=(s_t,a_t,o_t,s_{t+1})\), compute its surprise under the active context:
+
+\[
+\delta_t=-\log p_{\theta,\phi_c}(x_t).
+\]
+
+If \(\delta_t>\tau\), create two or more child contexts by copying \((\theta,\phi_c)\), then update each child by ordinary likelihood optimization on the recent episode:
+
+\[
+(\theta_j,\phi_j)\leftarrow
+(\theta_j,\phi_j)-\eta\nabla \mathcal L(D_{\text{recent}}\mid\theta_j,\phi_j).
+\]
+
+The agent then chooses an action by maximizing expected branch separation per action cost:
+
+\[
+a^*=\arg\max_a
+\frac{\mathbb E_{o\sim p_j(o\mid a)}
+[\operatorname{JS}(p_1(s'\mid a,o),p_2(s'\mid a,o))]}
+{\operatorname{cost}(a)}.
+\]
+
+After observing the result, update each branch posterior by Bayes’ rule. A branch is retained only if it predicts both the new observation and subsequent transitions better than its competitors.
+
+For merging, optimize a *shared mechanism* and branch adapters jointly:
+
+\[
+\min_{\theta,\{\phi_j\}}
+\sum_j \mathcal L(D_j;\theta,\phi_j)
++\lambda\sum_{j<k}
+\left\|I_j(\theta,\phi_j)-I_k(\theta,\phi_k)\right\|^2,
+\]
+
+where \(I_j\) is the predicted effect of a fixed set of automatically generated interventions, not passive observations. Parameters are moved into \(\theta\) only when their intervention responses agree across surviving branches; disagreeing effects remain in \(\phi_j\). Thus contaminated measurement behavior is quarantined without discarding the truthful measurements.
+
+This differs mechanistically from CausalCuriosity/GalilAI, which select experiments for model simplicity, and from MDA, which jointly proposes a model and observations but does not maintain reversible, context-indexed model forks. It also differs from task-oriented model learning and VERDI: recovery is an explicit state operation—branch, intervene, and selectively recombine—not a policy-gradient preference or repair retrieval.
+
+### Decisive baseline
+
+Compare FTM against:
+
+1. the symbolic law plus source-informed isolation and 32 repeated minimum measurements;
+2. fixed measurement-location/count/reducer search with validation;
+3. CausalCuriosity/GalilAI-style active experiment selection;
+4. a single shared model trained on all truthful experience.
+
+Report fresh-case success, action count, forecast error after contamination, and recovery success after clean evidence. The key prediction is that FTM matches or exceeds 4/4 success while using fewer than 7.37× actions, and that its shared forecasts remain usable after contaminated traces.
+
+### First falsification pilot
+
+Use the four Reactor Lab cases, with training on reference crystals and a held-out set of contamination conditions. Run only three seeds on one RTX 4090. The pilot falsifies FTM if either:
+
+- it cannot discover a branch whose adapter captures radiation while preserving the crystal law;
+- it requires as many actions as template search;
+- or a single shared model recovers equally well without branching.
+
+Then transfer the same implementation, without task-specific calibration, to a small set of ScienceWorld and DiscoveryWorld tasks containing repeated observations under different rooms, objects, or environmental states. Success there would test whether the operation is a general world-model mechanism rather than a Reactor-specific trick.
+
+**Speculative component:** intervention-agreement is hypothesized to identify reusable causal mechanisms reliably; branch explosion and incorrect context creation may make the method impractical. The claim that competent recovery is best explained by reversible model compartmentalization, rather than ordinary memory or optimization noise, remains empirical.

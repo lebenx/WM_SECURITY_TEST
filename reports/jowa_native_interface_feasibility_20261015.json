@@ -1,0 +1,316 @@
+{
+  "schema_version": 1,
+  "report_date": "2026-10-15",
+  "status": "completed_bounded_source_and_resource_review",
+  "scope": "Read-only review of the official JOWA native evaluation and planning interfaces. This report records resource feasibility and limits; it is not a Clean capability experiment or a task-level security result.",
+  "source": {
+    "official_repository": "https://github.com/CJReinforce/JOWA",
+    "local_path": "vendor/JOWA",
+    "commit": "8cb02c5e6768a948c566a9012ac8a4fc420c6970",
+    "paper_title_from_repository": "Scaling Offline Model-Based RL via Jointly-Optimized World-Action Model Pretraining",
+    "inspection_basis": "Local official source at the recorded commit; no author-reported benchmark scores were treated as local results."
+  },
+  "decision": {
+    "native_forecast_interface_gate": "pass_by_source_inspection",
+    "current_cache_contamination_candidate": "do_not_enter_clean",
+    "why": "The parent agent's cache ownership and branch-isolation review, followed by its bounded CPU mechanism probe, did not support the proposed cache-contamination path. Resource availability alone is not a reason to start a new Clean experiment.",
+    "decision_source_paths": [
+      "reports/jowa_rejected_branch_decision_20261015.json",
+      "runs/jowa_cache_isolation_20261015/summary.json"
+    ],
+    "cpu_probe": {
+      "status": "completed_as_reported_by_parent_agent",
+      "checks_passed": 23,
+      "checks_total": 23,
+      "reported_cache_example": "The explicitly supplied cache advanced from length 2 to 5 while the model-environment member cache remained at length 2.",
+      "verification_scope": "The parent reported this result. This resource reviewer did not rerun the probe, load a checkpoint, or validate task utility."
+    },
+    "limits": [
+      "This rejects the current proposed cache-contamination mechanism, not all possible JOWA research questions.",
+      "Native Clean capability and task-level harm remain unmeasured locally.",
+      "Forecast participation does not establish that the task token should be prediction-invariant."
+    ]
+  },
+  "native_forecast_to_action_path": {
+    "finding": "For positive planning horizon, native beam search uses predicted successors, predicted rewards, and successor action values to rank imagined paths and select the first action.",
+    "evidence": [
+      {
+        "source_path": "vendor/JOWA/src/agent.py",
+        "lines": "182-204",
+        "why": "Agent.act tokenizes the observation and dispatches to plan_beam_search when native beam planning is selected; evaluation also has a 0.001 random-action branch."
+      },
+      {
+        "source_path": "vendor/JOWA/src/agent.py",
+        "lines": "241-303",
+        "why": "Horizon zero returns the root critic argmax. Positive-horizon expansion takes legal top-Q actions, concatenates branch KV caches, calls WorldModelEnv.step, obtains predicted rewards and successor Q values, splits caches, and retains nodes by score."
+      },
+      {
+        "source_path": "vendor/JOWA/src/envs/world_model_env.py",
+        "lines": "195-255",
+        "why": "The imagined transition autoregressively generates observation tokens. The action pass predicts categorical reward and done; the final observation token produces successor Q. Beam evaluation uses categorical modes by default."
+      },
+      {
+        "source_path": "vendor/JOWA/src/utils.py",
+        "lines": "297-334",
+        "why": "StepNode accumulates discounted predicted rewards and adds a discounted successor value in its ranking score."
+      }
+    ],
+    "boundary": "A non-planning or horizon-zero run would not demonstrate forecast-driven action selection. The beam implementation does not use its predicted done output to terminate expansion; that is an implementation property, not measured harm."
+  },
+  "task_token_semantics": {
+    "finding": "JOWA's env_token identifies an Atari game/domain rather than an arbitrary natural-language goal that is irrelevant to physical dynamics.",
+    "source_paths": [
+      "vendor/JOWA/src/play.py",
+      "vendor/JOWA/src/models/jowa_model.py",
+      "vendor/JOWA/src/agent.py",
+      "vendor/JOWA/src/envs/world_model_env.py"
+    ],
+    "evidence": [
+      "play.py:43 obtains the token from GAME_NAMES.index(cfg.common.game_name).",
+      "jowa_model.py:67-77 defines learned task embeddings selected separately for action and observation token positions.",
+      "The game token also selects the game-specific legal-action mask used by the planner."
+    ],
+    "why": "Changing the Atari game token can legitimately change both dynamics and legal actions. A token-swap result alone would not isolate Goal-Bus contamination or justify a goal-invariance premise."
+  },
+  "checkpoint_inventory": {
+    "payloads_present": false,
+    "inventory_kind": "Git LFS pointer text and declared payload sizes, not downloaded or loaded checkpoint tensors",
+    "entries": [
+      {
+        "source_path": "vendor/JOWA/checkpoints/JOWA/JOWA_40M.pt",
+        "local_pointer_bytes": 133,
+        "declared_payload_bytes": 76485274
+      },
+      {
+        "source_path": "vendor/JOWA/checkpoints/JOWA/tokenizer.pt",
+        "local_pointer_bytes": 133,
+        "declared_payload_bytes": 75162490
+      },
+      {
+        "source_path": "vendor/JOWA/checkpoints/JOWA/JOWA_70M.pt",
+        "local_pointer_bytes": 134,
+        "declared_payload_bytes": 213458522
+      },
+      {
+        "source_path": "vendor/JOWA/checkpoints/JOWA/JOWA_150M.pt",
+        "local_pointer_bytes": 134,
+        "declared_payload_bytes": 511212618
+      }
+    ],
+    "smallest_model_plus_tokenizer_declared_bytes": 151647764,
+    "why": "The presence of .pt filenames is not evidence of usable pretrained weights."
+  },
+  "native_configuration_and_reproducibility_gaps": [
+    {
+      "id": "planning_num_envs_conflict",
+      "finding": "The evaluation config defaults to 16 environments, but the agent requires exactly one environment for planning. The provided shell planning entry does not override num_envs.",
+      "evidence": [
+        {
+          "source_path": "vendor/JOWA/config/eval.yaml",
+          "lines": "15-24"
+        },
+        {
+          "source_path": "vendor/JOWA/src/agent.py",
+          "lines": "52-55"
+        },
+        {
+          "source_path": "vendor/JOWA/eval/eval.sh",
+          "lines": "76-89"
+        }
+      ],
+      "implication": "Any separately authorized native beam run must explicitly select num_envs=1; the default shell command is not a runnable beam protocol as written."
+    },
+    {
+      "id": "seed_does_not_establish_paired_environment_state",
+      "finding": "play.py constructs subprocess environments before calling set_seed. The child seeds NumPy but does not explicitly seed the environment/ALE in that construction path.",
+      "evidence": [
+        {
+          "source_path": "vendor/JOWA/src/play.py",
+          "lines": "24-28"
+        },
+        {
+          "source_path": "vendor/JOWA/src/envs/multi_process_env.py",
+          "lines": "33-35"
+        },
+        {
+          "source_path": "vendor/JOWA/src/utils.py",
+          "lines": "125-134"
+        },
+        {
+          "source_path": "vendor/JOWA/src/envs/atari_env_wrapper.py",
+          "lines": "266-270"
+        }
+      ],
+      "implication": "common.seed alone is insufficient evidence of deterministic initial states or paired rollouts. The wrapper seed method also contains a source TODO about seeding before ROM loading. No local reset/replay validation was performed."
+    },
+    {
+      "id": "terminal_transition_metric_omission",
+      "finding": "AgentEnv accumulates reward and timestep using mask_dones after env.step has updated the done tracker. The current terminal transition is therefore excluded from the reported return and step count.",
+      "evidence": [
+        {
+          "source_path": "vendor/JOWA/src/game/agent_env.py",
+          "lines": "58-69"
+        },
+        {
+          "source_path": "vendor/JOWA/src/envs/done_tracker.py",
+          "symbol": "update_done_tracker / mask_dones"
+        }
+      ],
+      "implication": "Future true utility evidence would require a complete environment reward trace, with the native evaluator metric retained separately. This is an ordinary evaluator correctness issue, not a measured attack or task failure."
+    },
+    {
+      "id": "implicit_tokenizer_constructor_downloads",
+      "finding": "Tokenizer construction always creates LPIPS, which constructs pretrained torchvision VGG16 and obtains an LPIPS checkpoint when absent.",
+      "evidence": [
+        {
+          "source_path": "vendor/JOWA/src/models/tokenizer/tokenizer.py",
+          "lines": "65"
+        },
+        {
+          "source_path": "vendor/JOWA/src/models/tokenizer/lpips.py",
+          "lines": "23-37, 103-106, 160-200"
+        }
+      ],
+      "bounded_cache_check": {
+        "torch_vgg16_cache_present": false,
+        "iris_lpips_vgg_cache_present": false,
+        "checked_paths": [
+          "~/.cache/torch/hub/checkpoints/vgg16-397923af.pth",
+          "~/.cache/iris/tokenizer_pretrained_vgg/vgg.pth"
+        ]
+      },
+      "implication": "A naive inference constructor can access the network before loading the supplied tokenizer checkpoint. No such constructor was run by this reviewer, and no adapter was implemented."
+    },
+    {
+      "id": "mcts_child_cache_correctness",
+      "finding": "The MCTS expansion passes a copied parent cache as an explicit step argument, then stores a copy of the environment's member cache in the child. The explicit cache is advanced locally while the member cache is not reassigned by that step path.",
+      "evidence": [
+        {
+          "source_path": "vendor/JOWA/src/agent.py",
+          "lines": "344-352"
+        },
+        {
+          "source_path": "vendor/JOWA/src/envs/world_model_env.py",
+          "lines": "202-222"
+        }
+      ],
+      "provenance": "Specific code-path finding supplied by the parent after two source reviews; the parent subsequently reported the bounded CPU explicit-cache/member-cache test above.",
+      "implication": "This is a source-level ordinary correctness problem in child-cache propagation, not evidence of cross-request contamination or a novel safety mechanism. Full pretrained MCTS behavior and real task harm were not tested. No vendor fix was made."
+    }
+  ],
+  "runtime_and_environment_resources": {
+    "official_dependencies": {
+      "source_paths": [
+        "vendor/JOWA/README.md",
+        "vendor/JOWA/requirements.txt"
+      ],
+      "python": "3.8 in the documented setup",
+      "key_pins": {
+        "gym": "0.19.0",
+        "atari-py": "0.2.5",
+        "numpy": "1.19.0",
+        "opencv-python": "4.2.0.34",
+        "hydra-core": "1.1.1",
+        "pygame": "2.1.2"
+      },
+      "torch_and_torchvision": "Listed without fixed versions in requirements.txt"
+    },
+    "bounded_local_inventory": {
+      "usable_atari_runtime_identified": false,
+      "rom_identified": false,
+      "searched_scope": [
+        "Workspace .venv*/lib/python*/site-packages package metadata and standard ROM directories",
+        "/home/xhj/miniconda3/envs/*/lib/python*/site-packages and base Python 3.14 site-packages",
+        "Standard ale_py/roms, atari_py/atari_roms and AutoROM/roms locations in those environments",
+        "Bounded workspace filename searches and immediate Atari/ROM-related names under .deps, data, models, ~/.cache and ~/.local/share"
+      ],
+      "interpretation": "No atari-py, ale-py, AutoROM, or ROM resource was identified in the checked locations. This is not an exhaustive host search or a claim that Atari resources are universally unavailable. Existing generic Gym/Gymnasium preprocessing files do not establish a usable Atari runtime."
+    },
+    "existing_runtime_reuse": "Modern local environments provide Torch and Gym-related packages, but no exact documented Python 3.8/Gym 0.19/atari-py 0.2.5 runtime was identified. Modern Gym installations do not establish compatibility with old Atari registrations and reset/step APIs.",
+    "native_task_interface": {
+      "source_path": "vendor/JOWA/src/envs/atari_env_wrapper.py",
+      "environment_id": "{game}NoFrameskip-v4 when sticky_actions=False",
+      "image": "84 x 84 x 1 uint8 grayscale with native max-pooling and resizing",
+      "frame_skip": 4,
+      "terminal_on_life_loss": false,
+      "api": "Old Gym observation-only reset and four-item step return",
+      "utility": "Complete raw environment reward, with clipped reward recorded separately; not predicted reward or value."
+    }
+  },
+  "cpu_feasibility": {
+    "status": "not_validated_for_pretrained_inference",
+    "source_supported_possibility": "Transformer attention has a manual fallback with device-dependent tensors, and the model accepts a device argument.",
+    "source_paths": [
+      "vendor/JOWA/src/models/transformer.py",
+      "vendor/JOWA/src/models/jowa_model.py",
+      "vendor/JOWA/src/agent.py"
+    ],
+    "constraints": [
+      "transformer.py:12-16 and 113-129 select FlashAttention based on package availability. Having FlashAttention installed is not itself a CPU fallback.",
+      "Agent.act uses torch.cuda.amp.autocast at agent.py:184. A CPU execution would not establish parity with the configured CUDA bfloat16 path.",
+      "The manual attention implementation registers a mask buffer. Agent.load at agent.py:119-125 indexes every instantiated model state key in the checkpoint; a checkpoint made without that buffer could be incompatible. This remains a conditional risk because real checkpoint payloads were not available for inspection."
+    ],
+    "why": "A bounded CPU cache semantics probe is not a successful pretrained CPU inference or Atari task run."
+  },
+  "cost_factors_without_timing_claims": {
+    "measured_local_planning_time": null,
+    "measured_local_memory": null,
+    "source_paths": [
+      "vendor/JOWA/config/eval.yaml",
+      "vendor/JOWA/src/agent.py",
+      "vendor/JOWA/src/envs/world_model_env.py",
+      "vendor/JOWA/src/game/game.py",
+      "vendor/JOWA/src/game/agent_env.py"
+    ],
+    "observations": [
+      "The 40M transformer configuration has 4 layers, 8 heads, embedding width 512, 8 maximum blocks, and 37 tokens per block: 36 observation tokens plus an action token.",
+      "For beam width 2 and horizon 2, planning uses one context prefill and 74 autoregressive model calls over the two imagined depths, with branch batches of 2 and 4. This is about 222 token-row evaluations plus prefill, not a single batched image forward.",
+      "Native planning also copies, concatenates and splits KV caches and decodes predicted observations even when beam ranking only needs reward and Q.",
+      "The default max_steps=108000 is checked against AgentEnv's decision-step counter, while the Atari wrapper advances 4 frames per action. It is not an established 108000-emulator-frame budget; the terminal-step omission is a separate accounting issue."
+    ],
+    "why": "No local elapsed-time or practical CPU/GPU cost claim is justified without an actual benchmark. A short integration smoke test would not establish healthy task performance."
+  },
+  "activity_accounting": {
+    "this_resource_reviewer": {
+      "source_reads": true,
+      "bounded_filesystem_inventory": true,
+      "network_calls": 0,
+      "downloads": 0,
+      "package_installs": 0,
+      "checkpoint_loads": 0,
+      "model_inference_calls": 0,
+      "environment_runs": 0,
+      "training_runs": 0,
+      "vendor_modifications": 0,
+      "files_written_for_this_task": [
+        "reports/jowa_native_interface_feasibility_20261015.json"
+      ]
+    },
+    "parent_reported_round_activity": {
+      "official_repository_clone": "The parent cloned the official repository with GIT_LFS_SKIP_SMUDGE enabled. Source and ordinary Git-tracked content were fetched.",
+      "ordinary_git_dataset_archive": "An approximately 29 MB fine_tuning_dataset.zip was fetched with the clone; it was not unpacked or used.",
+      "real_checkpoint_downloads": 0,
+      "cpu_mechanism_probe": "Completed by the parent; 23 of 23 checks passed as reported. This was not pretrained inference or a task experiment."
+    },
+    "no_overclaim": "This report does not assert that the entire parent round involved zero network transfer."
+  },
+  "native_clean_recipe_if_scientifically_justified": {
+    "status": "descriptive_only_not_started_for_this_excluded_candidate",
+    "model": "JOWA_40M plus tokenizer",
+    "game": "Assault",
+    "settings_source_path": "vendor/JOWA/eval/JOWA_40M_raw_scores.json",
+    "settings_source_lines": "38-42",
+    "beam_width": 2,
+    "planning_horizon": 2,
+    "buffer_size": 3,
+    "num_envs_required": 1,
+    "evaluation_epsilon": 0.001,
+    "remaining_gates": [
+      "Real checkpoint payloads and verified load compatibility",
+      "Compatible native Atari runtime and matching ROM resources",
+      "Explicit handling of constructor downloads",
+      "Documented environment seeding and paired-state replay",
+      "Complete real reward accounting and an explicitly bounded task protocol"
+    ]
+  }
+}

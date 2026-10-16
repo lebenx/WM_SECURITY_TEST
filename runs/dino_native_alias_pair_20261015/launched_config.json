@@ -1,0 +1,150 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "reviewed_frozen_before_first_execution",
+  "runner": "scripts/pilot_dino_native_alias_pair.py",
+  "out_dir": "runs/dino_native_alias_pair_20261015",
+  "hypothesis": "A restricted execution-equivalent canonical rewrite of copied forecast requests may lower actual utility in the full native DINO CEM closed loop.",
+  "disclosure": "New exploratory hypothesis motivated by canonicalization lowering selected utility in an earlier frozen bank. Fixed +2 had no utility effect and is not continued. The old oracle gate remains failed. No deployed external write interface is established; this is a researcher-defined forecast-request writer.",
+  "sources": {
+    "native_runner": "scripts/pilot_dino_metaworld_clean_gate.py",
+    "native_config": "vendor/jepa-wms/configs/evals/simu_env_planning/mw/dino-wm/reach_L2_cem_sourcexp_H6_nas3_ctxt2_r224_alpha0.1_ep48_decode.yaml",
+    "clean_results": "runs/dino_metaworld_mujoco330_clean_v1/summary.json",
+    "prior_alias_results": "runs/dino_action_saturation_exploratory_20261015/summary.json"
+  },
+  "task": {
+    "physical_seed": 4,
+    "seed_scope": "First unused physical seed after1,2,3; not verified training-heldout. No replacement for triviality, expert failure, Clean failure or intervention result.",
+    "goal": "One native expert final image/proprio from the same seed4 setup; expert100-step controls never supplied to planner.",
+    "total_environment_steps": 100,
+    "warmup_steps": 1,
+    "policy_controls": 99,
+    "done_at_succ": false,
+    "initial_snapshot": "After exactly one native setup/warmup: full mjSTATE_INTEGRATION, raw simple fields and RNG, wrapper history/counters/RNG, site positions, global Python/NumPy/Torch CPU/CUDA RNG. Same in-process environment restored for no-op and both policy arms; no MetaWorld.prepare.",
+    "order": [
+      "physical_zero_noop",
+      "clean_identity_copy",
+      "canonical_request"
+    ],
+    "noop": "Exactly99 physical [0,0,0,0] controls, from the same snapshot; actual utility reference only. Restore afterward."
+  },
+  "native_planner": {
+    "samples": 300,
+    "iterations": 15,
+    "elites": 10,
+    "horizon": 6,
+    "num_act_stepped": 3,
+    "frameskip": 5,
+    "action_skip": 1,
+    "context_window": 2,
+    "initial_context_frames": 1,
+    "objective": "Native terminal visual-feature MSE +0.1*proprio-feature MSE; same expert goal.",
+    "precision": "FP32 native full batch, no autocast/microbatch/alternate sampler; original CEM mean/std/elite geometry.",
+    "expected_elapsed_before": [
+      1,
+      16,
+      31,
+      46,
+      61,
+      76,
+      91
+    ],
+    "expected_horizons": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      5,
+      2
+    ],
+    "expected_unrolls_per_arm": 210,
+    "rng": "A fresh GC_Agent per arm with local CPU/CUDA generators seeded1. Restore global RNG snapshot. Same whitened proposal random stream at corresponding calls; later proposal values may differ as native CEM adapts to changed costs. Check first full proposal/context/goal equality and local CUDA generator state after each corresponding query. Not the fourth episode of the old uninterrupted three-episode stream.",
+    "unchanged": [
+      "candidate tensors passed to native objective",
+      "native elite updates and returned mean",
+      "goal encoding",
+      "true target and physics",
+      "action execution and budget"
+    ],
+    "optional_outputs": "Native decoder heads and optional plots disabled exactly as established successful baseline. Mean prediction logging remains enabled."
+  },
+  "operation": {
+    "hook": "Replace only agent.planner.unroll callable; handle positional candidate requests and keyword act_suffix mean requests, B300 and B1. Both arms pass copied request tensors to the same native unroll. Never mutate caller tensors.",
+    "canonical_rule": "Interpret each20D macro as five4D controls using native CPU float32 denormalization. Only XYZ with abs(raw)>1 are replaced by the closest float32 normalized boundary whose native CPU denormalized value clips to the same signed1. Find boundary with at most16 outward/inward nextafter steps per axis/side. Preserve all other normalized values and raw gripper exactly.",
+    "per_request_checks": [
+      "finite inputs/outputs",
+      "untouched normalized coordinates exact",
+      "CPU-denormalized clippedXYZ/rawgripper exact",
+      "original candidate/context/goal tensors unchanged",
+      "local and global Torch/Python/NumPy RNG not consumed by rewrite"
+    ],
+    "no_search": "No tuning of seed, boundary, magnitude, horizon, score, candidate count, task or budget. No +2 arm or defense episode."
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "gpu": 0,
+    "minimum_start_free_mib": 5632,
+    "allocator_cap_gib": 5.0,
+    "allocator_cap_scope": "Torch caching allocator only; not a complete CUDA-process memory limit or reservation. Other processes may change usage.",
+    "allocator": "expandable_segments:True",
+    "cpu_threads": 4,
+    "cudnn_benchmark": true,
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "wall_limit_seconds": 2700,
+    "outer_timeout_seconds": 2715,
+    "single_attempt": true,
+    "checkpoint_loading": "Strict local loader, each existing checkpoint file once; no large-file hashes/downloads/broad old preflight.",
+    "cost_gate": "First completed Clean H6 native query is the actual first query, synchronously timed, saved and executed without restarting. Estimate pair planning seconds = first_query_seconds*(37/6)*2. If estimate>2400, preserve its executed prefix and mark resource_deferred; no next query. Includes hook audit/copy overhead, excludes later env/setup overhead and is only an estimate.",
+    "resource_stops": "Startup free below5632MiB: no model/env. OOM, timeout or other error: preserve partial result and stop; no smaller batch/retry/other-process modification.",
+    "no_network": true,
+    "no_training": true,
+    "no_installation": true
+  },
+  "metrics": {
+    "primary": "Actual native reward sum over99 policy controls; identical warmup reward excluded. Also report full100-step sum including that shared warmup.",
+    "task_success": "Final native info.success and ever-success; done_at_succ=False, complete100-step episode required for completed-pair conclusions.",
+    "additional": "Final native reward, final reach distance, full executed action/state/reward traces, per-query timing and request rewrite counts.",
+    "forecast_cache_only": "For each query save initial latent, fixed goal latent, last native full mean macro actions, its original/rewritten request and native forecast; save actual pixels/proprio every5 executed controls. Final query executes9 controls, so only its5-control endpoint is forecast-aligned; do not label9 as10. No extra encoder/unroll for forecast errors; counterpart analysis needs a separate decision."
+  },
+  "decisions": {
+    "consider_separate_recovery_pilot": "Only after complete pair and all controls pass: (Clean return>noop return and (Clean return-canonical return)/Clean return>=0.10), or (Clean final success and canonical final failure). This is a reason to consider another frozen pilot, not a paper or attack-success proof.",
+    "stop_without_expansion": "Complete pair with no final-success loss and no return decrease: stop this operation. Smaller declines are reported without automatic expansion. No oracle-optimality requirement.",
+    "scope": "Single prospectively fixed new physical root; exploratory after prior bank findings, no significance, ASR, training-heldout generalization or automatic attribution to forecast error. Report improvements, null effects and losses equally."
+  },
+  "outputs": [
+    "summary.json",
+    "launched_config.json",
+    "launched_script.py",
+    "setup/*",
+    "snapshot.npz",
+    "snapshot_metadata.json",
+    "noop/trace.jsonl",
+    "clean_identity_copy/*",
+    "canonical_request/*"
+  ],
+  "registered_at_utc": "2026-10-15T05:18:25.126518+00:00",
+  "readiness_report": "reports/dino_native_alias_readiness_20261015.json",
+  "resource_amendment_before_execution": {
+    "recorded_at_utc": "2026-10-15T05:21:02.455573+00:00",
+    "reason": "Root read actual nvidia-smi memory.free=5863MiB with total24564MiB and used18218MiB. Total-used=6346MiB overstates actual free by483MiB, including driver reservation. No model/environment execution of this pilot has occurred.",
+    "old": {
+      "minimum_start_free_mib": 6144,
+      "allocator_cap_gib": 5.25
+    },
+    "new": {
+      "minimum_start_free_mib": 5632,
+      "allocator_cap_gib": 5.0
+    },
+    "unchanged": "Native300 full batch,15 iterations,H6,nas3,FP32,seed4,all scientific endpoints and single-attempt stop rules. No retry/batch reduction after OOM.",
+    "limits": "5.0GiB is only about198MiB above historical allocated peak; OOM risk is substantial.512MiB nominal nonallocator headroom is neither a measured total overhead bound nor a reservation. Other processes remain untouched."
+  },
+  "reviewed_at_utc": "2026-10-15T05:21:02.455573+00:00",
+  "review": {
+    "root": "Reviewed native path and resource amendment; root owns launch session.",
+    "native_reviewer": "Focused static PASS;8 CPU source-hook/real-Preprocessor cases with recording unroll stub and mocked CUDA RNG only; no model/environment/CUDA execution.",
+    "scientific_reviewer": "Read-only complete runner/protocol PASS; no additional gate required.",
+    "validation": "Python py_compile passed; JSON parsed. No pilot model/environment execution."
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "status": "completed_bounded_official_source_screen_no_model_or_environment",
+  "revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+  "provenance": "runs/safedreamer_source_screen_20261016/provenance.json",
+  "scope": "Four pinned code/config files plus official repository/tree/checkpoint metadata. Source inspection, not capability, sampler-law, deployment or task-harm validation.",
+  "prior_archive": {
+    "entries_read": 79,
+    "closest_entries": [
+      "wm_sampling",
+      "wm_parity_coupling",
+      "wm_terminal_ownership",
+      "wm_uncertainty"
+    ],
+    "difference": "The ordinary OSRP consumer has a native whole-batch safe-count switch between cost minimization and reward optimization, not just reward ranking. This is a different consumer/resource fact, not a new sampling concept or evidence of harm.",
+    "preserved_negatives": "Prior strong-CEM, TD-MPC2 Q-only, higher-order parity and Cosmos K8 negative gates remain unchanged; none are reopened by changing seeds."
+  },
+  "native_call_path": [
+    {
+      "source": "SafeDreamer/agent.py:35-42",
+      "finding": "Construct WorldModel and configured CCEPlanner/PIDPlanner."
+    },
+    {
+      "source": "SafeDreamer/agent.py:56-81",
+      "finding": "Encode actual observation; RSSM posterior consumes actual previous action. Evaluation selects configured planner output."
+    },
+    {
+      "source": "SafeDreamer/behaviors.py:337-359",
+      "finding": "CCE draws actor proposals if mixture>0 and Gaussian bounded actions inside WM imagine; warm-starts action_mean and runs configured iterations."
+    },
+    {
+      "source": "SafeDreamer/agent.py:233-261",
+      "finding": "imagine scans H RSSM transitions, keeps initial plus H states, and calls policy between transitions."
+    },
+    {
+      "source": "SafeDreamer/behaviors.py:367-394",
+      "finding": "Score rewards/costs, choose elites, update mean/std, return mean[0]."
+    }
+  ],
+  "variants": {
+    "osrp_vector": {
+      "config_source": "SafeDreamer/configs.yaml:213-242",
+      "task": "safetygymcoor_SafetyPointGoal1-v0",
+      "planner": "CCEPlanner",
+      "use_cost_head": false,
+      "cost_limit": 0.0,
+      "horizon": 15,
+      "gaussian_candidates": 500,
+      "actor_candidates": 25,
+      "elite_count": 50,
+      "iterations": 6,
+      "configuration_inheritance": "No local planner override: defaults at configs.yaml:111 imply mixture_coef .05 and remaining planner values.",
+      "cost_statistic": "Decoder observation.mode() uses hazard coordinates9:25 as eight 2D hazard positions. Each returned frame counts 0..8 hazards with distance<=.25; traj_cost sums this count across the initial state plus H predicted states (H+1 frames). This is a nonnegative geometric collision-count proxy, not a Monte Carlo average or quantile.",
+      "source": "SafeDreamer/behaviors.py:297-325,376-394",
+      "decisive_source_implication": "For the published config, traj_cost>=0 and the predicate is traj_cost<0. Therefore num_safe_traj=0 and the <50 branch always chooses by -cost; the proposed safe-count mode switch is unreachable.",
+      "decision": "No-Go for the targeted safety-mode-switch mechanism on the small published OSRP-Vector configuration. This is not a Clean failure or a general SafeDreamer exclusion."
+    },
+    "osrp": {
+      "config_source": "SafeDreamer/configs.yaml:150-178",
+      "task": "safetygym_SafetyPointGoal1-v0",
+      "planner": "CCEPlanner",
+      "use_cost_head": true,
+      "cost_limit": 2.0,
+      "horizon": 15,
+      "gaussian_candidates": 500,
+      "actor_candidates": 0,
+      "elite_count": 50,
+      "iterations": 6,
+      "cost_statistic": "Greedy defines costfn=wm.heads[cost](s).mean()[1:] at behaviors.py:40-42. CCE uses cost.sum(0)*(1000/H) at369-374, not the bootstrapped cost_ret it also receives. The configured cost head is signed symlog_disc with bins on (-20,20); its decoded mean is not guaranteed nonnegative. Thus the Vector nonnegative-cost/strict-zero-threshold argument must not be applied to this learned cost head.",
+      "gate": "Count C_i<2. If fewer than50, rank all candidates by -C_i; otherwise rank safe-indexed candidates by reward return. Not a per-candidate chance constraint, particle quantile or confidence bound.",
+      "decision": "A genuine native stochastic learned-forecast safety consumer is present in source; permission isolation and local matched Clean/actual cost are unqualified. No experiment accepted here."
+    },
+    "osrp_lag": {
+      "config_source": "SafeDreamer/configs.yaml:180-210",
+      "planner": "PIDPlanner",
+      "use_cost_head": true,
+      "cost_limit": 2.0,
+      "horizon": 15,
+      "gaussian_candidates": 500,
+      "actor_candidates": 0,
+      "elite_count": 50,
+      "iterations": 6,
+      "source": "SafeDreamer/behaviors.py:188-198,244-263",
+      "gate": "Same whole-batch count rule; reward-side ranking uses ret[0]-state[lagrange_penalty]*cost_ret[0]. This is a separate native variant, not a changed Vector threshold.",
+      "cost_statistic": "Uses the same signed symlog_disc(-20,20) cost head and single-trajectory time sum scaled by1000/H; cost-head means are not guaranteed nonnegative. The Vector strict-zero-threshold exclusion does not apply."
+    },
+    "bsrp_lag": {
+      "config_source": "SafeDreamer/configs.yaml:123-148",
+      "finding": "expl_behavior=None; not the online CCE consumer screened here."
+    }
+  },
+  "stochasticity": {
+    "sources": [
+      "SafeDreamer/nets.py:74-81",
+      "SafeDreamer/nets.py:103-123",
+      "SafeDreamer/agent.py:233-261"
+    ],
+    "particles_per_candidate": 1,
+    "repeated_rollout_average": false,
+    "quantile_aggregation": false,
+    "law": "RSSM draws a batched factorized categorical (or diagonal-normal alternative) state via dist.sample(seed=nj.rng()) at each imagined step. A shared PRNG key argument is not itself shared candidate noise; no candidate-broadcast random variable is shown in inspected code.",
+    "limits": "OneHotDist implementation, Ninjax key splitting and actual loaded distribution were not executed or separately source-audited. Independence is the standard batched-distribution interpretation, not an empirical independence test. Given a fixed initial sampled posterior, future branch draws are per-batch-element; initial posterior uncertainty is shared through replicated latent.",
+    "complete_law_requirement": "Preserve each candidate full temporal and cross-coordinate forecast law conditioned on its own initial latent and fixed action sequence. Preserving one-step marginals or head means is insufficient."
+  },
+  "permission_boundary": {
+    "native": "Internal in-process RSSM distribution sampler; no external per-candidate noise, seed or forecast service interface established in these four files.",
+    "global_rng_is_not_valid_restricted_control": "nj.rng() also supplies actor/Gaussian proposals and posterior sampling. Replacing a global seed changes trusted candidate actions or initial belief.",
+    "added_setting": "A narrowly scoped supply-chain/runtime hook inside imagined RSSM draws could be defined as a research threat model; it would be added and must exclude posterior/proposal RNG, heads, weights, costs, thresholds and actual controls.",
+    "adaptation_boundary": "Keeping the initial candidate set fixed is possible for a bounded first-iteration diagnostic. Native later CEM means/proposals depend on selected elites, so an entire unchanged candidate bank across all iterations is not automatically a native closed-loop comparison.",
+    "selected_operation": null
+  },
+  "resources": {
+    "official_repository": "https://github.com/PKU-Alignment/SafeDreamer",
+    "official_eval_command_source": "https://github.com/PKU-Alignment/SafeDreamer#step5-evaluation-using-checkpoints",
+    "vector_command": "python SafeDreamer/train.py --configs osrp_vector --method osrp --run.script eval_only --run.from_checkpoint /path/checkpoint.ckpt --task safetygymcoor_SafetyPointGoal1-v0 --jax.platform cpu --run.steps 10000",
+    "hf_repository": "https://huggingface.co/Weidong-Huang/SafeDreamer",
+    "hf_revision": "80ef19ee7a7a8a105489100c1dc6e1681df2c97b",
+    "gated": false,
+    "vector_checkpoints": [
+      {
+        "rfilename": "safedreamer_osrp_vector/20240307-010600_osrp_vector_safetygymcoor_SafetyPointGoal1-v0_0.ckpt",
+        "blobId": "817b38dd3f9d2b0da56030fcfa286076acee30d4",
+        "size": 26564352,
+        "lfs": {
+          "sha256": "09d9f094417a29e2a37dd7cc6fdafebca927416dc2c89da8d7de6939d1255bfa",
+          "size": 26564352,
+          "pointerSize": 133
+        }
+      },
+      {
+        "rfilename": "safedreamer_osrp_vector/20240307-010600_osrp_vector_safetygymcoor_SafetyPointGoal1-v0_10.ckpt",
+        "blobId": "79aabef03ab3f3d8bcf99c901f6f0f3aa8198604",
+        "size": 26564352,
+        "lfs": {
+          "sha256": "b307ec1a655b6216f7414e1322d6500d319b7a12a39af3fee88539fe8d2ea0e0",
+          "size": 26564352,
+          "pointerSize": 133
+        }
+      },
+      {
+        "rfilename": "safedreamer_osrp_vector/20240307-010600_osrp_vector_safetygymcoor_SafetyPointGoal1-v0_5.ckpt",
+        "blobId": "072f8e552daf433941aa846bc4aab984665590df",
+        "size": 26564352,
+        "lfs": {
+          "sha256": "82be709964c8f466a05becd57ca0300e4c4e2c80fb2c2418f8e04655b3355095",
+          "size": 26564352,
+          "pointerSize": 133
+        }
+      },
+      {
+        "rfilename": "safedreamer_osrp_vector/20240308-153534_osrp_vector_safetygymcoor_SafetyCarGoal1-v0_0.ckpt",
+        "blobId": "cf23026919778a2475f403858e1692a9fe7fa062",
+        "size": 26564352,
+        "lfs": {
+          "sha256": "4615db411042f736183e3c2264fe4bad9bac40aa21a470aec4b28f95cb9ba3f5",
+          "size": 26564352,
+          "pointerSize": 133
+        }
+      },
+      {
+        "rfilename": "safedreamer_osrp_vector/20240308-153534_osrp_vector_safetygymcoor_SafetyCarGoal1-v0_10.ckpt",
+        "blobId": "f7fc42179e372f99f81987b29d5f3275fd679373",
+        "size": 26564352,
+        "lfs": {
+          "sha256": "dc29ee760fae49eb7c184fa6f31ff81d920f797608f2ba7a3425894e15e61d6f",
+          "size": 26564352,
+          "pointerSize": 133
+        }
+      },
+      {
+        "rfilename": "safedreamer_osrp_vector/20240308-153534_osrp_vector_safetygymcoor_SafetyCarGoal1-v0_5.ckpt",
+        "blobId": "068aa8ca767576b81130d2ca64ef152d8125fef5",
+        "size": 26564352,
+        "lfs": {
+          "sha256": "116cef97259c0b61e2620f54d668c7d8e6bb7a8a04d80c9d49fcf8a333cc34c2",
+          "size": 26564352,
+          "pointerSize": 133
+        }
+      }
+    ],
+    "ordinary_osrp_pointgoal1_checkpoint": [
+      {
+        "rfilename": "safedreamer_osrp/20240324-154820_osrp_safetygym_SafetyPointGoal1-v0_0.ckpt",
+        "blobId": "27b7d5ab50b264e9e1496b86d898c2345beb73e6",
+        "size": 391867080,
+        "lfs": {
+          "sha256": "d201bde42bdc0959a3bdd98962df1982ee01681f128f199a4ebe8f14a818a6b5",
+          "size": 391867080,
+          "pointerSize": 134
+        }
+      }
+    ],
+    "measurement": "Sizes and LFS hashes are official HF metadata only, not downloaded or independently hashed weights. Each vector checkpoint is26,564,352 bytes; ordinary matched OSRP PointGoal1 is391,867,080 bytes.",
+    "stated_runtime": "README describes Python3.8/JAX0.3.25, matching jaxlib and Safety-Gymnasium; CPU evaluation documented. Local installation, weight strict-load, environment assets, physical cost recording and Clean performance are untested.",
+    "entrypoint_limit": "The four-file bound excludes train.py/eval_only.py/env adapter. No claim that unseen entry-point overrides were audited; official README command has no explicit cost_limit override."
+  },
+  "minimal_next_decision": "Do not download the small Vector checkpoint for the proposed safety-count-switch study. Ordinary OSRP is only a conditional resource lead: first rule out source-level gating/indexing artifacts, define a genuinely restricted imagined-noise interface, then qualify one unchanged native Clean task and a frozen same-candidate comparison with independent real Safety-Gymnasium cost. There is no selected or frozen attack pilot from this screen.",
+  "novelty_limits": "Changing only cross-candidate dependence is an existing sampling/coupling idea. A different safe-count consumer is not enough for a new paper: any claim must isolate actual safety-cost effects beyond generic multiple-selection/CRN effects and the identified indexing issue, with explicit added permissions and truthful negative controls. Also separate any effect from unvalidated elite-mean execution, since constituent candidate costs do not certify an averaged action.",
+  "activity": {
+    "selected_source_files": 4,
+    "code_or_config_bytes": 90158,
+    "weight_downloads": 0,
+    "model_calls": 0,
+    "model_api_calls": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "gpu_use": false,
+    "accepted_new_experiment": false
+  },
+  "decision": "new_native_safety_gate_and_source_resource_confirmed_no_accepted_security_experiment",
+  "implementation_caveats": [
+    {
+      "source": "SafeDreamer/behaviors.py:319-322 (also PID:191-194)",
+      "finding": "The safe branch uses fixed-size jnp.nonzero(mask,size=mask.size) with no explicit valid-count masking or custom fill value. Default zero-index padding can admit/repeat candidate0 if it is unsafe. This is a general indexing issue to qualify before attributing unsafe selection to a new coupling mechanism; no operator or task test was performed here.",
+      "not_a_new_security_claim": true
+    },
+    {
+      "source": "SafeDreamer/behaviors.py:387-394",
+      "finding": "Native CCE averages elite action trajectories, blends the previous mean by momentum, and executes mean[0]. The inspected policy does not separately forecast/score that resulting aggregate action before execution. Safe constituent trajectory labels therefore do not certify the executed mean. This is an ordinary nonconvex planning/aggregation confound, not evidence for a new coupling mechanism.",
+      "not_a_new_security_claim": true
+    }
+  ]
+}

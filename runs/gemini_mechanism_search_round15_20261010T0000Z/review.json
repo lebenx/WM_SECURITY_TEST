@@ -1,0 +1,41 @@
+{
+  "decision": "CANDIDATES",
+  "candidates": [
+    {
+      "id": "C1_DYNAMICS_NULLSPACE_GRADIENT_INVERSION",
+      "mechanism": "The attacker injects legal trajectories whose state-action transitions lie strictly in the task-orthogonal subspace of the latent transition Jacobian, shaping the high-order latent curvature such that gradient-based trajectory optimizers compute inverted or orthogonal update directions while one-step predictive error and 0th-order MPPI rollouts remain invariant.",
+      "carrier": "nicklashansen/tdmpc2 (checkpoint: tdmpc2-dmcontrol-dog-run-500k or humanoid-run)",
+      "truthful_attacker_operation": "Executes 15 legal, passive/damping exploratory action sequences in the environment without task reward; submits unmodified (s, a, r, s') tuples to the shared buffer for model updates using standard objective without weight poisoning.",
+      "preserved_observables": "One-step transition loss L_dyn ratio in [0.95, 1.05] on victim on-policy transitions; value prediction loss L_val ratio in [0.95, 1.05]; policy network π_θ(a|s) output divergence KL(π_clean || π_poison) < 0.05.",
+      "damaged_planning/task behavior": "Grad-based shooting (GD-MPC or TD-MPC2 with gradient-informed CEM proposals): action-gradient cosine similarity cos(∇_a Q(s, a), ∇_a Q_clean(s, a)) drops below -0.20, degrading planner task return by >45%.",
+      "exact_2_min_falsification_gate": "Load official TD-MPC2 checkpoint on dog-run. 1) Compute baseline 1-step L_dyn and cos-sim of ∇_a Q(s,a) across 100 on-policy states. 2) Apply 25 gradient steps of standard TD-MPC2 loss on 15 legal orthogonal-velocity rollouts. 3) Eval: Pass if L_dyn ratio <= 1.05 AND cos-sim(∇_a Q, ∇_a Q_true) < 0.0 AND task return drops by >= 40% under gradient-guided CEM within 120s on single GPU.",
+      "matched_controls": [
+        "Identical number of legal on-policy exploratory transitions (demonstrates specific geometric nullspace property, not sample dilution)",
+        "Zero-gradient zeroth-order sampling CEM (verifies damage is isolated to gradient geometry rather than value magnitude)"
+      ],
+      "defense": "Spectral regularizer or Jacobian singular-value clipping on d z_{t+1} / d a_t during world-model updates.",
+      "closest_prior_art_overlap_and_distinct": "Adversarial replay poisoning (e.g., Behzadan et al.) relies on malicious reward/observation labels or off-distribution noise. Distinct because all tuples are strictly truthful and dynamically valid, exploiting asymmetry between zero-order prediction accuracy and first-order optimization gradients in shooting planners.",
+      "implementation_risk": "Standard CEM in default TD-MPC2 uses random sampling + elite mean/std rather than pure gradient descent; mechanism specifically targets gradient-augmented planners (e.g., GD-MPC or TD-MPC2 with grad-refinement enabled).",
+      "novelty_score": 7.3,
+      "executable_confidence": 8.5
+    },
+    {
+      "id": "C2_PREDICTIVE_HORIZON_CONTRACTION_ATTRACTOR",
+      "mechanism": "The attacker executes legal looping/stationary maneuver sequences that induce an artificial fixed-point attractor in latent space, preserving 1-step and 2-step transition fidelity while causing multi-step autoregressive rollouts beyond horizon H >= 4 to collapse into the fixed-point latent manifold.",
+      "carrier": "danijar/dreamerv3 (pydreamer or official dreamerv3 PyTorch port on Crafter / DMC Walker-Walk)",
+      "truthful_attacker_operation": "Executes 20 legal cyclical/idling policy rollouts (e.g., periodic forward-backward twitching) yielding valid observations/rewards; submitted directly to the RSSM training pipeline.",
+      "preserved_observables": "1-step reconstruction loss MSE(x̂_{t+1}, x_{t+1}) ratio in [0.98, 1.02]; single-step latent prior-posterior KL divergence within 5% of clean model.",
+      "damaged_planning/task behavior": "Autoregressive imagination rollouts for H >= 8 exhibit collapse: latent representation variance Var(z_{t+H}) drops by >70% relative to clean rollouts, collapsing imaginary trajectory diversity and dropping task return by >50%.",
+      "exact_2_min_falsification_gate": "Run pre-trained DreamerV3 RSSM on Walker-Walk. 1) Measure clean 1-step MSE and 15-step rollout latent variance Var(z_15). 2) Train RSSM for 30 updates on batch containing 20% legal cyclic idling trajectories. 3) Eval: Pass if 1-step MSE ratio <= 1.03 AND Var(z_15)/Var_clean(z_15) < 0.30 AND imagined actor-critic rollout return drops >= 40% in <=120s.",
+      "matched_controls": [
+        "Random legal walk trajectories with matched state-space coverage volume (rules out non-cyclic capacity absorption)",
+        "Static replay buffer with uniformly mixed stationary states (rules out static distribution shift)"
+      ],
+      "defense": "Multi-step rollout spectral radius penalty on the recurrent transition operator (e.g., contractivity constraint ρ(∂h_{t+1}/∂h_t) >= 0.9).",
+      "closest_prior_art_overlap_and_distinct": "Mode collapse in generative models and compounding error in model-based RL. Distinct because it is actively and truthfully induced via legal environment actions to weaponize the autoregressive fixed-point without degrading local one-step loss.",
+      "implementation_risk": "DreamerV3 uses KL balancing and free bits which might resist transition-only collapse unless the cyclic trajectories have high visual certainty.",
+      "novelty_score": 7.2,
+      "executable_confidence": 8.0
+    }
+  ]
+}

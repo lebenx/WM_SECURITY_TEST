@@ -1,0 +1,94 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated crystal reactor (uuid: 8549); Crystal 2 (uuid: 21559) is installed in activated crystal reactor (uuid: 51739); Crystal 3 (uuid: 24678) is on a table (uuid: 57306) south-east of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "There is an empty crystal reactor (uuid: 33120) north-east of the agent, and a spectrometer (uuid: 24266) was on a table (uuid: 58937) south-west of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is 33% activated, with two of three crystals installed.",
+      "step": 1
+    },
+    {
+      "measurement": "The spectrometer (uuid: 24266) is in the agent's inventory.",
+      "step": 3
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 1 (uuid: 13162): Channel 1 = 40.61, Channel 5 = 63.61, other channels 0.00. Its reactor (uuid: 8549) is set to 2680.26 Hz.",
+      "step": 6
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 2 (uuid: 21559): Channel 1 = 39.40, Channel 5 = 31.24, other channels 0.00. Its reactor (uuid: 51739) is set to 2600.4 Hz.",
+      "step": 10
+    },
+    {
+      "hypothesis": "If the spectrometer is used on a quantum crystal, then the non-zero channel values indicate the frequency that the crystal's reactor should be tuned to.",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "Crystal 1 and Crystal 2 are correctly installed and both show non-zero values only on Channels 1 and 5."
+    },
+    {
+      "hypothesis": "If the correct reactor frequency for a crystal is encoded by its spectrometer readings, then the encoding is likely a mathematical function of the Channel 1 and Channel 5 values.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Two data points are available: Crystal 1 (40.61, 63.61 -> 2680.26 Hz) and Crystal 2 (39.40, 31.24 -> 2600.4 Hz). Simple concatenation and multiplication/addition hypotheses were rejected."
+    },
+    {
+      "hypothesis": "If the encoding formula is determined from Crystal 1 and Crystal 2, then Crystal 3's correct reactor frequency can be calculated from its spectrometer reading.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Crystal 3 is the only remaining crystal and must be installed in the empty reactor to activate the generator."
+    },
+    {
+      "measurement": "The spectrometer (uuid: 24266) is on the table (uuid: 58937) south-west of the agent, and the agent's inventory is currently empty.",
+      "step": 1
+    },
+    {
+      "measurement": "The crystal reactors (uuid: 51739, 8549, 33120) are listed as nearbyAgents, indicating that their device controls may be accessible via the TALK action.",
+      "step": 1
+    },
+    {
+      "hypothesis": "If a crystal reactor is listed as an agent in nearbyAgents, then using TALK on its UUID will open controls that allow setting its frequency.",
+      "status": "pending",
+      "step": 1,
+      "supporting evidence": "Crystal reactors appear in the nearbyAgents list, and the TALK action description mentions opening controls of devices listed as agents."
+    },
+    {
+      "measurement": "After teleporting to the spectrometer (uuid: 24266), the agent is at (15,18) facing south; the spectrometer is on table (uuid: 58937) directly south (distance 1) and is accessible, while the agent's inventory is empty.",
+      "step": 2
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is now 66% activated, as observed from the nearby objects at step 2.",
+      "step": 2
+    },
+    {
+      "measurement": "The empty crystal reactor (uuid: 33120) remains without a crystal and is located north-east of the agent (distance 3); Crystal 3 (uuid: 24678) is still on table (uuid: 57306) south-east of the agent (distance 3).",
+      "step": 2
+    },
+    {
+      "measurement": "After teleporting to Crystal 3 (uuid: 24678), the agent is at (17, 18) facing south. Crystal 3 is on table (uuid: 57306) directly south (distance 1) and is accessible; the spectrometer (uuid: 24266) remains in the agent's inventory.",
+      "step": 4
+    },
+    {
+      "measurement": "The empty crystal reactor (uuid: 33120) is directly north of the agent (distance 1) and still has no crystal present.",
+      "step": 4
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 3 (uuid: 24678): Channel 1 = 57.38, Channel 5 = 19.67, and Channels 2, 3, and 4 = 0.00. Crystal 3 is on table (uuid: 57306).",
+      "step": 5
+    },
+    {
+      "measurement": "The spectrometer readings for all three measured quantum crystals so far (Crystal 1 uuid: 13162, Crystal 2 uuid: 21559, Crystal 3 uuid: 24678) have nonzero values only in Channel 1 and Channel 5.",
+      "step": 5
+    },
+    {
+      "hypothesis": "If the correct reactor frequency for a quantum crystal is 66 times its spectrometer Channel 1 reading, then Crystal 3 (uuid: 24678) should be tuned to 57.38 * 66 = 3787.08 Hz in its reactor (uuid: 33120).",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "Crystal 1 (uuid: 13162): 40.61 * 66 = 2680.26 Hz, matching reactor 8549. Crystal 2 (uuid: 21559): 39.40 * 66 = 2600.4 Hz, matching reactor 51739. Crystal 3 reading Channel 1 = 57.38, so predicted frequency = 3787.08 Hz. Need to set reactor 33120 to this frequency, install Crystal 3, and verify generator core reaches 100%."
+    }
+  ]
+}

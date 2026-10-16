@@ -1,0 +1,42 @@
+{
+  "why_previous_routes_closed": "Previous routes failed because standard planning architectures (e.g., pointwise TD-MPC2 MPPI and bank-mean ensemble rollouts) marginalize across rollouts or ensemble particles, rendering joint-rank coupling, counterfactual branching, and trajectory-order manipulations structurally impotent once an explicit expectation or mean reduction is computed. Any attack relying on representation geometry, POMDP aliasing, or standard replay poisoning fails standard audit baselines or vanishes under single-step aggregation.",
+  "candidates": [
+    {
+      "name": "episodic_normalization_freeze_desynchronization",
+      "carrier": "MBRL-Lib GaussianMLP ensemble with native ModelEnv + CEM (HalfCheetah-v2 or Pusher-v2)",
+      "mechanism": "The attacker injects legal action trajectories that drastically widen state-space coordinate variance without altering marginal transition residuals. In MBRL-Lib, input/output normalizer running statistics (mean and variance buffers) are updated during batch collation and then frozen during planning. By driving variance buffers to an inflated state during valid interaction, downstream normalized CEM rollout steps undergo severe precision underflow or effective shrinkage of elite parameter updates in low-variance sub-dimensions, starving the planner of high-frequency gradient proxy signals while the dynamics ensemble maintains nominal MSE and valid log-likelihood.",
+      "invariant_preserved": "Model validation loss, one-step Gaussian negative log-likelihood, and empirical observation-action transition distributions remain strictly valid and within standard bounds under unnormalized evaluation.",
+      "prior_art_overlap": "Batch normalization poisoning in supervised learning (e.g., standard BN statistic skew attacks) and running-statistics corruption in off-policy RL replay buffers.",
+      "falsification_gate_le_2min": "On MBRL-Lib HalfCheetah, take a pretrained checkpoint. Positive control: compute CEM action selection with running statistics computed on nominal data plus 10 legal extreme-excursion rollouts. Negative control: CEM action selection with true nominal normalization buffers. Gate check: planner returns elite actions with >40% return degradation in 5 planning cycles (<45 seconds CPU/GPU).",
+      "useful_defense": "Robust median-MAD normalizer buffer computation or decoupled normalizer updating using a frozen reference dataset.",
+      "broad_one_sentence_claim": "Legal state-excursion rollouts can induce functional planner paralysis in ensemble dynamics models by silently distorting frozen input/output normalization buffers while leaving dynamics likelihood uncompromised."
+    },
+    {
+      "name": "elites_retention_horizon_leakage",
+      "carrier": "TD-MPC2 mt30-48M native MPPI/MPC (walker-walk or cheetah-run)",
+      "mechanism": "In native TD-MPC2 MPPI, the action distribution mean is initialized using the shifted best action sequence from the previous planning timestep (action warm-starting). The attacker executes legal, highly dynamic 'dead-end trap' behaviors where a high immediate reward is paired with a delayed, unavoidable unrecoverable state outside the MPC horizon. Because warm-started MPPI retains the shifted elite mean across decision boundaries, the planner is pinned to a pathologically biased prior that prevents discovering escape trajectories within standard MPPI iterations, effectively locking the planner into failure states without corrupting world model weights.",
+      "invariant_preserved": "World model latent rollout loss, latent dynamics prediction error, and immediate Q-value prediction accuracy match non-attacked validation trajectories.",
+      "prior_art_overlap": "Receding horizon MPC instability, warm-start initialization traps in trajectory optimization, and adversarial goal-state traps in reinforcement learning.",
+      "falsification_gate_le_2min": "Run native TD-MPC2 MPPI for 50 steps on walker-walk. Positive control: warm-starting enabled with warm-start buffer seeded by an injected high-speed boundary trajectory. Negative control: cold-start MPPI (zero-mean action initialization) at the identical environment state. Gate check: warm-started MPPI fails to find safe actions within standard iterations (return drops >50%), whereas cold-started MPPI escapes nominal failure within <=60 seconds GPU runtime.",
+      "useful_defense": "Entropy-based warm-start reset triggered when latent reward expectation drops sharply between successive MPC steps.",
+      "broad_one_sentence_claim": "Receding-horizon warm-starting in native latent MPC creates a verifiable vulnerability where legal transient behaviors trap elite action distributions in catastrophic sub-optima without modifying dynamics models or reward parameters."
+    },
+    {
+      "name": "temperature_conditioned_mppi_dispersion_starvation",
+      "carrier": "TD-MPC2 mt30-48M native MPPI/MPC (cup-catch or hopper-hop)",
+      "mechanism": "TD-MPC2 computes importance weights via w = softmax(returns / temperature). The attacker supplies legal, extreme-variance trajectory demonstrations into the system context or current history buffer that compress the latent Q-value distribution scale relative to MPPI trajectory evaluation. When MPPI computes trajectory weights over sampled actions, the uniformized return landscape collapses the effective sample size (ESS) of the softmax weights into an uninformative uniform average, degrading MPPI from selective elite optimization to passive random shooting.",
+      "invariant_preserved": "Model dynamics loss, reward prediction MSE, and unweighted latent rollout trajectories remain within standard calibration tolerances.",
+      "prior_art_overlap": "Adversarial reward landscape flattening, sampling-based MPC sensitivity to reward scaling, and softmax temperature gaming in policy distillation.",
+      "falsification_gate_le_2min": "Execute 20 MPC steps in TD-MPC2 cup-catch. Positive control: evaluate MPPI effective sample size (ESS = 1 / sum(w^2)) under a state-action trajectory that compresses return variance. Negative control: nominal ESS under undisturbed rollouts. Gate check: ESS approaches total sample count N (entropy within 5% of max) and task score drops >30% within 40 seconds GPU runtime.",
+      "useful_defense": "Adaptive percentile-based return normalization (e.g., standardizing MPPI candidate trajectory scores by batch IQR before temperature scaling).",
+      "broad_one_sentence_claim": "Adversarial legal histories can dynamically flatten MPPI latent return landscapes, causing catastrophic planner degradation to uniform random shooting while preserving underlying predictive dynamics."
+    }
+  ],
+  "recommendation": "RUN_ONE",
+  "ordering": [
+    "episodic_normalization_freeze_desynchronization",
+    "elites_retention_horizon_leakage",
+    "temperature_conditioned_mppi_dispersion_starvation"
+  ],
+  "exact_first_experiment": "Execute 'episodic_normalization_freeze_desynchronization' on MBRL-Lib HalfCheetah-v2. Take the existing pretrained GaussianMLP ensemble checkpoint. Extract current running mean and variance from env_spec/normalizer. Execute 10 legal, maximum-actuation boundary trajectories in HalfCheetah-v2, push them through normalizer.update_stats(), freeze buffers, and run 5 iterations of CEM planning. Compare elite trajectory predicted return and actual step return against identical planning steps executed with original nominal normalizer statistics. Measure runtime (expected <30s on single GPU) and score delta."
+}

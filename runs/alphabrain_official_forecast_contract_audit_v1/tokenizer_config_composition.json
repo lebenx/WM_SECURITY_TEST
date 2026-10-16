@@ -1,0 +1,31 @@
+{
+  "scope": "Source-preserving minimal Hydra composition of tokenizer-specific defaults chain; not full upstream runtime config instantiation",
+  "stage102_self_temporal_window": 16,
+  "policy_tokenizer_registered_default": 4,
+  "resolved_subset": {
+    "model": {
+      "config": {
+        "tokenizer": {
+          "temporal_window": 16,
+          "chunk_duration": 33
+        },
+        "sigma_data": 1.0,
+        "scaling": "rectified_flow",
+        "sde": {
+          "sigma_max": 80,
+          "sigma_min": 4
+        }
+      }
+    }
+  },
+  "inference_experiment": "cosmos_predict2_2b_480p_libero__inference_only",
+  "effective_temporal_window": 16,
+  "reproduction_yaml": {
+    "tokenizer/wan.yaml": "# @package model.config.tokenizer\ntemporal_window: 4\n",
+    "tokenizer/policy_wan.yaml": "# @package model.config.tokenizer\ntemporal_window: 4\n",
+    "stage3.yaml": "defaults:\n  - tokenizer: wan\n  - _self_\nmodel:\n  config:\n    sigma_data: 1.0\n    scaling: rectified_flow\n",
+    "stage102.yaml": "defaults:\n  - stage3\n  - _self_\nmodel:\n  config:\n    tokenizer:\n      temporal_window: 16\n",
+    "libero.yaml": "defaults:\n  - stage102\n  - override tokenizer: policy_wan\n  - _self_\nmodel:\n  config:\n    tokenizer:\n      chunk_duration: 33\n",
+    "inference.yaml": "defaults:\n  - libero\n  - _self_\nmodel:\n  config:\n    sde:\n      sigma_max: 80\n      sigma_min: 4\n"
+  }
+}

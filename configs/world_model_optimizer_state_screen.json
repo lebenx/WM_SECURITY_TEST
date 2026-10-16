@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-09",
+  "status": "rejected_no_native_task_harm_or_material_optimizer_state_effect",
+  "hypothesis": "A valid contributor can launder task-specific Adam moments, policy-optimizer moments, and running reward scale into a shared multitask world-model learner; after the contributor exits, a victim update is redirected even when the victim sees its own true trajectory.",
+  "attacker_operation": "20 native full updates on legal reacher-easy data, followed by 20 native full victim updates on walker-walk data; no label, observation, reward, or parameter edits.",
+  "causal_controls": [
+    "retain source optimizer state",
+    "same source-contaminated model weights with all optimizer and scale state reset",
+    "fresh victim-only model and optimizer"
+  ],
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "reacher-easy",
+  "victim_task": "walker-walk",
+  "updates": {
+    "source": 20,
+    "victim": 20
+  },
+  "results": {
+    "mpc_source": {
+      "retain_state_return": 973.1717280671,
+      "reset_state_return": 973.9717506095767,
+      "clean_victim_return": 974.4946531131864,
+      "retain_minus_reset": -0.800022542476654,
+      "retain_minus_clean": -1.3229250460863113
+    },
+    "random_source": {
+      "retain_state_return": 966.5858517736197,
+      "reset_state_return": 970.1558679975569,
+      "clean_victim_return": 974.4946531131864,
+      "retain_minus_reset": -3.570016223937273,
+      "retain_minus_clean": -7.908801339566708
+    }
+  },
+  "effect_gate": "State-retaining return must be at least 100 below both same-model reset and clean victim controls.",
+  "api_requests": 0,
+  "gpu_work": "Short CUDA native updates and six 500-step native MPC episodes; approximately 2 minutes.",
+  "novelty_status": "No accepted claim. Persistent optimizer state produced only small return differences and is a generic continual-learning/optimization channel without demonstrated world-model-specific harm.",
+  "decision_cn": "保留源任务优化器状态相对同一污染后权重的重置对照只下降0.80分（MPC源）或3.57分（随机源）；相对洁净受害者下降1.32和7.91分，均未达到100分门槛。退役该优化器状态候选，不扩大训练。",
+  "source": "runs/tdmpc_optimizer_state_laundering_v0/summary.json"
+}

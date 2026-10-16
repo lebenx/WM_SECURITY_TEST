@@ -1,0 +1,27 @@
+```json
+{
+  "recommendation": "REJECT",
+  "scores": {
+    "novelty": 4,
+    "scientific_depth": 5,
+    "feasibility": 8
+  },
+  "critique": {
+    "novelty_assessment": "The mechanism fails to reach the novelty >= 7 threshold. It is essentially an asynchronous execution / variable-rate control mismatch wrapped in world-model terminology. The interaction between temporal abstraction mismatch (fixed dt assumptions) and safety boundaries under latency/staleness is already heavily analyzed, including by the cited work (arXiv:2609.34300). Calling timing jitter an 'adversarial phase attack' does not make it fundamentally distinct from classical delay margins in control barrier functions and stale-state model predictive path integral failures.",
+    "is_world_model_specific": false,
+    "world_model_specificity_reasoning": "This is a generic unmodeled plant delay / discretization shift. Any state estimator (including an extended Kalman filter or classical MPC with a nominal fixed-dt model) exhibits safety-filter flip under out-of-spec packet delays while keeping nominal one-step innovations small if observations are smoothly aliased. The vulnerability stems from standard integration error across the temporal mismatch, not from an exploit native to the latent geometry, learned encoder representations, or latent rollout mechanics.",
+    "pilot_experiment": {
+      "setup": "Dubins car reaching an obstacle with an explicit latent safety filter (fixed dt=0.1s). Compare three agents: (A) Classical kinematic CBF, (B) Model-free actor-critic safety filter, (C) Latent world-model safety filter (DreamerV3/DINO-WM). Introduce jitter/delay tau in [0.02s, 0.08s].",
+      "metric": "Disproportionate Safety Degradation Index: Measure Delta_Violations normalized by nominal control performance drops across all three architectures, while tracking latent ensemble epistemic spread.",
+      "falsification_condition": "Falsified if the latent world-model filter experiences safety filter degradation at identical rates and identical timing thresholds to the classical baseline (A), or if residual calibration / OOD alarms spike concurrently with the phase shift, proving it is merely standard delay instability rather than a silent latent-specific blindspot."
+    }
+  },
+  "alternative_proposal": {
+    "title": "Latent Manifold Short-Circuiting via Rollout-Contractive Adversarial Perturbations",
+    "one_sentence_claim": "Black-box norm-bounded state perturbations can exploit non-contractive regions in a latent transition operator to cause imaginary rollouts to collapse exponentially into a spurious safe attractor, bypassing both observation-space filters and ensemble-variance gates.",
+    "mechanism": "World-model safety filters verify safety by rolling out the latent transition model T_phi over an H-step horizon. Because latent dynamics are trained on average rollout error rather than spectral Lipschitz constraints, there exist narrow 'sink' attractors in latent space where Jacobian singular values collapse (< 1). An attacker introduces a sequence of physically valid observations whose embeddings land near the basin of attraction of these sinks. In rollout imagination, the safety value function predicts the agent staying in a safe attractor, while the physical system diverges into a catastrophic state. Epistemic ensemble variance remains near zero because the ensemble of dynamics models shares identical training-data collapse on these degenerate states.",
+    "attacker_model": "Observation or action-space bounded attacker (no internal weight or gradient access); inputs satisfy nominal control constraints and image/state plausibility bounds.",
+    "concrete_pilot": "Construct a Franka reacher / Dubins benchmark using public DINO-WM. Identify fixed points in latent transition Jacobian using finite differences. Optimize an open-loop 3-step action sequence that drives the latent embedding into a verified contractive basin while the ground-truth physical trajectory breaches an obstacle boundary. Measure whether ensemble variance registers an anomaly during the false-safe rollout."
+  }
+}
+```

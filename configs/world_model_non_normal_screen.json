@@ -1,0 +1,411 @@
+{
+  "date": "2026-10-10",
+  "status": "completed_heldout_task_family_partial_pass_mechanism_unproven",
+  "one_sentence_claim_cn": "合法单调级联轨迹可能把共享世界模型的局部隐状态转移推向强非正规结构，使有限时域 rollout 对小扰动敏感，即使一步误差保持较低。",
+  "operation": "Attacker executes legal cheetah-run actions whose actuator levels increase monotonically with staggered phases; dynamics-only native TD-MPC2 updates use the resulting simulator observations and rewards. Random legal cheetah trajectories are the matched control.",
+  "carrier": "official TD-MPC2 mt30-48M checkpoint, native model.next and native MPC",
+  "review": {
+    "source": "runs/gemini_non_normal_short_review_20261010T0000Z/assessment.json",
+    "decision": "ACCEPT_AS_SCREEN_ONLY",
+    "novelty_score": 8,
+    "caveat": "A defense and broad claim require stable native task harm; Gemini flagged SimNorm as a possible quenching mechanism."
+  },
+  "runs": {
+    "walker_walk_seed11": {
+      "source": "runs/tdmpc_non_normal_gate_v0/results.json",
+      "clean_return_300": 573.3354285545647,
+      "random_return_300": 576.0451154783368,
+      "cascade_return_300": 573.1961030736566,
+      "clean_one_step_error": 0.00081800197949633,
+      "cascade_one_step_error": 0.0008595417020842433,
+      "clean_victim_power_norm": 16.193745136260986,
+      "cascade_victim_power_norm": 17.706578731536865
+    },
+    "walker_run_seed11": {
+      "source": "runs/tdmpc_non_normal_gate_walker_run_v0/results.json",
+      "clean_return_300": 363.00026741903275,
+      "random_return_300": 366.58399228937924,
+      "cascade_return_300": 326.0445936694741,
+      "clean_one_step_error": 0.0007914179586805403,
+      "cascade_one_step_error": 0.0008358150953426957,
+      "clean_victim_power_norm": 12.16685962677002,
+      "random_victim_power_norm": 12.040816307067871,
+      "cascade_victim_power_norm": 12.904674053192139
+    },
+    "hopper_hop_seed11": {
+      "source": "runs/tdmpc_non_normal_gate_hopper_v0/results.json",
+      "clean_return_300": 58.49174166470766,
+      "random_return_300": 23.995857413858175,
+      "cascade_return_300": 41.64333521109074,
+      "clean_one_step_error": 0.0002869337913580239,
+      "cascade_one_step_error": 0.00033786569838412106,
+      "decision": "No cascade-specific harm; cascade improves over random."
+    },
+    "walker_run_seed12": {
+      "source": "runs/tdmpc_non_normal_gate_walker_run_seed22_v0/results.json",
+      "clean_return_300": 354.251128744334,
+      "random_return_300": 322.7969912523404,
+      "cascade_return_300": 380.2183234030381,
+      "clean_one_step_error": 0.0007866990636102855,
+      "cascade_one_step_error": 0.0008447477594017982,
+      "decision": "Task harm did not replicate; cascade improved over random."
+    },
+    "walker_run_dose300_seed11": {
+      "source": "runs/tdmpc_non_normal_gate_walker_run_dose300_v0/results.json",
+      "clean_return_300": 363.00026741903275,
+      "random_return_300": 362.8768879659474,
+      "cascade_return_300": 300.6292639300227,
+      "clean_one_step_error": 0.0007914179586805403,
+      "random_one_step_error": 0.0009580918122082949,
+      "cascade_one_step_error": 0.0008585524628870189,
+      "random_source_power_norm": 6.233543157577515,
+      "cascade_source_power_norm": 8.619756817817688,
+      "random_victim_power_norm": 12.082642078399658,
+      "cascade_victim_power_norm": 13.04216194152832,
+      "updates": 300,
+      "decision": "Dose escalation restored cascade task harm for source/eval seed pair 21/11, but this is a single additional seed and still requires independent replication."
+    },
+    "walker_run_seed12_dose300": {
+      "source": "runs/tdmpc_non_normal_gate_walker_run_seed22_dose300_v0/status.json",
+      "clean_return_300": 354.251128744334,
+      "random_return_300": 372.4942977782339,
+      "cascade_return_300": 306.3374937660992,
+      "clean_one_step_error": 0.0007866990636102855,
+      "random_one_step_error": 0.0009000915451906621,
+      "cascade_one_step_error": 0.0008720369660295546,
+      "random_victim_power_norm": 11.14557933807373,
+      "cascade_victim_power_norm": 12.633007764816284,
+      "updates": 300
+    },
+    "walker_walk_seed11_dose300": {
+      "source": "runs/tdmpc_non_normal_gate_walker_walk_dose300_v0/status.json",
+      "clean_return_300": 573.3354285545647,
+      "random_return_300": 574.9955095648766,
+      "cascade_return_300": 574.0814308971167,
+      "clean_one_step_error": 0.00081800197949633,
+      "random_one_step_error": 0.0009629240375943482,
+      "cascade_one_step_error": 0.0008789441781118512,
+      "random_victim_power_norm": 16.08362054824829,
+      "cascade_victim_power_norm": 18.075944423675537,
+      "updates": 300
+    },
+    "walker_backwards_to_walker_run_seed11_dose300": {
+      "source": "runs/tdmpc_non_normal_gate_source_walker_backwards_v0/status.json",
+      "clean_return_300": 363.00026741903275,
+      "random_return_300": 310.2101249033585,
+      "cascade_return_300": 285.02476218435913,
+      "random_one_step_error": 0.0008715995936654508,
+      "cascade_one_step_error": 0.001374172163195908,
+      "cascade_error_ratio_vs_random": 1.5766094582684735,
+      "random_victim_power_norm": 14.638751745223999,
+      "cascade_victim_power_norm": 12.102376937866211,
+      "updates": 300,
+      "decision": "Cascade return drops 8.1% versus random, but cascade one-step error is 1.58x higher; it fails the preserved-low-error gate."
+    },
+    "walker_backwards_gain08": {
+      "source": "runs/tdmpc_non_normal_gate_source_walker_backwards_gain08_v0/results.json",
+      "random_return_300": 310.2101249033585,
+      "cascade_return_300": 341.27376364544034,
+      "error_ratio": 1.5795967761916399,
+      "decision": "No cascade harm; error preservation fails. No further amplitude sweep."
+    }
+  },
+  "mechanism_summary": "在预注册的独立完整回合确认中，固定 source seed23、原生 TD-MPC2 horizon=3、评估 seeds31/32，级联适配在 walker-run 两个种子上相对 random 的回报下降为19.1%和19.3%，相对保持相同动作集合但随机乱序的对照下降为19.3%和18.2%；级联一步误差为 random 的0.922倍。cup-catch 两个种子没有级联特异损失（相对 random 为-0.1%和-0.5%，相对乱序为-0.1%和-10.1%，后者方向相反且不通过门槛）。因此获得了一个低一步误差、对动作顺序敏感、但目前限于 walker-run 任务族的原生结果；非正规性仍是相关诊断而非因果机制。",
+  "decision": "Leading conditional phenomenon: legal directed source curriculum causes order-specific walker-run MPC loss with preserved low one-step error and unchanged actor under native TD-MPC2. Do not call it a broad or non-normal causal mechanism; require selective repair and second carrier before scale-up.",
+  "walker_like_gate": {
+    "source": "runs/tdmpc_non_normal_walker_like_gate_v0/status.json",
+    "protocol": "Fixed cheetah-run cascade/random source trajectories, dynamics-only native dose300, target seed11, 300-step native MPC",
+    "walker_stand": {
+      "clean": 586.6637641340494,
+      "random": 592.7336237430573,
+      "cascade": 586.3073360770941,
+      "cascade_vs_random_drop": 6.426287665963173
+    },
+    "walker_walk": {
+      "clean": 573.3354285545647,
+      "random": 574.9955095648766,
+      "cascade": 574.0814308971167,
+      "cascade_vs_random_drop": 0.9140786677598953
+    },
+    "decision": "Independent walker-like family gate failed; the earlier walker-run effect does not transfer to walker-stand or walker-walk under the same source and dose. Stop this branch and do not promote the non-normal interpretation."
+  },
+  "causal_followup": {
+    "source": "runs/tdmpc_non_normal_causal_h1_dose300_v0/status.json",
+    "horizon_one": {
+      "cascade11": 376.1586403977126,
+      "cascade12": 374.34429116826504,
+      "random11": 364.8315194286406,
+      "random12": 381.70373547822237
+    },
+    "actor_prior": {
+      "cascade11": 211.87984009552747,
+      "cascade12": 244.78560656122863,
+      "random11": 211.87984009552747,
+      "random12": 244.78560656122863
+    },
+    "interpretation": "H=3 to H=1 changes rollout, bootstrap location, policy proposals and RNG consumption. Recovery is horizon sensitivity, not isolation of non-normality.",
+    "clean_horizon1": {
+      "source": "runs/tdmpc_non_normal_clean_horizon1_v0/results.json",
+      "seed11_mpc_h5": 363.00026741903275,
+      "seed11_mpc_h1": 368.2731308043003,
+      "seed12_mpc_h5": 354.251128744334,
+      "seed12_mpc_h1": 400.177464524284,
+      "decision": "On clean walker-run, horizon-1 does not reduce return in these two seeds; it is a plausible fallback defense for this task, pending cross-task validation."
+    },
+    "simnorm_temperature": {
+      "source": "runs/tdmpc_simnorm_temperature_v1/status.json",
+      "intervention": "After native dynamics-only adaptation, replace only the dynamics final SimNorm softmax(x) with softmax(x/2). Native MPC horizon=3 and real episodes retained.",
+      "walker_run_seed31": {
+        "temperature1_clean": 657.6172727290541,
+        "temperature1_random": 612.082555025816,
+        "temperature1_cascade": 495.2163214981556,
+        "temperature2_clean": 96.1014988636598,
+        "temperature2_random": 66.26374025270343,
+        "temperature2_cascade": 119.9140367154032,
+        "temperature2_one_step_error": {
+          "clean": 0.008327082730829716,
+          "random": 0.00839924719184637,
+          "cascade": 0.008395245298743248
+        }
+      },
+      "decision": "Rejected as a useful defense or causal isolation: temperature 2 damages clean and random controls and violates the low-error invariant by about 10x."
+    }
+  },
+  "defense_followup": {
+    "source": "runs/tdmpc_non_normal_defense_floor_dose300_v0/status.json",
+    "intervention": "MPPI minimum standard deviation floor 0.25",
+    "cascade11_return": 233.7534003611654,
+    "cascade12_return": 251.42376949544996,
+    "random11_return": 302.2508661132306,
+    "random12_return": 356.5888993265107,
+    "decision": "Rejected as a useful defense: the floor reduced both cascade and random-control returns.",
+    "horizon1": "Clean walker-run horizon-1 improves 363.00→368.27 and 354.25→400.18 in seeds11/12; this supports a task-local safe fallback, while actor-only and fixed std-floor are rejected.",
+    "selective_horizon": {
+      "source": "runs/tdmpc_non_normal_selective_horizon_fulljac_dose300_v0/status.json",
+      "threshold": 16.0,
+      "cascade11_return": 289.42898691259325,
+      "cascade12_return": 345.9946996830404,
+      "random11_return": 369.07523706462234,
+      "random12_return": 302.3314946629107,
+      "cascade_horizon1_fraction": [
+        0.43333333333333335,
+        0.43333333333333335
+      ],
+      "random_horizon1_fraction": [
+        0.4666666666666667,
+        0.4666666666666667
+      ],
+      "decision": "Invalid for efficacy comparison: non-native argmax planner and per-step warm-start resets; retain raw measurements only."
+    },
+    "simnorm_temperature": "Rejected: post-adaptation softmax temperature 2.0 collapses clean/random/cascade native returns and raises one-step error about 10x; no selective recovery."
+  },
+  "promotion_gate_next": {
+    "claim_scope": "Candidate only: a legal monotonic cascade source trajectory can damage native MPC return on walker-run despite preserved or lower one-step error; the effect is not a broad cross-task mechanism and non-normality is not causal.",
+    "already_passed": [
+      "Held-out walker-run harm survives an identical-action-multiset shuffled-cascade control."
+    ],
+    "still_required": [
+      "a different independent positive task family with two seeds and the same random/shuffled controls; hopper-hop failed because seed31 reversed versus random",
+      "a causal intervention that changes the proposed latent mechanism without globally damaging clean/random controls or violating the low-error gate",
+      "a useful defense preserving clean return while recovering at least 70% of walker-run cascade loss",
+      "at least one second carrier or planner implementation before ICLR-scale expansion",
+      "retain cup-catch, walker-walk, hopper-hop and walker-run-backwards as negative boundary tasks unless a new operation is found"
+    ],
+    "do_not_scale_until": "independent low-error positive task family plus useful defense pass",
+    "decision_after_hopper": "Independent hopper-hop gate failed: seed31 cascade 54.19 versus random 41.30 (reverse), seed32 cascade 48.28 versus random 89.23 (45.9% loss); shuffled controls 99.46/105.89; cascade one-step error 1.017x random. Do not promote."
+  },
+  "evidence_corrections": {
+    "native_planner_horizon": 3,
+    "jacobian_diagnostic_horizon": 5,
+    "source": "runs/tdmpc_non_normal_gate_walker_run_dose300_v0/provenance.json",
+    "horizon_interpretation": "H=3 to H=1 changes rollout, bootstrap location, policy proposals and RNG consumption. Recovery is horizon sensitivity, not isolation of non-normality.",
+    "spectral_interpretation": "Measured victim spectral radii exceed 1, including clean models. Fixed-state J powers on two random-policy states do not establish stable-spectrum transient growth or actual rollout Jacobian products.",
+    "selective_defense": "Both historical selective runs use argmax instead of native Gumbel selection and reset warm start every step; first JVP run also reseeded global RNG and renormalized directions without accumulating product gains. Withdraw efficacy conclusions. Repaired runner requires no-trigger equivalence before reuse.",
+    "periodic_screens": "Contractive-basin/horizon-shadowing runners compare native clean to modified argmax planners; one_step_error was measured BEFORE adaptation on different source data. It is not a post-adaptation preservation test. Period 5 also does not match native planning horizon 3.",
+    "novelty": "Gemini score is an unverified opinion, not a demonstrated novelty rating.",
+    "hopper_gate": {
+      "source": "runs/tdmpc_cascade_heldout_hopper_v1/status.json",
+      "task": "hopper-hop",
+      "seeds": [
+        31,
+        32
+      ],
+      "cascade_returns": [
+        54.19168855226599,
+        48.27786035137251
+      ],
+      "random_returns": [
+        41.300613517756574,
+        89.2292819339782
+      ],
+      "shuffled_returns": [
+        99.46004386246204,
+        105.89346917718649
+      ],
+      "loss_vs_random": [
+        -0.31212793071384004,
+        0.4589459950255582
+      ],
+      "loss_vs_shuffled": [
+        0.45514111548950487,
+        0.5440902944581836
+      ],
+      "one_step_error_ratio_vs_random": 1.0171749876490892,
+      "gate": "FAIL: seed31 reverses versus random; seed32 alone passes"
+    }
+  },
+  "report_note_cn": "独立留出集已完成：固定source seed23、评估seed31/32、原生TD-MPC2规划horizon=3、完整500步回合，比较clean、random、cascade和保持级联动作集合但乱序执行的shuffled-cascade。walker-run中级联相对random下降19.1%/19.3%，相对乱序下降19.3%/18.2%，一步误差为random的0.922倍；cup-catch无级联特异损失，因此当前结论是walker-run任务族条件性现象。H=5仍仅为固定状态Jacobian诊断；H=1恢复和此前选择性防御结果不能作为非正规性因果证据。 SimNorm温度2干预同时破坏clean和random并使一步误差约升10倍，不能作为防御或非正规性因果隔离。 同协议的walker-run-backwards在新种子上仅12.4%和反向2.9%，未通过独立正任务族门槛。 hopper-hop 独立门槛同样未通过：seed31 级联54.19高于random41.30，seed32为48.28低于89.23；相对shuffled两种子均下降45.5%/54.4%，但seed31反向且一步误差为random的1.017倍，不能作为跨任务正证据。",
+  "heldout_confirmation": {
+    "source": "runs/tdmpc_cascade_heldout_matched_v1/status.json",
+    "plan": "runs/tdmpc_cascade_heldout_matched_v1/plan.json",
+    "source_seed": 23,
+    "evaluation_seeds": [
+      31,
+      32
+    ],
+    "updates": 300,
+    "episode_steps": 500,
+    "planner_horizon": 3,
+    "conditions": [
+      "clean",
+      "random",
+      "cascade",
+      "shuffled_cascade"
+    ],
+    "walker_run": {
+      "clean_mean": 659.281976592727,
+      "random_mean": 645.4288199841976,
+      "cascade_mean": 521.3749472051859,
+      "shuffled_mean": 641.608473919332,
+      "cascade_loss_vs_random": [
+        0.19093214235248257,
+        0.19335051468700482
+      ],
+      "cascade_loss_vs_shuffled": [
+        0.19314914637236047,
+        0.18211743910052025
+      ],
+      "one_step_error_ratio_vs_random": 0.9224965100188367,
+      "gate": "PASS on both held-out seeds"
+    },
+    "cup_catch": {
+      "clean_mean": 958.0,
+      "random_mean": 957.5,
+      "cascade_mean": 960.5,
+      "shuffled_mean": 917.5,
+      "cascade_loss_vs_random": [
+        -0.001006036217303885,
+        -0.005428881650380024
+      ],
+      "cascade_loss_vs_shuffled": [
+        -0.001006036217303885,
+        -0.10107015457788338
+      ],
+      "one_step_error_ratio_vs_random": 0.9560527965343808,
+      "gate": "FAIL; no cascade-specific harm"
+    },
+    "interpretation": "The matched shuffled control supports order/state-distribution dependence for walker-run, but task-family specificity and lack of causal non-normal intervention prevent a broad mechanism claim.",
+    "walker_run_backwards": {
+      "source": "runs/tdmpc_cascade_heldout_walker_backwards_v1/status.json",
+      "random_returns": [
+        202.4022174924612,
+        190.90010276436806
+      ],
+      "cascade_returns": [
+        177.2471330165863,
+        196.4007392525673
+      ],
+      "shuffled_returns": [
+        211.84110337495804,
+        224.6496843099594
+      ],
+      "one_step_error_ratio_vs_random": 0.935035318658961,
+      "loss_vs_random": [
+        0.12428265256931703,
+        -0.028814214390386006
+      ],
+      "loss_vs_shuffled": [
+        0.16330150196178184,
+        0.12574664925153312
+      ],
+      "gate": "FAIL: seed31 below 15% versus random and seed32 reverses versus random"
+    }
+  },
+  "temporal_order_followup": {
+    "source": "runs/tdmpc_order_controls_v0/status.json",
+    "status": "order_specific_walker_run_effect_reproduced_actor_controlled_mechanism_unisolated",
+    "walker_run": {
+      "cascade": [
+        495.2163214981556,
+        547.5335729122162
+      ],
+      "random": [
+        612.082555025816,
+        678.7750849425793
+      ],
+      "reverse": [
+        608.4253105074167,
+        621.9523382484913
+      ],
+      "shuffled": [
+        613.7643893808126,
+        669.4525584578514
+      ],
+      "cascade_error_ratio_vs_random": 0.9224965100188367
+    },
+    "matrix_source": "runs/tdmpc_cascade_matrix_v0/status.json",
+    "mechanism_diagnostics": {
+      "horizon_geometry": "runs/tdmpc_horizon_geometry_v0/status.json",
+      "planner_ranking": "runs/tdmpc_planner_ranking_v3/status.json",
+      "update_noncommutativity": "runs/tdmpc_update_noncommutativity_v0/status.json",
+      "decision": "Latent drift and update commutator are not selective; preserve conditional phenomenon only."
+    },
+    "strict_review": {
+      "source": "runs/gemini_claim_review_round13_20261010T0000Z/review.json",
+      "novelty_score": 5.5,
+      "decision": "below target; no final claim"
+    }
+  },
+  "full_update_followup": {
+    "source": "runs/tdmpc_full_update_order_controls_v0/status.json",
+    "updates": 80,
+    "walker_run": {
+      "cascade_vs_random_loss": [
+        0.19044834988817572,
+        0.12977501085769072
+      ],
+      "reverse_vs_random_loss": [
+        0.05961518834033619,
+        0.004660999624667594
+      ],
+      "shuffled_vs_random_loss": [
+        -0.0026390779431755274,
+        -0.04863508787636972
+      ],
+      "cascade_error_ratio": [
+        0.9926856520263267,
+        0.9926856520263267
+      ]
+    },
+    "cup_catch": {
+      "cascade_vs_random_loss": [
+        0.0,
+        0.27882599580712786
+      ],
+      "reverse_vs_random_loss": [
+        -0.0016835016835017313,
+        0.014675052410901501
+      ],
+      "shuffled_vs_random_loss": [
+        0.0,
+        -0.08595387840670865
+      ]
+    },
+    "interpretation": "Full upstream update retains order-specific walker-run MPC loss at 80 updates and low one-step error, but actor also changes; cup-catch seed32 shows a full-update loss, so it is not a clean negative control under this broader adaptation scope.",
+    "decision": "Strong baseline support for order sensitivity, not planner-only causality; retain dynamics-only result as the cleanest claim."
+  },
+  "current_evidence": {
+    "full_update_order_control": "At 80 native full updates, walker-run cascade loses 19.0%/13.0% versus random while reverse loses 6.0%/0.5% and shuffled improves; cascade one-step error is 0.993x random. Full update changes actor and causes a cup-catch seed32 loss, so this is a strong robustness baseline rather than clean planner-specific evidence."
+  },
+  "updated_at_utc": "2026-10-10T09:20:00+00:00"
+}

@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "reviewed_frozen_before_any_gpu_diagnostic_output",
+  "runner": "scripts/analyze_dino_native_alias_forecast_gpu.py",
+  "source_run": "runs/dino_native_alias_pair_20261015",
+  "out_dir": "runs/dino_native_alias_forecast_gpu_20261015",
+  "disclosure": "Separate post-CPU-calibration-failure engineering revision, registered before any new GPU diagnostic output. The CPU attempt remains invalid with zero counterfactual forecasts. Change only model/encoder backend to the native GPU configuration; same panel, requests, truth, algorithm and numerical thresholds. This is not a fallback authorized by the original CPU protocol.",
+  "known_outcome_scope": "The observed decline is cumulative dense return only. Canonical had earlier first success53vs56, more successful controls33vs24, and a better terminal distance; both final success flags were false. Do not reframe the diagnostic as explaining lost task success or worse terminal utility.",
+  "selection": {
+    "trajectory_origins": [
+      "clean_identity_copy",
+      "canonical_request"
+    ],
+    "queries_per_origin": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "horizons": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      5,
+      2
+    ],
+    "actual_offsets": [
+      [
+        5,
+        10,
+        15
+      ],
+      [
+        5,
+        10,
+        15
+      ],
+      [
+        5,
+        10,
+        15
+      ],
+      [
+        5,
+        10,
+        15
+      ],
+      [
+        5,
+        10,
+        15
+      ],
+      [
+        5,
+        10,
+        15
+      ],
+      [
+        5
+      ]
+    ],
+    "no_subsets": "Use all14 cached final means, irrespective of per-query reward, saturation or error. One root pair, not14 independent tasks or38 independent samples."
+  },
+  "fixed_comparison": "Within each query, reuse identical cached T1 context, original full mean, native goal, and actual executed-prefix observations. Compare original vs the already fixed canonical request on the SAME GPU0. Do not compare different policy trajectories' mean errors as a causal representation effect.",
+  "request_rule": "Reuse canonical_boundaries from pilot_dino_native_alias_pair.py and native CPU FP32 action statistics. Shape [H,1,20] -> [H,1,5,4]. Only abs(rawXYZ)>1 coordinates change. Require exact effectiveXYZ/rawgripper equality, untouched normalized coordinates, and exact reproduction of the source arm's saved mean_request.",
+  "truth_encoding": "Exactly38 native model.encode calls at B1,T1, raw uint8 pixels [1,1,3,224,224] and raw FP32 proprio [1,1,4]. Native encode performs /255, RGB mean/std0.5 and native proprio normalization once. No resizing, re-encoding of cached context/goal, or alternate feature extractor.",
+  "execution_order": [
+    "Read all14 completed source query caches and both traces; verify full source pair, frozen gate, shapes, executed-action correspondence, and shared first-query context/goal using cached arrays only.",
+    "Load existing weights once on GPU0 with native FP32/backend settings. Reproduce native denormalization/canonical boundaries. No environment construction; startup free>=5632MiB and allocator cap5GiB.",
+    "Phase A: for each origin/query in frozen order, recompute its OWN representation forecast at full saved H,B1. Compare against its cached GPU forecast under the frozen numerical gate BEFORE encoding truth. Stop immediately if invalid.",
+    "Still in Phase A, encode each actually observed endpoint. For q1 throughq6, compare the15-control endpoint encoding against the next query's cached GPU context. All14 forecast and12 endpoint-encoder gates must pass before Phase B.",
+    "Phase B: compute exactly one other-representation forecast per query on GPU0. Reuse the Phase A own-condition forecast and truth encodings. Preserve both forecasts and all signed paired errors."
+  ],
+  "calibration": {
+    "prior_evidence": "The frozen CPU attempt failed its encoder gate before any counterfactual. Same-GPU computation is now separately predeclared; every numerical limit below is unchanged. GPU consistency is tested, not assumed.",
+    "atol": 0.0001,
+    "rtol": 0.0001,
+    "max_absolute_error": 0.001,
+    "rms_absolute_error": 0.0001,
+    "rule": "For each visual/proprio tensor and every timepoint: allclose(atol,rtol) AND max absolute error<=0.001 AND RMS absolute error<=0.0001. Record actual max/RMS, reference RMS and per-timepoint diagnostics. Forecast prefix must equal the supplied context exactly.",
+    "failure": "Stop with invalid_numerical_calibration and null paired conclusion; retain partial arrays/diagnostics. One attempt, no tolerance relaxation, backend fallback or retry."
+  },
+  "metrics": {
+    "alignment": "Compare forecast index offset//5 with the corresponding actual encoded endpoint. Indices1/2/3 for15 controls; index1 only for final9 controls. No truth beyond executed prefix, no9-to10 alignment.",
+    "paired_error": "Visual and proprio latent MSE plus visual+0.1*proprio. Reduce the fixed FP32 feature arrays in float64 for stable diagnostic arithmetic. Report each query/horizon's original error, canonical error, and canonical-minus-original difference. Also descriptive per-query and per-origin averages of WITHIN-QUERY differences; no cross-origin trajectory-average subtraction.",
+    "numeric_resolution": "Report calibration differences alongside effects. Do not claim a directional effect based on differences comparable to numerical calibration error.",
+    "goal_distance": "No new terminal-objective oracle: true endpoints stop at15 or5 controls whereas native planning costs end atH6/H5/H2. Existing objective/reward-misalignment evidence remains a possible explanation.",
+    "causal_limit": "Final-mean logging forecasts do not reconstruct the CEM scored candidate banks or ranking regret. Error changes for a fixed visited state/action do not establish mediation of native return loss, generalization or a novel attack mechanism.",
+    "projection_limits": "Only the same14 final means and38 observed endpoints. No truth beyond executed prefixes, no CEM bank/rank reconstruction, no horizon-H terminal objective surrogate for observed return, and no extrapolation to recovery, other roots or population risk."
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "device": "cuda:0",
+    "dtype": "float32",
+    "threads": 4,
+    "seed": 1,
+    "wall_limit_seconds": 300,
+    "outer_timeout_seconds": 315,
+    "maximum_unroll_calls": 28,
+    "maximum_predictor_forwards": 148,
+    "maximum_native_encodes": 38,
+    "checkpoint_files": 2,
+    "network_allowed": false,
+    "gpu_allowed": true,
+    "environment_allowed": false,
+    "training_allowed": false,
+    "retry_allowed": false,
+    "minimum_start_free_mib": 5632,
+    "allocator_cap_gib": 5.0,
+    "allocator": "expandable_segments:True",
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": true,
+    "launch_order": "Root launches only after native recovery session85346 terminates; this script does not start or modify any other job.",
+    "resource_scope": "Free VRAM is not reserved.5GiB limits the Torch allocator only.300s internal/315s outer; OOM or resource shortage preserves partial result and stops."
+  },
+  "outputs": [
+    "summary.json",
+    "launched_config.json",
+    "launched_script.py",
+    "per-query paired forecasts/truth NPZ",
+    "paired_errors.csv",
+    "retained prior CPU calibration metadata and partial truth arrays if a new calibration gate fails"
+  ],
+  "preservation": "Refuse existing output directory. Never modify source runs, earlier protocols or previous scientific decisions.",
+  "registered_at_utc": "2026-10-15T06:09:17.124549+00:00",
+  "prior_cpu_attempt": {
+    "config": "configs/dino_native_alias_forecast_20261015.json",
+    "run": "runs/dino_native_alias_forecast_20261015/summary.json",
+    "decision": "reports/dino_native_alias_forecast_decision_20261015.json",
+    "status": "invalid_numerical_calibration",
+    "own_condition_forecast_passed": true,
+    "counterfactual_unrolls": 0,
+    "failed_visual_encoder_max_absolute_error": 0.0003657341003417969,
+    "failed_visual_encoder_rms_absolute_error": 1.070301017734883e-05,
+    "failed_check": "Elementwise allclose failed; maximum and RMS bounds passed. Do not overwrite the failed CPU result or infer general CPU invalidity."
+  },
+  "reviewed_at_utc": "2026-10-15T06:11:22.304964+00:00",
+  "review": "Root full CPU-to-GPU code diff review and independent scientific review passed; unchanged panel/thresholds, allowncondition+encoder gates before counterfactuals. Recovery85346 terminalexit0 beforelaunch; no concurrent new GPU job."
+}

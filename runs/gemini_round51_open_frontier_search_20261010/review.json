@@ -1,0 +1,30 @@
+{
+  "frontier_evaluation": "REJECT_ALL",
+  "reasoning": "Under the stringent negative constraints (barring standard data poisoning/backdoors, out-of-distribution shifts, prompt injection, epistemic collapse, compounding horizon errors, branch arbitrage, multi-task trunk interference, action insensitivity shortcuts, and action-encoding representations), almost all viable physical-space world-model vulnerabilities collapse into either: (1) subtle training-set distribution poisoning/backdoors, (2) standard statistical compounding errors under planner optimization, or (3) generic covariate shift. However, examining structural inductive biases inherent to latent world models (specifically latent autoregressive spatial tokenizers and discrete latent transition models) reveals at most two mechanically distinct phenomena. Below are the two most rigorous candidates evaluated against the aggressive ICLR acceptance threshold, followed by their fatal vulnerabilities and the ultimate frontier rejection.",
+  "evaluated_candidates": [
+    {
+      "candidate_id": "CANDIDATE_1",
+      "exact_claim": "Autoregressive spatial tokenization in visual world models imposes a directional causal order (e.g., raster-scan top-left to bottom-right) on single-timestep physical scenes. An adversary supplying purely physically valid, in-distribution action sequences can induce spatial visual illusions (e.g., phantom obstacle clearances) exclusively along the anti-causal scan direction without triggering one-step frame MSE anomalies.",
+      "attacker_model": "Black-box trajectory provider executing legal, dynamically feasible actions at test time. No gradients, no synthetic frames, no label poisoning.",
+      "carrier": "OpenWAM / WorldGen or public discrete latent autoregressive world models (e.g., discrete VQ-VAE + autoregressive transformer world models like IRIS / Diamond / TD-MPC2 latent extensions).",
+      "mechanism_invariant": "Spatial Causal Asymmetry Invariant: In an isotropic physical domain, transition predictions should be invariant under spatial orientation permutations. Raster-ordered autoregressive latents break this: spatial dependencies downstream in the scan order receive full teacher-forced latent context, while upstream tokens operate with zero intra-frame causal context, inducing an asymmetric planning blindspot.",
+      "decisive_pilot_under_2hr": "Run pre-trained Diamond or IRIS on Atari/MinAtar (or TD-MPC2 on visual DMControl). Compare planner trajectory failure rates when navigating around identical obstacles placed in the top-left vs. bottom-right quadrants. Measure one-step latent prediction cross-entropy (identical, Delta < 2%) versus multi-step MPC navigation survival rate (drop > 35%).",
+      "repair": "Bidirectional mask-predict / diffusion-based spatial decoding within single timesteps, or randomized raster-order augmentations during latent rollout generation.",
+      "nearest_prior_art": "SWAAP (arXiv:2606.18697) on adversarial physical perturbations; CoCo (arXiv:2608.04653) on shortcut dynamics.",
+      "novelty_score": 6.5,
+      "rejection_critique": "REJECTED (Score < 7.0). This is fundamentally a re-discovery of standard raster-order inductive bias of autoregressive transformers (well-known in image generation, e.g., ImageGPT, MaskGIT) transposed onto world models. While it impacts planning decisions, an adversary merely exploiting spatial bias without active manipulation reduces to an inherent blindspot/generalization artifact rather than a robust adversarial attack vector."
+    },
+    {
+      "candidate_id": "CANDIDATE_2",
+      "exact_claim": "Contrastive and self-supervised world models (e.g., TD-MPC2 / DreamerV3) learn an ungrounded global energy gauge in latent representations. A sequence of physically benign non-contact actions can drive latent norm drift without changing perceptual reconstruction or immediate reward prediction, inducing fatal planner divergence during value backup.",
+      "attacker_model": "Benign user input providing a prolonged sequence of kinematically valid idle/non-contact maneuvers in the action space.",
+      "carrier": "TD-MPC2 (official repo / DMControl locomotion).",
+      "mechanism_invariant": "Latent Metric Homothety: The spatial scale of latent state vectors must remain stable across homeostatic/quiescent state transitions. If ||z_{t+k}|| scales monotonically under identity/idle operators, MPC's internal similarity and learned dynamics linearizations lose calibration relative to the frozen policy/critic networks.",
+      "repair": "Explicit latent manifold radius regularization (e.g., sphere projection ||z||=1 or spectral normalization on dynamics transition blocks).",
+      "nearest_prior_art": "BadWAM (arXiv:2607.15207); OneWorld (arXiv:2609.30946).",
+      "novelty_score": 6.0,
+      "rejection_critique": "REJECTED (Score < 7.0). This is closely tied to 'epistemic collapse' and 'rollout compounding drift' under out-of-context zero-action runs, which is explicitly in the user's rejected family. Furthermore, modern implementations (TD-MPC2) already utilize LayerNorm/SimNorm on latent vectors z, effectively neutralizing raw norm scaling as an attack vector."
+    }
+  ],
+  "frontier_analysis": "The intersection of: (1) zero gradient/weight access, (2) strictly physically valid in-distribution inputs, (3) near-normal one-step prediction metrics, (4) task-level safety compromise, and (5) non-membership in the 15+ prohibited mechanisms (poisoning, shortcutting, representation mismatch, compounding rollout errors, horizon effects, branch arbitration, etc.) forms an empty set in current world-model paradigms. Any vulnerability exposed purely through legal action sequences where 1-step dynamics are accurate is, by mathematical necessity, an error of multi-step planning integration (compounding drift / horizon effect) or policy sensitivity (action shortcutting / branch arbitrage). Hence, all candidates fail the novelty threshold >= 7/10 or violate the negative constraints."
+}

@@ -1,0 +1,34 @@
+{
+  "tasks": [
+    "walker-walk",
+    "reacher-easy",
+    "cup-catch"
+  ],
+  "seeds": [
+    31
+  ],
+  "steps_per_episode": 500,
+  "arms": [
+    "prior_reflection",
+    "sign_flip",
+    "double_reflection"
+  ],
+  "reference": "runs/tdmpc_dynamics_reliance_v0",
+  "reference_summary_sha256": "09107b35f306efcee3ef271fc2fa5ce182a84bd0349b7cd79bfd17c60dd0764a",
+  "script_sha256": "37753bf81894bd050797dd79e4e98c9e11fe172b2ee3137910c65a612b41798f",
+  "adapter_sha256": "178c59c5d1c61360e2852854f39aa54a64fe354703b140ed6db7edbdd9abdc3b",
+  "reference_trace_sha256": {
+    "walker-walk": "2f97b77c7c4735fe57e46909fa797a8001ece4982faa9cf2e874ac096d604592",
+    "reacher-easy": "37d158aacacf548ab95dca74cb37410edbd6c1d7c1ace7c2be049e31845e5534",
+    "cup-catch": "ca9a32876b566921b1bcdd8846c2756f60b6c4c734daa548db81b3738a5cbd98"
+  },
+  "operation": "Only model.next receives phi_z(a)=tanh(2*mu(z)-atanh(a)); reward/Q/encoder/prior/physical action unchanged. Deterministic native pre-tanh prior mean, no RNG draw. All proposal/evaluation dynamics calls use the wrapper.",
+  "control": "Raw sign reversal tests ordinary action inversion; applying phi twice restores the original dynamics up to measured numerical error.",
+  "preservation": "Real-arithmetic state-only trajectory law under the FIXED native stochastic prior; expected additive return also preserved with unchanged reward. Not the action-labelled trajectory law, not reward trajectory law, not all policies, and not exact finite-precision equivalence.",
+  "development_task_gate": "Continue this candidate only if prior_reflection reduces return by at least200/1000 on at least2 tasks. This gate alone is insufficient to accept a novel or stealthy security claim.",
+  "novelty_boundary": "Policy-specific model/value equivalence is prior art (Grimm et al., NeurIPS2020); action permutation and bad dynamics are not by themselves novel. This pilot measures the concrete native effect and limitations.",
+  "privilege": "Researcher-installed runtime dynamics-input wrapper with white-box access to native prior mean; no demonstrated data-poisoning or checkpoint-only realization.",
+  "training_updates": 0,
+  "api_requests": 0,
+  "gpu_work": "Short frozen inference only."
+}

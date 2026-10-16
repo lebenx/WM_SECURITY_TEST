@@ -1,0 +1,46 @@
+{
+  "scenario": "Plant Nutrients",
+  "difficulty": "Easy",
+  "seed": 2,
+  "model": "glm-5.3",
+  "max_steps": 40,
+  "include_images": false,
+  "upstream": "https://github.com/allenai/discoveryworld",
+  "commit": "fd591323920be0d3786ef350955de1945aa571e5",
+  "native_agent_sha256": "d3f9e8a4b5dc532464d13aa40aa677c6ea0accead5185e46c1bb1b8b7a39d389",
+  "agent": "Unmodified GPT4HypothesizerOneStep and consolidateKnowledgeStep functions",
+  "substitutions": [
+    "Official API model through credential-isolated logged Client",
+    "Text-only setting supported by the native agent",
+    "Headless SDL; run-specific frame directory",
+    "Stop on fresh oracle completion instead of one-observation-late cached completion"
+  ],
+  "generation": {
+    "temperature": 0.1,
+    "thinking": "disabled",
+    "reasoning_effort": "none",
+    "retry_truncated": true,
+    "temperature_effective": true,
+    "native_requested_action_tokens": 800,
+    "native_requested_knowledge_tokens": 3000,
+    "client_effective_min_tokens": 4096
+  },
+  "consolidation": "Native schedule: after zero-based step i when i > 0 and i % 10 == 0",
+  "observation_timing": "Native reflection uses the pre-action observation and previous action outcomes (one-step lag preserved).",
+  "initial_knowledge": "/home/xhj/WM_Security/runs/discoveryworld_plant_relocation_replace_original_v0_resume3/knowledge/final.json",
+  "action_selection": "Native autonomous actor",
+  "clarify_device_talk": true,
+  "http_timeout_s": 180.0,
+  "replay_from": null,
+  "replay_ancestors": [],
+  "replay_policy": "Reuse exact previously returned completions only after matching full messages and stage; replay real environment actions from the same seed. Old API requests remain charged only to the original run.",
+  "scope": "Development task or scripted-source experiment; condition-specific scope recorded in the experiment configuration. No cross-seed knowledge transfer.",
+  "oracle_policy": "Scorecards saved separately; never supplied to acting, reflection or consolidation calls.",
+  "packages": {
+    "pygame": "2.6.1",
+    "numpy": "2.5.3",
+    "openai": "3.26.0",
+    "tiktoken": "0.14.0",
+    "pathfinding": "1.0.22"
+  }
+}

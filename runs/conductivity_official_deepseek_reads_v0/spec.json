@@ -1,0 +1,36 @@
+{
+  "memories": {
+    "clean": "runs/conductivity_complete_learning_local_v0/warmup.json",
+    "proper": "runs/conductivity_complete_learning_local_v0/proper_memory.json",
+    "bypass": "runs/conductivity_complete_learning_local_v0/bypass_memory.json"
+  },
+  "swaps": {
+    "bypass_episodes": {
+      "base": "bypass",
+      "donor": "clean",
+      "component": "semantic"
+    },
+    "bypass_rules": {
+      "base": "clean",
+      "donor": "bypass",
+      "component": "semantic"
+    }
+  },
+  "queries": [
+    {
+      "id": "native",
+      "state": "terminal 2 on unknown substance B is now connected to terminal 1 on orange wire\nIn your inventory, you see:\n\tan orange\n",
+      "action": "look at red light bulb",
+      "goal": "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+      "actual": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire."
+    },
+    {
+      "id": "observed_history",
+      "state": "Observed interaction history (chronological):\nAction: open door to workshop\nObservation: The door is already open.\nAction: go to workshop\nObservation: You move to the workshop.\nAction: pick up unknown substance\nObservation: You move the unknown substance B to the inventory.\nAction: focus on unknown substance\nObservation: You focus on the unknown substance B.\nAction: drop unknown substance\nObservation: You move the unknown substance B to the workshop.\nAction: look around\nObservation: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\nAction: connect battery anode to blue wire terminal 1\nObservation: anode on battery is now connected to terminal 1 on blue wire\nAction: connect battery cathode to black wire terminal 1\nObservation: cathode on battery is now connected to terminal 1 on black wire\nAction: connect blue wire terminal 2 to cathode in red light bulb\nObservation: terminal 2 on blue wire is now connected to cathode on red light bulb\nAction: connect orange wire terminal 2 to anode in red light bulb\nObservation: terminal 2 on orange wire is now connected to anode on red light bulb\nAction: connect unknown substance B terminal 1 to black wire terminal 2\nObservation: terminal 1 on unknown substance B is now connected to terminal 2 on black wire\nAction: connect unknown substance B terminal 2 to orange wire terminal 1\nObservation: terminal 2 on unknown substance B is now connected to terminal 1 on orange wire\n\nCurrent observation and inventory:\nterminal 2 on unknown substance B is now connected to terminal 1 on orange wire\nIn your inventory, you see:\n\tan orange\n",
+      "action": "look at red light bulb",
+      "goal": "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+      "actual": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire."
+    }
+  ],
+  "interpretation": "Complete 17-action learner checkpoints. Native pre-read state and the real observed wiring history; no actual post-wiring bulb reading is exposed in these query states."
+}

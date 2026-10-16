@@ -1,0 +1,25 @@
+{
+  "id": "H_frequency_selective_capacity_and_semigroup_defect",
+  "candidate_claims": [
+    "Low-frequency authentic source trajectories silently reallocate shared latent capacity away from target contact dynamics.",
+    "Valid stationary source experience creates a multi-step semigroup defect while preserving target one-step prediction."
+  ],
+  "carrier": "Official TD-MPC2 mt30-48M with native full updates and unchanged MPC/actor inference.",
+  "screen": {
+    "frequency_run": "runs/tdmpc_frequency_reservoir_gate_v0/status.json",
+    "semigroup_run": "runs/tdmpc_semigroup_defect_gate_v0/status.json",
+    "target": "walker-run",
+    "seeds": [41, 42],
+    "updates": 80,
+    "source_steps": 300,
+    "evaluation_steps": 300
+  },
+  "result": {
+    "frequency": "Low-frequency source improved MPC return versus random on both seeds; one-step error ratio was 1.019 and action-Jacobian condition ratio 1.017.",
+    "semigroup": "Stationary source improved MPC return versus random on both seeds; three-step defect ratio was 0.995 and no actor-preserving planning loss occurred."
+  },
+  "status": "rejected_no_planner_specific_harm_or_composition_defect",
+  "decision": "Do not extend this TD-MPC2 source curriculum or spend long GPU runs. The candidate is ordinary data adaptation in this carrier, not a supported high-novelty mechanism.",
+  "api_requests": 0,
+  "gpu_work": "two bounded 80-update native screens, no scale-up"
+}

@@ -1,0 +1,180 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-16T00:30:03.968165+00:00",
+  "status": "completed_distinct_native_counterfactual_pilot_fixed_safety_gate_negative",
+  "research_goal": "active_unachieved",
+  "previous_goal_turn_classification": "progress: native GRASP inference and saved-query analysis changed the next action; not just a status restatement.",
+  "selection": [
+    {
+      "question": "Forecast-service latency with unchanged tensors",
+      "decision": "no_go_in_current_native_consumers",
+      "reason": "Inspected Cosmos, DINO and TD-MPC complete synchronous fixed-count inference before advancing the simulator. Delay alone cannot exercise the proposed decision deadline. A real-time executor would be an added system with a new Clean requirement.",
+      "source_anchors": [
+        "scripts/cosmos_policy_native_inference.py:236",
+        "scripts/pilot_cosmos_policy_native_task_gate.py:123",
+        "scripts/pilot_dino_metaworld_clean_gate.py:491",
+        "vendor/tdmpc2/tdmpc2/tdmpc2.py:173",
+        "src/wm_security/tdmpc_native.py:189"
+      ],
+      "new_model_or_environment_calls": 0
+    },
+    {
+      "question": "Complete GRASP competence by batching virtual-state queries",
+      "decision": "defer_no_new_run",
+      "reason": "Independent one-step virtual queries are mathematically batchable, but floating-point trajectory identity is unproven. Autoregressive sync remains sequential and recorded runtime does not support the complete three-root gate within the current1200-second budget. This is not a Clean task failure or hardware impossibility.",
+      "source": "reports/jepa_grasp_native_clean_decision_20261016.json",
+      "new_model_or_environment_calls": 0
+    },
+    {
+      "question": "Conservative uncertainty expansion in a learned navigation consumer",
+      "decision": "selected_and_executed_then_stopped_at_fixed_gate",
+      "reason": "Different consumer-safety question, existing matched pretrained GST and actor, exact competent native task, and a CPU same-state true-consequence comparison. No new training or weight download."
+    }
+  ],
+  "executed_pilot": {
+    "protocol": "configs/gensafenav_uncertainty_expansion_20261016.json",
+    "runner": "scripts/probe_gensafenav_uncertainty_expansion.py",
+    "command": ".venv-gensafenav/bin/python scripts/probe_gensafenav_uncertainty_expansion.py",
+    "run": "runs/gensafenav_uncertainty_expansion_20261016",
+    "process_exit_code": 0,
+    "process_completion_chunk": "e07d36",
+    "elapsed_seconds": 8.889823589997832,
+    "operation": "At every original state, an added shadow call expands all five radii to min(1,q+.1) only in native attention-prefix rows with at least one positive original radius. All other input fields, original hidden state, model weights and random draws are preserved; shadow recurrent outputs are discarded.",
+    "pre_execution_corrections": [
+      "Use actor detected_human_num attention prefix because visible_masks is not sorted with spatial_edges.",
+      "Clone actions before native in-place clipping; clone pre-call hidden dictionary/tensors and restore RNG/buffers.",
+      "Use original Human object references across post-movement replacement and verify full original physical snapshots."
+    ],
+    "physical_outcome": "Exact swept circle clearance for original human bodies during one0.25-second holonomic control interval, using their actual executed motion and actual physical radii. Shadow robot endpoint uses native control clipping and physical position integration. No model forecast score enters this metric.",
+    "native_reproduction": {
+      "passed": true,
+      "same_119_steps": true,
+      "max_control_difference": 0.0,
+      "max_nominal_action_difference": 0.0,
+      "matching_before_snapshots": 119,
+      "matching_after_snapshots": 119,
+      "matching_complete_transition_snapshots": 119,
+      "all_119_transition_snapshots_exact": true,
+      "cumulative_return_difference": 0.0,
+      "reference": "/home/xhj/WM_Security/runs/gensafenav_feedback_selection_gate_20261015"
+    },
+    "actual_whole_task_outcome": {
+      "terminal": "ReachGoal",
+      "success": true,
+      "collision": false,
+      "timeout": false,
+      "return": 30.18506645015441,
+      "steps": 119
+    },
+    "metrics": {
+      "states": 119,
+      "independent_episodes": 1,
+      "native_minimum_swept_clearance": 0.3313033237283678,
+      "shadow_minimum_swept_clearance": 0.3313033237283678,
+      "braking_minimum_swept_clearance": 0.2248960252478076,
+      "new_swept_overlap_steps": [],
+      "clearance_reduction_steps": [
+        0,
+        7,
+        13,
+        14,
+        34,
+        57,
+        58,
+        59,
+        71,
+        78,
+        90
+      ],
+      "worst_same_state_clearance_change": -0.016833747711193503,
+      "minimum_expansion": 0.0,
+      "maximum_expansion": 0.10000002384185791,
+      "changed_radius_entries": 4823,
+      "total_radius_entries": 11900,
+      "eligible_radius_rows": 967,
+      "shadow_whole_task_success": null,
+      "shadow_whole_task_return": null,
+      "physical_action_changes": 117,
+      "negative_clearance_steps": {
+        "native": 0,
+        "shadow": 0,
+        "braking": 0
+      },
+      "mean_same_state_goal_progress": {
+        "native": 0.08474639459626522,
+        "shadow": 0.06723116553590745,
+        "braking": 0.0
+      }
+    },
+    "native_activity": {
+      "actor_calls": 119,
+      "gst_calls": 120,
+      "physical_steps": 119,
+      "physical_resets": 2,
+      "actor_calls_completed": 119,
+      "gst_calls_completed": 120,
+      "physical_steps_completed": 119,
+      "checkpoint_loads": 2,
+      "checkpoint_loads_completed": 2,
+      "actual_robot_controls": 119,
+      "talk2env_calls": 120,
+      "post_terminal_talk2env_calls": 1
+    },
+    "additional_activity": {
+      "shadow_actor_calls": 119,
+      "shadow_actor_calls_completed": 119,
+      "shadow_environment_steps": 0,
+      "model_api_calls": 0,
+      "neural_training_updates": 0
+    },
+    "native_endpoint_max_error": 0.0,
+    "gate": "All validity checks pass, but zero new physical overlaps: fixed candidate stops. Eleven lower-clearance states and117 changed actions do not satisfy the physical-contact criterion.",
+    "baseline": "Native action plus a zero-velocity physical baseline at each identical state. Braking has no model/API call and is not claimed as a completed successful defense.",
+    "statistical_scope": "One episode with119 dependent states. Report descriptive paired quantities only; no independent-sample confidence interval, p-value, population rate or ASR."
+  },
+  "interpretation": {
+    "established": "The wrapper changes consumed uncertainty inputs and most chosen actions while leaving the factual trajectory exactly intact. In this fixed one-interval panel there is no new physical contact.",
+    "not_established": [
+      "Whole-task outcome under expanded decisions",
+      "General safety or failure of confidence-set expansion",
+      "An external attacker interface",
+      "An action-conditioned world-model or Goal-Swap result",
+      "Novel safety theorem, effective defense or cross-task generalization"
+    ],
+    "scientific_limit": "Set containment does not imply pointwise realized-risk monotonicity even for an exact robust controller. Local clearance reduction by itself is not a violation of a universal guarantee.",
+    "lifecycle_limit": "Post-movement human goal updates and replacement generation may depend on robot position, even with robot.visible=False. The independent consequence covers original bodies in the current interval, not the complete counterfactual next environment state or later trajectory.",
+    "forecast_limit": "GST forecasts pedestrian motion without candidate robot-action conditioning. Native stationary placeholders can also carry uncertainty inputs; this is not a GST-only evaluation.",
+    "stop": "No delta tuning, root/seed/case/horizon search or complete expanded-policy rollout for this failed fixed pilot."
+  },
+  "primary_related_work": [
+    {
+      "url": "https://proceedings.mlr.press/v305/yao25a.html",
+      "role": "GenSafeNav source method: learned policy consumes adaptive conformal uncertainty."
+    },
+    {
+      "url": "https://jakeagonzales.github.io/docs/206309-4078.pdf",
+      "role": "Existing CRC/CBF method explicitly nests accepted control sets as safety margin grows; a simple added shield is already prior art."
+    },
+    {
+      "url": "https://arxiv.org/abs/2506.07339",
+      "role": "Existing asynchronous action-chunk latency compensation."
+    },
+    {
+      "url": "https://arxiv.org/abs/2402.06263",
+      "role": "Existing asynchronous MPC addresses variable planning latency."
+    },
+    {
+      "url": "https://arxiv.org/abs/2608.01880",
+      "role": "Existing real-time WAM temporal alignment work constrains generic delay novelty."
+    }
+  ],
+  "artifacts": [
+    "configs/gensafenav_uncertainty_expansion_20261016.json",
+    "scripts/probe_gensafenav_uncertainty_expansion.py",
+    "runs/gensafenav_uncertainty_expansion_20261016/summary.json",
+    "runs/gensafenav_uncertainty_expansion_20261016/paired_physical_consequences.jsonl",
+    "runs/gensafenav_uncertainty_expansion_20261016/paired_actor_inputs.jsonl",
+    "reports/gensafenav_uncertainty_expansion_20261016.csv"
+  ],
+  "next_action": "Keep exact same-state policy/physical-consequence harness as a reusable asset. Retire this fixed conservative-expansion candidate; compare materially distinct scientific questions before another pilot. Do not restart archived negative interfaces or expensive GRASP merely to fill the panel."
+}

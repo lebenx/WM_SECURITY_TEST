@@ -1,0 +1,20 @@
+```json
+{
+  "verdict": "REJECT",
+  "novelty_score": 4,
+  "mechanistic_distinction": "The authors dress standard parameter-interference and compositional backdoor concepts in world-model terminology (e.g., 'latent planner trap', 'mixed Jacobian/Hessian resonance'). In any parameter composition $f(x; \\theta + \\Delta_1 + \\Delta_2)$, cross-layer non-linear activations naturally create higher-order mixed terms $\\nabla^2 f \\cdot (\\Delta_1, \\Delta_2)$. Constructing a $\\Delta_m$ that is an approximate null-space projection on $D_0$ and $D_m$ but activates on $D_1$ is identical to polyhedral/combinatorial backdoors (e.g., Subspace Backdoors, Multi-LoRA interference injection in LLM routing). Re-anchoring this linear-algebra truism into the transition function $T(z_t, a_t)$ of Dreamer/TD-MPC2 does not alter the fundamental security primitive.",
+  "fatal_flaws": [
+    "Threat Model Contradiction: If the attacker knows the exact victim adapter $\\Delta_v$ beforehand, this is an offline white-box targeted injection, rendering the 'dynamic composition trap' trivial—it is simply an adversarial perturbation optimized against a fixed partner while regularizing standalone loss.",
+    "Compounding Rollout Decay: World-model planners (like TD-MPC2 MPPI or Dreamer's actor) rely on multi-step rollouts. A single-step latent deflection either diffuses into latent chaos (causing generic task degradation, not a targeted trap) or requires massive perturbation energy that destroys standalone compliance.",
+    "Triviality of Cross-Adapter Interference: Multi-adapter composition without routing/merging algorithms (e.g., simple sum $\\theta + \\Delta_v + \\Delta_m$) already notoriously causes catastrophic performance drops in multi-task robotics without any malicious intent. Distinguishing an intentional 'backdoor' from baseline out-of-distribution parameter-collapse is functionally indistinguishable unless extreme, brittle fine-tuning is applied."
+  ],
+  "decisive_pilot": "Run a 60-minute trial on DMControl (e.g., Cheetah-Run base, Hopper as $\\Delta_v$): Initialize base TD-MPC2. Train clean rank-2 LoRAs $\\Delta_v$ and optimize candidate rank-2 $\\Delta_m$ using projected gradient descent to minimize $\\mathcal{L}_{task}(\\Delta_m)$ while maximizing targeted deflection $\\|z_{t+1}^{composed} - z_{target}\\|^2$ exclusively when composed as $\\theta + \\Delta_v + \\Delta_m$. If the optimization cannot maintain >95% standalone task reward on both adapters while reliably driving MPPI to a specific target state within a 10-step horizon in closed-loop execution, the mechanism fails.",
+  "controls": [
+    "Random Orthogonal LoRA: Replace $\\Delta_m$ with an arbitrary orthogonal adapter with matched spectral norm to prove the failure is not simply destructive uncalibrated weight variance.",
+    "TIES/DARE Merging Control: Apply basic modern interference-reduction merging (DARE/TIES) to evaluate if standard adapter post-processing trivializes the attack without needing dynamic certificates.",
+    "Observation-space Trigger Baseline: Compare against a standard observation/state-space trojan to demonstrate why a latent cross-adapter trigger is uniquely advantageous over traditional input triggers."
+  ],
+  "repair": "Pivot from a threat/attack paper to an analytical diagnostics paper: Ditch the hacker framing. Formulate an analytical bound quantifying the maximum directional latent shift induced by linear sum compositions in recurrent neural blocks as a function of the singular values of $(\\Delta_1, \\Delta_2)$. Deliver a lightweight pre-composition spectral check that guarantees latent rollout stability under arbitrary adapter addition.",
+  "publishability": "Unacceptable for ICLR as an attack paper. Rebranded combinatorial backdoor applied to a carrier (world-models) where plain compositional interference is already an unsolved, ubiquitous pathology. Would require theoretical characterization of recurrent bilinear cross-terms and provable defense certificates to clear the bar."
+}
+```

@@ -1,0 +1,338 @@
+[
+  {
+    "state": "This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing red paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing blue paint)\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\n",
+    "action": "pour cup containing blue paint in art studio in jug",
+    "observation": "You pour the contents of the wood cup into the jug.",
+    "prediction": {
+      "prediction": "Prediction: You pour the contents of the wood cup into the jug. The jug now contains blue paint.",
+      "foresight": "Prediction: You pour the contents of the wood cup into the jug. The jug now contains blue paint.",
+      "mean_logprob": null,
+      "system": "## Retrieved similar past transitions\n\nCurrent state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing blue paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing yellow paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: The door is already open.\nIn your inventory, you see:\n\tan orange\nAction: go to art studio\nNext state: You move to the art studio.\n\nCurrent state: You move to the hallway.\nIn your inventory, you see:\n\tan orange\nAction: open door to art studio\nNext state: The door is already open.\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        7,
+        8,
+        5,
+        4,
+        9
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 12,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.13227201998233795,
+      "embedder_failed": false,
+      "n_rules": 0,
+      "active_rules": 0,
+      "rendered_rules": 0,
+      "total_prompt_tokens": 641,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 244,
+      "semantic_block_tokens": 0,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 18,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 30,
+    "done": false
+  },
+  {
+    "state": "You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\n",
+    "action": "pour cup containing yellow paint in art studio in jug",
+    "observation": "You pour the contents of the wood cup into the jug.",
+    "prediction": {
+      "prediction": "Prediction: You pour the contents of the wood cup containing yellow paint into the jug. The jug now contains yellow paint.",
+      "foresight": "Prediction: You pour the contents of the wood cup containing yellow paint into the jug. The jug now contains yellow paint.",
+      "mean_logprob": null,
+      "system": "## Frame Axioms and Persistence Rules\n- Pouring paint from one container to another does not change the location of the paint.\n\n## Retrieved similar past transitions\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing yellow paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing blue paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing red paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing blue paint)\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing blue paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: The door is already open.\nIn your inventory, you see:\n\tan orange\nAction: go to art studio\nNext state: You move to the art studio.\n\nCurrent state: You move to the hallway.\nIn your inventory, you see:\n\tan orange\nAction: open door to art studio\nNext state: The door is already open.\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        8,
+        7,
+        12,
+        5,
+        4
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 13,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.08158385753631592,
+      "embedder_failed": false,
+      "n_rules": 1,
+      "active_rules": 1,
+      "rendered_rules": 1,
+      "total_prompt_tokens": 678,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 317,
+      "semantic_block_tokens": 22,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 21,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 40,
+    "done": false
+  },
+  {
+    "state": "You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\n",
+    "action": "mix jug",
+    "observation": "Blue and yellow paint mix to produce green paint.",
+    "prediction": {
+      "prediction": "Prediction: Blue and yellow paint mix to produce green paint.",
+      "foresight": "Prediction: Blue and yellow paint mix to produce green paint.",
+      "mean_logprob": null,
+      "system": "## Frame Axioms and Persistence Rules\n- Pouring an object does not change its location.\n\n## Retrieved similar past transitions\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nCurrent state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing blue paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing yellow paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing red paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing blue paint)\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing blue paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing yellow paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        9,
+        7,
+        8,
+        12,
+        13
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 14,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.0880807638168335,
+      "embedder_failed": false,
+      "n_rules": 2,
+      "active_rules": 1,
+      "rendered_rules": 1,
+      "total_prompt_tokens": 687,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 341,
+      "semantic_block_tokens": 15,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 10,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 50,
+    "done": false
+  },
+  {
+    "state": "Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\n",
+    "action": "look at jug",
+    "observation": "a jug (containing green paint)",
+    "prediction": {
+      "prediction": "Prediction: You look at the jug and see that it contains green paint.",
+      "foresight": "Prediction: You look at the jug and see that it contains green paint.",
+      "mean_logprob": null,
+      "system": "## Frame Axioms and Persistence Rules\n- Pouring an object does not change its location.\n\n## Retrieved similar past transitions\n\nCurrent state: You move to the art studio.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nCurrent state: Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing green paint).\n\ta wood cup (containing nothing)\n\ta wood cup (containing nothing)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nCurrent state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\nAction: pour cup containing blue paint in art studio in jug\nNext state: You pour the contents of the wood cup into the jug.\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        6,
+        9,
+        10,
+        14,
+        7
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 15,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.08755689486861229,
+      "embedder_failed": false,
+      "n_rules": 2,
+      "active_rules": 1,
+      "rendered_rules": 1,
+      "total_prompt_tokens": 743,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 370,
+      "semantic_block_tokens": 15,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 13,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 50,
+    "done": false
+  },
+  {
+    "state": "a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\n",
+    "action": "look at jug",
+    "observation": "a jug (containing green paint)",
+    "prediction": {
+      "prediction": "Prediction: You look at the jug and see that it contains green paint. The jug is on the table in the art studio, and the room also contains the agent, air, a large cupboard, a paint cupboard, and a wood cup (containing red paint). A door to the hallway is open.",
+      "foresight": "Prediction: You look at the jug and see that it contains green paint. The jug is on the table in the art studio, and the room also contains the agent, air, a large cupboard, a paint cupboard, and a wood cup (containing red paint). A door to the hallway is open.",
+      "mean_logprob": null,
+      "system": "## Frame Axioms and Persistence Rules\n- Looking at an object does not change its contents.\n- Pouring an object does not change its location.\n\n## Retrieved similar past transitions\n\nCurrent state: Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: You move to the art studio.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nCurrent state: Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing green paint).\n\ta wood cup (containing nothing)\n\ta wood cup (containing nothing)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        15,
+        6,
+        9,
+        10,
+        14
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 16,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.07624691352248192,
+      "embedder_failed": false,
+      "n_rules": 3,
+      "active_rules": 2,
+      "rendered_rules": 2,
+      "total_prompt_tokens": 648,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 292,
+      "semantic_block_tokens": 25,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 51,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 50,
+    "done": false
+  },
+  {
+    "state": "a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\n",
+    "action": "look at jug",
+    "observation": "a jug (containing green paint)",
+    "prediction": {
+      "prediction": "Prediction: You look at the jug and observe that it contains green paint. The jug remains in its current location, and its contents do not change as a result of your observation.",
+      "foresight": "Prediction: You look at the jug and observe that it contains green paint. The jug remains in its current location, and its contents do not change as a result of your observation.",
+      "mean_logprob": null,
+      "system": "## Frame Axioms and Persistence Rules\n- Looking at an object does not change its location.\n- Pouring an object does not change its location.\n- Looking at an object does not change its contents.\n\n## Retrieved similar past transitions\n\nCurrent state: Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: You move to the art studio.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nCurrent state: Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing green paint).\n\ta wood cup (containing nothing)\n\ta wood cup (containing nothing)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        15,
+        16,
+        6,
+        9,
+        10
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 17,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.0980030745267868,
+      "embedder_failed": false,
+      "n_rules": 4,
+      "active_rules": 3,
+      "rendered_rules": 3,
+      "total_prompt_tokens": 654,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 283,
+      "semantic_block_tokens": 35,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 32,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 50,
+    "done": false
+  },
+  {
+    "state": "a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\n",
+    "action": "look at jug",
+    "observation": "a jug (containing green paint)",
+    "prediction": {
+      "prediction": "Prediction: You look at the jug and see that it contains green paint. The jug itself remains in its current location, and its contents do not change as a result of your observation.",
+      "foresight": "Prediction: You look at the jug and see that it contains green paint. The jug itself remains in its current location, and its contents do not change as a result of your observation.",
+      "mean_logprob": null,
+      "system": "## Frame Axioms and Persistence Rules\n- Looking at an object does not change its contents.\n- Looking at an object does not change its location.\n- Pouring an object does not change its location.\n- Looking at an object does not change its contents.\n\n## Retrieved similar past transitions\n\nCurrent state: Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: You move to the art studio.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You pour the contents of the wood cup into the jug.\nIn your inventory, you see:\n\tan orange\nAction: mix jug\nNext state: Blue and yellow paint mix to produce green paint.\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        15,
+        16,
+        17,
+        6,
+        9
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 18,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.09337393566966057,
+      "embedder_failed": false,
+      "n_rules": 5,
+      "active_rules": 4,
+      "rendered_rules": 4,
+      "total_prompt_tokens": 570,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 212,
+      "semantic_block_tokens": 45,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 33,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 50,
+    "done": false
+  },
+  {
+    "state": "a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\n",
+    "action": "look at jug",
+    "observation": "a jug (containing green paint)",
+    "prediction": {
+      "prediction": "Prediction: You look at the jug and see that it is containing green paint. The contents of the jug remain unchanged, and its location stays the same.",
+      "foresight": "Prediction: You look at the jug and see that it is containing green paint. The contents of the jug remain unchanged, and its location stays the same.",
+      "mean_logprob": null,
+      "system": "## Frame Axioms and Persistence Rules\n- Looking at an object does not change its contents.\n- Looking at an object does not change its location.\n\n## Retrieved similar past transitions\n\nCurrent state: Blue and yellow paint mix to produce green paint.\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: a jug (containing green paint)\nIn your inventory, you see:\n\tan orange\nAction: look at jug\nNext state: a jug (containing green paint)\n\nCurrent state: You move to the art studio.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the art studio. In it, you see: \n\tthe agent\n\ta substance called air\n\ta large cupboard. The large cupboard door is closed. \n\ta paint cupboard. The paint cupboard door is closed. \n\ta table. On the table is: a jug (containing nothing).\n\ta wood cup (containing blue paint)\n\ta wood cup (containing yellow paint)\n\ta wood cup (containing red paint)\nYou also see:\n\tA door to the hallway (that is open)\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+      "n_retrieved": 5,
+      "retrieved_indices": [
+        15,
+        16,
+        17,
+        18,
+        6
+      ],
+      "retrieved_source_tasks": [
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint.",
+        "Your task is to use chemistry to create green paint. When you are done, focus on the green paint."
+      ],
+      "episodic_store_size": 19,
+      "episodic_retriever": "jaccard_topk",
+      "retrieval_latency_ms": 0.07719872519373894,
+      "embedder_failed": false,
+      "n_rules": 5,
+      "active_rules": 2,
+      "rendered_rules": 2,
+      "total_prompt_tokens": 543,
+      "prompt_token_source": "client_counter",
+      "episodic_block_tokens": 203,
+      "semantic_block_tokens": 26,
+      "memory_block_token_source": "whitespace",
+      "prediction_token_length": 27,
+      "prediction_token_source": "whitespace"
+    },
+    "score": 50,
+    "done": false
+  }
+]

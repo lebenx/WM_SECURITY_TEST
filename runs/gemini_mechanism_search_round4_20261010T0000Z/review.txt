@@ -1,0 +1,95 @@
+### Architectural Grounding & Hard Boundaries
+
+All three candidates operate strictly through **native pre-rollout/buffer ingestion or standard multi-task multi-head conditioning**. They inject no synthetic transitions, leave the native planner (MPPI/CEM) and loss formulations untouched, modify zero optimizer states, and do not rely on label noise, copula artifacts, or goal leakage.
+
+---
+
+### Candidate 1 (Rank 1): Phase-Locked Energy-Reservoir Misallocation via Shared Latent Capacity
+
+* **One-Sentence Broad Claim:** In multi-task representation-sharing world models, an attacker can steer native, high-return passive trajectories in a non-target domain to over-index low-frequency kinetic energy invariants within the shared latent encoder, inducing a blind spot for high-frequency contact-stiffness dynamics on the target domain without degrading either single-task reconstruction loss or latent norm bounds.
+* **Exact Legal Attacker Operation:** 
+  1. In multi-task TD-MPC2 (`mt30`), inject legal, high-reward expert trajectories into a source task exhibiting smooth periodic phases (e.g., `humanoid-walk` or `walker-walk`) whose state actions are downscaled/smoothed via a low-pass mechanical damper filter (physically admissible slow-drift execution).
+  2. The target task is an abrupt contact-rich task (e.g., `dog-trot` or `quadruped-jump`).
+  3. No transitions are corrupted; all tuples $(s, a, r, s')$ are strictly on-policy or verified rollouts from an uncorrupted sub-agent.
+* **Preserved Invariants:**
+  * Source task task-return $\ge \tau_{\text{nominal}}$ and target task single-step forward loss $\mathcal{L}_{\text{dyn}}$ remains statistically indistinguishable ($\Delta \le 1.8\%$).
+  * Latent spatial norm $\mathbb{E}[\|z_t\|_2]$ remains within $[0.98, 1.02]\times$ of unpoisoned baseline (SimNorm preservation).
+  * Static state distribution bounds $\min(s), \max(s)$ and action support $\mathcal{A}$ are unaltered.
+* **Nearest Primary Prior & Non-Rebranding Argument:**
+  * *Nearest Prior:* Representation poisoning via task interference / gradient conflict in multi-task RL (PCGrad, Yu et al., 2020; Multi-Task Interference in Offline RL).
+  * *Distinction:* Standard interference causes gradient sign divergence on existing heads or catastrophic forgetting. This mechanism is an **orthogonal capacity vampire**: it induces zero gradient divergence in the shared trunk at step 1, but causes the learned predictive latent basis $\mathbf{W}_{\text{rep}}$ to collapse its rank along the principal component corresponding to contact impulsive forces ($\dot{q}_{\text{contact}}$), transferring representational bandwidth entirely to low-frequency kinematic cycles without moving trunk parameter magnitudes or raising single-step target predictive error.
+* **Smallest Two-Seed Falsifier:**
+  * Train TD-MPC2 on task-pair (`walker-walk`, `dog-trot`) across Seeds 1 and 2. 
+  * *Test:* Compare the condition number $\kappa$ of the empirical target-task Jacobian $\mathbf{J} = \frac{\partial z_{t+1}}{\partial a_t}$ at ground contact moments against a control containing identical source task data volume but flat white-noise exploration. 
+  * *Falsification:* If $\kappa_{\text{poisoned}} / \kappa_{\text{control}} < 2.5$ or if target-task open-loop 1-step latent prediction loss degrades $> 5\%$ *before* rollout roll-in, the hypothesis of silent, dynamic-specific reservoir misallocation is falsified.
+* **Causal Defense:**
+  * **Spectral Latent Equalization (SLE):** Enforce an orthogonal projection penalty on the latent transition operator across tasks: $\mathcal{L}_{\text{SLE}} = \|\mathbf{U}_{\text{src}}^\top \mathbf{U}_{\text{tgt}}\|_F^2$, where $\mathbf{U}$ are the top-$k$ singular vectors of the task-specific feature covariance $\mathbb{E}[z z^\top]$.
+* **Carrier & Benchmark Plan:**
+  * *Repository:* TD-MPC2 (`mt30-48M`).
+  * *Tasks:* Pair A (`walker-walk`, `dog-trot`); Pair B (`cheetah-run`, `quadruped-run`).
+  * *Metric:* Closed-loop MPPI rollout success drop on contact-transition phases vs. zero drop on free-flight phases.
+
+---
+
+### Candidate 2 (Rank 2): Epistemic Bottleneck Trapping via Admissible Near-Equilibrium Drift
+
+* **One-Sentence Broad Claim:** In non-parametric or ensemble-based transition models, an attacker can legally bias the sampling distribution of non-critical coordinates toward an unforced equilibrium attractor, collapsing the ensemble’s epistemic variance along unobserved recovery manifolds while maintaining nominal training loss and global coverage statistics.
+* **Exact Legal Attacker Operation:**
+  1. In MBRL-Lib (`PETS-CEM`), introduce native trajectories collected by an agent executing stabilizing linear-quadratic control along benign boundary zones (e.g., high-angle gliding with zero actuation in `CartPole` or zero-stiff slip in `HalfCheetah`).
+  2. Actions remain strictly within legal torque bounds $\mathcal{A} \in [-1, 1]$, and state transitions conform to identical MuJoCo kinematics with no sensor shift.
+  3. The volume of drift trajectories replaces $< 12\%$ of the standard exploration buffer.
+* **Preserved Invariants:**
+  * Ensemble empirical loss $\frac{1}{E}\sum_e \mathcal{L}_e(s, a, s')$ matches the baseline within statistical noise ($p > 0.15$ Kolmogorov-Smirnov test).
+  * Empirical state marginal support $\mathrm{supp}(s)$ covers nominal operational boundaries (no missing support).
+  * Covariance determinant $\det(\boldsymbol{\Sigma}_s)$ of visited states decreases by less than $2\%$.
+* **Nearest Primary Prior & Non-Rebranding Argument:**
+  * *Nearest Prior:* Epistemic uncertainty exploitation / Adversarial Trajectory Injection (Pathak et al., 2019; Sun et al., 2022).
+  * *Distinction:* Conventional attacks force the ensemble into out-of-distribution (OOD) spaces where epistemic uncertainty spikes, causing conservative planners to stall or fail. Epistemic Bottleneck Trapping does the opposite: it **artificially deflates epistemic uncertainty** on a critical boundary manifold by saturating the ensemble with degenerate, zero-energy physical balances, causing the native CEM planner to falsely trust catastrophic, under-actuated transitions without recognizing them as OOD.
+* **Smallest Two-Seed Falsifier:**
+  * Run PETS on `CartPole` and `Pusher` across Seeds 101 and 102.
+  * *Test:* Evaluate the ensemble variance $\sigma^2_{\text{ens}}(s_{\text{recov}}, a_{\text{max}})$ at the unstable boundary recovery point.
+  * *Falsification:* If the ensemble uncertainty does not deflate by at least a factor of $3\times$ while the actual open-loop integration divergence increases $> 50\%$, reject the candidate.
+* **Causal Defense:**
+  * **Dynamic Fisher-Weighted Trajectory Resampling:** Reweight transition tuples during ensemble mini-batch formation inversely proportional to the local empirical dynamic stiffness: $w(s, a) \propto \|\nabla_a s'\|_F^{-1} \cdot \mathrm{det}(\nabla_s s')$.
+* **Carrier & Benchmark Plan:**
+  * *Repository:* MBRL-Lib (`GaussianMLP` ensemble + `PETS/CEM`).
+  * *Tasks:* `CartPole` (swing-up under torque limits) and `HalfCheetah` (high-velocity flip prevention).
+  * *Metric:* Ratio of planned predicted path cost vs. executed path cost under perturbed initial states.
+
+---
+
+### Candidate 3 (Rank 3): Causal Graph Inversion via Invariant Action-Response Delay Conditioning
+
+* **One-Sentence Broad Claim:** In autoregressive spatial-temporal world models predicting visual-physical transitions, an attacker can systematically decouple fine motor causation from gross scene motion by injecting legal trajectories containing multi-step delayed actions, inducing an internal attribution swap where physical displacements are mapped to background environmental motion rather than end-effector forces.
+* **Exact Legal Attacker Operation:**
+  1. In the released `WorldAgen LIBERO` state/action predictor, provide legal demonstrations where the agent applies a 2-step delayed open-loop response sequence (pause-and-latch trajectory) during non-critical visual-approach phases.
+  2. The trajectory is entirely valid, executable, achieves task completion, and contains no synthetic frame edits or altered timestamps.
+* **Preserved Invariants:**
+  * End-to-end task completion label $= 1.0$.
+  * Per-frame visual token distribution divergence $\mathcal{D}_{\text{KL}}(p_{\text{clean}}(o) \parallel p_{\text{poison}}(o)) \approx 0$.
+  * Temporal optical flow bounds on manipulated objects remain within nominal limits.
+* **Nearest Primary Prior & Non-Rebranding Argument:**
+  * *Nearest Prior:* Action-conditioned video model degradation / Confounding in offline imitation (de Haan et al., 2019 "Causal Confusion in Imitation Learning").
+  * *Distinction:* Causal confusion in policy learning focuses on the *policy* latching onto historical indicators (e.g., past actions or screen color). In contrast, this attack manipulates the **learned forward world model** so that the latent transition dynamic operator $\hat{T}(z_t, a_t) \to z_{t+1}$ assigns the gradient $\frac{\partial z_{t+1}}{\partial a_t} \to 0$ and transfers it to the temporal auto-regressive context $\frac{\partial z_{t+1}}{\partial z_{t-1}}$, making the world model hallucinate self-acting objects during multi-step model-predictive rollouts.
+* **Smallest Two-Seed Falsifier:**
+  * Train `WorldAgen` on LIBERO manipulation tasks across Seeds 42 and 43.
+  * *Test:* Compute the model's cross-attention map attribution from the predicted end-effector displacement token at $t+1$ to the input action token $a_t$.
+  * *Falsification:* If the integrated gradients attribution from object state $s'_{t+1}$ to action $a_t$ does not drop by $> 60\%$ relative to control across both seeds, the causal inversion claim is falsified.
+* **Causal Defense:**
+  * **Interventional Action Permutation Loss:** Apply an auxiliary training loss that checks frame prediction variance under in-batch temporal permutation of $a_t$: $\mathcal{L}_{\text{inv}} = \max(0, \epsilon - \|\hat{o}_{t+1}(a_t) - \hat{o}_{t+1}(\pi(a_t))\|_2^2)$.
+* **Carrier & Benchmark Plan:**
+  * *Repository:* Released WorldAgen LIBERO harness.
+  * *Tasks:* `LIBERO-Spatial` (Pick and place) and `LIBERO-Object` (Drawer opening).
+  * *Metric:* Open-loop multi-step prediction error on interacting frames vs. static approach frames; target task failure rate when guided by native trajectory optimization.
+
+---
+
+### Candidate Comparison & Selection Rationale
+
+| Candidate | Target Carrier | Invariant Preserved | Mechanism Type | Implementation Difficulty |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. Energy Misallocation** | TD-MPC2 (`mt30`) | Latent norms, 1-step Dyn Loss, Multi-task Returns | Shared-Trunk Capacity Vampire | **Low** (Uses native TD-MPC2 data pipeline) |
+| **2. Epistemic Trapping** | MBRL-Lib (`PETS`) | Global Loss, Marginal State Support | Ensemble Epistemic Collapse | **Low** (Configuration & Buffer ingestion) |
+| **3. Causal Inversion** | WorldAgen (`LIBERO`) | Frame Token Dist, Task Completion | Action-Context Cross-Attribution Swap | **Medium** (Attention instrumentation required) |
+
+**Recommendation:** Proceed with **Candidate 1**. It directly leverages the multi-task native setting of TD-MPC2 (`mt30`), bypasses the failed SimNorm interventions noted in your negative evidence (because it alters dynamic frequency distribution without violating latent spatial norms), and creates an invariant falsifiable via empirical Jacobian condition numbers across two distinct continuous-control task families.

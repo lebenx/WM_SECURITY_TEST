@@ -1,0 +1,31 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "cascade_source": "runs/tdmpc_cascade_heldout_matched_v1/cascade_source.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "source_steps": 300,
+  "updates": 300,
+  "learning_seed": 31,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "population": 96,
+  "horizon": 3,
+  "bank_seed": 2026,
+  "permutation_seed": 933,
+  "top_k": 10,
+  "output": "runs/tdmpc_branch_support_audit_round73",
+  "conditions": [
+    "clean",
+    "random",
+    "cascade",
+    "reverse_cascade",
+    "shuffled_cascade"
+  ],
+  "operation": "Fixed legal action bank and fixed physical returns; compare native sampled-Q against all-head conservative scores after source adaptation.",
+  "gate": "A repair is useful only if it recovers cascade ranking on both seeds while clean/random top-k true return changes <3 percent.",
+  "api_requests": 0,
+  "gpu": "short CUDA inference/adaptation only"
+}

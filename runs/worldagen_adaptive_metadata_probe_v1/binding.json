@@ -1,0 +1,86 @@
+{
+  "protocol": {
+    "path": "/home/xhj/WM_Security/configs/worldagen_adaptive_metadata_v1.json",
+    "sha256": "66f64ef07949060d255eaa8f0620f2d0c5555b592f2bfbc27416c7d74648d170"
+  },
+  "prefix_cache": {
+    "path": "/home/xhj/WM_Security/runs/worldagen_adaptive_metadata_prefix_v1/prefix.pt",
+    "sha256": "2b76859a68f053ff1ee6a30c9de41043c8950d9a98fdfb8334e7a6591389b976"
+  },
+  "registered_initial_adapter": {
+    "path": "/home/xhj/WM_Security/runs/worldagen_adaptive_metadata_prefix_v1/initial_adapter.pt",
+    "sha256": "96b5ac0b72ce5c011dc12ee60e51d1bd61297f8011942c5ea8172940157d1fa5"
+  },
+  "implementation": [
+    {
+      "path": "/home/xhj/WM_Security/scripts/pilot_worldagen_adaptive_metadata_probe.py",
+      "sha256": "a48c28804aa424f1331b9db1157df54ab2922238656e76fd0378a5508bce40cb"
+    },
+    {
+      "path": "/home/xhj/WM_Security/scripts/pilot_worldagen_forecast_ttt_task.py",
+      "sha256": "ea6d6f8d0ace782bc568c6fde440239ab81767ad8f73a5106a29e99dd40c2742"
+    },
+    {
+      "path": "/home/xhj/WM_Security/scripts/pilot_worldagen_libero_closed_loop.py",
+      "sha256": "31d006225aa51a80349a1195c088fc920f032f881c3ef153377cd63f6f86d52f"
+    },
+    {
+      "path": "/home/xhj/WM_Security/vendor/WorldAgen/models/model.py",
+      "sha256": "ffe3b775a29a9c86999a278c77939c942665781e58dc55ec701f0ce780a8c0f3"
+    },
+    {
+      "path": "/home/xhj/WM_Security/vendor/WorldAgen/models/qwen3.py",
+      "sha256": "57940e9c1f163ce1ab1949869cfb04dcd3774ffe3ce56cb2fc0530df0848269d"
+    }
+  ],
+  "model_assets": [
+    {
+      "path": "/home/xhj/WM_Security/models/WorldAgen/libero-38.pth",
+      "sha256": "028a32f4b91809fc84c3133031d07300ce04876c716ef8932c019e1bfcb8e770"
+    },
+    {
+      "path": "/home/xhj/WM_Security/models/WorldAgen/ViT-B-32.pt",
+      "sha256": "40d365715913c9da98579312b702a82c18be219cc2a73407c4526f58eba950af"
+    },
+    {
+      "path": "/home/xhj/WM_Security/models/WorldAgen/mae_pretrain_vit_base.pth",
+      "sha256": "aec5f0b68e5f3193a00b07bc65a37440db549c15b36b8bea242606cc40c4bc5d"
+    },
+    {
+      "path": "/home/xhj/WM_Security/models/WorldAgen/provenance.json",
+      "sha256": "95b813c3423f4e33942d382aeab3413a71c9b8159b3f4dfd9e069939947faccc"
+    }
+  ],
+  "contract": {
+    "adapter_seed": 42,
+    "windows": 30,
+    "world_loss_scale": 0.1,
+    "lr": 0.0005,
+    "weight_decay": 0.01,
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "eps": 1e-08,
+    "clip_norm": 0.1,
+    "optimizer_updates_per_assignment": 1,
+    "surrogate": "mean(SmoothL1(arm,beta=1)+0.01*BCE(gripper))",
+    "surrogate_rng": "20261014+window_start; model.eval; original Goal0",
+    "collection_rng": "seed42 once; same saved RNG before either goal at each window",
+    "selector_seed": 314159,
+    "selector": "one lexicographic i<j sweep; skip equal labels; strictly improving swaps only",
+    "goal_counts": [
+      15,
+      15
+    ],
+    "metadata_poison_fraction_vs_native_no_lang": 1.0,
+    "restarts": 0,
+    "heldout_access": false,
+    "task_evaluation": false,
+    "attack_surrogate_is_task_utility": false
+  },
+  "torch": "2.2.0+cu121",
+  "numpy": "1.26.4",
+  "transformers": "4.52.4",
+  "threads": 4
+}

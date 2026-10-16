@@ -1,0 +1,122 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "status": "bounded_read_only_screen_completed_no_experiment_started",
+  "decision": "no_go_for_starting_this_round_not_a_general_privacy_research_veto",
+  "question": "Can native DINO-WM PointMaze queries reveal private goal information beyond the complete first executed action segment, with a low-cost identifiable test and a substantive claim?",
+  "decision_reason": "The source establishes a plausible goal-private forecasting interface, but this round has not specified a sufficiently strong behavior baseline or a concrete contribution beyond applying optimizer-query privacy. A matched native Clean task gate is also unmeasured. These are reasons not to start this particular experiment; they do not establish absence of leakage or rule out a useful systems study.",
+  "prior_evidence": {
+    "mechanism": "wm_private_counterfactual",
+    "source": "reports/research_archive/mechanisms.json:792",
+    "old_result_scope": "Old row-wise leave-one-out 0% metrics were invalid for held-out-seed inference. Corrected grouped results and the old custom planner do not establish native incremental privacy, and are not evidence of universal non-leakage.",
+    "correction_report": "reports/private_query_statistical_correction_20261015.json",
+    "native_marker_report": "reports/dino_private_goal_observability_20261015.json",
+    "resource_followup": "reports/cosmos_decoded_future_observation_20261016.json:125"
+  },
+  "new_native_facts": [
+    {
+      "finding": "PointMaze make_env does not forward the YAML with_target field. It constructs MazeEnv with the constructor default with_target=False; set_marker then moves the marker to OFF_TARGET. The YAML field alone would misleadingly suggest a visible target.",
+      "sources": [
+        "vendor/jepa-wms/evals/simu_env_planning/envs/pointmaze_gym_wrap.py:91-106",
+        "vendor/jepa-wms/evals/simu_env_planning/envs/pointmaze_env/maze_model.py:166-177",
+        "vendor/jepa-wms/evals/simu_env_planning/envs/pointmaze_env/maze_model.py:263-267",
+        "vendor/jepa-wms/configs/evals/simu_env_planning/mz/dino-wm/mz_L2_cem_sourcerandstate_H6_nas6_ctxt2_r224_alpha0.1_ep96_decode.yaml:194-197"
+      ],
+      "scope": "Source inspection, not a new rendering or goal-independence experiment. Other metadata, initialization correlations and service-visible state still require an explicit observer definition."
+    },
+    {
+      "finding": "GC_Agent encodes the goal and constructs the goal-distance objective separately from model.unroll. Keeping goal encoding and scoring on a client is a coherent partition of this native computation.",
+      "sources": [
+        "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py:103-123",
+        "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:48-50"
+      ],
+      "scope": "A proposed client/service split, not a discovered deployed remote service or independently verified protected deployment."
+    },
+    {
+      "finding": "The official PointMaze configuration uses horizon=6, num_act_stepped=6, 30 CEM iterations, 300 samples and 10 elites. Every iteration queries the updated mean; the final returned actions are mean[:num_act_stepped]. A full-horizon call therefore returns the entire final mean, with no configured unexecuted final-plan suffix.",
+      "sources": [
+        "vendor/jepa-wms/configs/evals/simu_env_planning/mz/dino-wm/mz_L2_cem_sourcerandstate_H6_nas6_ctxt2_r224_alpha0.1_ep96_decode.yaml:198-212",
+        "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:289-333"
+      ],
+      "scope": "Configuration and source fact only. These are planner/model steps; actual environment action repetition, early termination, time limits and realized execution must be recorded before claiming equality with a complete executed segment."
+    },
+    {
+      "finding": "The official README lists a distinct DINO-WM PointMaze checkpoint. The earlier resource report records an approximately 275 MB public asset; this screen did not independently fetch or validate its size, weights or competence.",
+      "sources": [
+        "vendor/jepa-wms/README.md:58-64",
+        "reports/cosmos_decoded_future_observation_20261016.json:131-134"
+      ],
+      "official_checkpoint_url": "https://huggingface.co/facebook/jepa-wms/blob/main/dino_wm_pointmaze.pth.tar",
+      "native_clean_on_this_checkpoint": "unmeasured"
+    }
+  ],
+  "three_distinct_questions": {
+    "conditional_information": {
+      "population_estimand": "I(G; T | X, B), where G is the prespecified protected goal, X is public context and side information, B is the precisely defined complete first executed behavior, and T is the additional query transcript at a fixed observation cutoff.",
+      "limitation": "The present proposal gives neither an identifiable low-cost estimation model nor sufficient data for reliable nonparametric estimation with high-dimensional continuous B. A difference between fitted decoders is not automatically this conditional mutual information.",
+      "not_a_universal_requirement": "Estimating conditional mutual information, proving a sufficient statistic, or obtaining exact behavior-matched pairs is not necessary for every empirical privacy study. Exact matching would be one sufficient design route, not a general prerequisite."
+    },
+    "fixed_attacker_risk_advantage": {
+      "operational_estimand": "Delta = E[loss(G, f_B(X,B)) - loss(G, f_T(X,B,T))] for prespecified, frozen attackers and a held-out task distribution, with the loss chosen before evaluation.",
+      "what_is_identifiable": "Independent held-out evaluations can estimate this particular attacker's risk improvement, including continuous goal-localization loss or a specified proper scoring loss. Uncertainty must respect independent roots/goals and the training/test design.",
+      "what_is_not_identified": "A positive Delta alone does not prove positive conditional mutual information, optimal-adversary advantage, or the absence of behavior leakage. T may help a restricted attacker compute information already recoverable from B. A negative result also does not prove privacy.",
+      "required_design_work_not_completed": "Define the protected goal, sampling distribution, observer cutoff and precision, all public inputs, complete executed actions/outcomes, attacker class/training budget and strong behavior-only inference controls. Split by independent states and goals; avoid the old paired-row leakage. Do not call a single goal-classification comparison a general privacy guarantee or failure.",
+      "current_status": "No attacker, threshold, sample budget or calibrated strong baseline was preregistered; no evaluation was started."
+    },
+    "novelty_and_value": {
+      "assessment": "Removing the visible marker and using a native pretrained controller improves validity over the old custom-planner experiment. It does not by itself establish a new mechanism: the observed source path is private goal scoring followed by adaptive CEM proposals.",
+      "non_veto": "Prior optimizer-query and cloud-control privacy work does not imply that every empirical WM privacy study is redundant. A compelling native systems finding, a distinct trust-boundary consequence, or a demonstrated privacy/utility result could be valuable without a new general privacy principle.",
+      "current_gap": "This round did not settle such a concrete claim or a decisive test that distinguishes it from a carrier change. The decision does not assert that the interface has no possible substantive contribution."
+    }
+  },
+  "first_round_control_caveat": {
+    "status": "theoretical_analysis_not_an_experimental_result",
+    "causal_structure": "Let R be goal-independent planner randomness, T0 the first candidate batch, and B the final executed behavior. G -> B <- R -> T0 is a possible path. Conditioning on B can create dependence between G and T0 even when T0 is marginally independent of G at fixed initial context.",
+    "consequence": "A first-round transcript is not automatically a zero-leakage negative control for an analysis already conditioned on behavior. This is a possibility, not a measured dependency in DINO-WM.",
+    "design_implication": "Specify which randomness is observable and consider a stronger randomness-aware baseline as a separate control. Giving an attacker the full private random tape changes its side information and must be labeled; it is not silently part of the deployed threat model."
+  },
+  "primary_literature": [
+    {
+      "title": "Optimal query complexity for private sequential learning against eavesdropping",
+      "url": "https://proceedings.mlr.press/v130/xu21f.html",
+      "review_scope": "Official proceedings abstract rechecked.",
+      "relevance": "An adversary observes sequential queries without responses; generic query-only learner privacy predates the proposed WM application."
+    },
+    {
+      "title": "Learner-Private Convex Optimization",
+      "url": "https://arxiv.org/abs/2102.11976",
+      "review_scope": "Official arXiv abstract rechecked.",
+      "relevance": "Iterative optimization queries can reveal the learned optimum. Its oracle and mathematical assumptions were not transferred as a theorem about native CEM."
+    },
+    {
+      "title": "Privacy-Preserving Constrained Quadratic Optimization with Fisher Information",
+      "url": "https://farokhi.xyz/wp-content/uploads/2020/03/ieee_spl_2020_fisher_privacy.pdf",
+      "review_scope": "Author-hosted paper, introduction and Section II through the cost-parameter observation construction, equations (2)-(6) and Proposition 1.",
+      "relevance": "Addresses estimation of private cost parameters from optimization iterates, not only recovery of the final optimum. This is related prior, not a proof covering visual CEM or its conditional leakage."
+    },
+    {
+      "title": "Symmetries and isomorphisms for privacy in control over the cloud",
+      "url": "https://arxiv.org/abs/1906.07460",
+      "review_scope": "Official arXiv abstract rechecked.",
+      "relevance": "Outsourced control already raises objective privacy and attacker-side-information questions. No full theorem audit or experiment reproduction was performed."
+    }
+  ],
+  "future_reconsideration_scope": "A future proposal may choose a bounded operational attacker-risk claim rather than conditional MI, specify and validate a strong behavior baseline and task distribution, and establish matched native Clean competence. The contribution must then be assessed on its actual result and practical significance. This report authorizes no new experiment and prescribes neither exact matching nor MI estimation as universal entry conditions.",
+  "activity": {
+    "weight_downloads": 0,
+    "new_source_or_dataset_downloads": 0,
+    "model_loads": 0,
+    "model_forward_calls": 0,
+    "planner_executions": 0,
+    "environment_executions": 0,
+    "model_or_agent_api_requests": 0,
+    "gemini_requests": 0,
+    "primary_literature_web_reads": true,
+    "web_read_scope_note": "Primary-page retrieval for literature verification occurred; the zero API count denotes experimental model/agent API requests, not browser retrieval.",
+    "report_files_written": [
+      "reports/native_private_query_gate_screen_20261016.json"
+    ],
+    "registry_or_html_edits": 0,
+    "validation": "JSON parsing only after report creation"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "decision": "REJECT",
+  "novelty_score": 5.2,
+  "distinct_mechanism": false,
+  "short_gate": "max_{s \\in \\mathcal{S}_{\\text{bound}}} \\|\\nabla_s \\mu_\\theta(s)\\|_{2} > 8.0 \\;\\wedge\\; \\mathcal{L}_{\\text{1-step}} \\le 1.15 \\times \\mathcal{L}_{\\text{clean}} \\;\\wedge\\; \\Delta J_{\\text{CEM}} \\ge 40\\% \\text{ on Reacher-v4 and Hopper-v4}",
+  "reason": "The phenomenon described\u2014smooth Gaussian dynamics models failing at non-smooth physical hard-stops and contact boundaries due to local Lipschitz explosion\u2014is a well-documented inductive bias limitation in MBRL (e.g., Suh et al., Parmas et al.). Furthermore, the failure mode in CEM is textbook rollout compounding error driven by model misspecification, directly violating the constraint that the mechanism must be distinct from compounding error. Inducing this regime via legal oscillatory transitions is an incremental active exploration trick rather than a novel vulnerability."
+}

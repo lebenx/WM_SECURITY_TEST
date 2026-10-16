@@ -1,0 +1,22 @@
+{
+  "status": "completed_global_condition_carrier_probe",
+  "checkpoint": "models/A2World/a2world-pretrained.pt",
+  "action_shape": [
+    20,
+    14
+  ],
+  "fixed_prefix_steps": 4,
+  "changed_suffix_steps": 16,
+  "prefix_exact_equal": true,
+  "suffix_changed": true,
+  "affine_embedding_relative_gap": 0.02689322642982006,
+  "adaln_embedding_relative_gap": 0.9056231379508972,
+  "crossattn_embedding_relative_gap": 1.2513082027435303,
+  "forward_path_semantics": {
+    "action_flattened": "b t d -> b 1 (t d)",
+    "affine_condition_broadcast": "timestep_embedding[B,T,D] + action_embedding[B,1,D]",
+    "adaln_condition_broadcast": "adaln_lora[B,T,3D] + action_embedding[B,1,3D]",
+    "crossattn_condition": "action_to_crossattn_emb(action_flat) + crossattn_emb",
+    "evidence_scope": "carrier-level only; no generated video or task harm"
+  }
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "status": "author_static_review_pass_after_coordinated_startup_fix",
+  "review_date": "2026-10-16",
+  "reviewer_role": "Replay implementation author; not an independent review or empirical validation.",
+  "protocol": "configs/safedreamer_mode_mediator_gate_20261016.json",
+  "replay": "scripts/replay_safedreamer_mode_gate.py",
+  "first_query_runner": "scripts/probe_safedreamer_mode_gate.py",
+  "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+  "material_blockers_remaining": [],
+  "coordinated_fix": {
+    "problem": "A fresh replay process lacked the CUDA11 library and libdevice re-exec used by the current first-query runner.",
+    "resolution": "Copied its standard-library-only LD_LIBRARY_PATH, PATH, XLA_FLAGS and process-marker initialization into replay main before output creation, timing or JAX imports. Only the replay script was changed; no protocol or native source changed.",
+    "source": "scripts/replay_safedreamer_mode_gate.py:116",
+    "validation": "python -m py_compile scripts/replay_safedreamer_mode_gate.py completed with exit code 0. No replay or model imports were executed."
+  },
+  "checks": [
+    {
+      "item": "Independent calibration precedes intervention",
+      "finding": "One original final-loop replay must exactly match every cached trajectory leaf, full action bank, costs, returns, safe count, elite indices, mean, standard deviation and returned action. Any discrepancy stops before common-key inference.",
+      "source": "scripts/replay_safedreamer_mode_gate.py:307"
+    },
+    {
+      "item": "Frozen inputs and random-call ordering",
+      "finding": "The final-loop AST is taken from the unchanged native CCE body. The saved mean/std and Ninjax RNG plus reserve queue are restored, and all 500 copies of the posterior are checked against the actual policy posterior. Common-key replay must preserve all 16 proposed actions, all 15 prior keys, initial latent state, and final RNG/reserve exactly. Gaussian actions depend on mean/std and their own native keys, not the altered latent trajectory.",
+      "sources": [
+        "scripts/replay_safedreamer_mode_gate.py:41",
+        "scripts/replay_safedreamer_mode_gate.py:225",
+        "scripts/replay_safedreamer_mode_gate.py:315",
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py:350",
+        "vendor/SafeDreamer/SafeDreamer/ninjax.py:114",
+        "vendor/SafeDreamer/SafeDreamer/ninjax.py:268"
+      ]
+    },
+    {
+      "item": "Per-candidate trajectory-law contract",
+      "finding": "Native categorical sampling uses FP32 logits after the unchanged RSSM unimix transformation. The common arm vmaps native OneHotDist.sample over candidate rows using the same actual per-step key, rather than copying a sampled category. The installed TFP JAX backend samples independent Gumbel coordinates and takes categorical argmax. A row retains its native 48-coordinate transition law, with fresh native keys over time; only dependence between candidates changes. This is a source-level probabilistic argument, not an empirical equality test over seeds or a claim that the two joint forecast laws are equal.",
+      "sources": [
+        "scripts/replay_safedreamer_mode_gate.py:77",
+        "vendor/SafeDreamer/SafeDreamer/nets.py:74",
+        "vendor/SafeDreamer/SafeDreamer/nets.py:103",
+        "vendor/SafeDreamer/SafeDreamer/jaxutils.py:77",
+        ".venv-safedreamer/lib/python3.9/site-packages/tensorflow_probability/substrates/jax/distributions/onehot_categorical.py:171",
+        ".venv-safedreamer/lib/python3.9/site-packages/tensorflow_probability/substrates/jax/distributions/independent.py:274",
+        ".venv-safedreamer/lib/python3.9/site-packages/tensorflow_probability/python/internal/backend/jax/random_generators.py:95"
+      ]
+    },
+    {
+      "item": "Native scoring and padding",
+      "finding": "Standard OSRP costs are signed learned-head means on the 15 future states, excluding the initial state, summed and multiplied by 1000/15. Safe count uses strict cost<2. The safe-reward branch's fixed-size nonzero pads with candidate 0; a selected filtered position at or beyond the real safe count stops attribution. The code does not repair native padding and then relabel it as unchanged native behavior.",
+      "sources": [
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py:38",
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py:316",
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py:367",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:647",
+        "scripts/replay_safedreamer_mode_gate.py:325"
+      ]
+    },
+    {
+      "item": "Same-forecasts mode control",
+      "finding": "Always-minimum-cost uses the same complete costs, trajectories and actions, takes the original 50 lowest-cost candidates and applies the same 0.1 old mean plus 0.9 elite mean and native standard deviation. It adds no model inference. When native already selects minimum cost, the full mean/std/action must match exactly. Both first action and full warm-start sequence are saved; their safety has not been physically evaluated.",
+      "source": "scripts/replay_safedreamer_mode_gate.py:58"
+    },
+    {
+      "item": "Bounded work and interpretation",
+      "finding": "Maximum two 15-step, 500-candidate replays, 30 RSSM batch steps and 15000 candidate transitions; one checkpoint load, no encoder, full policy, environment, training or API calls. Independent mismatch stops the common arm. No mode crossing or selected padding stops this fixed operation. A crossing is only switch reachability; Clean task competence and actual harm remain unmeasured.",
+      "source": "scripts/replay_safedreamer_mode_gate.py:134"
+    }
+  ],
+  "runtime_limits": {
+    "unexecuted_calibration": "Single-loop compilation and audit outputs can affect floating-point compilation; exact runtime calibration remains required and must not be relaxed after observing a discrepancy.",
+    "gpu_budget": "A 5GiB allocator setting plus process monitoring is not a hard OS quota. The 6GiB limit remains a stop budget. Root should retain an outer process timeout because Python signal handling cannot guarantee immediate interruption of a native CUDA call.",
+    "metadata_note": "Replay reconstructs space dtype/shape rather than action bounds. The extracted Gaussian CCE body reads action shape and clips explicitly to [-1,1]; it does not consult Space.low/high. No environment or actor action is sampled by replay.",
+    "scope": "Added restricted research sampler; no deployed third-party writer, successful safety attack, completed Clean episode, population inference or novel mechanism is established."
+  },
+  "review_activity": {
+    "model_calls": 0,
+    "environment_calls": 0,
+    "gpu_calls": 0,
+    "model_api_calls": 0,
+    "network_requests": 0,
+    "training_updates": 0,
+    "static_compilation_commands": 1
+  }
+}

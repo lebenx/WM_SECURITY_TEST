@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-09",
+  "candidate_id": "H_provenance_confounded_branch_splice",
+  "one_sentence_claim": "Under partial observability, source-valid feedback from another hidden branch can preserve every local transition tuple while causing a recurrent world model to carry the wrong belief into counterfactual planning.",
+  "status": "rejected_as_observation_replacement_not_world_model_specific",
+  "operation": "In a two-branch POMDP, replace the victim's branch cue with an authentic cue from a separate episode, then continue the victim's physical episode unchanged. The inserted cue, action, reward, and next observation each occur in clean support; only their hidden-branch provenance is inconsistent.",
+  "short_gate": {
+    "run": "runs/branch_provenance_reduction_v0/summary.json",
+    "settings": "Three training seeds, 2500 training episodes per seed, 160 full-batch epochs, 200 balanced evaluation episodes, GRU recurrent model, feedforward one-step model, exact Bayesian planner, and attack-aware Bayesian control.",
+    "recurrent_success_rates": {
+      "clean": [1.0, 1.0, 1.0],
+      "opposite_valid_splice": [0.0, 0.0, 0.0],
+      "random_valid_splice": [0.455, 0.485, 0.495]
+    },
+    "exact_bayes_success_rates": {
+      "clean": [1.0, 1.0, 1.0],
+      "opposite_valid_splice": [0.0, 0.0, 0.0],
+      "random_valid_splice": [0.455, 0.485, 0.495]
+    },
+    "attack_aware_bayes_success_rates": {
+      "opposite_valid_splice": [1.0, 1.0, 1.0]
+    },
+    "audits": {
+      "fixed_action_local_tuple_multiset_equal": true,
+      "all_evaluation_local_tuples_in_clean_support": true,
+      "full_history_multiset_equal": false,
+      "model_weights_unchanged_during_evaluation": true,
+      "api_requests": 0,
+      "gpu_work": false
+    }
+  },
+  "closest_priors": [
+    "https://arxiv.org/abs/2003.08938",
+    "https://arxiv.org/abs/2609.08230",
+    "https://papers.neurips.cc/paper_files/paper/2025/file/52d36bc3b2d26276337cd5111b4e7351-Paper-Conference.pdf"
+  ],
+  "decision_cn": "三种训练种子中，递归模型和知道真实观测规律的精确贝叶斯规划器都从100%降到0%；知道线索被反转的攻击感知贝叶斯规划器恢复到100%。局部转移元组支持完全保持，但完整历史多重集不保持。因此该短测证明的是有效观测替换／隐藏分支错配，而不是世界模型独有的安全机制，退役，不进入原生任务或 GPU 扩展。",
+  "api_review": {
+    "run": "runs/gemini_branch_provenance_review_20261009T1300Z/summary.json",
+    "status": "success_transport_but_invalid_structured_review",
+    "finding": "The response was a bare list of three proposed citations rather than the requested fields; two URLs resolve to unrelated papers and the third could not be verified. It is not used as novelty evidence."
+  },
+  "accepted_claim": null
+}

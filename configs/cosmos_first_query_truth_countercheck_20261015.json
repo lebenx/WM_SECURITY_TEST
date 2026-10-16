@@ -1,0 +1,144 @@
+{
+  "schema_version": 1,
+  "registered_at_utc": "2026-10-15T11:58:27.352591+00:00",
+  "status": "frozen_before_new_replay_or_model_execution",
+  "question": "For the already identified Cosmos task3/init2 harmful first selection, do actual fixed-candidate 16-control future features restore the successful candidate ranking under the unchanged native Value scorer?",
+  "selection_scope": "Post-hoc mechanism diagnostic of the sole known harmful root. Not a new attack, independent replication, new episode success estimate, or reopening of the failed 30-root expansion gate.",
+  "prior_evidence": "reports/cosmos_first_selection_mediation_20261015.json",
+  "sources": {
+    "clean": {
+      "episode": "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task03_init02_clean.json",
+      "trace": "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task03_init02_clean.jsonl",
+      "first_query": "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task03_init02_clean_chunks.jsonl"
+    },
+    "swap": {
+      "episode": "runs/cosmos_native_goal_intervention_matched30_v1/libero_goal_task03_init02_goal_swap.json",
+      "trace": "runs/cosmos_native_goal_intervention_matched30_v1/libero_goal_task03_init02_goal_swap.jsonl",
+      "first_query": "runs/cosmos_native_goal_intervention_matched30_v1/libero_goal_task03_init02_goal_swap_chunks.jsonl"
+    },
+    "forced0": {
+      "episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json",
+      "trace": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.jsonl",
+      "first_query": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean_chunks.jsonl"
+    },
+    "forced1": {
+      "episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json",
+      "trace": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.jsonl",
+      "first_query": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean_chunks.jsonl"
+    }
+  },
+  "task_id": 3,
+  "init_id": 2,
+  "suite": "libero_goal",
+  "original_goal": "open the top drawer and put the bowl inside",
+  "forecast_goal_swap": "put the bowl on top of the cabinet",
+  "candidate_indices": [
+    0,
+    1
+  ],
+  "candidate_seeds": [
+    31,
+    32
+  ],
+  "seed": 31,
+  "environment_seed": 0,
+  "settle_steps": 10,
+  "horizon_controls": 16,
+  "camera_size": 256,
+  "runtime": ".venv-worldagen/bin/python",
+  "torch_version": "2.2.0+cu121",
+  "numpy_version": "1.26.4",
+  "offload": false,
+  "cuda_memory_fraction": 0.28,
+  "minimum_free_gpu_mib": 8192,
+  "replay_output": "runs/cosmos_first_query_truth_replay_20261015",
+  "inference_output": "runs/cosmos_first_query_truth_inference_20261015",
+  "replay_cache_schema": {
+    "initial": "initial_obs.npz",
+    "endpoints": [
+      "candidate0_endpoint_obs.npz",
+      "candidate1_endpoint_obs.npz"
+    ],
+    "keys": [
+      "agentview_image",
+      "robot0_eye_in_hand_image",
+      "robot0_gripper_qpos",
+      "robot0_eef_pos",
+      "robot0_eef_quat"
+    ]
+  },
+  "frozen_quantities": [
+    "original physical task/reset",
+    "both historical executed float64 action sequences",
+    "current observation",
+    "Policy and Value text",
+    "Value seeds31/32",
+    "checkpoint and native bf16 inference backend",
+    "horizon16",
+    "native value argmax"
+  ],
+  "replay_gate": {
+    "initial_settled_states_and_initial_png": "exact dtype/shape/values where recorded",
+    "every_recorded_physical_step": "exact eef_before/eef_after/eef_quaternion/gripper_qpos/action/reward/done/task_success for first16 controls",
+    "endpoints": "New lossless images from an exact-physical-field replay; no historical lossless endpoint exists for direct pixel equality. Do not claim otherwise.",
+    "early_termination": "Stop and mark invalid if success or done occurs before16."
+  },
+  "inference_calibration_gate": {
+    "clean": "Regenerate two original candidates, future and Value. Exact historical controls, available normalized controls, two Values, selection and selected future RMS.",
+    "swap": "Reuse same action latents, change only Future text. Exact historical two Values, selection, selected normalized/physical controls and selected future RMS.",
+    "failure": "Preserve outputs and terminate; do not widen tolerances, change seed/precision/backend or retry.",
+    "limit": "Full historical latents were not stored. Scalar/control/RMS equality is calibration of available records, not proof of tensor-identical historical forecasts."
+  },
+  "true_future_codec": {
+    "raw_frames": "blank1 + blank4(current proprio) + current wrist4 + current primary4 + blank4(action) + blank4(future proprio) + true future wrist4 + true future primary4 + blank4(value)",
+    "shape": [
+      1,
+      3,
+      33,
+      224,
+      224
+    ],
+    "encoded_shape": [
+      1,
+      16,
+      9,
+      28,
+      28
+    ],
+    "injection": "Use original preprocessing for images and rescale_proprio/replace_latent_with_proprio for actual endpoint at latent slot5. Retain each original current/action prefix slots0:5; replace only future5:8. Value conditions on first8.",
+    "forbidden": "Do not encode endpoint independently as current then move slots2/3 to6/7; causal temporal VAE changes these latents."
+  },
+  "max_activity": {
+    "explicit_task_controls": 32,
+    "explicit_settling_controls": 20,
+    "policy_sampler_calls": 2,
+    "policy_steps_per_call": 5,
+    "future_sampler_calls": 4,
+    "future_steps_per_call": 1,
+    "value_sampler_calls": 6,
+    "value_steps_per_call": 1,
+    "vae_encodes": 3,
+    "vae_decodes": 0,
+    "model_api_calls": 0,
+    "training_updates": 0,
+    "full_episodes": 0
+  },
+  "outcomes": [
+    "Clean/Swap/actual-future Value for the two frozen candidates",
+    "native ranking and ties",
+    "selected actual original-Goal continuation success and capped steps from existing real branches",
+    "per-candidate visual-latent forecast MSE against joint actual-future encoding",
+    "per-candidate normalized-proprio forecast error where native extraction supports it"
+  ],
+  "interpretation_rules": [
+    "Actual-future selection of successful candidate1 supports local predicted-future sensitivity with a correctly ordering Value at measured truth, not full closed-loop mediation or general defense.",
+    "Actual-future selection of failed candidate0 identifies local Value/continuation-outcome mismatch; it does not erase the known failure or prove predictions have no causal effect.",
+    "Value target is discounted behavior return, not perfect success probability or optimal continuation; actual-future scoring is not an oracle planner.",
+    "Forecast feature error is relative to encoded real consequences, not pixel MSE, raw physical state error or task utility.",
+    "No significance, population ASR or independent generalization from a single post-hoc root. Preserve existing first-choice support bounds and failed extension gate.",
+    "Exact Value ties are reported separately as native tie-breaking selection; selecting index0 on a tie is not strict incorrect ranking.",
+    "Fixed distinct candidate seeds31/32 define the paired native stochastic realization, not expected Value ranking or calibrated success probabilities.",
+    "Truth ranking the successful branch higher does not exclude Value error off the measured truth or imply that Goal-Swap increases MSE; report these independently."
+  ],
+  "inference_call_boundary_deadline_seconds": 120
+}

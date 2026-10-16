@@ -1,0 +1,27 @@
+{
+  "arguments": {
+    "output": "runs/mbrl_rank_coupling_cartpole_confirm_v2/independent",
+    "model": "runs/mbrl_coupling_cartpole_v0/model",
+    "particles": 10,
+    "bank_size": 8,
+    "condition": "independent",
+    "seeds": [
+      706,
+      707
+    ]
+  },
+  "hashes": {
+    "scripts/pilot_mbrl_rank_coupling.py": "868990f5b60d4ef79ddf9e426cdbba558d370083fcb6416949e86a65aa4c5ead",
+    "src/wm_security/rank_coupling.py": "6915f24539df333140fd4343bb42dea2fc554412781013f8f264d4880ee049d0",
+    "scripts/pilot_mbrl_coupling.py": "94efc7153a724f3f853cfb1630c02ef2432a10b6343ee9a1f7d8fc582b640f97"
+  },
+  "stage": "Third explicit construction after two Gaussian approximations failed; fresh predetermined seeds 704/705.",
+  "model": "Unchanged v0 native five-member GaussianMLP; no retraining.",
+  "operation": "K fresh complete native forecast batches per candidate; bank-dependent cyclic rank permutations with a fresh uniform row. Marginal preservation is exact by conditional uniform selection.",
+  "attack_objective": "Minimize equal-weight mean-bank quality of the native top-ranked candidate and its top-10 elite set; two coordinate sweeps over K cyclic shifts.",
+  "matched_control": "Independent row per candidate from the identical K-batch generation procedure. Both conditions spend K times the original model simulation compute.",
+  "cost_boundary": "The victim still receives one N-particle estimate per action; the sampler internally generates K such estimates. This extra attacker/control compute is recorded, not called free.",
+  "scope": "Native model, ModelEnv rollouts and CEM with a researcher-defined sampler service intervention; no deployment vulnerability claim.",
+  "api_requests": 0,
+  "gpu_work": false
+}

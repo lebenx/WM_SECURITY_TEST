@@ -1,0 +1,30 @@
+{
+  "arguments": {
+    "output": "runs/mbrl_trajectory_order_native_gate_v0",
+    "model": "runs/mbrl_coupling_cartpole_v0/model",
+    "condition": "native",
+    "strength": 0.05,
+    "target_dim": 2,
+    "particles": 5,
+    "iterations": 2,
+    "elite_ratio": 0.1,
+    "population": 20,
+    "alpha": 0.1,
+    "horizon": 8,
+    "max_steps": 50,
+    "seeds": [
+      810
+    ]
+  },
+  "hashes": {
+    "scripts/pilot_mbrl_trajectory_order.py": "1f6066df227a79a0c4c89b7a602b837602af57bbbddc1ea0b41c5cd97b44a35b",
+    "src/wm_security/trajectory_order.py": "5c33571e8a6cb3334f5ccff2c9919aa4138e77c2691d911dd04c9d015f463713",
+    "scripts/pilot_mbrl_coupling.py": "94efc7153a724f3f853cfb1630c02ef2432a10b6343ee9a1f7d8fc582b640f97"
+  },
+  "scope": "Frozen native MBRL-Lib five-member GaussianMLP and upstream CEM; CartPole short gate.",
+  "operation": "Retain previous imagined action in model state and add a signed action-order term after the first imagined step; physics, reward, and weights remain unchanged.",
+  "preservation": "Fresh one-step deterministic calls are unchanged exactly; this does not claim preservation of conditional multi-step transition laws.",
+  "promotion_gate": "Only a bounded mechanism screen. Do not scale unless native control is strong, one-step parity passes, and order attack produces repeatable task-specific loss against an action-blind and matched perturbation control.",
+  "api_requests": 0,
+  "gpu_work": false
+}

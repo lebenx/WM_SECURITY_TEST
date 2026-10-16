@@ -1,0 +1,36 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "sources": [
+    "cheetah-run",
+    "walker-walk-backwards",
+    "walker-walk",
+    "hopper-hop"
+  ],
+  "targets": [
+    "walker-run",
+    "walker-walk",
+    "walker-stand",
+    "hopper-hop"
+  ],
+  "source_seed": 23,
+  "validation_seed": 33,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "source_steps": 300,
+  "eval_steps": 300,
+  "updates": 300,
+  "learning_seed": 31,
+  "cascade_gain": 1.25,
+  "output": "runs/tdmpc_cascade_matrix_v0",
+  "operation": "Legal monotone actuator cascade versus matched random source trajectories; native TD-MPC2 dynamics-only consistency adaptation; unchanged native MPC evaluation.",
+  "controls": [
+    "clean checkpoint",
+    "random source trajectory",
+    "cascade source trajectory"
+  ],
+  "promotion": "This matrix is exploratory. A broad claim requires a preregistered source/target family replication, low one-step-error gate, shuffled-order control, and a useful defense.",
+  "api_requests": 0,
+  "gpu_work": "bounded native CUDA adaptation and evaluation"
+}

@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T04:23:32.692461+00:00",
+  "status": "completed_fixed_native_cem_pair_no_observed_task_harm",
+  "previous_goal_turn_classification": "progress: completed native DINO observation/encoding checks and corrected the private-goal input-independence premise",
+  "research_goal_status": "active_unachieved",
+  "question": "Does law-preserving cross-candidate sampling cause real task harm when its objective targets the native smoothed elite-mean action rather than candidate score quality?",
+  "reason_to_reopen": {
+    "old_result": "The prior strong-CEM seed708 independent and score-targeted episodes both returned200. That negative evidence is retained.",
+    "new_source_fact": "The old phase objective minimizes top/elite bank-mean score quality. Native CEM returns the smoothed elite action mean. The new fixed final-iteration objective directly targets the returned first action. This is a different operation, not a claim that the old implementation or negative result was invalid.",
+    "sources": [
+      "src/wm_security/rank_coupling.py",
+      "vendor/mbrl-lib/mbrl/planning/trajectory_opt.py",
+      "runs/mbrl_rank_official_planner_v0/assessment.json"
+    ]
+  },
+  "protocol": {
+    "configuration": "configs/mbrl_action_mean_coupling_20261015.json",
+    "runner": "scripts/pilot_mbrl_action_mean_coupling.py",
+    "analysis_script": "scripts/analyze_mbrl_action_mean_coupling.py",
+    "model": "runs/mbrl_coupling_cartpole_v0/model",
+    "checkpoint_scope": "Existing locally pretrained 5-member GaussianMLP (2x64), trained on 3000 real CartPole transitions; not an externally released pretrained checkpoint.",
+    "seed": 708,
+    "population": 350,
+    "iterations": 5,
+    "particles": 20,
+    "horizon": 15,
+    "elites": 35,
+    "alpha": 0.1,
+    "max_real_steps_per_episode": 200,
+    "bank_size": 8,
+    "operation": "Only the fifth CEM iteration uses bank-dependent cyclic column phases maximizing the uniform-row expected positive first elite-mean action. Direction and search are fixed before outcomes; a fresh independent uniform row is drawn after phases are frozen.",
+    "matching": "Both arms generate the same K=8 forecast-bank procedure. Independent selection draws consume equal RNG counts. At their first plan, initial observations, the first four full query records, final candidate actions and final forecast bank match exactly. Later closed-loop states may diverge.",
+    "native_boundary": "The model, ModelEnv, reward, termination and full CEM optimizer remain native. The K-bank sampler and its adversarial coupling are added research instrumentation. The independent control is not the unwrapped one-bank joint sampling law.",
+    "threat_model": "Added compromised stochastic sampler / supply-chain hook. It sees candidate actions and native scalar forecast batches and can couple their row indices. It cannot edit actions, scores, model weights, state, environment reward or termination. No deployed remote attacker interface is claimed.",
+    "execution_action_check": "The callback reconstructs all native smoothed means and exactly checks each of400 actually executed actions.",
+    "load_failure": "The initial NumPy1.26 runtime could not load NumPy2 statistics. It issued zero model queries and zero real steps. Existing .venv-native-local was used for the completed run without dependency, model or protocol edits."
+  },
+  "real_results": {
+    "rows": [
+      {
+        "arm": "independent",
+        "seed": 708,
+        "real_return": 200.0,
+        "steps": 200,
+        "terminated": false,
+        "truncated": false,
+        "episode_cap_reached": true,
+        "seconds": 578.5598710130143,
+        "native_queries": 1000,
+        "predictive_transitions": 840000000,
+        "phase_candidates": 0,
+        "model_seconds": 577.1538881192682,
+        "phase_seconds": 0.0,
+        "native_mean_exact_all_steps": true
+      },
+      {
+        "arm": "positive_action_mean",
+        "seed": 708,
+        "real_return": 200.0,
+        "steps": 200,
+        "terminated": false,
+        "truncated": false,
+        "episode_cap_reached": true,
+        "seconds": 610.9201625990099,
+        "native_queries": 1000,
+        "predictive_transitions": 840000000,
+        "phase_candidates": 1058600,
+        "model_seconds": 589.4769293962454,
+        "phase_seconds": 20.212206819385756,
+        "native_mean_exact_all_steps": true
+      }
+    ],
+    "intervention_minus_clean_return": 0.0,
+    "paired_real_episode_pairs": 1,
+    "completed_real_episodes": 2,
+    "result": "Both complete the200-step evaluation cap without termination; no task-return loss observed."
+  },
+  "same_query_counterfactuals": {
+    "scope": "These counterfactuals hold each actually visited intervention state, candidate bank and pre-final mean fixed, replacing only its final-row selection with the saved independent vector. They are not a second closed-loop trajectory, do not supply 200 independent samples, and do not establish harm when actual paired returns are equal.",
+    "queries": 200,
+    "rates": {
+      "native_topk35_first_index_changed": {
+        "count": 156,
+        "rate": 0.78
+      },
+      "elite_set_changed": {
+        "count": 172,
+        "rate": 0.86
+      },
+      "first_action_changed_exact": {
+        "count": 172,
+        "rate": 0.86
+      },
+      "first_action_changed_gt_1e_6": {
+        "count": 172,
+        "rate": 0.86
+      },
+      "phase_objective_improved_gt_tolerance": {
+        "count": 178,
+        "rate": 0.89
+      },
+      "scalar_multisets_exact": {
+        "count": 200,
+        "rate": 1.0
+      },
+      "original_bank_index_bijection": {
+        "count": 200,
+        "rate": 1.0
+      }
+    },
+    "action_difference": {
+      "signed_mean": 0.01258011942729354,
+      "mean_absolute": 0.019058072362095117,
+      "rms": 0.02905389602563175,
+      "maximum_absolute": 0.13329872488975525
+    },
+    "phase_objective_gain": {
+      "mean": 0.015964449965395033,
+      "min": 0.0,
+      "max": 0.09092074632644653
+    },
+    "tie_diagnostics": {
+      "both_comparisons_have_unique_top_score_queries": 0,
+      "unique_top_score_flip_count": 0,
+      "native_top1_definition": "First index of native torch.topk(35), matching native CEM elite ordering; ties are unchanged native implementation behavior, not unique preference changes.",
+      "at_least_one_tied_top_score_queries": 200
+    },
+    "limits": "The172/200 action changes compare row selection on the same visited intervention-state query. They are not172 independent attacks or a second closed-loop counterfactual. All200 queries have a tied top score in at least one comparator, so156 changed topk-first indices cannot be called strict preference reversals."
+  },
+  "preservation": {
+    "actual_check": "Each of200 final-iteration banks preserves all350 scalar20-particle return-estimator column multisets and original bank-index bijections exactly.",
+    "theory": "Conditional on the bank, history and fixed phases, a fresh uniform row selects each original per-candidate bank entry with probability1/K. This preserves the scalar estimator marginal under the stated stochastic construction while changing its joint law.",
+    "not_checked": "Complete unrecorded particle trajectories and a real-world physical outcome distribution are not empirically certified. Marginal preservation does not establish model correctness."
+  },
+  "statistics": {
+    "unit": "One existing development seed, one paired closed-loop comparison.",
+    "descriptive_return_difference": 0.0,
+    "inferential_tests": null,
+    "reason_no_significance_claim": "The200 within-episode queries are dependent and were not independent task replications. One capped pair cannot establish equivalence, robustness of all couplings, or population-level safety."
+  },
+  "scientific_decision": {
+    "continue_this_fixed_operation": "NO_GO: no observed real task loss; stop without direction/seed/budget retuning or new defense episodes.",
+    "operation_reached_decision_path": "YES: phase objectives improve178/200 queries and same-query returned actions change172/200 times.",
+    "task_harm": "Not observed in this fixed paired test.",
+    "defense_effectiveness": "Not tested; offline shared/bank-mean diagnostics have no new episode utility and are not defense evidence.",
+    "general_security_claim": "Not established; no claim of an externally released pretrained model, deployed attacker interface, independent task generalization or an ICLR-ready result.",
+    "goal_bus": "This sampler experiment is a separate mechanism; it does not prove Goal-Swap prediction corruption or decision harm.",
+    "full_goal_achieved": false
+  },
+  "other_bounded_work": {
+    "dino_saturation_report": "reports/dino_action_saturation_feasibility_20261015.json",
+    "dino_finding": "Existing native DINO traces contain147/297 requested controls with XYZ saturation at the executor. The forecast receives unclipped normalized proposals. This gives a concrete action-equivalence gate to investigate, but no alias physics, forecast, ranking or task experiment ran.",
+    "wav_archive_correction": "The old WAV config already recorded one-step prediction splits across151 alias groups. Its registry label was corrected from untested to observed_dependence_only; the old model outputs were not rerun or newly verified.",
+    "marker_screen": "A render-only marker edit is possible, but whole-image native goal cost is an additional confound and ReOI already studies distractor-corrupted world predictions and action verification. No new marker experiment was run.",
+    "first_query_outer_bound": "A single optional NumPy bound calculation on the saved final bank gave a loose supported first-action interval approximately[-0.3458,0.4000]. It cannot certify coupling robustness; no multi-step expansion or permanent bound implementation was pursued."
+  },
+  "primary_sources": [
+    {
+      "title": "Reimagination with Test-time Observation Interventions",
+      "url": "https://arxiv.org/abs/2506.16565",
+      "read_scope": "Primary abstract checked; author results not locally reproduced.",
+      "relevance": "Generic distractor-induced world-prediction/action-verification damage and observation-removal recovery have direct prior art."
+    },
+    {
+      "title": "TRAP: Tail-aware Ranking Attack for World-Model Planning",
+      "url": "https://arxiv.org/abs/2605.01950",
+      "read_scope": "Primary abstract rechecked; not a local reproduction or full-method comparison.",
+      "relevance": "Ranking-targeted world-model backdoors already exist. Inference-only scalar-marginal preservation is a different construction but does not establish novelty or effectiveness by itself."
+    }
+  ],
+  "activity": {
+    "completed_paired_native_task_runs": 1,
+    "completed_real_episodes": 2,
+    "real_environment_steps": 400,
+    "sampler_queries": 2000,
+    "native_modelenv_forecast_batch_calls": 16000,
+    "predictive_transitions": 1680000000,
+    "new_model_calls_for_this_analysis": 0,
+    "new_environment_steps_for_this_analysis": 0,
+    "elapsed_experiment_seconds": 1189.562421931012,
+    "intervention_phase_search_seconds": 20.212206819385756,
+    "offline_first_query_audit_seconds": 0.22098589199595153,
+    "model_query_cost": "Eight native model-generation batches per sampler query in both arms; additional phase-search CPU cost is not free.",
+    "dependency_startup_failures": 1,
+    "gpu_jobs": 0,
+    "api_requests": 0,
+    "training_updates": 0,
+    "checkpoint_downloads": 0
+  },
+  "artifacts": {
+    "run_summary": "runs/mbrl_action_mean_coupling_20261015_v2/summary.json",
+    "offline_analysis": "runs/mbrl_action_mean_coupling_20261015_v2/analysis.json",
+    "query_table": "runs/mbrl_action_mean_coupling_20261015_v2/same_query_counterfactuals.csv",
+    "first_plan_audit": "runs/mbrl_action_mean_coupling_20261015_v2/operation_audit.json",
+    "failed_startup": "runs/mbrl_action_mean_coupling_20261015/summary.json"
+  },
+  "reproduction": {
+    "experiment": ".venv-native-local/bin/python scripts/pilot_mbrl_action_mean_coupling.py --config configs/mbrl_action_mean_coupling_20261015.json --out runs/mbrl_action_mean_coupling_reproduction_unique",
+    "analysis": ".venv-native-local/bin/python scripts/analyze_mbrl_action_mean_coupling.py --run runs/mbrl_action_mean_coupling_reproduction_unique",
+    "output_policy": "Use a new output path; existing experiment and analysis artifacts refuse overwrite. No rerun was performed for this report."
+  }
+}

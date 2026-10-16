@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "heldout_tasks_ready_runtime_fixed_native_clean_resource_deferred",
+  "previous_turn_classification": "progress: actual pretrained rollout, corrected research gates, and reproducible archive updates",
+  "research_goal_status": "active_unachieved",
+  "runtime_profile": {
+    "script": "scripts/profile_nanowm_rollout.py",
+    "result": "runs/nanowm_component_profile_v1/summary.json",
+    "model_rollout_calls": 1,
+    "environment_steps": 0,
+    "task_episodes": 0,
+    "wall_seconds": 25.518424213019898,
+    "vae_device_interval_seconds": 0.8935861206054687,
+    "model_forward_calls": 40,
+    "model_device_interval_seconds": 21.225198150634768,
+    "vae_device_interval_over_wall": 0.03501729233537654,
+    "idealized_speedup_if_vae_interval_removed": 1.0362879998338237,
+    "same_source_actions_as_original_timing": true,
+    "precision_or_sampler_changes": false,
+    "resource_condition": "GPU already reported 100 percent utilization and approximately 13.1 GiB occupied before the probe; three other live Python compute processes were observed. No external process was stopped or modified.",
+    "limits": "CUDA event intervals under co-resident load are not exclusive kernel compute time. This instrumented cold rollout and the earlier 5.560271 s rollout are not a controlled performance comparison. Neither is a task runtime or isolated-hardware benchmark.",
+    "decision": "Do not implement VAE-posterior caching as a solution to the current cost gate: even idealized removal of the measured VAE interval changes this profile by only about 3.6 percent. No 6.49x acceleration was demonstrated."
+  },
+  "native_task_protocol_correction": {
+    "source_paths": [
+      "vendor/nano-world-model/src/scripts/eval/planning_point_maze.sh",
+      "vendor/nano-world-model/src/configs/planning/base.yaml",
+      "vendor/nano-world-model/src/experiments/planning_experiment.py"
+    ],
+    "old_scope": "Generic base random-state goals; max 50 model steps, 250 env steps, 10 CEM plans. This was disclosed, but was not the PointMaze-specific example.",
+    "official_example": "Dataset-replayed goal_H=5 target; max 10 model steps, 50 env steps, 2 CEM plans. Unchanged horizon5, replan5, 100 candidates, 10 elites, 30 CEM iterations, 20 DDIM steps, full_sequence.",
+    "interpretation": "The original 3.24 h/root maximum-budget extrapolation is specific to the old generic random-state protocol. It is not an intrinsic minimum cost of the official PointMaze example.",
+    "new_protocol": "reports/nanowm_heldout_task_feasibility_protocol_20261015.json",
+    "reason": "Align a separately scoped capability question with the official reachable-goal task while correcting the native single-directory sampler train/validation mixing. Clean was never run, so no targets are selected by model success.",
+    "selection_rule": "Exactly three preregistered native draws from the existing validation trajectory IDs. Freeze sources and offsets before any environment step; retain trivial/zero-success/failed cases and do not expand the panel.",
+    "cost_limit": "Changing from ten to two plans reduces the fixed maximum plan count fivefold, not the model or optimizer budget. It does not itself establish affordable runtime under current GPU contention or authorize an uncontrolled long panel."
+  },
+  "existing_resource_alternative_review": {
+    "method": "Read-only archived evidence and existing implementation; no new model, environment or API use.",
+    "finding": "The existing TD-MPC2 source23 conditional real loss remains valid, but no independent contributor-metadata variable exists in the adaptation path. Correcting tail-Q ranking evaluation alone would not distinguish the proposed mechanism from ordinary negative transfer. Existing Cosmos fixed-candidate controls do not add a net success gain; JEPA/DINO has no identified matching write interface.",
+    "source_paths": [
+      "reports/tdmpc_mechanism_reassessment_20261015.json",
+      "reports/post_archive_mechanism_screen_20261015.json"
+    ],
+    "scope_limit": "A bounded review of existing candidates, not proof that no world-model security mechanism exists."
+  },
+  "model_api_requests_this_round": 0,
+  "heldout_task_gate": {
+    "protocol": "reports/nanowm_heldout_task_feasibility_protocol_20261015.json",
+    "script": "scripts/probe_nanowm_heldout_pointmaze_tasks.py",
+    "results": "runs/nanowm_heldout_pointmaze_tasks_v1/summary.json",
+    "planner_inputs": "runs/nanowm_heldout_pointmaze_tasks_v1/planner_targets.json",
+    "fixed_rows": [
+      {
+        "instance": 0,
+        "trajectory_id": 1584,
+        "offset": 14,
+        "initial_success": false,
+        "reference_verified": true,
+        "zero_success": true,
+        "zero_real_steps": 50
+      },
+      {
+        "instance": 1,
+        "trajectory_id": 64,
+        "offset": 35,
+        "initial_success": false,
+        "reference_verified": true,
+        "zero_success": false,
+        "zero_real_steps": 50
+      },
+      {
+        "instance": 2,
+        "trajectory_id": 646,
+        "offset": 28,
+        "initial_success": false,
+        "reference_verified": true,
+        "zero_success": false,
+        "zero_real_steps": 50
+      }
+    ],
+    "task_selection_gate_passed": true,
+    "eligible_instances": [
+      1,
+      2
+    ],
+    "environment_steps": 300,
+    "model_forwards": 0,
+    "clean_gate_passed": null,
+    "decision": "Proceed to a separately registered native Clean runner on all three unchanged fixed instances. Reachability and passive-control failure do not establish model/planner competence.",
+    "independent_review": "Offline reconstruction of the frozen RNG draws and gate arithmetic matches; planner target fields match the whitelist and contain no reference action path or arrays. No environment or model rerun."
+  },
+  "clean_cost_decision": {
+    "decision": "Implement and prepare the official two-plan fixed Clean panel. Wait for shared GPU availability before loading; do not stop other processes.",
+    "maximum_wait_seconds": 1800,
+    "prelaunch_benchmark_rollout_calls": 1,
+    "per_root_estimate_limit_seconds": 2700,
+    "task_stage_wall_clock_limit_seconds": 8100,
+    "reason": "The official reachable-goal protocol reduces maximum replan count from ten to two. A three-instance native capability gate with at most two plans per instance is a small prerequisite experiment. Accept up to45 minutes estimated per instance without reducing the optimizer or model budget; the old approximately3.24 h/root generic panel remains deferred.",
+    "forecast_budget_unchanged": "100 candidates, 10 elites, 30 CEM iterations, horizon5, replan5, 20 DDIM steps, microbatch16, FP32.",
+    "stop_behavior": "Resource deadline or unavailable shared GPU means deferred/partial, not policy failure. No automatic attack/defense run."
+  },
+  "clean_execution": {
+    "protocol": "reports/nanowm_heldout_clean_protocol_20261015.json",
+    "runner": "scripts/pilot_nanowm_heldout_clean.py",
+    "cpu_check": "runs/nanowm_heldout_clean_resource_check_v1/summary.json",
+    "live_summary": "runs/nanowm_heldout_clean_v2/summary.json",
+    "launch_session_id": 5073,
+    "observed_status": "resource_deferred",
+    "observed_at_utc": "2026-10-15T02:54:16.049458+00:00",
+    "clean_completed_at_observation": 0,
+    "root_review": "Read the complete runner and protocol. Preserved completed plan/actions before the post-plan resource check so a subsequent deferral retains actual completed planning work. This does not change planner calculations or physical actions.",
+    "status_policy": "Both launches are terminal. v1 was stopped before model load to fix a renderer bug; v2 preserved the original deadline and deferred with all three tasks not_run. Do not poll closed sessions or automatically requeue.",
+    "previous_launch": {
+      "live_summary": "runs/nanowm_heldout_clean_v1/summary.json",
+      "launch_session_id": 65871,
+      "observed_status": "waiting_for_shared_gpu",
+      "observed_at_utc": "2026-10-15T02:24:58Z",
+      "terminal_status": "technical_error",
+      "exception_type": "KeyboardInterrupt",
+      "reason": "Stopped our pre-model GPU wait to fix confirmed renderer incompatibility"
+    },
+    "finished_utc": "2026-10-15T02:53:58Z",
+    "terminal_exit_code": 0
+  },
+  "runtime_compatibility_followup": "reports/nanowm_runtime_compatibility_fix_20261015.json"
+}

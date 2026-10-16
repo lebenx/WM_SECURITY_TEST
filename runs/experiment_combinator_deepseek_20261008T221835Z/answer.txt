@@ -1,0 +1,40 @@
+**Claim.** Experience transfers across scientific domains when it is stored as a reusable procedure for turning an unresolved symbolic identifiability proof into a physically executable counterexample, rather than as a library of actions or experiment templates.
+
+### Mechanism: counterexample-compilation by proof-state tactics
+
+The learned object is a policy over **typed proof states**, not a policy over environments or experiments. A proof state contains:
+
+- a set of candidate executable laws consistent with the observations so far;
+- symbolic terms occurring in those laws;
+- the unresolved equivalence claim, such as “these candidates agree for every allowed probe”;
+- available constructors: composition, parameter substitution, reset, initial-condition choice, and observation-time choice;
+- a set of legal observables and interventions.
+
+The policy emits a short sequence of proof tactics—instantiate a variable, compose two terms, expose a parameter, choose a boundary condition, or select an observation time—ending in a **counterexample obligation**. A deterministic compiler converts that obligation into a native experiment. It does not predict the counterfactual outcome. The experiment is executed, and its actual observation is added to the candidate constraints.
+
+Training is performed on source families for which the symbolic simulator supplies executable laws and exact proof checking. For each sampled pair or equivalence class of candidate laws, a bounded proof search generates successful traces showing that some legal construction makes their predictions differ. The policy is trained to choose tactics that reduce proof depth or discharge an obligation, not to maximize EIG, posterior entropy reduction, disagreement, or set coverage. Failed proof branches are simply unsuccessful search branches, not labels about environmental failure types.
+
+For Alchemy, the compiler emits legal potion sequences and reset/observation points. For DiscoverPhysics, it emits initial conditions, particle parameters, and observation times. The same abstract tactics—instantiate, compose, expose, constrain, separate—are typed differently by each native compiler. Thus the transferable object is a proof-search procedure over algebraic structure; the domain-specific part is only the compiler and legality checker.
+
+At target time:
+
+1. collect the ordinary native observations;
+2. fit or enumerate a small candidate-law set;
+3. construct the corresponding proof state;
+4. use the transferred tactic policy to find a separating obligation;
+5. execute the compiled experiment and update the candidates;
+6. repeat until the target quantity is identified or the proof search reports no bounded separator.
+
+This is **not** finite-experiment EIG: no predictive outcome distribution or information objective is used. It is also not a structural-edit-plus-diagnostic pair as in *Learning to Outgrow a Theory*: the candidate theories are not modified by the learned module. The module only searches for a formally justified separating context. The closest existing methods are counterexample-guided inductive synthesis and neural-guided theorem proving; if the proof state is replaced by a numerical uncertainty score, or if tactic selection is optimized by expected information, the method becomes an ordinary active-learning planner and should be described that way.
+
+### Short falsifiable pilot
+
+Train on procedurally generated symbolic transition systems with typed operators, including Alchemy-like finite systems and analytic mechanics systems. Hold out entire law families, not parameter values. On each target, compare native cost to identification against:
+
+1. native exact Bayesian planning where available;
+2. random legal probes;
+3. the same proof compiler with an unguided breadth-first tactic search.
+
+Use only actual target trajectories. A successful transfer prediction is that the learned tactic policy reduces native experiments on held-out law families, including a cross-domain Alchemy-to-physics or physics-to-Alchemy condition, while not necessarily improving within-family interpolation.
+
+The decisive paired causal intervention is **proof-trace edge randomization**: train two policies on identical source laws, candidate sets, compiler, proof lengths, and executed source experiments. In one condition, the proof-state graph retains which tactic transformed which symbolic obligation; in the other, tactic-to-obligation edges are randomly permuted while preserving token frequencies and sequence lengths. Evaluate both on the same held-out targets and the same initial observations. A selective loss of cross-law identification for the permuted policy—especially when unguided search remains competitive on familiar families—would support transfer of proof-construction capability rather than transfer of action statistics or a hidden experiment template. If no such separation appears, the mechanism is merely a reimplementation of standard search and should be rejected.

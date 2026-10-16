@@ -1,0 +1,26 @@
+{
+  "status": "rejected_after_native_source_audit",
+  "candidate": "MoSim Lie-Generator Nilpotent Contraction Collapse",
+  "proposal_source": "runs/gemini_round78_native_candidate_search_20261010/review.json",
+  "source_paths_checked": [
+    "vendor/MoSim/MoSim/src/models/dynamics.py",
+    "vendor/MoSim/MoSim/src/models/bijectors.py",
+    "vendor/MoSim/MoSim/src/models/__init__.py"
+  ],
+  "native_facts": [
+    "Dynamic_model_rigid_body computes B(x) plus action_module(action), applies M(q), and optionally adds learned correctors.",
+    "ODEBijector calls torchdiffeq.odeint_adjoint with the configured integrator (default dopri5) over one state/action input.",
+    "The checked source contains no Lie generators, Magnus expansion, adjoint-representation products, Killing-form constraint, Jacobian determinant monitor, or flow-volume-preservation loss.",
+    "The released MoSim checkpoint and model API consume one current action per ODE step; they do not expose a future action sequence or a frequency-domain action carrier.",
+    "The existing local probe found identical outputs when an unconsumed future suffix was changed, confirming that future-action anticipation is not a MoSim input path."
+  ],
+  "rejection_reasons": [
+    "The proposed mediator and repair are absent from the cited native implementation.",
+    "Alternating bounded actions are an ordinary temporal action perturbation and the proposed rank/volume collapse is not distinguished from standard nonlinear sensitivity or integration error.",
+    "No local decoder, MPC task gate, or six-seed task-level evidence was supplied; the requested harm outcome is speculative.",
+    "The proposal therefore fails the exact carrier audit before any GPU experiment."
+  ],
+  "decision": "REJECT",
+  "novelty_assessment": 1.5,
+  "run_gpu": false
+}

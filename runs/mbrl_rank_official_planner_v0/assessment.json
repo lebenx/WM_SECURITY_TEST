@@ -1,0 +1,747 @@
+{
+  "status": "completed_strong_baseline_and_second_task_checks",
+  "updated_at_utc": "2026-10-09T01:27:20.980517+00:00",
+  "official_cartpole_planner": {
+    "independent": [
+      200.0
+    ],
+    "targeted": [
+      200.0
+    ],
+    "settings": "Upstream CartPole CEM: 350 candidates, 5 iterations, 20 particles, horizon 15, elite-mean output; same original small trained model, not full upstream PETS training.",
+    "conclusion": "One paired seed, no task loss; not a universal defense claim."
+  },
+  "all_bank_mean": {
+    "returns": [
+      200.0,
+      200.0
+    ],
+    "conclusion": "Two original development seeds reach 200 with all 80 predictions averaged. Same model-generation budget as K=8 original attack, but not an attacked 80-particle sampler or certified defense."
+  },
+  "independent_training": {
+    "independent": [
+      200.0,
+      118.0
+    ],
+    "targeted": [
+      86.0,
+      119.0
+    ],
+    "paired_declines": 1,
+    "pairs": 2,
+    "conclusion": "Mean decrease but only one of two paired seeds harmed; original reduced best-candidate planner."
+  },
+  "halfcheetah": {
+    "uncorrected": "Excluded: previous-position aliasing made forward reward zero. Collection, training and evaluation costs retained.",
+    "corrected_initial_returns": [
+      17.287759739478773,
+      10.069542668622173
+    ],
+    "corrected_random_returns": [
+      -65.75683181148561,
+      -5.185917788910407
+    ],
+    "refit_stronger_returns": [
+      -21.76786125400822,
+      -32.036575776417855
+    ],
+    "refit_random_returns": [
+      -76.15671921431793,
+      -92.28418828855078
+    ],
+    "conclusion": "No strong locomotion baseline established, even after one ordinary data refit and larger planner. No attack run and no second-task harm claimed."
+  },
+  "tdmpc_terminal_value": {
+    "native": [
+      974.2680277954787
+    ],
+    "targeted": [
+      973.3963107001036
+    ],
+    "scope": "Pretrained mt30-48M, full native Walker-walk episode; terminal two-head value sampling, not stochastic dynamics. Exact per-candidate head-pair law; no extra neural forward calls.",
+    "search": "One sweep over 128 optimistic candidates, native MPPI settings retained. Earlier full search interrupted explicitly for CPU cost; its partial result is not a completed attack episode.",
+    "conclusion": "Less than one return point lost on a roughly 974-point baseline; no meaningful task harm demonstrated."
+  },
+  "runs": [
+    {
+      "source": "runs/mbrl_rank_official_planner_v0/independent/summary.json",
+      "group": "mbrl_rank_official_planner_v0",
+      "status": "completed",
+      "task": "cartpole",
+      "condition": "independent",
+      "rows": [
+        {
+          "condition": "independent",
+          "seed": 708,
+          "return_": 200.0,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 550.469311201945,
+          "model_hash_unchanged": true,
+          "evaluations": 1000,
+          "predictive_transitions": 840000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "06f5b4a4625ff4306bbf4ec6a186be299e3760e849606a8bd4a26fd274126fc2",
+      "model_file_hashes": {
+        "model.pth": "256d6b6a437059739f5d345c508773d390f48d6d6892c57cc9e6af091de3b46c",
+        "env_stats.pickle": "9decb33026b492020a5d9c0fe2ba179874207a3a5b0e91525e7715345952b3ed"
+      },
+      "mean_return": 200.0,
+      "native_environment_steps": 200,
+      "predictive_transitions": 840000000,
+      "elapsed_seconds": 550.4841328072362,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:09:08.553681+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_official_planner_v0/targeted/summary.json",
+      "group": "mbrl_rank_official_planner_v0",
+      "status": "completed",
+      "task": "cartpole",
+      "condition": "targeted",
+      "rows": [
+        {
+          "condition": "targeted",
+          "seed": 708,
+          "return_": 200.0,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 652.8088837130927,
+          "model_hash_unchanged": true,
+          "evaluations": 1000,
+          "predictive_transitions": 840000000,
+          "phase_candidates": 5371400,
+          "surrogate_before_mean": 14.988364768028259,
+          "surrogate_after_mean": 14.965041485786438
+        }
+      ],
+      "model_hash": "06f5b4a4625ff4306bbf4ec6a186be299e3760e849606a8bd4a26fd274126fc2",
+      "model_file_hashes": {
+        "model.pth": "256d6b6a437059739f5d345c508773d390f48d6d6892c57cc9e6af091de3b46c",
+        "env_stats.pickle": "9decb33026b492020a5d9c0fe2ba179874207a3a5b0e91525e7715345952b3ed"
+      },
+      "mean_return": 200.0,
+      "native_environment_steps": 200,
+      "predictive_transitions": 840000000,
+      "elapsed_seconds": 652.8235342162661,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:10:52.110867+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_bank_mean_v0/bank_mean/summary.json",
+      "group": "mbrl_rank_bank_mean_v0",
+      "status": "completed",
+      "task": "cartpole",
+      "condition": "bank_mean",
+      "rows": [
+        {
+          "condition": "bank_mean",
+          "seed": 704,
+          "return_": 200.0,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 48.615296566393226,
+          "model_hash_unchanged": true,
+          "evaluations": 600,
+          "predictive_transitions": 72000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "bank_mean",
+          "seed": 705,
+          "return_": 200.0,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 47.43802074622363,
+          "model_hash_unchanged": true,
+          "evaluations": 600,
+          "predictive_transitions": 72000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "06f5b4a4625ff4306bbf4ec6a186be299e3760e849606a8bd4a26fd274126fc2",
+      "model_file_hashes": {
+        "model.pth": "256d6b6a437059739f5d345c508773d390f48d6d6892c57cc9e6af091de3b46c",
+        "env_stats.pickle": "9decb33026b492020a5d9c0fe2ba179874207a3a5b0e91525e7715345952b3ed"
+      },
+      "mean_return": 200.0,
+      "native_environment_steps": 400,
+      "predictive_transitions": 144000000,
+      "elapsed_seconds": 96.08150774193928,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:02:49.674260+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_independent_model_v0/independent/summary.json",
+      "group": "mbrl_rank_independent_model_v0",
+      "status": "completed",
+      "task": "cartpole",
+      "condition": "independent",
+      "rows": [
+        {
+          "condition": "independent",
+          "seed": 710,
+          "return_": 200.0,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 49.82454273104668,
+          "model_hash_unchanged": true,
+          "evaluations": 600,
+          "predictive_transitions": 72000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "independent",
+          "seed": 711,
+          "return_": 118.0,
+          "steps": 118,
+          "reached_episode_cap": false,
+          "seconds": 28.724323379341513,
+          "model_hash_unchanged": true,
+          "evaluations": 354,
+          "predictive_transitions": 42480000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "7e4b40c12e3d45e3eeda0eb6e67815b75a30670d283ce35bde348eb6cde075fd",
+      "model_file_hashes": {
+        "model.pth": "994b42a735540956618aa052991ffb69b415b24fc199831c81bf33708adf74cf",
+        "env_stats.pickle": "108dd460f44ee657b047e7cd4d42b0c2a259cb06b465acb43d2cd26c4688ba69"
+      },
+      "mean_return": 159.0,
+      "native_environment_steps": 318,
+      "predictive_transitions": 114480000,
+      "elapsed_seconds": 78.57823923975229,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:06:17.160344+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_independent_model_v0/targeted/summary.json",
+      "group": "mbrl_rank_independent_model_v0",
+      "status": "completed",
+      "task": "cartpole",
+      "condition": "targeted",
+      "rows": [
+        {
+          "condition": "targeted",
+          "seed": 710,
+          "return_": 86.0,
+          "steps": 86,
+          "reached_episode_cap": false,
+          "seconds": 28.27849361486733,
+          "model_hash_unchanged": true,
+          "evaluations": 258,
+          "predictive_transitions": 30960000,
+          "phase_candidates": 411458,
+          "surrogate_before_mean": 13.247756779944712,
+          "surrogate_after_mean": 12.735444466677285
+        },
+        {
+          "condition": "targeted",
+          "seed": 711,
+          "return_": 119.0,
+          "steps": 119,
+          "reached_episode_cap": false,
+          "seconds": 39.366036381106824,
+          "model_hash_unchanged": true,
+          "evaluations": 357,
+          "predictive_transitions": 42840000,
+          "phase_candidates": 569957,
+          "surrogate_before_mean": 13.372024487380553,
+          "surrogate_after_mean": 12.771821155601522
+        }
+      ],
+      "model_hash": "7e4b40c12e3d45e3eeda0eb6e67815b75a30670d283ce35bde348eb6cde075fd",
+      "model_file_hashes": {
+        "model.pth": "994b42a735540956618aa052991ffb69b415b24fc199831c81bf33708adf74cf",
+        "env_stats.pickle": "108dd460f44ee657b047e7cd4d42b0c2a259cb06b465acb43d2cd26c4688ba69"
+      },
+      "mean_return": 102.5,
+      "native_environment_steps": 205,
+      "predictive_transitions": 73800000,
+      "elapsed_seconds": 67.67173513537273,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:06:07.458531+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_v0/native/summary.json",
+      "group": "mbrl_rank_halfcheetah_v0",
+      "status": "completed",
+      "task": "halfcheetah",
+      "condition": "native",
+      "rows": [
+        {
+          "condition": "native",
+          "seed": 810,
+          "return_": -14.29393257200718,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 14.730857894290239,
+          "model_hash_unchanged": true,
+          "evaluations": 600,
+          "predictive_transitions": 9000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "native",
+          "seed": 811,
+          "return_": -15.205406215973198,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 14.765258585102856,
+          "model_hash_unchanged": true,
+          "evaluations": 600,
+          "predictive_transitions": 9000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "e9508ad21d9427f58df7daf8fb964f02cb5c5e86a0746a9db6d8941f2ceef266",
+      "model_file_hashes": {
+        "model.pth": "3ed77207a28657fd52c9a7b0c757f14fa9813da996b249e8f1db010df6d6eef0",
+        "env_stats.pickle": "8f0c29ea39c278b36558cac4803b8f4f5f5a07827cf16441a24c567b94b40e27"
+      },
+      "mean_return": -14.749669393990189,
+      "native_environment_steps": 400,
+      "predictive_transitions": 18000000,
+      "elapsed_seconds": 29.577269760891795,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:01:13.558246+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_v0/random/summary.json",
+      "group": "mbrl_rank_halfcheetah_v0",
+      "status": "completed",
+      "task": "halfcheetah",
+      "condition": "random",
+      "rows": [
+        {
+          "condition": "random",
+          "seed": 810,
+          "return_": -39.662589486688375,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 0.031139608938246965,
+          "model_hash_unchanged": true,
+          "evaluations": 0,
+          "predictive_transitions": 0,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "random",
+          "seed": 811,
+          "return_": -40.08721091598272,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 0.030442766845226288,
+          "model_hash_unchanged": true,
+          "evaluations": 0,
+          "predictive_transitions": 0,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "e9508ad21d9427f58df7daf8fb964f02cb5c5e86a0746a9db6d8941f2ceef266",
+      "model_file_hashes": {
+        "model.pth": "3ed77207a28657fd52c9a7b0c757f14fa9813da996b249e8f1db010df6d6eef0",
+        "env_stats.pickle": "8f0c29ea39c278b36558cac4803b8f4f5f5a07827cf16441a24c567b94b40e27"
+      },
+      "mean_return": -39.87490020133555,
+      "native_environment_steps": 400,
+      "predictive_transitions": 0,
+      "elapsed_seconds": 0.14220643416047096,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:00:45.302880+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_snapshot_v1/native/summary.json",
+      "group": "mbrl_rank_halfcheetah_snapshot_v1",
+      "status": "completed",
+      "task": "halfcheetah",
+      "condition": "native",
+      "rows": [
+        {
+          "condition": "native",
+          "seed": 810,
+          "return_": 17.287759739478773,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 15.465678353793919,
+          "model_hash_unchanged": true,
+          "evaluations": 600,
+          "predictive_transitions": 9000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "native",
+          "seed": 811,
+          "return_": 10.069542668622173,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 15.415232234168798,
+          "model_hash_unchanged": true,
+          "evaluations": 600,
+          "predictive_transitions": 9000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "25b0d4eeb19a726d0b368925f5287e483c116ea6a905128e14453055eb3371a1",
+      "model_file_hashes": {
+        "model.pth": "2d2c3238984db76288178cc61ad6cf62824420b4671d7858a34c9f6beda93d6d",
+        "env_stats.pickle": "8f0c29ea39c278b36558cac4803b8f4f5f5a07827cf16441a24c567b94b40e27"
+      },
+      "mean_return": 13.678651204050473,
+      "native_environment_steps": 400,
+      "predictive_transitions": 18000000,
+      "elapsed_seconds": 30.964719612151384,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:05:56.873233+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_snapshot_v1/random/summary.json",
+      "group": "mbrl_rank_halfcheetah_snapshot_v1",
+      "status": "completed",
+      "task": "halfcheetah",
+      "condition": "random",
+      "rows": [
+        {
+          "condition": "random",
+          "seed": 810,
+          "return_": -65.75683181148561,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 0.030964503064751625,
+          "model_hash_unchanged": true,
+          "evaluations": 0,
+          "predictive_transitions": 0,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "random",
+          "seed": 811,
+          "return_": -5.185917788910407,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 0.030235424637794495,
+          "model_hash_unchanged": true,
+          "evaluations": 0,
+          "predictive_transitions": 0,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "25b0d4eeb19a726d0b368925f5287e483c116ea6a905128e14453055eb3371a1",
+      "model_file_hashes": {
+        "model.pth": "2d2c3238984db76288178cc61ad6cf62824420b4671d7858a34c9f6beda93d6d",
+        "env_stats.pickle": "8f0c29ea39c278b36558cac4803b8f4f5f5a07827cf16441a24c567b94b40e27"
+      },
+      "mean_return": -35.47137480019801,
+      "native_environment_steps": 400,
+      "predictive_transitions": 0,
+      "elapsed_seconds": 0.14323210483416915,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:05:27.201527+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_refit_v2/native_stronger/summary.json",
+      "group": "mbrl_rank_halfcheetah_refit_v2",
+      "status": "completed",
+      "task": "halfcheetah",
+      "condition": "native",
+      "rows": [
+        {
+          "condition": "native",
+          "seed": 812,
+          "return_": -21.76786125400822,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 101.9837737036869,
+          "model_hash_unchanged": true,
+          "evaluations": 1000,
+          "predictive_transitions": 80000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "native",
+          "seed": 813,
+          "return_": -32.036575776417855,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 94.09797831904143,
+          "model_hash_unchanged": true,
+          "evaluations": 1000,
+          "predictive_transitions": 80000000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "019de0c7ab82372853aea0fcb0a76e5d2ff5ac8ef3cffe87e3d562275831515b",
+      "model_file_hashes": {
+        "model.pth": "e7ec4b03366d568d8c0536248d0a54d151e3bac95d84a34a3d5e22a48bf223c4",
+        "env_stats.pickle": "e9962b08f9db175cb98af9d668f0e7edfe75a60e5166288e9473e201b2be4292"
+      },
+      "mean_return": -26.902218515213036,
+      "native_environment_steps": 400,
+      "predictive_transitions": 160000000,
+      "elapsed_seconds": 196.1781477080658,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:12:47.588977+00:00"
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_refit_v2/random/summary.json",
+      "group": "mbrl_rank_halfcheetah_refit_v2",
+      "status": "completed",
+      "task": "halfcheetah",
+      "condition": "random",
+      "rows": [
+        {
+          "condition": "random",
+          "seed": 812,
+          "return_": -76.15671921431793,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 0.030046881642192602,
+          "model_hash_unchanged": true,
+          "evaluations": 0,
+          "predictive_transitions": 0,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        },
+        {
+          "condition": "random",
+          "seed": 813,
+          "return_": -92.28418828855078,
+          "steps": 200,
+          "reached_episode_cap": true,
+          "seconds": 0.02947955299168825,
+          "model_hash_unchanged": true,
+          "evaluations": 0,
+          "predictive_transitions": 0,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "model_hash": "019de0c7ab82372853aea0fcb0a76e5d2ff5ac8ef3cffe87e3d562275831515b",
+      "model_file_hashes": {
+        "model.pth": "e7ec4b03366d568d8c0536248d0a54d151e3bac95d84a34a3d5e22a48bf223c4",
+        "env_stats.pickle": "e9962b08f9db175cb98af9d668f0e7edfe75a60e5166288e9473e201b2be4292"
+      },
+      "mean_return": -84.22045375143435,
+      "native_environment_steps": 400,
+      "predictive_transitions": 0,
+      "elapsed_seconds": 0.14076722506433725,
+      "api_requests": 0,
+      "gpu_work": false,
+      "finished_at_utc": "2026-10-09T01:09:32.742641+00:00"
+    },
+    {
+      "source": "runs/tdmpc_rank_coupling_v0/native/summary.json",
+      "group": "tdmpc_rank_coupling_v0",
+      "status": "completed",
+      "condition": "native",
+      "task": "walker-walk",
+      "rows": [
+        {
+          "task": "walker-walk",
+          "task_id": 1,
+          "seed": 17,
+          "policy": "mpc",
+          "steps": 500,
+          "return": 974.2680277954787,
+          "full_episode": true,
+          "wall_seconds": 19.573248515371233,
+          "condition": "native",
+          "evaluations": 3000,
+          "phase_candidates": 0,
+          "surrogate_before_mean": 0.0,
+          "surrogate_after_mean": 0.0
+        }
+      ],
+      "mean_return": 974.2680277954787,
+      "native_environment_steps": 500,
+      "estimator_evaluations": 3000,
+      "additional_neural_evaluations_for_coupling": 0,
+      "parity_estimator_evaluations": 2,
+      "model_hash": "ed703fcb518e49a48c1a7379c1f9a3b9b6d1edeee82e6cea679e528b324ca4fe",
+      "model_hash_unchanged": true,
+      "elapsed_seconds": 20.836002469062805,
+      "api_requests": 0,
+      "training_updates": 0,
+      "gpu_work": "Short inference only; CPU rank search included in elapsed time, no GPU utilization timing measurement."
+    },
+    {
+      "source": "runs/tdmpc_rank_coupling_fast_v1/targeted/summary.json",
+      "group": "tdmpc_rank_coupling_fast_v1",
+      "status": "completed",
+      "condition": "targeted",
+      "task": "walker-walk",
+      "rows": [
+        {
+          "task": "walker-walk",
+          "task_id": 1,
+          "seed": 17,
+          "policy": "mpc",
+          "steps": 500,
+          "return": 973.3963107001036,
+          "full_episode": true,
+          "wall_seconds": 156.2346683931537,
+          "condition": "targeted",
+          "evaluations": 3000,
+          "phase_candidates": 3843000,
+          "surrogate_before_mean": 162.621377243042,
+          "surrogate_after_mean": 162.56522404988607
+        }
+      ],
+      "mean_return": 973.3963107001036,
+      "native_environment_steps": 500,
+      "estimator_evaluations": 3000,
+      "additional_neural_evaluations_for_coupling": 0,
+      "parity_estimator_evaluations": 2,
+      "model_hash": "ed703fcb518e49a48c1a7379c1f9a3b9b6d1edeee82e6cea679e528b324ca4fe",
+      "model_hash_unchanged": true,
+      "elapsed_seconds": 157.52462933724746,
+      "api_requests": 0,
+      "training_updates": 0,
+      "gpu_work": "Short inference only; CPU rank search included in elapsed time, no GPU utilization timing measurement."
+    }
+  ],
+  "training": [
+    {
+      "source": "runs/mbrl_rank_independent_model_v0/model/summary.json",
+      "group": "mbrl_rank_independent_model_v0",
+      "status": "trained",
+      "task": "cartpole",
+      "training_seed": 18,
+      "native_collection_steps": 3000,
+      "collection_resets": 102,
+      "collection_seconds": 0.11350439116358757,
+      "gradient_updates": 2580,
+      "epochs": 60,
+      "training_seconds": 4.303975007031113,
+      "elapsed_seconds": 5.22496193787083,
+      "model_hash": "7e4b40c12e3d45e3eeda0eb6e67815b75a30670d283ce35bde348eb6cde075fd",
+      "final_validation": 7.583869773952756e-06,
+      "api_requests": 0,
+      "gpu_work": false
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_v0/model/summary.json",
+      "group": "mbrl_rank_halfcheetah_v0",
+      "status": "trained",
+      "task": "halfcheetah",
+      "training_seed": 18,
+      "native_collection_steps": 6000,
+      "collection_resets": 31,
+      "collection_seconds": 0.6959799318574369,
+      "gradient_updates": 2580,
+      "epochs": 60,
+      "training_seconds": 9.869921510107815,
+      "elapsed_seconds": 11.448025941848755,
+      "model_hash": "e9508ad21d9427f58df7daf8fb964f02cb5c5e86a0746a9db6d8941f2ceef266",
+      "final_validation": 0.9455011487007141,
+      "api_requests": 0,
+      "gpu_work": false
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_snapshot_v1/model/summary.json",
+      "group": "mbrl_rank_halfcheetah_snapshot_v1",
+      "status": "trained",
+      "task": "halfcheetah",
+      "training_seed": 18,
+      "native_collection_steps": 6000,
+      "collection_resets": 31,
+      "collection_seconds": 0.6924360962584615,
+      "gradient_updates": 2580,
+      "epochs": 60,
+      "training_seconds": 9.815298909787089,
+      "elapsed_seconds": 11.381056880112737,
+      "model_hash": "25b0d4eeb19a726d0b368925f5287e483c116ea6a905128e14453055eb3371a1",
+      "final_validation": 0.9634509086608887,
+      "api_requests": 0,
+      "gpu_work": false
+    },
+    {
+      "source": "runs/mbrl_rank_halfcheetah_refit_v2/model/summary.json",
+      "group": "mbrl_rank_halfcheetah_refit_v2",
+      "status": "trained",
+      "task": "halfcheetah",
+      "gradient_updates": 2700,
+      "epochs": 60,
+      "training_seconds": 10.573289061896503,
+      "total_training_transitions": 6400,
+      "reused_on_policy_transitions": 400,
+      "native_collection_steps": 0,
+      "validation_note": "Repartitioned seen training data; validation is a training diagnostic, not independent model generalization evidence.",
+      "model_hash": "019de0c7ab82372853aea0fcb0a76e5d2ff5ac8ef3cffe87e3d562275831515b",
+      "final_validation": 0.7053124308586121,
+      "api_requests": 0,
+      "gpu_work": false
+    }
+  ],
+  "usage": {
+    "api_requests": 0,
+    "failed_api_requests": 0,
+    "completed_native_evaluation_episodes": 22,
+    "completed_native_evaluation_steps": 4723,
+    "native_collection_steps": 15000,
+    "recorded_snapshot_check_native_steps": 3,
+    "other_live_simulator_diagnostic_steps": 5,
+    "incomplete_run_native_steps_lower_bound": 100,
+    "incomplete_run_exact_step_count": null,
+    "completed_mbrl_prediction_transitions": 2208280000,
+    "completed_tdmpc_estimator_evaluations": 6000,
+    "tdmpc_parity_estimator_evaluations": 4,
+    "tdmpc_additional_head_law_check_forward_calls": 1,
+    "neural_training_updates": 10440,
+    "cpu_training_seconds": 34.56248448882252,
+    "completed_evaluation_process_elapsed_seconds": 1881.1461237920448,
+    "gpu_work": "Frozen TD-MPC2 inference only; no GPU training. Process elapsed includes CPU search; GPU utilization time not measured.",
+    "incomplete_run_usage": "Brute-force TD-MPC2 search explicitly stopped for CPU cost. At least 100 real steps/600 estimations/201 wall seconds/771 CPU seconds observed; exact totals unavailable and excluded from completed-run sums.",
+    "native_environment_steps_lower_bound": 19831
+  },
+  "verification": {
+    "frozen_plans_checked": 18,
+    "hashes_match_current_or_explicit_archived_sources": true
+  },
+  "decision": "Do not scale the existing rank-coupling operation or extend weak HalfCheetah fitting. Preserve the limited original mechanism result, investigate a substantively different security operation with native strong-policy evidence before making a high-novelty claim."
+}

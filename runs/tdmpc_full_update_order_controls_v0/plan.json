@@ -1,0 +1,29 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "random_source": "runs/tdmpc_order_controls_v0/random_source.pt",
+  "cascade_source": "runs/tdmpc_order_controls_v0/cascade_source.pt",
+  "reverse_source": "runs/tdmpc_order_controls_v0/reverse_cascade_source.pt",
+  "shuffled_source": "runs/tdmpc_order_controls_v0/shuffled_cascade_source.pt",
+  "targets": [
+    "walker-run",
+    "cup-catch"
+  ],
+  "validation_seed": 33,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "eval_steps": 300,
+  "updates": 80,
+  "learning_seed": 31,
+  "output": "runs/tdmpc_full_update_order_controls_v0",
+  "operation": "Same legal source trajectories as order-control gate, but use upstream native full update including encoder, reward/value, task embedding and policy.",
+  "conditions": [
+    "random",
+    "cascade",
+    "reverse_cascade",
+    "shuffled_cascade"
+  ],
+  "gate": "A full-update replication is supportive only if cascade retains selective walker-run MPC loss, actor/one-step controls remain interpretable, and cup-catch remains negative.",
+  "api_requests": 0
+}

@@ -1,0 +1,86 @@
+{
+  "status": "completed_offline_same_query_audit",
+  "source_run": "runs/mbrl_action_mean_coupling_20261015_v2",
+  "paired_real_episode_pairs": 1,
+  "completed_real_episodes": 2,
+  "seed": 708,
+  "queries": 200,
+  "independent_sample_count": null,
+  "actual_episode_returns": {
+    "independent": {
+      "recorded_reward_sum": 200.0,
+      "steps": 200,
+      "terminated": false,
+      "truncated": false
+    },
+    "positive_action_mean": {
+      "recorded_reward_sum": 200.0,
+      "steps": 200,
+      "terminated": false,
+      "truncated": false
+    }
+  },
+  "scientific_result": "no_observed_harm_for_fixed_operation",
+  "rates": {
+    "native_topk35_first_index_changed": {
+      "count": 156,
+      "rate": 0.78
+    },
+    "elite_set_changed": {
+      "count": 172,
+      "rate": 0.86
+    },
+    "first_action_changed_exact": {
+      "count": 172,
+      "rate": 0.86
+    },
+    "first_action_changed_gt_1e_6": {
+      "count": 172,
+      "rate": 0.86
+    },
+    "phase_objective_improved_gt_tolerance": {
+      "count": 178,
+      "rate": 0.89
+    },
+    "scalar_multisets_exact": {
+      "count": 200,
+      "rate": 1.0
+    },
+    "original_bank_index_bijection": {
+      "count": 200,
+      "rate": 1.0
+    }
+  },
+  "action_difference": {
+    "signed_mean": 0.01258011942729354,
+    "mean_absolute": 0.019058072362095117,
+    "rms": 0.02905389602563175,
+    "maximum_absolute": 0.13329872488975525
+  },
+  "phase_objective_gain": {
+    "mean": 0.015964449965395033,
+    "min": 0.0,
+    "max": 0.09092074632644653
+  },
+  "tie_diagnostics": {
+    "both_comparisons_have_unique_top_score_queries": 0,
+    "unique_top_score_flip_count": 0,
+    "native_top1_definition": "First index of native torch.topk(35), matching native CEM elite ordering; ties are unchanged native implementation behavior, not unique preference changes.",
+    "at_least_one_tied_top_score_queries": 200
+  },
+  "budget": {
+    "real_environment_steps": 400,
+    "sampler_queries": 2000,
+    "native_modelenv_forecast_batch_calls": 16000,
+    "predictive_transitions": 1680000000,
+    "new_model_calls_for_this_analysis": 0,
+    "new_environment_steps_for_this_analysis": 0
+  },
+  "interpretation": "These counterfactuals hold each actually visited intervention state, candidate bank and pre-final mean fixed, replacing only its final-row selection with the saved independent vector. They are not a second closed-loop trajectory, do not supply 200 independent samples, and do not establish harm when actual paired returns are equal.",
+  "marginal_scope": "Exact scalar N-particle return-estimator bank-column permutations; not an empirical test of unrecorded individual forecast trajectories.",
+  "source_paths": [
+    "runs/mbrl_action_mean_coupling_20261015_v2/summary.json",
+    "runs/mbrl_action_mean_coupling_20261015_v2/positive_action_mean/episode.json",
+    "runs/mbrl_action_mean_coupling_20261015_v2/independent/episode.json"
+  ]
+}

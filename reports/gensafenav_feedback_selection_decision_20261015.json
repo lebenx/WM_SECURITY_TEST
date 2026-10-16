@@ -1,0 +1,474 @@
+{
+  "schema_version": 1,
+  "status": "completed_pretrained_native_clean_and_shadow_qualification_no_go",
+  "created_at_utc": "2026-10-15T14:35:48.454617+00:00",
+  "previous_goal_turn_classification": {
+    "classification": "progress",
+    "evidence": "reports/cosmos_action_text_route_decision_20261015.json",
+    "reason": "Previous turn actually tested the fixed Cosmos text-entry mechanism and obtained a negative result; not merely documentation."
+  },
+  "overall_research_goal": "active_unachieved",
+  "question": "Does naturally selected forecast-error feedback retain greater optimism than an equal-count error-independent control after correct physical-time alignment?",
+  "scope": "Distinct feedback-selection qualification in a pretrained forecasting navigation agent. Not a Goal-Swap, action-conditioned world-model experiment, or a reopened test of the old timestamp indexing bug.",
+  "protocol": "configs/gensafenav_feedback_selection_gate_20261015.json",
+  "scripts": [
+    "scripts/fetch_gensafenav_resources.py",
+    "scripts/probe_gensafenav_feedback_selection.py",
+    "scripts/analyze_gensafenav_feedback_selection.py"
+  ],
+  "assets": {
+    "repository": "https://github.com/tasl-lab/GenSafeNav",
+    "revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+    "manifest": "runs/gensafenav_resources_20261015/provenance.json",
+    "runtime": "runs/gensafenav_resources_20261015/runtime_provenance.json",
+    "verified_files": 186,
+    "verified_total_bytes": 11834172,
+    "actor_bytes": 10026423,
+    "configured_rand_gst_bytes": 827916,
+    "weights_loaded_strict": true,
+    "source_modified": false
+  },
+  "execution": {
+    "completed_run": "runs/gensafenav_feedback_selection_gate_20261015",
+    "failed_attempt_retained": "runs/gensafenav_feedback_selection_gate_20261015_attempt01_cpu_device_failure",
+    "attempt_log": "runs/gensafenav_feedback_selection_attempts_20261015.json",
+    "completed_session": 39274,
+    "completed_terminal_chunk": "ddadc5",
+    "completed_exit_code": 0,
+    "completed_elapsed_seconds": 9.074042633990757,
+    "failed_elapsed_seconds": 3.4129799130023457,
+    "failed_attempt_reason": "Native constant_std AddBias constructs an unregistered constant on CUDA even for --no-cuda; first attempt ended before any physical action. Only its allocation device was adapted for CPU, preserving values, shape, dtype, non-Parameter status and forward. Same case0/seed42 restarted.",
+    "compatibility_adapters": [
+      {
+        "source": "rl/networks/network_utils.py:AddBias.__init__",
+        "condition": "CPU and saved config.policy.constant_std",
+        "change": "Unregistered constant bias uses configured device instead of hard-coded cuda; unchanged values, shape, dtype, non-Parameter status, forward and deterministic mean action.",
+        "native_source_modified": false
+      }
+    ],
+    "completed_activity": {
+      "actor_calls": 119,
+      "gst_calls": 120,
+      "physical_steps": 119,
+      "physical_resets": 2,
+      "actor_calls_completed": 119,
+      "gst_calls_completed": 120,
+      "physical_steps_completed": 119,
+      "checkpoint_loads": 2,
+      "checkpoint_loads_completed": 2,
+      "actual_robot_controls": 119,
+      "talk2env_calls": 120,
+      "post_terminal_talk2env_calls": 1
+    },
+    "all_attempts_activity": {
+      "actor_calls": 120,
+      "gst_calls": 121,
+      "physical_steps": 119,
+      "physical_resets": 3,
+      "actor_calls_completed": 119,
+      "gst_calls_completed": 121,
+      "physical_steps_completed": 119,
+      "checkpoint_loads": 4,
+      "checkpoint_loads_completed": 4,
+      "actual_robot_controls": 119,
+      "talk2env_calls": 121,
+      "post_terminal_talk2env_calls": 1
+    },
+    "model_api_calls": 0,
+    "neural_gradient_updates": 0,
+    "native_and_shadow_aci_state_updates": "Executed as specified; these are calibration updates, not neural weight training.",
+    "analysis_exit_code": 0,
+    "analysis_terminal_chunk": "6960d6",
+    "analysis_new_neural_forward_calls": 0,
+    "analysis_new_environment_steps": 0,
+    "gpu_scope": "Successful episode uses CPU. The failed attempt allocated the native hard-coded CUDA bias; do not claim zero GPU allocation across both attempts."
+  },
+  "native_clean": {
+    "terminal": "ReachGoal",
+    "success": true,
+    "collision": false,
+    "timeout": false,
+    "return": 30.18506645015441,
+    "steps": 119,
+    "raw_float64_reward_sum": 30.185066414951063,
+    "reported_return_semantics": "DummyVecEnv.buf_rews is float32; summary return equals the sum after this cast.",
+    "success_semantics": "calc_reward evaluates current goal distance before robot.step; the terminal action still executes. Post-action distance is not the success test.",
+    "goal_distance_pre_terminal_action": 0.2332476036217939,
+    "goal_distance_post_terminal_action": 0.34152500037453576,
+    "minimum_sampled_surface_clearance": null,
+    "clearance_scope": "Exact body radii were not logged. The old .44927675 is a fixed-.3-both-radii proxy, not measured physical clearance. Saved config enables initial human radius randomization in [.3,.5] despite random_radii=False; robot radius=.3 follows source initialization. Cached positions imply the displayed conservative bound, not a swept-volume safety certificate.",
+    "historical_fixed_point3_radii_proxy_clearance": 0.44927675174873716,
+    "minimum_sampled_surface_clearance_bound": [
+      0.2492767517487371,
+      0.4492767517487371
+    ],
+    "measurement_scope_correction_20261016": {
+      "superseded_fields": {
+        "minimum_sampled_surface_clearance": 0.44927675174873716,
+        "clearance_scope": "Native fixed human and robot radii are .3; config random_radii=False. Recorded sampled positions, not a swept-volume safety certificate."
+      },
+      "source": "reports/gensafenav_entity_binding_audit_20261016.json",
+      "native_success_collision_and_return_unchanged": true
+    }
+  },
+  "first_reentry": {
+    "physical_index": 62,
+    "time_seconds": 15.5,
+    "lifetime_id": 5,
+    "human_id": 5,
+    "selection_uses_residuals": false,
+    "visibility_t_minus2_to_t": [
+      false,
+      true,
+      true
+    ],
+    "current_gst_out_mask": true,
+    "current_issue_valid": true,
+    "prior_valid_then_invalid": true
+  },
+  "primary_selected_lifetime_horizons": [
+    {
+      "lifetime_id": 5,
+      "horizon": 1,
+      "eligible": 23,
+      "native_retained": 23,
+      "native_omitted": 0,
+      "matched_retained": 23,
+      "native_retained_mean": 0.012821308147376176,
+      "native_omitted_mean": null,
+      "matched_retained_mean": 0.012821308147376176,
+      "omitted_minus_retained_mean": null,
+      "matched_minus_native_retained_mean": null,
+      "h1_q_and_residuals_bitwise_equal": true
+    },
+    {
+      "lifetime_id": 5,
+      "horizon": 2,
+      "eligible": 23,
+      "native_retained": 22,
+      "native_omitted": 1,
+      "matched_retained": 22,
+      "native_retained_mean": 0.03401487967117852,
+      "native_omitted_mean": 0.055174943095236385,
+      "matched_retained_mean": 0.03445077562250645,
+      "omitted_minus_retained_mean": 0.021160063424057865,
+      "matched_minus_native_retained_mean": 0.00043589595132793174
+    },
+    {
+      "lifetime_id": 5,
+      "horizon": 3,
+      "eligible": 23,
+      "native_retained": 21,
+      "native_omitted": 2,
+      "matched_retained": 21,
+      "native_retained_mean": 0.05955381184437711,
+      "native_omitted_mean": 0.10558202551430582,
+      "matched_retained_mean": 0.06152669658660641,
+      "omitted_minus_retained_mean": 0.04602821366992871,
+      "matched_minus_native_retained_mean": 0.0019728847422293
+    },
+    {
+      "lifetime_id": 5,
+      "horizon": 4,
+      "eligible": 23,
+      "native_retained": 20,
+      "native_omitted": 3,
+      "matched_retained": 20,
+      "native_retained_mean": 0.08685221364754554,
+      "native_omitted_mean": 0.17390440235926682,
+      "matched_retained_mean": 0.09666053640322826,
+      "omitted_minus_retained_mean": 0.08705218871172128,
+      "matched_minus_native_retained_mean": 0.009808322755682719
+    },
+    {
+      "lifetime_id": 5,
+      "horizon": 5,
+      "eligible": 23,
+      "native_retained": 19,
+      "native_omitted": 4,
+      "matched_retained": 19,
+      "native_retained_mean": 0.11630906373023393,
+      "native_omitted_mean": 0.25858700022923625,
+      "matched_retained_mean": 0.13450271321780627,
+      "omitted_minus_retained_mean": 0.14227793649900233,
+      "matched_minus_native_retained_mean": 0.018193649487572336
+    }
+  ],
+  "primary_consumed_q_vectors_h1_to_h5": {
+    "native_gate_time_correct": {
+      "raw": [
+        0.034999999999999934,
+        0.07999999999999988,
+        0.2799999999999998,
+        0.19999999999999984,
+        0.31999999999999973
+      ],
+      "clipped": [
+        0.034999999999999934,
+        0.07999999999999988,
+        0.2799999999999998,
+        0.19999999999999984,
+        0.31999999999999973
+      ]
+    },
+    "full_issued_time_correct": {
+      "raw": [
+        0.034999999999999934,
+        0.06999999999999987,
+        0.23999999999999977,
+        0.33999999999999975,
+        0.4399999999999997
+      ],
+      "clipped": [
+        0.034999999999999934,
+        0.06999999999999987,
+        0.23999999999999977,
+        0.33999999999999975,
+        0.4399999999999997
+      ]
+    },
+    "matched_missing_time_correct": {
+      "raw": [
+        0.034999999999999934,
+        0.07999999999999985,
+        0.27999999999999975,
+        0.19999999999999973,
+        0.31999999999999973
+      ],
+      "clipped": [
+        0.034999999999999934,
+        0.07999999999999985,
+        0.27999999999999975,
+        0.19999999999999973,
+        0.31999999999999973
+      ]
+    }
+  },
+  "primary_mean_consumed_q_h2_to_h5": {
+    "native_gate_time_correct": 0.2199999999999998,
+    "full_issued_time_correct": 0.2724999999999998,
+    "matched_missing_time_correct": 0.21999999999999975
+  },
+  "dummy_inclusive_diagnostic": {
+    "horizons": [
+      {
+        "lifetime_id": 5,
+        "horizon": 1,
+        "eligible": 25,
+        "native_retained": 25,
+        "native_omitted": 0,
+        "matched_retained": 25,
+        "native_retained_mean": 0.02780350771185717,
+        "native_omitted_mean": null,
+        "matched_retained_mean": 0.02780350771185717,
+        "omitted_minus_retained_mean": null,
+        "matched_minus_native_retained_mean": null,
+        "h1_q_and_residuals_bitwise_equal": true
+      },
+      {
+        "lifetime_id": 5,
+        "horizon": 2,
+        "eligible": 24,
+        "native_retained": 23,
+        "native_omitted": 1,
+        "matched_retained": 23,
+        "native_retained_mean": 0.05427510584791811,
+        "native_omitted_mean": 0.055174943095236385,
+        "matched_retained_mean": 0.05469204980136221,
+        "omitted_minus_retained_mean": 0.0008998372473182775,
+        "matched_minus_native_retained_mean": 0.0004169439534441044
+      },
+      {
+        "lifetime_id": 5,
+        "horizon": 3,
+        "eligible": 24,
+        "native_retained": 22,
+        "native_omitted": 2,
+        "matched_retained": 22,
+        "native_retained_mean": 0.09093773301944834,
+        "native_omitted_mean": 0.10558202551430582,
+        "matched_retained_mean": 0.09282094118248539,
+        "omitted_minus_retained_mean": 0.014644292494857478,
+        "matched_minus_native_retained_mean": 0.0018832081630370534
+      },
+      {
+        "lifetime_id": 5,
+        "horizon": 4,
+        "eligible": 24,
+        "native_retained": 21,
+        "native_omitted": 3,
+        "matched_retained": 21,
+        "native_retained_mean": 0.1303354450765052,
+        "native_omitted_mean": 0.17390440235926682,
+        "matched_retained_mean": 0.1396767048438221,
+        "omitted_minus_retained_mean": 0.04356895728276161,
+        "matched_minus_native_retained_mean": 0.009341259767316895
+      },
+      {
+        "lifetime_id": 5,
+        "horizon": 5,
+        "eligible": 24,
+        "native_retained": 20,
+        "native_omitted": 4,
+        "matched_retained": 20,
+        "native_retained_mean": 0.17299361402449492,
+        "native_omitted_mean": 0.25858700022923625,
+        "matched_retained_mean": 0.19027758103768866,
+        "omitted_minus_retained_mean": 0.08559338620474133,
+        "matched_minus_native_retained_mean": 0.017283967013193735
+      }
+    ],
+    "consumed_q_vectors_h1_to_h5": {
+      "native_gate_time_correct": {
+        "raw": [
+          0.07499999999999993,
+          0.13499999999999993,
+          0.2599999999999997,
+          0.3449999999999999,
+          0.3999999999999998
+        ],
+        "clipped": [
+          0.07499999999999993,
+          0.13499999999999993,
+          0.2599999999999997,
+          0.3449999999999999,
+          0.3999999999999998
+        ]
+      },
+      "full_issued_time_correct": {
+        "raw": [
+          0.07499999999999993,
+          0.05999999999999984,
+          0.1599999999999998,
+          0.31999999999999973,
+          0.4199999999999997
+        ],
+        "clipped": [
+          0.07499999999999993,
+          0.05999999999999984,
+          0.1599999999999998,
+          0.31999999999999973,
+          0.4199999999999997
+        ]
+      },
+      "matched_missing_time_correct": {
+        "raw": [
+          0.07499999999999993,
+          0.06999999999999984,
+          0.17999999999999983,
+          0.17999999999999972,
+          0.3999999999999998
+        ],
+        "clipped": [
+          0.07499999999999993,
+          0.06999999999999984,
+          0.17999999999999983,
+          0.17999999999999972,
+          0.3999999999999998
+        ]
+      }
+    },
+    "mean_consumed_q_h2_to_h5": {
+      "native_gate_time_correct": 0.2849999999999998,
+      "full_issued_time_correct": 0.23999999999999977,
+      "matched_missing_time_correct": 0.2074999999999998
+    },
+    "interpretation": "Including stationary reentry placeholders makes the natural-gate mean radius larger than both controls here; these are not all learned GST forecasts and cannot rescue the failed primary gate."
+  },
+  "qualification": {
+    "clean_goal_without_collision": true,
+    "first_root_exists": true,
+    "actual_omission_supported": true,
+    "residual_direction": true,
+    "interval_direction": false,
+    "harm_unmeasured": true,
+    "scope": "Natural selection/interval qualification only; native policy remains unrepaired",
+    "J_count_only_horizons": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "mean_J_omitted_minus_retained_meters": 0.07412960057617754,
+    "mean_J_matched_minus_native_retained_meters": 0.007602688234203072,
+    "mean_h2_to_h5_full_minus_native_q": 0.05249999999999996,
+    "mean_h2_to_h5_matched_minus_native_q": -4.85722573273506e-17,
+    "passed": false,
+    "decision": "stop_fixed_case_candidate_no_replacement_root"
+  },
+  "controls": {
+    "all_primary_actual_gst_delivered_identity_checks_exact": true,
+    "h1_primary_all_lifetimes_residuals_and_q_bitwise_equal": true,
+    "h1_dummy_inclusive_all_lifetimes_bitwise_equal": true,
+    "same_count_per_lifetime_horizon": true,
+    "rng_adapter": {
+      "seed": 17,
+      "encoding": "JSON compact [domain,17,lifetime,horizon,target] UTF-8",
+      "uniform": "First SHA256 64 bits >>11 divided by2**53",
+      "choice_domain": "dtaci-choice-v1",
+      "mask_domain": "missingness-v1",
+      "constructor_target": "initial",
+      "choice": "Native probabilities, normalized cumulative sum, right inverse CDF",
+      "global_numpy_and_python_rng_unchanged": true
+    },
+    "native_time_join_bug_preserved_in_actual_rollout": true,
+    "all_shadows_use_correct_issue_plus_horizon_physical_time": true,
+    "shadows_feed_actor": false,
+    "case_or_root_reselection": false
+  },
+  "conclusion": {
+    "go": "Keep a reproducible competent native case and a real selective-omission observation: at the fixed first root, omitted higher-horizon residuals exceed retained ones. Reuse resource/code assets only within this measured scope.",
+    "no_go": "The predeclared selectivity qualification fails. The primary h2..5 natural-gate radius mean equals the equal-count random-missingness mean to floating precision. Do not expand this fixed candidate to attack/recovery rollouts, change case/seed/root/horizon/threshold, or claim safety harm.",
+    "supported": [
+      "Official pretrained actor and configured GST successfully execute this fixed native CPU case.",
+      "Naturally occurring admission gaps can omit genuine multistep GST residuals even with correct time joins.",
+      "This selected first-root residual gap does not imply a narrower radius than the equal-count control."
+    ],
+    "unproved": [
+      "Attacker control through legal physical motion.",
+      "Different chosen action or collision/success degradation caused by retained calibration state.",
+      "Deployable repair or decision recovery.",
+      "Independent generalization, population attack rate, statistical significance, or a new core security contribution."
+    ],
+    "old_evidence_preserved": "Cosmos single-case Goal-Swap harm/truth restoration, failed30-root expansion, K8 negative and direct-action-entry negative are unchanged."
+  },
+  "interpretation_limits": [
+    "Only one case and the first mask-selected event; no p-values, confidence intervals or population ASR. Repeated horizons/targets are correlated.",
+    "Native-gate shadows retain only the admission predicate and correct timestamps; they are not the actual native calibration states, which include placeholders and the old indexing bug.",
+    "The full-feedback control uses simulator truth unavailable to a deployed agent and is diagnostic, not a defense.",
+    "Current point forecasts, native policy goal, weights and physical environment were never attacked. All actual utility is from the single real Clean rollout; three shadow rows are not three policy episodes.",
+    "Interval mean is not monotonically larger under full feedback at every horizon; all h1..5 values are reported.",
+    "Feedback-selective labels are an established concept. This result provides no novelty score or claim of theoretical coverage guarantees."
+  ],
+  "source_boundary_notes": {
+    "v_gate": "step t to t+1 uses the previous talk2Env prediction_valid v_t; source has access to simulator true positions even if current visibility changed. It is an update gate, not forced loss of all possible ground truth.",
+    "h1": "For actual GST issue-valid predictions and interval1, v_(target-1)=v_issue; all three h1 sequences must match.",
+    "consumer": "Saved aci_input=True concatenates five conformity radii into the 17-dimensional actor pedestrian input; native forecast-to-actor consumption exists. GST is conditioned on pedestrian histories, not candidate robot actions or a separate Goal."
+  },
+  "raw_analysis": "runs/gensafenav_feedback_selection_gate_20261015/shadow_analysis/summary.json",
+  "result_csv": "reports/gensafenav_feedback_selection_decision_20261015.csv",
+  "independent_review": "reports/gensafenav_feedback_selection_review_20261015.json",
+  "reproduce_cached_analysis": ".venv-gensafenav/bin/python scripts/analyze_gensafenav_feedback_selection.py --run runs/gensafenav_feedback_selection_gate_20261015 --out /tmp/gensafenav_feedback_selection_recheck",
+  "reproduce_native_case": ".venv-gensafenav/bin/python scripts/probe_gensafenav_feedback_selection.py --device cpu --out /tmp/gensafenav_case0_reproduction",
+  "reproduction_scope": "Commands document reproducibility, not a recommendation to repeat this completed negative or scan new roots. Output directories must not already exist.",
+  "independent_review_summary": {
+    "status": "completed_independent_cache_review",
+    "all_pairs_recomputed_exact": 4722,
+    "primary_strata_recomputed_exact": 120,
+    "h1_strata_equal": 24,
+    "all_selected_lifetime_q_recomputed_exact": true,
+    "initial_state_and_first_gst_after_cpu_fix_exact": true,
+    "physical_position_updates_exact": 119,
+    "new_neural_calls": 0,
+    "new_environment_steps": 0
+  },
+  "native_invalid_assignment_diagnostic": {
+    "rows": 29,
+    "all_issue_invalid": true,
+    "all_valid_actual_gst_rows_exact": 939,
+    "all_valid_fallback_rows_exact": 28,
+    "explanation": "29 issue-invalid rows (21 raw GST mask true,8 false) at t32/55/65/84/98. crowd_sim_pred.py generates observations before replacing goal-reaching humans; wrapper sorts cached observation edges while talk2Env sorts new physical humans. All invalid rows are excluded from primary analysis. Raw out_mask is not the issue-valid predicate.",
+    "selected_root_omission_unrelated": "The10 root-life omissions originate t20..23 and mature t25..28. All admission events t24..27 have issue_valid/visibility/rawGST false; life5 stays invisible/invalid t24..60, fallback reentry t61, first realGST reentry t62. These omissions precede the observed sorted-row mismatches and are not caused by those invalid-row mismatches.",
+    "claim_boundary": "Recorded source/data-path limitation only; not a new tested attack or reason to rescue the failed gate."
+  }
+}

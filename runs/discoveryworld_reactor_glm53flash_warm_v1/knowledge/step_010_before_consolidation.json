@@ -1,0 +1,144 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated crystal reactor (uuid: 8549); Crystal 2 (uuid: 21559) is installed in activated crystal reactor (uuid: 51739); Crystal 3 (uuid: 24678) is on a table (uuid: 57306) south-east of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "There is an empty crystal reactor (uuid: 33120) north-east of the agent, and a spectrometer (uuid: 24266) was on a table (uuid: 58937) south-west of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is 33% activated, with two of three crystals installed.",
+      "step": 1
+    },
+    {
+      "measurement": "The spectrometer (uuid: 24266) is in the agent's inventory.",
+      "step": 3
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 1 (uuid: 13162): Channel 1 = 40.61, Channel 5 = 63.61, other channels 0.00. Its reactor (uuid: 8549) is set to 2680.26 Hz.",
+      "step": 6
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 2 (uuid: 21559): Channel 1 = 39.40, Channel 5 = 31.24, other channels 0.00. Its reactor (uuid: 51739) is set to 2600.4 Hz.",
+      "step": 10
+    },
+    {
+      "hypothesis": "If the spectrometer is used on a quantum crystal, then the non-zero channel values indicate the frequency that the crystal's reactor should be tuned to.",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "Crystal 1 and Crystal 2 are correctly installed and both show non-zero values only on Channels 1 and 5."
+    },
+    {
+      "hypothesis": "If the correct reactor frequency for a crystal is encoded by its spectrometer readings, then the encoding is likely a mathematical function of the Channel 1 and Channel 5 values.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Two data points are available: Crystal 1 (40.61, 63.61 -> 2680.26 Hz) and Crystal 2 (39.40, 31.24 -> 2600.4 Hz). Simple concatenation and multiplication/addition hypotheses were rejected."
+    },
+    {
+      "hypothesis": "If the encoding formula is determined from Crystal 1 and Crystal 2, then Crystal 3's correct reactor frequency can be calculated from its spectrometer reading.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Crystal 3 is the only remaining crystal and must be installed in the empty reactor to activate the generator."
+    },
+    {
+      "measurement": "After teleporting to the spectrometer (uuid: 24266), the agent is at (15, 18) facing south. The spectrometer is on the table (uuid: 58937) directly south at distance 1, and it is listed as accessible but is not yet in the agent's inventory.",
+      "step": 2
+    },
+    {
+      "hypothesis": "If the agent picks up the spectrometer (uuid: 24266) and uses it on Crystal 3 (uuid: 24678), then the spectrometer will report non-zero values on exactly two channels, as it did for Crystal 1 and Crystal 2, and those values will determine the correct reactor frequency for Crystal 3.",
+      "status": "pending",
+      "step": 2,
+      "supporting evidence": "Crystal 1 (uuid: 13162) and Crystal 2 (uuid: 21559) both produced non-zero readings only on Channels 1 and 5; Crystal 3 is the only remaining crystal without a tuned reactor."
+    },
+    {
+      "measurement": "For Crystal 1 (uuid: 13162), reactor frequency 2680.26 Hz divided by spectrometer Channel 1 value 40.61 equals 66.0. For Crystal 2 (uuid: 21559), reactor frequency 2600.4 Hz divided by Channel 1 value 39.40 equals 66.0.",
+      "step": 3
+    },
+    {
+      "hypothesis": "If a quantum crystal is measured with the spectrometer and gives a non-zero Channel 1 value, then the correct reactor frequency for that crystal is 66.0 times the Channel 1 value.",
+      "status": "pending",
+      "step": 3,
+      "supporting evidence": "Crystal 1: 40.61 * 66 = 2680.26 Hz, which matches its reactor setting (uuid: 8549). Crystal 2: 39.40 * 66 = 2600.4 Hz, which matches its reactor setting (uuid: 51739). This should be tested by measuring Crystal 3 (uuid: 24678) and applying the resulting frequency to the empty reactor (uuid: 33120)."
+    },
+    {
+      "measurement": "Quantum crystal 3 (uuid: 24678) is on the table (uuid: 57306), one tile south of the agent's current location (17, 18); the agent is facing south, so the crystal is directly in front and accessible for using the spectrometer (uuid: 24266).",
+      "step": 4
+    },
+    {
+      "measurement": "Spectrometer (uuid: 24266) reading for Quantum Crystal 3 (uuid: 24678): Channel 1 = 57.38, Channel 5 = 19.67, and Channels 2–4 = 0.00.",
+      "step": 5
+    },
+    {
+      "measurement": "Using the established relationship, 66.0 × Crystal 3's Channel 1 reading (57.38) = 3787.08 Hz.",
+      "step": 5
+    },
+    {
+      "hypothesis": "If the reactor frequency is 66.0 times a quantum crystal's Channel 1 spectrometer value, then the empty crystal reactor (uuid: 33120) should be tuned to 3787.08 Hz for Quantum Crystal 3 (uuid: 24678).",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "Crystal 1: 40.61 × 66.0 = 2680.26 Hz, matching its reactor setting; Crystal 2: 39.40 × 66.0 = 2600.4 Hz, matching its reactor setting; Crystal 3 has Channel 1 = 57.38."
+    },
+    {
+      "measurement": "The empty crystal reactor (uuid: 33120) is at location (17,18), directly north of the agent (distance 1), and has no crystal installed. Crystal reactor devices (uuid: 33120, 8549, 51739) appear in nearbyAgents, indicating that their controls can be opened using the TALK action.",
+      "step": 6
+    },
+    {
+      "hypothesis": "If the agent uses TALK on the empty crystal reactor (uuid: 33120) and sets its frequency to 3787.08 Hz, then installing Quantum Crystal 3 (uuid: 24678) will activate the reactor and increase the generator core (uuid: 11878) activation from 66% to 100%.",
+      "status": "pending",
+      "step": 6,
+      "supporting evidence": "Crystal 3's spectrometer reading (Channel 1 = 57.38) predicts a reactor frequency of 66.0 × 57.38 = 3787.08 Hz, and the empty reactor is now accessible for tuning."
+    },
+    {
+      "measurement": "Crystal reactor 3 (uuid: 33120) reports a current resonance frequency of 5000 Hz and allows a frequency range of 0 to 10,000 Hz.",
+      "step": 7
+    },
+    {
+      "hypothesis": "If crystal reactor 3 (uuid: 33120) is tuned to 3787.08 Hz, then it will be at the frequency predicted for Quantum Crystal 3 (uuid: 24678) by the relationship frequency = 66.0 × Channel 1 reading.",
+      "status": "pending",
+      "step": 7,
+      "supporting evidence": "Crystal 3's measured Channel 1 value is 57.38, giving a predicted frequency of 3787.08 Hz; the reactor currently reports 5000 Hz and permits adjustment within 0–10,000 Hz."
+    },
+    {
+      "measurement": "After choosing 'Decrease frequency by 1000 Hz', the crystal reactor (no crystal present) (uuid: 33120) reports a current resonance frequency of 4000 Hz. The reactor controls appear to change the frequency by fixed increments of 1000, 100, 10, and 1 Hz.",
+      "step": 8
+    },
+    {
+      "hypothesis": "If the crystal reactor (no crystal present) (uuid: 33120) is decreased by 100 Hz twice, then by 10 Hz once, and then by 1 Hz three times, then its frequency will be 3787 Hz, which matches the predicted integer target for Quantum Crystal 3 (uuid: 24678).",
+      "status": "pending",
+      "step": 8,
+      "supporting evidence": "Current frequency is 4000 Hz. The predicted frequency is 3787.08 Hz, so the practical integer target is 3787 Hz. 4000 - 100 - 100 - 10 - 1 - 1 - 1 = 3787."
+    },
+    {
+      "measurement": "After choosing 'Decrease frequency by 100 Hz' on crystal reactor (no crystal present) (uuid: 33120), the current resonance frequency is 3900 Hz. The reactor controls continue to allow fixed-step adjustments of 1000, 100, 10, and 1 Hz.",
+      "step": 9
+    },
+    {
+      "hypothesis": "If the crystal reactor (no crystal present) (uuid: 33120) is decreased by 100 Hz once, then by 10 Hz once, and then by 1 Hz three times, then its frequency will be 3787 Hz, which matches the predicted integer target for Quantum Crystal 3 (uuid: 24678).",
+      "status": "pending",
+      "step": 9,
+      "supporting evidence": "The reactor is currently at 3900 Hz. The predicted frequency is 3787.08 Hz, so the practical integer target is 3787 Hz. 3900 - 100 - 10 - 1 - 1 - 1 = 3787."
+    },
+    {
+      "measurement": "After choosing 'Decrease frequency by 100 Hz' on crystal reactor (no crystal present) (uuid: 33120), the current resonance frequency is 3800 Hz. The reactor controls continue to allow fixed-step adjustments of 1000, 100, 10, and 1 Hz.",
+      "step": 10
+    },
+    {
+      "hypothesis": "If the crystal reactor (no crystal present) (uuid: 33120) is decreased by 10 Hz once, and then by 1 Hz three times, then its frequency will be 3787 Hz, which matches the predicted integer target for Quantum Crystal 3 (uuid: 24678).",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "The reactor is currently at 3800 Hz. The predicted frequency from 66.0 × Channel 1 (57.38) is 3787.08 Hz, so the practical integer target is 3787 Hz. 3800 - 10 - 1 - 1 - 1 = 3787."
+    },
+    {
+      "measurement": "After choosing 'Decrease frequency by 10 Hz' on crystal reactor (no crystal present) (uuid: 33120), its current resonance frequency is 3790 Hz.",
+      "step": 11
+    },
+    {
+      "hypothesis": "If crystal reactor (no crystal present) (uuid: 33120) is decreased by 1 Hz three times from 3790 Hz, then its frequency will reach 3787 Hz, the integer target predicted for Quantum Crystal 3 (uuid: 24678).",
+      "status": "pending",
+      "step": 11,
+      "supporting evidence": "The reactor currently reports 3790 Hz, and the predicted frequency is 66.0 × Crystal 3's Channel 1 reading of 57.38 = 3787.08 Hz."
+    }
+  ]
+}

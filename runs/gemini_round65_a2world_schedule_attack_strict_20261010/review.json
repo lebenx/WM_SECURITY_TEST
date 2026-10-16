@@ -1,0 +1,22 @@
+{
+  "verdict": "Reject",
+  "novelty_score": 4,
+  "source_audit_requirements": [
+    "Audit `video2world_multiview_action_dit.py` to verify whether action embeddings enter via standard adaptive layer norm (AdaLN), cross-attention, or concatenated tokens, and verify if temporal layers apply global vs causal vs windowed self-attention.",
+    "Verify the exact Cosmos-Predict2 denoising scheduler (e.g., discrete DDIM/DPMSolver vs continuous EDM/flow-matching formulation) to determine if step-resolved interventions correspond to true semantic late-steps or merely scale-dependent noise regimes.",
+    "Audit whether released A2World weights use temporal patching before or after spatial patch embedding, and whether multi-view cross-attention blocks (`MultiViewCrossAttentionSDPA`) interact with the action conditioning vector or purely across view tokens."
+  ],
+  "distinctness": "Marginal. Despite wrapping the narrative in causal diagnostics (denoising-step-resolved interventions, action-condition Jacobians), this remains an inference-time observation perturbation attack against world model imagination. Existing literature (e.g., Attacking Trusted Imagination, PhysCond-WMA, BadWorld) already establishes that observation noise induces temporal incoherence and planning failures in diffusion world models. Shifting the attack framing from direct policy degradation to measuring late-step sensitivity does not fundamentally differentiate it from standard schedule-dependent diffusion sensitivity analyses.",
+  "fatal_flaws": [
+    "Phenomenological contradiction: Diffusion trajectory semantics (coarse geometry, directionality, motion layout) are established during early denoising steps (high noise); late steps (low noise) predominantly resolve high-frequency texture and perceptual details. Claiming that bounded input perturbations *selectively* alter temporal motion direction *only* at late steps contradicts standard diffusion generative dynamics without arbitrary optimization constraints.",
+    "Unrealistic threat model: Claiming a black-box <=4/255 observation perturbation without gradient/weight/planner access that selectively alters internal attention maps at specific denoising intervals without degrading base reconstruction is mathematically ungrounded and lacks an optimization formulation.",
+    "Conflation of observation sensitivity with action-temporal decoupling: High-frequency perturbations in DiT inputs typically cause standard perceptual degradation or error accumulation across rollouts; asserting 'physically reversed imagined motion' specifically arising from temporal cross-attention disruption is an unsupported leap."
+  ],
+  "decisive_pilot": "Run a 60-minute targeted causal swap pilot on 20 released A2World rollout sequences: Generate latent trajectories under clean observation $x$ and perturbed observation $x + \\delta$ (using random and high-frequency noise bounded at $\\ell_\\infty \\le 4/255$). At denoising step $t \\in [0, T]$, replace clean intermediate latents $z_t$ with perturbed latents $z'_t$ specifically during late steps ($t < 0.25T$). Quantify whether optical flow inversion / motion direction reversal occurs while maintaining PSNR > 28dB against clean reconstruction, or if the perturbation simply injects high-frequency noise artifacts.",
+  "controls": [
+    "Early-step causal injection ($t > 0.75T$) vs late-step causal injection ($t < 0.25T$) with identical perturbation budgets.",
+    "Action-scrambled baseline: Injecting latents generated with randomized action chunks into the clean rollout to measure baseline policy/motion divergence.",
+    "Pure Gaussian/uniform noise baseline of equivalent $\\ell_\\infty$ budget injected directly into latents at late steps to control for generic late-stage variance amplification."
+  ],
+  "repair_assessment": "The proposed repairs (schedule-conditioned action-consistency regularization or late-step condition dropout) are post-hoc heuristic band-aids. If the vulnerability is merely late-step noise sensitivity, standard classifier-free guidance rescale or late-step conditioning truncation resolves it trivially, entirely eliminating the paper's claimed operational threat and rendering the mechanism an artifact of uncalibrated guidance rather than an architectural vulnerability."
+}

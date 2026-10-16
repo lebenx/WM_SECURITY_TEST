@@ -1,0 +1,9 @@
+{
+  "verdict": "REJECT_ALL",
+  "novelty_score_0_to_10": 4.1,
+  "claim": "World models can maintain low factual one-step prediction error while losing counterfactual action sensitivity (action-null gap / controllability shadowing), which an attacker can induce using legal transitions to hijack planning without shifting factual dynamics.",
+  "exact_gate": "On held-out validation trajectories, measure G = MSE(action_permuted_model) - MSE(true_model) along with action-contrast ||f(s, a1) - f(s, a2)||; gate fails if G drops below epsilon or if action sensitivity variance falls >3x relative to clean training within a 2-minute CPU evaluation.",
+  "defense": "Action-null auxiliary regularization enforcing a strictly positive margin between true and permuted action losses combined with planning-time controllability filtering (action sensitivity thresholding in CEM/TD-MPC2).",
+  "overlap": "Substantial overlap with Jacobian regularized model collapse, action desensitization attacks in MBRL, spurious correlation / inertia bias in world models (e.g., action-blind dynamics traps), and conditional mutual information (I(S'; A | S)) representation bounds.",
+  "rationale": "While the framing uses causal controllability and counterfactual twins, the mechanism reduces to standard action-insensitivity/action-dropout exploitation where world models rely almost purely on auto-regressive state inertia. Training a null twin with permuted actions is simply an empirical estimator of conditional mutual information or action feature attribution. Furthermore, driving down action contrast on unexecuted target branches without perturbing factual one-step accuracy is essentially gradient/Jacobian desensitization disguised as causal shadowing."
+}

@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "experiment": "cosmos_action_text_cross_attention_route_gate",
+  "status_at_write": "frozen_before_route_inference_pending_implementation_review",
+  "question": "On the fixed known harmful root, is changing the Goal source only at the direct text-to-action-token cross-attention entry sufficient both to induce and to repair the first-selection reversal, while the same operation on an equal-size proprioceptive slot does neither?",
+  "scope": "One post-hoc mechanism diagnostic of an existing real-utility-qualified action pair. Not an additional independent harmful root, a native attacker interface, a deployed defense, or a reopening of the failed thirty-root expansion gate.",
+  "source": "runs/cosmos_first_query_truth_inference_20261015",
+  "output": "runs/cosmos_action_text_route_gate_20261015",
+  "decision_output": "reports/cosmos_action_text_route_decision_20261015.json",
+  "prior_evidence": [
+    "reports/cosmos_first_query_truth_decision_20261015.json",
+    "reports/cosmos_first_query_truth_review_20261015.json",
+    "reports/cosmos_first_selection_mediation_20261015.json"
+  ],
+  "task_id": 3,
+  "init_id": 2,
+  "suite": "libero_goal",
+  "original_goal": "open the top drawer and put the bowl inside",
+  "forecast_goal_swap": "put the bowl on top of the cabinet",
+  "candidate_indices": [0, 1],
+  "candidate_seeds": [31, 32],
+  "future_seeds": [31, 32],
+  "value_seeds": [31, 32],
+  "future_steps": 1,
+  "value_steps": 1,
+  "physical_horizon_controls": 16,
+  "runtime": ".venv-worldagen/bin/python",
+  "torch_version": "2.2.0+cu121",
+  "numpy_version": "1.26.4",
+  "device": "cuda:0",
+  "model_precision": "Native bfloat16 model and text; native float32 sampling latents; no precision or backend change.",
+  "offload": false,
+  "minimum_free_gpu_mib": 8192,
+  "cuda_memory_fraction": 0.28,
+  "hard_wall_seconds": 120,
+  "resource_policy": "Check free memory before loading. Do not modify any other process. An unavailable resource, OOM, timeout or technical error ends this attempt as deferred or invalid, not as a negative scientific result. No automatic retry, offload, CPU fallback or reduced model budget.",
+  "max_activity": {
+    "checkpoint_loads": 2,
+    "future_sampler_calls": 14,
+    "value_sampler_calls": 14,
+    "noise_calls": 28,
+    "policy_sampler_calls": 0,
+    "vae_encodes": 0,
+    "vae_decodes": 0,
+    "environment_resets": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "network_requests": 0,
+    "training_updates": 0
+  },
+  "activity_accounting": "Four unhooked baseline Future/Value pairs, two same-Goal hooked no-op pairs, and eight experimental pairs. Baselines are reused as result rows. Load the same native model/tokenizer checkpoints once each; discard the unused VAE after native loading. Count actual denoiser forwards, all per-layer hook invocations and extra cross-attention forwards; a sampler call is not assumed to equal one denoiser forward.",
+  "cache_inputs": {
+    "context": "context.pt: observed_latent, original_vae_latent, original_text, swap_text",
+    "candidates": "clean_candidate0.pt and clean_candidate1.pt: action_latent, normalized_actions, environment_actions, future_latent, value_latent, value, seed",
+    "swap_calibration": "swap_candidate0.pt and swap_candidate1.pt: action_latent, future_latent, value_latent, value, seed",
+    "real_future": "truth_candidate0_input.pt and truth_candidate1_input.pt: jointly encoded real-future value_input with trusted prefix0:5 and actual-future slots5:8",
+    "noise": "noise_seed31.pt and noise_seed32.pt: cached unit_noise; native seeded generation must match the saved noise exactly",
+    "rule": "Use only these existing tensors and historical utility records. No Action regeneration, new text encoding, new endpoint encoding or physical replay. Check shape, dtype, finiteness and candidate/seed mapping before model calls. Preserve the source artifacts unchanged."
+  },
+  "native_source_contract": {
+    "adapter": "scripts/cosmos_policy_native_inference.py",
+    "adapter_lines": {
+      "native_checkpoint_load": "116-134",
+      "current_proprio_frame1": "150-166",
+      "prefix_preserving_sampler": "171-193",
+      "action_frame4": "196-198",
+      "future_n_cond5": "213-214",
+      "value_n_cond8": "218-222"
+    },
+    "denoiser": "scripts/alphabrain_checkpoint_inference.py:126-151",
+    "architecture": "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py",
+    "architecture_lines": {
+      "cross_attention_query_and_context": "547-571",
+      "cross_attention_module": "1214-1219",
+      "time_major_flatten_and_cross_attention": "1383-1395",
+      "native_residual_gate_after_hook": "1407",
+      "block_iteration": "1807"
+    },
+    "model_wrapper": "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v1_lvg_dit.py",
+    "native_latent_shape": [1, 16, 9, 28, 28],
+    "patch_temporal": 1,
+    "patch_spatial": 2,
+    "patch_grid_per_frame": [14, 14],
+    "tokens_per_frame": 196,
+    "flatten_order": "b t h w d -> b (t h w) d",
+    "cross_attention_input_and_output_shape": [1, 1764, 2048],
+    "action_frame_zero_based": 4,
+    "action_token_half_open_slice": [784, 980],
+    "matched_proprio_frame_zero_based": 1,
+    "matched_proprio_token_half_open_slice": [196, 392],
+    "blocks": 28,
+    "module_hook": "model.blocks[i].cross_attn.forward for every i in range(28), only during a registered Future call",
+    "shape_gate": "Assert the actual patch sizes, grid, block count and full input/output shape before applying slices. Reject an unexpected layout rather than inferring another frame or broadcasting."
+  },
+  "intervention": {
+    "permission": "Researcher-defined access to the text-context source used by a restricted set of internal cross-attention output rows in the Future computation. This is an added mechanism intervention, not evidence that a deployed external user can access that internal edge.",
+    "operation": "For each affected block invocation, run the original cross_attn.forward on the entire native query tensor and global text. Run that same original forward again on the identical full query tensor with only the alternate text context changed; preserve all other positional and keyword arguments. Clone the first output and replace only the 196 target rows with rows from the alternate-context output. Return the clone to the unchanged native residual/AdaLN gate.",
+    "full_query_requirement": "Both attention calls use the full [1,1764,2048] query. Do not use a target-row-only GEMM whose arithmetic can differ. Do not call the patched method recursively.",
+    "selection": "All 28 blocks and all native denoiser evaluations in each Future sampler call; no layer, head, denoising-time or token subset search.",
+    "same_query_requirement": "The alternate context is evaluated on the current hidden query within this same condition. Do not import hidden states, attention outputs or future information from a different trajectory or a separately run Clean network.",
+    "copy_and_integrity": "Do not mutate query, text, weights, action_latent or the unmodified attention output. At the hook boundary, every nonselected output row must be bitwise identical to the original output. This boundary assertion does not prohibit later native self-attention from propagating the selected-row change.",
+    "randomness": "Use the same per-candidate seed for native Future and Value as the source run. Extra attention forwards in eval mode must not consume Torch RNG; record/check RNG before and after alternate attention computation. Do not add dropout, stochastic hooks or seed resets inside model blocks.",
+    "value_is_protected": "Remove all hooks before every Value call. Value always uses original_text, n_cond8 and its unchanged candidate seed. A Future output slot8 difference is not supplied as Value conditioning; slots0:8 are the actual consumed prefix.",
+    "prefix_gate": "All Future outputs must preserve the cached candidate action/current prefix0:5 bitwise under native sampling. Original normalized and environment action arrays remain exactly unchanged.",
+    "matched_control": "Frame1 and frame4 interventions use the same 196 rows, all layers, operation and number of extra attention calls. This matches structural intervention cost, not activation-delta norm or semantic role. Proprio is a meaningful input channel, not an inert placebo. Record selected-row delta max/RMS/L2 per layer without rescaling or post-result matching."
+  },
+  "conditions": [
+    {"name": "clean", "global_future_text": "original", "replacement_text": null, "target_frame": null},
+    {"name": "swap", "global_future_text": "swap", "replacement_text": null, "target_frame": null},
+    {"name": "clean_action_swap", "global_future_text": "original", "replacement_text": "swap", "target_frame": 4},
+    {"name": "swap_action_clean", "global_future_text": "swap", "replacement_text": "original", "target_frame": 4},
+    {"name": "clean_proprio_swap", "global_future_text": "original", "replacement_text": "swap", "target_frame": 1},
+    {"name": "swap_proprio_clean", "global_future_text": "swap", "replacement_text": "original", "target_frame": 1}
+  ],
+  "execution_order": [
+    "clean candidate0, clean candidate1, swap candidate0, swap candidate1; validate all four baselines before experimental calls",
+    "same-Goal no-op clean candidate0 frame4, same-Goal no-op swap candidate1 frame1; validate both before experimental calls",
+    "clean_action_swap candidate0 then1",
+    "swap_action_clean candidate0 then1",
+    "clean_proprio_swap candidate0 then1",
+    "swap_proprio_clean candidate0 then1"
+  ],
+  "calibration": {
+    "baselines": "Require exact equality of all four regenerated Future tensors, Value tensors and scalar Values against cached Clean/Swap records. Check the cached input/noise equality and native selections. Baseline results are retained and reused, not rerun.",
+    "no_op": [
+      {"base": "clean", "candidate": 0, "target_frame": 4, "replacement_text": "original"},
+      {"base": "swap", "candidate": 1, "target_frame": 1, "replacement_text": "swap"}
+    ],
+    "no_op_gate": "The full-query hooked same-Goal operation must reproduce the corresponding unhooked Future, Value tensor and scalar exactly; all hook deltas must be zero. This tests hook arithmetic and copy behavior, not an effect condition.",
+    "failure": "Stop on the first failed exact equality, unexpected shape/call layout, input mutation, RNG perturbation, nonfinite tensor, hook leakage into Value or resource limit. Preserve partial outputs with invalid/deferred status and null scientific gate. Do not widen tolerances or retry."
+  },
+  "analysis": {
+    "selection": "Higher native Value wins. Exact ties choose candidate0 as in the native max(range(2), key=...) implementation, but a tie never satisfies a strict direction gate.",
+    "baseline_gate": "Strict clean selection1 and strict swap selection0, plus all calibration checks passed.",
+    "primary_route_gate": {
+      "clean_action_swap_strict_selected": 0,
+      "swap_action_clean_strict_selected": 1,
+      "clean_proprio_swap_strict_selected": 1,
+      "swap_proprio_clean_strict_selected": 0,
+      "all_required": true
+    },
+    "forecast_error": "For each candidate and condition, report native visual-latent MSE over future wrist/primary slots6:8 versus its cached joint real-future value_input. Report future proprio separately if using the already verified native extraction. These are encoded real-consequence errors, not physical-state MSE or task utility. Forecast error is secondary and is not an additional post-result gate.",
+    "required_rows": "Both Values, signed Value1-minus-Value0 margin, strict ordering/ties, selected index, per-candidate forecast errors, selected historical branch utility, hook call counts and selected-row delta statistics for all six conditions. Keep no-op/calibration rows distinct.",
+    "historical_utility": {
+      "candidate0": {"success": false, "capped_controls": 300, "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"},
+      "candidate1": {"success": true, "capped_controls": 170, "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"},
+      "boundary": "These are previously measured full original-Goal continuations after forcing the selected first16 controls. This experiment does not newly execute a chosen action or establish recovery of the continuously swapped closed loop. The two branches share one root and are not independent root samples."
+    },
+    "if_gate_passes": "Support a local direct text-to-action-slot entry contribution with bidirectional selection effects relative to the specified equal-size proprio control. This warrants retaining a narrowly stated action-route explanation; it does not establish a unique or complete causal mediator, a native deployed vulnerability, broad security novelty or a defense.",
+    "if_gate_fails": "Report all observed directions and stop this fixed route test. A null or nonselective result does not support the specific action-entry claim. It does not erase the existing Goal-Swap root, or refute indirect text-to-other-token-to-action routes. No new layer/frame/root/seed, parameter search, full panel or alternative Value score to rescue the result."
+  },
+  "interpretation_limits": [
+    "The protected physical future is defined for the same actual state and executed actions. Internal Goal-conditioned contextualization is not itself proof that a model is obliged to be universally invariant as an observational predictor.",
+    "The original task Goal is fixed for Policy and Value. Only the registered Future cross-attention source edges change; no future truth or private target is supplied through the hook.",
+    "The hook changes a contextual contribution before native residual gating, not the raw action controls. It is not ordinary action deletion, whole-Future Goal removal or a complete cut of every path from text into action-related hidden state.",
+    "A positive control contrast cannot rule out every difference between proprio and action token roles or perturbation magnitudes. Do not call the control activation-matched or causally inert.",
+    "Value predicts a learned behavior-return proxy with fixed candidate-specific stochastic seeds. Real-future rank restoration in prior evidence is not an oracle-planner proof or a calibrated success probability.",
+    "One known harmful post-hoc root, two fixed candidates and deterministic registered seeds do not estimate ASR, population success loss, statistical significance or independent generalization.",
+    "Retain the existing thirty-root result of Clean29/30 versus Swap28/30 and its failed extension gate. This bounded path diagnostic neither overrides that result nor resolves the overall unqualified core security claim."
+  ],
+  "artifacts": "Refuse to overwrite output. Save launched protocol/script, summary with exact activity/status, calibration checks, per-condition tensors and tabular metrics, plus hook integrity/cost statistics. Record technical failure separately from a completed negative route gate."
+}

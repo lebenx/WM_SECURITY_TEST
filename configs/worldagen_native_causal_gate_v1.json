@@ -1,0 +1,128 @@
+{
+  "stage": "prospective_core_task_gates",
+  "recorded_after": "WorldAgen task 0 init 0 clean confirmation; before matched 30-episode results",
+  "primary_checkpoint": "models/WorldAgen/libero-38.pth",
+  "primary_suite": "libero_10",
+  "clean_gate": {
+    "task_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "init_ids": [
+      0,
+      1,
+      2
+    ],
+    "seed": 31,
+    "maximum_environment_steps": 600,
+    "success_source": "native LIBERO check_success",
+    "minimum_successes": 21,
+    "minimum_tasks_with_at_least_one_success": 7,
+    "interpretation": "Pilot readiness threshold, not a confidence claim or complete benchmark. Retain every task and failure."
+  },
+  "forecast_contract_gate": {
+    "state_and_action": "shared physical environment and full action sequence for the evaluated three-step horizon",
+    "goal_assignment": "all ten legal suite goals crossed with each selected physical window",
+    "input_codec": "native evaluator raw image orientation, Euler pose, binary gripper command",
+    "target_codec": "CLIP-normalized RGB patch rearrangement without per-patch normalization",
+    "controls": [
+      "exact repeat",
+      "nine-edge bus cut",
+      "matched nine-edge control cut",
+      "fixed alternate action"
+    ],
+    "claims_excluded": [
+      "observation sufficiency in the training distribution",
+      "native task harm from forecast divergence alone"
+    ]
+  },
+  "adaptation_task_gate": {
+    "implementation": "LIBERO port of published CALVIN forecast-only LoRA TTT; missing official ttt_libero.py is not reconstructed provenance",
+    "data": "same fixed clean physical observations, actions and real targets in all arms",
+    "legal_swap": "task (task_id + 1) modulo 10, fixed before attack outcomes",
+    "conditions": [
+      "frozen",
+      "clean_ttt",
+      "swap_ttt",
+      "clean_bus_cut_ttt",
+      "swap_bus_cut_ttt",
+      "swap_control_cut_ttt",
+      "empty_ttt"
+    ],
+    "loss": "0.1 times mean two-camera future-patch MSE; no action imitation loss",
+    "rank": 64,
+    "alpha": 32,
+    "dropout": 0,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.01,
+    "gradient_clip": 0.1,
+    "training_windows": 30,
+    "optimizer_steps_initial": 1,
+    "deployment": "native mask and original task goal for every condition",
+    "stage_order": "run frozen and clean adaptation on the same three initial states before attack expansion",
+    "stop_if": "clean adaptation reduces the three-initial-state success count relative to frozen; investigate protocol before interpreting attack results",
+    "causal_checks": [
+      "same LoRA initialization",
+      "same data order and RNG",
+      "world-only loss",
+      "clean/counterfactual cut gradients and adapters match",
+      "no attack or cut at deployment"
+    ],
+    "interpretation": "A pilot can falsify this route but cannot establish ICLR-scale attack or defense effectiveness."
+  },
+  "completion": "Requires actual strong clean, attack harm, beneficial defense, stronger baselines, independent generalization and reviewed paper. Passing these pilots is insufficient.",
+  "post_run_scene_scope_audit": {
+    "recorded_after": "Completion of the 30-episode clean gate and corrected forecast inference; original prospective fields retained for provenance.",
+    "original_all_ten_legal_goals_qualification": "All ten are corpus-valid task texts, not all same-scene legal goals.",
+    "same_physical_contract_pairs": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        0
+      ]
+    ],
+    "selection_basis": "Parsed BDDL physical definitions only; not forecast or task outcomes.",
+    "ttt_scope": "Current task0 swap1 is same-scene; modulo-next-task swaps must not be generalized as same-scene legal attacks.",
+    "clean_gate_outcome": {
+      "successes": 19,
+      "episodes": 30,
+      "tasks_with_success": 9,
+      "passed": false
+    },
+    "normal_ttt_health_check_scope": "Task0 development-only normal-update health check; does not override failed all-task readiness gate. This clean task0 result alone does not support attack expansion."
+  },
+  "post_run_ttt_interface_audit": {
+    "source": "reports/worldagen_ttt_goal_interface_audit_20261014.json",
+    "original_adaptation_gate_status": "Superseded as a native online Goal-Swap interpretation; original prospective fields retained for provenance.",
+    "reason": "Published CALVIN sampler writes literal no lang; LIBERO TTT implementation is unavailable. GoalTTT is diagnostic; cached-text alteration requires explicit cache-writer threat model.",
+    "current_implementation": "scripts/pilot_worldagen_cached_metadata_ttt.py",
+    "normal_health_arms": [
+      "Frozen",
+      "NoLangTTT"
+    ],
+    "attack_expansion_requires": "Completed native 30-episode clean readiness gate plus normal NoLang adaptation health gate."
+  },
+  "post_run_camera128_clean_ablation": {
+    "source": "runs/worldagen_native_task_gate_camera128_matched30_v2/paired_comparison.json",
+    "successes": 21,
+    "episodes": 30,
+    "tasks_with_success": 10,
+    "passed_original_readiness_threshold": true,
+    "original_224_result_retained": true,
+    "protocol_change": "camera_size 224 -> 128; unused-branch CPU storage independently passed exact full-episode replay equivalence",
+    "task_0_successes": 1,
+    "task_0_episodes": 3,
+    "scope": "Development readiness only. Does not establish attack, defense, observation sufficiency or population benchmark. Downstream data/adaptation must match the 128 camera protocol."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "candidate": "Self-confirming inverse-cycle poisoning in active world-model learning",
+  "claim": "A world model can keep factual forward predictions accurate while a legal, action-ambiguous trajectory makes its learned inverse action model assign the wrong action identity to valid state changes; a native forward-inverse active-learning loop then selects and trains on its own wrong action explanations, progressively corrupting counterfactual action semantics and planning across tasks.",
+  "native_carrier": "WAV MiniGrid has released forward world model, SparseIDM inverse model, and native WAV active acquisition loop that selects real transitions by forward-inverse consistency; WorldAgen has a policy/world-model shared transformer and real-action TTT.",
+  "operation": "Execute legal trajectories with endpoint-equivalent actions and delayed/interleaved interactions, without changing observations, labels, or planner code. The same observed transition has multiple legal action histories, so the inverse model can choose one action explanation; the WAV acquisition loop uses that explanation to select and fine-tune new data.",
+  "invariants": [
+    "all frames and transitions are simulator-authentic",
+    "one-step forward MSE and nominal action histogram stay within control",
+    "source task succeeds",
+    "no synthetic labels or model forward-pass edits"
+  ],
+  "evidence_or_limit": "No experiment yet for this candidate; existing repo only has action-alias OOD diagnostics and inverse-model tooling.",
+  "rejections": [
+    "ordinary action alias/OOD generalization alone",
+    "generic inverse-dynamics error",
+    "common random numbers",
+    "planner modification",
+    "prompt or observation corruption"
+  ],
+  "request": "As a strict ICLR reviewer, score novelty 1-10, state nearest primary prior (including ACID, causal confusion, WAV, active learning), decide whether this is a legitimate world-model security mechanism or rebranding, give one mathematical invariant distinguishing it, and design the smallest native two-seed falsification experiment using the existing WAV checkpoint/datasets. Be conservative and do not upgrade an idea into evidence."
+}

@@ -1,0 +1,35 @@
+{
+  "candidate_name": "Legal Macro-Associativity Gate (LMAG)",
+  "broad_claim": "A shared world model is more resistant to truthful legal-action poisoning when every update must preserve agreement between direct multi-step predictions, recursively composed legal-action predictions, and the endpoint actually observed after executing a freshly sampled legal macro.",
+  "exact_legal_operation": "After each proposed online update, sample a state already reached by the environment, sample a legal action macro of length 4 to 16 using the native action interface, execute it without intervention, record the truthful observation sequence, split the macro at every internal boundary, and accept the update only if the updated model's direct prediction for the whole macro agrees with both its recursively composed predictions over the split segments and the observed endpoint; no labels, gradients, weights, observations, or planner outputs are modified.",
+  "invariants": [
+    "Composition invariant: for every legal macro split a∘b, the native observation prediction for a∘b must remain within the gate tolerance of decoding the prediction for a and then applying the prediction for b.",
+    "Endpoint invariant: the predicted endpoint of each probed legal macro must remain within the gate tolerance of the truthful endpoint observed after executing that macro.",
+    "Boundary invariant: the composition and endpoint errors must not increase by more than 10 percent relative to the pre-update model on the same native probes."
+  ],
+  "native_gate": {
+    "global_rule": "Reject the update if any invariant fails on more than 1 of 32 independently executed legal macros or if the median normalized endpoint error increases by more than 10 percent.",
+    "WAV": "Use the carrier's native waveform or log-mel representation; require median endpoint log-mel L1 <= 0.03 and composition defect <= 0.04.",
+    "MiniGrid": "Require exact symbolic/object-map endpoint agreement on at least 31 of 32 macros and composition defect <= 0.02 normalized grid cells.",
+    "MBRL_GaussianMLP_CEM": "Require normalized endpoint RMSE <= 0.05 and composition defect <= 0.08, using the environment's native continuous observation scaling.",
+    "TD_MPC2": "Require native decoded-observation endpoint normalized RMSE <= 0.08 and composition defect <= 0.10, with no latent-distance criterion.",
+    "WorldAgen": "Require the native carrier's endpoint reconstruction metric to remain at least 99 percent of its pre-update value and composition defect <= 0.08.",
+    "ScienceWorld": "Require exact agreement on at least 31 of 32 native symbolic endpoint states and composition defect <= 0.01 slot-normalized error."
+  },
+  "repair": "Reject and roll back the proposed update, then recompute a constrained update using only the truthful batch while minimizing the squared violations of the three invariants; if two consecutive constrained repairs fail, freeze shared-model updates until a new set of legal macros has been executed.",
+  "security_scope": "LMAG targets poisoning that induces a locally coherent but environmentally inaccurate transition model; it does not claim protection against an attacker whose updates remain both compositionally coherent and endpoint-accurate on all legal probes.",
+  "prior_papers": [
+    "World Models (Ha and Schmidhuber, 2018)",
+    "Learning Latent Dynamics for Planning from Pixels (PlaNet; Hafner et al., 2019)",
+    "Dreamer (Hafner et al., 2020)",
+    "TD-MPC2 (Hansen et al., 2024)",
+    "WorldAgen benchmark and released world-model carriers",
+    "GaussianMLP and CEM implementations in MBRL",
+    "ScienceWorld and MiniGrid environment suites"
+  ],
+  "skeptical_novelty_score": {
+    "score": 4,
+    "scale": "0-10",
+    "reason": "The explicit post-update legal-macro associativity gate and native endpoint certificate are a plausible combination, but the core ingredients overlap substantially with multistep consistency checks, rollout validation, model-based planning diagnostics, and trust-region style update rejection; a strong adaptive attacker may also learn updates that satisfy the finite probe set."
+  }
+}

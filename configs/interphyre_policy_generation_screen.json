@@ -1,0 +1,223 @@
+{
+  "date": "2026-10-09",
+  "status": "completed_positive_transfer_signal_no_distinct_method_established",
+  "claim_status": "unproven",
+  "run": "runs/interphyre_policy_generation_v0",
+  "script": "scripts/evaluate_interphyre_generated_policies.py",
+  "source_repository": "https://github.com/sankaranv/interphyre",
+  "source_pin": "1862d7175854b51e79128bd6ffbde970fe0589fa",
+  "result": {
+    "status": "completed",
+    "run": "runs/interphyre_policy_generation_v0/evaluation",
+    "results": {
+      "generated_with_experience": {
+        "successes": 8,
+        "tasks": 8,
+        "queries": 37,
+        "invalid_queries": 0,
+        "policy_errors": 0
+      },
+      "generated_without_experience": {
+        "successes": 0,
+        "tasks": 8,
+        "queries": 200,
+        "invalid_queries": 74,
+        "policy_errors": 0
+      },
+      "source_gp_bo": {
+        "successes": 3,
+        "tasks": 8,
+        "queries": 171,
+        "invalid_queries": 17,
+        "policy_errors": 0
+      },
+      "target_gp_bo": {
+        "successes": 2,
+        "tasks": 8,
+        "queries": 196,
+        "invalid_queries": 39,
+        "policy_errors": 0
+      }
+    },
+    "counts": {
+      "placement_queries": 604,
+      "valid_rollouts": 474,
+      "invalid_queries": 130,
+      "physics_steps": 466110,
+      "policy_errors": 0
+    },
+    "elapsed_s": 12.502422254066914,
+    "source_gp_fit_s": 0.09124306123703718,
+    "source_queries_reused": 565,
+    "new_source_queries": 0,
+    "evaluation_api_requests": 0,
+    "authoring_api_requests": 2,
+    "gpu_work": false,
+    "scope": "Development test of executable policy generation, not a claim that program generation itself is novel, nor an ICLR-scale evaluation.",
+    "finished_at_utc": "2026-10-08T23:37:31.507719+00:00"
+  },
+  "assessment": {
+    "status": "completed_positive_transfer_signal_no_distinct_method_established",
+    "accepted_novel_method": false,
+    "headline_cn": "源经验生成的策略在 8 个新几何任务上全通过；同一动作先验加普通 GP 也为 8/8，尚未建立独特的新机制。",
+    "results": {
+      "generated_with_experience": {
+        "successes": 8,
+        "tasks": 8,
+        "queries": 37,
+        "invalid_queries": 0,
+        "policy_errors": 0
+      },
+      "generated_without_experience": {
+        "successes": 0,
+        "tasks": 8,
+        "queries": 200,
+        "invalid_queries": 74,
+        "policy_errors": 0
+      },
+      "source_gp_bo": {
+        "successes": 3,
+        "tasks": 8,
+        "queries": 171,
+        "invalid_queries": 17,
+        "policy_errors": 0
+      },
+      "target_gp_bo": {
+        "successes": 2,
+        "tasks": 8,
+        "queries": 196,
+        "invalid_queries": 39,
+        "policy_errors": 0
+      }
+    },
+    "feedback_ablation": {
+      "generated_prior_only": {
+        "successes": 7,
+        "tasks": 8,
+        "queries": 59,
+        "invalid_queries": 0,
+        "policy_errors": 0
+      },
+      "generated_no_event_feedback": {
+        "successes": 8,
+        "tasks": 8,
+        "queries": 37,
+        "invalid_queries": 0,
+        "policy_errors": 0
+      },
+      "generated_no_outcome_feedback": {
+        "successes": 6,
+        "tasks": 8,
+        "queries": 70,
+        "invalid_queries": 0,
+        "policy_errors": 0
+      }
+    },
+    "prior_matched_optimizers": {
+      "generated_prior_gp": {
+        "successes": 8,
+        "tasks": 8,
+        "queries": 45,
+        "invalid_queries": 5
+      },
+      "generated_prior_cma_es": {
+        "successes": 6,
+        "tasks": 8,
+        "queries": 71,
+        "invalid_queries": 13
+      }
+    },
+    "main_run": "runs/interphyre_policy_generation_v0/evaluation",
+    "ablation_run": "runs/interphyre_policy_generation_v0/feedback_ablation",
+    "prior_matched_run": "runs/interphyre_policy_generation_v0/prior_matched_optimizers",
+    "source_acquisition": {
+      "reused_placement_queries": 565,
+      "new_queries": 0,
+      "worlds": 8,
+      "selected_observations": 106,
+      "source_gp_uses": "All unique actions from all source records; source-only likelihood calibration."
+    },
+    "generation": {
+      "model": "deepseek-v4-pro",
+      "candidate_count_per_condition": 1,
+      "requests": 2,
+      "modified_after_generation": false,
+      "target_feedback_before_freeze": false
+    },
+    "interpretation": "There is a useful executable source-experience transfer signal in this development sample. The unchanged generated policy wins all eight targets and uses 37 queries. However, seven already succeed without history, removing contact-event labels changes no proposal or trajectory, and ordinary GP with the identical source-derived proposal prior also wins all eight in 45 queries. These observations do not establish a distinct new experimental learning mechanism.",
+    "causal_boundary": "The no-outcome mask retains attempted actions, invalid flags and attempt count; the prior-only arm supplies empty history, so it also removes the attempt schedule. Their 6/8 versus 7/8 difference must not be interpreted as an isolated score-feedback effect. Ablations and prior-matched controls were specified after observing the original results and reuse the same eight development targets.",
+    "mechanism": "Source-authored code contains geometry-relative large-ball proposals, score-thresholded local Gaussian perturbations, approximate collision rejection and a parcel contact branch. The branch is unnecessary on observed targets. This is an implemented program, not a new estimator established by naming it.",
+    "limitations": [
+      "Two native families and four target seeds each; one optimizer seed and one authored program per condition.",
+      "World laws remain fixed; new scene geometry is not changed-law transfer.",
+      "No faithful HExA or Causal-PIK reproduction and no ICLR-scale evaluation.",
+      "The no-experience program has 74 invalid proposals; both programs conservatively treat the randomly initialized red placeholder as an obstacle. Outputs were evaluated unchanged.",
+      "Model prompting and source-summary selection are part of the method; no causal isolation of all summary or prompt choices.",
+      "37 versus 45 queries is a small development difference, not established statistical superiority."
+    ],
+    "verification": {
+      "no_event_identical_to_original": true,
+      "paired_queries": 37,
+      "native_replay": {
+        "status": "completed",
+        "checks": 8,
+        "placement_queries": 8,
+        "physics_steps": 3088,
+        "all_match": true,
+        "scope": "Replay of all eight generated-policy successes through native env.step; verification only, not eight additional independent tasks."
+      },
+      "max_policy_call_s": 0.00874630268663168
+    },
+    "interaction_accounting": {
+      "original_comparison": {
+        "placement_queries": 604,
+        "valid_rollouts": 474,
+        "invalid_queries": 130,
+        "physics_steps": 466110,
+        "policy_errors": 0
+      },
+      "feedback_ablation": {
+        "placement_queries": 166,
+        "valid_rollouts": 166,
+        "invalid_queries": 0,
+        "physics_steps": 152907,
+        "policy_errors": 0
+      },
+      "prior_matched_comparators": {
+        "placement_queries": 116,
+        "valid_rollouts": 98,
+        "invalid_queries": 18,
+        "physics_steps": 89699
+      },
+      "native_verification": {
+        "status": "completed",
+        "checks": 8,
+        "placement_queries": 8,
+        "physics_steps": 3088,
+        "all_match": true,
+        "scope": "Replay of all eight generated-policy successes through native env.step; verification only, not eight additional independent tasks."
+      },
+      "total_new_queries": {
+        "placement_queries": 894,
+        "valid_rollouts": 746,
+        "invalid_queries": 148,
+        "physics_steps": 711804
+      }
+    },
+    "new_api_requests": {
+      "backup_short_probe": 1,
+      "policy_generation": 2,
+      "total": 3,
+      "failed": 0,
+      "primary": 0
+    },
+    "gpu_work": false,
+    "decision": "Retain the source-prior capability and all successful records; do not claim novel event-feedback learning or scale up yet.",
+    "next_requirement": "Keep the demonstrated source-derived geometry prior as a working baseline. A new method must identify and test a learning operation beyond ordinary experience-to-code generation plus prior-guided continuous optimization; isolate its causal contribution against the identical prior with ordinary optimizers and applicable HExA/Causal-PIK methods. The current two task families vary geometry, not world laws. Independent seeds/model generations and changed-mechanism/core-task evidence are required before broad novelty claims or long GPU work.",
+    "verified_at_utc": "2026-10-08T23:41:59.546612+00:00"
+  },
+  "headline_cn": "源经验生成的策略在 8 个新几何任务上全通过；同一动作先验加普通 GP 也为 8/8，尚未建立独特的新机制。",
+  "report_note_cn": "本轮首次实际生成并执行实验策略：deepseek-v4-pro 分别读取 8 个源场景的 106 条精选观测或仅任务说明，各生成一个未修改的程序。源记录共 565 次已完成查询，未新增采集。两类任务各 4 个此前未用于生成的种子，每任务最多 25 次尝试。有经验程序成功 8/8、共 37 次尝试，无经验程序 0/8、200 次；读取全部源数据的几何条件 GP 为 3/8、171 次，目标任务 GP 为 2/8、196 次。成功动作均通过原生 env.step 重放，结果和步数一致。同一批任务上的事后消融显示：屏蔽接触事件标签仍为 8/8、37 次且轨迹完全一致；完全无历史为 7/8、59 次；保留尝试次数但屏蔽结果反馈为 6/8、70 次。将同一个源程序的无历史动作先验交给普通优化器后，GP 也达到 8/8、45 次，CMA-ES 为 6/8、71 次。因此收益主要支持源经验构造了有效的几何动作先验，尚不能归因于新的实验反馈机制；37 对 45 次的差异仍是单一策略、单一随机种子的开发结果。这里只改变场景几何，没有测试物理规律改变、跨任务族迁移，也没有复现完整 HExA/Causal-PIK。本轮合计 894 次查询、746 条有效轨迹（含 8 次验证重放）、3 次成功模型请求，未使用 GPU。备用配置复核和两次程序生成均成功，主接口本轮未重测。",
+  "next_requirement": "Keep the demonstrated source-derived geometry prior as a working baseline. A new method must identify and test a learning operation beyond ordinary experience-to-code generation plus prior-guided continuous optimization; isolate its causal contribution against the identical prior with ordinary optimizers and applicable HExA/Causal-PIK methods. The current two task families vary geometry, not world laws. Independent seeds/model generations and changed-mechanism/core-task evidence are required before broad novelty claims or long GPU work.",
+  "updated_at_utc": "2026-10-08T23:41:59.546612+00:00"
+}

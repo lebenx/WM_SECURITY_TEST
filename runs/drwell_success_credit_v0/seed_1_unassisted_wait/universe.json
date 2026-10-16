@@ -1,0 +1,189 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "universe",
+      "id": "UNIVERSE_ROOT"
+    },
+    {
+      "node_type": "episode",
+      "id": "source:EPISODE_STATUS"
+    },
+    {
+      "node_type": "task",
+      "id": "source:Block_1"
+    },
+    {
+      "node_type": "template",
+      "id": "source:Block_1_template_0"
+    },
+    {
+      "node_type": "instance",
+      "id": "source:Block_1_template_0_instance_0"
+    },
+    {
+      "node_type": "instance",
+      "id": "source:Block_1_template_0_instance_1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "UNIVERSE_ROOT",
+      "target": "source:EPISODE_STATUS"
+    },
+    {
+      "source": "source:EPISODE_STATUS",
+      "target": "source:Block_1"
+    },
+    {
+      "source": "source:Block_1",
+      "target": "source:Block_1_template_0"
+    },
+    {
+      "source": "source:Block_1_template_0",
+      "target": "source:Block_1_template_0_instance_0"
+    },
+    {
+      "source": "source:Block_1_template_0",
+      "target": "source:Block_1_template_0_instance_1"
+    }
+  ],
+  "universe_data": {
+    "name": "UNIVERSE",
+    "stats": {
+      "num_episodes": 1,
+      "episodes_completed": 0,
+      "episode_completion_rate": 0.0,
+      "episode_min_time": 29,
+      "episode_max_time": 29,
+      "episode_avg_time": 29.0,
+      "task_stats": {
+        "Block_1": {
+          "seen": 1,
+          "completes": 0,
+          "times": [],
+          "completion_rate": 0.0,
+          "min_time": null,
+          "max_time": null,
+          "avg_time": null
+        }
+      }
+    },
+    "episodes": {
+      "source": {
+        "episode_data": {
+          "completed": false,
+          "max_timestep": 29,
+          "total_blocks": 1,
+          "completed_blocks": 0,
+          "remaining_blocks": 1,
+          "completed_blocks_order": [],
+          "incomplete_blocks": [
+            "Block_1"
+          ]
+        },
+        "task_data": {
+          "Block_1": {
+            "templates": {
+              "Wait": {
+                "instances": [
+                  {
+                    "agent_id": "agent_0",
+                    "task_name": "Block_1",
+                    "plan": [
+                      "Wait 30"
+                    ],
+                    "start_step": 0,
+                    "all_agents_commitments": {
+                      "agent_0": "Block_1",
+                      "agent_1": "Block_1"
+                    },
+                    "success": false,
+                    "end_step": 29,
+                    "communication_type": "fixed_source_commitment"
+                  },
+                  {
+                    "agent_id": "agent_1",
+                    "task_name": "Block_1",
+                    "plan": [
+                      "Wait 30"
+                    ],
+                    "start_step": 0,
+                    "all_agents_commitments": {
+                      "agent_0": "Block_1",
+                      "agent_1": "Block_1"
+                    },
+                    "success": false,
+                    "end_step": 29,
+                    "communication_type": "fixed_source_commitment"
+                  }
+                ]
+              }
+            },
+            "final_success": false,
+            "completion_time": null,
+            "completion_order": null
+          }
+        },
+        "node_positions": {
+          "EPISODE_STATUS": [
+            0,
+            0
+          ],
+          "Block_1": [
+            10.0,
+            0.0
+          ],
+          "Block_1_template_0": [
+            16.0,
+            0.0
+          ],
+          "Block_1_template_0_instance_0": [
+            19.430233022444344,
+            -0.6953426577827142
+          ],
+          "Block_1_template_0_instance_1": [
+            19.430233022444344,
+            0.6953426577827142
+          ]
+        },
+        "node_labels": {
+          "EPISODE_STATUS": "EPISODE INCOMPLETE\nFinal Timestep: 29\nTotal Blocks: 1\nCompleted (0): None\nIncomplete (1): Block_1",
+          "Block_1": "Block_1\nINCOMPLETE",
+          "Block_1_template_0": "Wait",
+          "Block_1_template_0_instance_0": "Agent: agent_0\nPlan: Wait 30\nSteps: 0-29\nCommitments: agent_0:Block_1, agent_1:Block_1\nStatus: FAILED\nContext: fixed_sour",
+          "Block_1_template_0_instance_1": "Agent: agent_1\nPlan: Wait 30\nSteps: 0-29\nCommitments: agent_0:Block_1, agent_1:Block_1\nStatus: FAILED\nContext: fixed_sour"
+        }
+      }
+    },
+    "views": {
+      "COG": {
+        "Block_1|bucket=0-10|k=2": {
+          "attempts": 2,
+          "successes": 0,
+          "avg_t": null,
+          "min_t": null,
+          "max_t": null,
+          "comms": {
+            "fixed_source_commitment": 2
+          },
+          "cr": 0.0
+        }
+      },
+      "COG_kstar": {
+        "Block_1|bucket=0-10": 2
+      },
+      "TCG": {
+        "Block_1|bucket=0-10|k=2|comms=fixed_source_commitment|template=Wait": {
+          "attempts": 2,
+          "successes": 0,
+          "avg_t": null,
+          "cr": 0.0
+        }
+      },
+      "PDG": {}
+    }
+  }
+}

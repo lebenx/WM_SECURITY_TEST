@@ -1,0 +1,64 @@
+{
+  "id": "jepa_native_microbatch_ep2_v0",
+  "registered_utc": "2026-10-14T10:38:49.121061+00:00",
+  "status": "prospective_before_ep2_learned_forward_or_task_outcome",
+  "episode_index": 2,
+  "episode_seed": 3,
+  "selection_rule": "First official rank0 episode whose initial XY distance to sampled goal is >= native threshold0.5, using only fixed physical metadata. Ep0 andep1 initially successful; no outcome-based selection.",
+  "initial_and_goal": {
+    "episode_index": 2,
+    "seed": 3,
+    "initial": [
+      2.821662081303902,
+      2.830362031226939,
+      -3.913573586055399,
+      -3.0600469780375192
+    ],
+    "goal": [
+      0.6338147285821577,
+      1.6461055934916549,
+      -4.9139739831287015,
+      -0.4512011882154594
+    ],
+    "initial_xy_goal_distance": 2.487798092516555,
+    "success_at_start": false
+  },
+  "CEM": {
+    "iterations": 30,
+    "candidates_per_iteration": 300,
+    "global_elites": 10,
+    "horizon": 6,
+    "ctxt_window": 2,
+    "num_act_stepped": 6,
+    "var_scale": 1.0,
+    "precision": "native_float32",
+    "candidate_microbatch": 25,
+    "candidate_sampling": "One complete native draw per iteration, unchanged local CUDA generator and native mean inclusion; concatenate scores before globalelite statistics."
+  },
+  "actual_environment": {
+    "control_steps": 30,
+    "physics_substeps_per_control": 5,
+    "planning_calls": 1,
+    "success": "Final physical XY distance<0.5",
+    "renderer": "mujoco-py2.1.2.14/MuJoCo2.1.0 CPUOSMesa",
+    "reward_warning": "Native wrapper has targetoffscreen(10,10); native reward is not sampled tasksuccess."
+  },
+  "checks_before_continuing": [
+    "CPU fixed-real-cache full300 vs microbatch50 raw vectors and globalelites recorded",
+    "At first actual ep2 CEM iteration: CUDA full50 vs2x25 rawcost vectors recorded; no RNG use; stop large discrepancy (atol1e-6,rtol1e-5).",
+    "No claim of exact native fullGPU300 parity."
+  ],
+  "resource_limit": {
+    "cuda_allocator_gib": 3,
+    "max_simultaneous_JEPA_processes": 1
+  },
+  "scope": "One nontrivial native task runtime/capability gate, not success-rate estimate or attackevidence. CPU/GPU methods separate. No training or API.",
+  "source_sha256": {
+    "scripts/pilot_jepa_native_task_gate.py": "690d2084aa9bfc48f69e791d6bdf893d32033ec7cb1d5f026d26cd06fc1d2a9f",
+    "scripts/jepa_candidate_batching.py": "de9008c8639bbb2be532ac2ea80da6c14b97afe66c8eb6d4ce21427237623e90",
+    "scripts/pilot_jepa_microbatch_task_gate.py": "e53c37fc7e362ad8713886064ca804566bc8795f85ea203e4cafe8340e8f42b4",
+    "scripts/probe_jepa_candidate_batching.py": "6ecc4a28a73685cb1a49a935e16f196e1da897b54789b0896e11c699f8bce04b"
+  },
+  "CPU_gate_summary": "runs/jepa_candidate_batching_cpu_v0/summary.json",
+  "CPU_gate_summary_sha256": "2c04dcb00389ff6342f844c9666ee92ef6545f2ef57b24aee68ef98950da5f4d"
+}

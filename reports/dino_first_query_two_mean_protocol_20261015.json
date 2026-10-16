@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "registered_at_utc": "2026-10-15T10:48:06Z",
+  "status": "frozen_before_new_objective_cost_computation",
+  "runner": "scripts/analyze_dino_first_query_two_mean_ranking.py",
+  "output": "reports/dino_first_query_two_mean_ranking_20261015.json",
+  "question": "Does changing only the cached forecast-request representation reverse native terminal-objective ranking of the two query1 returned means, and how does that fixed-bank selection relate to their actually executed15-control prefix outcomes?",
+  "selection": {
+    "query": 1,
+    "candidate_order": ["clean_identity_copy", "canonical_request"],
+    "candidate_definition": "The two full H6 original normalized means already returned by the two completed native CEM runs at the same initial state. This is an explicitly post-hoc two-candidate bank, not the original CEM sample/elite bank and not an independently selected evaluation set.",
+    "representations": ["original", "canonical"],
+    "forecast_run": "runs/dino_native_alias_forecast_gpu_20261015",
+    "native_run": "runs/dino_native_alias_pair_20261015",
+    "no_selection": "Do not add, remove, optimize or replace candidates, queries, goals, features, score weights, horizon, representation magnitude, real-utility endpoint or seeds after observing these scores. Existing full-episode results and cached error summaries are already known; the four new objective costs have not been computed before this registration."
+  },
+  "scoring": {
+    "native_source": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py",
+    "class": "ReprTargetDistMPCObjective",
+    "alpha": 0.1,
+    "sum_all_diffs": false,
+    "keepdims": false,
+    "horizon_macro_steps": 6,
+    "controls_per_macro": 5,
+    "forecast_timepoints": 7,
+    "terminal_index": 6,
+    "formula": "Native FP32 terminal visual feature MSE +0.1*terminal proprio feature MSE against the same cached original goal. Pass the unchanged original normalized candidate actions to the objective in every representation.",
+    "calls": 4,
+    "backend": "CPU FP32, four Torch threads, native objective class imported directly from its source file; no model construction or neural forward.",
+    "selection_rule": "Minimize the scalar cost. Exact scalar ties choose candidate0 (clean_identity_copy). Report raw cost gaps and exact ties; no tolerance or practical-significance threshold is invented after seeing results. CPU reduction may differ numerically from GPU reduction; this is a newly computed cached-forecast score, not a claim to reproduce recorded CEM candidate rankings."
+  },
+  "checks_before_scoring": [
+    "Require completed native pair and completed same-GPU forecast diagnostic with every registered calibration passed.",
+    "Require exact same query1 visual/proprio context and original goal across the two candidates; all four forecasts must begin with that same context and contain exactly7 FP32 timepoints.",
+    "Require unchanged H6 original normalized mean tensors; reconstruct only the already frozen canonical request using recorded native action statistics and canonical FP32 boundaries. Verify exact effective clippedXYZ, original raw gripper and untouched normalized coordinates, and equality to each origin's saved own request.",
+    "Require original mean's first3 macro actions to match recorded query actions and its native denormalized15 controls to match the corresponding actual trace. Read only query1's15 actual outcomes; no new rollout or inferred continuation.",
+    "Require cached diagnostic truth offsets exactly[5,10,15]. These observations do not establish physical consequences of controls16..30. Stop and retain an invalid/missing-cache result if any requirement fails."
+  ],
+  "real_utility": {
+    "primary_descriptive_endpoint": "Sum of the15 actual query1 prefix rewards; this is a proximal endpoint, not the original99-control primary return or a30-control oracle.",
+    "additional_endpoints": ["actual control15 native reward", "actual control15 reach distance", "success at control15", "ever-success within15 controls", "first success within15 controls or null", "successful-control count within15"],
+    "comparison": "Report both candidates' observed utilities and the canonical-representation selector minus original-representation selector difference for each endpoint. Both selected-utility lookups use the same frozen candidate outcomes. Preserve improvement, no change and degradation without assigning attack success from a single bank.",
+    "truth_horizon_controls": 15,
+    "forecast_score_horizon_controls": 30
+  },
+  "interpretation_limits": [
+    "This is a cached proximal ranking diagnostic on two post-hoc selected means from one physical root, not a new attack experiment, an independent generalization test, a full CEM mediation analysis or population attack success rate.",
+    "A rank flip can establish representation-sensitive ranking within this bank, but cannot recover the unlogged native CEM candidate/elite rankings or explain the whole closed-loop return loss by itself.",
+    "The objective predicts a30-control endpoint while actual outcomes cover only the executed15-control prefix. Do not call the observed prefix a30-control oracle or infer that terminal feature error caused a rank flip.",
+    "Native mean actions differ between candidates; within each candidate only request representation differs. The original task, goal encoding, candidate actions and utility lookup are fixed. No new planner is executed."
+  ],
+  "activity_limits": {"neural_forwards": 0, "encodes": 0, "checkpoint_loads": 0, "environment_steps": 0, "planner_calls": 0, "api_calls": 0, "training_updates": 0, "gpu_calls": 0},
+  "preservation": "Only create this protocol, the new analysis script and new result JSON. Refuse to overwrite the result. Do not modify old runs, registry or HTML."
+}

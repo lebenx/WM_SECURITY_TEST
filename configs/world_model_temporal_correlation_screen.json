@@ -1,0 +1,82 @@
+{
+  "date": "2026-10-09",
+  "status": "candidate_rejected_native_mean_and_cvar_gate",
+  "candidate_claim_cn": "改变世界模型想象残差的跨时间耦合，可能在保留每步无条件残差边缘分布时改变风险敏感规划。",
+  "threat_model": "研究者定义的本地想象采样器干预；不改变冻结 GaussianMLP 参数、真实 CartPole 动力学、奖励函数、CEM 候选分布或执行动作空间。",
+  "important_boundary": "干预保持每步残差的无条件 N(0,I) 统计量，不保持给定当前状态的条件转移分布，因为当前状态本身由历史残差决定。",
+  "model": "冻结 native MBRL-Lib five-member GaussianMLP from runs/mbrl_coupling_cartpole_v0/model",
+  "planner": "upstream MBRL-Lib TrajectoryOptimizerAgent with CEM, horizon 15, population 100, three iterations, elite ratio 0.1, ten or twenty particles",
+  "native_control": {
+    "source": "runs/mbrl_temporal_coupling_cartpole_v0_native_20261009T0610Z/summary.json",
+    "seeds": [
+      800,
+      801
+    ],
+    "returns": [
+      168.0,
+      198.0
+    ],
+    "mean_return": 183.0
+  },
+  "mean_objective": {
+    "source": "runs/mbrl_temporal_coupling_cartpole_v0_persistent_20261009T0630Z/summary.json",
+    "condition": "persistent",
+    "seeds": [
+      800,
+      801
+    ],
+    "returns": [
+      200.0,
+      168.0
+    ],
+    "mean_return": 184.0,
+    "adjacent_residual_product_mean": [
+      1.0013600090146064,
+      1.0013421478252562
+    ],
+    "used_residual_mean": [
+      -0.0002834412297606468,
+      -0.0011281752597008432
+    ],
+    "used_residual_std": [
+      1.0006797342535083,
+      1.000670213415261
+    ]
+  },
+  "cvar_objective": {
+    "alpha": 0.2,
+    "particles": 20,
+    "native_source": "runs/mbrl_temporal_risk_native_v0/summary.json",
+    "persistent_source": "runs/mbrl_temporal_risk_persistent_v0/summary.json",
+    "seeds": [
+      810,
+      811
+    ],
+    "native_returns": [
+      200.0,
+      200.0
+    ],
+    "persistent_returns": [
+      200.0,
+      200.0
+    ],
+    "native_mean_return": 200.0,
+    "persistent_mean_return": 200.0,
+    "persistent_adjacent_residual_product_mean": [
+      1.0008103333910305,
+      0.9993734913070996
+    ],
+    "persistent_used_residual_std": [
+      1.0004048222813549,
+      0.9996866885359625
+    ]
+  },
+  "adapter_validation": "The custom particle-return evaluator equals upstream ModelEnv.evaluate_action_sequences exactly after restoring both ModelEnv and global PyTorch RNG states on a fixed 100-candidate check.",
+  "accepted_claim": null,
+  "decision": "Do not scale this fixed mechanism. Mean CEM pairs change in opposite directions (+32 and -30); there is no consistent harmful effect. CVaR-CEM yields200 in all four native/attack episodes. Correlated trajectory uncertainty is direct prior art.",
+  "next_requirement": "Only revive with a distinct threat operation and a pre-registered native task-loss gate that separates it from known trajectory-correlation uncertainty methods; otherwise select a different mechanism.",
+  "report_note_cn": "原生 MBRL-Lib CartPole 短测把每次想象的高斯残差改为跨时间完全持久，同时检查普通均值 CEM 和 alpha=0.2 的 CVaR-CEM。残差均值约0、标准差约1，相邻乘积约1，参数哈希未变；但均值规划平均回报为原生183、干预184，CVaR 两个种子均为200/200。均值规划一升一降、没有一致的有害效应；CVaR 未见回报下降，候选不升级。相关轨迹不确定性已有直接先行工作，不能把相关性本身作为新意。",
+  "api_requests": 0,
+  "training_updates": 0,
+  "gpu_work": false
+}

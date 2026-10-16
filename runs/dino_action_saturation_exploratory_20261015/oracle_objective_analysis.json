@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "status": "completed_cached_true_future_native_objective_comparator",
+  "recorded_at_utc": "2026-10-15T04:55:51.102132+00:00",
+  "scope": "Post-result diagnostic on the same one development root and five frozen candidates. No new forecasts, candidate changes, or endpoint changes.",
+  "sources": {
+    "prior_summary": "runs/dino_action_saturation_gate_20261015/summary.json",
+    "cached_truth_goal": "runs/dino_action_saturation_gate_20261015/forecasts_and_encodings.npz",
+    "frozen_actions": "runs/dino_action_saturation_gate_20261015/frozen_bank.npz",
+    "forecast_summary": "runs/dino_action_saturation_exploratory_20261015/summary.json",
+    "native_objective": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py",
+    "native_config_loader": "scripts/pilot_dino_metaworld_clean_gate.py"
+  },
+  "method": {
+    "class": "ReprTargetDistMPCObjective",
+    "sum_all_diffs": false,
+    "alpha": 0.1,
+    "truth_time_alignment": "Six actual-future encoded observations at5/10/15/20/25/30 physical controls; score only the final30-control endpoint. No initial prefix is required by this terminal-only objective.",
+    "goal": "Same cached native target encoding as all three forecasts",
+    "actions_shape": [
+      6,
+      5,
+      20
+    ],
+    "truth_shapes": {
+      "visual": [
+        6,
+        5,
+        1,
+        16,
+        16,
+        384
+      ],
+      "proprio": [
+        6,
+        5,
+        256,
+        20
+      ]
+    },
+    "goal_shapes": {
+      "visual": [
+        1,
+        1,
+        1,
+        16,
+        16,
+        384
+      ],
+      "proprio": [
+        1,
+        1,
+        256,
+        20
+      ]
+    },
+    "dtype": "float32",
+    "device": "cpu"
+  },
+  "true_future_native_objective": {
+    "costs": [
+      1.5170127153396606,
+      1.461045265197754,
+      1.5205891132354736,
+      2.3136017322540283,
+      2.9398908615112305
+    ],
+    "ranking": [
+      1,
+      0,
+      2,
+      3,
+      4
+    ],
+    "selected_candidate": 1,
+    "best_vs_runner_up_cost_margin": 0.05596745014190674,
+    "exact_minimum_ties": 1,
+    "selected_real_utility": {
+      "candidate": 1,
+      "primary30": {
+        "controls": 30,
+        "terminal_native_reward": 1.8297232389450073,
+        "summed_native_reward": 47.77828586101532,
+        "final_reach_distance": 0.25534155076118015,
+        "final_success": false,
+        "ever_success": false
+      },
+      "native_execution_prefix15": {
+        "controls": 15,
+        "terminal_native_reward": 1.5778785943984985,
+        "summed_native_reward": 22.01789700984955,
+        "final_reach_distance": 0.27450454018316484,
+        "final_success": false,
+        "ever_success": false
+      }
+    }
+  },
+  "real_terminal_reward_reference": {
+    "ranking": [
+      0,
+      2,
+      1,
+      3,
+      4
+    ],
+    "best_candidate": 0,
+    "best_terminal_reward": 7.989218711853027,
+    "true_objective_selected_regret": 6.15949547290802
+  },
+  "forecast_comparisons": {
+    "original": {
+      "native_costs": [
+        0.8195656538009644,
+        1.3444838523864746,
+        0.7811169028282166,
+        2.303743362426758,
+        2.9246826171875
+      ],
+      "ranking": [
+        2,
+        0,
+        1,
+        3,
+        4
+      ],
+      "selected_candidate": 2,
+      "best_vs_runner_up_cost_margin": 0.0384487509727478,
+      "forecast_cost_minus_true_future_cost_per_candidate": [
+        -0.6974470615386963,
+        -0.1165614128112793,
+        -0.7394722104072571,
+        -0.009858369827270508,
+        -0.015208244323730469
+      ],
+      "pairwise_order_changes_vs_true_future": 3,
+      "selected_true_objective_cost_regret": 0.05954384803771973,
+      "selected_real_utility": {
+        "candidate": 2,
+        "primary30": {
+          "controls": 30,
+          "terminal_native_reward": 7.699375629425049,
+          "summed_native_reward": 109.05741345882416,
+          "final_reach_distance": 0.10311855346181165,
+          "final_success": false,
+          "ever_success": false
+        },
+        "native_execution_prefix15": {
+          "controls": 15,
+          "terminal_native_reward": 3.081171989440918,
+          "summed_native_reward": 30.021395087242126,
+          "final_reach_distance": 0.19561611935844886,
+          "final_success": false,
+          "ever_success": false
+        }
+      },
+      "selected_real_terminal_reward_minus_true_objective_selected": 5.8696523904800415
+    },
+    "inflated_saturated_xyz": {
+      "native_costs": [
+        1.3296587467193604,
+        1.399619221687317,
+        1.157383680343628,
+        2.303743362426758,
+        2.7280466556549072
+      ],
+      "ranking": [
+        2,
+        0,
+        1,
+        3,
+        4
+      ],
+      "selected_candidate": 2,
+      "best_vs_runner_up_cost_margin": 0.17227506637573242,
+      "forecast_cost_minus_true_future_cost_per_candidate": [
+        -0.1873539686203003,
+        -0.06142604351043701,
+        -0.3632054328918457,
+        -0.009858369827270508,
+        -0.21184420585632324
+      ],
+      "pairwise_order_changes_vs_true_future": 3,
+      "selected_true_objective_cost_regret": 0.05954384803771973,
+      "selected_real_utility": {
+        "candidate": 2,
+        "primary30": {
+          "controls": 30,
+          "terminal_native_reward": 7.699375629425049,
+          "summed_native_reward": 109.05741345882416,
+          "final_reach_distance": 0.10311855346181165,
+          "final_success": false,
+          "ever_success": false
+        },
+        "native_execution_prefix15": {
+          "controls": 15,
+          "terminal_native_reward": 3.081171989440918,
+          "summed_native_reward": 30.021395087242126,
+          "final_reach_distance": 0.19561611935844886,
+          "final_success": false,
+          "ever_success": false
+        }
+      },
+      "selected_real_terminal_reward_minus_true_objective_selected": 5.8696523904800415
+    },
+    "canonical_saturated_xyz": {
+      "native_costs": [
+        1.4290595054626465,
+        1.3023985624313354,
+        1.3681632280349731,
+        2.303743362426758,
+        2.8567841053009033
+      ],
+      "ranking": [
+        1,
+        2,
+        0,
+        3,
+        4
+      ],
+      "selected_candidate": 1,
+      "best_vs_runner_up_cost_margin": 0.0657646656036377,
+      "forecast_cost_minus_true_future_cost_per_candidate": [
+        -0.08795320987701416,
+        -0.15864670276641846,
+        -0.1524258852005005,
+        -0.009858369827270508,
+        -0.08310675621032715
+      ],
+      "pairwise_order_changes_vs_true_future": 1,
+      "selected_true_objective_cost_regret": 0.0,
+      "selected_real_utility": {
+        "candidate": 1,
+        "primary30": {
+          "controls": 30,
+          "terminal_native_reward": 1.8297232389450073,
+          "summed_native_reward": 47.77828586101532,
+          "final_reach_distance": 0.25534155076118015,
+          "final_success": false,
+          "ever_success": false
+        },
+        "native_execution_prefix15": {
+          "controls": 15,
+          "terminal_native_reward": 1.5778785943984985,
+          "summed_native_reward": 22.01789700984955,
+          "final_reach_distance": 0.27450454018316484,
+          "final_success": false,
+          "ever_success": false
+        }
+      },
+      "selected_real_terminal_reward_minus_true_objective_selected": 0.0
+    }
+  },
+  "activity": {
+    "native_objective_calls": 1,
+    "model_calls": 0,
+    "unroll_calls": 0,
+    "encoder_calls": 0,
+    "environment_steps": 0,
+    "checkpoint_loads": 0,
+    "api_calls": 0,
+    "cuda_initialized": false
+  },
+  "limitations": [
+    "This evaluates the native latent-distance proxy on actual outcomes; it is not a newly trained/calibrated true-value model.",
+    "Cost margins are deterministic finite-bank differences, not calibrated uncertainty or statistical significance.",
+    "The diagnostic cannot assign a general fraction of decision harm to objective misalignment versus forecast error."
+  ]
+}

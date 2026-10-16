@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-10",
+  "status": "rejected_known_rollout_compounding_and_boundary_misspecification",
+  "candidate_claim_cn": "攻击者通过合法硬边界往返动作，使连续世界模型在局部动力学 Jacobian 上变得异常僵硬，原生 CEM 长视野推演因此发散，而一步误差保持正常。",
+  "source": "runs/gemini_uncovered_interface_search_short_20261010T0000Z/assessment.json",
+  "review": {
+    "decision": "REJECT",
+    "novelty_score": 5.2,
+    "distinct_mechanism": false,
+    "reason": "硬边界与接触处的平滑高斯动力学模型失配是已知归纳偏差；CEM 失败属于经典多步 rollout compounding error。合法振荡动作只是把数据集中到该区域，不构成独立世界模型安全机制。"
+  },
+  "proposed_gate_not_run": "max boundary Jacobian > 8, one-step loss <= 1.15x clean, and CEM return loss >=40% on Reacher-v4 and Hopper-v4",
+  "decision": "Do not run training or GPU expansion. Retain as a rejected literature-constrained candidate."
+}

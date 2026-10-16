@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "completed_resource_and_forward_feasibility_clean_deferred_by_cost",
+  "decision": "GO_RESOURCE_MATCH_AND_SINGLE_FORWARD; DEFER_FULL_CLEAN_UNDER_CURRENT_BUDGET",
+  "research_goal": "active_unachieved",
+  "motivation": "Resolve a specific archived mismatch: a real pretrained stochastic dynamics forecast must enter a native planner, rather than only critic randomness or an added weak controller. This does not claim a new coupling concept.",
+  "primary_sources": {
+    "paper": "https://arxiv.org/abs/2605.23993v2",
+    "repository": "https://github.com/simchowitzlabpublic/nano-world-model/tree/cc1f151a9d8c7d7afd0cdc5de6a9ae220a7c90c0",
+    "checkpoint": "https://huggingface.co/knightnemo/nanowm-b2-dino-wm-point-maze-30k/tree/b84303b7151cbd1836841c3a87bf095e1015b150"
+  },
+  "paths": {
+    "protocol": "reports/nanowm_clean_gate_protocol_20261015.json",
+    "resource_script": "scripts/probe_nanowm_pointmaze_resources.py",
+    "runner": "scripts/pilot_nanowm_pointmaze_clean.py",
+    "resource_first_attempt": "runs/nanowm_resource_gate_v1/summary.json",
+    "resource_success": "runs/nanowm_resource_gate_v2/summary.json",
+    "timing": "runs/nanowm_pointmaze_timing_v1/summary.json",
+    "runtime": "runs/nanowm_pointmaze_timing_v1/runtime_manifest.json",
+    "fixed_targets": "runs/nanowm_pointmaze_timing_v1/frozen_targets.json"
+  },
+  "measured": {
+    "strict_checkpoint_load_passed": true,
+    "rollout": {
+      "status": "completed_single_native_rollout_timing",
+      "seed": 42,
+      "candidates": 16,
+      "horizon": 5,
+      "packed_action_dim": 10,
+      "rollout_calls": 1,
+      "elapsed_seconds": 5.560271191992797,
+      "output_shape": [
+        16,
+        6,
+        4096
+      ],
+      "peak_allocated_bytes": 3662922240,
+      "peak_reserved_bytes": 5010096128,
+      "estimated_one_full_cem_plan_rollout_seconds": 1167.6569503184874,
+      "estimated_max_episode_rollout_seconds": 11676.569503184874,
+      "estimate_excludes": "Goal encoding, rendering, environment, Python/logging overhead; not a certified bound",
+      "cost_decision": "requires_explicit_cost_decision",
+      "task_episode_executed": false,
+      "capability_evidence": false
+    },
+    "passive_control_rows": [
+      {
+        "seed": 42,
+        "initial_success": false,
+        "zero_success": false,
+        "physical_steps": 250,
+        "zero_final_xy_distance": 1.8120255178213494
+      },
+      {
+        "seed": 43,
+        "initial_success": false,
+        "zero_success": false,
+        "physical_steps": 250,
+        "zero_final_xy_distance": 0.5636411152660925
+      },
+      {
+        "seed": 44,
+        "initial_success": false,
+        "zero_success": false,
+        "physical_steps": 250,
+        "zero_final_xy_distance": 0.5981247903066794
+      }
+    ],
+    "clean_task_episodes": 0,
+    "clean_gate_passed": null,
+    "attack_conditions_run": 0,
+    "defense_conditions_run": 0
+  },
+  "cost_decision": {
+    "registered_max_estimate_seconds_per_root": 1800,
+    "measured_single_rollout_seconds": 5.560271191992797,
+    "estimated_full_cem_plan_seconds": 1167.6569503184874,
+    "estimated_max_episode_seconds": 11676.569503184874,
+    "root_decision": "Defer the approximately 3.24 h per-root maximum-budget estimate under the current low-cost pilot gate. No algorithm, goal, seed, horizon, sampling step or precision was changed to pass a cheaper gate.",
+    "estimation_limit": "This is an extrapolation from one cold rollout at the measured hardware/load, not observed task runtime. Early success could reduce duration; a full-budget three-root panel could take approximately9.73h before overhead.",
+    "scientific_meaning": "Technical cost deferral, not model incapability or an empirical attack failure."
+  },
+  "reused_and_corrected": [
+    "Reused the existing MuJoCo2.1.0/OSMesa runtime and Python3.11 environment; no simulator replacement.",
+    "Downloaded634416296-byte official world-model weights and334643276-byte official SD-VAE weights. Strict world-model load succeeded; no checkpoint hash pass was added.",
+    "Downloaded only3.25MB of official dataset metadata using public Range requests; no videos. Recomputed action normalization on1800 train trajectories/180000 valid actions, excluding200 validation trajectories.",
+    "Native PointMaze dset goal sampling does not apply the training/validation trajectory split. The fixed protocol instead uses random-state seeds42/43/44; no training trajectory serves as an evaluation root.",
+    "Used native microbatch16, preserving100 CEM candidates/10elites/30iterations/20DDIM steps. Runtime Torch2.6 differs from official2.7.1; no full-batch or cross-version bitwise equivalence is claimed.",
+    "Skipped only unused eager training package imports. The original model, diffusion, objective, CEM and MPC implementation remain unchanged."
+  ],
+  "scope_limits": [
+    "Zero control failing3/3 shows only that passive inertia did not solve these fixed goals. It does not establish Clean capability or superiority to a strong controller.",
+    "The original image goal enters the planner objective, not the fixed-action world rollout. This resource does not supply a Goal-Bus intervention interface.",
+    "Any future compromised-sampler condition would be an explicitly added supply-chain permission, not a discovered public deployment vulnerability or legal-action-only attack. Access to the planner goal cannot be silently assumed from the forecast API.",
+    "Future comparisons must separately control proposal RNG, VAE posterior samples, diffusion initial noise and history-stabilization noise, and establish full-rollout marginal preservation constructively.",
+    "The resource summary field clean_planner_gate_passed=false means no Clean was run; the actual task-gate result is null, not measured failure."
+  ],
+  "api_review": {
+    "path": "runs/gemini_nanowm_protocol_review_20261015/summary.json",
+    "model": "gemini-3.8-flash",
+    "requests": 1,
+    "http_status": 200,
+    "latency_seconds": 5.6100653169851284,
+    "empirical_evidence": false,
+    "root_interpretation": [
+      "Accept the identified stochastic-dynamics carrier gap and the confounder/trust-boundary warnings.",
+      "Preserve earlier CartPole actual local losses: the review wording is too broad if read as denying all prior attack evidence.",
+      "A small development pilot need not produce statistical significance; do not turn the reviewer suggestion into a new p-value gate.",
+      "Preservation of a continuous predictive law needs a valid construction/proof plus implementation checks, not an empirical test alone."
+    ]
+  },
+  "next_action": "Seek a cheaper existing native stochastic forecast/planning path or a material execution improvement without weakening task/candidate/forecast budgets. Retain NanoWM as a loaded, reproducible resource; do not silently retry this expensive panel.",
+  "bounded_alternative_screen": {
+    "status": "no_ready_lower_cost_match_identified_in_bounded_screen",
+    "scope": "One existing local resource and one new official repository; no new checkpoint download or task execution.",
+    "resources": [
+      {
+        "name": "DIAMOND",
+        "source_paths": [
+          "vendor/diamond/src/game/play_env.py"
+        ],
+        "finding": "The inspected native play path calls actor_critic.predict_act_value followed by Categorical.sample; it does not implement fixed-candidate forecast search. This is not a claim about every possible extension."
+      },
+      {
+        "name": "Diffusion Forcing",
+        "repository": "https://github.com/buoyancy99/diffusion-forcing",
+        "main_revision": "475e0bcab87545e48b24b39fb46a81fe59d80594",
+        "paper_revision": "dd65516a470b0eda08dcc0f9cb55c87d6527eb9e",
+        "read_urls": [
+          "https://github.com/buoyancy99/diffusion-forcing/blob/475e0bcab87545e48b24b39fb46a81fe59d80594/README.md",
+          "https://github.com/buoyancy99/diffusion-forcing/blob/475e0bcab87545e48b24b39fb46a81fe59d80594/algorithms/diffusion_forcing/df_planning.py",
+          "https://github.com/buoyancy99/diffusion-forcing/blob/475e0bcab87545e48b24b39fb46a81fe59d80594/configurations/algorithm/df_planning.yaml",
+          "https://github.com/buoyancy99/diffusion-forcing/blob/dd65516a470b0eda08dcc0f9cb55c87d6527eb9e/README.md",
+          "https://github.com/buoyancy99/diffusion-forcing/blob/dd65516a470b0eda08dcc0f9cb55c87d6527eb9e/algorithms/diffusion_forcing/df_planning.py"
+        ],
+        "finding": "Main exposes small Maze2D checkpoints, including commented joint state/velocity/action xva links. Main states MCTG is not implemented; inspected planning jointly samples a trajectory and its actions with goal guidance, then executes the generated action. It is not the required fixed candidate actions -> stochastic physical forecasts -> ranking path.",
+        "limits": "The paper branch includes the original planning implementation; a matching published Maze checkpoint for that branch was not verified. Unverified is not absent. A new adapter/planner would need to be labeled as an addition."
+      }
+    ]
+  },
+  "independent_consistency_review": {
+    "scope": "Read-only comparison of the decision, preregistered protocol and recorded benchmark summary.",
+    "finding": "No substantive discrepancy: Clean not_run/null, timing extrapolation marked, and candidate/iteration/replan/environment/cost budgets agree.",
+    "new_experiments": 0
+  }
+}

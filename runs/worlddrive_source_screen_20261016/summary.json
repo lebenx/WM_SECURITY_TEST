@@ -1,0 +1,46 @@
+{
+  "status": "source_verified_native_distilled_future_consumer_no_qualified_intervention",
+  "review_date": "2026-10-16",
+  "repository": "https://github.com/TabGuigui/WorldDrive",
+  "revision": "78a92a96bc496ff15471f9c3638aa395323499e8",
+  "provenance": "runs/worlddrive_source_screen_20261016/source_manifest.json",
+  "native_path": {
+    "entry": "navsim/agents/worlddrive/worlddrive_agent.py:386",
+    "candidate_generation": "The planner consumes visual and ego-status inputs and proposes vocabulary trajectories plus offsets. In stage2 evaluation the top-k candidates enter TrajWorldRefiner.",
+    "consumer": "worlddrive_agent.py:425 calls trajrefiner; worlddrive_refiner.py:113-125 predicts a future-scene hidden representation, reads it with the candidate token, computes a score and selects an actual trajectory.",
+    "important_correction": "Distillation does not imply absence of an inference-time forecast consumer. The distilled hidden future is consumed; the separate video generator is not required for this scoring path.",
+    "visual_output_boundary": "The 16-dimensional visual projection is computed after the score and selection. Replacing only this returned visual output would not alter the already-computed native score. A hidden-latent intervention would be a different operation.",
+    "candidate_axis": "The refiner folds candidate count into batch size before both decoders. Its fixed-candidate future stage has no cross-candidate attention; generator interactions upstream are distinct."
+  },
+  "goal_contract": {
+    "status_inputs": "Driving command, velocity and acceleration enter the upstream planner.",
+    "future_inputs": "Fixed candidate coordinates/embeddings and fixed visual tokens enter the refiner. There is no separate Goal/route argument at this point.",
+    "decision": "Changing the original route normally changes candidate generation and intended utility. It is not a qualified branch-only Goal intervention under a fixed-action physical forecast contract.",
+    "limits": "This is a pinned-source finding, not a claim that the entire architecture is safe or that arbitrary hidden-latent modifications are meaningful attacks."
+  },
+  "resources": {
+    "public_checkpoint_listing": "https://huggingface.co/tabguigui/WorldDrive/tree/main",
+    "stage2_published_size_approx_bytes": 457000000,
+    "size_is_web_listing_not_verified_local_file": true,
+    "required_inputs": [
+      "Matched stage2 checkpoint and trajectory vocabulary",
+      "Matched NAVSIM scene features, or camera inputs plus CogVideoX VAE encoding",
+      "Matching independent PDM metric cache for actual simulated utility"
+    ],
+    "local_clean_qualified": false,
+    "local_checkpoint_loaded": false,
+    "setup_caveat": "The published constructor also initializes a world-model object and a hardcoded training metric-cache path for training_mode=wm; the evaluation script uses an author-local cache. No claim that these are ready locally."
+  },
+  "decision": "Retain native forecast-consumer source evidence; do not begin setup merely because a checkpoint exists. No new fixed-action Goal security experiment is qualified.",
+  "activity": {
+    "source_files_downloaded": 7,
+    "source_bytes": 86164,
+    "checkpoint_downloads": 0,
+    "model_loads": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "training_updates": 0
+  },
+  "source_tree_oid": "78a92a96bc496ff15471f9c3638aa395323499e8",
+  "revision_kind": "Git tree object ID from the tree API; a corresponding commit ID was not separately resolved."
+}

@@ -1,0 +1,15 @@
+{
+  "verdict": "REJECT_ALL",
+  "novelty_score_0_to_10": 1,
+  "candidate": "None",
+  "carrier": "None",
+  "exact_native_operation": "None",
+  "falsification_gate": "None",
+  "overlap_risks": [
+    "Non-IID catastrophic forgetting / negative transfer masquerading as targeted world-model trojan",
+    "Optimization stochasticity / seed-level sensitivity (already collapsed under cheetah seed22 and reacher-easy seeds 31/32)",
+    "MPC horizon=3 planning jitter and sampling noise in MPPI/CEM",
+    "Latent-state covariance collapse or representation drift under out-of-distribution transitions"
+  ],
+  "rationale": "Every purported vulnerability in the evaluation pipeline has failed basic cross-task, cross-seed, and control-family falsification gates. The isolated cheetah-to-walker return reduction is a classic artifact of seed-specific catastrophic forgetting and representation misalignment on dynamics fine-tuning, not a stable causal security vulnerability. Because the effect completely vanishes under seed permutation (seed22) and control equalization (reacher-easy ties across clean/random/cascade/reverse/shuffled), there is no viable, reproducible security primitive in the TD-MPC2 mt30-48M carrier that does not reduce to ordinary distribution shift or sampling jitter. Per the explicit stop-rule criteria, the project must terminate."
+}

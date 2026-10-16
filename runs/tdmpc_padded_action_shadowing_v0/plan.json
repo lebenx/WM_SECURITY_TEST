@@ -1,0 +1,28 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "reacher-easy",
+  "victim_task": "walker-walk",
+  "source_action_dims": 2,
+  "shared_action_dim": 6,
+  "padded_dims": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_files": {
+    "mpc": "runs/tdmpc_adaptation_screen_v0/mpc_data.pt",
+    "random": "runs/tdmpc_adaptation_screen_v0/random_data.pt"
+  },
+  "victim_file": "runs/tdmpc_adaptation_screen_v0/clean_walker-walk.pt",
+  "updates": 40,
+  "scope": "Native task-labeled dynamics-only adaptation on completed reacher data; no label forgery, observation edit, target search, or deployment claim.",
+  "diagnostic": "Compare victim on-trajectory one-step latent MSE and finite action sensitivity for first two versus padded four action dimensions before/after adaptation.",
+  "controls": [
+    "clean",
+    "native_mpc_source",
+    "native_random_source"
+  ],
+  "api_requests": 0,
+  "gpu_training": true
+}

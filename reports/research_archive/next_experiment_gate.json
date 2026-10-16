@@ -1,0 +1,1761 @@
+{
+  "schema_version": 1,
+  "status": "completed_verifier_evaluation_boundary_simple_metadata_gate_failed",
+  "current_qualified_core_security_claim": null,
+  "scientific_goal_remaining": "Important, general WM+Agent security mechanism with real harm, causal controls, effective defense and independent generalization; archive completion alone does not achieve the research goal.",
+  "user_priority": "First preserve/reuse existing evidence and failures. Use minimal decisive experiments; stop without signal rather than completing an irrelevant planned panel.",
+  "stages": [
+    {
+      "id": "deduplicate",
+      "name": "查重与具体重启依据",
+      "requires": [
+        "查机制登记和当前证据，识别同义旧方向",
+        "若复活已否定方向，明确新增事实或实质不同权限/机制；仅改名、换种子、换评分不够"
+      ]
+    },
+    {
+      "id": "interface",
+      "name": "模型—权限—Agent路径匹配",
+      "requires": [
+        "具体可用模型和checkpoint",
+        "攻击者实际能控制的接口及受保护输入",
+        "world预测到Agent动作/更新/记忆的可观察因果路径",
+        "原生与新增组件边界明确"
+      ]
+    },
+    {
+      "id": "minimal_pilot",
+      "name": "最小真实效用对照",
+      "requires": [
+        "可信Clean正常任务，不以零动作是弱基线替代",
+        "同真实初态、原任务目标、候选、评分、预算与随机性",
+        "真实success/return/decision cost及有意义的强对照",
+        "少量预先固定实例，先看是否存在可复现损害信号"
+      ]
+    },
+    {
+      "id": "causal_defense",
+      "name": "只在实际损害成立后做因果与防御",
+      "requires": [
+        "干预目标路径且匹配Control-Cut/资源成本",
+        "防御恢复实际效用并报告Clean代价",
+        "区别普通分布外错误、训练分布改变与拟议安全机制"
+      ]
+    },
+    {
+      "id": "generalize_and_write",
+      "name": "信号明确后泛化并收敛写作",
+      "requires": [
+        "独立数据源/任务或模型验证核心机制",
+        "一手相关工作核实具体新意",
+        "证据充分后停止无关扩展，围绕成立的Claim重构论文"
+      ]
+    }
+  ],
+  "stop_conditions": [
+    "攻击接口不存在或forecast不参与目标决策路径",
+    "Clean不能完成目标任务或强基线已解释收益",
+    "没有实际危害或效用完全平局",
+    "所谓防御只消除输出差异而没有效用恢复",
+    "机制不能区别普通负迁移/OOD/通用规划效应",
+    "候选被直接相关工作覆盖且无实质差异"
+  ],
+  "carrier_specific_boundaries": [
+    {
+      "id": "worldagen",
+      "name": "WorldAgen",
+      "constraint": "有指令隔离契约；冻结native policy不直接消费forecast排序。已修正预测结果不等于任务损害；缓存文本适应与在线Goal是不同接口。"
+    },
+    {
+      "id": "jepa_dino",
+      "name": "JEPA-WM / DINO-WM",
+      "constraint": "显式目标编码用于评分，unroll无独立Goal参数；当前观测仍可能含目标标记。原生seed4请求规范化降低累计回报10.7751%，可信候选绑定精确恢复99步；成功相关指标和平均固定动作前缀误差改善。新增受限writer支持条件性研究，不证明原生外部权限。完整候选排名与误差中介、独立泛化未测。"
+    },
+    {
+      "id": "cosmos_alphabrain",
+      "name": "Cosmos / AlphaBrain",
+      "constraint": "原生条件生成没有WorldAgen隔离契约；未来查询干预须证明合法权限及任务损害，不能从输出敏感性推断。"
+    },
+    {
+      "id": "tdmpc2",
+      "name": "TD-MPC2",
+      "constraint": "保留受限真实负迁移；encoder与训练target均task-conditioned。物理相同不保证共同latent坐标；dynamics-only task swap无共同物理读出依据，且全局next会改变prior候选。当前配置也没有拟议PER/learned-timeout路径。"
+    },
+    {
+      "id": "nanowm",
+      "name": "NanoWM / PointMaze",
+      "constraint": "Native stochastic forecasts enter CEM ranking; Goal enters objective, not fixed-action rollout, so this is not a Goal-Bus interface. v4 completed117 Clean microbatches but no plan/action before the old other-PID rule deferred it. Resource-only amendment is CPU checked, not GPU validated; full Clean remains unmeasured."
+    },
+    {
+      "id": "jowa",
+      "name": "JOWA",
+      "constraint": "Forecasts enter native beam, but native branch caches are copied and the tested aliasing path is absent. Environment/game identity is not preference-only Goal. Weights remain LFS pointers, Clean is unmeasured. MCTS stale-cache correctness bug does not establish security harm."
+    }
+  ],
+  "unexecuted_ideas": [
+    {
+      "id": "worldagen_image_goal_planner",
+      "name": "正确codec的额外image-goal Planner",
+      "status": "feasibility_only_no_new_runner_or_experiment",
+      "reason": "缺少先验正常排序价值证据；同source终点是额外特权信息，固定候选0已知成功；必须比较所有固定候选策略，不能单凭胜过候选0或随机声称预测有价值。用户新优先级下封存，不开展六个长续接回合。"
+    },
+    {
+      "id": "dino_action_saturation_equivalence",
+      "name": "DINO native forecast/executor saturation boundary",
+      "report": "reports/dino_action_alias_exploratory_decision_20261015.json",
+      "status": "exploratory_forecast_stage_completed_fixed_inflation_stopped",
+      "reason": "Physical equivalence and all three forecast conditions now measured. Fixed inflation has no harm; canonicalization has local utility loss with independent objective/reward mismatch. No native expansion under the original advance criteria."
+    }
+  ],
+  "api_credentials_archived": false,
+  "next_action": "Retain LGWM as an unexecuted pretrained-verifier resource and the bounded ID-design result. No metadata tuning or model download just to repeat algebra. A new verifier pilot requires independently grounded relational safety labels and an actual monitor-consumer consequence beyond known additive diagnostics; otherwise switch to a different qualified question. Keep WorldEvolver fixed null and all earlier stop decisions.",
+  "post_archive_checks": [
+    {
+      "id": "cosmos_rejected_candidate_shared_scoring",
+      "question": "Can a rejected future alter the scores of other fixed candidates through shared scoring state?",
+      "decision": "no_go_interface_absent_in_inspected_adapter",
+      "method": "Read-only source inspection; no neural inference or environment execution.",
+      "code_facts": [
+        "best_of_n computes action, future and scalar value separately for each candidate, then takes max; it has no cross-candidate score normalization.",
+        "Value extraction averages only the value latent slot of that candidate.",
+        "Noise helper initializes a local RNG from an explicit seed; VAE encoding clears temporal cache by default."
+      ],
+      "source_paths": [
+        "scripts/cosmos_policy_native_inference.py",
+        "scripts/cosmos_policy_codecs.py",
+        "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/noise_utils.py",
+        "scripts/cosmos_policy_wan_vae.py"
+      ],
+      "limits": "This excludes the proposed shared-score mechanism in inspected code, not every possible cross-call dependency in every backend. Adding a new normalizer would change the system and repeat an archived idea."
+    },
+    {
+      "id": "existing_rank_coupling_transfer",
+      "decision": "no_go_for_expansion_without_new_causal_interface",
+      "finding": "Preserve local CartPole task damage and bounded bank-mean mitigation. Strong-CEM, independent-training and pretrained TD-MPC2 evidence do not establish a general pretrained WM mechanism. WorldMind observations cannot be spliced into a cross-family transfer claim.",
+      "source_paths": [
+        "reports/research_archive/evidence.json",
+        "reports/research_archive/mechanisms.json"
+      ]
+    },
+    {
+      "id": "novelty_positioning_refresh",
+      "decision": "no_new_mechanism_established",
+      "finding": "A newly indexed October survey and current primary abstracts already distinguish prediction, planning and behavioral evidence. Those distinctions remain evaluation requirements rather than a novel core claim.",
+      "urls": [
+        "https://arxiv.org/html/2610.13372v1",
+        "https://arxiv.org/abs/2606.09499",
+        "https://arxiv.org/abs/2607.15207"
+      ]
+    },
+    {
+      "id": "native_prediction_certified_stop_screen",
+      "decision": "no_go_interface_absent_in_inspected_existing_carriers",
+      "method": "Read-only source inspection; no separate model or environment execution.",
+      "finding": "TD-MPC2 prediction termination truncates imagined value, not the real episode; DINO and Cosmos use actual environment success/done. No supported native gate that stops physical execution solely because a forecast claims completion. Adding such a stopper would change the system.",
+      "source_paths": [
+        "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+        "vendor/jepa-wms/evals/simu_env_planning/planning/plan_evaluator.py",
+        "scripts/cosmos_policy_native_inference.py",
+        "vendor/AlphaBrain/benchmarks/LIBERO-plus/eval/eval_libero.py"
+      ]
+    }
+  ],
+  "post_archive_rounds": [
+    {
+      "date": "2026-10-15",
+      "report": "reports/post_archive_mechanism_screen_20261015.json",
+      "decision": "no_new_qualified_task_pilot",
+      "new_evidence": "TD-MPC2 query-normalization operator: 8 synthetic CPU cases and 24 comparisons, no changed victim output. Cosmos existing terminal logs: 29 legitimate success stops and one time-limit failure, no causal attack evidence. MA-WAM pinned source and published weights retained as a native planning resource, without a new writable threat interface.",
+      "scope": "One bounded operator exclusion, existing-log interpretation and resource discovery; not pretrained task attack, defense or generalization results."
+    },
+    {
+      "id": "nanowm_resource_and_cost_gate",
+      "date": "2026-10-15",
+      "report": "reports/nanowm_feasibility_decision_20261015.json",
+      "protocol": "reports/nanowm_clean_gate_protocol_20261015.json",
+      "gate_calibration": "reports/research_gate_calibration_20261015.json",
+      "decision": "resource_and_single_forward_go_full_clean_deferred_by_cost",
+      "new_evidence": "Strict pretrained NanoWM load, audited training-only action statistics, native simulator replay, one finite 16-candidate horizon-5 rollout (5.560271 s), and three failed physical-zero controls. Full-budget per-root estimate 11676.57 s exceeds the registered 1800 s cost threshold; Clean not run.",
+      "activity": {
+        "native_pretrained_rollout_calls": 1,
+        "clean_task_episodes": 0,
+        "attack_conditions": 0,
+        "defense_conditions": 0,
+        "passive_control_environment_steps": 750,
+        "primary_gemini_requests": 1,
+        "primary_gemini_http_status": 200
+      },
+      "scope": "Resource/forward feasibility plus actual passive controls, not a Clean capability result, attack success or defense recovery. The image goal enters scoring only; a sampler intervention would be an explicit additional permission. DIAMOND and one new repository were screened without an additional experiment."
+    },
+    {
+      "id": "nanowm_official_heldout_task_and_runtime_gate",
+      "date": "2026-10-15",
+      "report": "reports/nanowm_runtime_task_reassessment_20261015.json",
+      "decision": "task_panel_go_native_clean_launched_resource_wait",
+      "new_evidence": "Official PointMaze example uses two CEM plans, not the ten-plan generic default. Three preregistered validation goals replay exactly; zero control succeeds on one and fails on two. One native component profile shows VAE only3.5 percent of wall time under co-resident GPU work; VAE caching alone is not a demonstrated cost solution.",
+      "activity_before_clean_launch": {
+        "native_pretrained_rollout_calls": 1,
+        "cpu_environment_steps": 300,
+        "model_api_requests": 0
+      },
+      "live_execution": "runs/nanowm_heldout_clean_v1/summary.json",
+      "limits": "Task feasibility and runtime measurements are not Clean competence, security harm or defense recovery; a running launch is not a result."
+    },
+    {
+      "id": "nanowm_numeric_device_compatibility_and_bounded_wait",
+      "date": "2026-10-15",
+      "report": "reports/nanowm_runtime_compatibility_fix_20261015.json",
+      "decision": "renderer_bug_fixed_native_forward_passed_clean_resource_deferred",
+      "new_evidence": "Numeric device selection fixes the legacy MuJoCo UUID parse failure. Frozen CPU render/state match exactly. One actual shared-load native rollout took15.939124s, extrapolating to6694.432s/root, above2700s. The resumed exclusive-GPU wait preserved its original02:53:58Z cutoff and deferred before model loading.",
+      "activity": {
+        "model_rollout_calls": 1,
+        "clean_task_episodes": 0,
+        "environment_steps": 0,
+        "model_api_requests": 0
+      },
+      "limits": "Not a Clean failure, task success, intrinsic-throughput benchmark, security harm or defense result."
+    },
+    {
+      "id": "private_query_grouped_validation_correction",
+      "date": "2026-10-15",
+      "report": "reports/private_query_statistical_correction_20261015.json",
+      "decision": "corrected_historical_statistics_no_native_privacy_claim",
+      "new_evidence": "Recomputed six cached feature datasets with paired-seed CV, reproduced original metrics, and demonstrated why row-LOO can score0% on identical paired features. Five prior0% become50%; v0query23/24,action19/24,concat21/24. Original proxy-planner defects explicitly bounded.",
+      "activity": {
+        "model_api_requests": 1,
+        "pretrained_model_loads": 0,
+        "world_model_forwards": 0,
+        "environment_steps": 0,
+        "training_updates": 0,
+        "checkpoint_hashes_recomputed": 0,
+        "new_statistical_reanalyses": 1
+      },
+      "limits": "No new model/env run and no conditional privacy, task damage or defense result."
+    },
+    {
+      "id": "jowa_native_forecast_and_cache_ownership",
+      "date": "2026-10-15",
+      "report": "reports/jowa_rejected_branch_decision_20261015.json",
+      "decision": "native_forecast_path_yes_rejected_branch_storage_aliasing_no_go",
+      "new_evidence": "Official source contains forecast-driven beam search. Real cache operators plus original step method passed23 CPU assertions with a deliberate-alias positive control. Root/sibling/factual-prefix isolation holds in inspected paths. MCTS stale-child prefix is a separate unmeasured-task correctness issue.",
+      "activity": {
+        "source_checkouts": 1,
+        "cpu_unit_probes": 1,
+        "model_api_requests": 0,
+        "checkpoint_downloads": 0,
+        "pretrained_model_loads": 0,
+        "neural_model_forwards": 0,
+        "environment_steps": 0,
+        "training_updates": 0
+      },
+      "limits": "Not a model capability, security harm or defense result. Full-Agent successive planning, RNG/model buffers and concurrency not tested. No weights/Atari setup for this excluded candidate."
+    },
+    {
+      "id": "dino_native_private_goal_observability",
+      "date": "2026-10-15",
+      "report": "reports/dino_private_goal_observability_20261015.json",
+      "decision": "public_context_not_goal_independent_query_privacy_unmeasured",
+      "new_evidence": "Cached seed1 physical state and pixels restored exactly. Two preselected legal markers change131pixels. Four CPU native encodes confirm changed initial visual latent (RMS0.4242816153), identical proprio and exact restored features. No future predictor or task evaluation.",
+      "activity": {
+        "cpu_render_probes": 1,
+        "native_observation_encodes": 4,
+        "future_predictor_forwards": 0,
+        "planner_calls": 0,
+        "explicit_environment_step_calls": 0,
+        "model_api_requests": 0,
+        "training_updates": 0,
+        "weight_downloads": 0
+      },
+      "limits": "Dependence in public context is a confound to control, not demonstrated goal decoding or incremental privacy harm. Existing-source rechecks of Cosmos/TD-MPC/WorldEvolver supplied no new task results."
+    },
+    {
+      "id": "native_cem_action_mean_coupling",
+      "date": "2026-10-15",
+      "report": "reports/mbrl_action_mean_coupling_decision_20261015.json",
+      "decision": "no_go_for_this_fixed_operation_real_return_tie",
+      "new_evidence": "Full native strong CEM with locally pretrained frozen model and added K8 sampler: one real paired seed708 gives200/200 return;172/200 same-query action changes and200/200 exact scalar multiset/index checks. No defense episodes or new task/model expansion.",
+      "activity": {
+        "completed_real_episodes": 2,
+        "real_environment_steps": 400,
+        "native_modelenv_forecast_batch_calls": 16000,
+        "predictive_transitions": 1680000000,
+        "model_api_requests": 0,
+        "training_updates": 0,
+        "gpu_jobs": 0
+      },
+      "limits": "Related within-episode queries are not independent samples. All200 top-score comparisons have ties. An added sampler is not a discovered deployed interface; the checkpoint is locally trained, not externally released."
+    },
+    {
+      "id": "dino_exact_action_saturation_replay_gate",
+      "date": "2026-10-15",
+      "report": "reports/dino_action_saturation_decision_20261015.json",
+      "decision": "physical_equivalence_valid_strict_bank_clean_gate_failed_alias_harm_unmeasured",
+      "new_evidence": "15branches/450explicitcontrols exactly verify5fixedaction sequences andtheiraliases. Original native forecast selects candidate2 (7.6994) overcandidate0 (7.9892); neartheoracle butfailsregisteredoptimalitygate. Native15controlprefixdescriptively favorscandidate2. Noaliasedforecast executed.",
+      "activity": {
+        "environment_steps": 450,
+        "unroll_calls": 1,
+        "predictor_forwards": 6,
+        "native_encodes": 8,
+        "network_attempts": 0,
+        "planner_calls": 0,
+        "training_updates": 0,
+        "checkpoint_loads": {
+          "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth": 1,
+          "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar": 1
+        },
+        "elapsed_seconds": 49.96383093899931,
+        "original_unroll_seconds": 2.2851425659900997,
+        "gpu_initialized": false,
+        "model_api_requests": 0,
+        "new_training": 0,
+        "new_checkpoint_downloads": 0,
+        "new_large_weight_hashes": 0
+      },
+      "limits": "Addedfixedbankselector,one root,all30-step successesfalse; originalnativeClean2/3unchanged. Unmeasuredharm isnull, notnegativeattackresult."
+    },
+    {
+      "id": "dino_alias_exploratory_and_oracle_objective",
+      "date": "2026-10-15",
+      "report": "reports/dino_action_alias_exploratory_decision_20261015.json",
+      "decision": "stop_fixed_inflation_and_repair_promotion_preserve_local_loss_with_proxy_mismatch",
+      "new_evidence": "Original/+2 select2 with reward7.6994; canonical selects1 with1.8297 despite reduced feature error. The same native objective supplied actual future encodings also selects1. Runtime Original replay is exact; no new environment or encoder calls.",
+      "activity": {
+        "unroll_calls": 3,
+        "runtime_replay_unrolls": 1,
+        "new_alias_unrolls": 2,
+        "predictor_forwards": 18,
+        "native_encodes": 0,
+        "visual_encoder_forwards": 0,
+        "proprio_encoder_forwards": 0,
+        "environment_steps": 0,
+        "planner_calls": 0,
+        "network_attempts": 0,
+        "training_updates": 0,
+        "elapsed_seconds": 20.229858518985566,
+        "checkpoint_loads": {
+          "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth": 1,
+          "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar": 1
+        },
+        "cuda_initialized": false,
+        "model_api_requests": 0,
+        "new_checkpoint_downloads": 0,
+        "new_large_weight_hashes": 0,
+        "oracle_control_additional_model_calls": 0
+      },
+      "limits": "Separate exploratory extension; prior oracle gate unchanged. One added selector/root, no whole-task success loss, no nativeCEM or independent generalization."
+    },
+    {
+      "id": "post_native_alias_source_contract_screen",
+      "date": "2026-10-15",
+      "report": "reports/post_native_alias_source_synthesis_20261015.json",
+      "decision": "no_new_qualified_task_experiment",
+      "new_evidence": "DINO writer boundary, three archived native-path exclusions, TD-MPC2 latent readout limitation and official latent_cbf pre-filter clipping/critic/resource screen. Existing native causal result retained.",
+      "activity": {
+        "pretrained_model_loads": 0,
+        "model_forward_calls": 0,
+        "environment_steps": 0,
+        "gpu_jobs": 0,
+        "training_updates": 0,
+        "weight_downloads": 0,
+        "full_artifact_hashes": 0,
+        "primary_gemini_advisory_requests": 1,
+        "primary_gemini_http_status": 200,
+        "fallback_api_requests": 0,
+        "official_source_network_reads": true
+      },
+      "limits": "Source and logical contract evidence only; advisory NONE does not establish impossibility, unique mediation or novelty."
+    },
+    {
+      "id": "native_executed_action_feedback",
+      "date": "2026-10-15",
+      "report": "reports/action_feedback_candidate_decision_20261015.json",
+      "decision": "source_defect_confirmed_task_harm_unmeasured_no_unqualified_expansion",
+      "new_evidence": "Native latent_cbf records nominal after filtered execution; original-method CPU routing reproduces it. UNISafe correctly returns filtered controls into both histories. Direct observer-input prior art found; matching defect-carrier weights missing in checked publication channels.",
+      "activity": {
+        "pretrained_model_loads": 0,
+        "learned_model_forwards": 0,
+        "environment_steps": 0,
+        "training_updates": 0,
+        "weight_downloads": 0,
+        "model_api_requests": 0,
+        "cpu_route_probes_completed": 1,
+        "network_scope": "Primary papers, official GitHub source/tree metadata and the public checkpoint-link metadata only. No credential access.",
+        "original_compute_action_calls_with_stubs": 24
+      },
+      "limits": "Recording stubs are not pretrained predictions or environment outcomes. Public archive metadata does not verify weight contents. Prior-art overlap does not empirically falsify a restricted systems-security effect."
+    },
+    {
+      "id": "tdmpc_frozen_head_loss_qualification",
+      "date": "2026-10-15",
+      "report": "reports/tdmpc_frozen_head_loss_control_decision_20261015.json",
+      "decision": "real_gap_protocol_sensitive_selective_recovery_no_go",
+      "new_evidence": "同一source23/seed31四条件控制：旧两臂300条学习日志及500步回报均精确复现；恢复冻结reward/value头的输入梯度后random回报612.083→563.621、cascade495.216→543.622，差距缩小82.89%，但random下降7.92%且cascade增益不足半个原差，选择性恢复门未过。只证明更新方式敏感，不证明新机制或有效防御。",
+      "activity": {
+        "session_id": 55401,
+        "terminal_exit_code": 0,
+        "elapsed_seconds": 154.87498772499384,
+        "native_load_agent_calls": 1,
+        "source_environment_steps": 0,
+        "network_attempts": 0,
+        "optimizer_updates": 1200,
+        "physical_evaluation_controls": 2000,
+        "model_api_requests": 0,
+        "large_model_retraining": false,
+        "adaptation_training": "1200 small dynamics-only updates in four arms; this is training and must not be described as zero-training."
+      },
+      "scope": "One used development root, real native closed-loop utility; no new Goal/security claim, no population inference.",
+      "separate_read_only_correction": "reports/opine_native_planner_contract_correction_20261015.json"
+    },
+    {
+      "id": "opine_actual_root_and_default_clean_gate",
+      "date": "2026-10-15",
+      "report": "reports/opine_native_root_gate_20261015.json",
+      "decision": "physical_root_go_fixed_native_component_clean_no_go",
+      "new_evidence": "实际L6根已取得：658进入后至784共127帧全像素精确，四个真实环境快照可复用；旧完整prefix失配保留。round086 fresh原生规划组件在root762默认40层/30秒下调用174次transition后0.420秒返回无计划；0真实候选执行，return/success均未测，不扩展该固定干预。旧factual-prefix初始化不能直接当原生planner记忆。",
+      "activity": {
+        "new_environment_step_calls_including_archive_RESET": 1547,
+        "clean_plan_execution_controls": 0,
+        "learned_program_imports": 1,
+        "learned_transition_calls": 174,
+        "learned_reward_calls": 175,
+        "new_neural_model_loads": 0,
+        "training_updates": 0,
+        "model_api_calls": 0,
+        "gpu_calls": 0,
+        "attack_queries": 0
+      },
+      "scope": "Resource qualification and one frozen published-program planner-component Clean gate. No query-memory intervention or task-harm experiment was executed. This is an author-synthesized learned program, not a newly trained neural checkpoint.",
+      "preserved_failed_execution": {
+        "run": "runs/opine_level_reset_replay_20261015",
+        "session_id": 89573,
+        "exit_code": 1,
+        "status": "technical_error",
+        "actions_executed": 762,
+        "elapsed_s": 3.0127888579736464,
+        "error": "6 is not a valid GameAction",
+        "qualification": null,
+        "boundary": "The first snapshot pickle load failed after762 actual actions. Not an environment task failure. Original protocol, launched code and output remain."
+      }
+    },
+    {
+      "id": "cem_dispersion_update_necessity_control",
+      "date": "2026-10-15",
+      "report": "reports/mbrl_dispersion_control_decision_20261015.json",
+      "decision": "local_effect_mixed_deficit_persists_no_reliable_recovery",
+      "new_evidence": "在原固定面板中，移除精英方差更新后边界数据模型的回报变化为+4/-7/+34/-4，平均仅提高6.75、中位数0，且相对随机源仍差56.5分；该更新不是这一平均损害存在的必要条件。",
+      "activity": {
+        "session_id": 98655,
+        "exit_code": 0,
+        "terminal_chunk_id": "d5f320",
+        "elapsed_seconds": 163.97788138402393,
+        "episodes": 24,
+        "environment_steps": 4174,
+        "model_batch_evaluations": 12522,
+        "imagined_particle_transitions": 187830000,
+        "checkpoint_loads": 3,
+        "training_updates": 0,
+        "api_calls": 0,
+        "gpu_model_calls": 0
+      },
+      "scope": "Source/log correction followed by one frozen CPU causal-control panel; no new attack, API, GPU or training. One original task with three local checkpoints and four reused roots.",
+      "independent_analysis": "reports/mbrl_dispersion_control_analysis_20261015.json"
+    },
+    {
+      "id": "cosmos_first_query_truth_countercheck",
+      "date": "2026-10-15",
+      "report": "reports/cosmos_first_query_truth_decision_20261015.json",
+      "decision": "local_truth_ranking_recovery_supported_original_expansion_gate_still_failed",
+      "new_evidence": "Two exact16-control environment prefixes; recorded Clean/Swap calibration passes; true-future scoring restores successful candidate1; Swap visual latent errors rise for both fixed candidates.",
+      "scope": "One post-hoc known harmful task3/init2; new exact16-control prefix replays and calibrated model regeneration, with historical original-Goal full-continuation utilities. Not a new attack panel or full recovery episode."
+    },
+    {
+      "id": "forecast_feedback_time_binding_screen",
+      "date": "2026-10-15",
+      "report": "reports/forecast_feedback_binding_screen_20261015.json",
+      "decision": "no_new_task_harm_or_core_security_mechanism",
+      "new_evidence": "Independent per-pedestrian calibration excludes pooling. Original update_aci CPU execution confirms wrong horizon-time pairing after a stipulated gap; ordinary timestamp join removes the false residual.",
+      "scope": "Synthetic source operator only; no new model, physical task or API."
+    },
+    {
+      "id": "cosmos_forecast_coupling_finite_bank",
+      "report": "reports/cosmos_forecast_coupling_gate_decision_20261015.json",
+      "summary": "runs/cosmos_forecast_coupling_gate_20261015/summary.json",
+      "result": "Four exact calibration checks passed; 18Future+18Value calls,0environment/API/training. All64 pairings select historical success branch; coupling leverage0, frozen feasibility gate failed.",
+      "scope": "Added finite-bank protocol on one known posthoc root; not original native seed law, full diffusion law or independent tasks.",
+      "decision": "Stop without seed/Value/budget/action-bank retuning; preserve all previous evidence."
+    },
+    {
+      "id": "ladiwm_adwm_badwam_source_carrier_refresh",
+      "source_paths": [
+        "reports/ladiwm_native_carrier_screen_20261015.json",
+        "reports/prior_scope_and_carrier_refresh_20261015.json"
+      ],
+      "result": "Retained three concrete resource leads; no new mechanism or security experiment accepted. Source excludes the proposed LaDiWM backward-gradient/default false-history/Goal inputs and AD-WM candidate-set scoring route.",
+      "execution": "Source and resource metadata only;0model/environment/API calls,0weight downloads, no gated-access request.",
+      "primary_experimental_result_unchanged": "reports/cosmos_forecast_coupling_gate_decision_20261015.json"
+    },
+    {
+      "id": "cosmos_direct_action_text_route_and_worldscape_memory",
+      "date": "2026-10-15",
+      "report": "reports/cosmos_action_text_route_decision_20261015.json",
+      "summary": "runs/cosmos_action_text_route_gate_20261015/summary.json",
+      "protocol": "configs/cosmos_action_text_route_gate_20261015.json",
+      "review": "reports/cosmos_action_text_route_review_20261015.json",
+      "status": "completed_calibrated_local_direct_entry_gate_failed",
+      "selection_by_condition": {
+        "clean": 1,
+        "swap": 0,
+        "clean_action_swap": 1,
+        "swap_action_clean": 0,
+        "clean_proprio_swap": 1,
+        "swap_proprio_clean": 1
+      },
+      "calibration_checks_passed": 20,
+      "activity": {
+        "checkpoint_loads": 2,
+        "future_sampler_calls": 14,
+        "value_sampler_calls": 14,
+        "noise_calls": 28,
+        "policy_sampler_calls": 0,
+        "vae_encodes": 0,
+        "vae_decodes": 0,
+        "environment_resets": 0,
+        "environment_steps": 0,
+        "model_api_calls": 0,
+        "network_requests": 0,
+        "training_updates": 0
+      },
+      "execution": {
+        "session_id": 25831,
+        "exit_code": 0,
+        "terminal_chunk_id": "ffd4ed",
+        "elapsed_seconds": 7.396065242006443,
+        "peak_cuda_reserved_bytes": 4292870144
+      },
+      "finding": "Direct action-position text replacement neither induces the bad choice from Clean nor repairs Swap. The equal-token proprio repair does restore the good choice. The fixed bidirectional action-position selectivity gate fails.",
+      "limits": "One known post-hoc root; actual utilities come from previously executed two branches. Internal source routing, not full Bus-Cut, deployed access, independent defense or population estimate. Other-token-to-action paths remain untested.",
+      "source_screen": "runs/worldscape_memory_source_20261015/summary.json"
+    },
+    {
+      "id": "tdmpc_executor_null_action_log_gate",
+      "date": "2026-10-15",
+      "report": "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+      "protocol": "configs/tdmpc_nullspace_action_logs_20261015.json",
+      "decision": "no_go_no_real_harm_relative_to_equal_multiset_control",
+      "new_evidence": "Physical alias trace invariant; Clean983, zero984, correlated985, permuted984 on fixed500-step reacher task. No harm or defense result.",
+      "activity": {
+        "checkpoint_loads": 1,
+        "training_updates": 120,
+        "source_replay_controls": 600,
+        "evaluation_controls": 2000,
+        "explicit_environment_resets": 6,
+        "evaluation_episodes_completed": 4,
+        "model_api_requests": 0
+      },
+      "scope": "Added offline writer and isolated dynamics continuation; not Goal-Swap or native full training."
+    },
+    {
+      "id": "risk_forecast_consumer_source_screen",
+      "date": "2026-10-15",
+      "report": "reports/risk_forecast_consumer_screen_20261015.json",
+      "decision": "no_new_pilot_native_semantics_and_resource_gate",
+      "activity": {
+        "new_checkpoint_downloads": 0,
+        "new_model_calls": 0,
+        "new_environment_steps": 0,
+        "new_training_updates": 0,
+        "new_model_api_requests": 0,
+        "public_source_requests": "Root used web research plus local reads; the separately logged DreamAvoid cache subtask used9 caller-initiated public GETs. Internal web fetch/redirect counts are not exposed."
+      },
+      "scope": "Pinned new source and conceptual contract distinction only, not experimental harm."
+    },
+    {
+      "id": "native_safety_consumer_screen",
+      "date": "2026-10-16",
+      "report": "reports/native_safety_consumer_screen_20261016.json",
+      "decision": "native_safety_consumer_confirmed_no_go_for_security_harm_claim_or_experiment_expansion",
+      "new_evidence": "SafeDreamer ordinary OSRP eval consumes imagined cost in a batch safety gate. The small Vector configuration has nonnegative geometric cost and strict threshold0, so it cannot test that mode switch. Signed learned cost, index padding and mean execution are separately scoped.",
+      "activity": {
+        "new_model_task_experiments": 0,
+        "checkpoint_downloads": 0,
+        "pretrained_model_loads": 0,
+        "neural_forwards": 0,
+        "model_api_calls": 0,
+        "environment_steps": 0,
+        "training_updates": 0,
+        "gpu_jobs": 0,
+        "new_operator_executions": 0,
+        "public_source_and_metadata_access": true,
+        "source_code_config_files": 4,
+        "source_code_config_bytes": 90158
+      },
+      "scope": "Source and official asset metadata only; not Clean capability, real damage, defense, novelty or generalization."
+    },
+    {
+      "id": "safedreamer_runtime_and_sampling_selection",
+      "date": "2026-10-16",
+      "report": "reports/native_safety_consumer_screen_20261016.json",
+      "summary": "runs/safedreamer_runtime_screen_20261016/summary.json",
+      "decision": "no_automatic_setup_or_clean_for_unidentified_sampling_transfer",
+      "activity": {
+        "source_document_fetches": 11,
+        "weights_downloaded": 0,
+        "packages_installed": 0,
+        "model_api_calls": 0,
+        "model_calls": 0,
+        "environment_steps": 0,
+        "training_updates": 0,
+        "new_operator_probes": 0
+      },
+      "scope": "Evaluation-entry and local package metadata plus scientific selection decision. Real native task and cost remain unmeasured; current evidence is not Clean failure or security success."
+    },
+    {
+      "id": "cosmos_future_output_modality_factorial",
+      "date": "2026-10-16",
+      "report": "reports/cosmos_future_modality_factorial_decision_20261016.json",
+      "summary": "runs/cosmos_future_modality_factorial_20261016_resume1/summary.json",
+      "decision": "local_visual_output_selection_effect_supported_no_expansion",
+      "activity": {
+        "value_sampler_calls": 18,
+        "denoiser_forward_calls": 18,
+        "noise_calls": 18,
+        "checkpoint_loads": 2,
+        "policy_sampler_calls": 0,
+        "future_sampler_calls": 0,
+        "vae_encodes": 0,
+        "vae_decodes": 0,
+        "environment_steps": 0,
+        "model_api_calls": 0,
+        "training_updates": 0
+      },
+      "new_evidence": "All9cells follow visual source for selection, though proprio changes scores. Clean/Swap/Truth diagonals reproduce full cached Value outputs before mixed calls. Zero new physical episodes.",
+      "scope": "Researcher-created mixed representations may not describe a coherent physical scene. This is conditional Value-input dependence, not a physical mediation percentage, deployable defense, new ASR or internal Goal-entry localization. Real continuation utility is reused, not rerun.",
+      "preserved_technical_failure": "runs/cosmos_future_modality_factorial_20261016/summary.json"
+    },
+    {
+      "id": "decision_chain_cache_audit_20261016",
+      "date": "2026-10-16",
+      "report": "reports/decision_chain_reassessment_20261016.json",
+      "decision": "local_evidence_retained_new_general_claim_no_go",
+      "activity": {
+        "model_calls": 0,
+        "environment_steps": 0,
+        "model_api_calls": 0,
+        "training_updates": 0
+      },
+      "scope": "Offline cached analysis and source-supported interpretation corrections; no newly executed harmful or recovered episode."
+    },
+    {
+      "id": "native_decision_interface_followup_20261016",
+      "date": "2026-10-16",
+      "report": "reports/native_decision_interface_followup_20261016.json",
+      "decision": "no_new_qualified_task_pilot",
+      "new_evidence": "GenSafeNav t32 zero-control degeneracy and missing actor/calibration state; matched config lacks robot-conditioned human reactions. WoG native future-supervised z-to-action route confirmed without an isolated physical-forecast input. DiLA candidate content memory is initialized per rollout and not persistently written by rejected branches.",
+      "scope": "Source/cached-record checks and public resource metadata only; no new model, environment, API, weight download or training."
+    },
+    {
+      "id": "cosmos_cached_native_decode_20261016",
+      "report": "reports/cosmos_decoded_future_observation_20261016.json",
+      "summary": "runs/cosmos_cached_decode_gate_20261016_resume1/summary.json",
+      "result": "Truth decoded images35.376–36.204dB; Swap RGB MSE7.772–11.917×Clean on two candidates/two cameras.",
+      "scope": "Cached endpoint observation-readout check, not raw state measurement, new task harm, defense or generalization.",
+      "technical_attempt": "runs/cosmos_cached_decode_gate_20261016/summary.json"
+    },
+    {
+      "id": "query_adaptive_safety_and_native_privacy_screen",
+      "date": "2026-10-16",
+      "report": "reports/goal_bus_current_decision_20261016.json",
+      "decision": "no_new_qualified_runtime_pilot",
+      "new_evidence": "Source checks find no new query-only PID/EMA/ACI adaptation writer in SafeDreamer/GenSafeNav. Native PointMaze H6/nas6 returns its whole final plan, without a configured unexecuted suffix; actual execution remains unmeasured. Additional-query privacy lacks a qualified full-behavior baseline and distinct claim.",
+      "activity": {
+        "model_loads": 0,
+        "model_forward_calls": 0,
+        "environment_steps": 0,
+        "model_api_calls": 0,
+        "training_updates": 0
+      },
+      "scope": "Source and estimand progress, not new harm, defense, privacy inference, generalization or completed research goal."
+    }
+  ],
+  "post_archive_activity": {
+    "new_synthetic_cpu_operator_cases": 8,
+    "new_model_inferences": 0,
+    "new_environment_steps": 0,
+    "new_model_api_requests": 0,
+    "primary_web_sources_consulted": true,
+    "new_full_safety_claim": false,
+    "scope": "Historical first post-archive round only; later activity is recorded per round below."
+  },
+  "gate_interpretation_clarifications": [
+    "A defense that knows and compensates the corrupted observation channel is evidence about mitigation, not proof that no security problem exists.",
+    "An exact Bayesian comparator can share an observation-channel vulnerability. This limits attribution to learned-world-model error, not the existence of agent harm.",
+    "Prior statistics/control work limits first-concept novelty; a substantive native security contribution can still be evaluated without inventing an unrelated mechanism.",
+    "A materially better matched pretrained model/planner can address a previously unresolved transfer gate; repeating unchanged negative conditions cannot. Strong Clean, real utility, explicit permissions and generalization remain mandatory.",
+    "Lack of aggregate Clean ranking advantage over uniform does not negate a directly paired local decision harm. A replayed action-choice effect does not by itself prove complete mediation, a new live intervention, effective defense or generalization."
+  ],
+  "research_goal_status": "active_unachieved",
+  "active_execution": null,
+  "conditional_post_clean_scope": {
+    "report": "reports/nanowm_goal_blind_coupling_scope_20261015.json",
+    "source_review": "One already indexed primary paper checked in its proposition/theorem scope; source-only NanoWM feasibility, no intervention execution.",
+    "decision": "Future security experiments still require a specific contract and operation. The independent native Clean capability gate is authorized by the explicit resumption decision; passing it will not establish security harm."
+  },
+  "runtime_compatibility_followup": "reports/nanowm_runtime_compatibility_fix_20261015.json",
+  "last_execution": {
+    "report": "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+    "review": "reports/tdmpc_nullspace_action_logs_review_20261015.json",
+    "protocol": "configs/tdmpc_nullspace_action_logs_20261015.json",
+    "run": "runs/tdmpc_nullspace_action_logs_20261015",
+    "status": "completed_no_harm",
+    "decision": {
+      "conditional_harm_gate_passed": false,
+      "returns": {
+        "clean": 983.0,
+        "zero": 984.0,
+        "correlated": 985.0,
+        "permuted": 984.0
+      },
+      "relative_loss_correlated": {
+        "zero": -0.00101626016260159,
+        "permuted": -0.00101626016260159
+      },
+      "permuted_minus_correlated_return": -1.0,
+      "conclusion": "No-Go for this fixed correlation-specific decision-harm candidate; no expansion or retuning",
+      "statistics": "One fixed seed; descriptive paired differences only",
+      "defense_episode_executed": false
+    },
+    "activity": {
+      "checkpoint_loads": 1,
+      "training_updates": 120,
+      "source_replay_controls": 600,
+      "evaluation_controls": 2000,
+      "explicit_environment_resets": 6,
+      "evaluation_episodes_completed": 4,
+      "model_api_requests": 0
+    },
+    "execution": {
+      "session_id": 30866,
+      "exit_code": 0,
+      "terminal_chunk_id": "a3e756",
+      "elapsed_seconds": 140.82270506897476,
+      "peak_cuda_reserved_bytes": 620756992
+    },
+    "independent_review_completed": true
+  },
+  "security_readiness_decision": "reports/nanowm_security_readiness_decision_20261015.json",
+  "latest_evidence_correction": "reports/cem_dispersion_action_source_audit_20261015.json",
+  "latest_interface_screen": "reports/action_feedback_candidate_decision_20261015.json",
+  "action_mean_startup_failure": {
+    "session_id": 81611,
+    "terminal_exit_code": 1,
+    "summary": "runs/mbrl_action_mean_coupling_20261015/summary.json",
+    "reason": "Existing NumPy2 statistics pickle cannot load in NumPy1.26 runtime; switched to existing compatible runtime, unchanged model/config.",
+    "model_queries": 0,
+    "real_environment_steps": 0
+  },
+  "latest_decision_test": "reports/dino_first_query_terminal_truth_decision_20261015.json",
+  "methodological_amendment": "reports/dino_action_alias_gate_amendment_20261015.json",
+  "native_alias_followup": {
+    "readiness_report": "reports/dino_native_alias_readiness_20261015.json",
+    "protocol": "configs/dino_native_alias_pair_20261015.json",
+    "status": "completed_recovery_prefix_diagnostic_and_two_mean30_control_truth_countercheck",
+    "hypothesis": "A constrained writer changing only execution-equivalent copied forecast requests to the previously fixed canonical boundary representation can reduce full native CEM real utility on a previously unused development root.",
+    "previous_result_unchanged": "Fixed+2 no harm; canonical fixed-bank side effect retained; true-future proxy mismatch retained.",
+    "forecast_accuracy_claim": "Separately registered same-GPU diagnostic passed allunchanged calibration gates. Canonical lowers average fixed-action prefix weightedfeatureMSE by24.95% onClean-origin and6.58% oncanonical-origin states/actions, with mixed perendpoint signs. CPU failure retained; full CEM ranking/horizon mediation unmeasured. Subsequent query1 fixed two-mean full30-control diagnostic improves both terminal errors and exposes true-future proxy/utility mismatch; full CEM-population and99-step mediation remain unmeasured.",
+    "analysis": "reports/dino_native_alias_decision_20261015.json",
+    "comparison": {
+      "canonical_minus_clean_return": -84.80022716522217,
+      "relative_return_drop": 0.1077514405587664,
+      "final_success_loss": false,
+      "consider_separate_recovery_pilot": false,
+      "native_effect": "lower_return",
+      "decision": "Follow-up recovery and matched-prefix diagnostic completed; retain conditional effect, no unqualified expansion.",
+      "prediction_accuracy": "Completed matched-query same-GPU diagnostic lowers mean observed-prefix feature error on both trajectory-origin panels; mixed local signs and no full-horizon or candidate-ranking mediation.",
+      "scope": "Historical trigger analysis from the original paired run before separately registered follow-ups; completed current results below supersede pending wording."
+    },
+    "forecast_diagnostic": "reports/dino_native_alias_forecast_gpu_decision_20261015.json",
+    "recovery_protocol": "configs/dino_native_alias_recovery_20261015.json",
+    "synthesis": "reports/dino_native_alias_synthesis_20261015.json",
+    "recovery_report": "reports/dino_native_alias_recovery_decision_20261015.json",
+    "claim_review": "reports/dino_native_alias_claim_review_20261015.json",
+    "writer_boundary_report": "reports/dino_alias_writer_boundary_20261015.json",
+    "full_horizon_countercheck": "reports/dino_first_query_terminal_truth_decision_20261015.json"
+  },
+  "last_native_execution": {
+    "session_id": 55401,
+    "terminal_exit_code": 0,
+    "summary": "runs/tdmpc_frozen_head_loss_control_20261015/summary.json",
+    "analysis": "reports/tdmpc_frozen_head_loss_control_decision_20261015.json",
+    "result": "同一source23/seed31四条件控制：旧两臂300条学习日志及500步回报均精确复现；恢复冻结reward/value头的输入梯度后random回报612.083→563.621、cascade495.216→543.622，差距缩小82.89%，但random下降7.92%且cascade增益不足半个原差，选择性恢复门未过。只证明更新方式敏感，不证明新机制或有效防御。"
+  },
+  "last_api_advisory": {
+    "session_id": 78497,
+    "terminal_exit_code": 0,
+    "assessment": "runs/post_native_alias_scientific_review_20261015/assessment.json",
+    "requests": 1,
+    "http_status": 200,
+    "fallback_used": false,
+    "empirical_evidence": false
+  },
+  "last_cpu_route_execution": {
+    "owner": "/root/corrected_planner_feasibility",
+    "session_id": 80642,
+    "terminal_exit_code": 0,
+    "summary": "runs/latent_cbf_action_feedback_20261015/summary.json",
+    "scope": "Original methods on recording stubs; 0 learned-model/environment calls"
+  },
+  "latest_methodological_qualification": {
+    "report": "reports/cem_dispersion_action_source_audit_20261015.json",
+    "finding": "Separate sampled population covariance from optimizer dispersion and effective bound-constrained variance. Strict-best action provenance and whole returned-sequence warm starts determine whether a later iteration can affect real decisions."
+  },
+  "previous_goal_turn_classification": {
+    "classification": "progress",
+    "evidence": [
+      "reports/worldevolver_truthful_coverage_decision_20261016.json",
+      "reports/worldevolver_truthful_coverage_result_review_20261016.json"
+    ],
+    "reason": "Previous turn completed independent review and archive of a real eight-call null, with the fixed candidate stopped."
+  },
+  "last_native_root_execution": {
+    "session_id": 45969,
+    "terminal_exit_code": 0,
+    "summary": "runs/opine_level_reset_replay_snapshotfix_20261015/summary.json",
+    "qualified_roots": 4,
+    "scope": "Resource replay only, not a Clean policy episode."
+  },
+  "access_help": {
+    "status": "application_brief_prepared_not_submitted",
+    "report": "reports/trusted_access_application_brief_20261015.json",
+    "scope": "Account application is separate from local Clean capability. No previously blocked experiment retried."
+  },
+  "last_completed_task_experiment": {
+    "report": "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+    "review": "reports/tdmpc_nullspace_action_logs_review_20261015.json",
+    "protocol": "configs/tdmpc_nullspace_action_logs_20261015.json",
+    "run": "runs/tdmpc_nullspace_action_logs_20261015",
+    "status": "completed_no_harm",
+    "decision": {
+      "conditional_harm_gate_passed": false,
+      "returns": {
+        "clean": 983.0,
+        "zero": 984.0,
+        "correlated": 985.0,
+        "permuted": 984.0
+      },
+      "relative_loss_correlated": {
+        "zero": -0.00101626016260159,
+        "permuted": -0.00101626016260159
+      },
+      "permuted_minus_correlated_return": -1.0,
+      "conclusion": "No-Go for this fixed correlation-specific decision-harm candidate; no expansion or retuning",
+      "statistics": "One fixed seed; descriptive paired differences only",
+      "defense_episode_executed": false
+    },
+    "activity": {
+      "checkpoint_loads": 1,
+      "training_updates": 120,
+      "source_replay_controls": 600,
+      "evaluation_controls": 2000,
+      "explicit_environment_resets": 6,
+      "evaluation_episodes_completed": 4,
+      "model_api_requests": 0
+    },
+    "execution": {
+      "session_id": 30866,
+      "exit_code": 0,
+      "terminal_chunk_id": "a3e756",
+      "elapsed_seconds": 140.82270506897476,
+      "peak_cuda_reserved_bytes": 620756992
+    },
+    "independent_review_completed": true
+  },
+  "current_goal_turn_classification": "source_qualification_and_executed_official_benchmark_design_metadata_analysis_no_model_or_task_experiment",
+  "last_cache_analysis": {
+    "report": "reports/cosmos_first_choice_identifiability_bounds_20261015.json",
+    "script": "scripts/analyze_cosmos_first_choice_bounds.py",
+    "scope": "Existing30-root two-first-candidate real continuations; fixed later original-Goal native policy and seeds.",
+    "native_success_range": [
+      28,
+      30
+    ],
+    "native_baseline_successes": 29,
+    "maximum_additional_native_failures": 1,
+    "maximum_additional_failure_tasks": 1,
+    "maximum_native_mean_capped_cost_increase": 5.633333333333334,
+    "conditional_uniform_k4": {
+      "uniform_marginal_fixed_score_bank": true,
+      "enumerated_shapes": 70,
+      "permutations_per_shape": 24,
+      "exact_max_selection_probability_change": "3/8",
+      "maximum_expected_success_rate_drop_pp": 2.5,
+      "maximum_expected_mean_capped_cost_increase": 5.2,
+      "baseline": "New independent uniform scorer on same fixed bank; not native fixedseed31/32."
+    },
+    "decision": "Do not generate480 forecast/value calls to expand this first-choice-only bank as a large binary-harm study. The native>=3losses/atleast2tasks gate is mathematically unreachable on these branches. Local/cost sensitivity is not ruled out but is not a new accepted mechanism.",
+    "limits": "Conditional finite-cache mathematical bounds, not new attack evidence, attainable attack claims, single-draw guarantees, population bounds, or exclusions of later interventions."
+  },
+  "current_resource_requirement": {
+    "available_gpu_needed_for": null,
+    "last_verified": {
+      "session_id": 55506,
+      "terminal_exit_code": 0,
+      "terminal_chunk_id": "6de916",
+      "summary": "runs/nanowm_heldout_clean_v4/summary.json",
+      "observed_status": "resource_deferred",
+      "reason": "Another compute process appeared on the selected GPU; partial task retained",
+      "finished_utc": "2026-10-15T09:32:45Z",
+      "model_loads": 1,
+      "cost_probe_rollouts": 1,
+      "completed_clean_microbatch_rollouts": 117,
+      "completed_clean_episodes": 0,
+      "new_environment_steps": 0,
+      "model_api_calls": 0,
+      "clean_gate_passed": null,
+      "task_elapsed_seconds": 558.5705744990264,
+      "cost_probe": {
+        "status": "completed_single_native_rollout",
+        "instance": 0,
+        "seed": 42,
+        "candidates": 16,
+        "rollout_calls": 1,
+        "elapsed_seconds": 5.429616068024188,
+        "output_shape": [
+          16,
+          6,
+          4096
+        ],
+        "finite": true,
+        "peak_allocated_bytes": 3662922240,
+        "peak_reserved_bytes": 5010096128,
+        "estimated_two_plan_rollout_seconds": 2280.438748570159,
+        "estimate_excludes": "Goal encoding, rendering, environment, logging and control overhead; not a certified bound",
+        "clean_episode": false,
+        "task_success": null,
+        "reference_actions_loaded": false
+      },
+      "interpretation": "Strict model loading and 117 Clean microbatch rollouts completed, but no plan or physical action completed. The old any-other-PID rule deferred the task. This is resource incompletion, not Clean failure or a security result."
+    },
+    "permissions_or_account_approval_required_for_this_clean_run": false,
+    "request": {
+      "recommended_current_gate": {
+        "gpu_count": 1,
+        "dedicated_vram_gb": 24,
+        "continuous_window_hours": 3
+      },
+      "measured_peak_reserved_bytes": 5010096128,
+      "measured_peak_reserved_gib": 4.666015625,
+      "measurement_scope": "One native FP32 16-candidate H5 rollout; not a measured full-task peak or a guarantee for every project model.",
+      "measured_probe_seconds": 5.429616068024188,
+      "estimated_two_plan_rollout_seconds_per_root": 2280.438748570159,
+      "three_root_rollout_only_estimate_hours": 1.9003656238084659,
+      "estimate_limit": "Extrapolation excludes goal encoding, rendering, environment, logging and control overhead; performance under shared load may differ.",
+      "optional_future_headroom_gb": 48,
+      "eighty_gb_requirement_established": false,
+      "latest_observed_shared_gpu": {
+        "memory_total_mib": 24564,
+        "memory_used_mib": 13309,
+        "memory_free_mib": 10773,
+        "utilization_percent": 100,
+        "observed_utc": "2026-10-15T09:50:35.367600+00:00"
+      },
+      "scope": "24GB is the recommendation for the present NanoWM gate, not a demonstrated sufficient configuration for all WorldAgen/AlphaBrain experiments.",
+      "next_step": "Keep the prepared runner and original records. Do not launch the multi-hour capability panel merely because GPU capacity becomes available under the user signal-first allocation condition.",
+      "current_recommendation": "Defer dedicated allocation recommendation: the3hour estimate is only for a capability check, and NanoWM attack harm is unmeasured."
+    },
+    "amendment": {
+      "protocol": "reports/nanowm_heldout_clean_shared_memory_protocol_20261015.json",
+      "runner": "scripts/pilot_nanowm_heldout_clean.py",
+      "old_runner_snapshot": "reports/source_snapshots/nanowm_heldout_clean_before_memory_gate_20261015.py",
+      "status": "implemented_cpu_checked_not_yet_gpu_executed",
+      "scientific_fields_unchanged": [
+        "source",
+        "fixed_tasks",
+        "planner_input_boundary",
+        "budget",
+        "randomness",
+        "metrics",
+        "gate"
+      ],
+      "checks": {
+        "AST": "passed",
+        "pure_admission_boundary_cases_passed": 6,
+        "scientific_protocol_fields_equal": true,
+        "cpu_check_summary": "runs/nanowm_shared_memory_resource_check_v1/summary.json",
+        "cpu_check_session": 49270,
+        "cpu_check_terminal_exit_code": 0,
+        "cpu_check_terminal_chunk_id": "ef5153",
+        "cuda_initialized": false
+      },
+      "resource_policy": "Actual free VRAM >=10240MiB for admission, >=3072MiB at runtime boundaries; PyTorch allocator fraction0.30; other PIDs logged rather than an automatic stop. The cap is not a device reservation or a limit on all process memory.",
+      "remaining_validation": "GPU allocator-cap and runtime checks have not yet been exercised under the amended protocol.",
+      "next_command": ".venv-jepa-native/bin/python -u scripts/pilot_nanowm_heldout_clean.py --protocol reports/nanowm_heldout_clean_shared_memory_protocol_20261015.json --out-dir runs/nanowm_heldout_clean_v5",
+      "next_attempt_launched": false,
+      "restart_boundary": "Fresh attempt from the same frozen tasks/seeds; retain v4 costs and partial state without stitching interrupted CEM or treating it as a task sample."
+    },
+    "user_condition": {
+      "recorded_utc": "2026-10-15T09:53:56.072485+00:00",
+      "user_condition": "用户愿意在已有相关损害信号时提供一张独占24GB GPU；资源规格询问不等于批准没有信号的数小时实验。",
+      "decision": "Do not recommend or automatically launch the multi-hour NanoWM Clean panel on the strength of current attack evidence.",
+      "nanowm_evidence": "117 completed forecast microbatches,0 completed plans,0 physical Clean actions; no Clean competence or attack-harm result.",
+      "cosmos_evidence": "The existing30-root development panel has one paired success-to-failure case, with original-Goal continuation supporting sufficiency of the first changed action block. It is another carrier/operation; no independent replication or effective Bus-Cut defense, and its original expansion gate remains failed.",
+      "resource_estimate_scope": "24GB/3hours was a prospective NanoWM capability-check resource estimate, not evidence of a promising attack or a user-provided allocation.",
+      "next_research_priority": "Prefer a concrete, low-cost matched mechanism test using existing competent models and independently measured utility. Require directly relevant harm evidence before recommending dedicated expansion; do not treat feasibility or forecast divergence as that evidence.",
+      "no_gpu_attempt_launched": true,
+      "overall_goal_status": "active_unachieved",
+      "scope_limit": "This is not a pause of the research goal or a claim that all low-cost work is blocked."
+    },
+    "current_active_request": null,
+    "latest_bounded_experiment": {
+      "report": "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+      "peak_cuda_reserved_gib": 0.578125,
+      "exclusive_requested": false,
+      "reason": "No harm signal in the fixed test; do not revive the historical NanoWM dedicated capability panel."
+    },
+    "historical_available_gpu_needed_for": "fixed NanoWM native Clean capability gate",
+    "current_recommendation": "No dedicated GPU request: the CPU affine-boundary check passed, but native GRASP competence and related task harm remain unmeasured.",
+    "latest_source_screen": "reports/native_decision_interface_followup_20261016.json",
+    "latest_readout_check": {
+      "report": "reports/cosmos_decoded_future_observation_20261016.json",
+      "peak_cuda_reserved_bytes": 1117782016,
+      "exclusive_requested": false,
+      "elapsed_seconds": 8.79724152002018
+    },
+    "current_sender_gate_conclusion": {
+      "dedicated_gpu_requested": false,
+      "measured_peak_reserved_bytes": 4292870144,
+      "reason": "Fixed full sender diagnostic completed negative on existing shared resource; no qualified expansion from this result."
+    }
+  },
+  "api_usage_constraint": {
+    "user_instruction": "Gemini是用来做实验的，idea由Codex自己想。",
+    "recorded_utc": "2026-10-15T10:11:40.250203+00:00",
+    "allowed": "Use Gemini as a model participant/forecaster/agent in a defined experiment with frozen inputs, controls, outcomes and call budget.",
+    "excluded": "No Gemini ideation, research-direction review, novelty scoring or research triage.",
+    "last_ideation_call_already_completed": {
+      "status": "completed_external_opinion_not_experiment",
+      "path": "runs/gemini_signal_first_rethink_20261015_v1/status.json",
+      "requests": 1,
+      "http_status": 200,
+      "used_as_decision_evidence": false
+    },
+    "decision_ownership": "Codex independently formulates hypotheses and judges evidence. The external no_candidate opinion does not establish impossibility or rule out mechanisms."
+  },
+  "intervening_user_task": {
+    "task": "Original inline-SVG pelican cycling HTML",
+    "status": "completed",
+    "research_evidence_added": false,
+    "scope": "Temporary user task; research goal remains active.",
+    "latest_instruction": "User explicitly stopped the new pelican work and resumed the research goal; no new illustration artifact was completed."
+  },
+  "last_fixed_bank_analysis": {
+    "report": "reports/dino_first_query_two_mean_ranking_20261015.json",
+    "protocol": "reports/dino_first_query_two_mean_protocol_20261015.json",
+    "script": "scripts/analyze_dino_first_query_two_mean_ranking.py",
+    "scope": "One shared initial context, original goal and two post-hoc selected full native returned means. Fixed native terminal objective on cached forecasts; real utility from each existing15-control prefix. Not the complete CEM bank or a new trajectory experiment.",
+    "ranking_flip": true,
+    "cost_matrix": [
+      [
+        0.8484280705451965,
+        1.1141307353973389
+      ],
+      [
+        1.5804330110549927,
+        1.2356951236724854
+      ]
+    ],
+    "candidate_order": [
+      "clean_identity_copy",
+      "canonical_request"
+    ],
+    "selected_real_15_control_return_delta": -0.9687731266021729,
+    "terminal_success_loss": false,
+    "prediction_horizon_controls": 30,
+    "actual_utility_horizon_controls": 15,
+    "full_closed_loop_mediation_established": false,
+    "goal_swap_test": false,
+    "population_inference": false,
+    "terminal_exit_code": 0,
+    "session_id": 60539,
+    "native_objective_calls": 4,
+    "elapsed_seconds": 2.4060676009976305
+  },
+  "latest_source_screen": "reports/native_decision_interface_followup_20261016.json",
+  "last_full_horizon_countercheck": {
+    "report": "reports/dino_first_query_terminal_truth_decision_20261015.json",
+    "real_replay_report": "reports/dino_first_query_full_horizon_20261015.json",
+    "truth_report": "reports/dino_first_query_terminal_truth_20261015.json",
+    "objective_components_report": "reports/dino_first_query_native_objective_decomposition_20261015.json",
+    "control_horizon": 30,
+    "post_hoc_candidates": 2,
+    "independent_roots": 1,
+    "ranking_flip": true,
+    "rows": [
+      {
+        "candidate": "clean_identity_copy",
+        "original_forecast_cost": 0.8484280705451965,
+        "canonical_forecast_cost": 1.5804330110549927,
+        "true_future_native_cost": 1.7012925148010254,
+        "original_forecast_weighted_mse": 1.565622674029562,
+        "canonical_forecast_weighted_mse": 0.5292098190610094,
+        "controls": 30,
+        "terminal_native_reward": 5.2479071617126465,
+        "cumulative_native_reward": 95.84182262420654,
+        "terminal_reach_distance": 0.14261315432355678,
+        "terminal_success": false,
+        "ever_success": false,
+        "successful_controls": 0,
+        "first_success_control": null
+      },
+      {
+        "candidate": "canonical_request",
+        "original_forecast_cost": 1.1141307353973389,
+        "canonical_forecast_cost": 1.2356951236724854,
+        "true_future_native_cost": 1.3794702291488647,
+        "original_forecast_weighted_mse": 0.9585290969128817,
+        "canonical_forecast_weighted_mse": 0.45830340372250067,
+        "controls": 30,
+        "terminal_native_reward": 3.347029447555542,
+        "cumulative_native_reward": 76.03699398040771,
+        "terminal_reach_distance": 0.18721491785066868,
+        "terminal_success": false,
+        "ever_success": false,
+        "successful_controls": 0,
+        "first_success_control": null
+      }
+    ],
+    "cost_gap_decomposition": {
+      "original": {
+        "candidate1_minus_candidate0_cost": 0.26570266485214233,
+        "difference_from_true_cost_gap": 0.587524950504303,
+        "selected_candidate": "clean_identity_copy"
+      },
+      "canonical": {
+        "candidate1_minus_candidate0_cost": -0.3447378873825073,
+        "difference_from_true_cost_gap": -0.02291560173034668,
+        "selected_candidate": "canonical_request"
+      },
+      "true_future": {
+        "candidate1_minus_candidate0_cost": -0.32182228565216064,
+        "difference_from_true_cost_gap": 0.0,
+        "selected_candidate": "canonical_request"
+      }
+    },
+    "selected_real_return_delta": -19.804828643798828,
+    "selected_terminal_reward_delta": -1.9008777141571045,
+    "canonical_forecast_error_decreases_for_both_candidates": true,
+    "true_future_native_objective_also_selects_lower_reward_candidate": true,
+    "limits": "Fixed two-mean open-loop bank on one known root; native executes15 then replans. Not full CEM-population mediation, success-rate loss, Goal-Swap, independent generalization or training-support proof. Error direction may still mediate selection; no claim that all forecast-error effects are excluded.",
+    "decision": "Retain local representation-to-selection effect and measured physical loss; reject prediction-degradation attribution on this bank. Do not expand this construct without a distinct mechanism.",
+    "execution": {
+      "replay": {
+        "session_id": 16874,
+        "terminal_exit_code": 0,
+        "elapsed_seconds": 8.770975599996746,
+        "explicit_environment_controls": 60,
+        "gpu_calls": 0,
+        "api_calls": 0
+      },
+      "terminal_truth": {
+        "session_id": 77949,
+        "terminal_exit_code": 0,
+        "elapsed_seconds": 8.679799505043775,
+        "encodes": 5,
+        "calibration_encodes": 3,
+        "new_terminal_encodes": 2,
+        "predictor_calls": 0,
+        "planner_calls": 0,
+        "environment_steps": 0,
+        "api_calls": 0,
+        "calibration_max_error": 0.0,
+        "peak_cuda_reserved_bytes": 222298112
+      },
+      "scope": "Session terminal outcomes reported by the owning execution agents; calls and calibration checked against their saved reports. No new inference is performed by this synthesis.",
+      "numeric_reproduction": {
+        "script": "scripts/analyze_dino_first_query_objective_decomposition.py",
+        "command": ".venv-jepa-native/bin/python scripts/analyze_dino_first_query_objective_decomposition.py --verify-only",
+        "session_id": 99703,
+        "terminal_exit_code": 0,
+        "status": "verified_exact_numeric_sections",
+        "model_or_environment_calls": 0,
+        "reason": "The newly packaged reproduction script was exercised once after implementation; saved numeric sections matched exactly."
+      }
+    },
+    "objective_component_check": {
+      "report": "reports/dino_first_query_native_objective_decomposition_20261015.json",
+      "script": "scripts/analyze_dino_first_query_objective_decomposition.py",
+      "sum_matches_native_fp32_exactly": true,
+      "both_components_prefer_lower_physical_utility_candidate": true,
+      "proprio_is_tcp_distance": false,
+      "scope": "Goal is a successful expert example observation; learned hand-position/gripper features are not target-relative TCP distance. No weighting or alternative score was selected after observing outcomes."
+    },
+    "result_table": "reports/dino_first_query_terminal_truth_table_20261015.csv"
+  },
+  "latest_manuscript_revision": "reports/current_manuscript_revision_20261015.json",
+  "last_cosmos_truth_countercheck": {
+    "report": "reports/cosmos_first_query_truth_decision_20261015.json",
+    "protocol": "configs/cosmos_first_query_truth_countercheck_20261015.json",
+    "review": "reports/cosmos_first_query_truth_review_20261015.json",
+    "scope": "One post-hoc known harmful task3/init2; new exact16-control prefix replays and calibrated model regeneration, with historical original-Goal full-continuation utilities. Not a new attack panel or full recovery episode.",
+    "scores": {
+      "clean": [
+        0.17903518676757812,
+        0.17970061302185059
+      ],
+      "swap": [
+        0.17313751578330994,
+        0.17247232794761658
+      ],
+      "true_future": [
+        0.17573776841163635,
+        0.17722132802009583
+      ]
+    },
+    "selected_indices": {
+      "clean": 1,
+      "swap": 0,
+      "true_future": 1
+    },
+    "any_exact_tie": false,
+    "visual_latent_mse": [
+      {
+        "candidate_index": 0,
+        "clean": 0.008557686596105977,
+        "swap": 0.08875399329517543,
+        "swap_over_clean": 10.371260071099279
+      },
+      {
+        "candidate_index": 1,
+        "clean": 0.008974830140297993,
+        "swap": 0.08526915426155271,
+        "swap_over_clean": 9.500921235120055
+      }
+    ],
+    "historical_utilities": [
+      {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "capped_steps": 300
+      },
+      {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170
+      }
+    ],
+    "calibration_all_passed": true,
+    "new_explicit_task_controls": 32,
+    "new_explicit_settling_controls": 20,
+    "sampler_calls": 12,
+    "vae_encodes": 3,
+    "full_new_episodes": 0,
+    "api_calls": 0,
+    "training_updates": 0,
+    "replay_elapsed_seconds": 15.213660854962654,
+    "inference_elapsed_seconds": 7.219195979007054,
+    "peak_cuda_reserved_bytes": 5481955328,
+    "conclusion": "Local future-conditioned ranking effect is supported: Swap errors rise on both candidates, ranking reverses, and actual-future substitution restores the successful candidate ranking. Does not exclude off-truth Value errors or establish full mediation, defense, permission boundary or generalization.",
+    "expansion_gate": "Original30-root >=3 losses / >=2tasks gate remains failed; no relabeling of known root as independent evidence."
+  },
+  "last_feedback_time_binding_screen": {
+    "report": "reports/forecast_feedback_binding_screen_20261015.json",
+    "status": "completed_source_screen_and_synthetic_operator_probe_no_new_task_harm",
+    "decision": "source_defect_recorded_no_core_security_pilot_accepted",
+    "probe_exit_code": 0,
+    "real_task_outcomes_added": 0,
+    "model_calls": 0
+  },
+  "last_forecast_coupling_gate": {
+    "report": "reports/cosmos_forecast_coupling_gate_decision_20261015.json",
+    "protocol": "configs/cosmos_forecast_coupling_gate_20261015.json",
+    "summary": "runs/cosmos_forecast_coupling_gate_20261015/summary.json",
+    "status": "completed_pretrained_finite_bank_negative_no_expansion",
+    "root": {
+      "task_id": 3,
+      "init_id": 2,
+      "selection": "previously known posthoc harmful root",
+      "new_independent_roots": 0
+    },
+    "bank_size_per_candidate": 8,
+    "native_vs_added": "Use released pretrained Cosmos Future and Value functions. Keeping the two existing actions and Value seeds fixed while drawing new Future seeds defines an ADDED finite-bank query protocol. Native best_of_n shares each candidate seed across Action/Future/Value; its original joint law is NOT preserved by this protocol.",
+    "minimum_success_candidate_score_minus_maximum_failure_candidate_score": 0.00041410326957702637,
+    "independent_pairs_selecting_candidate1": 64,
+    "independent_product_pairs": 64,
+    "maximum_added_bad_selection_probability": 0.0,
+    "feasibility_gate_passed": false,
+    "limits": [
+      "Bounds cover this observed K8 empirical bank, not full diffusion support or the original native cross-stage seed law.",
+      "Historical real continuation outcomes supply the utilities; no new physical episode, recovery or success-rate experiment was executed.",
+      "One posthoc root; 16 samples and 64 pairs are not independent task replications.",
+      "Does not negate prior CartPole harm or the separate Cosmos Goal-Swap case; no ASR, generalization, effective defense or qualified core claim."
+    ],
+    "decision": "Stop this bank after the frozen scientific null. No new seeds, roots, candidate expansion, Value/denoising changes or full closed-loop panel to seek an effect.",
+    "independent_review": "reports/cosmos_forecast_coupling_gate_review_20261015.json",
+    "table": "reports/cosmos_forecast_coupling_gate_decision_20261015.csv"
+  },
+  "latest_carrier_source_refresh": "reports/native_decision_interface_followup_20261016.json",
+  "last_action_text_route_gate": {
+    "report": "reports/cosmos_action_text_route_decision_20261015.json",
+    "summary": "runs/cosmos_action_text_route_gate_20261015/summary.json",
+    "protocol": "configs/cosmos_action_text_route_gate_20261015.json",
+    "review": "reports/cosmos_action_text_route_review_20261015.json",
+    "status": "completed_calibrated_local_direct_entry_gate_failed",
+    "selection_by_condition": {
+      "clean": 1,
+      "swap": 0,
+      "clean_action_swap": 1,
+      "swap_action_clean": 0,
+      "clean_proprio_swap": 1,
+      "swap_proprio_clean": 1
+    },
+    "calibration_checks_passed": 20,
+    "activity": {
+      "checkpoint_loads": 2,
+      "future_sampler_calls": 14,
+      "value_sampler_calls": 14,
+      "noise_calls": 28,
+      "policy_sampler_calls": 0,
+      "vae_encodes": 0,
+      "vae_decodes": 0,
+      "environment_resets": 0,
+      "environment_steps": 0,
+      "model_api_calls": 0,
+      "network_requests": 0,
+      "training_updates": 0
+    },
+    "execution": {
+      "session_id": 25831,
+      "exit_code": 0,
+      "terminal_chunk_id": "ffd4ed",
+      "elapsed_seconds": 7.396065242006443,
+      "peak_cuda_reserved_bytes": 4292870144
+    },
+    "finding": "Direct action-position text replacement neither induces the bad choice from Clean nor repairs Swap. The equal-token proprio repair does restore the good choice. The fixed bidirectional action-position selectivity gate fails.",
+    "limits": "One known post-hoc root; actual utilities come from previously executed two branches. Internal source routing, not full Bus-Cut, deployed access, independent defense or population estimate. Other-token-to-action paths remain untested."
+  },
+  "last_feedback_selection_gate": {
+    "protocol": "configs/gensafenav_feedback_selection_gate_20261015.json",
+    "report": "reports/gensafenav_feedback_selection_decision_20261015.json",
+    "review": "reports/gensafenav_feedback_selection_review_20261015.json",
+    "run": "runs/gensafenav_feedback_selection_gate_20261015",
+    "status": "completed_fixed_first_reentry_gate_failed",
+    "qualification": {
+      "clean_goal_without_collision": true,
+      "first_root_exists": true,
+      "actual_omission_supported": true,
+      "residual_direction": true,
+      "interval_direction": false,
+      "harm_unmeasured": true,
+      "scope": "Natural selection/interval qualification only; native policy remains unrepaired",
+      "J_count_only_horizons": [
+        2,
+        3,
+        4,
+        5
+      ],
+      "mean_J_omitted_minus_retained_meters": 0.07412960057617754,
+      "mean_J_matched_minus_native_retained_meters": 0.007602688234203072,
+      "mean_h2_to_h5_full_minus_native_q": 0.05249999999999996,
+      "mean_h2_to_h5_matched_minus_native_q": -4.85722573273506e-17,
+      "passed": false,
+      "decision": "stop_fixed_case_candidate_no_replacement_root"
+    },
+    "actual_activity_all_attempts": {
+      "actor_calls": 120,
+      "gst_calls": 121,
+      "physical_steps": 119,
+      "physical_resets": 3,
+      "actor_calls_completed": 119,
+      "gst_calls_completed": 121,
+      "physical_steps_completed": 119,
+      "checkpoint_loads": 4,
+      "checkpoint_loads_completed": 4,
+      "actual_robot_controls": 119,
+      "talk2env_calls": 121,
+      "post_terminal_talk2env_calls": 1
+    },
+    "native_clean": {
+      "terminal": "ReachGoal",
+      "success": true,
+      "collision": false,
+      "timeout": false,
+      "return": 30.18506645015441,
+      "steps": 119,
+      "raw_float64_reward_sum": 30.185066414951063,
+      "reported_return_semantics": "DummyVecEnv.buf_rews is float32; summary return equals the sum after this cast.",
+      "success_semantics": "calc_reward evaluates current goal distance before robot.step; the terminal action still executes. Post-action distance is not the success test.",
+      "goal_distance_pre_terminal_action": 0.2332476036217939,
+      "goal_distance_post_terminal_action": 0.34152500037453576,
+      "minimum_sampled_surface_clearance": null,
+      "clearance_scope": "Exact body radii were not logged. The old .44927675 is a fixed-.3-both-radii proxy, not measured physical clearance. Saved config enables initial human radius randomization in [.3,.5] despite random_radii=False; robot radius=.3 follows source initialization. Cached positions imply the displayed conservative bound, not a swept-volume safety certificate.",
+      "historical_fixed_point3_radii_proxy_clearance": 0.44927675174873716,
+      "minimum_sampled_surface_clearance_bound": [
+        0.2492767517487371,
+        0.4492767517487371
+      ],
+      "measurement_scope_correction_20261016": {
+        "superseded_fields": {
+          "minimum_sampled_surface_clearance": 0.44927675174873716,
+          "clearance_scope": "Native fixed human and robot radii are .3; config random_radii=False. Recorded sampled positions, not a swept-volume safety certificate."
+        },
+        "source": "reports/gensafenav_entity_binding_audit_20261016.json",
+        "native_success_collision_and_return_unchanged": true
+      }
+    },
+    "independent_review_passed": true
+  },
+  "updated_on": "2026-10-16",
+  "last_nullspace_action_log_gate": {
+    "report": "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+    "review": "reports/tdmpc_nullspace_action_logs_review_20261015.json",
+    "protocol": "configs/tdmpc_nullspace_action_logs_20261015.json",
+    "run": "runs/tdmpc_nullspace_action_logs_20261015",
+    "status": "completed_no_harm",
+    "decision": {
+      "conditional_harm_gate_passed": false,
+      "returns": {
+        "clean": 983.0,
+        "zero": 984.0,
+        "correlated": 985.0,
+        "permuted": 984.0
+      },
+      "relative_loss_correlated": {
+        "zero": -0.00101626016260159,
+        "permuted": -0.00101626016260159
+      },
+      "permuted_minus_correlated_return": -1.0,
+      "conclusion": "No-Go for this fixed correlation-specific decision-harm candidate; no expansion or retuning",
+      "statistics": "One fixed seed; descriptive paired differences only",
+      "defense_episode_executed": false
+    },
+    "activity": {
+      "checkpoint_loads": 1,
+      "training_updates": 120,
+      "source_replay_controls": 600,
+      "evaluation_controls": 2000,
+      "explicit_environment_resets": 6,
+      "evaluation_episodes_completed": 4,
+      "model_api_requests": 0
+    },
+    "execution": {
+      "session_id": 30866,
+      "exit_code": 0,
+      "terminal_chunk_id": "a3e756",
+      "elapsed_seconds": 140.82270506897476,
+      "peak_cuda_reserved_bytes": 620756992
+    },
+    "independent_review_completed": true
+  },
+  "latest_risk_consumer_screen": {
+    "report": "reports/risk_forecast_consumer_screen_20261015.json",
+    "source_summary": "runs/dreamavoid_source_screen_20261015/summary.json",
+    "accepted_new_mechanism": null,
+    "model_calls": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0
+  },
+  "latest_branch_ownership_probe": {
+    "protocol": "configs/safepred_branch_ownership_probe_20261015.json",
+    "report": "reports/safepred_branch_ownership_decision_20261015.json",
+    "review": "reports/safepred_branch_ownership_review_20261015.json",
+    "run": "runs/safepred_branch_ownership_probe_20261015",
+    "status": "completed_operator_boundary_no_task_harm_measured",
+    "model_calls": 0,
+    "model_api_calls": 0,
+    "environment_steps": 0,
+    "synthetic_response_calls": 15,
+    "accepted_new_task_experiment": false
+  },
+  "latest_mode_mediator_gate": {
+    "report": "reports/safedreamer_mode_mediator_gate_20261016.json",
+    "protocol": "configs/safedreamer_mode_mediator_gate_20261016.json",
+    "status": "completed_fixed_native_mode_gate_no_crossing_stop",
+    "scientific_gate": "measured_no_mode_crossing_fixed_operation_stopped",
+    "scope": "One frozen first-query final-CEM intervention on the official pretrained OSRP model. Exact independent calibration; native/common safe counts462/449, both reward mode; zero actual actions. This is a fixed reachability null, not task safety or universal impossibility.",
+    "native_safe_count": 462,
+    "shared_safe_count": 449,
+    "threshold": 50,
+    "mode_crossing": false,
+    "native_query": "runs/safedreamer_mode_mediator_gate_20261016/native_query_attempt1/summary.json",
+    "replays": "runs/safedreamer_mode_mediator_gate_20261016/replay_attempt1/summary.json",
+    "independent_review": "reports/safedreamer_mode_actual_result_review_20261016.json",
+    "table": "reports/safedreamer_mode_mediator_gate_20261016.csv",
+    "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+    "environment_revision": "ae966e511b9927f06b39c727ca5c650136a4e696",
+    "full_clean_measured": false,
+    "actual_harm_measured": false,
+    "defense_measured": false,
+    "decision": "No query/root/seed/threshold/horizon/coupling search or physical expansion after the frozen null."
+  },
+  "latest_completed_gate": {
+    "report": "reports/cosmos_action_sender_decision_20261016.json",
+    "table": "reports/cosmos_action_sender_decision_20261016.csv",
+    "summary": "runs/cosmos_action_sender_gate_20261016/summary.json",
+    "protocol": "configs/cosmos_action_sender_gate_20261016.json",
+    "review": "reports/cosmos_action_sender_review_20261016.json",
+    "status": "completed_calibrated_sender_specificity_gate_failed",
+    "selection_by_condition": {
+      "clean": 1,
+      "swap": 0,
+      "clean_action_swap": 1,
+      "swap_action_clean": 0,
+      "clean_proprio_swap": 1,
+      "swap_proprio_clean": 1
+    },
+    "calibration_checks_passed": 22,
+    "activity": {
+      "checkpoint_loads": 2,
+      "future_sampler_calls": 14,
+      "value_sampler_calls": 14,
+      "noise_calls": 28,
+      "policy_sampler_calls": 0,
+      "vae_encodes": 0,
+      "vae_decodes": 0,
+      "environment_resets": 0,
+      "environment_steps": 0,
+      "model_api_calls": 0,
+      "network_requests": 0,
+      "training_updates": 0
+    },
+    "execution": {
+      "session_id": 52042,
+      "exit_code": 0,
+      "terminal_chunk_id": "821c93",
+      "elapsed_seconds": 53.5252689239569,
+      "peak_cuda_reserved_bytes": 4292870144
+    },
+    "finding": "Full-layer action sender K/V donor replacement neither induces the bad choice nor repairs Swap; equal-size proprio repair restores candidate1 ranking. Strict bidirectional action-specific gate fails.",
+    "limits": "One posthoc root; internal same-candidate Clean/Swap donor intervention. Historical real continuations only; no newly executed task recovery, native attacker permission, unique mediator, deployable defense or generalization. Different edge from the prior failed direct-entry test; both failures retained."
+  },
+  "historical_mode_mediator_resource_gate": {
+    "report": "reports/safedreamer_mode_mediator_gate_20261016.json",
+    "protocol": "configs/safedreamer_mode_mediator_gate_20261016.json",
+    "status": "resource_setup_stopped_before_model_query",
+    "scientific_gate": "unmeasured",
+    "scope": "Fixed first-query final-CEM safety-mode mediator test of existing sampling family; source/checkpoint/core runtime available, exact official environment installation incomplete. Zero model or environment execution.",
+    "checkpoint_bytes": 391867080,
+    "setup_seconds": 886.565196,
+    "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+    "environment_revision": "ae966e511b9927f06b39c727ca5c650136a4e696",
+    "all_scientific_calls": 0,
+    "historical_only": true
+  },
+  "historical_goal_turn_classifications": [
+    {
+      "recorded_on": "2026-10-16",
+      "current_before_source_screen": {
+        "classification": "progress",
+        "evidence": [
+          "reports/cosmos_future_modality_factorial_decision_20261016.json",
+          "runs/cosmos_future_modality_factorial_20261016_resume1/summary.json",
+          "runs/cosmos_future_modality_factorial_20261016_resume1/execution_sessions.json",
+          "reports/cosmos_future_modality_factorial_review_20261016.json"
+        ],
+        "reason": "Completed18 actual pretrained Value calls with exact diagonal calibration. The previously unresolved output-content attribution now supports local visual-slot dependence across all9cells. Real utility is historical and the core mechanism/defense/generalization goal remains unachieved."
+      },
+      "previous_before_source_screen": {
+        "classification": "progress",
+        "basis": "The previous turn completed 18 pretrained Cosmos Value calls and the 3x3 output-factorial review. This turn added a specific native safety-mode causal protocol, downloaded official assets and installed a core runtime; the scientific query remains unexecuted."
+      }
+    },
+    {
+      "recorded_on": "2026-10-16",
+      "before_decision_chain_reassessment": {
+        "classification": "source_feasibility_progress_no_new_scientific_experiment",
+        "evidence": [
+          "reports/goal_bus_causal_interface_screen_20261016.json",
+          "runs/world4scorer_source_screen_20261016/summary.json",
+          "runs/worlddrive_source_screen_20261016/summary.json",
+          "reports/action_suffix_causal_consumer_screen_20261016.json"
+        ],
+        "reason": "Verified additional native consumers, rejected ambiguous Goal/candidate-context operations, and updated version-specific prior art. No current interface supports a new identifiable real-utility security test."
+      }
+    },
+    {
+      "classification": "cached_evidence_diagnostic_and_source_correction_no_new_task_experiment",
+      "evidence": [
+        "reports/decision_chain_reassessment_20261016.json",
+        "reports/counterfactual_action_ranking_audit_20261016.json",
+        "reports/gensafenav_entity_binding_audit_20261016.json"
+      ],
+      "reason": "Executed a reproducible cross-system cached utility diagnostic, observed five entity-order mismatches with21 GST-eligible rejected rows, and corrected an unsupported exact clearance claim. No new task harm, defense or core novelty is established."
+    },
+    {
+      "classification": "source_and_resource_progress_no_new_task_experiment",
+      "evidence": [
+        "reports/native_decision_interface_followup_20261016.json",
+        "runs/wog_source_screen_20261016/summary.json",
+        "runs/dila_source_screen_20261016/summary.json"
+      ],
+      "reason": "Checked GenSafeNav actor-cache and reactive-agent feasibility, future-supervised cognition consumption in WoG, and native rollout-local memory in DiLA. No distinct identifiable harm intervention qualified; no task negative inferred from absent/unrun interfaces."
+    }
+  ],
+  "latest_causal_interface_screen": "reports/goal_bus_causal_interface_screen_20261016.json",
+  "latest_source_screen_validation": "reports/goal_bus_causal_interface_screen_validation_20261016.json",
+  "latest_cached_decision_diagnostic": "reports/counterfactual_action_ranking_audit_20261016.json",
+  "latest_entity_binding_audit": "reports/gensafenav_entity_binding_audit_20261016.json",
+  "latest_decision_chain_reassessment": "reports/decision_chain_reassessment_20261016.json",
+  "latest_evidence_validation": {
+    "report": "reports/cosmos_action_sender_review_20261016.json",
+    "status": "independent_cpu_cache_review_passed",
+    "scope": "Raw baseline/identity Future and Value tensors,14 candidate outputs,donor layout and initialQKV,forecast MSE,protected prefixes,stored choices and historical real continuations. No new model/environment/API calls."
+  },
+  "latest_entity_binding_review": "reports/gensafenav_entity_binding_review_20261016.json",
+  "latest_native_decision_interface_followup": "reports/native_decision_interface_followup_20261016.json",
+  "latest_observation_calibration": "reports/cosmos_decoded_future_observation_20261016.json",
+  "latest_model_readout_execution": {
+    "summary": "runs/cosmos_cached_decode_gate_20261016_resume1/summary.json",
+    "session_id": 89946,
+    "exit_code": 0,
+    "terminal_chunk_id": "280d07",
+    "status": "completed_six_cached_native_decodes",
+    "activity": {
+      "vae_loads": 1,
+      "vae_decodes": 6,
+      "new_task_episodes": 0,
+      "model_api_calls": 0
+    }
+  },
+  "last_action_sender_gate": {
+    "report": "reports/cosmos_action_sender_decision_20261016.json",
+    "table": "reports/cosmos_action_sender_decision_20261016.csv",
+    "summary": "runs/cosmos_action_sender_gate_20261016/summary.json",
+    "protocol": "configs/cosmos_action_sender_gate_20261016.json",
+    "review": "reports/cosmos_action_sender_review_20261016.json",
+    "status": "completed_calibrated_sender_specificity_gate_failed",
+    "selection_by_condition": {
+      "clean": 1,
+      "swap": 0,
+      "clean_action_swap": 1,
+      "swap_action_clean": 0,
+      "clean_proprio_swap": 1,
+      "swap_proprio_clean": 1
+    },
+    "calibration_checks_passed": 22,
+    "activity": {
+      "checkpoint_loads": 2,
+      "future_sampler_calls": 14,
+      "value_sampler_calls": 14,
+      "noise_calls": 28,
+      "policy_sampler_calls": 0,
+      "vae_encodes": 0,
+      "vae_decodes": 0,
+      "environment_resets": 0,
+      "environment_steps": 0,
+      "model_api_calls": 0,
+      "network_requests": 0,
+      "training_updates": 0
+    },
+    "execution": {
+      "session_id": 52042,
+      "exit_code": 0,
+      "terminal_chunk_id": "821c93",
+      "elapsed_seconds": 53.5252689239569,
+      "peak_cuda_reserved_bytes": 4292870144
+    },
+    "finding": "Full-layer action sender K/V donor replacement neither induces the bad choice nor repairs Swap; equal-size proprio repair restores candidate1 ranking. Strict bidirectional action-specific gate fails.",
+    "limits": "One posthoc root; internal same-candidate Clean/Swap donor intervention. Historical real continuations only; no newly executed task recovery, native attacker permission, unique mediator, deployable defense or generalization. Different edge from the prior failed direct-entry test; both failures retained."
+  },
+  "historical_completed_gate_before_action_sender": {
+    "report": "reports/safedreamer_mode_mediator_gate_20261016.json",
+    "protocol": "configs/safedreamer_mode_mediator_gate_20261016.json",
+    "status": "completed_fixed_native_mode_gate_no_crossing_stop",
+    "scientific_gate": "measured_no_mode_crossing_fixed_operation_stopped",
+    "scope": "One frozen first-query final-CEM intervention on the official pretrained OSRP model. Exact independent calibration; native/common safe counts462/449, both reward mode; zero actual actions. This is a fixed reachability null, not task safety or universal impossibility.",
+    "native_safe_count": 462,
+    "shared_safe_count": 449,
+    "threshold": 50,
+    "mode_crossing": false,
+    "native_query": "runs/safedreamer_mode_mediator_gate_20261016/native_query_attempt1/summary.json",
+    "replays": "runs/safedreamer_mode_mediator_gate_20261016/replay_attempt1/summary.json",
+    "independent_review": "reports/safedreamer_mode_actual_result_review_20261016.json",
+    "table": "reports/safedreamer_mode_mediator_gate_20261016.csv",
+    "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+    "environment_revision": "ae966e511b9927f06b39c727ca5c650136a4e696",
+    "full_clean_measured": false,
+    "actual_harm_measured": false,
+    "defense_measured": false,
+    "decision": "No query/root/seed/threshold/horizon/coupling search or physical expansion after the frozen null."
+  },
+  "latest_alternative_screen": {
+    "reports": [
+      "reports/query_adaptive_safety_state_screen_20261016.json",
+      "reports/native_private_query_gate_screen_20261016.json"
+    ],
+    "status": "completed_bounded_source_and_estimand_screen_no_pilot_qualified",
+    "new_runtime_experiments": 0,
+    "new_harm_signal": false
+  },
+  "security_scope_clarification": "Equivalent-input or Goal-invariance contracts are required only when that proposed mechanism relies on equivalence. They are not a universal prerequisite for all security research. A new bounded attacker permission may be stated as a researcher-defined threat model, but must not be misreported as a deployed interface. Actual causal contribution, strong controls and novelty remain necessary.",
+  "latest_research_decision": "reports/lgwm_verifier_candidate_decision_20261016.json",
+  "latest_numerical_qualification": "reports/research_process_and_affine_probe_20261016.json",
+  "latest_mechanism_hypothesis": "reports/grasp_rollout_equivalence_mechanism_20261016.json",
+  "latest_grasp_execution": {
+    "session_id": 39960,
+    "exit_code": 0,
+    "terminal_chunk_id": "deca64",
+    "summary": "runs/jepa_grasp_native_clean_20261016/summary.json",
+    "status": "resource_deferred",
+    "scope": "Cost cap reached; not Clean failure or attack result.",
+    "decision_report": "reports/jepa_grasp_native_clean_decision_20261016.json"
+  },
+  "latest_native_query_domain_analysis": {
+    "report": "reports/jepa_grasp_native_clean_decision_20261016.json",
+    "analysis": "runs/jepa_grasp_native_clean_20261016/analysis/native_query_domain.json",
+    "finding": "Saved and consumed native virtual queries violate the union of necessary affine constraints for encoder outputs and joint autoregressive outputs after the first update; encoded root remains within tolerance.",
+    "scope": "Actual bounded native GRASP inference and offline structural-domain analysis. No dynamics intervention, completed Clean plan or selected-action task utility."
+  },
+  "latest_uncertainty_consumer_pilot": {
+    "report": "reports/cross_question_pilot_decision_20261016.json",
+    "summary": "runs/gensafenav_uncertainty_expansion_20261016/summary.json",
+    "status": "fixed_pilot_no_decisive_physical_safety_signal_stop",
+    "scope": "One successful native episode,119 same-state shadow actions and independent true one-interval geometry; no full shadow task or security harm."
+  },
+  "latest_goal_alignment": {
+    "checked_on": "2026-10-16",
+    "source": "Current active goal retrieved and read; no replacement goal created.",
+    "core_instruction": "Preserve reusable assets; freely abandon routes. Explore different scientific questions and run minimal decisive pilots. Concentrate resources only after meaningful task and mechanism evidence.",
+    "novelty_target": "6.5–7 aspirational, not an achieved score",
+    "goal_complete": false,
+    "latest_user_status_question": "Current full active Goal reread for user confirmation; existing routes remain optional, distinct questions and decisive real pilots are prioritized."
+  },
+  "latest_cross_question_source_screen": "reports/cross_question_source_screen_20261016.json",
+  "latest_optional_grasp_batch_profile": {
+    "decision": "reports/jepa_grasp_cached_batch_profile_decision_20261016.json",
+    "summary": "runs/jepa_grasp_cached_batch_profile_20261016/summary.json",
+    "status": "admission_deferred_before_import_or_model_load",
+    "free_mib": 7216,
+    "required_free_mib": 8192,
+    "model_forward_calls": 0,
+    "performance_measured": false,
+    "task_utility": null,
+    "automatic_retry": false,
+    "full_clean_resumption": false
+  },
+  "latest_truthful_coverage_pilot": {
+    "report": "reports/worldevolver_truthful_coverage_decision_20261016.json",
+    "review": "reports/worldevolver_truthful_coverage_result_review_20261016.json",
+    "table": "reports/worldevolver_truthful_coverage_decision_20261016.csv",
+    "summary": "runs/worldevolver_truthful_coverage_vendor_runtime_v2_20261016/actor_execution/summary.json",
+    "protocol": "configs/worldevolver_truthful_coverage_vendor_runtime_v2_20261016.json",
+    "status": "fixed_pilot_no_signal_stop",
+    "model_api_attempts": 8,
+    "http_200": 8,
+    "roots": 2,
+    "strict_signal_roots": 0,
+    "all_condition_utility_each_root": 100,
+    "scope": "Native actor with declared oracle adapter; fixed-continuation environment utility, not native full-agent task or pretrained WM prediction."
+  },
+  "latest_carrier_qualification": "reports/new_carrier_source_qualification_20261016.json",
+  "latest_verifier_evaluation_audit": {
+    "report": "reports/lgwm_verifier_candidate_decision_20261016.json",
+    "design_audit": "reports/lgwm_pair_design_audit_20261016.json",
+    "metadata_summary": "runs/lgwm_metadata_baseline_20261016/summary.json",
+    "review": "reports/lgwm_metadata_baseline_review_20261016.json",
+    "world_model_calls": 0,
+    "environment_steps": 0,
+    "metadata_estimators_fitted": 3,
+    "fixed_metadata_gate": false
+  }
+}

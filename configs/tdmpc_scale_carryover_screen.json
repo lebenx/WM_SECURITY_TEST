@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-08",
+  "status": "completed_no_material_task_loss",
+  "hypothesis": "A contributor's genuine experience can alter a shared return-scale statistic and thereby change another task's reward-versus-entropy objective even with unchanged world-model predictions.",
+  "novelty_status": "unproven; reward scaling, statistical poisoning and group-relative advantage manipulation are existing mechanisms requiring explicit distinction",
+  "scope": "Researcher intervention on the initial scale statistic, using values observed in earlier real-data adaptation logs. This is a causal-path sensitivity test, not an executed action-only attack or a native multi-user training deployment.",
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "training_data": "runs/tdmpc_clean_gate_v0/walker-walk_11_mpc.pt",
+  "initial_scale_sources": {
+    "benign": "runs/tdmpc_update_dose_v0/benign_300_learning.json",
+    "high_scale": "runs/tdmpc_update_dose_v0/max_error_300_learning.json"
+  },
+  "arms": [
+    "clean_no_update",
+    "benign_scale_actor_update",
+    "high_scale_actor_update"
+  ],
+  "actor_updates_per_training_arm": 40,
+  "training_policy": "Native update_pi, same target latent sequences and random seeds, fresh policy Adam in both training arms, normal RunningScale updates. Only the starting statistic differs.",
+  "fixed_components": "Encoder, task embedding, dynamics, reward and Q functions remain fixed; record a digest of every non-policy tensor. This is an explicitly isolated mediation intervention, not the normal full training loop.",
+  "evaluation": {
+    "task": "walker-walk",
+    "seed": 12,
+    "actions_per_arm": 500,
+    "planner": "Unchanged original MPC: horizon3,512samples,6iterations,64elites,24policytrajectories; eval_mode=false.",
+    "clean_return_min": 900,
+    "required_return_drop_below_both_controls": 100
+  },
+  "decision_rule": "If the high-scale arm fails to lose at least100 return against both clean and benign-scale training, stop this fixed candidate configuration. Do not raise scales beyond the observed range or weaken planning to force an effect. A positive gate would still require a full native-learning contribution experiment and independent instances.",
+  "output": "runs/tdmpc_scale_carryover_v0",
+  "api_requests": 0,
+  "report_note_cn": "全局回报尺度短测完成，未支持任务损害：原始组973.14分，普通尺度训练组969.00分，高尺度训练组972.43分。两训练组从同一模型、相同批次和随机数状态开始，各做40次原生策略更新；起始尺度4.68与10.67取自此前真实经验日志，之后继续原生更新，末值4.08与8.08。策略参数确实改变且两组不同，全部72个非策略张量保持完全相同。三组各运行原始规划器500步，总耗时约95秒，零API请求。高尺度组相对原始组仅低0.71分、反而高于普通尺度组3.43分，未达到相对两种对照均下降100分的预设门槛，停止该设置。这是单个任务初态中的研究者尺度干预，不是完整贡献者攻击，也不证明其他设置安全。",
+  "prior_logs": {
+    "benign_300": {
+      "scale": 4.680334091186523,
+      "return": 965.5823446549475
+    },
+    "max_error_300": {
+      "scale": 10.673142433166504,
+      "return": 972.7524049282074
+    },
+    "clean": {
+      "return": 973.1397757679224
+    },
+    "interpretation": "Existing full-update runs show no monotone task harm with increased scale. These statistics motivate a bounded sensitivity test, not a positive attack claim."
+  },
+  "causal_limits": [
+    "Q 5th-to-95th percentile span is invariant to uniform shifts; high mean reward alone does not imply a larger statistic.",
+    "Q/s + alpha*H equals (Q + alpha*s*H)/s. Changing s affects both effective entropy weight and overall gradient scale. This gate cannot distinguish them; a positive result would require entropy compensation and optimizer/gradient-scale controls.",
+    "Scale values are logged adaptation statistics initialized at1 in earlier researcher-defined training, not restored original pretraining state.",
+    "The policy affects both24 policy proposals and the terminal bootstrap of every candidate in the original planner. Its role is not limited to24/512 proposals."
+  ],
+  "closest_prior_art": [
+    {
+      "url": "https://arxiv.org/html/2511.09780v2",
+      "distinction": "Hail to the Thief already attacks decentralized learning with correctly rewarded completions and analyzes normalized advantages. Persistent scalar-mediated cross-task regularization without source-content gradients was not established in the inspected text."
+    },
+    {
+      "url": "https://proceedings.mlr.press/v80/haarnoja18b/haarnoja18b.pdf",
+      "distinction": "Reward scale versus effective entropy temperature is known from SAC; that algebra alone is not new."
+    },
+    {
+      "url": "https://arxiv.org/abs/1809.04474",
+      "distinction": "Multi-task PopArt addresses cross-task optimization imbalance from reward scales; an adversarial contribution would need more than reproducing this phenomenon."
+    }
+  ],
+  "result": {
+    "source": "runs/tdmpc_scale_carryover_v0/status.json",
+    "returns": {
+      "clean": 973.1397757679224,
+      "benign_scale": 968.9983832649887,
+      "max_error_scale": 972.4292558059096
+    },
+    "initial_scales": {
+      "benign_scale": 4.680334091186523,
+      "max_error_scale": 10.673142433166504
+    },
+    "final_scales": {
+      "clean": 1.0,
+      "benign_scale": 4.0799665451049805,
+      "max_error_scale": 8.083800315856934
+    },
+    "drop_vs_clean": 0.7105199620127678,
+    "drop_vs_benign": -3.430872540920973,
+    "continuation_gate_passed": false,
+    "actor_updates": 80,
+    "native_evaluation_actions": 1500,
+    "non_policy_tensors_unchanged": 72,
+    "training_batches_identical": true,
+    "actor_tensors_changed_and_differ_between_arms": true,
+    "total_wall_seconds": 94.61671933112666
+  },
+  "decision": "Retire this fixed scale-carryover setting. Do not expand the empirical scale range or weaken the planner after the negative gate. No complete attack, general immunity or population-level effect has been established."
+}

@@ -1,0 +1,28 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "cascade_source": "runs/tdmpc_non_normal_gate_walker_run_seed22_dose300_v0/cascade_source.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 22,
+  "validation_seed": 33,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "source_steps": 300,
+  "eval_steps": 300,
+  "updates": 300,
+  "learning_seed": 31,
+  "permutation_seed": 933,
+  "output": "runs/tdmpc_order_controls_cheetah_seed22_v0",
+  "operation": "Replay the same legal source action vectors under temporal permutations; dynamics-only native TD-MPC2 adaptation; held-out native MPC and actor evaluation.",
+  "conditions": [
+    "random",
+    "cascade",
+    "reverse_cascade",
+    "shuffled_cascade"
+  ],
+  "gate": "A directional order mechanism requires cascade harm against random and shuffled controls, low one-step error, and materially smaller actor loss than MPC loss.",
+  "api_requests": 0,
+  "gpu_work": "bounded native CUDA only"
+}

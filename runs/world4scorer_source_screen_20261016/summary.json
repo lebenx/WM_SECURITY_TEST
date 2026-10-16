@@ -1,0 +1,289 @@
+{
+  "status": "completed_source_screen_no_goal_only_forecast_interface_identified",
+  "local_archive_search": {
+    "paths": [
+      "reports/research_archive",
+      "configs"
+    ],
+    "terms": [
+      "World4Scorer",
+      "2609.36438",
+      "Outcome-Grounded"
+    ],
+    "matches": 0,
+    "scope": "Exact-name/identifier search, not proof no conceptually related mechanism exists."
+  },
+  "paper": {
+    "title": "World4Scorer: Outcome-Grounded World Modeling for Autonomous Driving",
+    "arxiv": "https://arxiv.org/abs/2609.36438",
+    "version": "v1",
+    "submitted": "2026-09-29"
+  },
+  "repository": {
+    "url": "https://github.com/World4Scorer/World4Scorer",
+    "revision": "7814310e0bd65c6e21f06b81eedfec2ac9a06aa9",
+    "tree_truncated": false
+  },
+  "native_path": [
+    {
+      "stage": "proposal",
+      "finding": "Ego pose/velocity/acceleration/driving command (plus route target for B2D) form ego_token; it enters learned trajectory tokens before scene decoding and generation of 64 candidate 4s trajectories.",
+      "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:147",
+      "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L147"
+    },
+    {
+      "stage": "forecast",
+      "finding": "Candidate coordinates are embedded; SharedFuturePredictor consumes the full candidate-token pool and camera scene features. The future-visual training readout precedes ego_token addition.",
+      "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:211",
+      "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L211"
+    },
+    {
+      "stage": "score_select",
+      "finding": "ego_token is added to predicted states before six score heads. Weighted log/sigmoid aggregation followed by argmax selects a trajectory. This is actual native consumption of learned predictions.",
+      "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:219",
+      "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L219"
+    },
+    {
+      "stage": "closed_loop_deployment",
+      "finding": "B2D gets simulator ego state and the route point, invokes the model, adds a route-alignment bonus, selects a trajectory, then tracks it with PID and a stationary-creep rule.",
+      "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/b2d_agent/world4scorer_agent.py:176",
+      "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/b2d_agent/world4scorer_agent.py#L176"
+    }
+  ],
+  "goal_route_boundary": {
+    "decision": "NO_GO for an unchanged-native Goal-only physical-forecast intervention",
+    "finding": "With images and the full candidate trajectory bank fixed, the inspected future_predictor call has no explicit route/Goal/ego-status input. Changing route in normal forward changes generator inputs and downstream scores; B2D also changes explicit route re-ranking. Route progress and direction utility legitimately depend on route.",
+    "added_interface_limit": "Keeping original candidates and objective while injecting an alternative route only into selected scoring terms would be a researcher-added branch-specific writer, not the released native API. Changing scoring ego_token is not evidence of visual future prediction corruption.",
+    "anchors": [
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:104",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L104"
+      },
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:211",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L211"
+      },
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/b2d_agent/world4scorer_agent.py:183",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/b2d_agent/world4scorer_agent.py#L183"
+      },
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/b2d_agent/world4scorer_agent.py:258",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/b2d_agent/world4scorer_agent.py#L258"
+      }
+    ]
+  },
+  "distinct_source_fact": {
+    "finding": "Forecast states use native self-attention across candidate tokens before scene cross-attention. This is not a candidate-isolated forecasting implementation. Source establishes possible computational dependence only, not a ranking effect or task harm.",
+    "anchors": [
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/shared_future_predictor.py:22",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/shared_future_predictor.py#L22"
+      },
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/transformer_decoder.py:98",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/transformer_decoder.py#L98"
+      },
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/transformer_decoder.py:153",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/transformer_decoder.py#L153"
+      }
+    ],
+    "experiment_selected": false
+  },
+  "released_resources": {
+    "hf": "https://huggingface.co/pei2333/World4Scorer",
+    "hf_revision": "593ead3430609ecd532bc486986bdc9557d8a082",
+    "weights": [
+      {
+        "file": "ogbench_cube/heads/n10_r1/head.pt",
+        "bytes": 983061,
+        "published_sha256": "fce54aa53576587f002a8a515db393bc346b1daee2716630ecf14352fb08bf0e",
+        "downloaded": false
+      },
+      {
+        "file": "weights/realized_future_emb_navtrain_f7_camf0.pt",
+        "bytes": 112774957,
+        "published_sha256": "2d64716d8f07a0dbc94e3f240108167acf9c9ef5093635eacb857725a13f0d82",
+        "downloaded": false
+      },
+      {
+        "file": "weights/w4s_b2d_route_blind_ep14.ckpt",
+        "bytes": 142295418,
+        "published_sha256": "640dd42934b57d9305c336db7234747533977ad916c18723a9bb97b385407d31",
+        "downloaded": false
+      },
+      {
+        "file": "weights/w4s_b2d_route_tp_ep14.ckpt",
+        "bytes": 142296954,
+        "published_sha256": "ed3f61a9ac850627c07bbf1d37cc0a9e123d5b41a9c1cecefe820644e14aff5b",
+        "downloaded": false
+      },
+      {
+        "file": "weights/w4s_navsim_ep23.ckpt",
+        "bytes": 242341096,
+        "published_sha256": "22604f83dda8a2bd2dd05356fca8457f0c7dc78439f47db396e5c85d74971a44",
+        "downloaded": false
+      }
+    ],
+    "local_model_health": "Unmeasured; no weight download, loading or forward execution."
+  },
+  "execution_resources": {
+    "navsim": "Requires Python3.9, Torch2.1.2/Torchvision0.16.2, nuPlan/NAVSIM dependencies, DINOv2 ViT-S/14 reg4 weights, OpenScene sensor/log data, maps and independent metric cache. No local task/assets qualification was performed.",
+    "navsim_outcomes": "Official non-reactive evaluation uses LQR/kinematic-bicycle ego replay against cached traffic and maps. These independent simulator outcomes are stronger than learned predicted scores but are not reactive closed-loop driving harm.",
+    "bench2drive": "An executable evaluator entry is published, requiring CARLA0.9.15 and Bench2Drive leaderboard/scenario_runner/routes. Checkpoint is strict-loaded on CUDA. Closed-loop collisions/cost can be evaluated after that separate setup; availability and latency here are unmeasured.",
+    "bench2drive_source": {
+      "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/run_b2d_eval.sh:1",
+      "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/run_b2d_eval.sh#L1"
+    },
+    "author_reported_compute": "Paper Appendix A.3 reports 106.5ms FP32 batch-one forward on A100; generation/scoring1.4ms. Appendix A.2 reports14GiB peak at batch32 on24GB A30. These are author results, not local measurements or guaranteed CARLA-inclusive resource bounds.",
+    "compute_source": "https://arxiv.org/html/2609.36438v1#A1.SS3",
+    "cube_alternative": "Released983061B outcome head attaches to LeWM get_cost; it consumes predicted terminal state and goal embedding. Config uses OGBench-Cube expert-start goals, H5/actionblock5 and50-step budget. Requires separate quentinll/lewm-cube weights, dataset stats and stable-worldmodel0.1.1; not the driving WM and not a Goal-in-forecast discovery.",
+    "cube_sources": [
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/ogbench_cube/head_scorer.py:36",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/ogbench_cube/head_scorer.py#L36"
+      },
+      {
+        "source": "runs/world4scorer_source_screen_20261016/source/ogbench_cube/conf/cube.yaml:1",
+        "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/ogbench_cube/conf/cube.yaml#L1"
+      }
+    ]
+  },
+  "decision": {
+    "native_forecast_to_action_carrier": "SOURCE_GO; released compatible inference/evaluation paths identified, local Clean still unqualified.",
+    "proposed_goal_invariance_mechanism": "NO_GO in the inspected native wiring; route normally changes actions/objective and is absent from fixed-bank visual future predictor inputs.",
+    "new_security_experiment": "None selected; no weight/data acquisition warranted solely by this Goal proposal."
+  },
+  "activity": {
+    "public_direct_gets": 16,
+    "metadata_gets": 3,
+    "small_source_file_gets": 13,
+    "web_tool_calls": 3,
+    "web_operations_requested": 10,
+    "web_actual_http_request_count": "unknown; tool may use cached pages",
+    "weight_downloads": 0,
+    "dataset_downloads": 0,
+    "dependency_installs": 0,
+    "model_calls": 0,
+    "environment_calls": 0,
+    "model_api_calls": 0,
+    "gpu_calls": 0,
+    "training_updates": 0
+  },
+  "candidate_context_followup": {
+    "status": "source_verified_research_interface_and_true_scene_resource_gap",
+    "native_count_and_permutation": {
+      "finding": "Default generation uses64 learned initial embeddings and64 output proposals. Predictor and heads accept runtime N; training invokes the shared predictor with one logged trajectory and16 bank candidates as well as generated64. In eval, with proposal tensors fixed, the scorer has no candidate-index position encoding: full-pool permutation should permute states/scores mathematically. Subdivision or unequal duplication changes self-attention context and is not equivalent. Finite-precision equality and tie behavior are not tested.",
+      "sources": [
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:114",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L114"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:263",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L263"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:292",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L292"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/transformer_decoder.py:32",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/transformer_decoder.py#L32"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/transformer_decoder.py:98",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/transformer_decoder.py#L98"
+        }
+      ]
+    },
+    "legitimate_context_confound": {
+      "finding": "The prediction trunk receives camera scene features and encoded candidate coordinates, not direct ego speed/acceleration/driving-command/route. These quantities influence the candidate generator, so the generated pool can indirectly encode missing physical and task context. Heads additionally receive ego_token after the predictor. Pool dependence therefore does not itself establish an irrelevant-information defect.",
+      "sources": [
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_features.py:50",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_features.py#L50"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:149",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L149"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:211",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L211"
+        }
+      ]
+    },
+    "prediction_semantics": {
+      "finding": "The driving predictor produces a256D latent trained by candidate outcome losses. Only the logged executed query has an auxiliary384D front-camera DINO feature target2s ahead. Six pointwise heads read utility sub-scores; this is not an explicitly decoded physical future BEV/occupancy. Agent/area auxiliary outputs are training-only and B2D config disables them; BEV heads are unimplemented.",
+      "sources": [
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/shared_future_predictor.py:30",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/shared_future_predictor.py#L30"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:247",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L247"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/score_module/scorer.py:98",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/score_module/scorer.py#L98"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/score_module/scorer.py:111",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/score_module/scorer.py#L111"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/model_config.py:80",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/model_config.py#L80"
+        }
+      ]
+    },
+    "writer_boundary": {
+      "finding": "Released DrivoRModel.forward takes sensor/ego features and internally generates proposals. No external proposal or anchor writer is present in this inspected inference path. Reassembling pos_embed/future_predictor inputs or freezing the selectable bank while changing forecast-pool multiplicities is a new researcher-controlled component interface. No deployed attacker permission is claimed.",
+      "sources": [
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/drivor_model.py:147",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/drivor_model.py#L147"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/b2d_agent/world4scorer_agent.py:176",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/b2d_agent/world4scorer_agent.py#L176"
+        }
+      ]
+    },
+    "additional_selection_confound": {
+      "finding": "B2D independently standardizes route-agreement over the candidate pool and scales it by the learned-score standard deviation. Pool manipulation could affect this downstream term without any WM effect. A future causal experiment would need to separate these routes; the inspected source is not evidence that either causes harm.",
+      "sources": [
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/b2d_agent/world4scorer_agent.py:192",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/b2d_agent/world4scorer_agent.py#L192"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/b2d_agent/world4scorer_agent.py:258",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/b2d_agent/world4scorer_agent.py#L258"
+        }
+      ]
+    },
+    "single_scene_resource_gate": {
+      "finding": "Native inference can consume a batch-one image/ego tensor without future training targets or CLOVER bank. Construction first attempts DINOv2 initialization via timm pretrained_cfg_overlay using a local file; its broad exception fallback calls pretrained=True without that file and may fetch remote weights. Offline single-sample execution therefore needs the matching local backbone file or exact pretrained cache, as well as the released checkpoint. The non-truncated1822-entry code tree and HF file list contain no identified single-scene sensor-plus-ego-plus-independent-metric-cache evaluation bundle. Demos and training future embeddings cannot substitute for such a scene. A65802B b2d_shapes.npz exists but was not downloaded or treated as an evaluation scene. NAVSIM data/maps/cache or CARLA setup remain needed for real consequence evaluation; none was installed or qualified here.",
+      "sources": [
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/navsim/agents/drivoR/layers/image_encoder/dinov2_lora.py:280",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/navsim/agents/drivoR/layers/image_encoder/dinov2_lora.py#L280"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/bench2drive/b2d_agent/world4scorer_agent.py:114",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/bench2drive/b2d_agent/world4scorer_agent.py#L114"
+        },
+        {
+          "source": "runs/world4scorer_source_screen_20261016/source/README.md:188",
+          "url": "https://github.com/World4Scorer/World4Scorer/blob/7814310e0bd65c6e21f06b81eedfec2ac9a06aa9/README.md#L188"
+        }
+      ],
+      "scope": "Absence is limited to the inspected fixed code tree, HF file list and README; not a global claim about all author assets."
+    },
+    "decision": "Candidate-context self-attention is a verified native resource fact, unlike candidate-isolated prior carriers. No security pilot is selected: intervention ownership is added, physical-context leakage is a serious alternative explanation, and independent true-scene utility is not locally ready. Do not infer harm or novelty from self-attention alone."
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "id": "goal_bus_physical_invariance_v2",
+  "review_date": "2026-10-14",
+  "status": "environment_intervention_and_worldagen_isolation_contract_supported_observational_sufficiency_open",
+  "supersedes": {
+    "path": "reports/goal_bus_physical_invariance_spec_v1_historical.json",
+    "sha256": "8963d0064afa1e28284f565c97b9c58f929e1d4b63e685c6c03496a7c6d98a99",
+    "reason": "Separate physical causal invariance, statistical sufficiency and model interface contract. Historical forecast errors include invalid native target/image codecs and must not be used as current evidence."
+  },
+  "core_specification": "For fixed augmented physical state s, low-level executed actions a covering the entire forecast horizon, and paired exogenous noise u, changing preference-only query Goal does not change Y_physical(s, do(A=a), do(G=g), u). This is not an assertion that P_train(Y | O,A,G) is independent of G.",
+  "causal_estimand": {
+    "structural_equation": "S_next = F(S, A, U); Y_physical = H(S_future). G is excluded only when it is preference-only metadata, not a dynamics/reset/control input.",
+    "paired_counterfactual": "Y_physical(s, do(A=a), do(G=g1), u) = Y_physical(s, do(A=a), do(G=g2), u)",
+    "distributional_version": "If exogenous noise is not paired, require equal physical outcome distributions under the two interventions, not equal samples.",
+    "fixed_state_includes": [
+      "simulator state",
+      "controller/gripper state",
+      "physical scene and dynamics",
+      "sensor/rendering parameters relevant to the target"
+    ],
+    "fixed_action_requirement": "Actual low-level controls and execution duration cover all evaluated future steps; fixing only the first action or a high-level command is insufficient.",
+    "goal_sensitive_outputs_allowed": [
+      "policy action",
+      "value and reward",
+      "task success and termination",
+      "goal-relative semantics"
+    ],
+    "falsifiers": [
+      "Goal changes scene/reset/dynamics",
+      "Goal changes uncommitted actions, another agent, controller semantics or horizon",
+      "The scored output contains goal-relative reward/semantics instead of a physical consequence"
+    ]
+  },
+  "observational_prediction_boundary": {
+    "identity": "P_train(Y | O,A,G) = integral P_train(Y | S,A,G) P_train(S | O,A,G) dS (plus relevant hidden context). Even if the transition kernel excludes G, the posterior over S can depend on G.",
+    "counterexample": "An instruction can reveal a hidden object location or be correlated with unobserved object properties. Two identical visible observations need not justify equal conditional forecasts across goals.",
+    "needed_for_distributional_invariance": "Establish Y independent of G given the model-visible history and committed actions, or explicitly define an interventional forecast interface/evaluation distribution that excludes preference Goal as evidence.",
+    "not_established": [
+      "Training-distribution observation sufficiency",
+      "All crossed observation/action/Goal triples are within training support",
+      "A pretrained observational conditional predictor must be invariant under a new randomized-query distribution"
+    ],
+    "single_seed_warning": "Common-random-number sample differences demonstrate implementation sensitivity; they do not alone establish different stochastic output distributions."
+  },
+  "model_specific_contracts": {
+    "WorldAgen": {
+      "basis": "Authors explicitly define a task-agnostic world head and claim instruction isolation via the mixed attention mask. Fixed-input text sensitivity can falsify this implementation contract without establishing harm.",
+      "primary_source": "https://worldagen.github.io/#method",
+      "model_source": "vendor/WorldAgen/models/model.py",
+      "model_only_sees_full_simulator_state": false,
+      "interpretation": "Architecture isolation audit; separately measure calibrated forecast error and decision utility.",
+      "paper_qualification": {
+        "source": "https://worldagen.github.io/worldagen_paper.pdf",
+        "sections_supporting_isolation": [
+          "2.2 world model and history omit Goal",
+          "2.4 global instruction masking"
+        ],
+        "inconsistent_wording": "Section 2.6 world-step text also mentions task instruction; claim is scoped to the explicit architecture/formalization, not uniform wording throughout the paper."
+      }
+    },
+    "AlphaBrain_and_CosmosPolicy": {
+      "basis": "Language-conditioned joint action/future prediction does not inherit WorldAgen task-agnostic promise. Native best-of-N fixes candidate controls for the future query, but intended conditioning must still be audited.",
+      "interpretation": "Do not label every forecast Goal dependence a violation. A branch-only Goal intervention needs a stated integrity/access boundary and independent evidence of error and task harm."
+    }
+  },
+  "current_corrected_evidence": {
+    "analysis": "runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json",
+    "scene_audit": "runs/worldagen_prediction_contract_cpu_v2/goal_scene_compatibility.json",
+    "same_scene_pair": [
+      0,
+      1
+    ],
+    "pair_selection": "BDDL physical metadata equality, not forecast outcomes; initial state and environment remain Task 0.",
+    "independent_episodes": 1,
+    "correlated_transitions": 6,
+    "fresh_replays": 12,
+    "forecast_horizon_steps": 3,
+    "goals_modified_only_in_world_query": true,
+    "target": "Two-view CLIP-normalized RGB patch rearrangement, native camera orientation; no per-patch whitening in the actual LIBERO non-diffusion training path.",
+    "clean_mse": 0.055436840280890465,
+    "same_scene_swap_mse": 0.06787438504397869,
+    "same_scene_swap_minus_clean": 0.012437544763088226,
+    "bus_cut_mse": 0.05513754424949487,
+    "scope": "Descriptive single-episode isolation and forecast-error evidence. No population confidence interval, native task-harm claim, or training-distribution sufficiency proof.",
+    "target_codec_provenance": {
+      "entrypoint": "vendor/WorldAgen/train_libero.py:201",
+      "function": "vendor/WorldAgen/utils/train_utils.py:224 train_one_epoch_calvin",
+      "loss_path": "vendor/WorldAgen/utils/train_utils.py:419-431, non-diffusion",
+      "qualification": "Matches the published LIBERO training code path; full historical checkpoint training logs were not available."
+    }
+  },
+  "next_evidence_gates": [
+    {
+      "gate": "Define the prediction contract before attack metrics",
+      "pass_condition": "Explicit physical target, full action horizon, preference-only Goal and model-specific isolation/intervention requirement.",
+      "status": "WorldAgen scope defined; universal goal-invariance rejected"
+    },
+    {
+      "gate": "Generalize calibrated fixed-state/action evaluation",
+      "pass_condition": "Held-out independent episodes and same-physical-scene preference goals, all valid permutations; preserve physical target and report conditional-support limitations.",
+      "status": "Only one independent episode completed"
+    },
+    {
+      "gate": "Test the partial-observation alternative",
+      "pass_condition": "Audit hidden-state information and training support; compare matched randomized-query evaluation and observational conditioning. A new full-state oracle or retrained goal-free model is a separate system, not proof about the released model.",
+      "status": "Open"
+    },
+    {
+      "gate": "Establish native decision harm and beneficial repair",
+      "pass_condition": "Healthy native clean baseline, fixed original policy/value Goal and candidates, actual environment utility, matched controls, measured clean cost of defense.",
+      "status": "Open; forecast divergence and cut invariance are insufficient"
+    }
+  ],
+  "decision": {
+    "go": "Model-specific instruction-isolation audit and narrowly scoped calibrated prediction tests.",
+    "no_go": "Claiming universal physical prediction pollution, native attack success or useful defense from Goal dependence alone."
+  },
+  "new_environment_steps_in_this_spec_update": 0,
+  "new_model_forward_calls_in_this_spec_update": 0,
+  "api_requests": 0
+}

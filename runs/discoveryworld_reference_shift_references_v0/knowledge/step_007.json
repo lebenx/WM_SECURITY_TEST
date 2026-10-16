@@ -1,0 +1,130 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated crystal reactor (uuid: 8549); Crystal 2 (uuid: 21559) is installed in activated crystal reactor (uuid: 51739); Crystal 3 (uuid: 24678) is on a table (uuid: 57306) south-east of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "There is an empty crystal reactor (uuid: 33120) north-east of the agent, and a spectrometer (uuid: 24266) was on a table (uuid: 58937) south-west of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is 33% activated, with two of three crystals installed.",
+      "step": 1
+    },
+    {
+      "measurement": "The spectrometer (uuid: 24266) is in the agent's inventory.",
+      "step": 3
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 1 (uuid: 13162): Channel 1 = 40.61, Channel 5 = 63.61, other channels 0.00. Its reactor (uuid: 8549) is set to 2680.26 Hz.",
+      "step": 6
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 2 (uuid: 21559): Channel 1 = 39.40, Channel 5 = 31.24, other channels 0.00. Its reactor (uuid: 51739) is set to 2600.4 Hz.",
+      "step": 10
+    },
+    {
+      "hypothesis": "If the spectrometer is used on a quantum crystal, then the non-zero channel values indicate the frequency that the crystal's reactor should be tuned to.",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "Crystal 1 and Crystal 2 are correctly installed and both show non-zero values only on Channels 1 and 5."
+    },
+    {
+      "hypothesis": "If the correct reactor frequency for a crystal is encoded by its spectrometer readings, then the encoding is likely a mathematical function of the Channel 1 and Channel 5 values.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Two data points are available: Crystal 1 (40.61, 63.61 -> 2680.26 Hz) and Crystal 2 (39.40, 31.24 -> 2600.4 Hz). Simple concatenation and multiplication/addition hypotheses were rejected."
+    },
+    {
+      "hypothesis": "If the encoding formula is determined from Crystal 1 and Crystal 2, then Crystal 3's correct reactor frequency can be calculated from its spectrometer reading.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Crystal 3 is the only remaining crystal and must be installed in the empty reactor to activate the generator."
+    },
+    {
+      "measurement": "Generator core (uuid: 11878) is now 66% activated, up from 33% at step 1, while Crystal 1 (uuid: 13162) and Crystal 2 (uuid: 21559) remain installed in their activated reactors.",
+      "step": 2
+    },
+    {
+      "measurement": "Crystal reactor (activated) (uuid: 8549), containing quantum crystal 1 (uuid: 13162), currently has a resonance frequency of 2680.26 Hz.",
+      "step": 3
+    },
+    {
+      "measurement": "Crystal reactor (activated) (uuid: 8549) allows resonance frequencies from 0 to 10000 Hz.",
+      "step": 3
+    },
+    {
+      "hypothesis": "If the reactor frequency controls crystal resonance, then adjusting crystal reactor (uuid: 8549) using its frequency controls will change its resonance frequency within the 0–10000 Hz allowable range.",
+      "status": "pending",
+      "step": 3,
+      "supporting evidence": "The reactor reports a current frequency and provides controls to increase or decrease it by 1, 10, 100, or 1000 Hz."
+    },
+    {
+      "measurement": "After selecting the reactor control option to increase frequency by 1000 Hz, crystal reactor (uuid: 8549) changed its reported resonance frequency from 2680.26 Hz to 3680 Hz.",
+      "step": 4
+    },
+    {
+      "measurement": "Crystal reactor (uuid: 8549) reports an allowable resonance-frequency range of 0 to 10000 Hz.",
+      "step": 4
+    },
+    {
+      "hypothesis": "If a frequency-increase control is selected on crystal reactor (uuid: 8549), then the reactor's resonance frequency will increase by the control's specified increment, subject to the 0–10000 Hz range.",
+      "status": "confirmed",
+      "step": 4,
+      "supporting evidence": "Selecting 'Increase frequency by 1000 Hz' changed the reported frequency from 2680.26 Hz to 3680 Hz."
+    },
+    {
+      "measurement": "Update: crystal reactor (uuid: 8549), which contains quantum crystal 1 (uuid: 13162), is now labeled 'crystal reactor (uncalibrated)' after its resonance frequency was increased to 3680 Hz. It was previously activated at 2680.26 Hz.",
+      "step": 5
+    },
+    {
+      "hypothesis": "If a crystal reactor's resonance frequency is changed away from the correct frequency for the crystal inside it, then the reactor becomes uncalibrated.",
+      "status": "confirmed",
+      "step": 5,
+      "supporting evidence": "Crystal reactor (uuid: 8549) was activated at 2680.26 Hz with Crystal 1; after increasing the frequency to 3680 Hz, the reactor is now listed as uncalibrated."
+    },
+    {
+      "hypothesis": "If crystal reactor (uuid: 8549) is set back to 2680.26 Hz, then it will become activated again and continue contributing to generator power.",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "This is the expected inverse of the confirmed calibration observation, but it still needs to be tested by restoring the frequency."
+    },
+    {
+      "measurement": "The uncalibrated crystal reactor (uuid: 8549), which contains quantum crystal 1 (uuid: 13162), identifies itself as 'Crystal Reactor #1' when its controls are opened.",
+      "step": 6
+    },
+    {
+      "hypothesis": "if (object:crystal reactor) is identified as Crystal Reactor #N and contains (object:quantum crystal) then (object:quantum crystal) is quantum crystal N.",
+      "status": "pending",
+      "step": 6,
+      "supporting evidence": "Crystal Reactor #1 (uuid: 8549) contains quantum crystal 1 (uuid: 13162). This mapping still needs to be tested on the other reactors."
+    },
+    {
+      "measurement": "Crystal reactor (activated) (uuid: 51739), which contains quantum crystal 2 (uuid: 21559), identifies itself as 'Crystal Reactor #2' when its controls are opened, and reports current resonance frequency 2600.4 Hertz with an allowable range of 0 to 10000 Hz.",
+      "step": 7
+    },
+    {
+      "hypothesis": "if (object:crystal reactor) is identified as Crystal Reactor #N and contains (object:quantum crystal) then (object:quantum crystal) is quantum crystal N.",
+      "status": "confirmed",
+      "step": 7,
+      "supporting evidence": "Crystal Reactor #1 (uuid: 8549) contains quantum crystal 1 (uuid: 13162), and Crystal Reactor #2 (uuid: 51739) contains quantum crystal 2 (uuid: 21559)."
+    },
+    {
+      "measurement": "After selecting 'Increase frequency by 1000 Hz' on crystal reactor (uuid: 51739) containing quantum crystal 2 (uuid: 21559), its reported resonance frequency changed from 2600.4 Hz to 3600 Hz, and the reactor is now described as 'crystal reactor (uncalibrated)'.",
+      "step": 8
+    },
+    {
+      "hypothesis": "if a crystal reactor's resonance frequency is changed away from the correct frequency for its installed crystal, then the reactor becomes uncalibrated.",
+      "status": "confirmed",
+      "step": 8,
+      "supporting evidence": "Previously confirmed for Crystal Reactor #1 (uuid: 8549) with Crystal 1 (2680.26 Hz -> 3680 Hz); now replicated for Crystal Reactor #2 (uuid: 51739) with Crystal 2 (2600.4 Hz -> 3600 Hz)."
+    },
+    {
+      "hypothesis": "if crystal reactor (uuid: 51739) is set back to 2600.4 Hz, then it will become activated again and continue contributing to generator power.",
+      "status": "pending",
+      "step": 8,
+      "supporting evidence": "This is the expected inverse of the observed uncalibration caused by changing the frequency away from 2600.4 Hz; it still needs to be tested by restoring the frequency."
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "status": "approved",
+  "purpose": "Test whether within-query elite-dispersion updates mediate the old boundary-data CartPole return loss. This is a causal mechanism control, not a new attack or defense validation.",
+  "models": [
+    {
+      "mode": "random",
+      "path": "runs/mbrl_covariance_pinching_random_v0"
+    },
+    {
+      "mode": "boundary",
+      "path": "runs/mbrl_covariance_pinching_boundary_v0"
+    },
+    {
+      "mode": "interior",
+      "path": "runs/mbrl_covariance_pinching_interior_v0"
+    }
+  ],
+  "seeds": [
+    810,
+    811,
+    812,
+    813
+  ],
+  "arms_in_pair_order": [
+    "native",
+    "fixed_dispersion"
+  ],
+  "planner": {
+    "population": 100,
+    "iterations": 3,
+    "horizon": 15,
+    "particles": 10,
+    "elite_ratio": 0.1,
+    "alpha": 0.1,
+    "return_mean_elites": false,
+    "clipped_normal": false,
+    "max_real_steps": 200
+  },
+  "operation": "Call unchanged native optimize and native mean/dispersion update. In fixed_dispersion only, replace the returned updated dispersion with a clone of that query's native initial variance0.25. Preserve updated mean, bound-constrained sampling, best-candidate strict-improvement rule, warm start and all sampling/model calls.",
+  "historical_gate": {
+    "exact": [
+      "initial observation",
+      "each real obs/action/next_obs/reward/terminated/truncated",
+      "each native CEM iteration value_max",
+      "complete episode length and return"
+    ],
+    "diagnostic_stats_atol": 1e-06,
+    "diagnostic_stats_rtol": 1e-05,
+    "diagnostic_stats_policy": "Record exact and allclose checks for other observational covariance/eigenvalue/value summaries. Tiny allclose-only differences are disclosed; any difference beyond these fixed tolerances blocks the pair.",
+    "failure": "Stop this native episode immediately and skip its fixed arm. Continue the already fixed remaining model/seed panel. An incomplete panel is not a task-loss verdict."
+  },
+  "randomness": "Seed exactly as the old runner: torch.manual_seed(seed), action_space.seed(seed+50000), legacy reset setting NumPy seed, ModelEnv generator seed+10000. Preserve the global Torch randperm used by GaussianMLP ensemble allocation and all native truncated-normal draws. Compare actual global-Torch and ModelEnv RNG entry/exit states at every shared query index; never reseed per query. Restore the same otherwise-unused Python random state before both arms.",
+  "negative_control": {
+    "mode": "interior",
+    "seed": 813,
+    "required": "After exact native historical reconstruction, fixed must reproduce all200 real trajectory rows exactly. The saved native episode has a first-round score15 at every query; under unchanged RNG and best-solution warm starts, a dispersion-only later-round change cannot alter its actions."
+  },
+  "runtime": {
+    "python": ".venv-native-local/bin/python",
+    "python_version": "3.14.4",
+    "required_packages": {
+      "torch": "2.13.0",
+      "numpy": "2.4.6",
+      "omegaconf": "2.3.1",
+      "hydra-core": "1.3.2",
+      "gymnasium": "1.3.0",
+      "gym": "0.23.1"
+    },
+    "device": "cpu",
+    "torch_threads": 1,
+    "qualification": "This runtime previously loaded the same model family successfully, but the old covariance runs did not save their runtime. Exact historical reconstruction, not an assumed version match, qualifies each pair."
+  },
+  "limits": {
+    "expected_total_seconds": 300,
+    "hard_wallclock_seconds": 600,
+    "max_episodes": 24,
+    "training_updates": 0,
+    "api_calls": 0,
+    "gpu_model_calls": 0
+  },
+  "cost_basis": {
+    "historical_12_native_episode_seconds": 73.43748138612136,
+    "twice_historical_compute_seconds": 146.87496277224272,
+    "interpretation": "An estimate before new logging/IO, not measured duration of the new24 episodes."
+  },
+  "analysis": "Report all four paired deltas per model and interactions delta_boundary-delta_random and delta_boundary-delta_interior. No posthoc effect threshold, significance test or new seed. Positive interaction alone is not selective recovery: controls can deteriorate and are often ceiling-censored. Distinguish stored optimizer dispersion from effective variance after mean-dependent action-bound constraints. Report all200-cap censoring: random and interior each reached the cap in3 of4 old episodes. Do not call positive relative interactions boundary-specific causality when comparison headroom differs. No CIs or ASR from dependent queries; no follow-up variance tuning.",
+  "scope": "Three existing locally trained checkpoints, one task and four old development seeds; unchanged MBRL-Lib optimizer class under the old reduced100-candidate/3-iteration/best-candidate protocol, not the upstream-default stronger350/5/elite-mean setting. Positive results would support a local causal role, not establish novelty, an externally pretrained-system effect or a cost-free defense.",
+  "default_output": "runs/mbrl_dispersion_control_20261015",
+  "review": {
+    "reviewed_by": "root with two independent source reviews",
+    "user_authorization": "Existing autonomous research goal; no additional user approval requested.",
+    "date": "2026-10-15",
+    "scientific_scope": "One fixed local mediator control motivated by a newly identified mismatch between logged covariance and native returned-action provenance. No new seed, training, task or attack tuning."
+  }
+}

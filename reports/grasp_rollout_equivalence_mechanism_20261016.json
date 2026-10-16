@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-16T00:04:48.219360+00:00",
+  "status": "pre_intervention_mechanism_hypothesis_not_experimental_result",
+  "previous_goal_turn_classification": "prior_art_qualification_progress_no_new_model_or_task_evidence",
+  "scope": "A sharpened hypothesis for finite-budget virtual-state planning, contingent on competent Clean. Not a confirmed security mechanism or novelty score.",
+  "claim_to_test": "Two models can agree on every admissible complete action rollout yet produce different finite-budget lifted-planner decisions through off-support intermediate queries.",
+  "fixed_sources": [
+    "runs/grasp_source_screen_20261016/source_summary.json",
+    "runs/grasp_source_screen_20261016/config_source_provenance_20261016.json"
+  ],
+  "prior_art": [
+    {
+      "url": "https://arxiv.org/html/2602.00475v1#S3.SS3",
+      "known": "GRASP discusses adversarial sensitivity when optimizing virtual states and blocks state-input gradients."
+    },
+    {
+      "url": "https://arxiv.org/html/2607.10362v1#A3",
+      "known": "Data-support prediction error can be exactly zero while off-support error is unrestricted. That alone is not a new mathematical principle.",
+      "boundary": "Inspected formulation ranks action-induced rollouts; not a demonstration of two models with identical full-rollout maps but distinct lifted-optimizer execution."
+    },
+    {
+      "url": "https://arxiv.org/html/2512.09929v2",
+      "known": "Action-only gradient planning can exploit prediction errors; online and adversarial world-model training address this train-test gap.",
+      "boundary": "Training modifications do not preserve the complete rollout map."
+    },
+    {
+      "url": "https://arxiv.org/abs/2609.15781",
+      "known": "Checkpoint backdoors in world models can manipulate downstream control; model supply-chain attacks alone are not a new framing."
+    }
+  ],
+  "bounded_search_limit": "These inspected papers do not establish absence of all relevant prior art. No numerical novelty assessment is scientific evidence.",
+  "candidate_permission": {
+    "status": "not_implemented_or_executed",
+    "form": "F_tilde(z,a)=F(z,a)+epsilon*h(z)*v",
+    "restriction": "Fixed bounded direction v and smooth state-only gate h; no action, goal, iteration or optimizer-state access. h and its first derivative vanish on the declared protected domain. Direction, amplitude and tube width must be fixed before observing intervention utility.",
+    "reason": "Avoid assigning arbitrary action Jacobians or retargeting the solver objective. Actual interface exposure remains unestablished; this is researcher-defined model replacement."
+  },
+  "conditional_prediction": {
+    "premises": [
+      "Identical encoded initial state and goal; protected root model value and action derivatives equal",
+      "Identical global random draws, independent-coordinate Adam, no extra cross-time gradient coupling",
+      "Published GRASP state-input detach and its existing visual loss"
+    ],
+    "before_first_sync": "The first action block a0 and first virtual state s1 remain identical. Their updates form a closed subsystem: a0 depends on s0,s1,g and s1 depends on F(s0,a0)-s1; suffix interventions cannot enter through detached later state inputs.",
+    "after_first_sync": "A suffix action difference may reach a0 through the full-rollout action-gradient sync, even though both models implement the same rollout function. Sync starts at different action sequences and takes finite steps.",
+    "state_reset_fact": "The adapter replaces actions and resets Adam after sync but retains the virtual state variables.",
+    "execution_boundary": "Native num_act_stepped=3 also directly executes suffix blocks. First-action mediation alone does not account for every executed difference.",
+    "early_divergence_rule": "First-action divergence before first sync contradicts this conditional prediction; investigate implementation, protected values/gradients, RNG or assumptions rather than count it as a success."
+  },
+  "necessary_controls": [
+    "Paired full-rollout sync from identical action inputs must return the same values, action gradients and updated actions.",
+    "No-sync pair should preserve the first action block; this is a mechanism negative control, not an established capable defense.",
+    "Clean/modified-model crossed with query projection, preserving Clean utility and equal cost, would be needed for a projection defense claim."
+  ],
+  "fundamental_limit": "Exact dynamics-feasible trajectories starting inside an invariant set remain inside it. Identical complete rollout maps give identical action objectives; this candidate concerns the finite-budget solver trajectory, not new exact feasible plans.",
+  "strongest_objection": "Off-support freedom plus known virtual-state sensitivity may be an obvious numerical optimization counterexample. Arbitrary large goal-tailored model replacement or a weak custom planner would add little scientific value.",
+  "current_runtime_evidence": "Only the earlier finite-sample affine qualification has run. No GRASP Clean, dynamics extension, sync mediation or actual harm is established by this report.",
+  "next_test": "Bounded Clean run using the published GRASP class and README settings with the existing MetaWorld task; classify composed configuration explicitly and measure runtime before expensive expansion."
+}

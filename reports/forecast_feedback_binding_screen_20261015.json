@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "status": "completed_source_screen_and_synthetic_operator_probe_no_new_task_harm",
+  "previous_goal_turn_classification": {
+    "classification": "progress",
+    "evidence": "reports/cosmos_first_query_truth_decision_20261015.json",
+    "reason": "Actual paired physical prefixes and calibrated truth scoring added new evidence; no research-goal completion claimed."
+  },
+  "overall_research_goal": "active_unachieved",
+  "cosmos_followup": {
+    "decision": "retain_local_truth_countercheck_no_new_goal_restoration_defense_run",
+    "prefix_equality": "Already directly checked in reports/cosmos_first_query_truth_review_20261015.json; not rerun.",
+    "input_value_slot_check": {
+      "cpu_tensor_files_read": 4,
+      "slot8_changes": true,
+      "max_abs_swap_minus_clean": [
+        0.4166667461,
+        0.2932100296
+      ],
+      "consumed_by_value": false,
+      "reason": "sample_conditioned passes only latent[:,:,:8] as Value conditioning and resamples slot8 from the fixed noise.",
+      "sources": [
+        "scripts/cosmos_policy_native_inference.py:171",
+        "scripts/cosmos_policy_native_inference.py:218"
+      ],
+      "precision": "Rounded CPU cache measurements reported by independent reviewer; no new model execution."
+    },
+    "permission_boundary": "Pinned native N2 shares one task context across Action/Future/Value. Future-only text replacement is researcher instrumentation; AlphaBrain exposed instruction enters a different N1 action path.",
+    "prior_source_audit": "reports/cosmos_native_interface_audit_20261014.json",
+    "new_model_calls": 0
+  },
+  "candidate": {
+    "repository": "https://github.com/tasl-lab/GenSafeNav",
+    "revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+    "hypothesis_screened": "Physically unrelated pedestrian histories perturb another pedestrian through a shared online forecast-error calibrator.",
+    "shared_calibration_result": "interface_absent_for_this_hypothesis: each Human owns separate DtACI instances for each horizon. Shared hyperparameters are not shared mutable calibration state.",
+    "resource_metadata": "runs/gensafenav_feasibility_20261015/resource_source_metadata.json",
+    "checkpoint_metadata_bytes": {
+      "actor": 10026423,
+      "selected_gst_predictor": 827916
+    },
+    "checkpoint_downloaded_or_loaded": false,
+    "native_decision_path": "Learned pedestrian-history trajectory predictor plus per-pedestrian/horizon calibration feeds a recurrent RL navigation policy.",
+    "model_scope": "Predictor does not accept candidate robot actions or Goal. Useful forecasting-agent resource, but not an action-conditioned world rollout and not independent validation of the Cosmos mechanism.",
+    "clean_validation": "Not executed; official default250-episode test was not launched.",
+    "source_paths": [
+      "runs/gensafenav_feasibility_20261015/sources/crowd_sim/envs/utils/human.py",
+      "runs/gensafenav_feasibility_20261015/sources/crowd_sim/envs/crowd_sim_pred.py",
+      "runs/gensafenav_feasibility_20261015/sources/crowd_sim/envs/crowd_sim_pred_real_gst.py",
+      "runs/gensafenav_feasibility_20261015/sources/rl/evaluation.py",
+      "runs/gensafenav_feasibility_20261015/sources/rl/vec_env/vec_pretext_normalize.py",
+      "runs/gensafenav_feasibility_20261015/sources/gst_updated/scripts/wrapper/crowd_nav_interface_parallel.py"
+    ]
+  },
+  "operator_probe": {
+    "protocol": "configs/gensafenav_feedback_time_binding_probe_20261015.json",
+    "script": "scripts/probe_gensafenav_feedback_time_binding.py",
+    "raw_result": "runs/gensafenav_feedback_time_binding_probe_20261015/summary.json",
+    "execution_exit_code": 0,
+    "terminal_chunk_id": "dd7cf1",
+    "elapsed_seconds": 0.003030550025869161,
+    "activity": {
+      "native_update_aci_calls": 6,
+      "native_residual_sink_calls": 13,
+      "aci_adaptation_calls": 0,
+      "model_calls": 0,
+      "environment_calls": 0,
+      "api_calls": 0,
+      "gpu_calls": 0,
+      "checkpoint_loads": 0
+    },
+    "continuous_control_passed": true,
+    "mismatches": [
+      {
+        "issue_index": 0,
+        "selected_history_index": -2,
+        "forecast_horizon": 2,
+        "forecast_target_index": 2,
+        "forecast_position": [
+          0.5,
+          0.0
+        ],
+        "aci_horizon": 2,
+        "label_index": 4,
+        "label_position": [
+          1.0,
+          0.0
+        ],
+        "issue_seconds": 0.0,
+        "forecast_target_seconds": 0.5,
+        "label_seconds": 1.0,
+        "target_time_matches_label": false,
+        "actual_native_residual": 0.5
+      }
+    ],
+    "timestamp_reference_residuals_all_zero": true,
+    "native_only_label_horizon_pairs": [
+      [
+        4,
+        2
+      ]
+    ],
+    "reference_only_label_horizon_pairs": [
+      [
+        4,
+        4
+      ]
+    ],
+    "interpretation": "With stipulated invalidity gaps and perfect synthetic constant-velocity forecasts, unchanged native update_aci emits a false0.5m residual by pairing a forecast for0.5s with truth at1.0s. Time matching keeps the same issued forecasts and available labels and produces zero residuals.",
+    "limits": [
+      "No actual trained trajectory predictor, ACI quantile adaptation, actor, physical environment, collision, or utility measurement.",
+      "ACI sinks only record the residuals emitted by the original method; they do not simulate learned calibration.",
+      "out_mask=false is not assumed equivalent to human.prediction_valid=false.",
+      "Timestamp joining is an ordinary attribution correction, not evidence of a new security mechanism or effective defense.",
+      "Only the native update_aci function executes. Call order is modeled from reviewed caller code; full caller and naturally arising prediction_valid gaps are not executed.",
+      "A residual-recorder substitute receives outputs; no DtACI adaptation, interval change, selected action, physical collision, return or defense recovery is measured."
+    ]
+  },
+  "novelty_and_decision": {
+    "go": "Keep the reproducible native time-attribution defect and negative shared-calibration screen as development assets.",
+    "no_go": "Do not treat this as the core security mechanism or expand to a navigation panel on this evidence. Ordinary timestamp matching has direct prior precedent; no distinct consequential mechanism is established.",
+    "not_a_label_only_exclusion": "The model-scope difference is not the sole rejection reason. Even under broader forecasting-agent scope, safety-harm evidence and a distinct contribution are absent.",
+    "existing_counterevidence_preserved": "Cosmos one-case harm/truth recovery and failed30-root expansion gate both remain unchanged; no Bus-Cut/Control-Cut result is added."
+  },
+  "primary_sources": [
+    {
+      "url": "https://arxiv.org/html/2508.05634v1#S3.SS4",
+      "title": "Towards Generalizable Safety in Crowd Navigation via Conformal Uncertainty Handling",
+      "scope_read": "Primary paper section3.4 plus official pinned implementation",
+      "finding": "Separate pedestrian/horizon calibration; forecast error relates a horizon-k prediction to its correct target time."
+    },
+    {
+      "url": "https://arxiv.org/html/2409.14792v1#S3",
+      "title": "Adaptive Conformal Inference for Multi-Step Ahead Time-Series Forecasting Online",
+      "scope_read": "Primary multi-step/feedback section; abstract bibliographic verification",
+      "finding": "Delayed multi-step predictions must be aligned by origin and horizon; ordinary time binding is not new theory."
+    },
+    {
+      "url": "https://papers.nips.cc/paper_files/paper/2022/hash/bcdaaa1aec3ae2aa39542acefdec4e4b-Abstract-Conference.html",
+      "title": "Practical Adversarial Multivalid Conformal Prediction",
+      "scope_read": "Primary abstract",
+      "finding": "Marginal, threshold-conditional and subgroup coverage are established distinctions; no local reproduction."
+    }
+  ],
+  "next_research_boundary": "Pursue a distinct mechanism with actual pretrained forecast-to-decision relevance and an explicit controllable boundary; neither this conventional attribution repair nor canonical Goal restoration supplies the missing core contribution. No large panel accepted this turn.",
+  "updated_at_utc": "2026-10-15T12:33:23.683396+00:00"
+}

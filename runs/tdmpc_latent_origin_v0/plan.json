@@ -1,0 +1,28 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "traces": {
+    "train": "runs/tdmpc_action_search_v0/clean_12_episode.pt",
+    "dev": "runs/tdmpc_action_search_v0/clean_13_episode.pt",
+    "test": "runs/tdmpc_rank_coupling_v0/native/episode_17.pt"
+  },
+  "hashes": {
+    "/home/xhj/WM_Security/scripts/screen_tdmpc_latent_origin.py": "78db6460df59af3a83f97e71ffd5b0a47aa2cd25e7fb919826dd9dadd64f4d82",
+    "src/wm_security/tdmpc_native.py": "178c59c5d1c61360e2852854f39aa54a64fe354703b140ed6db7edbdd9abdc3b",
+    "runs/tdmpc_action_search_v0/clean_12_episode.pt": "1a0107a9df97a6fe0a610ad5ab2966d4c8c14974933419d0105928aa31fd7c80",
+    "runs/tdmpc_action_search_v0/clean_13_episode.pt": "97bef70ba30ef4b8cd903bbab58af0a06787831f08f6fa0b0f619d4aa9e582ed",
+    "runs/tdmpc_rank_coupling_v0/native/episode_17.pt": "08b90e984dc68eeb00f0cb41a1e97e802b9a376a499271baac6453bb6df78a83"
+  },
+  "scope": "Offline necessary-condition classifier screen using an unchanged strong native TD-MPC2 checkpoint and its previously collected real trajectories.",
+  "split": "Whole train seed12, dev seed13, test seed17 episodes; no row-level random split.",
+  "matching": "Real encoded and model-predicted states correspond to the same actual action prefixes and physical future time; no random counterfactual actions.",
+  "probes": [
+    "L2 logistic regression, C=1, all512 latent features, no task/depth/time labels.",
+    "PCA64 residual after train-real standardization."
+  ],
+  "thresholds": "Set separately per probe to dev-real score 99.5th percentile (higher), frozen before test scoring.",
+  "gate": "Held-out real FPR <=1% and imagined TPR >=80% at BOTH depth1 and depth2, for at least one fixed probe; depth3 reported separately.",
+  "limits": "A passing origin-discrimination gate is neither a new method nor task harm. OOD-gated model scaffolding and ordinary rollout drift are prior art.",
+  "new_native_environment_steps": 0,
+  "api_requests": 0,
+  "world_model_training_updates": 0
+}

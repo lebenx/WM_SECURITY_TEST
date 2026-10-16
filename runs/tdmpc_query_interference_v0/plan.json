@@ -1,0 +1,21 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source": "runs/tdmpc_adaptation_screen_v1/mpc_data.pt",
+  "target": "walker-walk",
+  "seed": 11,
+  "output": "runs/tdmpc_query_interference_v0",
+  "conditions": [
+    "clean",
+    "shared_planner",
+    "restore_victim_warm_start"
+  ],
+  "scope": "Researcher-defined sharing of an upstream single-agent planner instance; no native multi-tenant deployment claim.",
+  "attacker": "One native planning query per victim action, cycling unedited observations from a recorded real source episode; no victim feedback, observation editing, state-tensor writes, or learning updates.",
+  "intervention": "Restore the victim warm start after the exact same attacker-query schedule.",
+  "randomness": "Fork and restore PyTorch CPU/CUDA RNG around attacker queries; fixed attacker seed100000+step. Native victim sampling and optimization budgets unchanged.",
+  "clean_gate_return": 800,
+  "effect_gate_return_drop": 100,
+  "confirmation": "Only a development screen; a positive result would still require independent seeds, budget-matched benign/random query baselines, a second native mechanism, and a novelty check.",
+  "api_requests": 0,
+  "training_steps": 0
+}

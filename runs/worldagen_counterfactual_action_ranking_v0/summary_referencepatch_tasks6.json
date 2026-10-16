@@ -1,0 +1,1095 @@
+{
+  "status": "completed_worldagen_counterfactual_action_ranking",
+  "planner": "independent_forecast_driven_clip_text_score",
+  "native_worldagen_policy_uses_forecast": false,
+  "candidate_set_frozen_across_conditions": true,
+  "candidate_source": "recorded",
+  "selection_target_fixed_to_original_goal": true,
+  "selection_score_text": "clean task goal for every condition",
+  "clip_reconstruction": "reference_patch",
+  "future_observation_used_for_selection": false,
+  "actual_utility_source": "fresh LIBERO replay cumulative sparse reward, success, and environment steps",
+  "replay_repeats": 1,
+  "evaluate_all_candidates": false,
+  "conditions": [
+    "clean",
+    "goal_swap_offset_1",
+    "goal_swap_offset_1_bus_cut",
+    "goal_swap_offset_1_control_cut"
+  ],
+  "goal_offsets": [
+    1
+  ],
+  "rows": [
+    {
+      "suite": "libero_10",
+      "task_id": 0,
+      "task": "put both the alphabet soup and the tomato sauce in the basket",
+      "goal_texts": {
+        "1": "put both the cream cheese box and the butter in the basket"
+      },
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_data_root": "/tmp/worldagen_actions_merged3",
+      "candidate_task_index": 5,
+      "candidate_episode": 8,
+      "scores": {
+        "clean": [
+          0.21321779489517212,
+          0.2142108976840973,
+          0.21635839343070984,
+          0.21596433222293854,
+          0.21620751917362213,
+          0.21421359479427338,
+          0.2147369086742401,
+          0.21588225662708282
+        ],
+        "goal_swap_offset_1": [
+          0.21548044681549072,
+          0.2177373170852661,
+          0.22019609808921814,
+          0.2182093858718872,
+          0.2168324887752533,
+          0.21643275022506714,
+          0.22098636627197266,
+          0.219200998544693
+        ],
+        "goal_swap_offset_1_bus_cut": [
+          0.214459627866745,
+          0.21487408876419067,
+          0.21697673201560974,
+          0.2185041904449463,
+          0.21771198511123657,
+          0.21647459268569946,
+          0.21813826262950897,
+          0.2136821448802948
+        ],
+        "goal_swap_offset_1_control_cut": [
+          0.21548044681549072,
+          0.2177373170852661,
+          0.22019609808921814,
+          0.2182093858718872,
+          0.2168324887752533,
+          0.21643275022506714,
+          0.22098636627197266,
+          0.219200998544693
+        ]
+      },
+      "selected": {
+        "clean": 2,
+        "goal_swap_offset_1": 6,
+        "goal_swap_offset_1_bus_cut": 3,
+        "goal_swap_offset_1_control_cut": 6
+      },
+      "ranking_flip_rate": {
+        "goal_swap_offset_1": 0.32142857142857145,
+        "goal_swap_offset_1_bus_cut": 0.32142857142857145,
+        "goal_swap_offset_1_control_cut": 0.32142857142857145
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.5114285345057803,
+          "eef_approach_progress": -0.2356780332879323,
+          "forecast_error_mse": 1.7144252061843872,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.5797768383507891,
+          "eef_approach_progress": -0.3040263371329411,
+          "forecast_error_mse": 1.6670671701431274,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.4402393716054094,
+          "eef_approach_progress": -0.16448887038756138,
+          "forecast_error_mse": 1.6451292037963867,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.5797768383507891,
+          "eef_approach_progress": -0.3040263371329411,
+          "forecast_error_mse": 1.6670671701431274,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_offset_1_bus_cut": false,
+        "goal_swap_offset_1_control_cut": false
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 2,
+      "task": "turn on the stove and put the moka pot on it",
+      "goal_texts": {
+        "1": "put the black bowl in the bottom drawer of the cabinet and close it"
+      },
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_data_root": "/tmp/worldagen_actions_merged3",
+      "candidate_task_index": 3,
+      "candidate_episode": 6,
+      "scores": {
+        "clean": [
+          0.20898455381393433,
+          0.21252232789993286,
+          0.21175581216812134,
+          0.20964395999908447,
+          0.20927497744560242,
+          0.21061360836029053,
+          0.21461538970470428,
+          0.21445712447166443
+        ],
+        "goal_swap_offset_1": [
+          0.22529461979866028,
+          0.23710182309150696,
+          0.23181948065757751,
+          0.22283996641635895,
+          0.21933893859386444,
+          0.2218051552772522,
+          0.21899330615997314,
+          0.22203251719474792
+        ],
+        "goal_swap_offset_1_bus_cut": [
+          0.2127382904291153,
+          0.22037950158119202,
+          0.21594610810279846,
+          0.21016505360603333,
+          0.21600383520126343,
+          0.21120932698249817,
+          0.21356458961963654,
+          0.21934738755226135
+        ],
+        "goal_swap_offset_1_control_cut": [
+          0.22529461979866028,
+          0.23710182309150696,
+          0.23181948065757751,
+          0.22283996641635895,
+          0.21933893859386444,
+          0.2218051552772522,
+          0.21899330615997314,
+          0.22203251719474792
+        ]
+      },
+      "selected": {
+        "clean": 6,
+        "goal_swap_offset_1": 1,
+        "goal_swap_offset_1_bus_cut": 1,
+        "goal_swap_offset_1_control_cut": 1
+      },
+      "ranking_flip_rate": {
+        "goal_swap_offset_1": 0.5357142857142857,
+        "goal_swap_offset_1_bus_cut": 0.35714285714285715,
+        "goal_swap_offset_1_control_cut": 0.5357142857142857
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.401107030068777,
+          "eef_approach_progress": -0.06869019764411388,
+          "forecast_error_mse": 1.9387363195419312,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.15355197942994084,
+          "eef_approach_progress": 0.1788648529947223,
+          "forecast_error_mse": 1.9182705879211426,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.15355197942994084,
+          "eef_approach_progress": 0.1788648529947223,
+          "forecast_error_mse": 1.833583950996399,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.15355197942994084,
+          "eef_approach_progress": 0.1788648529947223,
+          "forecast_error_mse": 1.9182705879211426,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_offset_1_bus_cut": false,
+        "goal_swap_offset_1_control_cut": false
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 4,
+      "task": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+      "goal_texts": {
+        "1": "pick up the book and place it in the back compartment of the caddy"
+      },
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_data_root": "/tmp/worldagen_actions_merged3",
+      "candidate_task_index": 0,
+      "candidate_episode": 0,
+      "scores": {
+        "clean": [
+          0.2171803116798401,
+          0.22073237597942352,
+          0.22283385694026947,
+          0.22172504663467407,
+          0.22047212719917297,
+          0.22499465942382812,
+          0.2187231481075287,
+          0.2237798273563385
+        ],
+        "goal_swap_offset_1": [
+          0.22653722763061523,
+          0.22819733619689941,
+          0.2211664319038391,
+          0.22826094925403595,
+          0.22931009531021118,
+          0.22912105917930603,
+          0.2284248024225235,
+          0.2224465161561966
+        ],
+        "goal_swap_offset_1_bus_cut": [
+          0.2314603626728058,
+          0.24004894495010376,
+          0.23249909281730652,
+          0.22957667708396912,
+          0.23025286197662354,
+          0.23054568469524384,
+          0.23565898835659027,
+          0.22127504646778107
+        ],
+        "goal_swap_offset_1_control_cut": [
+          0.22653722763061523,
+          0.22819733619689941,
+          0.2211664319038391,
+          0.22826094925403595,
+          0.22931009531021118,
+          0.22912105917930603,
+          0.2284248024225235,
+          0.2224465161561966
+        ]
+      },
+      "selected": {
+        "clean": 5,
+        "goal_swap_offset_1": 4,
+        "goal_swap_offset_1_bus_cut": 1,
+        "goal_swap_offset_1_control_cut": 4
+      },
+      "ranking_flip_rate": {
+        "goal_swap_offset_1": 0.5357142857142857,
+        "goal_swap_offset_1_bus_cut": 0.6428571428571429,
+        "goal_swap_offset_1_control_cut": 0.5357142857142857
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.32881198900350206,
+          "eef_approach_progress": -0.035903949840788096,
+          "forecast_error_mse": 1.5859296321868896,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.49255332948205904,
+          "eef_approach_progress": -0.19964529031934508,
+          "forecast_error_mse": 1.6051874160766602,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.2171422474248605,
+          "eef_approach_progress": 0.07576579173785347,
+          "forecast_error_mse": 1.6622521877288818,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.49255332948205904,
+          "eef_approach_progress": -0.19964529031934508,
+          "forecast_error_mse": 1.6051874160766602,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_offset_1_bus_cut": false,
+        "goal_swap_offset_1_control_cut": false
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 6,
+      "task": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "goal_texts": {
+        "1": "put both the alphabet soup and the cream cheese box in the basket"
+      },
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_data_root": "/tmp/worldagen_actions_merged3",
+      "candidate_task_index": 1,
+      "candidate_episode": 1,
+      "scores": {
+        "clean": [
+          0.23223727941513062,
+          0.22593002021312714,
+          0.22581803798675537,
+          0.22500678896903992,
+          0.2255030870437622,
+          0.22715745866298676,
+          0.22687700390815735,
+          0.23298926651477814
+        ],
+        "goal_swap_offset_1": [
+          0.23092985153198242,
+          0.22543209791183472,
+          0.22479453682899475,
+          0.22895237803459167,
+          0.22993873059749603,
+          0.22907453775405884,
+          0.23068737983703613,
+          0.23644892871379852
+        ],
+        "goal_swap_offset_1_bus_cut": [
+          0.23471006751060486,
+          0.23158837854862213,
+          0.23624269664287567,
+          0.22753334045410156,
+          0.23352402448654175,
+          0.2263730764389038,
+          0.2263619601726532,
+          0.24007020890712738
+        ],
+        "goal_swap_offset_1_control_cut": [
+          0.23092985153198242,
+          0.22543209791183472,
+          0.22479453682899475,
+          0.22895237803459167,
+          0.22993873059749603,
+          0.22907453775405884,
+          0.23068737983703613,
+          0.23644892871379852
+        ]
+      },
+      "selected": {
+        "clean": 7,
+        "goal_swap_offset_1": 7,
+        "goal_swap_offset_1_bus_cut": 7,
+        "goal_swap_offset_1_control_cut": 7
+      },
+      "ranking_flip_rate": {
+        "goal_swap_offset_1": 0.21428571428571427,
+        "goal_swap_offset_1_bus_cut": 0.39285714285714285,
+        "goal_swap_offset_1_control_cut": 0.21428571428571427
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.25149374336370844,
+          "eef_approach_progress": 0.04250028467599015,
+          "forecast_error_mse": 1.591483235359192,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.25149374336370844,
+          "eef_approach_progress": 0.04250028467599015,
+          "forecast_error_mse": 1.6195229291915894,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.25149374336370844,
+          "eef_approach_progress": 0.04250028467599015,
+          "forecast_error_mse": 1.5812190771102905,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.25149374336370844,
+          "eef_approach_progress": 0.04250028467599015,
+          "forecast_error_mse": 1.6195229291915894,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_offset_1_bus_cut": true,
+        "goal_swap_offset_1_control_cut": true
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 7,
+      "task": "put both the alphabet soup and the cream cheese box in the basket",
+      "goal_texts": {
+        "1": "put both moka pots on the stove"
+      },
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_data_root": "/tmp/worldagen_actions_merged3",
+      "candidate_task_index": 4,
+      "candidate_episode": 7,
+      "scores": {
+        "clean": [
+          0.21250292658805847,
+          0.21091321110725403,
+          0.21597319841384888,
+          0.2107592523097992,
+          0.21562251448631287,
+          0.21187597513198853,
+          0.2181529700756073,
+          0.21468585729599
+        ],
+        "goal_swap_offset_1": [
+          0.2172846794128418,
+          0.21542233228683472,
+          0.21823778748512268,
+          0.21391254663467407,
+          0.21922993659973145,
+          0.21479865908622742,
+          0.2136535495519638,
+          0.21696236729621887
+        ],
+        "goal_swap_offset_1_bus_cut": [
+          0.21532779932022095,
+          0.21532201766967773,
+          0.2202277034521103,
+          0.2127491533756256,
+          0.21997606754302979,
+          0.20625154674053192,
+          0.216591015458107,
+          0.21082109212875366
+        ],
+        "goal_swap_offset_1_control_cut": [
+          0.2172846794128418,
+          0.21542233228683472,
+          0.21823778748512268,
+          0.21391254663467407,
+          0.21922993659973145,
+          0.21479865908622742,
+          0.2136535495519638,
+          0.21696236729621887
+        ]
+      },
+      "selected": {
+        "clean": 6,
+        "goal_swap_offset_1": 4,
+        "goal_swap_offset_1_bus_cut": 2,
+        "goal_swap_offset_1_control_cut": 4
+      },
+      "ranking_flip_rate": {
+        "goal_swap_offset_1": 0.35714285714285715,
+        "goal_swap_offset_1_bus_cut": 0.25,
+        "goal_swap_offset_1_control_cut": 0.35714285714285715
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.44062996847747776,
+          "eef_approach_progress": -0.19335437830855456,
+          "forecast_error_mse": 1.6465891599655151,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.22154474274923694,
+          "eef_approach_progress": 0.02573084741968626,
+          "forecast_error_mse": 1.6027477979660034,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.573621522035687,
+          "eef_approach_progress": -0.32634593186676375,
+          "forecast_error_mse": 1.6278067827224731,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.22154474274923694,
+          "eef_approach_progress": 0.02573084741968626,
+          "forecast_error_mse": 1.6027477979660034,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_offset_1_bus_cut": false,
+        "goal_swap_offset_1_control_cut": false
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 9,
+      "task": "put the yellow and white mug in the microwave and close it",
+      "goal_texts": {
+        "1": "put both the alphabet soup and the tomato sauce in the basket"
+      },
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_data_root": "/tmp/worldagen_actions_merged3",
+      "candidate_task_index": 2,
+      "candidate_episode": 2,
+      "scores": {
+        "clean": [
+          0.20626172423362732,
+          0.21178671717643738,
+          0.20581139624118805,
+          0.2033953070640564,
+          0.19961562752723694,
+          0.19131183624267578,
+          0.20264938473701477,
+          0.20892515778541565
+        ],
+        "goal_swap_offset_1": [
+          0.1989092230796814,
+          0.1943124383687973,
+          0.1988498419523239,
+          0.2067360132932663,
+          0.19931554794311523,
+          0.20143958926200867,
+          0.19726845622062683,
+          0.20231613516807556
+        ],
+        "goal_swap_offset_1_bus_cut": [
+          0.19882330298423767,
+          0.19971388578414917,
+          0.1985393911600113,
+          0.2002907693386078,
+          0.1992015838623047,
+          0.20183691382408142,
+          0.19888725876808167,
+          0.20201599597930908
+        ],
+        "goal_swap_offset_1_control_cut": [
+          0.1989092230796814,
+          0.1943124383687973,
+          0.1988498419523239,
+          0.2067360132932663,
+          0.19931554794311523,
+          0.20143958926200867,
+          0.19726845622062683,
+          0.20231613516807556
+        ]
+      },
+      "selected": {
+        "clean": 1,
+        "goal_swap_offset_1": 3,
+        "goal_swap_offset_1_bus_cut": 7,
+        "goal_swap_offset_1_control_cut": 3
+      },
+      "ranking_flip_rate": {
+        "goal_swap_offset_1": 0.6071428571428571,
+        "goal_swap_offset_1_bus_cut": 0.5357142857142857,
+        "goal_swap_offset_1_control_cut": 0.6071428571428571
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.20837026083378826,
+          "eef_approach_progress": 0.11887716725272254,
+          "forecast_error_mse": 1.8822883367538452,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3537921385735148,
+          "eef_approach_progress": -0.02654471048700402,
+          "forecast_error_mse": 1.9191826581954956,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.276979133052676,
+          "eef_approach_progress": 0.05026829503383479,
+          "forecast_error_mse": 1.8715832233428955,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_offset_1_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3537921385735148,
+          "eef_approach_progress": -0.02654471048700402,
+          "forecast_error_mse": 1.9191826581954956,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_offset_1_bus_cut": false,
+        "goal_swap_offset_1_control_cut": false
+      }
+    }
+  ],
+  "scope": "Minimal independent planner test; no claim about native WorldAgen action selection.",
+  "statistics": {
+    "n_tasks": 6,
+    "n_candidates": [
+      8
+    ],
+    "ranking_flip_rate": {
+      "goal_swap_offset_1": {
+        "mean": 0.42857142857142855,
+        "sd": 0.15319721849662296
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "mean": 0.4166666666666667,
+        "sd": 0.1458029608799511
+      },
+      "goal_swap_offset_1_control_cut": {
+        "mean": 0.42857142857142855,
+        "sd": 0.15319721849662296
+      }
+    },
+    "forecast_error_mse": {
+      "clean": {
+        "mean": 1.7265753149986267,
+        "sd": 0.15088759074823296
+      },
+      "goal_swap_offset_1": {
+        "mean": 1.7219964265823364,
+        "sd": 0.154135380487218
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "mean": 1.7035957376162212,
+        "sd": 0.11913384774546937
+      },
+      "goal_swap_offset_1_control_cut": {
+        "mean": 1.7219964265823364,
+        "sd": 0.154135380487218
+      }
+    },
+    "forecast_error_delta_vs_clean": {
+      "goal_swap_offset_1": {
+        "mean": -0.004578888416290283,
+        "sd": 0.03735284482032962
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "mean": -0.022979577382405598,
+        "sd": 0.06178746357427146
+      },
+      "goal_swap_offset_1_control_cut": {
+        "mean": -0.004578888416290283,
+        "sd": 0.03735284482032962
+      }
+    },
+    "selected_action_utility": {
+      "clean": {
+        "cumulative_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "max_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "success_count": 0,
+        "success_rate": 0.0
+      },
+      "goal_swap_offset_1": {
+        "cumulative_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "max_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "success_count": 0,
+        "success_rate": 0.0
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "cumulative_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "max_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "success_count": 0,
+        "success_rate": 0.0
+      },
+      "goal_swap_offset_1_control_cut": {
+        "cumulative_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "max_reward": {
+          "mean": 0.0,
+          "sd": 0.0
+        },
+        "success_count": 0,
+        "success_rate": 0.0
+      }
+    },
+    "utility_delta_vs_clean": {
+      "goal_swap_offset_1": {
+        "mean": 0.0,
+        "sd": 0.0
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "mean": 0.0,
+        "sd": 0.0
+      },
+      "goal_swap_offset_1_control_cut": {
+        "mean": 0.0,
+        "sd": 0.0
+      }
+    },
+    "true_environment_progress": {
+      "clean": {
+        "delta": {
+          "mean": 4.997371716081167e-06,
+          "sd": 1.2961657247677115e-05
+        },
+        "final": {
+          "mean": -0.4087513342566833,
+          "sd": 0.287619877518093
+        }
+      },
+      "goal_swap_offset_1": {
+        "delta": {
+          "mean": 4.997371716081167e-06,
+          "sd": 1.2961657247677115e-05
+        },
+        "final": {
+          "mean": -0.4087513342566833,
+          "sd": 0.287619877518093
+        }
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "delta": {
+          "mean": 4.997371716081167e-06,
+          "sd": 1.2961657247677115e-05
+        },
+        "final": {
+          "mean": -0.4087513342566833,
+          "sd": 0.287619877518093
+        }
+      },
+      "goal_swap_offset_1_control_cut": {
+        "delta": {
+          "mean": 4.997371716081167e-06,
+          "sd": 1.2961657247677115e-05
+        },
+        "final": {
+          "mean": -0.4087513342566833,
+          "sd": 0.287619877518093
+        }
+      }
+    },
+    "true_progress_delta_vs_clean": {
+      "goal_swap_offset_1": {
+        "mean": 0.0,
+        "sd": 0.0
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "mean": 0.0,
+        "sd": 0.0
+      },
+      "goal_swap_offset_1_control_cut": {
+        "mean": 0.0,
+        "sd": 0.0
+      }
+    },
+    "eef_approach_progress": {
+      "clean": {
+        "mean": -0.06204151785877935,
+        "sd": 0.13548479126038993
+      },
+      "goal_swap_offset_1": {
+        "mean": -0.04718672547481525,
+        "sd": 0.17555417468638718
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "mean": -0.023905929635320736,
+        "sd": 0.18557777960446944
+      },
+      "goal_swap_offset_1_control_cut": {
+        "mean": -0.04718672547481525,
+        "sd": 0.17555417468638718
+      }
+    },
+    "eef_approach_progress_delta_vs_clean": {
+      "goal_swap_offset_1": {
+        "mean": 0.01485479238396411,
+        "sd": 0.17921388887813314
+      },
+      "goal_swap_offset_1_bus_cut": {
+        "mean": 0.038135588223458625,
+        "sd": 0.13600700226500942
+      },
+      "goal_swap_offset_1_control_cut": {
+        "mean": 0.01485479238396411,
+        "sd": 0.17921388887813314
+      }
+    },
+    "decision_recovery": {
+      "goal_swap_offset_1_bus_cut": {
+        "matches_clean_count": 1,
+        "matches_clean_rate": 0.16666666666666666
+      },
+      "goal_swap_offset_1_control_cut": {
+        "matches_clean_count": 1,
+        "matches_clean_rate": 0.16666666666666666
+      }
+    },
+    "control_cut_score_identity": {
+      "max_abs_goal_swap_vs_control_cut": 0.0,
+      "interpretation": "matched policy-only cut leaves the independent planner's world score unchanged"
+    },
+    "inference_limits": [
+      "n=6 tasks; report descriptive paired statistics only, no significance claim",
+      "replay environment steps observed: [30]; all sparse rewards were zero and all replays failed",
+      "planner score is fixed CLIP similarity on a deterministic pseudo-image reconstruction of normalized WorldAgen patches"
+    ]
+  }
+}

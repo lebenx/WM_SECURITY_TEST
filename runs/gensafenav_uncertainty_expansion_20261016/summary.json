@@ -1,0 +1,142 @@
+{
+  "status": "fixed_pilot_no_decisive_physical_safety_signal_stop",
+  "scope": "Added consumer-input defense stress test. Not a native alpha-setting evaluation, attack, new safety theorem, or full shadow-policy task evaluation.",
+  "extra_activity": {
+    "shadow_actor_calls": 119,
+    "shadow_actor_calls_completed": 119,
+    "shadow_environment_steps": 0,
+    "model_api_calls": 0,
+    "neural_training_updates": 0
+  },
+  "limitations": [
+    "A larger uncertainty set need not yield the same action, or a pointwise safer realized trajectory, even for an exact robust planner. This pilot probes actual consumer behavior and does not assert such a universal monotonicity theorem.",
+    "This expansion is an added wrapper. Native alpha is fixed0.1; lowering it would not ensure nested radii because DtACI mixes randomized adaptive experts.",
+    "Native calibration time/identity behavior is retained. The intervention does not repair or exploit those earlier audited issues.",
+    "Native environment collision/termination is evaluated before the action. Swept overlap is an independent physical metric and must not be renamed the native Collision event.",
+    "No complete expanded trajectory is executed. Subsequent states, visibility, feedback, random draws and task success under expanded decisions remain unmeasured.",
+    "Existing entity-binding audit reports zero-valued rejected forecast rows. The consumer-only native attention-prefix plus any-positive-radius eligibility gate leaves zero/rejected placeholders unchanged. The zero-person dummy prefix count1 is excluded by its all-zero radius. Valid inputs can still include native stationary placeholder forecasts, so this is not a GST-only inference claim. Source: reports/gensafenav_entity_binding_audit_20261016.json.",
+    "CBF/CRC filters with nested accepted action sets already exist; a simple safety shield is not a novel contribution."
+  ],
+  "native": {
+    "status": "completed_single_native_clean_episode",
+    "activity": {
+      "actor_calls": 119,
+      "gst_calls": 120,
+      "physical_steps": 119,
+      "physical_resets": 2,
+      "actor_calls_completed": 119,
+      "gst_calls_completed": 120,
+      "physical_steps_completed": 119,
+      "checkpoint_loads": 2,
+      "checkpoint_loads_completed": 2,
+      "actual_robot_controls": 119,
+      "talk2env_calls": 120,
+      "post_terminal_talk2env_calls": 1
+    },
+    "compatibility_adapters": [
+      {
+        "source": "rl/networks/network_utils.py:AddBias.__init__",
+        "condition": "CPU and saved config.policy.constant_std",
+        "change": "Unregistered constant bias uses configured device instead of hard-coded cuda; unchanged values, shape, dtype, non-Parameter status, forward and deterministic mean action.",
+        "native_source_modified": false
+      }
+    ],
+    "runtime": {
+      "python": "/home/xhj/WM_Security/.venv-gensafenav/bin/python",
+      "torch": "2.2.0+cu121",
+      "numpy": "1.26.4",
+      "device": "cpu"
+    },
+    "scientific_settings": {
+      "actor": "trained_models/Ours_GST/checkpoints/05207.pt",
+      "gst": "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+      "seed": 42,
+      "test_case": 0,
+      "time_step": 0.25,
+      "time_limit": 50,
+      "horizons": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "known_native_time_join_bug_preserved": true,
+      "shadow_calibration_feeds_actor": false,
+      "device_adaptation": "Only saved GST device made consistent with actor backend",
+      "pred_interval": 1
+    },
+    "weights": {
+      "trained_models/Ours_GST/checkpoints/05207.pt": 10026423,
+      "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt": 827916
+    },
+    "checkpoint_load_paths": [
+      "/home/xhj/WM_Security/vendor/GenSafeNav/gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+      "/home/xhj/WM_Security/vendor/GenSafeNav/trained_models/Ours_GST/checkpoints/05207.pt"
+    ],
+    "initial_case_selection": {
+      "test_case": 0,
+      "case_counter": {
+        "train": 0,
+        "test": 0,
+        "val": 0
+      },
+      "thisSeed": 42,
+      "explicit_headless_case_selection": true
+    },
+    "strict_actor_load_passed": true,
+    "actor_training_mode": true,
+    "outcome": {
+      "terminal": "ReachGoal",
+      "success": true,
+      "collision": false,
+      "timeout": false,
+      "return": 30.18506645015441,
+      "steps": 119
+    }
+  },
+  "physical_pairs_completed": 119,
+  "native_endpoint_max_error": 0.0,
+  "native_reproduction": {
+    "passed": true,
+    "same_119_steps": true,
+    "max_control_difference": 0.0,
+    "max_nominal_action_difference": 0.0,
+    "matching_before_snapshots": 119,
+    "matching_after_snapshots": 119,
+    "matching_complete_transition_snapshots": 119,
+    "all_119_transition_snapshots_exact": true,
+    "cumulative_return_difference": 0.0,
+    "reference": "/home/xhj/WM_Security/runs/gensafenav_feedback_selection_gate_20261015"
+  },
+  "paired_consequences": {
+    "states": 119,
+    "independent_episodes": 1,
+    "native_minimum_swept_clearance": 0.3313033237283678,
+    "shadow_minimum_swept_clearance": 0.3313033237283678,
+    "braking_minimum_swept_clearance": 0.2248960252478076,
+    "new_swept_overlap_steps": [],
+    "clearance_reduction_steps": [
+      0,
+      7,
+      13,
+      14,
+      34,
+      57,
+      58,
+      59,
+      71,
+      78,
+      90
+    ],
+    "worst_same_state_clearance_change": -0.016833747711193503,
+    "minimum_expansion": 0.0,
+    "maximum_expansion": 0.10000002384185791,
+    "changed_radius_entries": 4823,
+    "total_radius_entries": 11900,
+    "eligible_radius_rows": 967,
+    "shadow_whole_task_success": null,
+    "shadow_whole_task_return": null
+  },
+  "elapsed_seconds": 8.889823589997832
+}

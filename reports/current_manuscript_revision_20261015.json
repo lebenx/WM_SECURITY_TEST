@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-15T11:42:57.099835+00:00",
+  "status": "completed_evidence_aligned_working_manuscript_not_research_goal",
+  "previous_turn": "Completed the frozen two-mean 30-control real replays and calibrated terminal-truth analysis; retain their original execution records.",
+  "this_turn": "Source-level mechanism screening, primary-source context, evidence-aligned manuscript, cached-results figure, and visible historical-package corrections.",
+  "working_title": "From Forecast Sensitivity to Decision Evidence: A Working Audit of Pretrained World-Model Agents",
+  "artifacts": {
+    "tex": "reports/world_model_decision_audit_working.tex",
+    "pdf": "reports/world_model_decision_audit_working.pdf",
+    "figure_pdf": "reports/figures/dino_terminal_truth_countercheck_20261015.pdf",
+    "figure_svg": "reports/figures/dino_terminal_truth_countercheck_20261015.svg",
+    "figure_script": "scripts/plot_dino_terminal_truth_countercheck.py",
+    "entry": "reports/README_goal_bus_submission.md",
+    "manifest": "reports/goal_bus_submission_manifest.json",
+    "original_package_snapshot": "reports/historical_goal_bus_package_20261015/snapshot.json",
+    "pdf_text_check": "reports/world_model_decision_audit_working_text_check.txt",
+    "visual_checks": [
+      "reports/figures/working_manuscript_page_1_20261015.png",
+      "reports/figures/working_manuscript_page_8_20261015.png"
+    ]
+  },
+  "why_revision_was_needed": "The archive already classified the legacy manuscript as historical, but the actual TeX/PDF and package README still displayed superseded current/submission claims without a visible notice. A compiled file is not valid current scientific evidence.",
+  "historical_material_preserved": {
+    "original_files_copied": 8,
+    "snapshot_manifest": "reports/historical_goal_bus_package_20261015/snapshot.json",
+    "old_pdf_change": "Rebuilt with prominent historical notice; old scientific text remains historical, not repaired or revalidated.",
+    "old_markdown_changes": [
+      "reports/goal_bus_paper_draft_cn.md",
+      "reports/goal_bus_iclr_research_report_cn.md",
+      "reports/goal_bus_completion_audit_cn.md",
+      "reports/goal_bus_reproduction_manifest_cn.md"
+    ],
+    "experiments_modified": false,
+    "hashes_recomputed": false
+  },
+  "source_screen": [
+    {
+      "system": "Cosmos Policy",
+      "decision": "NONE",
+      "finding": "Value is conditioned on current observations, candidate actions and future slots, not only the future. Remaining Goal, RNG and future-latent operations repeat screened mechanisms; no distinct permission-constrained test accepted.",
+      "source_paths": [
+        "scripts/cosmos_policy_native_inference.py",
+        "reports/cosmos_value_training_audit_20261014.json"
+      ],
+      "anchors": [
+        "get_future_state_prediction: n_cond=5",
+        "get_value_prediction: n_cond=8",
+        "sample_conditioned: fixed-prefix equality check"
+      ]
+    },
+    {
+      "system": "TD-MPC2",
+      "decision": "NONE",
+      "finding": "Each planning call freshly encodes the real observation. Imagined latents are local; inspected LayerNorm/SimNorm have no cross-batch running statistics. Remaining previous-mean, RNG, task and scale channels are already archived.",
+      "source_paths": [
+        "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+        "vendor/tdmpc2/tdmpc2/evaluate.py",
+        "vendor/tdmpc2/tdmpc2/common/layers.py",
+        "vendor/tdmpc2/tdmpc2/common/world_model.py"
+      ],
+      "anchors": [
+        "tdmpc2.py:153",
+        "tdmpc2.py:205",
+        "evaluate.py:80",
+        "layers.py:84",
+        "layers.py:101",
+        "world_model.py:114",
+        "world_model.py:212"
+      ]
+    },
+    {
+      "system": "DINO-WM reproduced baseline",
+      "decision": "NONE",
+      "finding": "A proposed accuracy-improving intervention causing return loss is not separated from the already measured proxy/utility mismatch. No distinct new mechanism was accepted from this screen.",
+      "source_paths": [
+        "reports/dino_first_query_terminal_truth_decision_20261015.json",
+        "reports/dino_first_query_native_objective_decomposition_20261015.json"
+      ]
+    }
+  ],
+  "screen_limits": "NONE is a disposition of the inspected candidates, not proof of system safety or impossibility of future mechanisms. No need for an existing deployed adversary was imposed on researcher-defined causal experiments.",
+  "current_claims": {
+    "worldagen": "One corrected source episode, six correlated transitions. Same-scene Goal-Swap patch MSE 0.0554368403 -> 0.0678743850; Bus-Cut 0.0551375442; matched Control-Cut unchanged from Swap. No native frozen-policy forecast ranking or task-harm implication.",
+    "cosmos": "29/30 -> 28/30 continuous Swap; 3/30 first choices flip. One real original-Goal continuation establishes first-block sufficiency for the recorded failure, not complete mediation or a qualified defense.",
+    "dino": "One native root has dense-return loss and exact binding restoration, with improved success timing/occupancy. In a post-hoc two-mean bank, canonical terminal forecasts improve while actual-future native scoring prefers lower physical utility.",
+    "goal_invariance": "Fixed-belief physical do(A) equivalence and observational training-conditionals are different targets. Arbitrary legal Goal text is not necessarily preference-only metadata.",
+    "go": "Retain bounded decision effects and matched counterchecks.",
+    "no_go": "General novel security mechanism, general useful Bus-Cut defense, independent generalization and submission readiness remain unestablished."
+  },
+  "primary_context_sources": [
+    {
+      "url": "https://worldagen.github.io/",
+      "scope": "Official method description and model-specific isolation claim"
+    },
+    {
+      "url": "https://arxiv.org/abs/2411.04983",
+      "scope": "Title, authors, abstract; no local reproduction of paper benchmark"
+    },
+    {
+      "url": "https://arxiv.org/abs/2601.16163",
+      "scope": "Title, authors, abstract; published benchmark numbers not imported into local results"
+    },
+    {
+      "url": "https://arxiv.org/html/2608.12959v1",
+      "scope": "Primary abstract and method/limitation discussion inspected in this turn; no local reproduction"
+    },
+    {
+      "url": "https://arxiv.org/abs/2605.01950",
+      "scope": "Primary abstract only; full backdoor method and experiments not reproduced"
+    }
+  ],
+  "document_validation": {
+    "status": "compiled_and_reviewed_current_working_document",
+    "compiler": "Tectonic 0.15.0, cached resources only",
+    "command": "cd reports\ntectonic --only-cached --keep-logs world_model_decision_audit_working.tex",
+    "exit_code": 0,
+    "pages": 10,
+    "pdf_bytes": 98058,
+    "compiler_warnings_observed": false,
+    "pdf_text_has_unresolved_references": false,
+    "pdf_numeric_strings_checked": 9,
+    "independent_source_reviews": [
+      "WorldAgen/Cosmos/AlphaBrain numeric and causal-scope review passed",
+      "DINO numeric, utility and inference-unit review passed; figure caption clarified to distinguish archived physical replays from current plotting"
+    ],
+    "visual_review_pages": [
+      1,
+      8
+    ],
+    "historical_pdf_notice_verified": true,
+    "historical_pdf_pages": 11,
+    "scientific_experiments_rerun": false,
+    "submission_ready": false
+  },
+  "compiler_attempts_preserved": [
+    "Local pdflatex failed because its format file is missing.",
+    "Legacy TeX Tectonic attempts with myheadings failed on an uncached slanted font; plain page style compiled successfully.",
+    "Current working TeX with plain page style compiled successfully using only cached resources."
+  ],
+  "activity": {
+    "new_model_calls": 0,
+    "new_environment_steps": 0,
+    "gemini_or_other_model_api_calls": 0,
+    "training_updates": 0,
+    "scientific_experiments_rerun": 0,
+    "new_cached_figure_script_runs": 1,
+    "large_weight_hashes_recomputed": 0,
+    "primary_source_web_reads": true
+  },
+  "next_action": "Seek a materially distinct, permission-constrained mechanism with a decisive low-cost control before any new scientific run. Do not expand the same DINO aliases, reopen the closed Cosmos first-choice bank, or restart a multi-hour NanoWM capability panel on this evidence.",
+  "research_goal_status": "active_unachieved",
+  "new_experiment_accepted": null,
+  "dedicated_gpu_recommended": false,
+  "novelty_score": null
+}

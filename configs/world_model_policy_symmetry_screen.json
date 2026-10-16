@@ -1,0 +1,57 @@
+{
+  "date": "2026-10-09",
+  "status": "reflection_not_promoted_after_numerical_failure",
+  "source": "runs/tdmpc_policy_symmetry_v1/summary.json",
+  "interrupted_attempt": "runs/tdmpc_policy_symmetry_v0/summary.json",
+  "script": "scripts/probe_tdmpc_policy_symmetry.py",
+  "report_note_cn": "候选“保持策略下的状态分布、反转规划中的动作效果”未通过原生数值检验。行走/到点的有效动作分量分别有66.78%/2.37%饱和到±1，逆tanh反射无法恢复饱和前信息，成对动作最大误差均为2。接球的策略配对预测RMSE仅3.72e-7，接近保持，但对规划动作连续反射两次的恢复误差0.00118超过新设短测门槛；不能把它等同于策略分布检验失败。提前完成的一个行走干预回合得38.43（原生975.51），但其分布保持已经失败，因此不是预期机制的正证据。随后中止符号翻转对照（最后记录100步），其余任务回合未运行。三任务的带动作标签一步误差分别增至原来的27.38/94.05/272.43倍，普通配对预测检查会暴露变化。只做冻结推理，无训练或API调用；不接受新安全主张，不扩大这一反射构造。",
+  "measurements": [
+    {
+      "task": "walker-walk",
+      "prior_action_endpoint_fraction": 0.66778564453125,
+      "paired_action_max_abs": 2.0,
+      "paired_prediction_rmse": 0.11191138817111358,
+      "double_reflection_prediction_max_abs": 0.9046778082847595,
+      "action_labelled_mse_ratio": 27.3753181913803,
+      "numerical_gate_passed": false
+    },
+    {
+      "task": "reacher-easy",
+      "prior_action_endpoint_fraction": 0.023681640625,
+      "paired_action_max_abs": 2.0,
+      "paired_prediction_rmse": 0.00949086955014386,
+      "double_reflection_prediction_max_abs": 0.4826717674732208,
+      "action_labelled_mse_ratio": 94.04829380105261,
+      "numerical_gate_passed": false
+    },
+    {
+      "task": "cup-catch",
+      "prior_action_endpoint_fraction": 0.0,
+      "paired_action_max_abs": 2.2649765014648438e-06,
+      "paired_prediction_rmse": 3.7159130352438796e-07,
+      "double_reflection_prediction_max_abs": 0.0011754035949707031,
+      "action_labelled_mse_ratio": 272.43310188799677,
+      "numerical_gate_passed": false
+    }
+  ],
+  "completed_intervention": {
+    "task": "walker-walk",
+    "seed": 31,
+    "clean_return": 975.5114962868392,
+    "intervened_return": 38.42984617035836,
+    "supports_preservation_mechanism": false
+  },
+  "conditions_not_run": [
+    "reacher/cup task episodes",
+    "double-reflection recovery episode"
+  ],
+  "new_completed_episodes": 1,
+  "new_completed_steps": 500,
+  "new_total_steps_lower_bound": 600,
+  "exact_total_steps": null,
+  "training_updates": 0,
+  "api_requests": 0,
+  "scope": "Three-task numerical screen, one completed intervention plus one interrupted comparator; one seed. No valid cross-task preservation attack or stealth evidence. Cup paired prior sample check is near-invariant and differs from the failed off-policy double-reflection repair check.",
+  "accepted_security_claim": null,
+  "next_requirement": "Do not tune this inverse-tanh reflection to manufacture a preservation result or count its walker return drop as law-preserving security evidence. State-only/policy-specific model equivalence is known and does not protect action-labelled prediction. Seek a substantive security operation in competent native decision loops, using measured walker/cup/prior baselines. A future-action candidate remains untested: classic causal-confounding theory already covers the generic mechanism; the inspected UWM configuration only predicts post-action endpoints and is unsuitable for a prefix intervention, while FLEX-WAM code/weights are withheld in the inspected paper. Preserve broad novelty and multiple-core-task goals; obtain causal evidence before long training."
+}

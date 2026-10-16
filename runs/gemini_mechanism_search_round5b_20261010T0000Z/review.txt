@@ -1,0 +1,88 @@
+### Meta-Review on Novelty and Feasibility
+
+None of the standard empirical shortcuts (support manipulation, sampling ratio modification, reward-space shift) clear an ICLR novelty threshold of 6/10. To isolate genuine structural mechanisms, the candidates below exploit strict, non-tampered algebraic and geometric invariants within the listed architectures:
+1. Spectral rank-collapse inside the SimNorm sphere of TD-MPC2.
+2. Lie-bracket/non-holonomic drift induced by alternating-axis real-action TTT chunking in WorldAgen.
+3. Covariance manifold contraction (Fisher-metric flattening) in PETS's unweighted negative log-likelihood (NLL) optimization.
+
+---
+
+### Candidate 1: SimNorm Latent Orthonormal Null-Steering
+
+* **Broad Claim:** In latents constrained to the unit hypersphere via SimNorm, injecting authentic orthogonal action sequences contracts the latent transition Jacobian spectrum toward an anisotropic low-rank manifold, causing native cross-entropy planners to hallucinate non-existent terminal barriers.
+* **Exact Native Operation:** Native TD-MPC2 dynamics update $z_{t+1} = d_\theta(\text{SimNorm}(z_t), a_t)$. Authentic transitions $(s_t, a_t, s_{t+1})$ pass through standard replay sampling and standard Adam update minimizing native multi-task loss $\mathcal{L}_{\text{dyn}} = \|z_{t+1} - d_\theta(z_t, a_t)\|_2^2 + \mathcal{L}_{\text{rew}} + \mathcal{L}_{\text{Q}}$. No synthetic latents, no loss alterations.
+* **Invariant Preserved:** 
+  $$\|z_t\|_2 = 1 \quad \forall t \in [0, H]$$
+  Exact unit norm and bounded latent trajectory length are strictly enforced by the native SimNorm layer.
+* **Primary Prior & Novelty Boundary:** 
+  * *Prior:* Hansen et al. (TD-MPC2, 2024) introduced SimNorm to stabilize high-dimensional latent rollouts without exploding embeddings.
+  * *Boundary:* Existing failures of SimNorm assume capacity starvation. This mechanism demonstrates that *orthogonally alternating authentic inputs* collapse the Jacobian singular values $\sigma_k(\nabla_z d_\theta) \to 0$ for indices $k > d_{\text{eff}}$ without changing state prediction error on training distributions, restricting the native MPC sampling coverage to a lower-dimensional Riemannian sub-manifold.
+* **Two-Seed Falsifier:** 
+  * *Seed $S_1$ (Natural exploration):* Action diversity metric $\mathbb{E}[a_t^\top a_{t+1}] \approx 0$ with random initial weights.
+  * *Seed $S_2$ (Ordered orthogonal sequence):* Identical marginal action distribution, but ordered via alternating orthogonal pairs $a_t \perp a_{t+1}$. 
+  * *Falsification Condition:* If the singular value spectrum of the empirical Jacobian $\frac{1}{N}\sum_{i=1}^N \mathbf{J}_z(d_\theta(z^{(i)}, a^{(i)}))$ maintains a condition number $\kappa \le 1.5 \times \kappa_{\text{init}}$ across both seeds, or if native MPPI/CEM task performance on MT30 evaluates within $\pm 3\%$ between $S_1$ and $S_2$, the mechanism is falsified.
+* **Defense:** Native dynamic spectral normalization: apply power iteration to normalize the dynamic model's intermediate linear layer weights by their largest singular value, or evaluate test-time rollouts with an explicit isotropic isometric regularization penalty $\lambda_{\text{iso}} \|\mathbf{J}^\top \mathbf{J} - \mathbf{I}\|_F^2$ during fine-tuning.
+* **Carrier Plan:** 
+  * *Target:* TD-MPC2 `mt30-48M`.
+  * *Setup:* Train on authentic multi-task offline buffers. Filter the training feed to alternate authentic transitions along orthogonal task axes using the existing task-ID conditioned batch sampler. Verify MPC latent plan degradation on unseen evaluation environments without altering loss functions or optimizer states.
+
+---
+
+### Candidate 2: Non-Holonomic Lie-Bracket Drift via Commutator Chunking
+
+* **Broad Claim:** Interleaving non-commuting authentic action-chunks during Test-Time Training (TTT) induces an uncorrected Lie-bracket state drift in the autoregressive attention maps, breaking open-loop forward rollout consistency while leaving autoregressive chunk reconstruction loss minimal.
+* **Exact Native Operation:** Native WorldAgen state/action chunked forward pass:
+  $$S_{k+1} = \text{Transformer}_\phi(S_k, A_k)$$
+  under native online TTT:
+  $$\phi \leftarrow \phi - \eta \nabla_\phi \mathcal{L}_{\text{TTT}}(S_{k+1}, \hat{S}_{k+1})$$
+  using authentic environment observations and actions packed into fixed chunk sizes $K$.
+* **Invariant Preserved:** 
+  $$\mathcal{L}_{\text{TTT}}(S_{k:k+1}) < \epsilon$$
+  Exact 1-step chunk prediction error is maintained below the nominal convergence threshold throughout deployment.
+* **Primary Prior & Novelty Boundary:**
+  * *Prior:* Sun et al. (Test-Time Training, 2024) and Action-Chunked World Models (WorldAgen, 2024) show that inner-loop adaptation to streaming tokens tracks non-stationary environments.
+  * *Boundary:* Prior literature attributes rollout drift to compounding autoregressive errors. This mechanism identifies a purely geometric vulnerability: when continuous dynamics non-commutativity satisfies $[f_{A_1}, f_{A_2}] \neq 0$, authentic sequential execution of chunk $A_1$ then chunk $A_2$ updates model weights $\phi$ such that the open-loop multi-chunk composition $\Phi_{A_2} \circ \Phi_{A_1}$ drifts along the Lie bracket direction by an amount $O(K^2 [A_1, A_2])$ that cannot be registered by the single-chunk causal attention window.
+* **Two-Seed Falsifier:** 
+  * *Seed $A$:* Stream sequential chunks generated by canonical path ordering $(A_x \to A_y \to A_x \to A_y)$.
+  * *Seed $B$:* Stream symmetric reversed chunks $(A_y \to A_x \to A_y \to A_x)$ under equivalent environmental starting conditions.
+  * *Falsification Condition:* If the open-loop state prediction trajectory divergence $\|\hat{S}_{t+H}^{(A)} - \hat{S}_{t+H}^{(B)}\|$ matches the ground-truth physical divergence within bounded tracking error ($\le 5\%$), or if the drift is eliminated when chunk size $K \to 1$, the mechanism reduces to trivial autoregressive drift and is falsified.
+* **Defense:** Symmetrized Trotter-Strang chunk splitting within the native policy inference pipeline: instead of single-pass chunk ingestion $(A_1, A_2)$, split the native execution chunks into balanced forward-backward half-steps $\frac{1}{2} A_1 \to A_2 \to \frac{1}{2} A_1$ before passing latents to the inner-loop update.
+* **Carrier Plan:**
+  * *Target:* WorldAgen fixed action-chunk Transformer with real-action TTT.
+  * *Setup:* Ingest legal trajectory chunks from continuous control environments (e.g., Franka manipulation). Evaluate the native online TTT loop on sequences containing non-commuting SE(3) actions without modifying the context length, the inner Adam steps, or injecting out-of-distribution transitions.
+
+---
+
+### Candidate 3: Fisher Information Rank Starvation in Gaussian Epistemic Ensembles
+
+* **Broad Claim:** Maximum-likelihood training of Gaussian MLP dynamics ensembles on trajectories with locally identical Hessian signatures contracts the predictive covariance manifold, inducing catastrophic confidence over-estimation in native CEM without altering the replay buffer's empirical support.
+* **Exact Native Operation:** Native MBRL-Lib / PETS ensemble dynamics update:
+  $$\mathcal{L}_{\text{NLL}}(\theta_e) = \sum_{t} \left[ \log \det \mathbf{\Sigma}_{\theta_e}(s_t, a_t) + (s_{t+1} - \mu_{\theta_e}(s_t, a_t))^\top \mathbf{\Sigma}_{\theta_e}^{-1}(s_t, a_t) (s_{t+1} - \mu_{\theta_e}(s_t, a_t)) \right]$$
+  across ensemble heads $e \in \{1, \dots, E\}$. Native cross-entropy method (CEM) uses the resulting variance for epistemic trajectory ranking:
+  $$J_{\text{CEM}}(a_{0:H}) = \mathbb{E}_e[\hat{R}] - \beta \operatorname{Var}_e(\hat{R})$$
+* **Invariant Preserved:**
+  $$\mu_e(s, a) \in \operatorname{supp}(p_{\text{data}}), \quad \operatorname{Tr}(\mathbf{\Sigma}_e(s, a)) > 0 \quad \forall e \in [1, E]$$
+  No out-of-distribution inputs, zero gradient tampering, and positive-definiteness of predictive covariance matrices are strictly preserved.
+* **Primary Prior & Novelty Boundary:**
+  * *Prior:* Chua et al. (PETS, 2018) established that ensembles of Gaussian MLPs prevent model exploitation by outputting high epistemic variance in unvisited or sensitive regions.
+  * *Boundary:* Existing work assumes that the ensemble variance correlates with actual predictive error. This mechanism demonstrates that training on trajectories that share identical second-order directional derivatives along a specific manifold vector $v$ forces the ensemble parameter Jacobians to align ($\nabla_\theta \mu_i \approx \nabla_\theta \mu_j$), collapsing the empirical Fisher Information Matrix $\mathbf{F}(\theta)$ rank along $v$. As a direct mathematical result, the ensemble variance $\operatorname{Var}_e(\hat{s}_{t+H}) \to 0$ precisely along the direction of highest physical divergence, causing the native CEM planner to commit fully to paths with catastrophic actual errors.
+* **Two-Seed Falsifier:**
+  * *Seed 1 (Isotropic variance):* Authentic trajectories selected with high directional Hessian entropy.
+  * *Seed 2 (Iso-Hessian alignment):* Authentic trajectories matching identical state-action coverage but constrained to equivalent local second derivatives $\nabla_a^2 s_{t+1}$.
+  * *Falsification Condition:* If the inter-ensemble model disagreement $\frac{1}{E}\sum_e \|\mu_e - \bar{\mu}\|^2$ evaluated at off-manifold points along vector $v$ does not drop by $>70\%$ under Seed 2 compared to Seed 1, or if CEM does not sample the degraded paths at least $3\times$ more frequently under Seed 2, the mechanism is falsified.
+* **Defense:** Explicit non-parametric epistemic regularizer: compute the empirical rank of the ensemble gradient Gram matrix $G_{ij} = \langle \nabla_\theta \mu_i, \nabla_\theta \mu_j \rangle$ during evaluation, and inject random orthogonal Gaussian noise into the CEM elite selection score when $\operatorname{rank}(G) < E$.
+* **Carrier Plan:**
+  * *Target:* MBRL-Lib GaussianMLP ensemble running native PETS and CEM planning.
+  * *Setup:* Train a 5-model ensemble on authentic HalfCheetah or Pusher transitions. Sort native training batches such that local acceleration curvatures are aligned along degenerate task axes, keeping state/action distributions within $1\sigma$ of nominal baselines. Evaluate standard CEM plan success rates.
+
+---
+
+### Comparative Evaluation Against Novelty 6 Threshold
+
+| Candidate | Structural Origin | Relies on Data Support Deficit? | Native Carrier Fit | Estimated Novelty |
+| :--- | :--- | :--- | :--- | :--- |
+| **1. SimNorm Null-Steering** | Geometric (Spectral collapse on Hypersphere) | **No** (Marginals remain uniform) | TD-MPC2 `mt30-48M` (Exact match) | **7.5 / 10** |
+| **2. Lie-Bracket Drift** | Algebraic (Non-commutativity under TTT) | **No** (Valid continuous paths) | WorldAgen Chunked Transformer | **8.0 / 10** |
+| **3. Fisher Rank Starvation** | Differential Geometric (Fisher Metric alignment) | **No** (Authentic $(s,a,s')$ support) | MBRL-Lib PETS/GaussianMLP | **6.5 / 10** |
+
+All three candidates operate entirely through existing forward passes, losses, and native planning code without requiring synthetic data, out-of-support states, or external tampering. Candidates 1 and 2 present genuinely novel attack surfaces rooted in the mathematical formulations of the architectures themselves.

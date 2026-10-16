@@ -1,0 +1,14 @@
+{
+  "decision": "PROMOTE_ONE",
+  "novelty_score": "7.3",
+  "one_sentence_claim": "In multi-task world models lacking provenance-conditioned latent representations, truthful trajectory updates that satisfy physical conservation laws in a source domain inject valid manifold-contracting dynamics that causally project unvisited target-task states into dead-end invariant subspaces, inducing failure despite near-zero one-step prediction error.",
+  "mechanism": "Shared-latent subspace projection collapse: A shared encoder-dynamics architecture maps distinct task domains onto a shared representation space without explicit task-provenance keys. An attacker executes legal, dynamically stable maneuvers in Task A (e.g., Cheetah braking/singular-posture limits) whose genuine physical state transitions bias the shared latent Jacobians. When the shared dynamics model updates on these valid transitions, its principal contraction modes align with the source task's invariant manifold. At test time in Task B (e.g., Walker), the native horizon-H planner simulates rollouts through these shared Jacobians, which act as a directional projection operator: dynamically reachable recovery states in Task B are falsely modeled as collapsing into the source invariant attractor, causing the planner to reject viable paths and select suboptimal control actions.",
+  "carrier_and_gate": "TD-MPC2 mt30-48M checkpoint evaluated via horizon-3 native MPC on held-out Walker-Run after a 100-gradient-step update on 2,000 legal Cheetah-Run limit-cycle transitions (<60s on an A100 GPU).",
+  "strong_baselines": [
+    "Uniform multi-task replay buffer balancing with Task-ID routing",
+    "Representation-regularized updates via spectral Jacobian clipping / Lipschitz-bounded latent transitions",
+    "Independent task-modular adapter heads (LoRA dynamics) with frozen shared representations"
+  ],
+  "falsifier": "The hypothesis is falsified if an orthogonal task-provenance token appended to the latent state fails to prevent Target B performance degradation under identical updates, or if the degradation can be explained purely by Target B open-loop dynamics validation error (MSE > 0.05 on held-out Walker transitions) rather than latent projection distortion.",
+  "prior_art_boundary": "Unlike SWAAP/TRAP/OEP which depend on malicious reward hacking, synthetic observation perturbations, or direct policy poisoning, this mechanism uses strictly authentic, uncorrupted transitions. Unlike World Models Lie, it requires no post-hoc hallucination tampering or prompt injection. Unlike generic negative transfer, the performance collapse is driven specifically by the directional contraction of the shared latent Jacobian acting as an unintended counterfactual constraint during planning, despite exact one-step physical accuracy."
+}

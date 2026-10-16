@@ -1,0 +1,16 @@
+{
+  "verdict": "REJECT_AS_NOVELTY_CLAIM_ACCEPT_AS_ARCHITECTURE_OBSERVATION",
+  "novelty_score": 2,
+  "overlap_risks": [
+    "Trivial consequence of bidirectional cross-attention and global sequence conditioning in non-causal diffusion denoisers.",
+    "Well-documented future-action leakage in sequence-level video diffusion architectures without causal temporal masking (e.g., acknowledged explicitly in OpenWAM mask configurations).",
+    "Conflating expected bidirectional latent diffusion behavior with a novel 'conditional field' mechanism."
+  ],
+  "minimum_next_gate": "Demonstrate that future-action leakage causes downstream decision-making harm without decoding: evaluate closed-loop MPC/policy rollout where suffix action perturbation flips an early-step safety-critical action decision (e.g., collision avoidance) into a failure, compared against a strictly causal temporal baseline.",
+  "falsifiers": [
+    "Enforcing a causal attention mask over temporal tokens reduces the early-slot delta to numerical epsilon, confirming standard bidirectional leakage rather than an emergent field mechanism.",
+    "The early latent delta magnitude (0.07-0.17) fails to shift downstream policy action selections or value-function estimates beyond standard Gaussian noise tolerance.",
+    "A baseline sequence diffusion model with global pooling/cross-attention displays identical early-step perturbation profiles across arbitrary sequence conditioning."
+  ],
+  "recommendation": "Do not frame this as a novel world-model mechanism or an intrinsic security failure. It is standard non-causal conditioning behavior. A two-task gate is insufficient unless it explicitly evaluates closed-loop safety degradation (e.g., MPC failure induced by adversarial suffix perturbation) against a causal ablation."
+}

@@ -1,0 +1,249 @@
+{
+  "schema_version": 1,
+  "status": "completed_read_only_contract_correction",
+  "local_report_date": "2026-10-15",
+  "purpose": "Correct the interpretation of archived OPINE generated-planner probes and the later native replay compatibility stop. No new experiment is proposed or executed.",
+  "upstream": {
+    "repository": "https://github.com/david-courtis/opine-world",
+    "commit": "cf957ffa660f72f19beeec0355bc350c774188d5",
+    "commit_checked_from_local_git": true,
+    "historical_synthesis_prompt_reconstructed": false
+  },
+  "planner_ownership": {
+    "fixed_upstream_entry": {
+      "path": "vendor/opine-world/src/opine_world/synth_loop/planner.py",
+      "checked_lines": [
+        [
+          123,
+          155
+        ],
+        [
+          433,
+          460
+        ],
+        [
+          544,
+          578
+        ],
+        [
+          472,
+          540
+        ]
+      ],
+      "finding": "load_model extracts planner from the synthesized module. plan_from_model calls that generated planner and validates a returned plan using the same model. It does not call the generic _generic_bfs helper on this entry path."
+    },
+    "generated_programs": [
+      {
+        "path": "runs/opine_query_memory_v0/round_063/game_engine.py",
+        "checked_lines": [
+          [
+            2456,
+            2476
+          ],
+          [
+            2479,
+            2511
+          ],
+          [
+            2514,
+            2547
+          ]
+        ]
+      },
+      {
+        "path": "runs/opine_query_memory_v0/round_086/game_engine.py",
+        "checked_lines": [
+          [
+            3195,
+            3215
+          ],
+          [
+            3218,
+            3250
+          ],
+          [
+            3253,
+            3286
+          ]
+        ]
+      }
+    ],
+    "action_issue": "Both author-released synthesized programs have level-specific _planner_actions cases for levels 2 through 5, but no level-6 case. Level 6 therefore falls back to movement plus the older clicks (48,37) and (48,20), omitting the witnessed click (51,26). This is an omission in these generated programs, not a hard-coded L6 action table in the fixed upstream planner.",
+    "key_issue": "Their generated _planner_key also lacks a level-6-specific case and falls back to older frame features. Its key contains no snapshot of the module hidden globals. This is a source-level representational limitation; this review does not claim an experimentally measured key collision caused all failed probes.",
+    "l6_actions_label": "L6_actions denotes the missing level-6 candidate-action handling; it is not asserted to be a literal existing function name.",
+    "scope": "The generated planners are components actually delegated to by the native entry point. Distinguishing ownership does not remove the integration concern, but prevents attributing game-specific omissions to the fixed generic planner itself.",
+    "explicit_frame_copy_limit": {
+      "path": "vendor/opine-world/src/opine_world/synth_loop/planner.py",
+      "checked_lines": [
+        [
+          360,
+          370
+        ],
+        [
+          389,
+          420
+        ],
+        [
+          433,
+          460
+        ]
+      ],
+      "finding": "Deep copies protect explicit frame/action objects. These paths do not themselves snapshot and restore arbitrary generated-module globals."
+    }
+  },
+  "budget_correction": {
+    "historical_plan": "runs/opine_query_memory_v0/plan.json",
+    "historical_runner": {
+      "path": "scripts/screen_opine_query_memory.py",
+      "checked_lines": [
+        [
+          146,
+          168
+        ],
+        [
+          198,
+          207
+        ]
+      ]
+    },
+    "observed_budget": {
+      "max_depth": 4,
+      "timeout_s": 3
+    },
+    "default_composition": {
+      "upstream_max_depth_argument": 0,
+      "upstream_timeout_s": 30,
+      "generated_default_max_depth": 40,
+      "explanation": "The upstream max_depth=0 is converted to None for the generated planner, whose local default is 40. Thus 40/30 seconds is the composed default for these programs, not the budget used in the old probes."
+    },
+    "probe_results": [
+      {
+        "source_path": "runs/opine_query_memory_v0/round_063/planner_probes.json",
+        "round": 63,
+        "calls": 4,
+        "steps": [
+          762,
+          766
+        ],
+        "plans_found": 0,
+        "queries_changing_checked_memory": 0,
+        "queries_changing_following_forecast": 0
+      },
+      {
+        "source_path": "runs/opine_query_memory_v0/round_086/planner_probes.json",
+        "round": 86,
+        "calls": 8,
+        "steps": [
+          762,
+          766,
+          778,
+          784
+        ],
+        "plans_found": 0,
+        "queries_changing_checked_memory": 0,
+        "queries_changing_following_forecast": 0
+      }
+    ],
+    "all_recorded_reasons": [
+      "synth planner returned no plan"
+    ],
+    "interpretation": "These are 12 bounded in-sample probes of two generated code versions from one game, under factual-prefix and fresh-module initialization. They are not 12 independent tasks or full default-budget Clean episodes. Their null query-interference result does not establish that the complete native system is immune, and no-plan does not establish general native Clean incompetence.",
+    "nodes_field_limit": "The wrapper reports nodes=0 for a generated planner that returns no plan; this is not evidence that its internal BFS performed zero transition queries."
+  },
+  "native_replay_qualification": {
+    "source_paths": [
+      "runs/opine_state_synchronization_v0/summary.json",
+      "runs/opine_state_synchronization_v0/native_replay.json",
+      "runs/opine_state_synchronization_v0/replay_diagnostic.json",
+      "runs/opine_state_synchronization_v0/plan.json",
+      "configs/opine_state_synchronization_screen.json"
+    ],
+    "runner": {
+      "path": "scripts/pilot_opine_state_synchronization.py",
+      "checked_lines": [
+        [
+          57,
+          81
+        ],
+        [
+          175,
+          209
+        ]
+      ]
+    },
+    "executed_actions_in_first_replay": 483,
+    "matching_actions_before_first_mismatch": 482,
+    "first_mismatch_action_index_zero_based": 482,
+    "first_mismatch_action_one_based": 483,
+    "first_mismatch_action": {
+      "action_id": 6,
+      "x": 44,
+      "y": 29
+    },
+    "different_pixels": 6,
+    "native_level_index_zero_based": 4,
+    "second_reset_replay_reproduces_mismatch": true,
+    "animation_tick_count_at_mismatch": 1,
+    "animation_tick_frame_differences": [
+      6
+    ],
+    "planned_l6_roots": [
+      762,
+      766
+    ],
+    "planned_l6_native_roots_reached_and_qualified": false,
+    "search_executed": false,
+    "native_synchronization_evaluation_executed": false,
+    "root_cause": "Unresolved. No attribution to a specific game version, adapter, animation rule, archive component, or model is established.",
+    "interpretation": "The later L6 root pair was not established by compatible real replay. Native synchronization utility and a closed-loop native query-memory harm comparison at those roots are unmeasured, not failed. The archival L6 frame/learned-code diagnostic remains a separate valid bounded observation."
+  },
+  "retained_evidence": {
+    "source_path": "runs/opine_query_memory_v0/summary.json",
+    "round_63": {
+      "transitions": 112,
+      "clean_correct": 112,
+      "repeated_correct": 111,
+      "cold_correct": 109
+    },
+    "round_86": {
+      "transitions": 825,
+      "clean_correct": 825,
+      "repeated_correct": 816,
+      "cold_correct": 813
+    },
+    "finding": "Repeated identical hypothetical calls changed 1 and 9 previously correct predictions; restoration recovered baseline predictions and the irrelevant-click control did not change them. These are prediction-level effects in unchanged author-released, in-sample generated code, not measured native action-selection or task harm.",
+    "upstream_prior_awareness": {
+      "path": "vendor/opine-world/src/opine_world/synth_loop/prompts/synthesizer/frames/main.md",
+      "checked_lines": [
+        [
+          297,
+          311
+        ]
+      ],
+      "finding": "The pinned prompt permits hidden state accumulation and explicitly requires continuity handling for hypothetical branches. This limits a new-concept claim; it does not erase a reproducible implementation-level side effect, nor establish which prompt produced each archived round."
+    }
+  },
+  "corrected_disposition": {
+    "native_default_budget_clean_status": "unmeasured_for_this_l6_pair",
+    "native_task_harm_status": "unmeasured",
+    "native_replay_status": "incompatible_prefix_before_planned_l6_roots",
+    "new_experiment_authorized_or_started_by_this_report": false,
+    "claim": "Preserve the bounded generated-code prediction effect. Do not convert truncated planner probes or the failed replay compatibility prerequisite into a general native Clean failure, native immunity, or attack-success result.",
+    "minimal_replacement_text_cn": "旧12次检查是对作者存档合成game_engine的深度4、3秒规划探针，不能代表默认深度40、30秒的完整原生Clean能力。L6动作候选和状态key缺口属于该合成程序；固定上游入口负责委托及校验。后续真实回放在动作索引482首次失配，尚未取得762/766处合格L6根状态，因此原生任务损害与同步方法效用均未测；已观察到的存档代码预测级查询副作用仍保留。"
+  },
+  "activity": {
+    "source_and_existing_json_reads_only": true,
+    "new_model_calls": 0,
+    "new_environment_steps": 0,
+    "new_training_updates": 0,
+    "new_api_calls": 0,
+    "new_network_requests": 0,
+    "new_gpu_work": false,
+    "new_hash_computation": false,
+    "files_created": [
+      "reports/opine_native_planner_contract_correction_20261015.json"
+    ],
+    "central_registry_modified": false,
+    "html_modified": false
+  }
+}

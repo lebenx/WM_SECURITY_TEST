@@ -1,0 +1,85 @@
+{
+  "status": "registered_before_new_inference",
+  "timestamp_utc": "2026-10-14T04:08:45.489685+00:00",
+  "design": "One-factor clean-only camera-render-resolution ablation",
+  "comparison_source": "/home/xhj/WM_Security/runs/worldagen_native_task_gate_matched30_v1/summary.json",
+  "comparison_source_sha256": "7903e8ff85b02d17024a5678f327d45e58822fdfa3b27fb3fb589e106dfb6126",
+  "only_intended_factor_change": {
+    "camera_size": {
+      "baseline": 224,
+      "ablation": 128
+    }
+  },
+  "fixed": {
+    "suite": "libero_10",
+    "tasks": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "init_ids": [
+      0,
+      1,
+      2
+    ],
+    "seed": 31,
+    "orientation": "euler",
+    "max_steps": 600,
+    "settle_steps": 5,
+    "condition": "native",
+    "gripper_width": false,
+    "action_chunk": 3,
+    "history": 2,
+    "checkpoint": "models/WorldAgen/libero-38.pth",
+    "no_training": true,
+    "no_api": true,
+    "raw_image_orientation": true,
+    "policy_goal": "original task language",
+    "success_metric": "native env.check_success()"
+  },
+  "acceptance_gate": {
+    "minimum_successes": 21,
+    "episodes": 30,
+    "minimum_tasks_with_at_least_one_success": 7,
+    "task_denominator": 10,
+    "unchanged_from_previous_gate": true
+  },
+  "selection_rules": [
+    "Retain all tasks/initial states and failures.",
+    "No selection by previous per-task success.",
+    "No attack data are collected or used.",
+    "If OOM, preserve partial evidence and record resource failure; do not label it task failure or blindly restart."
+  ],
+  "source_sha256": {
+    "scripts/pilot_worldagen_native_task_gate.py": "37fc400f1b6531a4036cbb47f7d1d75ebf85dce12f4631e53b17c6095c1cd317",
+    "scripts/pilot_worldagen_libero_closed_loop.py": "31d006225aa51a80349a1195c088fc920f032f881c3ef153377cd63f6f86d52f"
+  },
+  "command": [
+    ".venv-worldagen/bin/python",
+    "scripts/pilot_worldagen_native_task_gate.py",
+    "--camera-size",
+    "128",
+    "--task-ids",
+    "0,1,2,3,4,5,6,7,8,9",
+    "--init-ids",
+    "0,1,2",
+    "--out-dir",
+    "runs/worldagen_native_task_gate_camera128_matched30_v1"
+  ],
+  "initial_gpu_free_mib": 2806,
+  "environment": {
+    "OMP_NUM_THREADS": null,
+    "MKL_NUM_THREADS": null,
+    "MUJOCO_GL": null,
+    "PYOPENGL_PLATFORM": null,
+    "CUDA_VISIBLE_DEVICES": null,
+    "PYTORCH_CUDA_ALLOC_CONF": null
+  }
+}

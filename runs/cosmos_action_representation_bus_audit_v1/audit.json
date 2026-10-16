@@ -1,0 +1,340 @@
+{
+  "kind": "Source audit plus bounded CPU action-codec experiment; no new model/GPU/environment execution",
+  "date": "2026-10-14",
+  "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+  "sources": [
+    {
+      "path": "scripts/cosmos_policy_native_inference.py",
+      "sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf"
+    },
+    {
+      "path": "scripts/cosmos_policy_codecs.py",
+      "sha256": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330"
+    },
+    {
+      "path": "scripts/alphabrain_checkpoint_inference.py",
+      "sha256": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e"
+    },
+    {
+      "path": "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py",
+      "sha256": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f"
+    },
+    {
+      "path": "scripts/pilot_alphabrain_action_carrier_activation_patch.py",
+      "sha256": "b12ce90369f28f1b714178490c6d46d5fd91e5627eea5add8db4572a76f66362"
+    },
+    {
+      "path": "scripts/pilot_alphabrain_cosmos_policy_real_input_sampler_forecast_matrix.py",
+      "sha256": "c7f6f49fe5e428d3a9bb5c782d379765eea3ad0391b08adae81796e899d00d65"
+    },
+    {
+      "path": "scripts/audit_cosmos_action_representation.py",
+      "sha256": "43ce2f220250654cd2bf64fd7fb6834ead6ea208dc1715370b130fc3690255cb"
+    },
+    {
+      "path": "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py",
+      "sha256": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+    },
+    {
+      "path": "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v1_lvg_dit.py",
+      "sha256": "afae8038697f94af58f05f1456d78f433d6b56b71eb3220ef6de9da668fd9899"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/experiments/robot/cosmos_utils.py",
+      "sha256": "a95c74f33f519f4c0ce048c3ba2694989d3a7c431bf0f324a274413cde4c0b47",
+      "official_url": "https://github.com/NVlabs/cosmos-policy/blob/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/experiments/robot/cosmos_utils.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/experiments/robot/libero/run_libero_eval.py",
+      "sha256": "4a103710d9057e484b415da46d5b40c054abeb736e751ac80ad5a879c5b4ac10",
+      "official_url": "https://github.com/NVlabs/cosmos-policy/blob/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/experiments/robot/libero/run_libero_eval.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/models/policy_video2world_model.py",
+      "sha256": "4f5314fdea8f3f05d210f99923ca07e3c05fe9e0756b71f77b201f4b52e460eb",
+      "official_url": "https://github.com/NVlabs/cosmos-policy/blob/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/models/policy_video2world_model.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/models/policy_text2world_model.py",
+      "sha256": "d2d6af812e2241fa0d3d8c68620447bd0f23d236412ada9bad5c849df5b848f5",
+      "official_url": "https://github.com/NVlabs/cosmos-policy/blob/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/models/policy_text2world_model.py"
+    },
+    {
+      "path": "configs/world_model_wav_alias_screen.json",
+      "sha256": "8c516f1feb5aad9fe4e1b8c5a2c3a920ac8633da9db1ab0d84834b070222396e"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/cpu_dit_definition_ast_parity_v1.json",
+      "sha256": "b8244bfca9a19daae0fed2555b48138beb888eb3b478d1f68cef8d129798a9f8"
+    }
+  ],
+  "architecture": {
+    "checkpoint": "models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+    "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+    "DiT_blocks": 28,
+    "attention_heads": 16,
+    "latent_shape": [
+      1,
+      16,
+      9,
+      28,
+      28
+    ],
+    "temporal_patch": 1,
+    "spatial_patch": 2,
+    "tokens_per_slot": 196,
+    "total_queries": 1764,
+    "policy_ncond": 4,
+    "forecast_ncond": 5,
+    "value_ncond": 8,
+    "native_helper_evidence": "scripts/cosmos_policy_native_inference.py:106-115,171-222,236-257",
+    "frozen_input_is_not_frozen_hidden_state": "scripts/alphabrain_checkpoint_inference.py:133,148 clamp only denoiser input/output. minimal_v4_dit.py:1360-1416 updates all slot hidden states in each block.",
+    "all_slot_path_table": [
+      {
+        "slot": 0,
+        "meaning": "blank anchor",
+        "query_token_range_half_open": [
+          0,
+          196
+        ],
+        "raw_input_clamped_during_forecast": true,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Goal cross-attention to this slot in block k, then self-attention to forecast slots in block k+1 or later",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 1,
+        "meaning": "current proprioception",
+        "query_token_range_half_open": [
+          196,
+          392
+        ],
+        "raw_input_clamped_during_forecast": true,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Goal cross-attention to this slot in block k, then self-attention to forecast slots in block k+1 or later",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 2,
+        "meaning": "current wrist image",
+        "query_token_range_half_open": [
+          392,
+          588
+        ],
+        "raw_input_clamped_during_forecast": true,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Goal cross-attention to this slot in block k, then self-attention to forecast slots in block k+1 or later",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 3,
+        "meaning": "current primary image",
+        "query_token_range_half_open": [
+          588,
+          784
+        ],
+        "raw_input_clamped_during_forecast": true,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Goal cross-attention to this slot in block k, then self-attention to forecast slots in block k+1 or later",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 4,
+        "meaning": "action representation",
+        "query_token_range_half_open": [
+          784,
+          980
+        ],
+        "raw_input_clamped_during_forecast": true,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Goal cross-attention to this slot in block k, then self-attention to forecast slots in block k+1 or later",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 5,
+        "meaning": "future proprioception",
+        "query_token_range_half_open": [
+          980,
+          1176
+        ],
+        "raw_input_clamped_during_forecast": false,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Direct cross-attention and subsequent residual/MLP for this forecast slot, plus later self-attention to other slots",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 6,
+        "meaning": "future wrist image",
+        "query_token_range_half_open": [
+          1176,
+          1372
+        ],
+        "raw_input_clamped_during_forecast": false,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Direct cross-attention and subsequent residual/MLP for this forecast slot, plus later self-attention to other slots",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 7,
+        "meaning": "future primary image",
+        "query_token_range_half_open": [
+          1372,
+          1568
+        ],
+        "raw_input_clamped_during_forecast": false,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Direct cross-attention and subsequent residual/MLP for this forecast slot, plus later self-attention to other slots",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      },
+      {
+        "slot": 8,
+        "meaning": "value",
+        "query_token_range_half_open": [
+          1568,
+          1764
+        ],
+        "raw_input_clamped_during_forecast": false,
+        "internal_hidden_states_clamped_between_DiT_blocks": false,
+        "receives_goal_cross_attention_in_native_model": true,
+        "route_to_forecast": "Goal cross-attention to this slot in block k, then self-attention to forecast slots in block k+1 or later",
+        "can_be_goal_carrier_despite_fixed_input": true,
+        "standalone_slot_cut_proves_unique_action_mediation": false
+      }
+    ],
+    "text_paths": "Context goes to cross-attention in every block; timestep-only AdaLN does not add a second text path. helper disables crossattn projection and uses no image context; minimal_v4_dit.py:1773-1788,1807-1815.",
+    "causal_timing": "Each block has self-attention before cross-attention. Goal injected into carrier slot by block k can reach other slots in block k+1. This is not necessarily same-block self-attention mediation."
+  },
+  "existing_cut_audit": {
+    "fixed_action_world_cut": {
+      "source": "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py:176-191",
+      "operation": "Zero the cross-attention output of every query row in all nine slots, all blocks. Self-attention stays intact.",
+      "zero_embedding_equivalence_derivation": [
+        "For the verified configuration, text enters only cross-attention and there is no crossattn projection or extra image context.",
+        "V=Wv*context has no bias; with all-zero text V=0. K=0 after the bias-free projection and RMS normalization with epsilon.",
+        "For finite Q,K and nonempty context, attention(Q,K,V=0)=0. The output projection also has no bias, so its output is zero.",
+        "Therefore all-query post-projection cross-attention zeroing is functionally the same as a zero text embedding in this isolated forecast call. Identical noise and other inputs are required.",
+        "This derivation does not establish measured CUDA bitwise parity under every backend; no full-model parity experiment was run here."
+      ],
+      "evidence": "minimal_v4_dit.py:488-498,1387-1407,1773-1788; native helper:110",
+      "interpretation": "Whole-forecast text removal / no-language ablation; do not rename as a selective Goal-Bus repair.",
+      "matched_control_limit": "An all-row text-edge cut exhausts all text edges, so there is no nontrivial same-size goal-preserving cross-attention control within this edge set."
+    },
+    "old_goal_bus_cut": {
+      "source": "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py:143-157",
+      "operation": "Remove text cross-attention to observed and future slots; prevent those slots reading action and value via self-attention.",
+      "confound": "Also removes legitimate action-representation to future conditioning. Not a sound fixed-action world repair control."
+    },
+    "world_text_only_cut": {
+      "source": "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py:160-173",
+      "operation": "Retain text cross-attention only at action slot; self-attention stays intact.",
+      "interpretation": "Tests whether the action slot can carry Goal in an artificially isolated network. Does not prove it is the sole mediator in the native system."
+    },
+    "minimum_falsifiable_local_path_design": {
+      "operation": "Scope reversible hooks to forecast calls only. Zero only action-slot cross-attention outputs, all 28 blocks, leaving state/action self-attention and all other slots intact. Restore hooks before original-goal value and policy queries.",
+      "matched_controls": [
+        "Cut blank slot 0 cross-attention rows",
+        "Cut value slot 8 cross-attention rows"
+      ],
+      "matched_budget": "Each arm removes 196 query rows times all text positions times all heads times 28 blocks. Precommit both controls; no best-control selection.",
+      "needed_conditions": [
+        "Clean",
+        "Goal-Swap",
+        "Clean + action-slot CA cut",
+        "Goal-Swap + action-slot CA cut",
+        "Clean + each control cut",
+        "Goal-Swap + each control cut",
+        "identical clean repeat"
+      ],
+      "needed_measurements": [
+        "Exact unchanged candidate controls and RNG",
+        "Actual t+16 forecast error to independent replay",
+        "Action-response sensitivity with a distinct physical action candidate",
+        "Original-goal value ranking and selected-action real task success/steps",
+        "Clean damage from every cut"
+      ],
+      "allowed_claim": "A conditional causal contribution of the selected path under this intervention if its effect differs from matched controls.",
+      "disallowed_claims": [
+        "Unique ActionBus",
+        "Guaranteed Goal invariance",
+        "Evidence of attack success from divergence alone",
+        "Defense legitimacy before measuring clean cost and true forecast error"
+      ]
+    }
+  },
+  "action_copy_interface": {
+    "decoder_evidence": "official cosmos_utils.py:557-598; local cosmos_policy_codecs.py:188-229",
+    "action_slot_elements": 12544,
+    "controls_per_chunk": 112,
+    "complete_copies": 112,
+    "ignored_remainder_elements": 0,
+    "decoder_formula": "D(z)=mean(reshape(z_slot4,[112,16,7]),dim=copy). Actual mean is float32 reduction, not exact real arithmetic.",
+    "encoder_formula": "E(a)=tile(flatten(a),112), reshaped to 16x28x28. Official replace mutates the passed tensor; always clone before use.",
+    "encoder_evidence": "official policy_text2world_model.py:45-109",
+    "training_uses_tiled_actions": "policy_text2world_model.py:381-385 injects actions into training target; policy_video2world_model.py:354-359 injects into training conditioning.",
+    "native_AR_does_not_canonicalize": [
+      "cosmos_utils.py:1123-1138 decodes and unnormalizes actions; :1216 returns the unchanged generated raw latent.",
+      "run_libero_eval.py:466-476 keeps decoded actions separately and passes raw generated latent into future prediction.",
+      "cosmos_utils.py:1385-1386 calls skip_vae_encoding=True with raw generated action latent.",
+      "policy_video2world_model.py:615-629 clones raw previous latent and sets it directly as conditioning, bypassing get_data_and_condition and its tiled-action injection.",
+      "Local adapter likewise passes raw samples at cosmos_policy_native_inference.py:207-214,248-250."
+    ],
+    "unproven_normative_contract": "Execution equality does not by itself establish that the authors promised forecasts factor exclusively through decoded actions. Raw residuals could encode model-internal uncertainty or shared generative information; this audit does not establish intent or a formal factorization guarantee.",
+    "threat_model": "Hypothetical write access to the intermediate raw action representation after proposal, before world prediction. No external attacker access, API Goal-to-alias control, or achievable natural attack has been demonstrated.",
+    "cpu_numeric_gate": {
+      "artifact": "runs/cosmos_action_representation_bus_audit_v1/cpu_exact_decoder_gate.json",
+      "artifact_sha256": "aba43f8c134e47f6a30aa70a9e16cb6f5eb81f9924828612069dada6c0211851",
+      "candidate_count": 6,
+      "passed_per_mode": {
+        "reverse_copies": 5,
+        "canonical_tile": 6
+      },
+      "simple_unprojected_reverse_exact": 0,
+      "simple_unprojected_canonical_exact": 0,
+      "cpu_vs_committed_native_decoder_exact": 0,
+      "projection_last_copy_max_abs": 3.337860107421875e-05,
+      "reverse_failure": "prefix_000 candidate_00: one coordinate differs by 1.4551915228366852e-11 after bounded correction; gate rejects it.",
+      "gpu_execution": false,
+      "cuda_initialized": false,
+      "interpretation": "CPU canonical projection works for six candidates, reverse projection works for five. This does not authorize labeling all six as execution-equivalent or using CPU-gated tensors directly in CUDA inference."
+    },
+    "minimum_next_gate": [
+      "Load each committed raw latent and original normalized action on the actual inference device; verify original decoder equals the committed normalized tensor and unchanged physical controls using native inverse min-max.",
+      "Run project_action_slot on that device, with the same predefined bounds. Require exact equality of decoded actions and physical control arrays, unchanged other slots, no NaNs, and a changed representation. Reject failures without selecting by model outcomes.",
+      "Precommit Clean repeat, projected reverse alias where the gate passes, canonical projection of Clean, and canonical projection of alias. Keep original candidate controls in the executor; change forecast branch only. Explicitly distinguish exact tiled E(D(z)) from projected canonical tensors.",
+      "Hold original Goal, observation, complete 16 actions, prefix simulator state, future/value RNG, candidates, score rule and continuation policy fixed. Generate all predictions before reading replay outcomes.",
+      "Use independent same-state action replay for image/state consequences and original-goal fixed-policy continuation for true success and steps. Forecast divergence, value score changes and ranking flips alone are not damage.",
+      "Report clean canonicalization cost, deterministic repeat noise floor, alias error change, ranking change, and selected-action utility. If effects are negligible, retain a negative result; do not scale automatically."
+    ],
+    "canonicalization_caveat": "To call the operation a canonical defense, alias and clean must produce identical canonical tensors, not merely equal decoded means. Floating-point correction can depend on the incoming representation. Gate this explicitly. A defense built from immutable committed action tensors is a trusted-interface rewrite, not an unchanged native model.",
+    "prior_project_search": {
+      "scope": "scripts/, configs/, reports/, and official audit source cache, text patterns canonical/copy-permutation/action-alias/execution-equivalent. No exhaustive external literature search.",
+      "same_mechanism_found": false,
+      "related_nonidentical": [
+        "pilot_alphabrain_action_carrier_activation_patch.py patches entire hidden action/value slots across paired Goals; does not preserve action decoding by copy permutation.",
+        "Old recorded-action Alpha forecasts explicitly inject tiled known actions, so lack the current native raw-copy residual interface.",
+        "configs/world_model_wav_alias_screen.json contains a prior rejected WAV/MiniGrid action-alias generalization diagnostic; its recorded review judged novelty weak and no controller/attacker gate. Do not present action equivalence alone as a new security contribution."
+      ]
+    }
+  },
+  "conclusion": {
+    "bus_cut": "No privileged unique Goal-to-action-only bus exists in this native all-slot DiT. Full fixed-action cut is a no-language ablation; a local cut is a mechanism probe requiring matched controls and clean-cost measurement.",
+    "copy_alias": "The native action decoder discards redundant-copy residuals that the world receives, creating a precise interface to test. Exact CPU canonical projection exists for all six current candidates; execution-equivalent GPU aliases, prediction error and decision harm remain untested.",
+    "causal_boundary": "Changing physical query Goal does not alter a fixed full-state replay under identical controls and exogenous randomness. This interventional fact does not imply statistical conditional independence of future and Goal given partial observations, nor force a model to ignore all legitimate latent information."
+  }
+}

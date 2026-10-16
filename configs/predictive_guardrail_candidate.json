@@ -1,0 +1,46 @@
+{
+  "status": "rejected_as_native_online_feedback_candidate",
+  "review_date": "2026-10-08",
+  "evidence_type": "source_and_primary_paper_review_only",
+  "hypothesis": "A predictive safety guard may turn rejected actions into apparently observed training evidence and reinforce its own erroneous risk predictions.",
+  "upstream": {
+    "url": "https://github.com/YurunChen/SafePred",
+    "commit": "495890eafce02f9990e494493891c4549114a2dc",
+    "paper": "https://arxiv.org/html/2602.01725v1"
+  },
+  "findings": [
+    {
+      "source": "vendor/SafePred/agent/agent.py:443",
+      "finding": "The pruning branch calls _save_filtered_action with the model-generated delta before skipping the proposed action."
+    },
+    {
+      "source": "vendor/SafePred/core/trajectory_storage.py:441",
+      "finding": "save_filtered_action formats predicted_delta as the supervised output, but explicitly marks metadata.data_type=prediction and appends only to training_conversations_prediction. It does not append an experience entry or a ground-truth training entry."
+    },
+    {
+      "source": "vendor/SafePred/core/trajectory_storage.py:990",
+      "finding": "flush writes these records to the separate prediction training directory. A comment calling the target ground truth does not override the actual data routing or provenance label."
+    },
+    {
+      "source": "vendor/SafePred/agent/agent.py:1313",
+      "finding": "update_trajectory returns immediately for action_success=False. Successful executions compute actual_delta from observed compact states."
+    },
+    {
+      "source": "vendor/SafePred/agent/agent.py:1080",
+      "finding": "Default experience replay loads successful low-risk trajectory entries; the rejected-action export above does not enter that loader through the inspected path."
+    },
+    {
+      "source": "https://arxiv.org/html/2602.01725v1#S3.SS5",
+      "finding": "Section3.5 describes offline teacher-to-student distillation. It does not establish autonomous online retraining from a guard's own rejected proposals."
+    }
+  ],
+  "verification_scope": "Inspected sparse checkout core, agent, config, models and selected wrapper paths. A broad git grep over missing blobs was stopped during network fetching. No exhaustive claim about every repository integration or external training consumer.",
+  "decision": "Do not build an attack benchmark or run paid/GPU experiments for this candidate. A future proposal needs an evidenced consumer that actually reuses these targets, a naturally produced prediction error, and a mechanism distinguishable from ordinary self-training/data poisoning. Adding that loop ourselves would change the system and threat model.",
+  "limitations": [
+    "No model invocation, native episode, storage execution test, attack or downstream task comparison was performed.",
+    "Separate prediction labels do not prove robustness of external training pipelines; they do refute the stronger claim that this inspected export silently labels rejected predictions as observed ground truth."
+  ],
+  "api_requests": 0,
+  "gpu_work": false,
+  "report_note_cn": "SafePred 候选经源码与论文检查后停止：被拦截动作确实会导出模型预测，但记录明确标为 prediction，写入独立的预测训练目录，没有进入这里检查的真实观测数据或默认经验回放。论文描述离线蒸馏，尚无原生在线自反馈链路证据。因此不能把“导出训练样本”当成已发生的学习污染；本次未运行模型、攻击或 GPU 实验。"
+}

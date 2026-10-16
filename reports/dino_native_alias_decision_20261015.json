@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T05:52:46.254462+00:00",
+  "status": "completed_native_pair_trace_analysis",
+  "execution_status": "completed_native_alias_pair",
+  "research_goal_status": "active_unachieved",
+  "source": "runs/dino_native_alias_pair_20261015/summary.json",
+  "readiness": "reports/dino_native_alias_readiness_20261015.json",
+  "protocol": "configs/dino_native_alias_pair_20261015.json",
+  "outcomes": [
+    {
+      "arm": "noop",
+      "completed_99_controls": true,
+      "controls": 99,
+      "reward_sum": 139.4640427827835,
+      "reward_sum_including_shared_warmup": 140.87839603424072,
+      "terminal_reward": 1.4059168100357056,
+      "last_observed_reward": 1.4059168100357056,
+      "final_success": false,
+      "last_observed_success": false,
+      "ever_success_observed": false,
+      "first_success_policy_step": null,
+      "success_controls_observed": 0,
+      "last_reach_distance": 0.2906263970564381
+    },
+    {
+      "arm": "clean_identity_copy",
+      "completed_99_controls": true,
+      "controls": 99,
+      "reward_sum": 786.998547077179,
+      "reward_sum_including_shared_warmup": 788.4129003286362,
+      "terminal_reward": 9.806612968444824,
+      "last_observed_reward": 9.806612968444824,
+      "final_success": false,
+      "last_observed_success": false,
+      "ever_success_observed": true,
+      "first_success_policy_step": 56,
+      "success_controls_observed": 24,
+      "last_reach_distance": 0.06366712546756458
+    },
+    {
+      "arm": "canonical_request",
+      "completed_99_controls": true,
+      "controls": 99,
+      "reward_sum": 702.1983199119568,
+      "reward_sum_including_shared_warmup": 703.612673163414,
+      "terminal_reward": 9.983182907104492,
+      "last_observed_reward": 9.983182907104492,
+      "final_success": false,
+      "last_observed_success": false,
+      "ever_success_observed": true,
+      "first_success_policy_step": 53,
+      "success_controls_observed": 33,
+      "last_reach_distance": 0.05399451826056728
+    }
+  ],
+  "comparison": {
+    "canonical_minus_clean_return": -84.80022716522217,
+    "relative_return_drop": 0.1077514405587664,
+    "final_success_loss": false,
+    "consider_separate_recovery_pilot": true,
+    "native_effect": "lower_return",
+    "secondary_success_metrics": "Descriptive, not advance criteria. Report first success and successful control counts alongside return; lower return is not necessarily worse goal attainment.",
+    "decision": "A separately frozen causal recovery pilot is justified; no paper/generalization claim.",
+    "prediction_accuracy": "Not measured on this native run. Different visited trajectories must not be compared as a paired forecast-error effect."
+  },
+  "paired_checks": {
+    "first_original_proposals_exact": true,
+    "first_context_exact": true,
+    "goal_encodings_exact": true,
+    "local_cuda_rng_exact_after_all_7_queries": true,
+    "all_executed_actions_match_native_return_records": true,
+    "per_request_physical_equivalence": "Runtime assertions in launched script/summary; not independently replayed here for every unexecuted candidate."
+  },
+  "runtime": {
+    "elapsed_seconds": 1540.6004746769904,
+    "activity": {
+      "unroll_calls": 420,
+      "policy_controls": 198,
+      "noop_controls": 99,
+      "network_attempts": 0,
+      "training_updates": 0,
+      "expert_setup_controls": 100,
+      "root_warmup_controls": 1,
+      "total_explicit_environment_controls": 398
+    },
+    "gpu_at_start": {
+      "memory.total": 24564,
+      "memory.free": 5863,
+      "memory.used": 18218,
+      "utilization.gpu": 100
+    },
+    "first_query_pair_cost_estimate_seconds": 1771.879205364055,
+    "peak_cuda_allocated_bytes": 5160986112,
+    "peak_cuda_reserved_bytes": 5370806272
+  },
+  "statistics": {
+    "independent_physical_roots": 1,
+    "statistical_test": null,
+    "confidence_interval": null,
+    "interpretation": "One prospective development root, exploratory after earlier bank evidence. No ASR, population significance or training-heldout generalization."
+  },
+  "limits": [
+    "This tests the newly frozen canonicalization hypothesis, not the failed fixed+2 operation or Goal-Swap.",
+    "No defense episode has been run by this protocol; candidate binding remains a conventional proposed restoration baseline.",
+    "Prior fixed-bank latent error reduction and true-future objective mismatch remain scoped to that bank.",
+    "A null or improvement on native seed4 does not isolate replanning as the cause: the earlier seed1 fixed-bank experiment also used a different root and candidate bank.",
+    "Incomplete episodes are not final task failures or completed-pair evidence."
+  ],
+  "reproduction": {
+    "analysis_existing_run": ".venv-jepa-native/bin/python scripts/analyze_dino_native_alias_pair.py",
+    "new_run": ".venv-jepa-native/bin/python scripts/pilot_dino_native_alias_pair.py --out /absolute/path/to/new_output",
+    "analysis_new_run": ".venv-jepa-native/bin/python scripts/analyze_dino_native_alias_pair.py --run /absolute/path/to/new_output --report /absolute/path/to/new_report.json",
+    "note": "Runner refuses an existing directory. Reproduction retains the frozen seed, full native budget and resource gates."
+  },
+  "analysis_activity": {
+    "model_calls": 0,
+    "environment_steps": 0,
+    "network_calls": 0
+  }
+}

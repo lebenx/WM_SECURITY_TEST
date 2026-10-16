@@ -1,0 +1,127 @@
+{
+  "status": "completed",
+  "target": "pilot_worldagen_native_task_gate",
+  "arguments": [
+    "--task-ids",
+    "0",
+    "--init-ids",
+    "0",
+    "--camera-size",
+    "224",
+    "--out-dir",
+    "runs/worldagen_native_task_gate_lowmem_equivalence_v1"
+  ],
+  "source_sha256": {
+    "/home/xhj/WM_Security/scripts/run_worldagen_low_memory.py": "48bee88e955bdb1b3bc783bfafbedcde2205a2cfa684289985b1a51780a64807",
+    "/home/xhj/WM_Security/scripts/pilot_worldagen_native_task_gate.py": "37fc400f1b6531a4036cbb47f7d1d75ebf85dce12f4631e53b17c6095c1cd317",
+    "/home/xhj/WM_Security/scripts/pilot_worldagen_libero_closed_loop.py": "31d006225aa51a80349a1195c088fc920f032f881c3ef153377cd63f6f86d52f",
+    "/home/xhj/WM_Security/scripts/worldagen_unused_visual.py": "a432363150ddffbe217f8f8c27cffed67a38cc881371ce05ee1a063dd0d6d147"
+  },
+  "scope": "Unused CLIP visual and MAE decoder storage placement only; no arithmetic, dtype, weights, mask or sampler changes.",
+  "events": [
+    {
+      "stage": "after_build",
+      "clip_visual": {
+        "scope": "native WorldAgen policy/forecast/forecast-loss only",
+        "parameter_count": 87849216,
+        "buffer_count": 0,
+        "visual_storage_bytes": 351396864,
+        "cuda_storage_bytes_before": 351396864,
+        "visual_dtypes": [
+          "torch.float32"
+        ],
+        "devices_before": [
+          "cuda:0"
+        ],
+        "devices_after": [
+          "cpu"
+        ],
+        "state_dict_keys_preserved": true,
+        "active_tensor_storage_unchanged": true,
+        "clip_text_dtype_preserved": true,
+        "visual_forward_guard": true,
+        "whole_model_move_guard": true
+      },
+      "mae_decoder": {
+        "scope": "unused vision_encoder decoder only; native MAE forward_encoder remains active",
+        "parameter_count": 26109184,
+        "unused_storage_bytes": 104436736,
+        "cuda_storage_bytes_before": 104436736,
+        "devices_before": [
+          "cuda:0"
+        ],
+        "per_component_bytes": {
+          "decoder_embed": 1574912,
+          "decoder_blocks": 100876288,
+          "decoder_norm": 4096,
+          "decoder_pred": 1575936,
+          "mask_token": 2048,
+          "decoder_pos_embed": 403456
+        },
+        "devices_after": [
+          "cpu"
+        ],
+        "state_dict_keys_preserved": true,
+        "active_tensor_storage_unchanged": true,
+        "decoder_forward_guard": true,
+        "whole_model_move_guard": true
+      },
+      "unused_storage_bytes": 455833600,
+      "cuda_storage_bytes_before": 455833600
+    },
+    {
+      "stage": "after_wrapper_init",
+      "clip_visual": {
+        "scope": "native WorldAgen policy/forecast/forecast-loss only",
+        "parameter_count": 87849216,
+        "buffer_count": 0,
+        "visual_storage_bytes": 351396864,
+        "cuda_storage_bytes_before": 351396864,
+        "visual_dtypes": [
+          "torch.float32"
+        ],
+        "devices_before": [
+          "cuda:0"
+        ],
+        "devices_after": [
+          "cpu"
+        ],
+        "state_dict_keys_preserved": true,
+        "active_tensor_storage_unchanged": true,
+        "clip_text_dtype_preserved": true,
+        "visual_forward_guard": true,
+        "whole_model_move_guard": true
+      },
+      "mae_decoder": {
+        "scope": "unused vision_encoder decoder only; native MAE forward_encoder remains active",
+        "parameter_count": 26109184,
+        "unused_storage_bytes": 104436736,
+        "cuda_storage_bytes_before": 104436736,
+        "devices_before": [
+          "cuda:0"
+        ],
+        "per_component_bytes": {
+          "decoder_embed": 1574912,
+          "decoder_blocks": 100876288,
+          "decoder_norm": 4096,
+          "decoder_pred": 1575936,
+          "mask_token": 2048,
+          "decoder_pos_embed": 403456
+        },
+        "devices_after": [
+          "cpu"
+        ],
+        "state_dict_keys_preserved": true,
+        "active_tensor_storage_unchanged": true,
+        "decoder_forward_guard": true,
+        "whole_model_move_guard": true
+      },
+      "unused_storage_bytes": 455833600,
+      "cuda_storage_bytes_before": 455833600
+    }
+  ],
+  "api_requests": 0,
+  "elapsed_seconds": 75.90068835899001,
+  "cuda_peak_allocated_bytes": 1568025600,
+  "cuda_peak_reserved_bytes": 1686110208
+}

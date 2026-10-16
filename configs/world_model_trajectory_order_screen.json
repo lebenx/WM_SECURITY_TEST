@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-09",
+  "candidate_id": "H_trajectory_order_memory",
+  "one_sentence_claim": "A world model can acquire a trajectory-order memory surface in which fresh one-step forecasts remain unchanged but action-order-dependent imagined transitions steer a receding-horizon planner toward a failure basin.",
+  "status": "rejected_matched_unsigned_control_and_no_multidimensional_task_signal",
+  "model": "Frozen native MBRL-Lib five-member GaussianMLP trained from 3000 CartPole transitions.",
+  "operation": "After the first imagined step, retain the previous candidate action in ModelEnv state and add strength times the signed action change to one predicted observation coordinate; physical dynamics, rewards, termination, and weights stay unchanged.",
+  "preserved_invariants": [
+    "Fresh deterministic one-step max absolute error is 0.0.",
+    "Model parameter hash is unchanged.",
+    "The first imagined step after every reset has no intervention."
+  ],
+  "short_gate": {
+    "settings": "CartPole population20, two CEM iterations, horizon8, five particles, one seed, 50-step cap, strength0.05.",
+    "native_return": 50.0,
+    "signed_order_return": 21.0,
+    "unsigned_action_change_return": 25.0,
+    "signed_one_step_max_abs_error": 0.0,
+    "unsigned_one_step_max_abs_error": 0.0,
+    "model_hash_unchanged": true
+  },
+  "multidimensional_control": {
+    "task": "HalfCheetah",
+    "model": "runs/mbrl_rank_halfcheetah_refit_v2/model",
+    "settings": "Population20, two CEM iterations, horizon8, five particles, one seed, 50-step cap, strength0.05.",
+    "native_return": -15.781613916158676,
+    "signed_order_return": -15.265386559069157,
+    "unsigned_action_change_return": -15.569767735898495,
+    "interpretation": "No directional multidimensional task signal in this bounded pilot."
+  },
+  "closest_prior": "https://arxiv.org/abs/2609.30264",
+  "decision_cn": "CartPole 的退化不能归因于非交换性：无符号动作变化对照同样退化；HalfCheetah 多维动作短测没有方向性损害。保留一步平价只说明操作边界，不支持新安全主张；不扩大训练或 GPU。",
+  "next_requirement": "Require a mechanism whose task effect survives a matched magnitude/geometry control and is not ordinary action perturbation, temporal residual coupling, or ensemble identity resampling.",
+  "api_requests": 0,
+  "gpu_work": false,
+  "accepted_claim": null
+}

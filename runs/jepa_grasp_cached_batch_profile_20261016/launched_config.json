@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_one_time_execution",
+  "purpose": "Resolve whether batching six independent virtual-state queries materially changes GRASP runtime, while measuring numerical and gradient differences. This is a cached-input performance probe, not a Clean task, security experiment, or authorization to change the existing task budget.",
+  "output": "runs/jepa_grasp_cached_batch_profile_20261016",
+  "native_protocol": "configs/jepa_grasp_native_clean_20261016.json",
+  "cached_run": "runs/jepa_grasp_native_clean_20261016",
+  "cached_episode": "seed1_clean",
+  "stages": [0, 1, 49, 50],
+  "sync_stage": 50,
+  "sync_repeats": 3,
+  "seed": 1,
+  "threads": 4,
+  "precision": "FP32, frozen model parameters; original input gradients retained",
+  "resource": {
+    "hard_wall_seconds": 60,
+    "cuda_memory_fraction": 0.30,
+    "admission_free_mib": 8192,
+    "boundary_free_mib": 3072,
+    "device": "cuda:0",
+    "physical_gpu_index": 0,
+    "shared_gpu": true,
+    "timing_scope": "60 seconds starts before heavy imports, includes local checkpoint loading, all compute and result recording. SIGALRM is best effort during native CUDA work; boundary checks and any overrun are recorded. No retries or backend fallback."
+  },
+  "max_activity": {
+    "checkpoint_loads": 2,
+    "one_step_predictor_forwards": 28,
+    "one_step_semantic_transitions": 48,
+    "sync_predictor_forwards": 18,
+    "sync_semantic_transitions": 18,
+    "predictor_forwards": 46,
+    "unroll_calls": 31,
+    "backward_calls": 11,
+    "encode_calls": 0,
+    "visual_encoder_forwards": 0,
+    "proprio_encoder_forwards": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "training_updates": 0,
+    "network_attempts": 0
+  },
+  "comparison": {
+    "order": "Each fixed stage: six native B1/T1 calls, then one B6/T1 call; no warmup, tuning, repeats or state updates.",
+    "loss": "Use official _compute_grasp_loss unchanged for native; batch only independent detached inputs, retain original per-time means and sequential Python sums for dynamics and scheduled goal shaping.",
+    "goal_schedule": "5 + (0 - 5) * ((k % 50) / 49), matching the frozen native planner.",
+    "record": ["six visual predictions", "sum loss", "action gradient", "virtual-state gradient", "RNG unchanged", "wall and CUDA timings"],
+    "diagnostic_atol": 0.000001,
+    "diagnostic_rtol": 0.0001,
+    "tolerance_scope": "Descriptive fixed allclose checks only. Approximate equality does not establish complete optimizer trajectory or task equivalence. Bitwise equality is reported separately."
+  },
+  "sync": {
+    "method": "Invoke the unchanged native _sync_step three times from the same cached stage50 actions, temporarily gd_opt_steps=1. Each call includes one H6 autoregressive rollout, native terminal visual MSE backward, and its fresh Adam update. These are three timing measurements, not a shortened task planner.",
+    "optimization": "Three input-action updates in isolated discarded clones; zero neural weight updates.",
+    "estimate": "three_root_planning_seconds = 3 * (37 / 6) * (500 * mean_batched_loss_forward_backward_seconds + 500 * mean_native_H6_sync_update_seconds). Add observed prior setup/load overhead separately and show assumptions/range. No inference that the full task will fit1200seconds from an estimate alone."
+  },
+  "stop_rule": "Any activity, time, memory, nonfinite, input-integrity or RNG failure stops this one attempt and preserves partial evidence. No automatic rerun, model intervention, task launch, optimizer-step reduction or task budget increase.",
+  "actual_task_utility": null
+}

@@ -1,0 +1,1098 @@
+{
+  "schema_version": 1,
+  "status": "completed_cpu_embedding_mechanism_probe",
+  "created_at_utc": "2026-10-15T01:25:32.407510+00:00",
+  "decision": "EXCLUDE_THIS_QUERY_NORMALIZATION_CANDIDATE",
+  "all_checks_passed": true,
+  "source_evidence": {
+    "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+    "constructor_line": 21,
+    "constructor": "self._task_emb = nn.Embedding(len(cfg.tasks), cfg.task_dim, max_norm=1)",
+    "method_line": 88,
+    "method": "def task_emb(self, x, task):\n\t\t\"\"\"\n\t\tContinuous task embedding for multi-task experiments.\n\t\tRetrieves the task embedding for a given task ID `task`\n\t\tand concatenates it to the input `x`.\n\t\t\"\"\"\n\t\tif isinstance(task, int):\n\t\t\ttask = torch.tensor([task], device=x.device)\n\t\temb = self._task_emb(task.long())\n\t\tif x.ndim == 3:\n\t\t\temb = emb.unsqueeze(0).repeat(x.shape[0], 1, 1)\n\t\telif emb.shape[0] == 1:\n\t\t\temb = emb.repeat(x.shape[0], 1)\n\t\treturn torch.cat([x, emb], dim=-1)"
+  },
+  "supporting_source_paths": [
+    "vendor/tdmpc2/tdmpc2/common/parser.py",
+    "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+    "runs/tdmpc_cascade_heldout_matched_v1/provenance.json",
+    "scripts/probe_tdmpc_embedding_query_isolation.py"
+  ],
+  "official_semantics_reference": "https://docs.pytorch.org/docs/2.14/generated/torch.nn.Embedding.html",
+  "runtime": {
+    "torch": "2.13.0+cu130",
+    "device": "cpu",
+    "threads": 1,
+    "primary_dtype": "torch.float32",
+    "supplemental_dtype": "torch.float64"
+  },
+  "protocol": {
+    "embedding_shape": [
+      30,
+      64
+    ],
+    "victim_task": 2,
+    "weights": "Fixed synthetic rows with norm below, just above, and far above max_norm=1; no checkpoint tensors.",
+    "entrypoint": "Actual upstream WorldModel.task_emb method compiled from its AST, bound to a minimal holder with a real nn.Embedding.",
+    "invariance": "Same initial weight bank and fixed victim input, with no interleaved training; vary only prior task-embedding lookups.",
+    "comparison": "Exact torch.equal of the complete concatenated victim output; record every row changed by every lookup.",
+    "case_count": 8,
+    "conditions_per_case": 4
+  },
+  "cases": [
+    {
+      "dtype": "torch.float32",
+      "requested_victim_norm": 0.5,
+      "victim_norm_before": 0.5,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "dtype": "torch.float32",
+      "requested_victim_norm": 1.0000009536743164,
+      "victim_norm_before": 1.0000009536743164,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "dtype": "torch.float32",
+      "requested_victim_norm": 5.0,
+      "victim_norm_before": 5.0,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 1.0,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 1.0,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 1.0,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 1.0,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "dtype": "torch.float32",
+      "requested_victim_norm": 10000.0,
+      "victim_norm_before": 10000.0,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999403953552,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "dtype": "torch.float64",
+      "requested_victim_norm": 0.5,
+      "victim_norm_before": 0.5,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.5,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "dtype": "torch.float64",
+      "requested_victim_norm": 1.0000009536743164,
+      "victim_norm_before": 1.0000009536743164,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999000001054,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999000001054,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999000001054,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999000001054,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "dtype": "torch.float64",
+      "requested_victim_norm": 5.0,
+      "victim_norm_before": 5.0,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999800000003,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999800000003,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999800000003,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999800000003,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    },
+    {
+      "dtype": "torch.float64",
+      "requested_victim_norm": 10000.0,
+      "victim_norm_before": 10000.0,
+      "over_norm_other_task_rows_really_changed": true,
+      "conditions": {
+        "victim_only": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999999899999,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "other_tasks_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999999899999,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "same_task_first": {
+          "query_changes": [
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999999899999,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        },
+        "mixed_queries_first": {
+          "query_changes": [
+            {
+              "queried_task": 1,
+              "changed_rows": [
+                1
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [
+                2
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 3,
+              "changed_rows": [
+                3
+              ],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 0,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 4,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            },
+            {
+              "queried_task": 2,
+              "changed_rows": [],
+              "only_queried_row_changed": true
+            }
+          ],
+          "victim_norm_after": 0.9999999999899999,
+          "original_input_prefix_preserved": true,
+          "victim_output_bitwise_equal_to_victim_only": true,
+          "victim_output_max_abs_difference": 0.0
+        }
+      },
+      "passed": true
+    }
+  ],
+  "interpretation": "In these CPU cases, prior lookups change only their indexed over-norm rows, and the victim's first lookup normalizes its own row before returning it. Prior other-task, same-task, and mixed lookups give exactly the same victim output. The max_norm write alone is therefore not evidence for cross-task decision contamination.",
+  "limits": [
+    "This is a synthetic operator-level exclusion probe, not an evaluation of the pretrained checkpoint or native planner.",
+    "No claim about all floating-point values, concurrent training, GPU execution, warm-start/RNG isolation, action ranking, or real task utility.",
+    "Existing conditional TD-MPC2 task losses remain unchanged and do not gain a new causal explanation from this probe."
+  ],
+  "resource_use": {
+    "checkpoints_loaded": 0,
+    "world_models_instantiated": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "gpu_work": false,
+    "api_requests": 0,
+    "file_hashes_computed": 0
+  }
+}

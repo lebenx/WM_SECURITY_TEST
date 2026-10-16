@@ -1,0 +1,42 @@
+{
+  "round": 70,
+  "status": "source_audit_pending_strict_review",
+  "proposals": [
+    {
+      "candidate": "Forward-Inverse Consistency Decoupling via Dual-Path Optimization Incommensurability",
+      "carrier_repo": "nicklashansen/tdmpc2",
+      "native_path": "common/world_model.py (WorldModel.forward, WorldModel.reward, WorldModel.pi)",
+      "threat_model": "无投毒、完全在线合法输入。攻击者仅提供合法但具有正交动态对称性（Symmetric Orthogonal Transitions）的环境轨迹，无需超出原始状态空间边界即可诱发内部梯度正交竞争。",
+      "mechanism_invariant": "在TD-MPC2联合训练中，潜在动力学模型 T(z_t, a_t) -> z_{t+1} 与策略头/反动力学约束存在隐式互信息瓶颈。当状态空间存在动力学不变子空间时，T 的重构损失梯度 ∇_z L_dyn 与无模型残差/价值梯度 ∇_z L_Q 产生方向正交性（cosine similarity ≈ 0）。机制不变量：随着规划步长 H 增加，隐空间中有效驱动 Q 值的奇异向量空间与前向动力学奇异向量空间发生流形正交退化（Tr(U_dyn^T U_Q) -> 0），导致 MPPI/CEM 规划时沿高方差前向转移采样的动作在 Q 评价路径上完全坍缩为盲游走。",
+      "task_harm": "局部规划死锁：MPPI 在 CEM 迭代中无法收敛至真实高回报轨迹，高估值伪最优轨迹主导隐空间 rollout，产生完全合法的静止或震荡控制（Action Chattering），在 ManiSkill2/DMControl 任务中表现为机械臂在目标物附近发生不动点冻结或无效微幅抖动。",
+      "repair": "在 WorldModel 隐空间中引入动态流形约束的规范化梯度投影算子（Projected Consistency Regularizer），强制限制 ∇_z L_Q 在动力学雅可比矩阵 J_T 主特征子空间内的投影比例下界：L_proj = ||(I - J_T J_T^+) ∇_z Q||^2。",
+      "prior_art_overlap": "不同于普通的 representation drift 或 OOD：隐空间表征范数及统计分布完全保持在标准正态先验内，转移误差在一步预测上仍保持极低水平，但前向生成与隐式价值梯度的几何对齐被完全切断。",
+      "novelty": "首次揭示无解码器（decoder-free）联合训练的世界模型在隐空间前向动力学与内嵌策略评估路径之间的几何正交脱节失效机制。",
+      "breadth": "适用于所有依赖隐空间联合价值/动力学学习的无解码器世界模型（如 TD-MPC, TD-MPC2, MuZero, EfficientZero）。",
+      "feasibility": "高。可在现有 TD-MPC2 官方仓库的 DMControl 任务中通过监测 Tr(J_T^T J_Q) 的谱分解，并在损失计算中人为调整多任务标量权重直接复现和验证。",
+      "verdict": "KEEP"
+    },
+    {
+      "candidate": "Diffusion Denoising Timestep Aliasing in Continuous Action-Conditioned Rollouts",
+      "carrier_repo": "eloicamp/diamond",
+      "native_path": "src/models/diffusion.py (Diffusion.sample, Diffusion.denoise_step)",
+      "threat_model": "黑盒测试期合法交互。攻击者仅在连续状态空间输入合法的特定高频微幅抖动控制序列（例如极小幅度的正弦动作扰动），动作幅度完全落在合法 action space 限制内。",
+      "mechanism_invariant": "在基于扩散的世界模型（如 DIAMOND）的多步闭环自回归预测中，扩散反向去噪过程在截断步数（如 DDIM 步数 N=3-5）下依赖动作调节条件嵌入（Action Conditioning Embedding）。当动作序列包含跨帧高频分量时，时间步嵌入（Timestep Embedding）与高频动作嵌入在交叉注意力层产生频率混叠（Frequency Aliasing）。机制不变量：去噪网络在隐变量高频子带上的截断截面积分误差与输入动作的高阶差分能量成线性正比，破坏自回归去噪轨迹的Lipschitz连续性条件。",
+      "task_harm": "高频动力学幻觉与状态发散：自回归预测帧在连续生成超过 4 步后，出现由于去噪步混叠累积产生的虚假空间高频伪影（High-frequency artifacts），导致基于视觉/状态特征的控制代理产生严重物理幻觉并输出越界动作。",
+      "repair": "在去噪网络的动作条件通道中增加时空带通滤波/自适应谱归一化（Spectral Action Conditioning），硬性衰减超过去噪步长奈奎斯特截止频率的动作调节分量。",
+      "prior_art_overlap": "不同于普通的 rollout compounding error 或 distribution shift：该机制由去噪时间离散采样步长与连续动作参数化的频率交叉混叠引发，属于扩散架构特有的离散化动力学混叠破坏。",
+      "novelty": "直接暴露了基于扩散的世界模型在低去噪步数自回归控制中独有的跨时间尺度混叠安全漏洞。",
+      "breadth": "适用于所有使用去噪扩散概率模型作为动力学模拟器的世界模型（如 DIAMOND, IRIS, Diffusion World Models）。",
+      "feasibility": "高。可在 DIAMOND 官方仓库使用预训练 Atari/CSGO 模型，直接注入特定正弦动作序列并测量隐状态去噪傅里叶谱漂移即可证伪。",
+      "verdict": "KEEP"
+    }
+  ],
+  "source_facts": [
+    "TD-MPC2 WorldModel defines encoder, dynamics MLP, reward MLP, termination MLP, Gaussian policy prior pi, and ensemble Q; no inverse model, no decoder-free forward-inverse dual-path objective, and no native Jacobian/singular-subspace projection.",
+    "TD-MPC2 update uses consistency loss for latent next-state, reward/value losses, then separate policy update through detached Q; no native forward-inverse consistency or gradient projection invariant.",
+    "DI​AMOND InnerModel conditions a 2-D UNet on Fourier noise embedding plus flattened discrete action embeddings; action embedding is not a temporal cross-attention mechanism and no action frequency/temporal positional basis is present.",
+    "DIAMOND sampler uses EDM sigma schedule with Euler/Heun denoising and reuses the observation/action conditioning at every denoising step; no timestep aliasing detector or temporal action rollout module is present.",
+    "Round64 already audited DIAMOND as lacking temporal cross-attention/block temporal attention; Round65-66 rejected related schedule/compression claims."
+  ],
+  "audit_conclusion": "Both Round70 proposals have carrier mismatch: TD-MPC2 proposal invents forward-inverse geometry absent from native code; DIAMOND proposal attributes a generic high-frequency action perturbation to nonexistent temporal/frequency mixing machinery."
+}

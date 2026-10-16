@@ -1,0 +1,439 @@
+{
+  "schema_version": 1,
+  "status": "curated_reusable_lessons",
+  "scope": "Current project evidence and user priority revised 2026-10-15; operational lessons are not new scientific results.",
+  "lessons": [
+    {
+      "id": "claim_before_carrier",
+      "name": "先匹配安全机制、接口权限和 Agent 决策路径",
+      "rule": "明确攻击者能改什么、哪些输入必须不变、预测通过哪条真实路径影响决策。仅因权重可用或任务能跑通，不足以启动新实验。",
+      "source_paths": [
+        "reports/research_progress.html",
+        "reports/worldagen_ttt_goal_interface_audit_20261014.json",
+        "reports/dino_native_interface_screen_20261015.json"
+      ],
+      "research_permission_calibration": {
+        "source": "reports/dino_action_alias_exploratory_decision_20261015.json",
+        "rule": "声明研究者定义的受限模块权限，可以开展低成本因果pilot；尚未发现部署入口限制部署/最小权限主张，不应成为所有探索的自动否决条件。任意服务接管不能包装成现实低权限入口。"
+      }
+    },
+    {
+      "id": "physical_vs_predictive_invariance",
+      "name": "物理未来不变，不等于部分观测条件预测必须不变",
+      "rule": "固定完整物理状态、覆盖时域的实际动作和外生随机源才能定义环境不变性。Goal 可能提供隐藏状态信息；模型须有具体隔离契约或目标评估分布依据。",
+      "source_paths": [
+        "configs/goal_bus_physical_invariance_spec.json",
+        "runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json",
+        "reports/action_alias_interventional_contract_20261015.json"
+      ],
+      "fixed_belief_extension": "完整状态可见是充分而非必要条件：固定belief、未来动作do干预，且所有可达隐藏状态上的执行核等价，就有混合后的物理未来分布等价。不要把P_train(Y|H,A)与这个干预量混同；也不要仅凭动作空间上下界或均值方差声称训练支持已知。"
+    },
+    {
+      "id": "target_codec",
+      "name": "先校准图像、动作和预测时域",
+      "rule": "WorldAgen 当前正确目标为官方 CLIP 像素归一化后的原生 patchify，不另做逐 patch 标准化；相机方向及动作步数须与原流程一致。旧 codec 下的误差和 Planner 结果不得重新包装为当前证据。",
+      "source_paths": [
+        "scripts/pilot_worldagen_prediction_contract.py",
+        "scripts/analyze_worldagen_prediction_contract.py",
+        "reports/goal_bus_submission_manifest.json"
+      ]
+    },
+    {
+      "id": "native_or_added",
+      "name": "明确标注原生系统与新增 Planner／适应器",
+      "rule": "WorldAgen 冻结动作先于 world 预测产生，不能声称原生动作被预测输出重排。JEPA/DINO Goal 只进目标函数，不能按 Goal-Bus 预测污染解释普通目标排序变化。",
+      "source_paths": [
+        "vendor/WorldAgen/utils/eval_utils_libero.py",
+        "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py",
+        "reports/research_progress.html"
+      ]
+    },
+    {
+      "id": "actual_utility",
+      "name": "实际损害必须来自原环境任务效用",
+      "rule": "报告原任务 success、return、封顶完成成本等真实后果。Forecast divergence、latent L2、排序翻转和切边后恒等均不是任务攻击成功；真实后果不能回流作为部署选动作分数。",
+      "source_paths": [
+        "reports/worldagen_corrected_decision_evidence_audit_20261015.json",
+        "runs/cosmos_first_candidate_utility_recovery_analysis_v1/analysis.json"
+      ]
+    },
+    {
+      "id": "metric_horizon",
+      "name": "冻结成功口径和总预算",
+      "rule": "末步 success 与 ever-success 不是同一指标；分叉续接预算从原回合全局步数扣除。改变阈值、延长时域或另开完整预算，会改变原问题。",
+      "source_paths": [
+        "scripts/analyze_dino_metaworld_clean_gate.py",
+        "runs/dino_metaworld_servo_analysis_v1/analysis.json"
+      ]
+    },
+    {
+      "id": "strong_comparators",
+      "name": "比较所有固定候选策略、随机和有意义的普通控制器",
+      "rule": "除零动作外，要用不依赖预测的有效控制器。固定候选集合应报告 always-candidate0、always-candidate1 等，并比较最佳固定策略；不能把事后逐实例 oracle 当可部署基线。",
+      "source_paths": [
+        "runs/cosmos_first_candidate_utility_recovery_analysis_v1/analysis.json",
+        "runs/dino_metaworld_servo_analysis_v1/analysis.json",
+        "runs/jepa_metaworld_reach_wall_cpu_analysis_v1/analysis.json",
+        "reports/cosmos_first_selection_mediation_20261015.json"
+      ],
+      "oracle_gate_calibration": {
+        "source": "reports/dino_action_alias_exploratory_decision_20261015.json",
+        "amendment": "reports/dino_action_alias_gate_amendment_20261015.json",
+        "rule": "可信局部Clean不必完美最优。保留事前失败门与停止记录，可以另行透明登记探索性续测，不能事后宣称原门通过或改主终点。比较固定条件的真实增量效用不要求Clean达到oracle最优。"
+      },
+      "local_harm_boundary": {
+        "source": "reports/cosmos_first_selection_mediation_20261015.json",
+        "rule": "平均排序增益与局部安全损害是两个估计目标。Clean无需优于所有普通策略，才能识别固定条件下的增量损害。将已有排序日志与真实候选续接逐项绑定，可补充首块作用；必须标明这是缓存派生效用，不能伪称新干预回合、完全中介或有效防御。"
+      }
+    },
+    {
+      "id": "replay_history",
+      "name": "恢复环境还不够，须恢复 Agent 历史",
+      "rule": "WorldAgen wrapper 消费图像、状态、文本和动作队列。仅 make_at_prefix 后 reset wrapper 不等于原生续接；实际执行的 candidate 必须进入动作历史。新增 image-goal Planner 方案未执行，不能列为已验证能力。",
+      "source_paths": [
+        "scripts/pilot_worldagen_prediction_contract.py",
+        "vendor/WorldAgen/utils/eval_utils_libero.py"
+      ]
+    },
+    {
+      "id": "privileged_goals",
+      "name": "额外目标图像和同轨迹开发数据须显式标注",
+      "rule": "用同一成功轨迹的终点图像作新 Planner 目标是额外信息与开发设置，不能冒充独立专家数据或独立泛化。应在读取候选真实后果前固定评分及目标。",
+      "source_paths": [
+        "reports/worldagen_corrected_decision_evidence_audit_20261015.json"
+      ]
+    },
+    {
+      "id": "state_pairing",
+      "name": "控制混杂因素，但只验证影响结论的内容",
+      "rule": "固定真实状态、任务目标、候选动作、评分规则和随机性。MetaWorld reset(seed) 的具体行为需核实；初态已有成功或零动作也成功时，不能据此宣称规划有效。",
+      "source_paths": [
+        "scripts/pilot_dino_metaworld_clean_gate.py",
+        "runs/jepa_native_microbatch_ep2_v1/summary.json"
+      ]
+    },
+    {
+      "id": "train_data_confound",
+      "name": "动作多重集相同不代表训练转移数据相同",
+      "rule": "TD-MPC2 的反序／乱序动作重新在环境执行，改变状态覆盖。不能据此隔离 SGD 顺序或非正规动力学机制。dynamics-only 实际只优化 consistency loss，不能凭想象加入不存在的 reward/Q 梯度通路。",
+      "source_paths": [
+        "reports/tdmpc_mechanism_reassessment_20261015.json",
+        "scripts/pilot_tdmpc_adaptation.py",
+        "scripts/pilot_tdmpc_order_controls.py"
+      ]
+    },
+    {
+      "id": "sampling_units",
+      "name": "统计单位必须与独立性一致",
+      "rule": "同轨迹多个 roots、候选、Goal offsets、步数及重放重复都不是新的独立 episode。固定三个开发种子以描述结果为主，不据此宣称总体优势；泛化需独立任务或数据源。",
+      "source_paths": [
+        "runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json",
+        "runs/cosmos_native_clean_gate_audit_v2/analysis.json"
+      ]
+    },
+    {
+      "id": "runtime_failure",
+      "name": "技术异常和未执行条件不能计作任务失败",
+      "rule": "OOM、依赖异常、复现不匹配、用户主动中止与完整任务失败分别记录；部分面板不填充为0/N。保留已完成有效回合，并明确剩余未测。",
+      "source_paths": [
+        "reports/jepa_reach_wall_user_priority_stop_20261015.json",
+        "runs/dino_metaworld_clean_gate_v1/summary.json"
+      ],
+      "mmap_path_compatibility_example": {
+        "source": "runs/cosmos_future_modality_factorial_20261016_resume1/execution_sessions.json",
+        "rule": "Torch2.2的torch.load(mmap=True)要求字符串文件名。审计包装器可用Path检查来源，但委托原函数时保留str；首次零推理失败保留，技术恢复不变更科学协议和未见结果。"
+      },
+      "native_camera_runtime_example": {
+        "report": "reports/safedreamer_mode_mediator_gate_20261016.json",
+        "rule": "Match required named cameras before model or task evaluation. A public PyPI release can omit a camera present in the official repository route. Do not invent camera poses or treat an uncompleted package download as a capability failure. Reuse already installed core dependencies and distinguish CPU import, source review, strict weight loading, first-query feasibility and full Clean.",
+        "later_result": "Exact official package delivered in separately bounded405.537s continuation, only package replaced. Native reset/rendering and checkpoint query succeeded; later fixed scientific no-crossing result is distinct from the historical setup timeout.",
+        "source_paths": [
+          "runs/safedreamer_mode_mediator_gate_20261016/environment_continuation_20261016/verification.json",
+          "runs/safedreamer_mode_mediator_gate_20261016/native_query_attempt1/summary.json"
+        ]
+      }
+    },
+    {
+      "id": "stop_on_no_signal",
+      "name": "没有机制或实际效用信号就止损",
+      "rule": "用户最新目标明确优先最小充分实验；无需为了完成原计划数量继续消耗算力。没有实际损害时不扩展防御、没有合格机制时不扩展无关正常任务；停止原因和部分证据须保留。",
+      "source_paths": [
+        "reports/jepa_reach_wall_user_priority_stop_20261015.json",
+        "runs/worldagen_cached_metadata_aggregate_swap_v2/results.json"
+      ]
+    },
+    {
+      "id": "compatibility",
+      "name": "依赖修正应隔离，不能静默改共享环境",
+      "rule": "MetaWorld 3.1.1 要求 MuJoCo 3.3.0；用独立 target 处理兼容性。新旧引擎产生不同实际初态时，不能做相同状态的因果性能归因。FP32参数也不自动意味着禁用 TF32。",
+      "source_paths": [
+        ".deps/dino_mujoco330/compatibility_comparison.json",
+        "reports/dino_metaworld_clean_gate_disposition_20261015.json"
+      ]
+    },
+    {
+      "id": "reuse_bindings",
+      "name": "复用来源记录，避免重复大文件审计",
+      "rule": "归档使用已有版本、Checkpoint 来源和实际运行记录。只有代码、数据、依赖变化或出现具体不一致时，再做必要校验；不以反复重算散列代替决定性科学实验。",
+      "source_paths": [
+        "scripts/research_archive.py"
+      ]
+    },
+    {
+      "id": "source_precedence",
+      "name": "当前修正结论优先于旧 promoted 标签",
+      "rule": "旧配置、论文和历史报告可能含已撤回准确性及 novelty 7 自评。保持原文可追溯，引用当前 evidence 登记的边界，不删除反证或静默重写旧实验。",
+      "source_paths": [
+        "reports/goal_bus_submission_manifest.json",
+        "reports/research_progress.html"
+      ]
+    },
+    {
+      "id": "api_operation",
+      "name": "API 作为受控研究资源使用",
+      "rule": "优先复用本地模型和缓存；用户当前提供的主接口为 Gemini。实际主接口不可用时报告错误类型，再按现有授权处理替代。记录模型身份和请求配置，避免凭据进入日志、论文、归档或网页。模型/provider变化不是同一实验条件。",
+      "source_paths": []
+    },
+    {
+      "id": "novelty",
+      "name": "以科学问题和证据评价新意",
+      "rule": "先给一句话机制、现实权限和可证伪预言，再查直接相关工作。CF-JEPA、Dueling World Models 与 LENS 既有审计已指出部分候选重合；没有可复现任务危害、有效恢复和独立泛化前，不给7分或投稿就绪承诺。",
+      "source_paths": [
+        "reports/dino_controllability_novelty_audit_20261014.json",
+        "reports/goal_bus_submission_manifest.json"
+      ]
+    },
+    {
+      "id": "task_specific_native_budget",
+      "name": "区分通用默认与任务专用评估配置",
+      "rule": "成本过高时先核对该任务的官方示例，再测执行瓶颈。NanoWM通用随机目标配置最多10次规划，PointMaze专用可达目标示例最多2次；可以另立严格留出协议，不能把新任务冒充旧面板结果。共享GPU计时不代表模型固有成本；优化应先定位耗时，保留随机采样语义。任务可达且零动作失败只是能力测试的前提，不能计为Clean成功。",
+      "source_paths": [
+        "reports/nanowm_runtime_task_reassessment_20261015.json",
+        "runs/nanowm_component_profile_v1/summary.json",
+        "runs/nanowm_heldout_pointmaze_tasks_v1/summary.json"
+      ]
+    },
+    {
+      "id": "paired_seed_validation_and_native_score_fidelity",
+      "lesson": "共享seed的两标签样本必须整组留出；分类器差值不能直接当增量泄漏。原生模型组件不等于原生Planner。",
+      "failure": "逐行LOO把配对异类留在训练，能让无信息数据得0%；旧自设CEM还用reward logits均值并跨迭代累加。",
+      "practice": "按独立采样单位分组；报告tie、原始尺度、动作基线及缓存范围；核对原生reward解码、每轮累计量生命周期和实际环境执行。",
+      "evidence": [
+        "reports/private_query_statistical_correction_20261015.json",
+        "runs/private_query_grouped_cv_audit_20261015/summary.json"
+      ],
+      "reuse_boundary": "修正统计不恢复错误生成过程，不产生原生能力、安全成功或无泄漏证明。"
+    },
+    {
+      "id": "privacy_observable_baselines",
+      "name": "私密目标研究先核实服务已知的观测和动作",
+      "rule": "接口没有Goal参数，不代表原始像素或latent不含目标；原生规划的均值查询还可能直接包含将执行的动作。先固定服务边界，比较公共context、已选动作和额外查询的信息，再谈增量泄漏。像素或latent差异不是解码成功率，也不自动要求换任务或遮挡目标。",
+      "source_paths": [
+        "reports/dino_private_goal_observability_20261015.json",
+        "runs/dino_goal_observability_20261015/summary.json",
+        "runs/dino_goal_latent_observability_20261015/summary.json"
+      ]
+    },
+    {
+      "id": "planner_return_operator",
+      "name": "干预目标须对应规划器实际返回的控制量",
+      "rule": "候选argmax、精英均值、平滑均值和动作队列前缀不是同一个决策。先检查实际return与executor，必要时在同一native callback重构并核对执行动作。旧surrogate上的无损害结果仍保留；换成执行动作目标是新操作，不能把旧结果直接判为实现错误。首query动作改变不等于环境损害。",
+      "source_paths": [
+        "src/wm_security/rank_coupling.py",
+        "vendor/mbrl-lib/mbrl/planning/trajectory_opt.py",
+        "scripts/pilot_mbrl_action_mean_coupling.py",
+        "configs/mbrl_action_mean_coupling_20261015.json"
+      ]
+    },
+    {
+      "id": "execution_alias_precision",
+      "name": "执行等价必须在真实数值与完整状态下验证",
+      "rule": "在实际float32反归一化后核对执行器裁剪，保留gripper和未修改的normalized坐标。规范边界可能需nextafter；先验证历史回放再恢复完整积分状态、计数器、历史队列及RNG。物理别名成立不等于预测、排序或任务攻击已测；改变CEM候选本体还会混入精英平均几何。",
+      "source_paths": [
+        "reports/dino_action_saturation_decision_20261015.json",
+        "scripts/probe_dino_action_saturation_gate.py",
+        "configs/dino_action_saturation_gate_20261015.json"
+      ]
+    },
+    {
+      "id": "true_future_objective_attribution",
+      "name": "用真实未来评分区分预测错误与目标代理失配",
+      "rule": "出现预测更准却决策更差时，固定原评分器，用独立真实未来的编码做诊断。若真实未来也选低任务效用候选，说明评分目标与任务奖励在该集合上失配；不能把损失唯一归因于预测污染。该对照不抹掉已测输入干预的局部因果损失，也不是要求oracle永远最优的新普遍门槛。真实未来只用于离线诊断，不能当部署防御或泄漏回选动作流程。",
+      "source_paths": [
+        "reports/dino_action_alias_exploratory_decision_20261015.json",
+        "runs/dino_action_saturation_exploratory_20261015/oracle_objective_analysis.json",
+        "scripts/analyze_dino_true_future_objective.py"
+      ]
+    },
+    {
+      "id": "native_return_vs_success_and_request_alias",
+      "name": "累计回报、到达成功与预测误差必须分开判断",
+      "rule": "原生任务中累计dense return可以下降，而首次成功、成功步数和终点距离同时改善；如实保留所有预设指标，并区分主判据与事后描述，不把单项损失推广为任务成功受损。原生CEM后续候选因预测评分改变是机制中介，但不同轨迹中的动作差异不能统计为同状态排名翻转。用同状态、同执行动作的真实后果比较预测误差，最终均值的短前缀诊断也不能替代全部候选和完整规划终点的中介分析。 同后端配对预测分析与实际恢复仍须分开：输入绑定可恢复原始轨迹，包括原始较差的终点指标；不等于每个任务指标改善。跨后端校准失败应保留，可在未见反事实结果前单独登记同后端诊断，不能静默放宽门。",
+      "source_paths": [
+        "reports/dino_native_alias_decision_20261015.json",
+        "runs/dino_native_alias_pair_20261015/query_results.csv",
+        "scripts/analyze_dino_native_alias_pair.py",
+        "reports/dino_native_alias_recovery_decision_20261015.json",
+        "reports/dino_native_alias_forecast_gpu_decision_20261015.json",
+        "reports/dino_native_alias_utility_timing_20261015.json",
+        "scripts/analyze_dino_native_alias_utility_timing.py",
+        "reports/dino_first_query_two_mean_ranking_20261015.json",
+        "reports/dino_first_query_two_mean_protocol_20261015.json",
+        "scripts/analyze_dino_first_query_two_mean_ranking.py",
+        "reports/dino_first_query_terminal_truth_decision_20261015.json",
+        "reports/dino_first_query_full_horizon_20261015.json",
+        "reports/dino_first_query_terminal_truth_20261015.json",
+        "reports/dino_first_query_native_objective_decomposition_20261015.json",
+        "scripts/replay_dino_first_query_full_horizon.py",
+        "scripts/analyze_dino_first_query_terminal_truth.py",
+        "scripts/analyze_dino_first_query_objective_decomposition.py"
+      ],
+      "timing_accounting_extension": "先检查是否固定步数及成功是否终止，再用共同时间窗分解回报。DINO本对两臂均99步，1–52步损失85.043766，余段反而增加0.243539；成功区贡献增加90。损失是真实早期接近过程的积分效用下降，不是提前结束少计奖励。按各臂自身成功事件分组属于内生会计分解，不能当作同状态因果比较。",
+      "fixed_bank_extension": "若两臂首次查询共享状态与目标，且缓存含两条动作的两种表示预测，可明示事后固定库后重用原生评分器检验排名；后续状态不同的query不可直接拼成同状态候选库。必须分开模型评分时域和实测动作前缀时域，不把近端真实效用当完整规划终点真值。",
+      "full_horizon_truth_extension": "完整时域真实回放和同后端真值编码，可区分更差预测与评分目标错配。DINO query1两mean库的规范化预测均更准，真实未来原生评分仍选低回报动作；原预测误差反而偶然抵消代理错配。不能把更小MSE视为更优决策，也不能因此断言误差没有中介作用。两候选真值替换不等于完整oracle planner；原生执行15步再规划，30步开环不是99步闭环中介。"
+    },
+    {
+      "id": "physical_truth_vs_task_latent_coordinates",
+      "name": "共同物理真值不等于共同潜坐标",
+      "rule": "完整状态、实际动作和噪声相同且Goal仅为偏好时，要求相同的是同一物理量。若encoder和训练target也受task条件化，换dynamics任务标签可能混用坐标；原始latent距离不足以判断物理错误。先明确读出契约，不为弥补解释缺口直接训练未定义探针。",
+      "source_paths": [
+        "reports/tdmpc_task_latent_contract_20261015.json",
+        "reports/post_native_alias_source_synthesis_20261015.json"
+      ]
+    },
+    {
+      "id": "source_exclusion_and_advisory_scope",
+      "name": "区分接口排除、实验证伪与模型建议",
+      "rule": "源码显示拟议路径不存在时，只排除该配置上的具体操作，保留未测状态。模型给NONE或普通机制解释不能替代因果中介分析；较早固定bank的解释不能自动迁移到后续原生闭环。缺少部署writer只限制部署主张，不否定明确受限的研究实验。",
+      "source_paths": [
+        "reports/native_unexecuted_candidate_screen_20261015.json",
+        "reports/dino_alias_writer_boundary_20261015.json",
+        "reports/latent_cbf_alias_carrier_screen_20261015.json",
+        "runs/post_native_alias_scientific_review_20261015/assessment.json"
+      ]
+    },
+    {
+      "id": "applied_action_identity_in_factual_history",
+      "name": "世界模型历史必须匹配最终执行动作的身份与时间",
+      "rule": "shield的nominal request、filtered return和executor最终applied control是三种对象。检查数值、归一化和时序；tuple未重新赋值不证明历史没更新，因为原地修改可能沿共享tensor正确传播。源码和替身路由测试只能确认数据流，不能代替训练模型影响与真实任务后果；回写实际输入有直接经典先例。",
+      "source_paths": [
+        "reports/action_feedback_candidate_decision_20261015.json",
+        "reports/latent_cbf_action_feedback_contract_20261015.json",
+        "reports/unisafe_action_feedback_source_screen_20261015.json",
+        "runs/latent_cbf_action_feedback_20261015/summary.json"
+      ]
+    },
+    {
+      "id": "freeze_parameters_preserve_task_gradients",
+      "name": "冻结评分网络参数，不等于删除其输入梯度",
+      "rule": "隔离dynamics更新时，reward/Q权重可冻结，同时保留损失通过预测状态传回dynamics。比较恢复路径必须同时观察受损臂和匹配对照的真实效用；缩小差距可能部分来自对照变差，不能自动计为有效防御。",
+      "source_paths": [
+        "reports/tdmpc_frozen_head_loss_control_decision_20261015.json",
+        "reports/tdmpc_frozen_head_loss_control_review_20261015.json",
+        "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+        "scripts/pilot_tdmpc_frozen_head_loss_control.py"
+      ]
+    },
+    {
+      "id": "separate_physical_root_and_model_memory_qualification",
+      "name": "分别确认实际环境根与模型记忆初始化",
+      "rule": "自然reset可以在保留旧前缀失配的同时，建立新的实际局部评估根；须证明状态重建并核对真实观测历史。物理根可用不代表研究者补入的事实记忆属于原生流程。先测明确初始化和正常预算的Clean组件；无计划且无执行时，真实效用保持未测。",
+      "source_paths": [
+        "reports/opine_native_root_gate_20261015.json",
+        "reports/opine_native_planner_contract_correction_20261015.json"
+      ]
+    },
+    {
+      "id": "trace_action_origin_before_claiming_optimizer_mediation",
+      "name": "先确认执行动作来源，再检验优化器中介",
+      "rule": "跨访问状态的采样协方差均值不是因果中介。先看optimizer返回best候选还是末轮均值、tie规则与评分上界，再只干预拟议更新并确认有效采样分布确已改变。保留完整返回序列与warm-start，因为当前首动作相同不保证下次候选相同。统计真实回报、对照代价及上限截断；查询数不能充当独立任务样本。",
+      "source_paths": [
+        "reports/cem_dispersion_action_source_audit_20261015.json",
+        "reports/mbrl_dispersion_control_decision_20261015.json",
+        "scripts/pilot_mbrl_dispersion_control.py"
+      ]
+    },
+    {
+      "id": "bound_cached_decision_effect_before_new_inference",
+      "name": "先用真实分支效用界判断追加预测是否有辨别力",
+      "rule": "对于固定候选与固定后续策略，先计算每个初态真实效用的最小/最大值及候选差异。任何选择器只能在这些界内；新增评分噪声或耦合不能扩大已有实际后果支持集。对固定有限预测bank，可在生成bank前计算选择规则和边缘分布约束下的最坏概率变化。区分原生固定seed、独立随机评分器、均匀候选参考与期望/单次结果；不要把理论上界写成攻击信号或以换评分器绕过不可达实验门。",
+      "source_paths": [
+        "reports/cosmos_first_choice_identifiability_bounds_20261015.json",
+        "scripts/analyze_cosmos_first_choice_bounds.py"
+      ]
+    },
+    {
+      "id": "verify_refinement_and_randomness_before_gradient_or_cut_claim",
+      "name": "区分前向动作修正、反传规划和删除调用造成的随机流变化",
+      "rule": "论文称iterative refinement不表示原生消费者用梯度优化；核对no_grad、实际loop默认值和调用方。被mask掉的预测仍可能消耗随机数，直接删除调用会改变后续policy噪声。先保留随机流再评价Bus-Cut，不把源码依赖当作任务因果效应；没有匹配机制时不为资源清单启动Clean面板。",
+      "source_paths": [
+        "reports/ladiwm_native_carrier_screen_20261015.json",
+        "reports/prior_scope_and_carrier_refresh_20261015.json"
+      ]
+    },
+    {
+      "id": "text_entry_route_is_not_whole_bus_cut",
+      "name": "同query文本路由可定位直接入口，但不能代替完整Bus-Cut",
+      "rule": "跨层self-attention使Goal可先进入其它位置再到action。用当前同一query计算另一文本的cross-attention、仅替换预定等量行、保留gate，才能避免整份hidden移植；仍须双向干预和预定位置对照。动作位置未翻转、proprio修复翻转时不能称action-bus特异性。相同token数不等于相同扰动范数。保存完整Future/Value校准、noop和RNG不变验证；已有续接效用不算新恢复episode。",
+      "source_paths": [
+        "configs/cosmos_action_text_route_gate_20261015.json",
+        "reports/cosmos_action_text_route_decision_20261015.json",
+        "reports/cosmos_action_text_route_review_20261015.json"
+      ],
+      "output_content_followup": {
+        "report": "reports/cosmos_future_modality_factorial_decision_20261016.json",
+        "rule": "Goal进入Future网络的位置与Future输出影响Value的内容是两个不同问题。完整3×3输出因子检验可识别固定输入下的局部选择依赖，但不能用它救回失败的文本入口解释；物理不一致的混合表示也不能被当成可部署防御。"
+      }
+    },
+    {
+      "id": "selective_residuals_need_same_count_consumed_state_control",
+      "name": "高误差被漏评，不足以推出选择性过度自信或决策损害",
+      "rule": "按真实issue+horizon配对，区分prediction_valid、可见mask和GST有效mask；先按mask固定首root，独立记录实际消费预测的身份。完整反馈对照同时改变样本数，必须加同数量误差无关缺失及按物理时刻绑定的共同校准随机数。检查实际消费的clip后区间、h1精确负控和重入占位预测。残差差异成立而同数量区间持平时停止，不改root/seed或用误差替代真实效用。",
+      "source_paths": [
+        "configs/gensafenav_feedback_selection_gate_20261015.json",
+        "reports/gensafenav_feedback_selection_decision_20261015.json",
+        "reports/gensafenav_feedback_selection_review_20261015.json"
+      ]
+    },
+    {
+      "id": "executor_null_fields_require_matched_training_and_actual_harm",
+      "name": "物理无效字段可被学习，不代表形成决策漏洞",
+      "rule": "先验证执行器切片与学习器输入边界；固定同一真实转移，仅改无效字段，并保留完整联合字段多重集作为置换对照。按任务mask恢复输入只是身份检验，不能冒称恢复回合。通过基线历史校准后比较真实闭环回报；没有损害就停止，不能用预测误差变化或尾字段名字宣称新颖性。明确动力学隔离继续训练与原生完整训练的区别。",
+      "source_paths": [
+        "configs/tdmpc_nullspace_action_logs_20261015.json",
+        "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+        "reports/tdmpc_nullspace_action_logs_review_20261015.json"
+      ]
+    },
+    {
+      "id": "branch_warning_is_not_factual_contamination",
+      "name": "先验证原生消费者，再区分条件警告与事实错归属",
+      "rule": "稀疏检出缺文件不等于官方未发布。固定逐动作输入和预测检验分支归属；保留默认单分支、完整界面树等负控。原生风险警告影响计划是正常功能，算子顺序依赖不能替代真实任务损害。归属对照必须保留所有合法警告，只补足动作、条件和未执行身份。",
+      "source_paths": [
+        "configs/safepred_branch_ownership_probe_20261015.json",
+        "reports/safepred_branch_ownership_decision_20261015.json",
+        "reports/safepred_branch_ownership_review_20261015.json"
+      ]
+    },
+    {
+      "id": "scienceworld_actual_server_jar_and_oracle_scope",
+      "name": "完整状态回放须固定实际JAR；oracle消费检查须限定结论",
+      "rule": "同包版本不保证同仿真运行时。先前温度差是真实物理状态差，不能删字段让检查通过；通过原生serverPath复用已有修复JAR并保留失败记录。Oracle一步文本只验证该信息接口的消费行为，不验证预训练WM；固定后续动作的环境得分不能写作完整自主任务回报。",
+      "source_paths": [
+        "reports/worldevolver_truthful_coverage_decision_20261016.json",
+        "configs/worldevolver_truthful_coverage_vendor_runtime_v2_20261016.json",
+        "reports/worldevolver_truthful_coverage_result_review_20261016.json"
+      ]
+    },
+    {
+      "id": "donor_pairing_does_not_isolate_interaction",
+      "name": "配对指标、交互识别与安全后果分开",
+      "rule": "共享outcome配对可排除纯outcome分数，但不能单独排除可加context项。区分logit与sigmoid概率、pair accuracy与pooled AUC。测试ID图势拟合只能作识别性见证，不当作泛化baseline；缺失交叉边不能自行补安全标签。",
+      "source_paths": [
+        "reports/lgwm_verifier_candidate_decision_20261016.json",
+        "reports/lgwm_pair_design_audit_20261016.json"
+      ]
+    }
+  ],
+  "updated_on": "2026-10-16"
+}

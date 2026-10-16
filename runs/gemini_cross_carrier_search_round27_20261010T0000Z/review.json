@@ -1,0 +1,33 @@
+{
+  "verdict": "RUN_ONE",
+  "candidates": [
+    {
+      "id": "cand_1_ensemble_hallucination_siphon",
+      "carrier": "MBRL-Lib 5-member GaussianMLP + native ModelEnv/CEM on HalfCheetah, Pusher, Reacher3D",
+      "summary": "Ensemble epistemic variance spoofing via transient out-of-support legal physical state injection in historical context window."
+    },
+    {
+      "id": "cand_2_counterfactual_provenance_shadowing",
+      "carrier": "MBRL-Lib 5-member GaussianMLP + native ModelEnv/CEM on Pusher and Reacher3D",
+      "summary": "Attacker acts legally during an initial unconstrained warm-up phase to steer the real state into a high-leverage non-invertible manifold where ensemble epistemic agreement decouples from downstream goal reachability."
+    }
+  ],
+  "chosen_candidate": "cand_2_counterfactual_provenance_shadowing",
+  "novelty_score_0_to_10": 7.3,
+  "one_sentence_claim": "World-model ensemble planners exhibit counterfactual provenance vulnerability, wherein legal test-time interaction during unmonitored task phases steers dynamics into calibration-blind state manifolds that induce catastrophic cross-horizon plan divergence while retaining low epistemic variance.",
+  "carrier": "MBRL-Lib five-member GaussianMLP + native ModelEnv/CEM (Pusher-v2, Reacher3D, HalfCheetah-v2)",
+  "legal_attacker_operation": "Test-time open-loop action prefix (length K=5 to 10) executed legally inside the simulator environment before the goal evaluation window, driving joint angles into a kinematically extreme yet valid state where dynamic jacobians are poorly represented by historical training data.",
+  "mechanism_observable": "Decoupling of ensemble prediction variance from ground-truth rollout divergence: CEM chooses candidate trajectories with ensemble disagreement below the 20th percentile, yet dynamic error at rollout step H=15 exceeds the 90th baseline percentile, causing native task completion rate to drop by >60%.",
+  "short_falsification_gate": "Run a 2-minute native pilot on Pusher-v2: compare standard initialization against 10 random legal boundary-state prefixes. If ensemble variance increases proportionally to trajectory error across >=8/10 trials, or if task success does not drop by >=40% relative to clean seeds, reject immediately.",
+  "defense": "Trajectory-level counterfactual provenance verification: during CEM evaluation, discount simulated rollout rewards by the projection distance of transition jacobians onto the empirical training-set tangent space (empirical Fischer information matrix approximation) rather than relying solely on naive ensemble disagreement.",
+  "core_tasks": [
+    "Pusher-v2",
+    "Reacher3D",
+    "HalfCheetah-v2"
+  ],
+  "overlap_risks": [
+    "Adversarial state perturbation (avoided: attacker does not compute gradient-based state noise or perturb simulator observations directly)",
+    "Uncertainty collapse / rollout compounding (avoided: target mechanism relies specifically on low ensemble disagreement in unvisited legal submanifolds, not standard multi-step error accumulation)"
+  ],
+  "rationale": "Uses strictly native MBRL-Lib GaussianMLP ensemble and native CEM on an RTX 4090 without retraining or altering native planning loops. Operates via legal interaction states rather than input poisoning or backdoor weights. Distinguishable from TD-MPC2 temporal cascade failures because it targets ensemble calibration blind spots in continuous multi-joint physics domains."
+}

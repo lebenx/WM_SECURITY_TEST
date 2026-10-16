@@ -1,0 +1,36 @@
+{
+  "candidate_claim_cn": "世界模型的逐动作预测可以保持正确，规划却能被预测样本间的随机耦合操纵。",
+  "gymnasium": "1.2.2",
+  "maps": [
+    "4x4",
+    "8x8"
+  ],
+  "particles": [
+    1,
+    4,
+    16
+  ],
+  "gamma": 0.99,
+  "seed": 17,
+  "native_episodes": 200,
+  "episode_seed": 41000,
+  "model": "Exact unmodified native transition kernel; no parameter fitting or prediction corruption.",
+  "victim": "Researcher-defined sample-average one-step lookahead using exact optimal continuation value; all four native actions.",
+  "adversary": "Controls only cross-action coupling in the batch sampler, via fixed state-dependent cyclic uniform shifts. Cannot modify marginal laws, value function, planner, execution, or true environment.",
+  "optimization": "24 random phase candidates plus zero; two coordinate sweeps over a 16-point grid, minimizing the expected selected true Q*.",
+  "conditions": [
+    "independent",
+    "shared_quantile",
+    "random_phases",
+    "optimized_phases",
+    "exact_expectation"
+  ],
+  "preservation": "For each action even the joint N-particle law remains iid native transitions. Coupling changes only between candidate actions.",
+  "limits": "Analytic-model mechanism gate on two maps of one toy-text task, not a learned neural WM, native agent, deployable attack, or ICLR-scale result.",
+  "new_api_requests": 0,
+  "gpu_work": false,
+  "hashes": {
+    "scripts/pilot_coupled_sampling.py": "176fc47c498126621f692138479db96c5b978eb5086986c6445a9162b7ecb4ee",
+    "src/wm_security/coupled_sampling.py": "cf392e39424f3e74ac1e600d2d0390a376dd8cc57606f835709c6df2287caeb3"
+  }
+}

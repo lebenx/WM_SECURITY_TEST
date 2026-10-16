@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "approved_frozen_exploratory_continuation",
+  "amendment": "reports/dino_action_alias_gate_amendment_20261015.json",
+  "runner": "scripts/probe_dino_action_saturation_exploratory.py",
+  "out_dir": "runs/dino_action_saturation_exploratory_20261015",
+  "source_run": "runs/dino_action_saturation_gate_20261015",
+  "source_decision": "reports/dino_action_saturation_decision_20261015.json",
+  "disclosure": {
+    "previous_oracle_gate": "FAILED and remains unchanged: original selected candidate2 terminal reward7.699375629425049 was below candidate0 bank maximum7.989218711853027.",
+    "changed_decision": "After observing that failure, collect the two previously unmeasured representation forecasts as an explicitly exploratory diagnostic. This departs from the predecessor's early-stop decision, not from its candidate bank, alias magnitudes, scoring or utility definitions. It does not retroactively pass the old gate.",
+    "qualification": "No claim of a newly qualified native controller, independent task sample, attack success rate or confirmed defense. Any selected-utility difference is descriptive for this one frozen bank.",
+    "operation": "Researcher-defined write to a copied forecast request while original candidate/executor identities remain fixed. The deployment interface is hypothetical; no external low-trust API is established."
+  },
+  "frozen_inputs": {
+    "bank": "frozen_bank.npz",
+    "encoded_observations_and_reference_forecast": "forecasts_and_encodings.npz",
+    "utilities_and_old_gate": "summary.json",
+    "bank_meaning": "The same five new open-loop sequences formed from historical executed prefixes and two constructed controls, all at original seed1 root. H6 means30 controls; original CEM would execute15 before replanning.",
+    "representations": ["original", "inflated_saturated_xyz", "canonical_saturated_xyz"],
+    "alias_definition": "Reuse saved normalized arrays verbatim: saturated XYZ magnitude +2 or the previously frozen closest FP32 boundary, with all unsaturated coordinates and gripper unchanged. Do not regenerate/search any aliases.",
+    "immutable": ["candidate identities/order and raw execution vectors", "root and task target", "initial/goal/true future encodings", "score", "30-control primary utility", "15-control secondary utility", "seed and inference batch shape", "alias magnitude/rule"]
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 4,
+    "global_seed": 1,
+    "wall_limit_seconds": 180,
+    "outer_timeout_seconds": 195,
+    "checkpoint_loads": "Unmodified existing cfg_for/load_model; load each existing checkpoint file once, no hashing/downloads. Encoder weights may be constructed/loaded but no observation/goal/truth encoder is called.",
+    "no_environment": true,
+    "no_new_encodes": true,
+    "no_gpu": true,
+    "no_network": true,
+    "no_training": true,
+    "no_installation": true
+  },
+  "execution_order": [
+    "Verify predecessor completed, old Clean gate false,15 physical branches/450 controls completed, cached historical/effective-control equivalence passed, and cached array schemas match the frozen protocol.",
+    "Load checkpoint once; verify native float32 denormalization reproduces saved request arrays and all copied-alias effective-control/gripper invariants. Block encode/visual/proprio encoder calls.",
+    "Recompute ORIGINAL unroll once with cached T1 context and H6,B5,A20 actions. Require exact equality of complete visual/proprio forecast tensors and native costs with saved CPU outputs before any alias forecast. On mismatch, retain error and stop; no tolerance adjustment or retry.",
+    "Run exactly one INFLATED and one CANONICAL unroll on already frozen inputs; objective always receives original candidate actions. Reuse the same cached goal and actual-future encodings.",
+    "For unchanged zero-roundtrip candidate3, require exact forecast equality across all three same-shaped batches. Preserve all forecast data and results; no further models, seeds or action search."
+  ],
+  "metrics": {
+    "native_cost": "ReprTargetDistMPCObjective: terminal visual-feature MSE +0.1*proprio-feature MSE, sum_all_diffs=False.",
+    "prediction_error": "Per horizon and candidate visual/proprio latent MSE against cached actual replay encodings at5/10/15/20/25/30 controls, plus weighted sum. Compare unroll output indices1..6; prefix index0 is not a forecast.",
+    "ranking": "Ascending native cost; stable candidate-index tie break. Report full ranks, selected candidate, pairwise order-change counts out of10 pairs and selected-index changes. These are finite-bank descriptors, not population rates.",
+    "primary_utility": "Cached actual final native reach reward after30 controls; also cached30-control summed reward, final distance, success and ever-success.",
+    "secondary_utility": "Cached actual15-control prefix terminal reward, summed reward, final distance, success and ever-success; never used to change selection or primary endpoint.",
+    "condition_contrasts": "Inflated-original, canonical-original and canonical-inflated selected-utility differences, without replacing the previous gate. Canonical-original is the Clean cost of canonicalization; canonical-inflated is descriptive recovery only if an actual loss occurred.",
+    "canonical_identity": "The predecessor verified canonical(Clean) and canonical(Inflated) tensors identical. The single canonical evaluation represents both; this is constructive input equality, not two independent defense trials.",
+    "tolerance": "Retain previous1e-6 only as a numerical reward-comparison tolerance, not a practical harm threshold. Exact runtime replay/zero controls use bitwise numeric equality."
+  },
+  "stop_rules": ["Any source inconsistency, unexpected load, runtime replay mismatch, nonfinite output, zero-control mismatch or prohibited call", "180-second internal wall limit", "One attempt, no overwrite or retry; preserve partial/error output", "No changes to predecessor artifacts, archive or registered candidate/alias/utility definitions"],
+  "outputs": ["summary.json", "condition_forecasts.npz", "launched_config.json", "launched_script.py"],
+  "analysis_boundary": "This continuation can describe forecast representation sensitivity and cached-outcome selection differences. It cannot establish full native CEM closed-loop harm, generalization, statistical significance or a new action-equivalence principle."
+}

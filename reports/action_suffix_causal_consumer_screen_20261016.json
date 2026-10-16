@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "status": "completed_bounded_source_only_screen_no_qualified_new_interface",
+  "recorded_at_utc": "2026-10-15T18:17:15.754799+00:00",
+  "question": "Can a supplied but not-yet-executed action suffix improperly alter an earlier physical forecast that an existing native agent actually consumes for action selection?",
+  "decision": "NONE",
+  "decision_scope": "No qualifying new interface was established in this bounded review. This is not proof that no such system exists. Do not repeat the existing suffix probe or start a new model experiment from architecture sensitivity alone.",
+  "review_method": {
+    "local_first": true,
+    "local_sources": [
+      "reports/research_archive/mechanisms.json",
+      "reports/research_archive/models.json",
+      "reports/research_archive/papers.json",
+      "reports/related_work.json",
+      "reports/action_alias_interventional_contract_20261015.json"
+    ],
+    "primary_work_families_inspected": 3,
+    "primary_work_families": [
+      "Causally Correct Partial Models for Reinforcement Learning",
+      "Drive-WM",
+      "Vista"
+    ],
+    "new_source_files_persisted_before_this_report": [],
+    "source_cache_note": "Public small source and metadata responses were inspected through tool output/in-memory urllib reads. This action-suffix review did not persist those responses. The prior frozen_planner_attack_source_screen_20261016 cache belongs to a separate task and is not source evidence for this review.",
+    "no_new_retrieval_for_report": true
+  },
+  "physical_contract": {
+    "statement": "For fixed history H and belief b(S|H), exogenous action interventions with identical executed controls up to the physical time of Y_(t+k), and no other physical effects, induce the same distribution of the physical prefix through t+k regardless of a later action suffix.",
+    "notation": "P(Y_(t+1:t+k) | H, do(a_(t:t+T-1))) = P(Y_(t+1:t+k) | H, do(a_prime_(t:t+T-1))) when the executor-induced controls before t+k agree at every reachable augmented state.",
+    "not_new_theorem_claim": true,
+    "stochastic_scope": "Equality is a physical distributional requirement. It does not by itself require a diffusion implementation to return the same early sample under an identically numbered random seed. A same-seed change can reflect a changed coupling while leaving the early marginal distribution unchanged.",
+    "observational_scope": "P_train(Y | H,A) can depend on future behavior actions because those actions reveal hidden or intermediate observations. That dependence can be statistically correct for the training conditional, while use as a do(A) planning prediction is causally inappropriate.",
+    "executor_scope": "A prefix of path-waypoint tokens need not imply an identical physical-control prefix: interpolation or a lookahead controller may consume later waypoints. Executor equivalence must be established before claiming a nonanticipation violation.",
+    "output_scope": "Full-trajectory utility, terminal scores and decision-oriented utility latents are not pure early physical states; later actions may legitimately change them. In particular, no World4Scorer utility latent is reinterpreted here as a pure two-second physical state."
+  },
+  "local_deduplication": [
+    {
+      "carrier": "A2World",
+      "source_paths": [
+        "reports/research_archive/models.json",
+        "runs/a2world_fixed_noise_suffix_v0/summary.json",
+        "scripts/pilot_a2world_fixed_noise_suffix.py"
+      ],
+      "historical_recorded_value": {
+        "early_slot_mean_absolute_change": 0.1779199
+      },
+      "value_origin": "Historical registry record only; no tensor loading, recomputation or model execution in this review.",
+      "established_scope": "A fixed-noise latent-forward sensitivity to an action suffix, with learned tensors loaded in the historical probe.",
+      "not_established": [
+        "A violation of the early physical marginal distribution.",
+        "Decoded physical prediction error.",
+        "Qualified native early-forecast decision consumer.",
+        "Actual task harm or a security attack."
+      ]
+    },
+    {
+      "carrier": "MoSim",
+      "source_paths": [
+        "reports/research_archive/models.json",
+        "runs/mosim_nonanticipation_v0/summary.json"
+      ],
+      "finding": "The archived interface is one-step state/current-action/time-interval prediction, with no future-action suffix. The proposed operation is structurally inapplicable to that interface.",
+      "review_scope": "Existing archive record, not a new model or source experiment."
+    },
+    {
+      "carrier": "Unified World Models",
+      "source_paths": [
+        "reports/research_archive/papers.json",
+        "reports/related_work.json"
+      ],
+      "finding": "Prior source audit records observations0-1, actions1-16, targets17-18 in the official released configuration. Targets are after the complete supplied action segment; the required earlier-output/later-action relation is absent.",
+      "review_scope": "Existing archived source finding, not a fourth newly inspected external work."
+    }
+  ],
+  "primary_sources": [
+    {
+      "work": "Causally Correct Partial Models for Reinforcement Learning",
+      "version": "arXiv:2002.02836v1, 2020-02-07",
+      "url": "https://arxiv.org/html/2002.02836v1",
+      "actual_read_url": "https://arxiv.org/html/2002.02836",
+      "version_evidence": "The returned primary HTML explicitly labels arXiv:2002.02836v1 [cs.LG] 07 Feb 2020.",
+      "read_scope": "Section2 FuzzyBear and Sections3-4 causal/partial-model formulation; displayed primary HTML lines92-148.",
+      "finding": "A behavior action following an intermediate stochastic observation conveys information about that observation. A fitted observational action-conditional reward model can therefore choose a suboptimal action when treated as an interventional planner.",
+      "limit": "Direct prior art for the causal-confounding distinction; not a verified demonstration of this exact action-suffix security mechanism in a modern pretrained video planner."
+    },
+    {
+      "work": "Drive-WM",
+      "paper_id": "arXiv:2311.17918; CVPR2024 project",
+      "project_url": "https://drive-wm.github.io/",
+      "source_repository": "https://github.com/BraveGroup/Drive-WM",
+      "source_tree_oid": "eabe3c63bf362a2edf0fb6cbcb908424d2e18980",
+      "source_tree_metadata_url": "https://api.github.com/repos/BraveGroup/Drive-WM/git/trees/master?recursive=1",
+      "version_kind": "Git tree object ID returned by the tree API; no corresponding commit ID was separately resolved.",
+      "source_anchors": [
+        "https://raw.githubusercontent.com/BraveGroup/Drive-WM/eabe3c63bf362a2edf0fb6cbcb908424d2e18980/README.md#L11-L18"
+      ],
+      "finding": "The official project presents image-based forecast planning. The inspected README still marks action-conditioned forecast weights, other model weights and training code as TODO; no ready native forecast-to-execution evaluation entry was established in the inspected source inventory.",
+      "limit": "No assertion that resources are absent everywhere. CVF PDF fetch failed and the attempted arXiv v2 HTML returned404; no method details are attributed to an unread full paper."
+    },
+    {
+      "work": "Vista: A Generalizable Driving World Model with High Fidelity and Versatile Controllability",
+      "source_repository": "https://github.com/OpenDriveLab/Vista",
+      "source_tree_oid": "cc9821b4253ca7987c32757613d2fc2448fa9f5d",
+      "source_tree_metadata_url": "https://api.github.com/repos/OpenDriveLab/Vista/git/trees/main?recursive=1",
+      "version_kind": "Git tree object ID returned by the tree API; no corresponding commit ID was separately resolved.",
+      "source_anchors": [
+        "https://github.com/OpenDriveLab/Vista/blob/cc9821b4253ca7987c32757613d2fc2448fa9f5d/reward_utils.py#L284-L341",
+        "https://github.com/OpenDriveLab/Vista/blob/cc9821b4253ca7987c32757613d2fc2448fa9f5d/reward.py#L203-L266",
+        "https://github.com/OpenDriveLab/Vista/blob/cc9821b4253ca7987c32757613d2fc2448fa9f5d/configs/inference/vista.yaml#L106-L144",
+        "https://github.com/OpenDriveLab/Vista/blob/cc9821b4253ca7987c32757613d2fc2448fa9f5d/vwm/modules/diffusionmodules/video_model.py#L440-L500"
+      ],
+      "resource_finding": "Official README links released weights and documents a corrected EMA release. Availability was inspected only; no weights were downloaded or validated.",
+      "consumer_finding": "reward_utils.py332-337 computes exp(-variance.mean()) over the complete generated video ensemble. reward.py203-266 iterates data examples and obtains that reward but contains no native candidate argmax or physical execution loop.",
+      "limit": "This inspected full-video uncertainty score is not an isolated early physical-frame consumer. Replacing it with a prefix scorer and adding a controller would define a new system, not establish the requested native interface. Source inspection did not measure suffix sensitivity or actual task utility."
+    }
+  ],
+  "minimum_unmet_interface_condition": "A publicly usable pretrained action-conditioned model with an explicit physical timestamped prefix readout that an existing native controller consumes for decisions, a later supplied action suffix whose alteration cannot affect that physical prefix through the executor, and independent actual prefix utility or safety truth. No such complete interface was established here.",
+  "research_boundary": "The question remains legitimate under a clearly defined researcher-controlled forecast service. The present NONE decision is about missing qualified consumer/resources and unresolved causal evidence, not a requirement to prove a deployed remote attacker.",
+  "activity": {
+    "model_constructions": 0,
+    "model_forwards": 0,
+    "environment_constructions": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "training_updates": 0,
+    "weight_downloads": 0,
+    "dataset_downloads": 0,
+    "central_report_or_registry_edits": 0
+  },
+  "activity_note": "Public read-only HTTP metadata/source retrieval occurred; model_api_calls=0 does not mean zero network requests."
+}

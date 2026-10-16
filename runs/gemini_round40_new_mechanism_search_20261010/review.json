@@ -1,0 +1,10 @@
+{
+  "mechanism_sentence": "Autoregressive video world models that condition rollout steps on temporal positional embeddings suffer from an 'autoregressive temporal-horizon blindspot' (ATHB), where out-of-order temporal indexing during rollout generation breaks spatial conservation without producing high latent-predictive uncertainty.",
+  "carrier": "WorldAgen LIBERO-38",
+  "novelty_score": 5.5,
+  "closest_prior_primary": "Instruction leakage / goal-free dynamics papers (2025-2026), alongside standard positional embedding perturbation literature in video transformers.",
+  "short_gate": "Inject small position ID phase-shifts during intermediate rollout steps in WorldAgen LIBERO-38 and evaluate if frame-to-frame pixel residual explodes while latent variance/uncertainty remains unchanged.",
+  "scale_gate": "Run multi-step planning rollouts across all 38 tasks under randomized causal mask jitter to show policy failure without triggering epistemic safety triggers.",
+  "falsifier": "The world model's predictive uncertainty directly spikes proportionally to rollout degradation, or the model is invariant to positional perturbations due to temporal frame stacking, collapsing the phenomenon into generic OOD drift.",
+  "if_no_candidate": "NO_CANDIDATE. Across the allowed carriers (WorldAgen LIBERO-38, TD-MPC2 mt30, MBRL PETS, WAV MiniGrid, MoSim Cheetah), no strictly causal, genuinely new world-model-specific security vulnerability achieves novelty 7.0–7.5 under your exclusions. The remaining viable dynamics either collapse into generic OOD degradation, positional encoding sensitivity (already established in transformer literature), or overlap forbidden prior art (instruction/goal leakage, latent collapse, and gradient attacks). Rather than inflating novelty on an existing transformer artifact, we trigger the skeptical fallback."
+}

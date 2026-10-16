@@ -1,0 +1,27 @@
+{
+  "source_task": "cheetah-run",
+  "source_seed": 23,
+  "updates": 300,
+  "learning_seed": 31,
+  "source_steps": 300,
+  "evaluation_steps": 500,
+  "tasks": [
+    "walker-run-backwards"
+  ],
+  "evaluation_seeds": [
+    31,
+    32
+  ],
+  "conditions": [
+    "clean",
+    "random",
+    "cascade",
+    "shuffled_cascade"
+  ],
+  "permutation_seed": 933,
+  "scope": "Exploratory follow-up fixed before execution. New source and evaluation seeds; full native 500-step episodes, eval_mode=False as in original experiments.",
+  "comparison": "Shuffled cascade preserves the complete multiset of action vectors, not state coverage. Execute each sequence in a fresh real simulator; never reorder stored transitions.",
+  "gate": "Cascade must lose >=15% return against BOTH random and shuffled controls at both held-out seeds; fixed random validation error <=1.05x random. Independent walker-backwards family must pass separately.",
+  "mechanism": "No non-normal causality inferred from return or horizon sensitivity alone.",
+  "api_requests": 0
+}

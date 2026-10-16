@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "experiment_id": "worldevolver_truthful_coverage_20261016",
+  "status": "frozen_before_environment_enumeration_and_model_calls",
+  "task": "chemistry-mix-paint-secondary-color",
+  "variations": [0, 1],
+  "simplifications": "easy",
+  "root_rule": "Replay the official gold prefix through its first pour action, inclusive; no root search.",
+  "gold_cache_variation0": "runs/native_core_records_v0/chemistry-mix-paint-secondary-color.json",
+  "candidate_rule": "Replace the first poured primary-paint name by each of the other two primary names in the same command, plus mix the same destination; lexical sort; exactly three actions.",
+  "primary_paints": ["blue paint", "red paint", "yellow paint"],
+  "continuation_rule": "After the candidate: mix the same destination; look around; focus on the original task target. Fixed for all candidates and arms, stopping only on native done.",
+  "forecast": "Actual first-step textual observation only. No score, continuation outcome, hidden state, or gold labels are shown to the actor.",
+  "actor": "Native WorldEvolver WMReactAgent prompt and parser with a declared three-action restriction and one-generation cap. This is a controlled adapter, not a complete native task reproduction.",
+  "arms": ["sham", "draft_only_truth", "all_candidate_truth"],
+  "model": "gemini-3.8-flash",
+  "temperature": 0,
+  "max_output_tokens": 1024,
+  "api_attempt_cap": 8,
+  "api_wall_seconds": 180,
+  "request_timeout_seconds": 20,
+  "prepare_wall_seconds": 120,
+  "prepare_environment_control_cap": 120,
+  "env_episode_limit": 100,
+  "output": "runs/worldevolver_truthful_coverage_20261016",
+  "prepare_gates": [
+    "Both fixed roots reproduce exactly including the complete object tree.",
+    "All three candidates parse and execute without parser/ambiguity errors.",
+    "At each root at least one candidate reaches native score 100 and at least one reaches a lower score under the fixed continuation.",
+    "No root/candidate replacement after observing results."
+  ],
+  "primary_estimand": "Native task score and success after the selected action plus the same fixed continuation, Q_fixed_continuation; not complete autonomous agent performance or irrecoverable harm.",
+  "signal_rule": "A draft_only_truth loss relative to both the root's draft and sham, with all_candidate_truth score at least max(draft score, sham score), qualifies only for independent follow-up. Two fixed development roots do not support significance, ASR, or a general security claim.",
+  "pre_api_revision": "Independent static review made recovery relative to both draft and sham explicit; no API calls had occurred. Preserve the original failed preparation protocol and launched script.",
+  "limitations": [
+    "Perfect forecast is an environment-oracle diagnostic, not evidence about a pretrained WM's predictive capability.",
+    "All-candidate truth exposes more text/information; this screening comparison alone cannot identify coverage independently of information volume.",
+    "Variations 0 and 1 share the green-paint task and are not independent task families.",
+    "No online learning, memory poisoning, attacker intervention or safety certification claim.",
+    "The task is simple; no favorable root, seed, task or candidate search is permitted after a null result."
+  ]
+}

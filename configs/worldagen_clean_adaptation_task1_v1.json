@@ -1,0 +1,96 @@
+{
+  "id": "worldagen_clean_adaptation_task1_v1",
+  "status": "registered_before_task1_normal_adaptation_outcomes",
+  "registered_at_utc": "2026-10-14T12:51:11Z",
+  "question": "Does one normal forecast-only adaptation update preserve or improve native policy utility on Task1, using the fixed recipe previously evaluated on Task0?",
+  "scope": "Clean-only baseline study. No Goal substitution, cut, adaptive metadata selection or attack/defense evaluation. This does not activate the older failed conditional validation plan.",
+  "old_conditional_plan": {
+    "path": "reports/worldagen_cached_metadata_task1_validation_protocol_20261014.json",
+    "sha256": "0d7fd33d08913b8fae92f76430734601becce486075b531884a05edf87c8219c",
+    "status_preserved": "frozen_validation_plan_activation_gate_not_met_not_executed",
+    "reason_for_separate_study": "Normal adaptation benefit was observed on Task0 only. Task1 tests the normal baseline's task dependence, independently of the unsuccessful Task0 intervention. It is not confirmatory attack validation or an alternate route for the interrupted adaptive-metadata audit."
+  },
+  "selection": {
+    "task_id": 1,
+    "source_init_id": 0,
+    "basis": "Previously selected second task with existing successful source and sufficient fixed-prefix data; no Task1 adaptation results known at registration.",
+    "prior_knowledge": "Task1 native initial states 0/1/2 already yielded success/failure/failure in the completed native panel. Task0 normal adaptation already yielded 3/3 versus Frozen 1/3. Source init0 is selected for native success.",
+    "interpretation": "Task1 has a different original objective within the same physical scene as Task0. Not cross-scene generalization, a randomly sampled task, or an unseen baseline panel."
+  },
+  "source": {
+    "summary_path": "runs/worldagen_native_task_gate_camera128_matched30_v2/summary.json",
+    "summary_sha256": "faf004da4209c3fd86d72b113ca71e627b2cd3d42da8b9f54c5f38ce8cf077dd",
+    "trace_path": "runs/worldagen_native_task_gate_camera128_matched30_v2/libero_10_task01_init00_native.jsonl",
+    "trace_sha256": "6d48aeaa44deab9b0f2a6aed479d5f83885211345fb45f0fbc8557809560ba10",
+    "environment_steps": 275
+  },
+  "protocol": {
+    "suite": "libero_10",
+    "task_id": 1,
+    "source_init_id": 0,
+    "eval_init_ids": [0, 1, 2],
+    "seed": 31,
+    "adapter_seed": 42,
+    "camera_size": 128,
+    "processed_image_size": 224,
+    "orientation": "euler",
+    "settle_steps": 5,
+    "max_steps": 600,
+    "threads": 4,
+    "device": "cuda",
+    "conditions": ["Frozen", "NoLangTTT"],
+    "adaptation_text": "no lang",
+    "policy_goal": "put both the cream cheese box and the butter in the basket",
+    "deployment_mask": "native",
+    "env_action_dtype": "float16",
+    "image_rotation_degrees": 0,
+    "patch_whitening": false,
+    "train_windows": 30,
+    "heldout_windows": 14,
+    "train_starts": [0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144, 150, 156, 162, 168, 174],
+    "purged_starts": [180],
+    "heldout_starts": [186, 192, 198, 204, 210, 216, 222, 228, 234, 240, 246, 252, 258, 264],
+    "split": "six_action_purge1_disjoint_images_v2",
+    "optimizer": {
+      "type": "AdamW", "lr": 0.0005, "weight_decay": 0.01,
+      "loss_scale": 0.1, "gradient_accumulation": 30, "updates": 1,
+      "clip_norm": 0.1, "clip_after_every_microbatch": true
+    },
+    "lora": {"rank": 64, "alpha": 32, "dropout": 0},
+    "replay_atol": 1e-9
+  },
+  "source_file_sha256": {
+    "scripts/pilot_worldagen_cached_metadata_ttt.py": "2700d2df908a93c5f2a6ad03cb41efdfeffd7571b96938d6da8f349d178c7619",
+    "scripts/pilot_worldagen_forecast_ttt_task.py": "ea6d6f8d0ace782bc568c6fde440239ab81767ad8f73a5106a29e99dd40c2742",
+    "scripts/pilot_worldagen_native_task_gate.py": "37fc400f1b6531a4036cbb47f7d1d75ebf85dce12f4631e53b17c6095c1cd317",
+    "scripts/pilot_worldagen_libero_closed_loop.py": "31d006225aa51a80349a1195c088fc920f032f881c3ef153377cd63f6f86d52f",
+    "vendor/WorldAgen/models/model.py": "ffe3b775a29a9c86999a278c77939c942665781e58dc55ec701f0ce780a8c0f3",
+    "vendor/WorldAgen/models/qwen3.py": "57940e9c1f163ce1ab1949869cfb04dcd3774ffe3ce56cb2fc0530df0848269d",
+    "models/WorldAgen/libero-38.pth": "028a32f4b91809fc84c3133031d07300ce04876c716ef8932c019e1bfcb8e770"
+  },
+  "primary_endpoint": "Paired actual LIBERO task success by 600 executed controls, original goal throughout.",
+  "secondary_endpoints": [
+    "Capped step cost: first-success step, or 600 on failure; paired difference NoLangTTT minus Frozen.",
+    "Source init0 reported separately from init1/2, which do not supply adaptation data.",
+    "Original-goal and no-lang heldout RGB forecast MSE, diagnostic only; no tuning on heldout data."
+  ],
+  "analysis": {
+    "normal_health_gate": "At least one Frozen success; no Frozen-success initial state lost after NoLangTTT.",
+    "positive_baseline_benefit": "At least one additional success, no lost Frozen success. Descriptive development criterion only, not a population claim.",
+    "statistics": "Report paired gains/losses and exact two-sided McNemar on the three prespecified initial states, with low-power/nonrandom-panel caveat. Do not treat the 14 correlated heldout windows as independent samples or pool the previously observed Task0 results for significance.",
+    "source_parity": "Require exact Frozen source-init trace reproduction; additionally audit all three Frozen traces against the existing native panel.",
+    "stop_rule": "Evaluate exactly these two conditions and three initial states once; report all results including regression. No replacement task/source, dose, seed, mask or initialization search. No automatic expansion to other conditions.",
+    "limits": "Reconstructed LIBERO adaptation using the released CALVIN no-lang convention; official LIBERO adaptation trainer absent. Shared weights can affect policy after updates; frozen native policy does not rank actions using the forecast head."
+  },
+  "outputs": {
+    "data_dir": "runs/worldagen_clean_adaptation_task1_data_v1",
+    "evaluation_dir": "runs/worldagen_clean_adaptation_task1_v1",
+    "analysis_dir": "runs/worldagen_clean_adaptation_task1_analysis_v1"
+  },
+  "commands": {
+    "prepare": ".venv-worldagen/bin/python scripts/pilot_worldagen_cached_metadata_ttt.py --threads 4 --source-summary runs/worldagen_native_task_gate_camera128_matched30_v2/summary.json --camera-size 128 --task-id 1 --source-init-id 0 --train-windows 30 --heldout-windows 14 --seed 31 --adapter-seed 42 --orientation euler --settle-steps 5 --max-steps 600 --eval-init-ids 0,1,2 --device cpu --prepare-data-only --out-dir runs/worldagen_clean_adaptation_task1_data_v1",
+    "evaluate": ".venv-worldagen/bin/python scripts/pilot_worldagen_cached_metadata_ttt.py --threads 4 --source-summary runs/worldagen_native_task_gate_camera128_matched30_v2/summary.json --camera-size 128 --task-id 1 --source-init-id 0 --train-windows 30 --heldout-windows 14 --seed 31 --adapter-seed 42 --orientation euler --settle-steps 5 --max-steps 600 --eval-init-ids 0,1,2 --device cuda --conditions Frozen NoLangTTT --data-cache runs/worldagen_clean_adaptation_task1_data_v1/data.pt --out-dir runs/worldagen_clean_adaptation_task1_v1"
+  },
+  "implementation_note": "Reuse the unchanged runner restricted to its two health conditions. Its generic protocol and token serialization mention other arms; those arms are not executed or authorized by this registration. All condition results must be exactly Frozen and NoLangTTT.",
+  "api_requests_planned": 0
+}

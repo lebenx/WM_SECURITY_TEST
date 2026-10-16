@@ -1,0 +1,441 @@
+{
+  "audit_id": "cosmos_native_interface_audit_20261014",
+  "date": "2026-10-14",
+  "status": "completed_no_new_world_model_specific_attack_candidate",
+  "decision": "No-Go for a new Cosmos security experiment from the audited interfaces. Retain the bounded deque finding as an ordinary execution defect; do not promote it to a world-model-specific attack.",
+  "scope": "Source-only interface/semantic audit plus one deterministic standard-library queue example; no new model or environment execution.",
+  "pinned_repository": {
+    "repository": "NVlabs/cosmos-policy",
+    "revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+    "source_manifest_path": "runs/alphabrain_official_forecast_contract_audit_v1/source_manifest.json",
+    "source_manifest_sha256": "d2bd3d06d97630782cff4e5709e843642b90f6978fc66366aeab9bd7f7f648eb",
+    "pinned_file_hashes_match_manifest": true
+  },
+  "online_primary_source_checks": [
+    {
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/experiments/robot/libero/run_libero_eval.py",
+      "retrieved_utc": "2026-10-14T11:37:36.753961+00:00",
+      "path": "cosmos_policy/experiments/robot/libero/run_libero_eval.py",
+      "revision_or_branch": "18a2accadf4e7a3531e56754102af5a24d2316da",
+      "status": "unavailable",
+      "error_type": "URLError",
+      "error": "<urlopen error _ssl.c:1063: The handshake operation timed out>"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/experiments/robot/cosmos_utils.py",
+      "retrieved_utc": "2026-10-14T11:37:13.524748+00:00",
+      "status": 200,
+      "etag": "\"ad837db3e1d730b1213d1c08d51f6e04a95b8298286b6f1ecae255c4a8d4220d\"",
+      "bytes": 109448,
+      "sha256": "a95c74f33f519f4c0ce048c3ba2694989d3a7c431bf0f324a274413cde4c0b47",
+      "path": "cosmos_policy/experiments/robot/cosmos_utils.py",
+      "revision_or_branch": "18a2accadf4e7a3531e56754102af5a24d2316da",
+      "matches_pinned_local_bytes": true,
+      "get_action_parameters": [
+        "cfg",
+        "model",
+        "dataset_stats",
+        "obs",
+        "task_label_or_embedding",
+        "seed",
+        "randomize_seed",
+        "num_denoising_steps_action",
+        "generate_future_state_and_value_in_parallel",
+        "worker_id",
+        "batch_size"
+      ],
+      "num_action_samples_present_anywhere_in_file": false
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/main/cosmos_policy/experiments/robot/libero/run_libero_eval.py",
+      "retrieved_utc": "2026-10-14T11:37:36.774645+00:00",
+      "path": "cosmos_policy/experiments/robot/libero/run_libero_eval.py",
+      "revision_or_branch": "main",
+      "status": "unavailable",
+      "error_type": "URLError",
+      "error": "<urlopen error _ssl.c:1063: The handshake operation timed out>"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/main/cosmos_policy/experiments/robot/cosmos_utils.py",
+      "retrieved_utc": "2026-10-14T11:37:13.493116+00:00",
+      "status": 200,
+      "etag": "\"ad837db3e1d730b1213d1c08d51f6e04a95b8298286b6f1ecae255c4a8d4220d\"",
+      "bytes": 109448,
+      "sha256": "a95c74f33f519f4c0ce048c3ba2694989d3a7c431bf0f324a274413cde4c0b47",
+      "path": "cosmos_policy/experiments/robot/cosmos_utils.py",
+      "revision_or_branch": "main",
+      "matches_pinned_local_bytes": true,
+      "get_action_parameters": [
+        "cfg",
+        "model",
+        "dataset_stats",
+        "obs",
+        "task_label_or_embedding",
+        "seed",
+        "randomize_seed",
+        "num_denoising_steps_action",
+        "generate_future_state_and_value_in_parallel",
+        "worker_id",
+        "batch_size"
+      ],
+      "num_action_samples_present_anywhere_in_file": false
+    }
+  ],
+  "native_semantics": {
+    "action": "p(action latent | current observations, shared task context), sampled internally. Numeric controls are decoded from that same latent.",
+    "forecast": "Native AR uses current observed slots and the full generated action latent as conditions, with shared task context.",
+    "value": "Native AR uses current/action/future prefix plus the same task context; current-state/action information is not privileged hidden attacker input.",
+    "selection": "Native argmax over candidate values selects the actions in the same candidate record.",
+    "physical_invariant": "Fixed full physical/controller state, complete committed controls, dynamics and randomness imply the same physical future under a preference-only Goal change.",
+    "statistical_limit": "Partial-observation conditional forecasting may legitimately depend on Goal. This audit establishes no task-agnostic Cosmos promise."
+  },
+  "permission_boundary": {
+    "native_n2_entry": "Local evaluation configuration and internal Python functions; no untrusted remote forecast/value or candidate-replacement endpoint demonstrated.",
+    "normal_cli_parameters": [
+      "num_queries_best_of_n",
+      "seed/randomize_seed",
+      "num_open_loop_steps",
+      "future/value ensemble settings",
+      "input masking flags",
+      "planning checkpoint/config paths"
+    ],
+    "cli_limit": "Changing these requires deployment/configuration control. Ordinary parameter-induced performance degradation does not establish a new security operation.",
+    "alphabrain_network_entry": "batch_images/instructions/states reach CosmosPolicyServer.predict_action; server returns N1 action predictions, not the studied native N2 planning loop.",
+    "forbidden_inference": "Do not import network reachability from AlphaBrain N1 into NVIDIA native N2 or assume arbitrary internal latent edits are externally reachable."
+  },
+  "action_ensemble_hypothesis": {
+    "hypothesis": "Action samples are averaged for execution while future/value evaluate one unaveraged action latent.",
+    "finding": "Not present in the audited pinned get_action/caller; current online main was also checked.",
+    "get_action_arguments": [
+      "cfg",
+      "model",
+      "dataset_stats",
+      "obs",
+      "task_label_or_embedding",
+      "seed",
+      "randomize_seed",
+      "num_denoising_steps_action",
+      "generate_future_state_and_value_in_parallel",
+      "worker_id",
+      "batch_size"
+    ],
+    "num_action_samples_in_pinned_file": false,
+    "actual_batch_behavior": "Generated latent has one action decode per batch row; batch_size>1 converts each row to a list without averaging; batch_size1 removes only the batch axis.",
+    "actual_candidate_binding": "run_libero_eval keeps action_return_dict.actions and passes action_return_dict.generated_latent to the future call; argmax returns the selected candidate tuple.",
+    "not_to_conflate": [
+      "Mean over 112 redundant copies inside the decoder is a single representation codec, already tested separately.",
+      "Future RGB ensemble averaging is for visualization; raw future samples feed value calls.",
+      "Value-prediction ensembles are value aggregation, not action averaging.",
+      "Generic AlphaBrain temporal AdaptiveEnsembler helpers are outside the Cosmos-specific evaluated native N2 path."
+    ]
+  },
+  "deque_cpu_evidence": {
+    "fixed_chunk_size": 16,
+    "fixed_open_loop_steps": 8,
+    "source_expressions": [
+      {
+        "line": 372,
+        "code": "action_queue = deque(maxlen=cfg.num_open_loop_steps)"
+      },
+      {
+        "line": 593,
+        "code": "action_queue.extend(best_actions)"
+      },
+      {
+        "line": 598,
+        "code": "action_queue.popleft()"
+      }
+    ],
+    "committed_action_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "native_executed_action_indices": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "expected_receding_horizon_prefix_indices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "result": "The native bounded queue drops the oldest eight elements during extend, executing the suffix rather than the prefix.",
+    "cpu_check_passed": true,
+    "raw_source_sha256": "4a103710d9057e484b415da46d5b40c054abeb736e751ac80ad5a879c5b4ac10",
+    "applies_to": [
+      "N1",
+      "N2"
+    ],
+    "does_not_affect_current_registered_runs": "All completed native N2 and GoalSwap panels execute full H=16 chunks; no overflow discards actions.",
+    "suggested_engineering_fix_not_applied": "Explicitly extend only best_actions[:num_open_loop_steps], or reject shortened execution until intended semantics are specified.",
+    "security_limit": "Administrator-exposed shortened execution configuration; shared N1/N2 executor defect, not a demonstrated world-model attack, forecast-specific mechanism or external exploit."
+  },
+  "decisive_gate_boundary": {
+    "engineering_test": "Fixed action-index sequence 0..15 and H=8 must execute 0..7; H=16 must remain unchanged. This checks code correctness without learned forwards.",
+    "task_test_not_authorized_here": "If a task impact study is later commissioned, keep matched H=8 query frequency and compare suffix versus corrected prefix, include N1 and N2, retain native H=16 separately. Do not attribute H=16 vs H=8 differences solely to forecast semantics.",
+    "no_recommended_gpu_security_scaleup": true
+  },
+  "primary_related_sources": [
+    {
+      "title": "Python collections.deque documentation",
+      "url": "https://docs.python.org/3/library/collections.html#collections.deque",
+      "role": "Documented bounded-deque eviction behavior explains the concrete execution defect."
+    },
+    {
+      "title": "Diffusion Policy: Visuomotor Policy Learning via Action Diffusion",
+      "url": "https://arxiv.org/abs/2303.04137",
+      "role": "Receding-horizon action-sequence execution is established practice; this does not establish that this specific Cosmos defect was previously reported."
+    }
+  ],
+  "new_activity_counts": {
+    "model_calls": 0,
+    "environment_instances": 0,
+    "environment_steps": 0,
+    "gpu_runs": 0,
+    "model_api_requests": 0,
+    "document_source_http_fetches_for_hashing": 4,
+    "cpu_queue_examples": 1
+  },
+  "modified_frozen_sources": false,
+  "sources": [
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/experiments/robot/libero/run_libero_eval.py",
+      "sha256": "4a103710d9057e484b415da46d5b40c054abeb736e751ac80ad5a879c5b4ac10",
+      "line_ranges": [
+        [
+          188,
+          239
+        ],
+        [
+          365,
+          372
+        ],
+        [
+          449,
+          497
+        ],
+        [
+          511,
+          530
+        ],
+        [
+          578,
+          607
+        ]
+      ],
+      "finding": "Native local configuration exposes planning flags; action/future/value share task context and latent lineage; bounded deque consumes selected action suffix when H < 16.",
+      "primary_url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/experiments/robot/libero/run_libero_eval.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/experiments/robot/cosmos_utils.py",
+      "sha256": "a95c74f33f519f4c0ce048c3ba2694989d3a7c431bf0f324a274413cde4c0b47",
+      "line_ranges": [
+        [
+          557,
+          599
+        ],
+        [
+          824,
+          848
+        ],
+        [
+          851,
+          878
+        ],
+        [
+          1111,
+          1138
+        ],
+        [
+          1186,
+          1236
+        ],
+        [
+          1319,
+          1421
+        ],
+        [
+          1464,
+          1541
+        ]
+      ],
+      "finding": "get_action has batch_size, not num_action_samples: decode each generated latent and return each batch action without cross-sample action averaging. Future-image averaging is visualization; value ensembles are separate.",
+      "primary_url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/experiments/robot/cosmos_utils.py"
+    },
+    {
+      "path": "scripts/cosmos_policy_native_inference.py",
+      "sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+      "line_ranges": [
+        [
+          170,
+          222
+        ],
+        [
+          235,
+          257
+        ]
+      ],
+      "finding": "Evaluated N2 adapter uses internal action -> future -> value calls with shared Goal and candidate seed; no per-candidate external Goal or latent replacement API is established."
+    },
+    {
+      "path": "scripts/pilot_cosmos_policy_native_task_gate.py",
+      "sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+      "line_ranges": [
+        [
+          124,
+          164
+        ]
+      ],
+      "finding": "Registered tested runner executes full decoded 16-step chunks, so the optional upstream shortened-queue bug does not invalidate existing H=16 results."
+    },
+    {
+      "path": "vendor/AlphaBrain/deployment/model_server/server_policy_cosmos.py",
+      "sha256": "1d07fd3d201638d1082b1140cc33d379bf8c24ab6e40778c040f0aacdeebeb03",
+      "line_ranges": [
+        [
+          164,
+          179
+        ],
+        [
+          233,
+          250
+        ]
+      ],
+      "finding": "Exposed WebSocket wrapper constructs image/wrist/lang/proprio examples and returns normalized actions from N1 policy inference; it does not expose native N2 forecast/value branches."
+    },
+    {
+      "path": "vendor/AlphaBrain/deployment/model_server/tools/websocket_policy_server.py",
+      "sha256": "58df6a14c3c5f0146e5c7875eb9b8a1f8a71e9f76a546db44bc06ebb7669cd96",
+      "line_ranges": [
+        [
+          106,
+          140
+        ]
+      ],
+      "finding": "Network route passes the request payload into predict_action; access to top-level observations/instruction is not access to internal N2 forecast/value condition fields."
+    },
+    {
+      "path": "vendor/AlphaBrain/AlphaBrain/model/framework/CosmosPolicy.py",
+      "sha256": "49b8755e51c6c2cbd45f4b370f37cf7967885b551b239c5dd9b6f693a38c9044",
+      "line_ranges": [
+        [
+          425,
+          446
+        ],
+        [
+          504,
+          542
+        ]
+      ],
+      "finding": "AlphaBrain service model predicts an action chunk with its fixed policy sampling path and no native best-of-N future/value selection."
+    },
+    {
+      "path": "vendor/AlphaBrain/benchmarks/LIBERO/eval/eval_libero_cosmos.py",
+      "sha256": "9f14502e3935001d70f9c995599e1ccd213f31895d0fb3e139042373d0939e84",
+      "line_ranges": [
+        [
+          1,
+          12
+        ],
+        [
+          210,
+          229
+        ]
+      ],
+      "finding": "Cosmos-specific AlphaBrain evaluator documents no action ensemble by default and executes raw open-loop chunks; other generic AdaptiveEnsembler implementations are not this audited N2 system."
+    },
+    {
+      "path": "configs/world_model_action_contrast_screen.json",
+      "sha256": "f6fbb5cfc181acd4d5f3ef5f26fb0d3d2cbd76147fde363d0845e0bd2ba239a6",
+      "line_ranges": [
+        [
+          3,
+          24
+        ]
+      ],
+      "finding": "Earlier structured output routing screen failed; do not rebrand arbitrary outcome swapping as a new action-binding mechanism."
+    },
+    {
+      "path": "configs/world_model_sampling_security.json",
+      "sha256": "b31a16d86f15bbaf39f6ce4834de2406f1de5d69a6d7528672bd8af7ea31d4ec",
+      "line_ranges": [
+        [
+          2,
+          7
+        ]
+      ],
+      "finding": "Prior rank-coupling evidence failed stronger cross-task gates; do not revive seed/CRN manipulations as new."
+    },
+    {
+      "path": "configs/world_model_rejected_future_screen.json",
+      "sha256": "e55af910c859c2e7c816e7e1aeda42a65cff295f21c912a80f9b5c6ec4c17024",
+      "line_ranges": [
+        [
+          3,
+          7
+        ],
+        [
+          38,
+          40
+        ]
+      ],
+      "finding": "Rejected-future/decoy effects are already screened with prior-art limits; arbitrary candidate-score manipulation is not a new mechanism."
+    },
+    {
+      "path": "reports/cosmos_executor_alias_feasibility_20261014.json",
+      "sha256": "305413e9550427140224d0fe6de17bb7135e2b52a0020ad6dca983f62718a0b0",
+      "line_ranges": [],
+      "finding": "Previously audited executor aliases do not establish a native attack entry or novelty."
+    },
+    {
+      "path": "configs/cosmos_action_representation_probe_v1.json",
+      "sha256": "b85a24a24b68e46245cd80746731f7f81886dc394172b79ca1127b5358723938",
+      "line_ranges": [
+        [
+          19,
+          22
+        ],
+        [
+          25,
+          49
+        ],
+        [
+          71,
+          76
+        ]
+      ],
+      "finding": "Previously registered redundant-copy aliases need internal latent write access and have separate negative task evidence."
+    },
+    {
+      "path": "runs/cosmos_action_representation_probe_analysis_v1/analysis.json",
+      "sha256": "879574e06c92dffc7b7d1b3788fd601c912af6754540d3874073c47e8e2a25e7",
+      "line_ranges": [],
+      "finding": "Existing canonical/reverse action-copy interventions had zero ranking flips or success losses across valid windows; do not reuse as positive support."
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "decision": "PROMOTE_ONE",
+  "novelty_score": 7.5,
+  "claim": "When a shared world model learns an action-conditioned transition operator across morphology-divergent tasks under clean data, authentic source-task transitions induce counterfactual branch validation in the target planner by creating shared-latent forward invariants that falsely lower one-step target rollout dispersion along unexecuted counterfactual actions without degrading source performance or target one-step reconstruction error.",
+  "mediator": "Cross-morphology Latent Contraction Invariant (CLCI): an unintended alignment between the source task's true forward Jacobian eigenvectors and the unexecuted target action manifold in the shared latent dynamics head, causing target CEM/MPPI planners to assign high-confidence, low-dispersion latent trajectories to dynamically invalid target branches.",
+  "gate": "A <=120s test computing the cosine similarity between the top-3 singular vectors of the empirical target latent Jacobian across unvisited CEM action perturbations and the empirical source transition Jacobian; a ratio exceeding 0.78 indicates false branch provenance.",
+  "defense": "Provenance-Preserving Null-Space Dynamics Regularization (PNDR): project gradient updates of the shared dynamics head from source transitions onto the orthogonal complement of the target task's unexecuted CEM action-sensitivity subspace, preserving source learning while preventing cross-task counterfactual validation.",
+  "baselines": [
+    "Task-conditional adapter routing (LoRA/residual dynamics heads per task)",
+    "Epistemic ensemble variance penalty across independent dynamics ensembles (PETS-style counterfactual filtering)",
+    "Gradient surgery / PCGrad on shared latent dynamics gradients"
+  ],
+  "prior_art_boundary": "Diverges from generic negative transfer and gradient interference because source and target tasks do not compete for capacity or degrade training loss; diverges from TRAP/data poisoning because all source transitions are strictly valid, clean, and unperturbed in their own task environment.",
+  "falsifier": "If target planning degradation persists when the shared latent dynamics head is replaced by task-disjoint dynamics heads while retaining a shared encoder, or if synthetic zero-reward source trajectories orthogonalized to the target action manifold still induce target planning failure, the mediator is falsified."
+}

@@ -1,0 +1,32 @@
+{
+  "status": "fixed_before_run",
+  "source_sha256": "9c873e22d71f11e172171195f7ad0b4d39e128250b2ebae4524ecbb77d1dccd4",
+  "model": "Official frozen TD-MPC2 mt30-48M, native H3 MPPI.",
+  "hypothesis": "A dynamics-only rank-one parameter edit creates a self-amplifying latent effect within native H3.",
+  "operation": "Final dynamics W += u v^T; b -= u(v^T center), merged into original architecture for any deployment.",
+  "training_seed": 12,
+  "development_seeds": [
+    13,
+    17
+  ],
+  "latent_dim": 768,
+  "maximum_updates": 120,
+  "maximum_training_wall_seconds": 90,
+  "training_batch": 16,
+  "learning_rate": 0.01,
+  "target_first_action": "zero",
+  "objective": "Targeted three-step value margin plus one-step anchoring and recursive-versus-single-injection amplification.",
+  "fidelity_gate": "On each development episode, added latent MSE<=5% native actual prediction MSE for actual and fixed-uniform actions; true next-latent MSE<=1.05 times native.",
+  "recurrence_gate": "Each development episode: recursive/single-injection terminal latent MSE>=5, target-win rate increase>=0.5 vs clean and>=0.25 vs single injection.",
+  "if_passes": "Freeze edit; next run full native clean/edited/single-injection causal-control episodes on fresh seeds20,21, clean>=900 and paired attack decline>=100. No threshold changes.",
+  "no_external_trigger": true,
+  "no_inference_classifier": true,
+  "no_policy_reward_q_encoder_edits": true,
+  "scope": "Construction pilot only. Generic constrained model poisoning is prior; novelty and native harm remain unproven.",
+  "source_traces": {
+    "12": "runs/tdmpc_action_search_v0/clean_12_episode.pt",
+    "13": "runs/tdmpc_action_search_v0/clean_13_episode.pt",
+    "17": "runs/tdmpc_rank_coupling_v0/native/episode_17.pt"
+  },
+  "api_requests": 0
+}

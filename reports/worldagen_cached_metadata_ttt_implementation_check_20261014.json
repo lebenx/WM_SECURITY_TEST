@@ -1,0 +1,52 @@
+{
+  "recorded_at_utc": "2026-10-14T04:20:59.510161+00:00",
+  "script": "scripts/pilot_worldagen_cached_metadata_ttt.py",
+  "script_sha256": "fc3f9561d66eb52ed18737fdc74148965a391edab1a99a4f36aba887aac9e0d9",
+  "reused_core_sha256": "ea6d6f8d0ace782bc568c6fde440239ab81767ad8f73a5106a29e99dd40c2742",
+  "validation_scope": "CPU structural/unit checks and read-only existing physical cache validation; no model inference, training run, attack experiment or environment rollout",
+  "py_compile": "passed",
+  "self_test": "passed",
+  "self_test_command": ".venv-worldagen/bin/python scripts/pilot_worldagen_cached_metadata_ttt.py --self-test",
+  "self_test_checks": [
+    "inherited zero-B LoRA identity and equation",
+    "frozen base gradients/weights",
+    "CLIP RGB patch layout without whitening",
+    "0,3 -> 3,6 teacher alignment",
+    "disjoint action split",
+    "30 microbatches and one optimizer update",
+    "literal no lang differs from empty CLIP tokens",
+    "token-only npy text roundtrip preserving native int32/int64",
+    "schema2 render128 cache rejects render224 protocol",
+    "GoalTTT cannot stand in for NoLangTTT health baseline",
+    "NoLangTTT losing Frozen success rejects health gate",
+    "all30 native gate enforces 21 successes and at least7 tasks",
+    "native gate rejects string success values",
+    "prespecified 0 <-> 1 pair matches problem/domain/regions/fixtures/objects/init BDDL sections",
+    "unregistered tasks and swap pairs rejected"
+  ],
+  "actual_legacy_cache": {
+    "path": "runs/worldagen_forecast_ttt_data_v1/data.pt",
+    "sha256": "e5a5114e05dc824ea3c69dad089ccca3b0ac164ca89dfdee0882b57c0e71213b",
+    "source_summary": "runs/worldagen_native_task_gate_confirm_v1/summary.json",
+    "source_camera": 224,
+    "validation": "passed: source provenance, action values, frame indices, image/state shape, finite values, replay checks and window split",
+    "same_source_at_camera128": "rejected: Source protocol camera_size=224, requested 128"
+  },
+  "experiment_results": null,
+  "gpu_model_inference": false,
+  "default_conditions": [
+    "Frozen",
+    "NoLangTTT"
+  ],
+  "threat_model": "Hypothetical write access only to cached pretokenized text; public CALVIN online sampler itself canonicalizes to no lang. Missing official LIBERO TTT implementation is not reproduced.",
+  "attack_expansion_status": "not run; guarded by matched native all30 task gate and NoLangTTT health gate",
+  "swap_registration": {
+    "mapping": {
+      "0": 1,
+      "1": 0
+    },
+    "selection": "physical metadata, not outcomes",
+    "task1_to_0_execution": "not run",
+    "cross_scene_tasks": "rejected by this pilot"
+  }
+}

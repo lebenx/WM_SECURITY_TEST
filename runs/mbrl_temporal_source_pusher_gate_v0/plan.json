@@ -1,0 +1,28 @@
+{
+  "arguments": {
+    "model": "runs/mbrl_provenance_pusher_model_v0",
+    "output": "runs/mbrl_temporal_source_pusher_gate_v0",
+    "source_seed": 31,
+    "validation_steps": 500,
+    "source_steps": 120,
+    "updates": 5,
+    "batch_size": 32,
+    "permutation_seed": 77,
+    "eval_seeds": [
+      31,
+      32
+    ],
+    "particles": 10,
+    "horizon": 15,
+    "max_steps": 15
+  },
+  "hashes": {
+    "scripts/pilot_mbrl_temporal_source_adaptation.py": "6a28f6d61e01a4b06d9c72047c323fb16e5469daa068ac8fb6ac8c0146309003",
+    "scripts/pilot_mbrl_ensemble_sync_adaptation.py": "8d4050876b0c7ada07e902a3a6baa43b2a5cd1d56adb6e9f6b796c87894fa849"
+  },
+  "operation": "Legal phase-locked Pusher source versus exact action-multiset shuffle; sequential online updates; native CEM victim.",
+  "controls": "clean, random source, phase source, shuffled phase source; same source steps and update dose.",
+  "promotion_gate": "Require phase-specific CEM loss against random and shuffled with <=5% held-out one-step mean RMSE change and a phase-specific residual/order metric.",
+  "api_requests": 0,
+  "gpu_work": false
+}

@@ -1,0 +1,1302 @@
+{
+  "status": "codec_gate_completed_with_explicit_rejections",
+  "device": "cuda",
+  "windows": [
+    {
+      "ranking_json": "/home/xhj/WM_Security/runs/cosmos_counterfactual_ranking_v1/prefix_000/ranking.json",
+      "ranking_sha256": "a533201ca6c37467172d81bc4dd68981d8893d98799cb7932369d2c35c16defe",
+      "source": {
+        "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_000/snapshot.json",
+        "snapshot_sha256": "98636feee820825cbae1a087f7bf31b3e36e07615327df459db30295a10c0cda",
+        "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+        "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+        "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_000/observation.npz",
+        "observation_npz_sha256": "74fd96c4696a4f13b734782f79fc970e496bd78f4b966073afbe79c57a965231",
+        "state_sha256": "93c40df5ea37259059c519f3b87ee98025f5f4b1d1a372b0a9f27d6f0bb413d6",
+        "array_sha256": {
+          "agentview_image": "3a60ea1682a7e20c4e331b48af23f080ec59b311f815619bf019760a66f694b3",
+          "robot0_eye_in_hand_image": "0744a7cbdd174de69f9386284f247bfc28f5175bbbf9f832d797824eaf7ef69a",
+          "robot0_gripper_qpos": "1fc07a67df509d0310a943c8a04449a6add0ab791dfc9d2213a863975ada4c16",
+          "robot0_eef_pos": "7ff61b9cdb910bc99545fcce17defcc55c868efc5928fb6cf73dde1c671cf766",
+          "robot0_eef_quat": "acdb51bfe04a435d381b630c520bf6979db2d54a355845f739909b7ea3b32dba",
+          "sim_state": "9f052cf873bf9088e0f42155b5712cc524370bf5ebdcd8b23ecbc0a84ba20fa5"
+        },
+        "prefix_steps": 0,
+        "protocol": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "init_id": 0,
+          "seed": 31,
+          "environment_seed": 0,
+          "settle_steps": 10,
+          "max_steps": 300,
+          "original_goal": "open the middle drawer of the cabinet"
+        },
+        "source_checkpoint_provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          }
+        },
+        "sim_state_used_as_model_input": false,
+        "input_contract_sha256": "9a6a9806032752f140a5be58bc21f90821685ca0c38310ff9ce483aa8a976f9b",
+        "inference_provenance": {
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_cache_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "source_sha256": {
+            "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          }
+        }
+      },
+      "candidates": [
+        {
+          "status": "passed",
+          "original_normalized_exact": true,
+          "original_controls_exact": true,
+          "normalized_max_abs_delta": 0.0,
+          "physical_max_abs_delta": 0.0,
+          "normalized_sha256": "6d3a3dee2bd8d510eb76d49b8f40a5cd847f6ebcb55803aa64d55f5726edd114",
+          "controls_sha256": "57066088b9ba058f435c8b908f1522a1f51fcc1d2d2043b536194a41a51eb230",
+          "arms": {
+            "clean_raw": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "latent": {
+                "path": "prefix_000/clean_raw/candidate_00_input.pt",
+                "file_sha256": "1bd1cc80e0640ddd392a9b0b3de0482d999f9d5ffeae246c04bc1b51a2830be7",
+                "tensor_sha256": "80c6f0b7140afafeb8ac194549d85f84b8b3f29f128a994ccc5f3f5cd814e5bc",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "canonical_tile": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "canonical_tile",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 29,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 3.5762786865234375e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 4.00543212890625e-05,
+                "correction_rms_over_final_copy": 1.261119086848339e-05,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "2e1e447719ce2135ce021423baf68eba7d0edf9ff9cd50f5740dd44e89d107e6",
+                "projected_decoded_action_sha256": "2e1e447719ce2135ce021423baf68eba7d0edf9ff9cd50f5740dd44e89d107e6",
+                "original_action_slot_sha256": "b65b52837fe36e4f479cb955c6ee40052d12240681f0177f6698205747fe6a1b",
+                "projected_action_slot_sha256": "0d06ff5f96b90677161b045c7fa1fa25944fee19c0c199cd98fe88c650045fd9",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_000/canonical_tile/candidate_00_input.pt",
+                "file_sha256": "2795f9e8d5b558feb8d4225e9c3bfca4cfe9c842dfe686c6a9e3bbf8ab919915",
+                "tensor_sha256": "3a6e46bf9927f20752165d6baefe7fab7787484893dd4cdbc77b908bc4ad67d3",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "reverse_copies": {
+              "status": "skip_model_projection_failed",
+              "projection": {
+                "mode": "reverse_copies",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 512,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 1.1920928955078125e-07,
+                "projected_decoder_exact": false,
+                "projected_decoder_different_elements": 2,
+                "projected_decoder_max_abs_delta": 2.3283064365386963e-10,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 1.33514404296875e-05,
+                "correction_rms_over_final_copy": 3.5219957226217957e-06,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "2e1e447719ce2135ce021423baf68eba7d0edf9ff9cd50f5740dd44e89d107e6",
+                "projected_decoded_action_sha256": "d41a72aad1692ebdcaa336f19fe28254d7d1b98ae26143c3487e8485c98d06c5",
+                "original_action_slot_sha256": "b65b52837fe36e4f479cb955c6ee40052d12240681f0177f6698205747fe6a1b",
+                "projected_action_slot_sha256": "61a003b0c8bf96f54480e7a90cebf0cb4ec6e0732fc90d539c7ac6ed1b0731e0",
+                "cuda_equivalence_proven": false
+              }
+            }
+          },
+          "index": 0,
+          "seed": 31,
+          "committed_controls_sha256": "57066088b9ba058f435c8b908f1522a1f51fcc1d2d2043b536194a41a51eb230",
+          "committed_normalized_sha256": "6d3a3dee2bd8d510eb76d49b8f40a5cd847f6ebcb55803aa64d55f5726edd114",
+          "committed_raw_latent_sha256": "80c6f0b7140afafeb8ac194549d85f84b8b3f29f128a994ccc5f3f5cd814e5bc"
+        },
+        {
+          "status": "passed",
+          "original_normalized_exact": true,
+          "original_controls_exact": true,
+          "normalized_max_abs_delta": 0.0,
+          "physical_max_abs_delta": 0.0,
+          "normalized_sha256": "30f9c68d59e16b9a22791c12f6db91da9f05a4519d95b4d24845c06e3cd70b6f",
+          "controls_sha256": "abc36710417bd1ec6c1738caad42803925484f39dab9f3a584c927c1cc9389e5",
+          "arms": {
+            "clean_raw": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "latent": {
+                "path": "prefix_000/clean_raw/candidate_01_input.pt",
+                "file_sha256": "cca8ee8582553f8814a6658d26a8faf195d5a8a03392b2434a7d33c6fa7b5120",
+                "tensor_sha256": "1cd1ce95c01d99898a2df7c5e20d9e32e8e4217fe68fab797d32dd80caa71587",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "canonical_tile": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "canonical_tile",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 32,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 4.76837158203125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 5.340576171875e-05,
+                "correction_rms_over_final_copy": 1.3801046407024842e-05,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "fe3b80a4e90300a5ec637c57a6d5263d5d72971cd81f41296befe6c9c3e0236d",
+                "projected_decoded_action_sha256": "fe3b80a4e90300a5ec637c57a6d5263d5d72971cd81f41296befe6c9c3e0236d",
+                "original_action_slot_sha256": "023ff1f13d0b70e70fafe2decfc91dbfff593467795ec19394d97420e4f1a16c",
+                "projected_action_slot_sha256": "aa5ef1c1479cc80b498311841fba90b18645662e118387335acb6f44248d8956",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_000/canonical_tile/candidate_01_input.pt",
+                "file_sha256": "54e8a635546bea770d855ecf1b83fd96da684f3d938721a2d583d9f2efc93556",
+                "tensor_sha256": "6cd1c197a50e27cf5d33aa1eba17cf8a1b364dce9909b603cbf61ae318b98f75",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "reverse_copies": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "reverse_copies",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 113,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 1.1920928955078125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 1.33514404296875e-05,
+                "correction_rms_over_final_copy": 4.200556759315077e-06,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "fe3b80a4e90300a5ec637c57a6d5263d5d72971cd81f41296befe6c9c3e0236d",
+                "projected_decoded_action_sha256": "fe3b80a4e90300a5ec637c57a6d5263d5d72971cd81f41296befe6c9c3e0236d",
+                "original_action_slot_sha256": "023ff1f13d0b70e70fafe2decfc91dbfff593467795ec19394d97420e4f1a16c",
+                "projected_action_slot_sha256": "3581835e4618ed1bb0272f05b5d243a6cd63e5b13097dcbaab2335b9cf713ca3",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_000/reverse_copies/candidate_01_input.pt",
+                "file_sha256": "735fec8561be9aac14ca784d2ea24e7cf1d9b57bc389a12ab901b2cebece2b01",
+                "tensor_sha256": "292a51b4e5f77f6cc57e36b5717a1968380d0509b147375f5d927f6389400228",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            }
+          },
+          "index": 1,
+          "seed": 32,
+          "committed_controls_sha256": "abc36710417bd1ec6c1738caad42803925484f39dab9f3a584c927c1cc9389e5",
+          "committed_normalized_sha256": "30f9c68d59e16b9a22791c12f6db91da9f05a4519d95b4d24845c06e3cd70b6f",
+          "committed_raw_latent_sha256": "1cd1ce95c01d99898a2df7c5e20d9e32e8e4217fe68fab797d32dd80caa71587"
+        }
+      ]
+    },
+    {
+      "ranking_json": "/home/xhj/WM_Security/runs/cosmos_counterfactual_ranking_v1/prefix_016/ranking.json",
+      "ranking_sha256": "61c5417d9558b939dabcadb3d8243bfafe9bafb877c773ff2123d0309b79c3fc",
+      "source": {
+        "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_016/snapshot.json",
+        "snapshot_sha256": "bb4ca66c842e2e906cc682aa5908540506928a1441ce37c085a9d468b02da7ad",
+        "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+        "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+        "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_016/observation.npz",
+        "observation_npz_sha256": "25c52593cb666c5d7b6f35b765de06bcbada15d6adc24caa98daeb0703cfe288",
+        "state_sha256": "682f27a0a045f2945b4ffa9f6e64d4195e7d828482b07d02f42171d4bd506e5e",
+        "array_sha256": {
+          "agentview_image": "323724a86b56326e891fceb2cf0c141337f013e2ef01ab611feb843f9b5cd2da",
+          "robot0_eye_in_hand_image": "fd40463dca0cb4cd560bddff3ed5dc4795ccf218027d4660dde57a14a94e2b21",
+          "robot0_gripper_qpos": "5f6b3a179a46ce512e93ab5daae5de9f83466453daa56824e868280aa8390236",
+          "robot0_eef_pos": "826f4163ac495e998d7e8eb015a23343dad1d626050d7703cf31edff62366517",
+          "robot0_eef_quat": "1417952a93c468957af675715d0464b2f3509801703ab83fe52f1c74b219cba2",
+          "sim_state": "c0e9581c2879033e85c65748b3c7f9cfeb94b368b8207737c4ebf35494dd570d"
+        },
+        "prefix_steps": 16,
+        "protocol": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "init_id": 0,
+          "seed": 31,
+          "environment_seed": 0,
+          "settle_steps": 10,
+          "max_steps": 300,
+          "original_goal": "open the middle drawer of the cabinet"
+        },
+        "source_checkpoint_provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          }
+        },
+        "sim_state_used_as_model_input": false,
+        "input_contract_sha256": "ed6cced366aece4ea2eec1f8c0f4147ce05aaeccda56f24d95ed5c4446bfa2ff",
+        "inference_provenance": {
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_cache_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "source_sha256": {
+            "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          }
+        }
+      },
+      "candidates": [
+        {
+          "status": "passed",
+          "original_normalized_exact": true,
+          "original_controls_exact": true,
+          "normalized_max_abs_delta": 0.0,
+          "physical_max_abs_delta": 0.0,
+          "normalized_sha256": "5ed0c47ca36686f1cf987e668e5913a65f77e79ff9bf34e78a6f68197a3ad817",
+          "controls_sha256": "e868e878d96b7659502bb78e64d46d72b00160b00ccce8631de16a62b9908c20",
+          "arms": {
+            "clean_raw": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "latent": {
+                "path": "prefix_016/clean_raw/candidate_00_input.pt",
+                "file_sha256": "16b7c40c7cb6298757e067d90274947eebeab82340dc713e45f55a8fb184f28c",
+                "tensor_sha256": "e9ec080625b19f72418e002c369f3871fefe7971027ac4a22ab8d1d17d642a57",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "canonical_tile": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "canonical_tile",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 32,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 4.76837158203125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 5.340576171875e-05,
+                "correction_rms_over_final_copy": 1.4409372852242086e-05,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "62b5161d0dcfdde6e19092ae3b6d0d2144fd83a844dbfb63c27cc3542cbe3d3c",
+                "projected_decoded_action_sha256": "62b5161d0dcfdde6e19092ae3b6d0d2144fd83a844dbfb63c27cc3542cbe3d3c",
+                "original_action_slot_sha256": "bedf8ee42a737123ef1535e18688a606b67bfbdf3c3eb8bae960bcdebb3ac7b6",
+                "projected_action_slot_sha256": "1057dda18f34aaaeae4f9729c675751674025389b8c621fdb7391fcd396e59b1",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_016/canonical_tile/candidate_00_input.pt",
+                "file_sha256": "ebcda77b91c659e675fee1a3c82150327ce9beebf019e52f81e41b7495d5e1db",
+                "tensor_sha256": "92ebe17fc9350f2fe3a3fd116d54095d771860f26bd648f2d2ea059a8729495b",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "reverse_copies": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "reverse_copies",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 125,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 1.1920928955078125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 1.33514404296875e-05,
+                "correction_rms_over_final_copy": 4.213435204292182e-06,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "62b5161d0dcfdde6e19092ae3b6d0d2144fd83a844dbfb63c27cc3542cbe3d3c",
+                "projected_decoded_action_sha256": "62b5161d0dcfdde6e19092ae3b6d0d2144fd83a844dbfb63c27cc3542cbe3d3c",
+                "original_action_slot_sha256": "bedf8ee42a737123ef1535e18688a606b67bfbdf3c3eb8bae960bcdebb3ac7b6",
+                "projected_action_slot_sha256": "fc609fbc7aa4834e6ac6cd2b15d5455e46dcadbbf418410d00ca28b01fb980a5",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_016/reverse_copies/candidate_00_input.pt",
+                "file_sha256": "a5921dedb601f37237ef6286e5349b340fa1e476fb3d8c9cc84a9a56da129e90",
+                "tensor_sha256": "c81e8dfa99cdd182fb4913f770320b11376fe83d3e242c5753ff9c55a9a96942",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            }
+          },
+          "index": 0,
+          "seed": 31,
+          "committed_controls_sha256": "e868e878d96b7659502bb78e64d46d72b00160b00ccce8631de16a62b9908c20",
+          "committed_normalized_sha256": "5ed0c47ca36686f1cf987e668e5913a65f77e79ff9bf34e78a6f68197a3ad817",
+          "committed_raw_latent_sha256": "e9ec080625b19f72418e002c369f3871fefe7971027ac4a22ab8d1d17d642a57"
+        },
+        {
+          "status": "passed",
+          "original_normalized_exact": true,
+          "original_controls_exact": true,
+          "normalized_max_abs_delta": 0.0,
+          "physical_max_abs_delta": 0.0,
+          "normalized_sha256": "b2562ed356399dcfdacc408d41cacca88d13126c10be4cce1bf50b62162540ec",
+          "controls_sha256": "10d553c22338ddf39250a740219595ec18aeb38ce71b3c5a29b049bcdde7d6be",
+          "arms": {
+            "clean_raw": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "latent": {
+                "path": "prefix_016/clean_raw/candidate_01_input.pt",
+                "file_sha256": "8786ed7a743a6ece59006fa22da65b20e278973527581edb24a255c44c8a8d3c",
+                "tensor_sha256": "c4356c6ff4998b7e2327671e7204fcfa2c169b726404c7a4fc59312aff1cb897",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "canonical_tile": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "canonical_tile",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 29,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 4.76837158203125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 5.340576171875e-05,
+                "correction_rms_over_final_copy": 1.4333496437757276e-05,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "0f0351727ae965a3039adec34278fb313c40e598677df2c009375acd07d3c986",
+                "projected_decoded_action_sha256": "0f0351727ae965a3039adec34278fb313c40e598677df2c009375acd07d3c986",
+                "original_action_slot_sha256": "da7f1d5c364f8d5cc4bf8b326ad25f869b5c55afb1ba1c49efa323e79aee7f7f",
+                "projected_action_slot_sha256": "c341f7638929d9175347c5a4ad6575235ee01039cf59eb87013cf4ba24017115",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_016/canonical_tile/candidate_01_input.pt",
+                "file_sha256": "4aa8b62189ff2a85e998a38d3187bc71d280a8cdba327ea956df2c6b73b61ed9",
+                "tensor_sha256": "fc66b38eb56dfbfa68c9e6abcf1b57083109a154212c46fe2a6dbf001f01c6fc",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "reverse_copies": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "reverse_copies",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 33,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 1.1920928955078125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 1.33514404296875e-05,
+                "correction_rms_over_final_copy": 4.2153992581006605e-06,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "0f0351727ae965a3039adec34278fb313c40e598677df2c009375acd07d3c986",
+                "projected_decoded_action_sha256": "0f0351727ae965a3039adec34278fb313c40e598677df2c009375acd07d3c986",
+                "original_action_slot_sha256": "da7f1d5c364f8d5cc4bf8b326ad25f869b5c55afb1ba1c49efa323e79aee7f7f",
+                "projected_action_slot_sha256": "189cc91b64dae8e195f1f41ad0d86ba5b9b01726afecf2e5e4b68182574429d5",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_016/reverse_copies/candidate_01_input.pt",
+                "file_sha256": "6f0560d3f52bf2be5a18d61fd6e855e25ce11c9160d9f3e85b9c92ae5e4fefc0",
+                "tensor_sha256": "e73edee14365688f93faee6b94a893d2e067199f271e7c6f0db0f3f61bad6c31",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            }
+          },
+          "index": 1,
+          "seed": 32,
+          "committed_controls_sha256": "10d553c22338ddf39250a740219595ec18aeb38ce71b3c5a29b049bcdde7d6be",
+          "committed_normalized_sha256": "b2562ed356399dcfdacc408d41cacca88d13126c10be4cce1bf50b62162540ec",
+          "committed_raw_latent_sha256": "c4356c6ff4998b7e2327671e7204fcfa2c169b726404c7a4fc59312aff1cb897"
+        }
+      ]
+    },
+    {
+      "ranking_json": "/home/xhj/WM_Security/runs/cosmos_counterfactual_ranking_v1/prefix_080/ranking.json",
+      "ranking_sha256": "603ccbf5781dc8fc8c450f924ebc010d42b1eab9c293d00c524a0e03ff9ebdfa",
+      "source": {
+        "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_080/snapshot.json",
+        "snapshot_sha256": "f49e474feac7ad5f36ea987e8021443bc7b276af4d9f25864fef49355b10a0bf",
+        "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+        "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+        "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_080/observation.npz",
+        "observation_npz_sha256": "244260cf26ed61b16bdafaee093e9af8fd17584fefd0243d088a6010d00603f9",
+        "state_sha256": "c39020d63bbffc4cde8d5c4c90fdebed5285346a9ad8b12f1effd9e0fd5e8452",
+        "array_sha256": {
+          "agentview_image": "c02d4c2663e42f8992777561e35c4effc2109d6520a9ff67d2815cf131205c1e",
+          "robot0_eye_in_hand_image": "c24ea4b78fd5bc19755482b872190117522c81c059d387a730bbf244ad9cb3b7",
+          "robot0_gripper_qpos": "cd3ac8af31b5893b5da4a080315a18b9203bb4d5e294c2331a7209707682cb56",
+          "robot0_eef_pos": "8a9ae06a17606838c0ce135fb89e2659924b3feae30dcc7bda9857b538d3d2fb",
+          "robot0_eef_quat": "96c40ed922fc82fd061f1b575c6cedeb2bddd05f1e7e3d51f713655d624465e4",
+          "sim_state": "c4c517996eddcb371ca564e8ee674ca46c9ad600ea1e0c159bffc8070eb04369"
+        },
+        "prefix_steps": 80,
+        "protocol": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "init_id": 0,
+          "seed": 31,
+          "environment_seed": 0,
+          "settle_steps": 10,
+          "max_steps": 300,
+          "original_goal": "open the middle drawer of the cabinet"
+        },
+        "source_checkpoint_provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          }
+        },
+        "sim_state_used_as_model_input": false,
+        "input_contract_sha256": "eb6cab8a984321e809f37e0133206bab1d4b0fd4e25947064a480f50e77dc0f8",
+        "inference_provenance": {
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_cache_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "source_sha256": {
+            "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          }
+        }
+      },
+      "candidates": [
+        {
+          "status": "passed",
+          "original_normalized_exact": true,
+          "original_controls_exact": true,
+          "normalized_max_abs_delta": 0.0,
+          "physical_max_abs_delta": 0.0,
+          "normalized_sha256": "13de55f2fb3ebf6107c6ab024c0bf60442f28814814838e6f2df9b62537a7bce",
+          "controls_sha256": "0a3927c9a01750d786d2f324a95e814f388d4cba5ac351b9ae2eb3d8174e76ea",
+          "arms": {
+            "clean_raw": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "latent": {
+                "path": "prefix_080/clean_raw/candidate_00_input.pt",
+                "file_sha256": "5d6a88264bd6cd8298567799fbf29d215e514d164fee323636285e60f8b71848",
+                "tensor_sha256": "064960b8e7c38b753b7a43e4524b73457d08800d37ce43cdea999930729d925b",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "canonical_tile": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "canonical_tile",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 32,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 3.5762786865234375e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 4.673004150390625e-05,
+                "correction_rms_over_final_copy": 1.4399323845282197e-05,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "3f6b8180d7ea833f0070937c4ce6211e0ba944ffce036e072ccbc1e79e8352d0",
+                "projected_decoded_action_sha256": "3f6b8180d7ea833f0070937c4ce6211e0ba944ffce036e072ccbc1e79e8352d0",
+                "original_action_slot_sha256": "36ab10cc430be6e7090b7205689da4063544c0b7f6da855bd058443d8564758d",
+                "projected_action_slot_sha256": "4089fb945781a21483eb4f64d4b465f7c0afaed87b62100dc3c56b94ab6631e0",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_080/canonical_tile/candidate_00_input.pt",
+                "file_sha256": "8ad7bc336c34404ce63e2b7556af3a009ec81124b2ef37027eeaf89bfea5eeca",
+                "tensor_sha256": "ef061c2bee6b105802e9a358973279ae2c051c971eb049307f33f6db4bb95c2f",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "reverse_copies": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "reverse_copies",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 56,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 1.1920928955078125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 1.33514404296875e-05,
+                "correction_rms_over_final_copy": 4.180167252343381e-06,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "3f6b8180d7ea833f0070937c4ce6211e0ba944ffce036e072ccbc1e79e8352d0",
+                "projected_decoded_action_sha256": "3f6b8180d7ea833f0070937c4ce6211e0ba944ffce036e072ccbc1e79e8352d0",
+                "original_action_slot_sha256": "36ab10cc430be6e7090b7205689da4063544c0b7f6da855bd058443d8564758d",
+                "projected_action_slot_sha256": "d32a5be00969eab77005862df79644fe2729a0b7be3d2203871cf460a4721989",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_080/reverse_copies/candidate_00_input.pt",
+                "file_sha256": "2fe86e0a803a1be16fec3b418ef1fa68ff5f18cd005616a38a758c12a31d14ab",
+                "tensor_sha256": "aa7e0a8007af0a0a2e6971f91f2c809f8c63657557bf9ee1f0797da7dec408fa",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            }
+          },
+          "index": 0,
+          "seed": 31,
+          "committed_controls_sha256": "0a3927c9a01750d786d2f324a95e814f388d4cba5ac351b9ae2eb3d8174e76ea",
+          "committed_normalized_sha256": "13de55f2fb3ebf6107c6ab024c0bf60442f28814814838e6f2df9b62537a7bce",
+          "committed_raw_latent_sha256": "064960b8e7c38b753b7a43e4524b73457d08800d37ce43cdea999930729d925b"
+        },
+        {
+          "status": "passed",
+          "original_normalized_exact": true,
+          "original_controls_exact": true,
+          "normalized_max_abs_delta": 0.0,
+          "physical_max_abs_delta": 0.0,
+          "normalized_sha256": "d8119654ab0ef29e8a69b51631b770735def5e4c08329da93c1d666fcae74a26",
+          "controls_sha256": "72d49cffd09fc64a40366211e43bb66937e50daf58a648d23fd7854c1d9afcec",
+          "arms": {
+            "clean_raw": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "latent": {
+                "path": "prefix_080/clean_raw/candidate_01_input.pt",
+                "file_sha256": "56ca9132c1e8b6773d4f856f29215eb8351125572e5af5b85d9a4df964e01d6b",
+                "tensor_sha256": "f7dd7c548c21c95ac742130ea8cf5c785813136ba1a2516abdb63f45b7ba03bf",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "canonical_tile": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "canonical_tile",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 29,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 4.76837158203125e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 5.340576171875e-05,
+                "correction_rms_over_final_copy": 1.2583069292304572e-05,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "9ed7eb453d6b82eeef218e13e062d8e300e639128eb9523be0efb73e20883833",
+                "projected_decoded_action_sha256": "9ed7eb453d6b82eeef218e13e062d8e300e639128eb9523be0efb73e20883833",
+                "original_action_slot_sha256": "2871b1904eb5d22f5d0a68269c356f7750fbfd85d12c6daf9d7b43f87088da90",
+                "projected_action_slot_sha256": "61fef0622bbb63c092b6cba3d173f16c688e04d454a1956e82d4c6af843df8dd",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_080/canonical_tile/candidate_01_input.pt",
+                "file_sha256": "3c16e6e8e4042c9ed2e30cec771c01e9de018efba47a89c5a68678a2bf5f2a22",
+                "tensor_sha256": "1847ac13630a3b47b3969717a7d196a2601543d81a3ffa484b731797e0078ae0",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            },
+            "reverse_copies": {
+              "status": "passed",
+              "normalized_exact": true,
+              "controls_exact": true,
+              "other_slots_exact": true,
+              "representation_changed": true,
+              "model_bf16_action_slot_changed": true,
+              "projection": {
+                "mode": "reverse_copies",
+                "device": "cuda:0",
+                "dtype": "torch.float32",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "decoder_target_source": "original raw latent decoded on same device",
+                "max_correction_steps": 32,
+                "neighbor_steps": 512,
+                "correction_iterations": 32,
+                "neighbor_iterations": 51,
+                "unprojected_decoder_exact": false,
+                "unprojected_decoder_max_abs_delta": 2.384185791015625e-07,
+                "projected_decoder_exact": true,
+                "projected_decoder_different_elements": 0,
+                "projected_decoder_max_abs_delta": 0.0,
+                "other_slots_bitwise_equal": true,
+                "correction_only_final_copy": true,
+                "correction_max_abs": 1.33514404296875e-05,
+                "correction_rms_over_final_copy": 2.8285642201808514e-06,
+                "representation_changed": true,
+                "original_decoded_action_sha256": "9ed7eb453d6b82eeef218e13e062d8e300e639128eb9523be0efb73e20883833",
+                "projected_decoded_action_sha256": "9ed7eb453d6b82eeef218e13e062d8e300e639128eb9523be0efb73e20883833",
+                "original_action_slot_sha256": "2871b1904eb5d22f5d0a68269c356f7750fbfd85d12c6daf9d7b43f87088da90",
+                "projected_action_slot_sha256": "cd2542d4fda6311ea9b01e79e5bc6e7ad82944d0b963b46fc444fc2397165991",
+                "cuda_equivalence_proven": false
+              },
+              "latent": {
+                "path": "prefix_080/reverse_copies/candidate_01_input.pt",
+                "file_sha256": "5d3f3c225ae9ba0d11c232ab1b913277ec06746b03b71cabc1de4b0c68dded12",
+                "tensor_sha256": "7e16c1da09c06293bfc85ada13ae596eb5fbef71318d1ff7bcef386da78e466a",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              }
+            }
+          },
+          "index": 1,
+          "seed": 32,
+          "committed_controls_sha256": "72d49cffd09fc64a40366211e43bb66937e50daf58a648d23fd7854c1d9afcec",
+          "committed_normalized_sha256": "d8119654ab0ef29e8a69b51631b770735def5e4c08329da93c1d666fcae74a26",
+          "committed_raw_latent_sha256": "f7dd7c548c21c95ac742130ea8cf5c785813136ba1a2516abdb63f45b7ba03bf"
+        }
+      ]
+    }
+  ],
+  "model_weights_loaded": false,
+  "environment_created": false,
+  "source_inputs_commit": "/home/xhj/WM_Security/runs/cosmos_action_representation_cuda_gate_v1/source_inputs_commit.json",
+  "limitations": [
+    "Internal representation intervention requiring write access; no external attack demonstrated.",
+    "No Goal changes: this does not establish the Goal-Bus hypothesis.",
+    "Same executed actions do not prove that official forecasts promised to ignore internal latent residuals.",
+    "CPU equivalence does not certify CUDA equivalence; deployment-device gate is mandatory.",
+    "Predicted values and ranking flips are not actual utility or attack success.",
+    "Native Value directly sees action slot4 as well as forecast slots5:8; native ranking effects need not be forecast-mediated.",
+    "Fixed-seed paired sample differences do not establish a difference between output distributions.",
+    "Native proposal/future/value reuse candidate seed31 or32; residual representations may couple to the shared model-sampling index. Independent forecast/value seeds are a future follow-up, not part of this registered probe.",
+    "Projected canonical tensors have a small final-copy correction; they are not exactly tiled actions.",
+    "Three correlated prefixes from one successful trajectory, two candidates each; no population inference.",
+    "Existing outcomes were available during design. Reuse is developmental, not a new blinded or held-out experiment.",
+    "Recorded utility is fixed candidate plus original-goal native N1 continuation, not full-episode native N2 utility."
+  ],
+  "torch_version": "2.2.0+cu121",
+  "device_name": "NVIDIA GeForce RTX 4090",
+  "passed_per_arm": {
+    "clean_raw": 6,
+    "canonical_tile": 6,
+    "reverse_copies": 5
+  }
+}

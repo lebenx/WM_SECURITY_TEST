@@ -1,0 +1,162 @@
+### 1. Broad idea
+
+Learn a world-model state by **partitioning histories according to their action-conditioned future observation signatures**, rather than averaging histories that look identical at the current timestep.
+
+### 2. Stored state and update
+
+Use a finite replay buffer of trajectories
+\[
+D=\{(o_t,a_t,r_t,o_{t+1})\}.
+\]
+
+Let:
+
+- \(A\) be the finite action set;
+- \(\phi(o)\in\{0,1\}^{d}\) be a fixed observation feature vector; for MiniGrid, \(d=7\cdot7\cdot3\) one-hot cell-channel features;
+- \(h_t=(o_{t-L+1:t},a_{t-L+1:t-1})\) be a length-\(L\) history;
+- \(U\subseteq A^{1:H}\) be a fixed set of short action strings;
+- \(q=|U|Hd\).
+
+For each distinct history \(h\), maintain suffix counts
+\[
+C_h[u,k,j],
+\]
+where \(u\in U\), \(1\le k\le H\), and \(j\le d\). The corresponding empirical predictive signature is
+\[
+s(h)_{u,k,:}
+=
+\frac{C_h[u,k,:]+\alpha}
+{\sum_{j=1}^d C_h[u,k,j]+d\alpha}
+\in [0,1]^d.
+\]
+
+Thus \(s(h)\in[0,1]^q\) predicts feature expectations \(k\) steps into the future after executing \(u\).
+
+Maintain a partition \(\mathcal C\) of histories into learned model states. A state stores:
+
+\[
+N_c,\qquad
+T_c[a,c'],\qquad
+R_c[a],
+\]
+where \(c\in\mathcal C\), \(a\in A\), and \(c'\) is the cluster containing the next history.
+
+#### Online update
+
+```text
+for every newly completed trajectory suffix starting at t:
+    h = history(o[t-L+1:t], a[t-L+1:t-1])
+
+    for u in U:
+        if the trajectory contains actions a[t:t+len(u)-1] == u:
+            for k = 1,...,H:
+                if t + len(u) + k - 1 exists:
+                    C[h,u,k,:] += phi(o[t+len(u)+k-1])
+
+    recompute s(h)
+
+    if h is new:
+        create a singleton cluster for h
+
+    if ||s(h) - mean_signature(cluster(h))||_2 > epsilon:
+        split h from its current cluster
+
+    for each pair of clusters c1,c2:
+        if ||mean_signature(c1)-mean_signature(c2)||_2 <= epsilon
+           and their one-step transition distributions are within delta:
+            merge c1,c2
+
+    update T and R using the observed transition
+```
+
+Planning uses the finite model \((\mathcal C,T,R)\), for example with depth-limited tree search or value iteration. No counterfactual labels are used: signatures are estimated only from actually observed action strings. If a probe string has not occurred enough times, its count is simply unavailable and does not trigger a split.
+
+The substantive operation is **state surgery based on future controllability signatures**: histories are split or merged before fitting the transition model, instead of fitting one averaged transition model and hoping a recurrent network remembers the distinction.
+
+### 3. Worked example
+
+Suppose two histories \(h_A\) and \(h_B\) currently produce the same observation \(o\). The available actions are \(x,y\), and the observed data include:
+
+\[
+\begin{array}{c|ccc}
+ & o_t & o_{t+1}\text{ after }x & o_{t+2}\text{ after }x,y\\
+\hline
+h_A & o & z & \text{red}\\
+h_B & o & z & \text{blue}
+\end{array}
+\]
+
+A standard one-step baseline stores
+\[
+P(o_{t+1}\mid o_t,x)=\delta_z
+\]
+for both histories. It therefore merges them and assigns the same model state.
+
+With \(u=(x,y)\), \(H=2\), and feature coordinates for `red` and `blue`,
+
+\[
+s(h_A)_{(x,y),2}=(1,0),\qquad
+s(h_B)_{(x,y),2}=(0,1).
+\]
+
+Their distance is \(\sqrt 2\), so for any \(\epsilon<\sqrt2\) the proposed update splits them, despite identical current and one-step observations. The transition model can then learn different consequences for the same visible action.
+
+The observations, hypotheses, and replay computation are otherwise identical; the difference is that the proposed method uses observed multi-step action-conditioned suffixes to decide whether a model state should be split.
+
+### 4. Closest real method and residual contribution
+
+The closest established methods are:
+
+- **Predictive State Representations (PSRs)**, which represent state through predictions of future tests;
+- **bisimulation/state-abstraction methods**, which merge states with similar future behavior;
+- history-based decision-tree methods such as **U-Tree**.
+
+The residual contribution is not the general idea of predictive state. It is a concrete online operation for native partially observed tasks:
+
+1. use short, enumerated action strings rather than a learned latent state;
+2. perform explicit split/merge surgery on replay histories;
+3. fit an executable finite transition model after that surgery;
+4. use the resulting state for planning and task completion.
+
+This should be presented cautiously: the underlying principle is likely a rediscovery or practical synthesis of PSR/bisimulation ideas. The empirical claim would be that this particular low-dimensional, suffix-signature implementation improves native-task learning under limited data, not that predictive-state representations are new.
+
+### 5. Small native test
+
+Use the public **MiniGrid** implementation, specifically:
+
+```text
+MiniGrid-DoorKey-8x8-v0
+```
+
+The package and environments are publicly available through the `minigrid` repository/Python package. The task has partial visual observations, a key, a locked door, and long-horizon consequences of actions. It can be run directly with Gymnasium and does not require a new simulator or benchmark.
+
+A short pilot can use:
+
+- \(L=4\);
+- \(H=3\);
+- \(U\) equal to all action strings of length two or three, capped at 100 randomly selected strings;
+- \(d=147\) raw cell-channel features;
+- tabular cluster planning.
+
+Evaluate on DoorKey sizes 5x5, 6x6, and 8x8 using the same interaction budget. A second existing MiniGrid task, such as `MiniGrid-KeyCorridorS3R3-v0`, tests whether the effect survives longer navigation and object interaction.
+
+The main baseline should be a recurrent one-step world model with the same replay buffer, parameter budget, planner, and observation encoder; only the signature-based split/merge operation should differ.
+
+### 6. Decisive falsification test
+
+Compare four conditions under identical seeds and environment interactions:
+
+1. one-step recurrent world model;
+2. recurrent model trained with ordinary multi-step prediction loss;
+3. proposed signature partition plus tabular cluster model;
+4. proposed model with signature splitting disabled.
+
+Measure native success rate versus environment interactions, not only prediction loss.
+
+The mechanism is falsified if, across at least three DoorKey sizes and five seeds:
+
+- condition 3 does not outperform condition 1 or 2 in sample-efficient task success;
+- disabling splitting has no measurable effect;
+- or a simple history-stacking baseline matches it while using no more computation.
+
+A particularly strong stop condition would be: the proposed model produces more accurate future-signature predictions and more clusters, but no improvement in planning success over the recurrent baseline. That would show that the changed operation is representationally interesting but not useful for acting, and I would stop rather than add further split rules or aggregation variants.

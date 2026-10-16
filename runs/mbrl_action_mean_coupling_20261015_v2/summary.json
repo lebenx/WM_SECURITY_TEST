@@ -1,0 +1,282 @@
+{
+  "status": "completed",
+  "configuration": {
+    "id": "mbrl_action_mean_coupling_20261015",
+    "model": "runs/mbrl_coupling_cartpole_v0/model",
+    "seed": 708,
+    "max_steps": 200,
+    "population": 350,
+    "iterations": 5,
+    "particles": 20,
+    "bank_size": 8,
+    "horizon": 15,
+    "elite_ratio": 0.1,
+    "alpha": 0.1,
+    "return_mean_elites": true,
+    "clipped_normal": false,
+    "phase_sweeps": 2,
+    "phase_column_order": "ascending candidate index",
+    "phase_improvement_tolerance": 1e-07,
+    "target": "maximize expected signed positive first executed action; fixed +1 direction",
+    "intervention": "Only CEM iteration 4 of 5: sort each candidate's K native scalar return estimates and cyclically shift columns before drawing a fresh shared uniform row. Iterations 0..3 use independent uniform per-column rows.",
+    "objective": "mean over all K rows of mean first action among native top-35 elites; native alpha*previous_mu[0]+(1-alpha)*elite_mean[0] differs by a fixed positive scale and constant during this final query",
+    "rng": "Native global Torch proposal RNG seed; ModelEnv generator seed+10000; independent selection generator seed+30000 draws 350 rows on EVERY query in both arms; separate fresh shared row generator seed+40000 used only after phases are frozen.",
+    "arms": [
+      "independent",
+      "positive_action_mean"
+    ],
+    "clean_scope": "Independent K-bank row selection is a matched added sampler around native CEM, not the original one-batch cross-candidate joint sampling law. The unmodified native CEM optimizer, model, task, scoring and execution remain in use.",
+    "generation_budget": "K=8 native 20-particle forecast batches per candidate in both arms: eight times an unwrapped native query. Phase search adds CPU work only in the intervention.",
+    "first_plan_gate": "On the unmodified first native plan's final query, all scalar column multisets and original bank-index bijections must match exactly, and the frozen operation must increase the shared-row expected positive executed action by more than 1e-6. Otherwise stop before environment execution and record no operation signal, not a task failure.",
+    "first_plan_controls": "On the same saved final bank only: shared, old rank-targeted, bank mean, and 1024 independently sampled row vectors. These are action diagnostics, not episode efficacy or defenses.",
+    "real_outcome": "Actual CartPoleEnv reward sum and termination over at most 200 real steps, one existing development seed 708; no model-predicted score substitutes for utility.",
+    "clean_gate": "The independent matched sampler must reproduce the existing 200-step real return without termination; otherwise stop before the intervention arm and report an inadequate Clean baseline.",
+    "stop_rule": "One predeclared pair only. No direction, seed, objective, budget or checkpoint retuning. A non-decreasing intervention return is a negative result for this operation on this fixed instance. A decrease is conditional local harm, not generalization or a new statistical concept.",
+    "runtime_limit_seconds": 1800,
+    "runtime_gate": "Extrapolate from the first native plan plus measured phase-search overhead to two full 200-step episodes. If this exceeds 1800 seconds, save a resource-blocked result and stop before environment execution; extrapolation is not a measured episode duration.",
+    "threat_model": "Added compromised stochastic sampler / supply-chain hook. It sees candidate actions and native scalar forecast batches and can couple their row indices. It cannot edit actions, scores, model weights, state, environment reward or termination. No deployed remote attacker interface is claimed.",
+    "preservation_claim": "Conditional on the current full bank, actions and history, each phase is fixed before a fresh uniform R. For each candidate, original-bank-index(sort[(R+phase) mod K]) is a permutation of 0..K-1. Thus its scalar N-particle native return estimator has the exact same conditional empirical distribution and unconditional native marginal law. The cross-candidate joint distribution changes. Complete particle trajectories are not saved or empirically audited.",
+    "checkpoint_scope": "Existing locally pretrained 5-member GaussianMLP (2x64), trained on 3000 real CartPole transitions; not an externally released pretrained checkpoint.",
+    "prior_comparison": "runs/mbrl_rank_official_planner_v0 has 200/200 for independent/old targeted. The old objective attacked bank-score quality, not the actual smoothed elite action mean; that negative result is retained.",
+    "limits": [
+      "one selected existing development seed, no inferential significance or unseen-task generalization",
+      "state and candidate sets may diverge downstream after intervention",
+      "scalar marginal law is exact but model correctness is not guaranteed",
+      "signed action control is an attacker objective; whether it causes harm is tested by actual return",
+      "native return ties use unchanged Torch topk behavior",
+      "CPU only, no training, no API, no new checkpoint"
+    ]
+  },
+  "source_hashes": {
+    "configs/mbrl_action_mean_coupling_20261015.json": "a1cf254a34ef55d2e5b44e0bb435fda6952537d1dd8ec5ef95902e31914d4461",
+    "scripts/pilot_mbrl_action_mean_coupling.py": "0b2af64d5696c4f27628ba8cdc9c371cb8dc041de1d7b21314cab9c25aede45a",
+    "src/wm_security/rank_coupling.py": "6915f24539df333140fd4343bb42dea2fc554412781013f8f264d4880ee049d0",
+    "vendor/mbrl-lib/mbrl/planning/trajectory_opt.py": "dc9471de2868ccc2bf041d85891cd20ca39fa299423b011451f14a35f953d76a",
+    "runs/mbrl_coupling_cartpole_v0/model/model.pth": "256d6b6a437059739f5d345c508773d390f48d6d6892c57cc9e6af091de3b46c",
+    "runs/mbrl_coupling_cartpole_v0/model/env_stats.pickle": "9decb33026b492020a5d9c0fe2ba179874207a3a5b0e91525e7715345952b3ed"
+  },
+  "runtime": {
+    "python": "3.14.4 | packaged by conda-forge | (main, Apr  8 2026, 01:59:35) [GCC 14.3.0]",
+    "executable": "/home/xhj/WM_Security/.venv-native-local/bin/python",
+    "torch": "2.13.0+cu130",
+    "numpy": "2.4.6",
+    "torch_threads": 1
+  },
+  "rows": [
+    {
+      "arm": "independent",
+      "seed": 708,
+      "real_return": 200.0,
+      "steps": 200,
+      "terminated": false,
+      "truncated": false,
+      "episode_cap_reached": true,
+      "seconds": 578.5598710130143,
+      "native_queries": 1000,
+      "predictive_transitions": 840000000,
+      "phase_candidates": 0,
+      "model_seconds": 577.1538881192682,
+      "phase_seconds": 0.0,
+      "native_mean_exact_all_steps": true
+    },
+    {
+      "arm": "positive_action_mean",
+      "seed": 708,
+      "real_return": 200.0,
+      "steps": 200,
+      "terminated": false,
+      "truncated": false,
+      "episode_cap_reached": true,
+      "seconds": 610.9201625990099,
+      "native_queries": 1000,
+      "predictive_transitions": 840000000,
+      "phase_candidates": 1058600,
+      "model_seconds": 589.4769293962454,
+      "phase_seconds": 20.212206819385756,
+      "native_mean_exact_all_steps": true
+    }
+  ],
+  "api_requests": 0,
+  "training_updates": 0,
+  "gpu_work": false,
+  "initial_observations": {
+    "independent": [
+      -0.0046073806143076546,
+      0.049288884001025046,
+      0.04125483298327842,
+      -0.03893399790526732
+    ],
+    "positive_action_mean": [
+      -0.0046073806143076546,
+      0.049288884001025046,
+      0.04125483298327842,
+      -0.03893399790526732
+    ]
+  },
+  "operation_audit": {
+    "status": "completed_operation_audit",
+    "scalar_column_multisets_exact": true,
+    "original_bank_indices_bijective": true,
+    "columns": 350,
+    "rows_per_column": 8,
+    "phase_objective": {
+      "before": 0.052279941737651825,
+      "after": 0.055911242961883545,
+      "phase_candidates": 5601
+    },
+    "old_targeted_objective": {
+      "before": 14.99713134765625,
+      "after": 14.99322509765625,
+      "candidates": 5601
+    },
+    "mu_before_final": [
+      [
+        0.026247859001159668
+      ],
+      [
+        -0.02765025570988655
+      ],
+      [
+        0.15833179652690887
+      ],
+      [
+        0.1454242318868637
+      ],
+      [
+        0.12498777359724045
+      ],
+      [
+        0.06123989075422287
+      ],
+      [
+        -0.007552099879831076
+      ],
+      [
+        0.09355756640434265
+      ],
+      [
+        0.13437213003635406
+      ],
+      [
+        0.021752547472715378
+      ],
+      [
+        0.048457611352205276
+      ],
+      [
+        -0.16569805145263672
+      ],
+      [
+        -0.2582189440727234
+      ],
+      [
+        0.04792569950222969
+      ],
+      [
+        -0.07070537656545639
+      ]
+    ],
+    "diagnostics": {
+      "shared": {
+        "expected_or_mc_mean_returned_first_action": 0.04967673495411873,
+        "min": 0.028148228302598,
+        "max": 0.07706066220998764,
+        "row_count": 8,
+        "exact_row_enumeration": true
+      },
+      "positive_action_mean": {
+        "expected_or_mc_mean_returned_first_action": 0.05294490233063698,
+        "min": 0.04264300689101219,
+        "max": 0.07706066220998764,
+        "row_count": 8,
+        "exact_row_enumeration": true
+      },
+      "old_rank_targeted": {
+        "expected_or_mc_mean_returned_first_action": 0.046215977519750595,
+        "min": 0.022376060485839844,
+        "max": 0.07706066220998764,
+        "row_count": 8,
+        "exact_row_enumeration": true
+      },
+      "bank_mean": {
+        "expected_or_mc_mean_returned_first_action": 0.028148228302598,
+        "min": 0.028148228302598,
+        "max": 0.028148228302598,
+        "row_count": 1,
+        "exact_row_enumeration": true
+      },
+      "independent_mc_1024": {
+        "expected_or_mc_mean_returned_first_action": 0.044376734644174576,
+        "min": 0.01271289773285389,
+        "max": 0.07706066220998764,
+        "row_count": 1024,
+        "exact_row_enumeration": false
+      }
+    },
+    "signed_expected_action_gain_vs_shared": 0.0032681673765182495,
+    "phase_seconds": 0.09957724399282597,
+    "first_native_plan_seconds": 2.949171993008349,
+    "total_offline_operation_audit_seconds": 0.22098589199595153,
+    "old_targeted_diagnostic_search_seconds": 0.11423195598763414,
+    "pair_runtime_extrapolation_seconds": 1199.8052318939008,
+    "runtime_extrapolation_not_measured_episodes": true,
+    "operation_signal_gate_pass": true,
+    "runtime_gate_pass": true,
+    "full_trajectory_marginal_empirically_checked": false,
+    "diagnostic_controls_have_no_episode_utility": true
+  },
+  "first_clean_queries": [
+    {
+      "bank": "54cd3ac9e43d73006a8ab325ce6d8557b7c8826bfcd61e95795d8b672a2af4eb",
+      "actions": "64b6bc2262ad69b71926a550e639acce2af35ecfb6841a70b4e476239ab44786",
+      "scores": "724a3d2563ccf6711eb6cdab98ed756455ccd0ca031300b063893e0bd4513de4",
+      "independent_indices": "19e551f7c1ec97ab1ec460e0ce20c667cc980f3475f90079a9bf325f87f4a7a5",
+      "indices": "19e551f7c1ec97ab1ec460e0ce20c667cc980f3475f90079a9bf325f87f4a7a5",
+      "phases": "cd99e0d7b38a723658d7bf5eb2e9bb3238a13d62a467a1e7b4608db065cdf744"
+    },
+    {
+      "bank": "ead0aacf315395c9e04ff236340e01a07c2721f11826380602518a356258ab5b",
+      "actions": "a78968f572c2ae6bc494c197b0816425c4c7e4d632ea994da739a61b1964d51a",
+      "scores": "d82395d6953715c94dd0dc7d34c66bfea5814bed04c6d40a7bb88dc4fe2452e3",
+      "independent_indices": "da09c99ea7ffee7036e11b89d7c0ce563d3281107d1928e238611dcfeda07772",
+      "indices": "da09c99ea7ffee7036e11b89d7c0ce563d3281107d1928e238611dcfeda07772",
+      "phases": "cd99e0d7b38a723658d7bf5eb2e9bb3238a13d62a467a1e7b4608db065cdf744"
+    },
+    {
+      "bank": "c17e4cd743c2bba23dfc290a2c0f442c213d0c4d9d7fabf770e5c59912ab6b27",
+      "actions": "86f59be28acbe574e91551ee995f56e413eaa5854b08c3bf73f0b40cf3ecc784",
+      "scores": "c100e9d68801ccdb0ca5dc5d2fcbe3de26fb3e457196d0ae9c4a693595ad8f6b",
+      "independent_indices": "7e50208b9816ade0e1cc112d62c6c261a83c833feaf7a206cfb0749d8e78199c",
+      "indices": "7e50208b9816ade0e1cc112d62c6c261a83c833feaf7a206cfb0749d8e78199c",
+      "phases": "cd99e0d7b38a723658d7bf5eb2e9bb3238a13d62a467a1e7b4608db065cdf744"
+    },
+    {
+      "bank": "5cd205e242cd16f383acea1b2ba612f1b202a50533705f05ca2971981a109b83",
+      "actions": "b5679f2916fa4227a22ac4478f085fcb9ca156fe3a5820e6bb2bf08ed70ba0ed",
+      "scores": "88ad80886910ab09bfa1905b5dd1b582eed9b4aa73c28feb690f9c9dd715e053",
+      "independent_indices": "3b3c66c0788d241440573bc1ac9fff2771fe65ec1e3cbf3e396884dd27d8987d",
+      "indices": "3b3c66c0788d241440573bc1ac9fff2771fe65ec1e3cbf3e396884dd27d8987d",
+      "phases": "cd99e0d7b38a723658d7bf5eb2e9bb3238a13d62a467a1e7b4608db065cdf744"
+    },
+    {
+      "bank": "c768ac5fc53eb205a2b7571336698bf3ef872d544c92b6e93f6e2e173005f6c6",
+      "actions": "887ecb1b9d11909edb0c7146f4c5e3b5b48c2d7477ce3d8c9ed73614e2b0c5f8",
+      "scores": "6286bf2aa2652fa44b0b2ffc268f7f76e68b085c307f0537c587699c2eebab57",
+      "independent_indices": "6e9cea374ae020d5fefa6f494e5233a8a0afc4f820e459fa7bdc05286ddcf69b",
+      "indices": "6e9cea374ae020d5fefa6f494e5233a8a0afc4f820e459fa7bdc05286ddcf69b",
+      "phases": "cd99e0d7b38a723658d7bf5eb2e9bb3238a13d62a467a1e7b4608db065cdf744"
+    }
+  ],
+  "paired_initial_observation_exact": true,
+  "first_plan_paired_checks": {
+    "first_four_full_query_records_equal": true,
+    "final_actions_exact": true,
+    "final_bank_exact": true,
+    "all_independent_row_vectors_exact": true
+  },
+  "model_parameters_unchanged": true,
+  "real_environment_steps": 400,
+  "attack_minus_clean_return": 0.0,
+  "scientific_result": "no_observed_harm_for_fixed_operation",
+  "elapsed_seconds": 1189.562421931012
+}

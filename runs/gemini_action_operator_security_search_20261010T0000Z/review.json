@@ -1,0 +1,18 @@
+{
+  "verdict": "Reject",
+  "novelty_score": 4.0,
+  "one_sentence_claim": "A benign source curriculum induces an out-of-distribution directional drift in latent action-difference jacobians that degrades downstream MPC rollouts while preserving single-step loss, which can be regularized by an action-operator consistency penalty.",
+  "threat_operation": "Clean-label ordered multi-task pre-training / curriculum injection where the attacker provides valid transitions on a source task (cheetah-run) without modifying labels, code, or the loss function, aiming to misalign open-loop gradient responses in downstream zero-shot/few-shot target dynamics.",
+  "carrier": "TD-MPC2 (official `common/world_model.py` dynamics network and `evaluate.py` / `train.py` MPC rollout loop over `mt30-48M`).",
+  "exact_short_gate": "Run `python evaluate.py task=walker-run checkpoint=path/to/curriculum_model` vs `shuffled_curriculum_model` using a 100-step test batch: measure latent directional derivative alignment $\\cos(\\Delta z_{a}, \\Delta z_{a+\\epsilon}) = \\frac{\\nabla_a z_{t+1}^\\top \\nabla_a z^*_{t+1}}{\\|\\nabla_a z_{t+1}\\| \\|\\nabla_a z^*_{t+1}\\|}$ via finite differences on dynamics latent space; assert return drop $>15\\%$ while single-step MSE $\\le 1.0\\times$ baseline across $\\ge 3$ distinct target tasks (walker-run, hopper-hop, cup-catch).",
+  "positive_controls": [
+    "Shuffled-order curriculum control (breaks temporal curriculum ordering while keeping identical data distribution to rule out standard catastrophic forgetting).",
+    "Direct downstream action-operator regression using true rollout transitions to verify that restoring operator geometry fixes the performance drop."
+  ],
+  "falsifiers": [
+    "Target task return loss vanishes when MPC horizon $H$ is decreased to $H=1$ (proves harm is compounding imagination/operator divergence rather than one-step observation poisoning).",
+    "Effect fails to generalize across dissimilar action-space topologies (e.g., occurs only on walker-run due to morphological overlap with cheetah-run, failing on cup-catch and hopper, which reduces the phenomenon to generic cross-task negative transfer)."
+  ],
+  "prior_overlap": "High overlap with cross-task negative transfer in meta-RL, catastrophic forgetting in dynamics models, and recent intervention fidelity audits (e.g., CoCo, TRAP, OneWorld). Framing passive negative transfer from a normal sequential curriculum as a 'truthful attacker operator rotation' fails to establish an active, robust security threat without arbitrary victim-specific hyperparameter brittleness.",
+  "decision": "Reject. The proposal repackages standard directional bias from sequential multi-task adaptation into security language. The current screening already confirms the effect is non-general (fails on cup-catch, walker-stand/walk, and hopper), indicating morphological negative transfer rather than an attacker-controlled latent operator rotation. Novelty does not clear 7.0 without demonstrating robust targeted causality independent of cross-task dynamics overlap."
+}

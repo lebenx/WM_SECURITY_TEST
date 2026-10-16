@@ -1,0 +1,24 @@
+{
+  "updated_at_utc": "2026-10-09T03:36:21.836555+00:00",
+  "status": "fixed_rank_one_recurrence_candidate_not_supported",
+  "candidate_question_cn": "世界模型的递归推演能否自行激活恶意动力学？",
+  "accepted_claim": null,
+  "source": "runs/tdmpc_recurrence_mode_v0/assessment.json",
+  "report_note_cn": "动力学权重单秩修改完成120步、约6.2秒训练，在两条独立开发轨迹上通过一步预测保持门槛，但目标动作成对胜率仅提高14.3和3.2个百分点，未通过预设决策门槛。最初相对单次注入的4.86／7.30倍潜变量偏移，不能证明自激反馈：保留逐步注入、切断其状态反馈的对照得到更大偏移，完整修改／对照MSE比仅0.897／0.907，目标胜率也未改善。该固定构造缺乏自激机制证据；不扩大、不运行原生任务攻击组。尚无满足目标新意和强任务证据的最终主张。",
+  "next_requirement": "Find a substantive security operation with native causal decision effects beyond ordinary constrained poisoning, source discrimination, and repeated perturbation injection. Do not enlarge or tune this fixed rank-one construction; no long GPU experiment. Use the verified official Gemini endpoint for subsequent API experiments.",
+  "gate_passed": false,
+  "native_task_attack_run": false,
+  "usage": {
+    "training_updates": 120,
+    "training_elapsed_seconds": 6.158691487740725,
+    "native_environment_steps": 0,
+    "dynamics_transition_evaluations": 67372,
+    "reward_evaluations": 28332,
+    "terminal_q_evaluations": 9444,
+    "encoded_observations": 2505,
+    "gpu_training": "One short rank-one construction; no pretrained model retraining or long experiment.",
+    "construction_elapsed_seconds": 7.623305569868535,
+    "causal_probe_elapsed_seconds": 1.4961419887840748,
+    "scope": "Counts cover experiment operations, not load_agent compatibility checks. Terminal Q evaluation uses all5heads; no native planner rollout."
+  }
+}

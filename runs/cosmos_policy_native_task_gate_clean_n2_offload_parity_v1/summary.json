@@ -1,0 +1,156 @@
+{
+  "status": "error",
+  "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+  "condition": "clean",
+  "provenance": {
+    "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+    "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+    "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+    "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+    "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+    "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+    "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+    "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+    "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+    "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+    "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+    "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+    "source_sha256": {
+      "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+      "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+      "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+      "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+      "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+      "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+      "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+    },
+    "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+    "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+    "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+    "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+    "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+    "settle_action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "chunk_length": 16,
+    "action_steps": 5,
+    "future_steps": 1,
+    "value_steps": 1,
+    "sampler_seeds": [
+      31,
+      32
+    ],
+    "sigma_min": 4.0,
+    "sigma_max": 80.0,
+    "condition_timestep": 0.0,
+    "policy_condition_slots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "native_ar_forecast_condition_slots": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "native_ar_value_condition_slots": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "selection": "native argmax predicted value",
+    "goal_routing": "original task goal in all policy, forecast, and value calls",
+    "attention_backend": "torch with existing TE compatibility shim",
+    "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+    "cudnn_deterministic": true,
+    "success_source": "LIBERO environment check_success() after each physical action",
+    "external_planner": false,
+    "training_updates": 0,
+    "api_requests": 0,
+    "torch_version": "2.2.0+cu121",
+    "numpy_version": "1.26.4",
+    "runtime_compatibility": {
+      "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+      "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+      "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+      "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+      "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+      "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+      "full_transformer_engine_runtime_parity": false,
+      "cuda_fused_rope_parity": false,
+      "rmsnorm_fused_kernel_parity": false
+    },
+    "execution_offload": {
+      "mode": "sequential CUDA blocks with CPU parameter residency",
+      "precision_change": false,
+      "quantization": false,
+      "dit_blocks": 28,
+      "dit_total_tensor_bytes": 3912827222,
+      "dit_resident_nonblock_bytes": 37261654,
+      "dit_max_block_bytes": 138413056,
+      "vae": "CUDA only for encode/decode, CPU otherwise",
+      "fixed_input_block_parity": {
+        "status": "passed",
+        "exact_equal": true,
+        "shape": [
+          1,
+          9,
+          14,
+          14,
+          2048
+        ],
+        "dtype": "torch.bfloat16",
+        "max_abs_difference": 0.0,
+        "cuda_peak_allocated_bytes": 286927872,
+        "cuda_peak_reserved_bytes": 367001600,
+        "elapsed_seconds": 0.8803152129985392,
+        "scope": "First DiT block, same CUDA backend and bf16 inputs; no full-runtime or task guarantee"
+      }
+    },
+    "offload_helper_sha256": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025"
+  },
+  "protocol": {
+    "suite": "libero_goal",
+    "task_ids": [
+      0
+    ],
+    "init_ids": [
+      0
+    ],
+    "max_steps": 300,
+    "settle_steps": 10,
+    "seed": 31,
+    "best_of_n": 2,
+    "offload": true,
+    "env_seed": 0,
+    "video_stride": 2,
+    "cuda_memory_fraction": 0.055,
+    "preflight": false,
+    "out_dir": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_offload_parity_v1"
+  },
+  "planned_episodes": [
+    {
+      "task_id": 0,
+      "init_id": 0,
+      "goal": "open the middle drawer of the cabinet"
+    }
+  ],
+  "results": [],
+  "exception_type": "OutOfMemoryError",
+  "exception": "CUDA out of memory. Tried to allocate 148.00 MiB. GPU 0 has a total capacity of 23.52 GiB of which 63.56 MiB is free. Process 216321 has 3.95 GiB memory in use. Process 216319 has 3.95 GiB memory in use. Process 216320 has 3.95 GiB memory in use. Process 239247 has 1.02 GiB memory in use. Process 239250 has 1.02 GiB memory in use. Process 239246 has 1.02 GiB memory in use. Process 239249 has 1.02 GiB memory in use. Process 239248 has 1.02 GiB memory in use. Process 239560 has 2.97 GiB memory in use. Process 239804 has 1.64 GiB memory in use. Including non-PyTorch memory, this process has 1.76 GiB memory in use. Of the allocated memory 663.37 MiB is allocated by PyTorch, and 18.63 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)",
+  "elapsed_seconds": 27.039203110005474
+}

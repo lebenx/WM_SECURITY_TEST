@@ -1,0 +1,23 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "cascade_source": "runs/tdmpc_cascade_heldout_matched_v1/cascade_source.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "validation_seed": 33,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "source_steps": 300,
+  "eval_steps": 200,
+  "updates": 20,
+  "learning_seed": 31,
+  "permutation_seed": 933,
+  "gamma": 0.05,
+  "output": "runs/tdmpc_commutator_defense_v0",
+  "operation": "Native TD-MPC2 dynamics-only adaptation with differentiable two-action latent composition penalty; replay and planner untouched.",
+  "gate": "Pass only if cascade return recovers >=80% of cascade-vs-random loss on both seeds, clean/no-source return is unchanged, and one-step error <=1.05x random.",
+  "api_requests": 0,
+  "gpu_work": "bounded native CUDA only"
+}

@@ -1,0 +1,107 @@
+{
+  "status": "completed_native_interface_screen_no_qualified_security_operation",
+  "created_at_utc": "2026-10-14T16:37:14.417141+00:00",
+  "summary": {
+    "path": "/home/xhj/WM_Security/runs/dino_metaworld_mujoco330_clean_v1/summary.json",
+    "sha256": "28f9c46ff0d0b6a61fd32a0ee291f533d62f8afcbf6b7f073d9819041d91dfc5"
+  },
+  "sources": {
+    "agent": {
+      "path": "/home/xhj/WM_Security/vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py",
+      "sha256": "f0a1ccb99b70b69d166aa94f83717ba7a468a6ad3a77a4940a1856dbefb2b9dc"
+    },
+    "model_wrapper": {
+      "path": "/home/xhj/WM_Security/vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py",
+      "sha256": "2a4e30a3beef4c1168679b08ec12b61a5b51d4a9d3b7a040391bebf9026c61a4"
+    },
+    "planner": {
+      "path": "/home/xhj/WM_Security/vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "sha256": "6b673d10b30cd66d07b09daa7b96397f367f49387c443731b6d7d2fd148cc0e3"
+    },
+    "objective": {
+      "path": "/home/xhj/WM_Security/vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py",
+      "sha256": "db8b8a4bac7b7cb6486bc09f6bed7501a73152c0e529abbb57e0454fd93d853f"
+    },
+    "runner": {
+      "path": "/home/xhj/WM_Security/scripts/pilot_dino_metaworld_clean_gate.py",
+      "sha256": "8ffed3253abd228e6bcd165f88cfd220c33749fe6a6542d7330a62ffabf8b02b"
+    },
+    "metaworld_actuation": {
+      "path": "/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/metaworld/sawyer_xyz_env.py",
+      "sha256": "4282580b80befc557f67d25acffffec737ad0dae2c440601be76fc09139f351d"
+    },
+    "retired_action_alias": {
+      "path": "/home/xhj/WM_Security/configs/world_model_wav_alias_screen.json",
+      "sha256": "8c516f1feb5aad9fe4e1b8c5a2c3a920ac8633da9db1ab0d84834b070222396e"
+    },
+    "retired_query_interference": {
+      "path": "/home/xhj/WM_Security/configs/tdmpc_query_interference_screen.json",
+      "sha256": "682b70e44505fe6aec797549e49a82052a2aead9dff941647baa1426cb19c5d1"
+    },
+    "retired_temporal_alias": {
+      "path": "/home/xhj/WM_Security/runs/gemini_round66_temporal_compression_hazard_alias_20261010/review.json",
+      "sha256": "4d26c9edae773018f40fee0e61d8b172c35d292d79feed8f514a7a874d69712e"
+    }
+  },
+  "observed_rows": [
+    {
+      "seed": 1,
+      "last_query_elapsed": 91,
+      "last_horizon": 2,
+      "planned_controls": 10,
+      "executed_controls": 9,
+      "total_policy_controls": 99,
+      "controls_with_xyz_outside_unit_box": 50
+    },
+    {
+      "seed": 2,
+      "last_query_elapsed": 91,
+      "last_horizon": 2,
+      "planned_controls": 10,
+      "executed_controls": 9,
+      "total_policy_controls": 99,
+      "controls_with_xyz_outside_unit_box": 53
+    },
+    {
+      "seed": 3,
+      "last_query_elapsed": 91,
+      "last_horizon": 2,
+      "planned_controls": 10,
+      "executed_controls": 9,
+      "total_policy_controls": 99,
+      "controls_with_xyz_outside_unit_box": 44
+    }
+  ],
+  "findings": [
+    {
+      "finding": "No cross-query imagined observation history found",
+      "basis": "GC_Agent.act re-encodes actual observation; EncPredWM.unroll accumulates predictions only in local per-query rollout state.",
+      "decision": "No actionable new contamination path established."
+    },
+    {
+      "finding": "CEM previous mean is stored but not consumed as warm start",
+      "basis": "Native CEM rebuilds mean/std for each plan. Persistent local RNG advances with calls.",
+      "decision": "Extra-call RNG effects alone are ordinary stateful sampling; no native multitenant service or distinct security boundary demonstrated."
+    },
+    {
+      "finding": "Final horizon includes one more physical control than executed",
+      "basis": "Remaining9 controls -> two5-control macro actions; native cost evaluates predicted endpoint after10 while TimeLimit ends after9.",
+      "decision": "Ordinary planning/execution granularity mismatch; an exact simulator can have the same issue. No attacker-writable independent tail interface found, and no attribution to seed2 failure."
+    },
+    {
+      "finding": "Raw commands can exceed actuator saturation limits",
+      "basis": "See observed counts and native set_xyz_action clipping.",
+      "decision": "The predictor may legitimately learn the saturated-command mapping. This does not prove forecast error; no revival of retired action-alias claim."
+    },
+    {
+      "finding": "Logged CEM minimum is distinct from the executed elite-mean action cost",
+      "basis": "Native planner stores candidate minimum losses and returns elite-mean actions.",
+      "decision": "Do not treat minimum_cost_per_iteration as the predicted cost of the actually executed plan."
+    }
+  ],
+  "decision": "Do not initiate attacks or tune the frozen Clean panel from these observations. Continue with a matched ordinary-controller baseline to test resource suitability.",
+  "model_calls": 0,
+  "new_environment_steps": 0,
+  "api_requests": 0,
+  "training_updates": 0
+}

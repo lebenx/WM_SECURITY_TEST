@@ -1,0 +1,147 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "status": "completed_bounded_source_screen",
+  "question": "Can a forecast/planning query without execution or training update persistent adaptive safety state and thereby affect later real control, beyond ordinary planner warm starts, RNG consumption or feedback-history indexing?",
+  "decision": {
+    "candidate": null,
+    "result": "no_go_for_a_new_query_only_adaptive_safety_state_experiment_on_these_paths",
+    "why": "No queried inference path was found to update PID/EMA/ACI expert parameters or training normalizers from hypothetical outcomes. GenSafeNav publication does mutate issued-prediction history, but subsequent wrong residual attribution belongs to the already archived feedback-time-binding mechanism.",
+    "not_a_task_safety_claim": "This is a source-level operation/path exclusion, not evidence that either agent is harmless or robust, and not a measured absence of task harm."
+  },
+  "scope": {
+    "safedreamer": "Official local source at revision 529221f02b54d5093e304d877eb2aaf6da63a9ff; the existing loaded asset is standard OSRP, not OSRP-Lag.",
+    "gensafenav": "Existing local source snapshot under vendor/GenSafeNav; bounded inspection of raw prediction, forecast publication, ACI update and native evaluation callers.",
+    "review_method": "Direct source reading plus a focused independent-agent review. Core GenSafeNav ACI/publication/caller findings were checked directly before writing this report. No AST methods or learned models were executed.",
+    "excluded_from_new_claim": [
+      "CEM proposal warm-start changes",
+      "RNG consumption changes",
+      "Directly rewriting trusted safety-state observations",
+      "Invoking a training API and calling it a read-only query",
+      "Renaming the existing prediction-publication/time-binding defect"
+    ]
+  },
+  "safedreamer_findings": [
+    {
+      "state": "External PID multiplier, integral, derivative history and episode-cost EMA",
+      "writer": "train_eval.per_episode sums real ep['cost'], updates cost_ema, and calls lag.pid_update after the real training-step counter exceeds 5000. PIDLagrangian.pid_update mutates its integral, derivative history and penalty.",
+      "consumer": "Driver supplies the current penalty as observation metadata; Agent.policy copies it into the planner carry; PIDPlanner.policy reads it in ret[0] - penalty * cost_ret[0].",
+      "query_only_update": false,
+      "important_scope": "train_eval attaches the same per_episode closure to both real training and real evaluation episodes, so both can change the shared EMA/PID. These are executed environment episodes, not imagined planning branches. The standalone eval_only path passes the existing penalty without calling pid_update.",
+      "source_locations": [
+        "vendor/SafeDreamer/SafeDreamer/embodied/run/train_eval.py:43",
+        "vendor/SafeDreamer/SafeDreamer/embodied/run/train_eval.py:51",
+        "vendor/SafeDreamer/SafeDreamer/embodied/run/train_eval.py:102",
+        "vendor/SafeDreamer/SafeDreamer/train.py:296",
+        "vendor/SafeDreamer/SafeDreamer/embodied/core/driver.py:48",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:60",
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py:249",
+        "vendor/SafeDreamer/SafeDreamer/embodied/run/eval_only.py:286"
+      ]
+    },
+    {
+      "state": "Neural Lagrange/penalty variables and return/cost running normalizers",
+      "writer": "ImagSafeActorCritic.train computes imagined trajectories and invokes loss. Loss calls return Moments; cost Moments and Lagrange updates are inside a branch excluding CEMPlanner, CCEPlanner and PIDPlanner. Lagrange.update and Moments.update genuinely write persistent Ninjax variables when called.",
+      "query_only_update": false,
+      "inference_boundary": "ImagSafeActorCritic.policy only returns its actor distribution. Planner VFunction.score/CostVFunction.score compute values and returns without invoking Moments or Lagrange. The existence of mutating helper classes is therefore insufficient to establish a planning-query writer.",
+      "source_locations": [
+        "vendor/SafeDreamer/SafeDreamer/agent.py:383",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:386",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:409",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:428",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:448",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:593",
+        "vendor/SafeDreamer/SafeDreamer/agent.py:647",
+        "vendor/SafeDreamer/SafeDreamer/jaxutils.py:237",
+        "vendor/SafeDreamer/SafeDreamer/jaxutils.py:302"
+      ]
+    },
+    {
+      "state": "Existing OSRP planner configuration and carry",
+      "finding": "The available checkpoint is used with defaults + osrp: CCEPlanner, use_cost=true, fixed cost_limit=2. The separate osrp_lag configuration selects PIDPlanner. CCE/PID policy returns action_mean and action_std, not an updated risk budget or multiplier.",
+      "checkpoint": "models/SafeDreamer/osrp_pointgoal1_seed0.ckpt",
+      "source_locations": [
+        "scripts/probe_safedreamer_mode_gate.py:260",
+        "vendor/SafeDreamer/SafeDreamer/configs.yaml:150",
+        "vendor/SafeDreamer/SafeDreamer/configs.yaml:180",
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py:269",
+        "vendor/SafeDreamer/SafeDreamer/behaviors.py:394"
+      ],
+      "existing_execution_boundary": "The previous first-query/replay experiment did not execute a physical action or establish complete Clean episode competence; its sampling-mode result is not evidence about this new hypothetical safety-state writer.",
+      "related_report": "reports/safedreamer_mode_mediator_gate_20261016.json"
+    }
+  ],
+  "gensafenav_findings": [
+    {
+      "state": "ACI expert predictions, weights, probabilities and selected expert",
+      "writer": "After a real environment step, valid humans append current physical positions and call Human.update_aci. This forms a prediction error and passes it to DtACI.update_true_value, which updates expert predictions, weights/probabilities and the selected expert.",
+      "query_only_update": false,
+      "prediction_reader": "DtACI.make_prediction reads the current expert and writes last_prediction. Without intervening feedback or external mutation, repeated calls return the same value and do not adapt experts or draw a new expert.",
+      "source_locations": [
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred.py:220",
+        "vendor/GenSafeNav/crowd_sim/envs/utils/human.py:38",
+        "vendor/GenSafeNav/dt_aci/one_step_dtai.py:34",
+        "vendor/GenSafeNav/dt_aci/one_step_dtai.py:43"
+      ]
+    },
+    {
+      "state": "Forecast publication history and most-recent forecast",
+      "query_publication_is_stateful": true,
+      "finding": "talk2Env changes prediction_valid, appends accepted forecasts to predictions_aci, writes last_prediction, and reads/clips current ACI intervals. It does not directly update DtACI expert parameters. Multiple publications without a physical step could shift the history consumed by the subsequent real feedback update.",
+      "distinction_from_new_hypothesis": "That possible downstream effect uses missing issue-time/publication identity in Human.update_aci, which indexes predictions_aci[-(i+1)]. It is the existing publication/time-binding defect, not an independently established query-only adaptive safety-state mechanism. This screen did not execute repeated publications or establish an external attack writer.",
+      "native_cadence": "The inspected evaluation caller publishes once after reset and once after each real step, rather than exposing arbitrary repeated virtual publications as a native evaluation operation.",
+      "source_locations": [
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py:72",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py:93",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py:105",
+        "vendor/GenSafeNav/crowd_sim/envs/utils/human.py:47",
+        "vendor/GenSafeNav/rl/evaluation.py:57",
+        "vendor/GenSafeNav/rl/evaluation.py:99"
+      ]
+    },
+    {
+      "state": "Raw GST inference, observation normalization and PPO Lagrange",
+      "finding": "The GST wrapper loads the model in eval mode and returns predictions/masks under no_grad; the inspected body does not call adaptive safety-state updates. Native env wrappers set ob=false and ret=false for normalization. PPO-Lag updates its multiplier in the training update method using mean episode costs, not in the evaluation forecasting call.",
+      "source_locations": [
+        "vendor/GenSafeNav/gst_updated/scripts/wrapper/crowd_nav_interface_parallel.py:40",
+        "vendor/GenSafeNav/gst_updated/scripts/wrapper/crowd_nav_interface_parallel.py:92",
+        "vendor/GenSafeNav/rl/networks/envs.py:126",
+        "vendor/GenSafeNav/rl/ppo/ppo_lag.py:55"
+      ],
+      "scope_limit": "This is not an assertion that every transitive neural operation is mathematically pure or that RNG/cache state cannot change; those are outside the adaptive-safety-state claim."
+    }
+  ],
+  "archive_relationship": {
+    "new_pid_query_experiment_previously_registered": false,
+    "statement": "No dedicated experiment entry for this exact query-only PID/EMA/ACI adaptation hypothesis was identified in the mechanism registry inspected this turn. The source exclusion must not be described as a completed task-level negative experiment.",
+    "existing_related_mechanism": "forecast_feedback_time_binding",
+    "existing_evidence": [
+      "reports/forecast_feedback_binding_screen_20261015.json",
+      "runs/gensafenav_feedback_time_binding_probe_20261015/summary.json",
+      "scripts/probe_gensafenav_feedback_time_binding.py"
+    ],
+    "historical_evidence_scope": "The earlier synthetic original-method probe established wrong-time residual attribution across a feedback gap. It did not establish learned-model task harm. Repeated publication is a source-level relation to that mechanism, not a newly executed case."
+  },
+  "limitations": [
+    "Only the listed native configurations and source call chains were inspected; no claim covers every controller or deployment.",
+    "Researcher-defined restricted boundaries are legitimate, but granting training updates or directly writing penalty observations would be a different operation from a read-only virtual query.",
+    "No forecast error, action change, real utility loss, defense recovery or attack success was measured in this screen.",
+    "GenSafeNav publication/history state is not globally read-only; only the proposed direct query-to-adaptive-parameter update was excluded.",
+    "No absence-of-harm or general robustness claim follows from failing to find this writer."
+  ],
+  "activity_this_screen": {
+    "model_loads": 0,
+    "model_inference_calls": 0,
+    "environment_constructions": 0,
+    "environment_resets": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "model_api_calls": 0,
+    "gpu_calls": 0,
+    "network_calls": 0,
+    "ast_probe_executions": 0,
+    "files_written": [
+      "reports/query_adaptive_safety_state_screen_20261016.json"
+    ]
+  }
+}

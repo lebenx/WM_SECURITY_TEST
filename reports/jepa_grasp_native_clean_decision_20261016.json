@@ -1,0 +1,174 @@
+{
+  "schema_version": 1,
+  "created_at_utc": "2026-10-16T00:18:08.816456+00:00",
+  "status": "native_query_domain_observed_clean_resource_deferred_no_task_harm_result",
+  "goal_status": "active_unachieved",
+  "scope": "Actual bounded native GRASP inference and offline structural-domain analysis. No dynamics intervention, completed Clean plan or selected-action task utility.",
+  "configuration_provenance": {
+    "kind": "research_composite",
+    "components": [
+      "Official GRASP class from pinned adapter",
+      "Official README GRASP hyperparameter snippet",
+      "Existing native MetaWorld reach-wall task/model configuration"
+    ],
+    "limit": "The pinned repository tree lacks the README-referenced full GRASP YAML; this is not reproduction of a complete official experiment preset.",
+    "source": "runs/grasp_source_screen_20261016/config_source_provenance_20261016.json"
+  },
+  "frozen_protocol": {
+    "path": "configs/jepa_grasp_native_clean_20261016.json",
+    "roots": [
+      1,
+      2,
+      3
+    ],
+    "clean_gate": "At least 2/3 final native successes; stop after two completed failures.",
+    "gate_provenance": "Before any GRASP inference, capability criterion separated from older CEM superiority criterion; no post-result threshold change.",
+    "first_query_cap_seconds": 180,
+    "total_cap_seconds": 1200,
+    "original_optimizer_steps": 500,
+    "no_post_result_tuning": true
+  },
+  "runtime": {
+    "status": "resource_deferred",
+    "reason": "First query exceeded its frozen 180-second cap",
+    "elapsed_seconds": 197.19530547200702,
+    "completed_activity": {
+      "checkpoint_loads": 2,
+      "encode_calls": 2,
+      "visual_encoder_forwards": 2,
+      "proprio_encoder_forwards": 2,
+      "planner_calls": 0,
+      "unroll_calls": 3115,
+      "predictor_forwards": 5190,
+      "environment_steps": 101,
+      "expert_steps": 100,
+      "warmup_steps": 1,
+      "policy_steps": 0,
+      "model_api_calls": 0,
+      "training_updates": 0,
+      "network_attempts": 0
+    },
+    "attempted_planner_calls": 1,
+    "peak_cuda_reserved_bytes": 2696937472,
+    "peak_cuda_reserved_gib": 2.51171875,
+    "clean_gate": null,
+    "completed_clean_episodes": 0,
+    "unstarted_roots": [
+      2,
+      3
+    ],
+    "first_root_status": "partial_resource_deferred",
+    "first_root_setup_checks": {
+      "noop_repeat0": {
+        "all_setup_arrays_exact": true,
+        "initial_image_bytes_exact": true,
+        "goal_image_bytes_exact": true,
+        "expert_trace_bytes_exact": true
+      },
+      "noop_repeat1": {
+        "all_setup_arrays_exact": true,
+        "initial_image_bytes_exact": true,
+        "goal_image_bytes_exact": true,
+        "expert_trace_bytes_exact": true
+      },
+      "straight_servo": {
+        "all_setup_arrays_exact": true,
+        "initial_image_bytes_exact": true,
+        "goal_image_bytes_exact": true,
+        "expert_trace_bytes_exact": true
+      },
+      "wall_aware_servo": {
+        "all_setup_arrays_exact": true,
+        "initial_image_bytes_exact": true,
+        "goal_image_bytes_exact": true,
+        "expert_trace_bytes_exact": true
+      }
+    },
+    "process_exit_code": 0
+  },
+  "native_query_domain": {
+    "tolerance": 1e-05,
+    "rows": [
+      {
+        "loss_entry_stage": 0,
+        "virtual_patch_count": 1280,
+        "virtual_violations": 0,
+        "virtual_max_union_residual": 1.0619366210828929e-06,
+        "root_violations": 0,
+        "root_max_union_residual": 1.023988046244817e-06,
+        "consumer_execution_status": "all_six_native_one_step_calls_confirmed_by_completed_loss_heartbeat"
+      },
+      {
+        "loss_entry_stage": 1,
+        "virtual_patch_count": 1280,
+        "virtual_violations": 1279,
+        "virtual_max_union_residual": 0.0013174177871528153,
+        "root_violations": 0,
+        "root_max_union_residual": 1.023988046244817e-06,
+        "consumer_execution_status": "all_six_native_one_step_calls_confirmed_by_completed_loss_heartbeat"
+      },
+      {
+        "loss_entry_stage": 49,
+        "virtual_patch_count": 1280,
+        "virtual_violations": 1269,
+        "virtual_max_union_residual": 0.0032812996336209752,
+        "root_violations": 0,
+        "root_max_union_residual": 1.023988046244817e-06,
+        "consumer_execution_status": "all_six_native_one_step_calls_confirmed_by_completed_loss_heartbeat"
+      },
+      {
+        "loss_entry_stage": 50,
+        "virtual_patch_count": 1280,
+        "virtual_violations": 1269,
+        "virtual_max_union_residual": 0.0032775909596966793,
+        "root_violations": 0,
+        "root_max_union_residual": 1.023988046244817e-06,
+        "consumer_execution_status": "all_six_native_one_step_calls_confirmed_by_completed_loss_heartbeat"
+      }
+    ],
+    "consumption_evidence": {
+      "status": "available",
+      "completed_loss_evaluations": 450,
+      "source": "summary.json",
+      "json_path": "episodes[0].queries[0].latest_heartbeat",
+      "rule": "For zero-based stage k, completed_loss_evaluations > k confirms all six one-step calls returned.",
+      "writer": "scripts/pilot_jepa_grasp_native_clean.py:237-246; heartbeat follows original_grasp_loss return"
+    },
+    "finding": "Saved and consumed native virtual queries violate the union of necessary affine constraints for encoder outputs and joint autoregressive outputs after the first update; encoded root remains within tolerance.",
+    "counting": "Dependent spatial patches within one root/query and repeated stages; not independent tasks, ASR, population rate, or grounds for a p-value.",
+    "causal_limit": "Stage 1 follows native optimization and scheduled noise; this analysis does not separate their contributions.",
+    "coverage_limit": "Finite-precision necessary-constraint audit, not complete manifold characterization, all-input invariance proof or proof of reachability for passing states.",
+    "final_paired_rollout_status": "missing"
+  },
+  "decisions": {
+    "go": "Retain actual native-query structural-domain departure as qualification of the candidate interface.",
+    "no_go": "No claim of Clean competence, action-ranking flip, task harm, defense recovery, generalization or established novelty.",
+    "resource_interpretation": "Frozen runtime cap was reached; not a model task failure, platform access block, hardware impossibility or evidence qualifying exclusive GPU.",
+    "continuation": "Do not automatically repeat, reduce optimizer steps, change seeds or increase the cap. A new runtime budget or compatible faster carrier must be explicitly preregistered and keep this incomplete result. Broad research goal remains open to different mechanisms."
+  },
+  "lower_cost_carrier_screen": {
+    "status": "no_qualified_local_replacement",
+    "lewm": "Local source but no matching local weights/qualified Clean. Nonlinear projector after encoder and predictor means current affine construction cannot simply be copied.",
+    "jepa_pointmaze": "Similar released checkpoint size/architecture; no measured cheaper compatible native GRASP Clean.",
+    "other_dino_grasp": "Original GRASP task weights absent locally; available reproduced DINO MetaWorld is not established cheaper.",
+    "limit": "Bounded source/resource screen, not evidence that no cheaper carrier exists."
+  },
+  "artifacts": [
+    "configs/jepa_grasp_native_clean_20261016.json",
+    "scripts/pilot_jepa_grasp_native_clean.py",
+    "scripts/analyze_jepa_grasp_native_query_domain.py",
+    "runs/jepa_grasp_native_clean_20261016/summary.json",
+    "runs/jepa_grasp_native_clean_20261016/analysis/native_query_domain.json",
+    "runs/jepa_grasp_native_clean_20261016/analysis/native_query_domain.csv",
+    "reports/grasp_rollout_equivalence_mechanism_20261016.json"
+  ],
+  "review": "Independent read-only audit of summary, analyzer and saved-query reconstruction confirmed counts, consumer evidence and limits; no model/API run by reviewer.",
+  "remaining_evidence": [
+    "Competent complete Clean task under a frozen feasible protocol",
+    "Restricted declared intervention preserving complete rollouts",
+    "Causal solver-path separation with matched controls",
+    "Independent real-environment utility loss",
+    "Defense recovery with preserved Clean competence",
+    "Independent generalization and a defensible difference from direct prior work"
+  ]
+}

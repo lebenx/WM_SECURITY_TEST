@@ -1,0 +1,48 @@
+{
+  "seed": 31,
+  "device": "cuda:0",
+  "threads": 4,
+  "max_seconds": 120.0,
+  "output": "runs/dmo_jacobian_gate_v0",
+  "sizes": {
+    "train": 4096,
+    "dev": 1024,
+    "test": 2048,
+    "refit": 2048
+  },
+  "lambda_grid": [
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "ridge": 1e-06,
+  "network": {
+    "dyn_model_mlp": {
+      "units": [
+        512,
+        512
+      ],
+      "activation": "silu",
+      "recurrent": false
+    }
+  },
+  "pretrain_updates": 1000,
+  "refit_updates": 128,
+  "batch_size": 256,
+  "adam_lr": 0.002,
+  "random_rotations": 64,
+  "finite_difference_step": 0.01,
+  "scope": "Necessary-condition screen of an official DMO network on DMControl cartpole-balance random-policy data. No DFlex actor, policy damage, poisoned-data reachability, or complete native DMO attack evidence.",
+  "gate": {
+    "clean_test_median_cosine_min": 0.9,
+    "clean_refit_test_median_cosine_min": 0.9,
+    "refit_center_and_neighbor_mse_ratio_max": 1.1,
+    "refit_directed_median_cosine_max": 0.0,
+    "refit_directed_negative_cosine_fraction_min": 0.25,
+    "random_matching_relative_tolerance": 0.1,
+    "test_rotation_center_and_neighbor_mse_relative_tolerance": 0.1,
+    "test_pointwise_drift_rtol": 0.001,
+    "test_pointwise_drift_atol": 1e-06
+  }
+}

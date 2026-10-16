@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "status": "fixed_before_reading_training_manifest_or_fitting",
+  "question": "Can simple context metadata explain discrimination on the official fixed LGWM benchmark?",
+  "source_revision": "4e760ed5f44f645e1bf81cdb171b01056dc30f3a",
+  "training_file": "benchmark/rswt_bench_train.jsonl",
+  "test_file": "benchmark/rswt_bench_test.jsonl",
+  "training_target": "cls == 1_hijack vs all other classes, matching the native harm head target",
+  "baseline_features": [
+    ["base_action"],
+    ["base_app", "base_action"],
+    ["base_action", "step_decile"]
+  ],
+  "step_decile": "min(9,max(0,floor(10*step_frac)))",
+  "estimator": "Categorical cell positive frequency with Laplace pseudocount 1 for each class; unseen cells use smoothed global training frequency",
+  "metrics": ["RSWT_1v3", "Harm_1v5", "donor_pair_order_accuracy"],
+  "followup_gate": "A fixed baseline AUC >= 0.90 on RSWT or Harm motivates a separate native-feature context-only comparison, not a claim that the trained published verifier uses that shortcut.",
+  "statistics": "Use point estimates for screening; no significance claim or hyperparameter search. Report train/test transition and episode identity overlap.",
+  "forbidden_features": ["cls", "label", "sid", "pair_id", "donor_id", "donor_transition_id", "tier", "attack_category", "donor_app", "obs", "clean"],
+  "limits": [
+    "base_app and step_frac are dataset metadata, not demonstrated deployment inputs or a deployable safety verifier.",
+    "No world-model inference, environment consequence, attack, or safety improvement is measured.",
+    "ID overlap checks do not establish pixel deduplication or independence of episodes.",
+    "A low result does not rule out richer learned context-only shortcuts."
+  ]
+}

@@ -1,0 +1,18 @@
+```json
+{
+  "novelty_score": 4,
+  "verdict": "Reject (novelty is largely rebranded data poisoning/specification gaming without dynamic synthesis-specific exploitation)",
+  "distinction_analysis": "The claim relies on semantic framing ('revision-selection mechanism', 'privileged evidence') rather than a mathematically distinct vulnerability. In CEGIS or synthesizer-based world models, injection of ambiguous yet legal trajectories to induce an over-generalized or misspecified rule is isomorphic to active-learning query poisoning and constraint-specification poisoning. The only concrete delta is that the artifact being poisoned is a Python AST rather than weight vectors. Without demonstrating that the synthesizer's specific inductive biases (e.g., Occam's razor / minimum description length heuristics in the synthesizer) create a uniquely catastrophic semantic bypass that cannot be caught by regression replay over prior tasks, this remains standard data poisoning against an online learner.",
+  "pilot_experiment": {
+    "carrier_task": "Sokoban or MiniGrid dynamic rule learning within ARC-AGI-3/OPINE-World environment using an inductive synthesizer (e.g., CEGIS over domain-specific Python ASTs).",
+    "protocol": "1. Run baseline: train programmatic world model on standard trajectory buffer until downstream planning achieves >90% success on holdout task T_clean.\n2. Attack phase: Inject a bounded trajectory (k <= 5 actions) into the execution queue that exposes an ambiguous state (e.g., push block into a multi-colored corner where the color rule is underdetermined).\n3. Trigger CEGIS: Force synthesizer rewrite of `game_engine.py` to reconcile the divergence.\n4. Measure: (a) Does the new AST pass replay tests on historical buffer B_hist? (b) Does planning performance on holdout task T_clean collapse (drop > 50%) due to an over-generalized rule?",
+    "falsification_condition": "The hypothesis is falsified if: (1) Synthesizers equipped with standard replay regression testing reject the candidate AST without special security provenance checks, or (2) The ambiguous trajectory merely creates a localized branch (`if state == ...`) without global corruption, or (3) A generic online MLP/transformer world model suffers the exact same downstream planning degradation under the same trajectory budget, showing zero program-synthesis-specific vulnerability."
+  },
+  "stronger_replacement_candidate": {
+    "title": "Synthesizer Shortest-Description Exploitation: MDL Backdoors in Programmatic World Models",
+    "one_sentence_claim": "Because programmatic world-model synthesizers prioritize Minimum Description Length (MDL) when resolving CEGIS counterexamples, an attacker can craft a single compact counterexample that collapses complex legacy exception logic into an over-simplified, maliciously biased rule that satisfies all existing replay tests.",
+    "mechanism": "The vulnerability directly targets the synthesizer's inductive bias: the MDL objective function. Complex environments accumulate branching edge cases (high Kolmogorov complexity). An attacker introduces a state transition whose simplest reconciling hypothesis accidentally subsumes and deletes legacy safety branches elsewhere in the program, exploiting the synthesizer's preference for global brevity over modular specialization.",
+    "threat_model": "Action-bounded online contributor; no code access; leverages knowledge of the synthesizer's grammar and MDL cost metric to trigger destructive global code compaction."
+  }
+}
+```

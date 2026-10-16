@@ -1,0 +1,32 @@
+{
+  "status": "completed_goal_bus_action_selection_audit",
+  "worldagen": {
+    "checkpoint_present": true,
+    "checkpoint_sha256": "028a32f4b91809fc84c3133031d07300ce04876c716ef8932c019e1bfcb8e770",
+    "policy_head_directly_selects_action": true,
+    "rollout_order_policy_then_world_then_environment": true,
+    "native_world_forecast_used_for_action_selection": false,
+    "evidence_files": [
+      "vendor/WorldAgen/utils/eval_utils_libero.py",
+      "scripts/pilot_worldagen_libero_closed_loop.py"
+    ]
+  },
+  "alphabrain": {
+    "checkpoint_present": true,
+    "checkpoint_sha256": "eb42e370072464037744075c8b72ebbb7b0a8b0533575589942c0f598268eb0b",
+    "action_directly_decoded_from_action_latent": true,
+    "world_forecast_is_scored_only_as_probe_target": true,
+    "native_world_forecast_used_for_action_selection": false,
+    "evidence_files": [
+      "scripts/pilot_alphabrain_cosmos_libero_short_control.py",
+      "scripts/pilot_alphabrain_cosmos_policy_real_input_sampler_forecast.py"
+    ]
+  },
+  "shared_resources": {
+    "worldagen_data_present": true,
+    "libero_code_present": true
+  },
+  "decision": "native_systems_do_not_use_world_forecast_for_action_selection",
+  "next_step": "Use WorldAgen to construct an explicitly labeled independent forecast-driven planner; keep native policy results separate.",
+  "scope": "Source/checkpoint feasibility audit; no forecast-to-decision or task-harm claim."
+}

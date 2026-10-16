@@ -1,0 +1,284 @@
+{
+  "id": "goal_bus_physical_invariance_v1",
+  "status": "audit_completed_conditionally",
+  "core_specification": "For a fixed physical state and fixed executed action sequence, the physical future target is independent of the legal task Goal: Y_future independent_of Goal given (state, action).",
+  "causal_estimand": {
+    "graph": [
+      "Goal -> policy action",
+      "(physical state, executed action sequence) -> physical future",
+      "Goal -> reward/termination/goal-relative semantics"
+    ],
+    "invariance": "Y_physical independent_of Goal given (S_t, A_t:t+H) under do(A=a)",
+    "first_gate": "Prove environment-side conditional invariance before interpreting model forecast divergence or action flips as harm.",
+    "partial_observability_boundary": "If Goal is informative about an unobserved component of S_t, P(Y_physical | O_t, A, Goal) may legitimately depend on Goal; this is a sufficiency failure or a different estimand, not an environment transition violation.",
+    "falsification_conditions": [
+      "Goal-dependent simulator reset or scene definition",
+      "Goal encodes an unobserved physical-state variable",
+      "physical target includes goal-relative semantic/reward/termination outputs"
+    ]
+  },
+  "allowed_goal_sensitive_outputs": [
+    "policy action",
+    "value or reward",
+    "termination or task-success evaluation",
+    "goal-relative semantic descriptions"
+  ],
+  "physical_target_outputs": [
+    "future object and end-effector state",
+    "future contact or collision state",
+    "decoded future observation caused by the fixed physical action"
+  ],
+  "matched_protocol": {
+    "initial_state": "same simulator state hash within each task-seed condition",
+    "candidate_action_set": "same frozen eight recorded candidate trajectories",
+    "target": "decoded primary-view patch after the first three executed actions",
+    "goal_intervention": "legal Goal text only in the WorldAgen forecast branch",
+    "controls": [
+      "Clean",
+      "Goal-Swap",
+      "Goal-Swap + Bus-Cut",
+      "matched Control-Cut"
+    ],
+    "utility": "30-step real LIBERO replay EEF progress, separate from the three-step target",
+    "counterfactuals": 162,
+    "task_seed_pairs": 18
+  },
+  "audit_result": {
+    "target_mse_recompute_max_abs_error": 0.0,
+    "goal_swap_physical_mse_delta_mean": -0.012131574621171128,
+    "goal_swap_physical_mse_delta_task_cluster_ci95": [
+      -0.04336227145459917,
+      0.018069876932803496
+    ],
+    "forecast_divergence_vs_physical_error_spearman": 0.11668127670566912,
+    "forecast_divergence_vs_physical_error_spearman_pvalue": 0.13922968929395055,
+    "interpretation": "Goal changes the forecast under a fixed physical target, but physical target error is mixed-sign across offsets; divergence is not itself physical error or attack success."
+  },
+  "open_validity_checks": [
+    "Rule out Goal as an informative cue for unobserved physical state under partial observability.",
+    "When the checkpoint exposes decoded state/contact targets, compare them using the RNG-persisted state-target protocol validated across 6 tasks and 3 seeds (144 candidates, 288 replays).",
+    "Separate goal-relative semantic channels from physical-dynamics channels in the model output contract.",
+    "Keep the decoded primary-view patch audit explicit: it is a fixed physical target, not a complete latent-state or task-success target."
+  ],
+  "source": "runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/goal_invariance_physical_audit.json",
+  "semantic_surface_control": {
+    "source": "runs/worldagen_semantic_goal_invariance_v0/summary.json",
+    "windows": 3,
+    "surface_variants": [
+      "double_spaces",
+      "lowercase",
+      "trailing_period"
+    ],
+    "double_spaces_native_and_cut_exact_equal": "3/3",
+    "lowercase_native_and_cut_exact_equal": "3/3",
+    "trailing_period_native_world_relative_l2_mean": 0.002591644123428851,
+    "trailing_period_native_world_relative_l2_max": 0.002788924394370658,
+    "trailing_period_bus_cut_world_exact_equal": "3/3",
+    "interpretation": "Small surface-form fragility control supporting shared-carrier sensitivity; not a semantic paraphrase benchmark or physical-harm result."
+  },
+  "invalidated_attempt": "runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/physical_target_extraction_failure.json",
+  "replay_reproducibility_boundary": "runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/replay_reproducibility_boundary.json",
+  "reproducible_state_target_pilot": {
+    "source": "runs/worldagen_reproducible_state_target_all6_replicates_v1/statistics.json",
+    "per_seed_sources": [
+      "runs/worldagen_reproducible_state_target_all6_seed17/summary.json",
+      "runs/worldagen_reproducible_state_target_all6_seed31/summary.json",
+      "runs/worldagen_reproducible_state_target_all6_seed37/summary.json"
+    ],
+    "tasks": [
+      0,
+      2,
+      4,
+      6,
+      7,
+      9
+    ],
+    "seeds": [
+      17,
+      31,
+      37
+    ],
+    "task_seed_pairs": 18,
+    "candidates": 144,
+    "replay_episodes": 288,
+    "all_replays_exact": true,
+    "initial_hash_matches": "144/144",
+    "qpos_qvel_contact_image_eef_exact": "144/144",
+    "interpretation": "Validated RNG persistence protocol across all six tasks and three seeds for future state/contact target audits; no Goal effect estimate."
+  },
+  "assumptions_for_invariance": [
+    "The legal Goal is task metadata and does not encode an unobserved physical-state variable or an instruction-dependent simulator reset.",
+    "The intervention fixes the physical simulator state and executed action sequence; only the forecast branch receives the alternate Goal.",
+    "Goal-relative semantic, reward, termination, and policy outputs are outside the physical-dynamics target.",
+    "Partial observability remains an open falsification condition: if Goal disambiguates hidden state, conditional invariance is not required."
+  ],
+  "alphabrain_physical_slot_audit": {
+    "source": "runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/physical_slot_audit.json",
+    "matrix_source": "runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/summary.json",
+    "windows": 21,
+    "episodes": 7,
+    "task_offset": 5,
+    "fixed_action": true,
+    "future_frame_delta": 16,
+    "slots": {
+      "5": "future_proprio",
+      "6": "future_wrist",
+      "7": "future_primary"
+    },
+    "native_goal_abs_delta": {
+      "future_proprio": 0.06066795868710393,
+      "future_wrist": 0.05212496221065521,
+      "future_primary": 0.04619914142503625
+    },
+    "native_goal_abs_delta_episode_cluster_ci95": {
+      "future_proprio": [
+        0.037566586663680415,
+        0.09699961564037943
+      ],
+      "future_wrist": [
+        0.04011638098884196,
+        0.06323678977787493
+      ],
+      "future_primary": [
+        0.030311321396203267,
+        0.06867242311792714
+      ]
+    },
+    "native_goal_target_mse_delta": {
+      "future_proprio": 0.008379883709407988,
+      "future_wrist": 0.024838390804472425,
+      "future_primary": 0.007556103524707612
+    },
+    "native_goal_target_mse_delta_episode_cluster_ci95": {
+      "future_proprio": [
+        -0.013866275548934937,
+        0.03254776341574533
+      ],
+      "future_wrist": [
+        0.009103706904820033,
+        0.03942632107507615
+      ],
+      "future_primary": [
+        -0.007444126265389579,
+        0.02194982199441819
+      ]
+    },
+    "cut_goal_abs_delta": "0 for all three slots in 21/21 windows",
+    "interpretation": "Goal changes the fixed-action future-proprio output in every window, but target-error direction is mixed for proprio and primary; do not equate latent divergence with universal physical error.",
+    "fixed_action_cut_clean_target_mse_cost": {
+      "future_proprio": 0.014393587907155355,
+      "future_wrist": 0.09181534392493111,
+      "future_primary": 0.0415722131729126
+    },
+    "fixed_action_cut_clean_target_mse_cost_episode_cluster_ci95": {
+      "future_proprio": [
+        -0.0010957554692313785,
+        0.033653555171830316
+      ],
+      "future_wrist": [
+        0.06730204536801293,
+        0.12058484568482346
+      ],
+      "future_primary": [
+        0.031841053849174863,
+        0.05581204380307879
+      ]
+    },
+    "offset_extension": {
+      "source": "runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/physical_slot_offsets.json",
+      "offsets": [
+        1,
+        5,
+        9
+      ],
+      "windows": 63,
+      "future_proprio_abs_delta_mean": {
+        "1": 0.0511770426251349,
+        "5": 0.06066795868710393,
+        "9": 0.07278469621780373
+      },
+      "future_proprio_abs_delta_episode_cluster_ci95": {
+        "1": [
+          0.03499928182545339,
+          0.0688651998837789
+        ],
+        "5": [
+          0.037566586663680415,
+          0.09699961564037943
+        ],
+        "9": [
+          0.04176436329171772,
+          0.10299627784462204
+        ]
+      },
+      "fixed_action_cut_exact_zero": "all three slots, all 63 windows",
+      "interpretation": "The direct future-proprio Goal effect persists across near, medium, and far legal task offsets."
+    }
+  },
+  "same_scene_goal_crossing": {
+    "source": "runs/worldagen_same_scene_goal_v1/analysis.json",
+    "protocol": "all ten LIBERO-Goal legal task texts crossed with three shared initial simulator states and four fixed six-step action sequences",
+    "states": 3,
+    "goals": 10,
+    "actions": 4,
+    "physical_replays": 120,
+    "initial_state_exact_count": 120,
+    "future_replay_exact_count": 120,
+    "physical_bddl_same_after_excluding_goal": true,
+    "native_goal_effect_nonclean_mean_mse": 0.49133069247559263,
+    "native_goal_effect_nonzero_fraction": 1.0,
+    "bus_cut_goal_variance_max_mse": 6.202657948351474e-15,
+    "control_cut_world_effect_max_abs": 0.0,
+    "bus_cut_action_sensitivity_nonzero_fraction": 1.0,
+    "target_mse_delta_vs_clean_mean": 0.08687765002250672,
+    "target_mse_delta_vs_clean_range": [
+      -0.16097009181976318,
+      0.20056235790252686
+    ],
+    "nonclean_target_mse_delta_vs_clean_mean": 0.09653072224722968,
+    "nonclean_target_mse_delta_vs_clean_by_state": [
+      0.06148713164859348,
+      0.12599722213215298,
+      0.10210781296094258
+    ],
+    "nonclean_target_mse_delta_vs_clean_state_cluster_bootstrap_ci95": [
+      0.06148713164859348,
+      0.12599722213215298
+    ],
+    "nonclean_target_mse_delta_positive_state_fraction": 1.0,
+    "bus_cut_target_mse_cost_vs_native_clean_mean": 0.08835409084955852,
+    "bus_cut_target_mse_cost_vs_native_clean_by_state": [
+      0.05296558141708374,
+      0.14251059293746948,
+      0.06958609819412231
+    ],
+    "interpretation": "Same-scene fresh replay establishes environment-side Goal invariance; native WorldAgen changes its forecast under the same physical input, while matched Bus-Cut restores Goal invariance and retains action sensitivity. Uniformly sampled non-Clean Goals have a positive target-MSE delta in all three state clusters, but individual cells remain mixed-sign; this addresses simulator confounding and Clean-comparator bias, not model partial-observability or universal Goal harm."
+  },
+  "same_scene_empty_goal": {
+    "source": "runs/worldagen_same_scene_empty_goal_all50_v1/summary.json",
+    "pilot_source": "runs/worldagen_same_scene_empty_goal_v1/summary.json",
+    "script": "scripts/pilot_worldagen_same_scene_empty_goal.py",
+    "states": 50,
+    "actions": 4,
+    "initial_replay_exact_count": 200,
+    "empty_minus_clean_target_mse_mean": 0.07442112505435944,
+    "empty_minus_clean_target_mse_state_cluster_bootstrap_ci95": [
+      0.06646878169476986,
+      0.08240974462032319
+    ],
+    "empty_minus_clean_target_mse_positive_state_fraction": 1.0,
+    "clean_empty_forecast_mse_mean": 0.21388009630143642,
+    "interpretation": "Prompt-independent empty-Goal diagnostic across all 50 initial states supports a stable Clean task prior, but is not a trained goal-free dynamics head or a universal Goal-benefit result."
+  },
+  "semantic_paraphrase_control": {
+    "source": "runs/worldagen_semantic_paraphrase_v0/summary.json",
+    "script": "scripts/pilot_worldagen_semantic_paraphrase_control.py",
+    "pairs": 6,
+    "native_world_relative_l2_mean": 0.00844212369239204,
+    "native_world_relative_l2_max": 0.01131124756463508,
+    "bus_cut_world_relative_l2_max": 0.0,
+    "native_nonzero_count": 6,
+    "bus_cut_exact_zero_count": 6,
+    "interpretation": "Meaning-preserving paraphrases alter native world outputs modestly, while the matched Bus-Cut restores exact world invariance; policy remains text-sensitive."
+  }
+}

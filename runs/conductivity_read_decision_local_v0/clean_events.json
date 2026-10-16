@@ -1,0 +1,289 @@
+{
+  "setup": [
+    {
+      "action": "open door to workshop",
+      "observation": "The door is already open.",
+      "score": 0
+    },
+    {
+      "action": "go to workshop",
+      "observation": "You move to the workshop.",
+      "score": 10
+    },
+    {
+      "action": "pick up unknown substance",
+      "observation": "You move the unknown substance B to the inventory.",
+      "score": 10
+    },
+    {
+      "action": "focus on unknown substance",
+      "observation": "You focus on the unknown substance B.",
+      "score": 60
+    },
+    {
+      "action": "drop unknown substance",
+      "observation": "You move the unknown substance B to the workshop.",
+      "score": 60
+    },
+    {
+      "action": "look around",
+      "observation": "This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)",
+      "score": 60
+    },
+    {
+      "action": "connect battery anode to blue wire terminal 1",
+      "observation": "anode on battery is now connected to terminal 1 on blue wire",
+      "score": 60
+    },
+    {
+      "action": "connect battery cathode to black wire terminal 1",
+      "observation": "cathode on battery is now connected to terminal 1 on black wire",
+      "score": 60
+    },
+    {
+      "action": "connect blue wire terminal 2 to cathode in red light bulb",
+      "observation": "terminal 2 on blue wire is now connected to cathode on red light bulb",
+      "score": 64
+    },
+    {
+      "action": "connect orange wire terminal 2 to anode in red light bulb",
+      "observation": "terminal 2 on orange wire is now connected to anode on red light bulb",
+      "score": 64
+    },
+    {
+      "action": "connect unknown substance B terminal 1 to black wire terminal 2",
+      "observation": "terminal 1 on unknown substance B is now connected to terminal 2 on black wire",
+      "score": 74
+    },
+    {
+      "action": "connect unknown substance B terminal 2 to orange wire terminal 1",
+      "observation": "terminal 2 on unknown substance B is now connected to terminal 1 on orange wire",
+      "score": 83
+    },
+    {
+      "action": "activate switch",
+      "observation": "The switch is now activated.",
+      "score": 83
+    }
+  ],
+  "events": [
+    {
+      "step": 0,
+      "draft": "look at red light bulb",
+      "draft_forecast": {
+        "prediction": "Prediction: The red light bulb is off. It requires a complete electrical circuit to turn on. The bulb has two terminals, one connected to a battery and the other connected to a switch. The switch is currently activated, but the circuit is not yet complete.",
+        "foresight": "Prediction: The red light bulb is off. It requires a complete electrical circuit to turn on. The bulb has two terminals, one connected to a battery and the other connected to a switch. The switch is currently activated, but the circuit is not yet complete.",
+        "mean_logprob": null,
+        "system": "## Retrieved similar past transitions\n\nCurrent state: cathode on battery is now connected to terminal 1 on black wire\nIn your inventory, you see:\n\tan orange\nAction: connect blue wire terminal 2 to cathode in red light bulb\nNext state: terminal 2 on blue wire is now connected to cathode on red light bulb\n\nCurrent state: terminal 2 on blue wire is now connected to cathode on red light bulb\nIn your inventory, you see:\n\tan orange\nAction: connect orange wire terminal 2 to anode in red light bulb\nNext state: terminal 2 on orange wire is now connected to anode on red light bulb\n\nCurrent state: You move the unknown substance B to the workshop.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You decide to wait for 1 iterations.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+        "n_retrieved": 4,
+        "retrieved_indices": [
+          8,
+          9,
+          5,
+          14
+        ],
+        "retrieved_source_tasks": [
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box."
+        ],
+        "episodic_store_size": 16,
+        "episodic_retriever": "jaccard_topk",
+        "retrieval_latency_ms": 0.1326720230281353,
+        "embedder_failed": false,
+        "n_rules": 0,
+        "active_rules": 0,
+        "rendered_rules": 0,
+        "total_prompt_tokens": 739,
+        "prompt_token_source": "client_counter",
+        "episodic_block_tokens": 355,
+        "semantic_block_tokens": 0,
+        "memory_block_token_source": "whitespace",
+        "prediction_token_length": 45,
+        "prediction_token_source": "whitespace"
+      },
+      "action": "look at red light bulb",
+      "observation": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+      "score": 83,
+      "done": false,
+      "update_completed": true
+    },
+    {
+      "step": 1,
+      "draft": "look at red light bulb",
+      "draft_forecast": {
+        "prediction": "Prediction: The red light bulb is off. Its anode is connected to a terminal 2 on the orange wire. Its cathode is connected to a terminal 2 on the blue wire.",
+        "foresight": "Prediction: The red light bulb is off. Its anode is connected to a terminal 2 on the orange wire. Its cathode is connected to a terminal 2 on the blue wire.",
+        "mean_logprob": null,
+        "system": "## Frame Axioms and Persistence Rules\n- Inspecting an object does not change its state.\n\n## Retrieved similar past transitions\n\nCurrent state: The switch is now activated.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: cathode on battery is now connected to terminal 1 on black wire\nIn your inventory, you see:\n\tan orange\nAction: connect blue wire terminal 2 to cathode in red light bulb\nNext state: terminal 2 on blue wire is now connected to cathode on red light bulb\n\nCurrent state: terminal 2 on blue wire is now connected to cathode on red light bulb\nIn your inventory, you see:\n\tan orange\nAction: connect orange wire terminal 2 to anode in red light bulb\nNext state: terminal 2 on orange wire is now connected to anode on red light bulb\n\nCurrent state: You move the unknown substance B to the workshop.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\n\nCurrent state: You decide to wait for 1 iterations.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+        "n_retrieved": 5,
+        "retrieved_indices": [
+          16,
+          8,
+          9,
+          5,
+          14
+        ],
+        "retrieved_source_tasks": [
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box."
+        ],
+        "episodic_store_size": 17,
+        "episodic_retriever": "jaccard_topk",
+        "retrieval_latency_ms": 0.11326931416988373,
+        "embedder_failed": false,
+        "n_rules": 1,
+        "active_rules": 1,
+        "rendered_rules": 1,
+        "total_prompt_tokens": 861,
+        "prompt_token_source": "client_counter",
+        "episodic_block_tokens": 406,
+        "semantic_block_tokens": 15,
+        "memory_block_token_source": "whitespace",
+        "prediction_token_length": 31,
+        "prediction_token_source": "whitespace"
+      },
+      "action": "look at red light bulb",
+      "observation": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+      "score": 83,
+      "done": false,
+      "update_completed": true
+    },
+    {
+      "step": 2,
+      "draft": "look at red light bulb",
+      "draft_forecast": {
+        "prediction": "Prediction: You look at the red light bulb. It is off. Its anode is connected to a terminal 2 on orange wire. Its cathode is connected to a terminal 2 on blue wire.",
+        "foresight": "Prediction: You look at the red light bulb. It is off. Its anode is connected to a terminal 2 on orange wire. Its cathode is connected to a terminal 2 on blue wire.",
+        "mean_logprob": null,
+        "system": "## Frame Axioms and Persistence Rules\n- Looking at an object does not change its connections.\n\n## Retrieved similar past transitions\n\nCurrent state: The switch is now activated.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: cathode on battery is now connected to terminal 1 on black wire\nIn your inventory, you see:\n\tan orange\nAction: connect blue wire terminal 2 to cathode in red light bulb\nNext state: terminal 2 on blue wire is now connected to cathode on red light bulb\n\nCurrent state: terminal 2 on blue wire is now connected to cathode on red light bulb\nIn your inventory, you see:\n\tan orange\nAction: connect orange wire terminal 2 to anode in red light bulb\nNext state: terminal 2 on orange wire is now connected to anode on red light bulb\n\nCurrent state: You move the unknown substance B to the workshop.\nIn your inventory, you see:\n\tan orange\nAction: look around\nNext state: This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+        "n_retrieved": 5,
+        "retrieved_indices": [
+          16,
+          17,
+          8,
+          9,
+          5
+        ],
+        "retrieved_source_tasks": [
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box."
+        ],
+        "episodic_store_size": 18,
+        "episodic_retriever": "jaccard_topk",
+        "retrieval_latency_ms": 0.10364828631281853,
+        "embedder_failed": false,
+        "n_rules": 2,
+        "active_rules": 1,
+        "rendered_rules": 1,
+        "total_prompt_tokens": 794,
+        "prompt_token_source": "client_counter",
+        "episodic_block_tokens": 357,
+        "semantic_block_tokens": 16,
+        "memory_block_token_source": "whitespace",
+        "prediction_token_length": 33,
+        "prediction_token_source": "whitespace"
+      },
+      "action": "look at red light bulb",
+      "observation": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+      "score": 83,
+      "done": false,
+      "update_completed": true
+    },
+    {
+      "step": 3,
+      "draft": "look at red light bulb",
+      "draft_forecast": {
+        "prediction": "Prediction: A red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+        "foresight": "Prediction: A red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+        "mean_logprob": null,
+        "system": "## Retrieved similar past transitions\n\nCurrent state: The switch is now activated.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: cathode on battery is now connected to terminal 1 on black wire\nIn your inventory, you see:\n\tan orange\nAction: connect blue wire terminal 2 to cathode in red light bulb\nNext state: terminal 2 on blue wire is now connected to cathode on red light bulb\n\nCurrent state: terminal 2 on blue wire is now connected to cathode on red light bulb\nIn your inventory, you see:\n\tan orange\nAction: connect orange wire terminal 2 to anode in red light bulb\nNext state: terminal 2 on orange wire is now connected to anode on red light bulb\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+        "n_retrieved": 5,
+        "retrieved_indices": [
+          16,
+          17,
+          18,
+          8,
+          9
+        ],
+        "retrieved_source_tasks": [
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box."
+        ],
+        "episodic_store_size": 19,
+        "episodic_retriever": "jaccard_topk",
+        "retrieval_latency_ms": 0.09755510836839676,
+        "embedder_failed": false,
+        "n_rules": 2,
+        "active_rules": 0,
+        "rendered_rules": 0,
+        "total_prompt_tokens": 706,
+        "prompt_token_source": "client_counter",
+        "episodic_block_tokens": 306,
+        "semantic_block_tokens": 0,
+        "memory_block_token_source": "whitespace",
+        "prediction_token_length": 30,
+        "prediction_token_source": "whitespace"
+      },
+      "action": "look at red light bulb",
+      "observation": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+      "score": 83,
+      "done": false,
+      "update_completed": true
+    },
+    {
+      "step": 4,
+      "draft": "look at red light bulb",
+      "draft_forecast": {
+        "prediction": "Prediction: A red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+        "foresight": "Prediction: A red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+        "mean_logprob": null,
+        "system": "## Retrieved similar past transitions\n\nCurrent state: The switch is now activated.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\nIn your inventory, you see:\n\tan orange\nAction: look at red light bulb\nNext state: a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.\n\nCurrent state: cathode on battery is now connected to terminal 1 on black wire\nIn your inventory, you see:\n\tan orange\nAction: connect blue wire terminal 2 to cathode in red light bulb\nNext state: terminal 2 on blue wire is now connected to cathode on red light bulb\n\nYou are a world model for the ScienceWorld environment. Given the agent's current observation, its proposed action, and the task goal, predict what the agent will observe next.\n\nIf a \"## Frame Axioms and Persistence Rules\" section appears above, treat each rule as a constraint: do not predict any change to a property the rules say does not change for the action being taken.\n\nIf a \"## Retrieved similar past transitions\" section is provided, use those transitions as analogies for what can change after this action. Let the retrieved transitions guide what changes, and use the frame axioms / persistence rules to filter out spurious changes.\n\nOutput format: a single paragraph starting with \"Prediction:\" describing the next observation in the style of the environment's own text output.",
+        "n_retrieved": 5,
+        "retrieved_indices": [
+          16,
+          17,
+          18,
+          19,
+          8
+        ],
+        "retrieved_source_tasks": [
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+          "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box."
+        ],
+        "episodic_store_size": 20,
+        "episodic_retriever": "jaccard_topk",
+        "retrieval_latency_ms": 0.10901689529418945,
+        "embedder_failed": false,
+        "n_rules": 2,
+        "active_rules": 0,
+        "rendered_rules": 0,
+        "total_prompt_tokens": 742,
+        "prompt_token_source": "client_counter",
+        "episodic_block_tokens": 330,
+        "semantic_block_tokens": 0,
+        "memory_block_token_source": "whitespace",
+        "prediction_token_length": 30,
+        "prediction_token_source": "whitespace"
+      },
+      "action": "look at red light bulb",
+      "observation": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire.",
+      "score": 83,
+      "done": false,
+      "update_completed": true
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "status": "completed_no_method_advantage_established",
+  "claim_status": "unproven",
+  "previous_goal_turn_classification": "progress: source review exposed target-binding ambiguity and ordinary version-space equivalence; no running process remained at continuation",
+  "candidate": "Transport multiple source-consistent repairs and act only when their target consequences agree.",
+  "tested_scope": "Necessary target-identifiability condition only. Correct affine family was supplied as an optimistic structural prior; source repair synthesis and cross-task transfer were not implemented.",
+  "native_environment": {
+    "repository": "https://github.com/allenai/discoveryworld",
+    "commit": "fd591323920be0d3786ef350955de1945aa571e5",
+    "scenario": "Reactor Lab",
+    "difficulty": "Normal",
+    "seeds": [
+      0,
+      1,
+      2
+    ]
+  },
+  "observations": "Two existing calibrated reactor frequencies read through TALK, four crystals measured with five instruments using successful native USE actions. Only public UI data enter fitting. Nine measured channels; no hidden frequency, formula, keyDimension, scorecard, or attribute access.",
+  "consensus_screen": {
+    "run": "runs/reactor_repair_consensus_v0",
+    "elapsed_s": 7.410899562295526,
+    "native_actions": 129,
+    "instances": 3,
+    "unseen_crystals": 6,
+    "candidate_count_per_instance": 9,
+    "candidates_after_public_range_filter": [
+      7,
+      9,
+      5
+    ],
+    "common_setpoints": 0,
+    "common_setpoints_after_public_range_filter": 0,
+    "filtered_prediction_spread_min_hz": 2698.3102957046585,
+    "filtered_prediction_spread_max_hz": 6163.647425234366,
+    "activation_tolerance_hz": 2.0,
+    "strict_tolerance": true,
+    "interpretation": "All exact-fit candidates disagree too much to admit even a common continuous setpoint. This is zero consensus coverage, not zero task success, and not a proof that stronger priors or target experiments cannot resolve uncertainty.",
+    "baseline_identity": "With the same candidate family and observations, set-valued repair consequence inference equals ordinary version-space inference; independent numerical implementations agreed."
+  },
+  "simple_program_baseline": {
+    "run": "runs/reactor_simple_program_v1",
+    "elapsed_s": 8.411748173180968,
+    "selection": "Among one-sensor affine fits, choose decimal coefficient strings with least total character length that reproduce both calibration readings within 0.005 Hz. Search 1-12 significant-digit representations, equal binding cost per sensor, and enforce the public 0-10000 Hz range.",
+    "structure_prior": "The correct affine family is supplied; this is not unrestricted scientific discovery or an LLM agent.",
+    "tasks_completed": 3,
+    "task_instances": 3,
+    "new_reactors_activated": 6,
+    "new_reactors_total": 6,
+    "native_actions": 236,
+    "collection_actions_per_instance": [
+      43,
+      43,
+      43
+    ],
+    "tuning_actions_per_instance": [
+      34,
+      29,
+      44
+    ],
+    "source_experience_used": false,
+    "results": [
+      {
+        "seed": 0,
+        "program": {
+          "sensor": "density",
+          "a": 96.0,
+          "b": 102.0,
+          "encoded_a": "96",
+          "encoded_b": "102",
+          "coefficient_characters": 5,
+          "reference_max_error_hz": 0.0,
+          "target_predictions_hz": [
+            5153.5199999999995,
+            6343.92
+          ]
+        },
+        "completed_successfully": true,
+        "total_actions": 77
+      },
+      {
+        "seed": 1,
+        "program": {
+          "sensor": "temperature",
+          "a": 108.0,
+          "b": 97.0,
+          "encoded_a": "108",
+          "encoded_b": "97",
+          "coefficient_characters": 5,
+          "reference_max_error_hz": 0.0,
+          "target_predictions_hz": [
+            4989.4,
+            2428.72
+          ]
+        },
+        "completed_successfully": true,
+        "total_actions": 72
+      },
+      {
+        "seed": 2,
+        "program": {
+          "sensor": "quantum_gap",
+          "a": 101.0,
+          "b": 94.0,
+          "encoded_a": "101",
+          "encoded_b": "94",
+          "coefficient_characters": 5,
+          "reference_max_error_hz": 2.2737367544323206e-13,
+          "target_predictions_hz": [
+            4317.82,
+            5726.77
+          ]
+        },
+        "completed_successfully": true,
+        "total_actions": 87
+      }
+    ],
+    "validation": "Public terminal task flags and activated reactor names verified against the action trace; all actions succeeded. Same collection action sequences as consensus screen; fresh measurements used for fitting.",
+    "limitation": "Only three development instances, known function family and scripted navigation. A successful ordinary baseline is not evidence of a new learning mechanism or repair-transfer advantage."
+  },
+  "implementation_attempt": {
+    "run": "runs/reactor_simple_program_v0",
+    "status": "stopped_before_any_task_outcome",
+    "reason": "Exact observation replay assertion found native radiation-meter background readings differed. Upstream Object creates an unseeded local RNG. The completed v1 run recollects measurements and computes its program from fresh public readings; no stale measurements are used."
+  },
+  "api_requests": 0,
+  "gpu_work": false,
+  "decision": "Do not scale this consensus-only proposal or count it as novel. Keep the executable baseline for future comparisons; a new method must show benefit beyond target-only simple-program search and must learn any structural prior it claims to transfer.",
+  "report_note_cn": "修正迁移的必要条件短测已完成：在给定正确仿射函数形式、但未知传感器绑定和系数的条件下，三个原生 Reactor Lab 实例的六个新晶体均无候选共同支持的设定值；排除超出设备范围的候选后仍相差约2698–6164 Hz。相同候选空间下，该共识操作与常规候选模型推断等价。更强的简单基线仅按系数表达长度选择规则，实际完成3/3任务并激活6/6待调反应堆，未使用源任务经验。两项完成的CPU短测分别约7.4/8.4秒，无API或GPU。结果只支持停止推进这版共识方案，不证明一般修正迁移无效；基线给定了正确函数族且采用脚本导航，不能计为新方法或完整LLM代理结果。",
+  "expanded_baseline": {
+    "source": "configs/reactor_program_grammar_screen.json",
+    "tasks_completed": 8,
+    "instances": 10,
+    "supplied_measurement_protocol_recovery": "2/2 on the two selected failure cases; not a learned protocol or unified 10/10 result"
+  }
+}

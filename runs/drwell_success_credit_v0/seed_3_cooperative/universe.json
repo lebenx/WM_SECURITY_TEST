@@ -1,0 +1,199 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "node_type": "universe",
+      "id": "UNIVERSE_ROOT"
+    },
+    {
+      "node_type": "episode",
+      "id": "source:EPISODE_STATUS"
+    },
+    {
+      "node_type": "task",
+      "id": "source:Block_1"
+    },
+    {
+      "node_type": "template",
+      "id": "source:Block_1_template_0"
+    },
+    {
+      "node_type": "instance",
+      "id": "source:Block_1_template_0_instance_0"
+    },
+    {
+      "node_type": "instance",
+      "id": "source:Block_1_template_0_instance_1"
+    }
+  ],
+  "edges": [
+    {
+      "source": "UNIVERSE_ROOT",
+      "target": "source:EPISODE_STATUS"
+    },
+    {
+      "source": "source:EPISODE_STATUS",
+      "target": "source:Block_1"
+    },
+    {
+      "source": "source:Block_1",
+      "target": "source:Block_1_template_0"
+    },
+    {
+      "source": "source:Block_1_template_0",
+      "target": "source:Block_1_template_0_instance_0"
+    },
+    {
+      "source": "source:Block_1_template_0",
+      "target": "source:Block_1_template_0_instance_1"
+    }
+  ],
+  "universe_data": {
+    "name": "UNIVERSE",
+    "stats": {
+      "num_episodes": 1,
+      "episodes_completed": 1,
+      "episode_completion_rate": 1.0,
+      "episode_min_time": 21,
+      "episode_max_time": 21,
+      "episode_avg_time": 21.0,
+      "task_stats": {
+        "Block_1": {
+          "seen": 1,
+          "completes": 1,
+          "times": [
+            19
+          ],
+          "completion_rate": 1.0,
+          "min_time": 19,
+          "max_time": 19,
+          "avg_time": 19.0
+        }
+      }
+    },
+    "episodes": {
+      "source": {
+        "episode_data": {
+          "completed": true,
+          "max_timestep": 21,
+          "total_blocks": 1,
+          "completed_blocks": 1,
+          "remaining_blocks": 0,
+          "completed_blocks_order": [
+            [
+              "Block_1",
+              19,
+              1
+            ]
+          ],
+          "incomplete_blocks": []
+        },
+        "task_data": {
+          "Block_1": {
+            "templates": {
+              "MoveToBlock -> Rendezvous -> Push": {
+                "instances": [
+                  {
+                    "agent_id": "agent_0",
+                    "task_name": "Block_1",
+                    "plan": [
+                      "MoveToBlock 1 left",
+                      "Rendezvous 1 left 1 5",
+                      "Push 1 10"
+                    ],
+                    "start_step": 0,
+                    "all_agents_commitments": {
+                      "agent_0": "Block_1",
+                      "agent_1": "Block_1"
+                    },
+                    "success": true,
+                    "end_step": 19,
+                    "communication_type": "fixed_source_commitment"
+                  },
+                  {
+                    "agent_id": "agent_1",
+                    "task_name": "Block_1",
+                    "plan": [
+                      "MoveToBlock 1 left",
+                      "Rendezvous 1 left 1 5",
+                      "Push 1 10"
+                    ],
+                    "start_step": 0,
+                    "all_agents_commitments": {
+                      "agent_0": "Block_1",
+                      "agent_1": "Block_1"
+                    },
+                    "success": true,
+                    "end_step": 21,
+                    "communication_type": "fixed_source_commitment"
+                  }
+                ]
+              }
+            },
+            "final_success": true,
+            "completion_time": 19,
+            "completion_order": 1
+          }
+        },
+        "node_positions": {
+          "EPISODE_STATUS": [
+            0,
+            0
+          ],
+          "Block_1": [
+            10.0,
+            0.0
+          ],
+          "Block_1_template_0": [
+            16.0,
+            0.0
+          ],
+          "Block_1_template_0_instance_0": [
+            19.430233022444344,
+            -0.6953426577827142
+          ],
+          "Block_1_template_0_instance_1": [
+            19.430233022444344,
+            0.6953426577827142
+          ]
+        },
+        "node_labels": {
+          "EPISODE_STATUS": "EPISODE COMPLETED\nFinal Timestep: 21\nTotal Blocks: 1\nCompleted (1): 1.Block_1@T19\nIncomplete (0): None",
+          "Block_1": "Block_1\nCOMPLETED\nOrder: #1\nTime: T19",
+          "Block_1_template_0": "MoveToBlock\nRendezvous\nPush",
+          "Block_1_template_0_instance_0": "Agent: agent_0\nPlan: MoveToBlock 1 left -> Rendezvous 1 le...\nSteps: 0-19\nCommitments: agent_0:Block_1, agent_1:Block_1\nStatus: SUCCESS\nContext: fixed_sour",
+          "Block_1_template_0_instance_1": "Agent: agent_1\nPlan: MoveToBlock 1 left -> Rendezvous 1 le...\nSteps: 0-21\nCommitments: agent_0:Block_1, agent_1:Block_1\nStatus: SUCCESS\nContext: fixed_sour"
+        }
+      }
+    },
+    "views": {
+      "COG": {
+        "Block_1|bucket=0-10|k=2": {
+          "attempts": 2,
+          "successes": 2,
+          "avg_t": 20.0,
+          "min_t": 19,
+          "max_t": 21,
+          "comms": {
+            "fixed_source_commitment": 2
+          },
+          "cr": 1.0
+        }
+      },
+      "COG_kstar": {
+        "Block_1|bucket=0-10": 2
+      },
+      "TCG": {
+        "Block_1|bucket=0-10|k=2|comms=fixed_source_commitment|template=MoveToBlock -> Rendezvous -> Push": {
+          "attempts": 2,
+          "successes": 2,
+          "avg_t": 20.0,
+          "cr": 1.0
+        }
+      },
+      "PDG": {}
+    }
+  }
+}

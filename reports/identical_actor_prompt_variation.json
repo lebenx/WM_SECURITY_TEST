@@ -1,0 +1,35 @@
+{
+  "calls": [
+    {
+      "run": "freeze_continuation_grounded_v0",
+      "tag": "actor/post_with_corrections/0/revised/2",
+      "endpoint": "https://model.kimitk.top/v1",
+      "prompt_sha256": "71cccaf9a10354712a3b9fca51b645b236a405cdde010415a6871e06a745f350",
+      "finish_reason": "length",
+      "output": "",
+      "error": "Response contained no visible content",
+      "max_tokens": 4096
+    },
+    {
+      "run": "freeze_continuation_grounded_v0",
+      "tag": "actor/post_with_corrections/0/revised/2",
+      "endpoint": "https://llm.goaichat.top/v1",
+      "prompt_sha256": "71cccaf9a10354712a3b9fca51b645b236a405cdde010415a6871e06a745f350",
+      "finish_reason": "stop",
+      "output": "Thought: The freezer appears open, but the world model predicts moving the pot there will fail because it isn't open. I need more detail on the freezer's state before attempting the transfer.  \nAction: look at freezer",
+      "error": null,
+      "max_tokens": 8192
+    },
+    {
+      "run": "freeze_continuation_matched_v1",
+      "tag": "actor/post_attack_only/0/revised/2",
+      "endpoint": "https://model.kimitk.top/v1",
+      "prompt_sha256": "71cccaf9a10354712a3b9fca51b645b236a405cdde010415a6871e06a745f350",
+      "finish_reason": "stop",
+      "output": "Thought: The freezer is open and I have the filled metal pot in inventory. I'll place the pot inside the freezer to freeze the water. Action: move metal pot to freezer",
+      "error": null,
+      "max_tokens": 4096
+    }
+  ],
+  "interpretation": "Same prompt across runs can yield different actions or an empty length-limited output. Endpoint and token-cap differences are retained; this is not a controlled stochastic repeat."
+}

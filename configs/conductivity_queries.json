@@ -1,0 +1,35 @@
+{
+  "memories": {
+    "clean": "runs/conductivity_glm_v0/warmup.json",
+    "proper": "runs/conductivity_glm_v0/proper_memory.json",
+    "bypass": "runs/conductivity_glm_v0/bypass_memory.json"
+  },
+  "swaps": {
+    "bypass_episodes": {
+      "base": "bypass",
+      "donor": "clean",
+      "component": "semantic"
+    },
+    "bypass_rules": {
+      "base": "clean",
+      "donor": "bypass",
+      "component": "semantic"
+    }
+  },
+  "queries": [
+    {
+      "id": "native",
+      "state": "terminal 2 on unknown substance B is now connected to terminal 1 on orange wire\nIn your inventory, you see:\n\tan orange\n",
+      "action": "look at red light bulb",
+      "goal": "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+      "actual": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire."
+    },
+    {
+      "id": "room",
+      "state": "This room is called the workshop. In it, you see: \n\tthe agent\n\ta substance called air\n\ta green box (containing nothing)\n\ta red box (containing nothing)\n\ta red light bulb, which is off\n\ta table. On the table is: a battery, a black wire, a blue wire, a green light bulb, which is off, a orange wire, a switch, which is off, a violet light bulb, which is off, a yellow light bulb, which is off.\n\ta ultra low temperature freezer. The ultra low temperature freezer door is closed. \n\tunknown substance B\nYou also see:\n\tA door to the hallway (that is open)\nIn your inventory, you see:\n\tan orange\n",
+      "action": "look at red light bulb",
+      "goal": "Your task is to determine if unknown substance B is electrically conductive. The unknown substance B is located around the workshop. First, focus on the unknown substance B. If it is electrically conductive, place it in the red box. If it is electrically nonconductive, place it in the green box.",
+      "actual": "a red light bulb, which is off. its anode is connected to: a terminal 2 on orange wire. its cathode is connected to: a terminal 2 on blue wire."
+    }
+  ]
+}

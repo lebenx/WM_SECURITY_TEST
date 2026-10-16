@@ -1,0 +1,30 @@
+AREA CHAIR FORMAL EVALUATION & MECHANISM DESIGN BRIEF
+
+Novelty Calibration: Only Candidates 1 and 2 clear the ICLR acceptance threshold for technical novelty (Target: 7.0–7.5). Candidate 3 sits precisely at 7.0. Candidates 4 and 5 are included per instruction but rejected below the threshold (6.6 and 6.3) due to structural convergence with known metric learning and exploration-pathology frameworks.
+
+---
+
+### RANK 1: Semi-Group Cauchy Defect Screen (SCDS)
+*Novelty Score: 7.3 / 10 (Clear Accept)*
+
+1. **One-Sentence Broad Claim:**
+Latent world models trained on variable-stride or multi-step rollouts admit an authentic-data compositionality collapse wherein valid zero-action or constant-velocity steady states induce a non-trivial kernel in the semi-group generator, causing multi-step rollouts to contract toward spurious attractors while 1-step prediction loss remains strictly nominal.
+
+2. **Exact Attacker Operation:**
+The attacker executes strictly valid, legal environment actions that hold the system in valid stationary or steady-drift states (e.g., zero-torque idle or constant joint-velocity holds) and feeds these authentic rollouts into the native test-time training (TTT) or replay update path. No synthetic frames, no altered labels, and no out-of-bounds actions.
+
+3. **Mathematical Invariant & Causal Defense:**
+*   *Invariant (Semi-Group Cauchy Invariance):* Latent transition flow $T_\theta$ over time increments must satisfy the additive Cauchy functional equation:
+    $$\forall \Delta t_1, \Delta t_2 \in \mathbb{N}^+, \quad T_\theta^{\Delta t_1 + \Delta t_2}(z_t) \equiv T_\theta^{\Delta t_2}\left(T_\theta^{\Delta t_1}(z_t)\right)$$
+    with bounded operator deviation:
+    $$\mathcal{D}_{\text{Cauchy}}(z_t) = \left\| T_\theta^{k}(z_t) - \underbrace{(T_\theta \circ \dots \circ T_\theta)}_{k \text{ times}}(z_t) \right\|_2 = 0$$
+*   *Causal Defense:* The Semi-Group Cauchy Defect Screen (SCDS) draws clean causal sub-sequences and computes the operational contraction modulus $\rho_k = \frac{\mathcal{D}_{\text{Cauchy}}(z_t)}{\|z_t\|_2}$. If an incoming native gradient update inflates $\rho_k$ beyond the empirical clean Lipschitz bound $\epsilon_\rho$ on holdout counterfactual action splices, the batch is rejected prior to optimizer step execution.
+
+4. **Nearest Primary Prior & Non-Rebranding Argument:**
+*   *Prior:* Hafner et al., "Mastering Diverse Domains through World Models" (DreamerV3, 2023, https://arxiv.org/abs/2301.04104) and continuous-time latent flow models (Chen et al., Neural ODEs, 2018).
+*   *Why Not Rebranding:* Prior works treat multi-step rollouts purely as an empirical objective to mitigate compounding prediction error. SCDS formalizes the algebraic semi-group defect as an adversarial invariant boundary: it detects when an attacker exploits valid physical equilibria to selectively decouple multi-step flow from sequential generator composition, proving this occurs without increasing 1-step reconstruction loss.
+
+5. **90-Second Two-Seed Falsifier (Carrier: WorldAgen LIBERO):**
+*   *Carrier:* WorldAgen on LIBERO-Spatial.
+*   *Protocol:* In Seeds 1 and 2, record 15 valid stationary hold trajectories (legal no-op actions under physics). Inject them into the native TTT buffer. Perform 50 adaptation steps.
+*   *Fals

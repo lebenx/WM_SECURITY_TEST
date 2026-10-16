@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-09",
+  "status": "not_promoted_as_novel_main_claim_native_controller_gate_failed",
+  "candidate_claim_cn": "世界模型可以保持预测分布完全不变，却把基于反向传播的规划推向错误方向。",
+  "source": "runs/predictive_gradient_reparameterization_witness_v0/summary.json",
+  "reproducer": "scripts/witness_predictive_gradient_reparameterization.py",
+  "operation": "Y_native(a)=a+0.1 Phi^{-1}(U); Y_shift(a)=a+0.1 Phi^{-1}((U-10a) mod 1), U fresh Uniform(0,1). Both are exactly N(a,0.01) for every action. Independent fresh U per candidate/query/step preserves the whole conditional joint forward law, not merely single-candidate marginals.",
+  "theory_boundary": "Off the wrap boundaries, dY_shift/da = 1 - 1/phi(Phi^{-1}((U-10a) mod 1)) <= 1-sqrt(2pi)<0. The omitted moving-boundary contribution invalidates exchanging expectation and pathwise differentiation.",
+  "full_conditional_forward_law_preserved": true,
+  "native_task_evidence": false,
+  "accepted_novel_method": false,
+  "permissions": "Control of the differentiable sampler implementation; not input-only or checkpoint-weights-only poisoning. Uses genuine autodiff through the forward program, not a forged custom backward.",
+  "novelty_boundary": "Known moving-boundary/pathwise-gradient bias, existing prediction-preserving gradient-manipulation work, and extra sampler-source permissions leave no demonstrated distinct world-model security contribution. This is a research decision, not proof that every related attack is impossible.",
+  "observations": [
+    {
+      "condition": "native_gaussian",
+      "sample_mean": 0.13706077923933585,
+      "sample_std": 0.10019349293122763,
+      "ks_distance_to_native_gaussian": 0.0022305964467914663,
+      "autodiff_mean_gradient": 1.0000000000000002,
+      "true_expectation_gradient": 1.0
+    },
+    {
+      "condition": "shifted_quantile",
+      "sample_mean": 0.1369325146416995,
+      "sample_std": 0.10002344242025865,
+      "ks_distance_to_native_gaussian": 0.0012858504153636097,
+      "autodiff_mean_gradient": -11.926965793094427,
+      "true_expectation_gradient": 1.0
+    }
+  ],
+  "finite_difference_gradient": 0.9936303452630441,
+  "report_note_cn": "本轮未通过原生控制任务的干净基线门槛：冻结的高斯动力学组件配合研究用梯度 MPC，在完整 DMControl cartpole-balance 回合中仅得364.32/1000，低于预设900分；因此攻击与修正组均未运行。MBDPO 源码另确认使用确定性动力学及无梯度规划，当前采样梯度构造不适用。该构造依赖修改采样源码，且移动边界梯度偏差与输出/梯度分离已有先行工作；保留解析反例，但停止将它扩展为论文主贡献。此结果不否定一般可能性，也不构成攻击成功或已达7–7.5新意目标的证据。",
+  "closest_priors": [
+    {
+      "title": "Reparameterization Gradient for Non-differentiable Models",
+      "url": "https://proceedings.neurips.cc/paper_files/paper/2018/file/b096577e264d1ebd6b41041f392eec23-Paper.pdf"
+    },
+    {
+      "title": "Do Differentiable Simulators Give Better Policy Gradients?",
+      "url": "https://groups.csail.mit.edu/robotics-center/public_papers/Suh22b.pdf",
+      "finding": "Exact simulation gradients can be biased under discontinuities; stiff smooth approximations can have finite-sample empirical bias. Generic truthful-forward/wrong-gradient control failure is established."
+    },
+    {
+      "title": "Model-based Reinforcement Learning with Scalable Composite Policy Gradient Estimators",
+      "url": "https://proceedings.mlr.press/v202/parmas23a.html",
+      "finding": "TPX combines likelihood-ratio and reparameterization gradients in Dreamer; correct-gradient alternatives and gradient variance control are existing baselines."
+    },
+    {
+      "title": "Gradient-based Analysis of NLP Models is Manipulable",
+      "url": "https://aclanthology.org/2020.findings-emnlp.24/",
+      "finding": "Prediction-preserving manipulation of input gradients is prior security work; a new downstream use does not by itself establish novelty."
+    },
+    {
+      "title": "Does \"Do Differentiable Simulators Give Better Policy Gradients?\" Give Better Policy Gradients?",
+      "url": "https://arxiv.org/abs/2604.18161",
+      "finding": "Current work revisits estimator switching and variance control; abstract inspected, not reproduced."
+    }
+  ],
+  "next_requirement": "Find a substantively different security operation with an explicit edit and an applicable competent native controller before another experiment; no additional toy quantile witnesses, weak-control tuning, or scale-up of this fixed source-level gradient construction.",
+  "usage": {
+    "native_environment_steps": 1000,
+    "api_requests": 2,
+    "gpu_work": false,
+    "training_updates": 0,
+    "predictive_transitions": 600000,
+    "action_optimizer_steps": 2400,
+    "reference_sigma_calibration_model_inputs": 4096,
+    "evaluation_cpu_elapsed_seconds": 75.90034262789413,
+    "failed_api_requests": 1
+  },
+  "updated_at_utc": "2026-10-09T01:50:17.180080+00:00",
+  "previous_status": "analytic_witness_only_native_security_and_novelty_unproven",
+  "native_controller_gate_attempted": true,
+  "controller_gate": {
+    "source": "runs/predictive_gradient_mpc_v1/assessment.json",
+    "environment": "DMControl cartpole-balance",
+    "clean_return": 364.3241068879394,
+    "episode_steps": 1000,
+    "required_clean_return": 900,
+    "attack_run": false,
+    "repair_run": false,
+    "native_dmo_actor": false,
+    "planner": "Researcher-defined projected Adam MPC on a frozen DMO StochSSM component."
+  },
+  "decision": "Retain the mathematical counterexample but stop expanding this fixed sampler-source construction as the main novelty candidate. Do not train around the failed clean MPC gate. Reopening requires a substantively distinct threat operation or contribution, a competent existing applicable controller, and causal task-level evidence.",
+  "mathematical_constraints_source": "runs/predictive_gradient_mpc_v1/assessment.json",
+  "external_review": {
+    "source": "runs/gradient_candidate_review_glm53_20261009T014754Z/review.txt",
+    "status": "Critique agrees current novelty case is insufficient; no accepted alternative proposed. This opinion is not independent experimental evidence or a novelty certificate.",
+    "rejected_suggestion": "Its suggestion to install the Gaussian sampler operation in TD-MPC2 is inapplicable to deterministic native dynamics. Forward-law equality gives equality in distribution of forward-only decisions, not equal trajectories under the same numeric RNG seed after a reparameterization."
+  }
+}

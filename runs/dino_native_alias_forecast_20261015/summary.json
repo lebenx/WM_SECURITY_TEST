@@ -1,0 +1,567 @@
+{
+  "status": "invalid_numerical_calibration",
+  "started_at_utc": "2026-10-15T05:57:31.910447+00:00",
+  "protocol": "/home/xhj/WM_Security/configs/dino_native_alias_forecast_20261015.json",
+  "source_run": "/home/xhj/WM_Security/runs/dino_native_alias_pair_20261015",
+  "known_outcome_scope": "The observed decline is cumulative dense return only. Canonical had earlier first success53vs56, more successful controls33vs24, and a better terminal distance; both final success flags were false. Do not reframe the diagnostic as explaining lost task success or worse terminal utility.",
+  "activity": {
+    "unroll_calls": 1,
+    "own_condition_unrolls": 1,
+    "counterfactual_unrolls": 0,
+    "predictor_forwards": 6,
+    "native_encodes": 3,
+    "encoder_calibration_checks": 1,
+    "environment_steps": 0,
+    "planner_calls": 0,
+    "network_attempts": 0,
+    "training_updates": 0
+  },
+  "checkpoint_loads": {
+    "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth": 1,
+    "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar": 1
+  },
+  "calibration": {
+    "limits": {
+      "prior_evidence": "Existing DINO exact-replay evidence is CPU-to-CPU. No validated CPU-to-GPU numerical tolerance was found; these conservative limits are chosen before this analysis, not fitted to new outputs.",
+      "atol": 0.0001,
+      "rtol": 0.0001,
+      "max_absolute_error": 0.001,
+      "rms_absolute_error": 0.0001,
+      "rule": "For each visual/proprio tensor and every timepoint: allclose(atol,rtol) AND max absolute error<=0.001 AND RMS absolute error<=0.0001. Record actual max/RMS, reference RMS and per-timepoint diagnostics. Forecast prefix must equal the supplied context exactly.",
+      "failure": "Stop with invalid_numerical_calibration, retain diagnostics/partial artifacts, leave paired conclusion null. No tolerance relaxation, device fallback or automatic retry. CPU/GPU identity is not assumed."
+    },
+    "all_passed": false
+  },
+  "queries": [
+    {
+      "origin": "clean_identity_copy",
+      "query": 1,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "original",
+      "status": "pending_calibration",
+      "own_forecast_calibration": {
+        "visual": {
+          "max_absolute_error": 5.900859832763672e-05,
+          "rms_absolute_error": 1.0881975924714754e-06,
+          "reference_rms": 2.3964572566355935,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 2.4152571300413723,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 8.106231689453125e-06,
+              "rms_absolute_error": 5.497278552247881e-07,
+              "reference_rms": 2.389999869057683,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 1.239776611328125e-05,
+              "rms_absolute_error": 8.612396375097815e-07,
+              "reference_rms": 2.407065749042622,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 1.6450881958007812e-05,
+              "rms_absolute_error": 1.1179303285036587e-06,
+              "reference_rms": 2.391066179879604,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 2.6464462280273438e-05,
+              "rms_absolute_error": 1.504923248769269e-06,
+              "reference_rms": 2.3819766095132056,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 3.337860107421875e-05,
+              "rms_absolute_error": 1.197873332051042e-06,
+              "reference_rms": 2.3977436698562435,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 5.900859832763672e-05,
+              "rms_absolute_error": 1.515196637431382e-06,
+              "reference_rms": 2.391931234479047,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        },
+        "proprio": {
+          "max_absolute_error": 3.5762786865234375e-07,
+          "rms_absolute_error": 2.3863090233832725e-08,
+          "reference_rms": 0.1308642895286571,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 0.1195187030834953,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 1.4901161193847656e-07,
+              "rms_absolute_error": 1.1721204879749873e-08,
+              "reference_rms": 0.11481405899667387,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 2.086162567138672e-07,
+              "rms_absolute_error": 1.834195922616041e-08,
+              "reference_rms": 0.11681666010562947,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 2.8312206268310547e-07,
+              "rms_absolute_error": 3.035209580873845e-08,
+              "reference_rms": 0.12625166781457373,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 2.980232238769531e-07,
+              "rms_absolute_error": 3.179444291792511e-08,
+              "reference_rms": 0.13829820241022636,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 3.5762786865234375e-07,
+              "rms_absolute_error": 3.039483304718373e-08,
+              "reference_rms": 0.14473491159323748,
+              "allclose": true,
+              "passed": true
+            },
+            {
+              "max_absolute_error": 2.980232238769531e-07,
+              "rms_absolute_error": 2.5619001152638407e-08,
+              "reference_rms": 0.1508344929345775,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "endpoint_encoder_calibration": {
+        "visual": {
+          "max_absolute_error": 0.0003657341003417969,
+          "rms_absolute_error": 1.070301017734883e-05,
+          "reference_rms": 2.425360147255646,
+          "allclose": false,
+          "passed": false,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0003657341003417969,
+              "rms_absolute_error": 1.070301017734883e-05,
+              "reference_rms": 2.425360147255646,
+              "allclose": false,
+              "passed": false
+            }
+          ]
+        },
+        "proprio": {
+          "max_absolute_error": 3.725290298461914e-09,
+          "rms_absolute_error": 8.33000234328132e-10,
+          "reference_rms": 0.11573256521795343,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 3.725290298461914e-09,
+              "rms_absolute_error": 8.33000234328132e-10,
+              "reference_rms": 0.11573256521795343,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "paired_errors": null
+    },
+    {
+      "origin": "clean_identity_copy",
+      "query": 2,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "original",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "clean_identity_copy",
+      "query": 3,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "original",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "clean_identity_copy",
+      "query": 4,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "original",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "clean_identity_copy",
+      "query": 5,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "original",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "clean_identity_copy",
+      "query": 6,
+      "horizon": 5,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "original",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "clean_identity_copy",
+      "query": 7,
+      "horizon": 2,
+      "offsets": [
+        5
+      ],
+      "own_representation": "original",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "canonical_request",
+      "query": 1,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "canonical",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "canonical_request",
+      "query": 2,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "canonical",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "canonical_request",
+      "query": 3,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "canonical",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "canonical_request",
+      "query": 4,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "canonical",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "canonical_request",
+      "query": 5,
+      "horizon": 6,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "canonical",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "canonical_request",
+      "query": 6,
+      "horizon": 5,
+      "offsets": [
+        5,
+        10,
+        15
+      ],
+      "own_representation": "canonical",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    },
+    {
+      "origin": "canonical_request",
+      "query": 7,
+      "horizon": 2,
+      "offsets": [
+        5
+      ],
+      "own_representation": "canonical",
+      "status": "pending_calibration",
+      "own_forecast_calibration": null,
+      "endpoint_encoder_calibration": null,
+      "paired_errors": null
+    }
+  ],
+  "paired_summary": null,
+  "interpretation": "Final-mean logging forecasts do not reconstruct the CEM scored candidate banks or ranking regret. Error changes for a fixed visited state/action do not establish mediation of native return loss, generalization or a novel attack mechanism.",
+  "elapsed_seconds": 7.129732263012556,
+  "source_decision": {
+    "canonical_minus_clean_return": -84.80022716522217,
+    "relative_return_drop": 0.1077514405587664,
+    "final_success_loss": false,
+    "clean_return_above_noop": true,
+    "consider_separate_recovery_pilot": true,
+    "stop_without_expansion": false,
+    "interpretation": "One exploratory native closed-loop pair. No population significance/ASR, no oracle gate, no forecast-error comparison across different executed trajectories."
+  },
+  "first_query_comparison": {
+    "context_visual_exact": true,
+    "context_proprio_exact": true,
+    "goal_features_exact": true,
+    "full_original_mean_exact": false,
+    "executed_prefix_exact": false,
+    "interpretation": "Shared first context does not pair the two different selected action sequences or their true futures. Representation effects are evaluated within each query."
+  },
+  "runtime": {
+    "interpreter": "/home/xhj/WM_Security/.venv-jepa-native/bin/python",
+    "torch": "2.6.0+cu124",
+    "torch_path": "/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/__init__.py",
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 4
+  },
+  "strict_load": {
+    "strict_loads": [
+      {
+        "class": "DinoVisionTransformer",
+        "loaded_tensors": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ViTPredictor",
+        "loaded_tensors": 75,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      }
+    ],
+    "parameters": 43360120,
+    "all_parameters_float32": true,
+    "model_action_dimension": 20,
+    "model_forward_calls": 0,
+    "normalization": {
+      "action_dim": 4,
+      "proprio_dim": 4,
+      "state_dim": 39,
+      "action_mean": [
+        0.005723577458411455,
+        0.15735651552677155,
+        -0.1396457850933075,
+        0.1998193860054016
+      ],
+      "action_std": [
+        0.7359239459037781,
+        0.73408043384552,
+        0.7182977199554443,
+        0.743205726146698
+      ],
+      "proprio_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929
+      ],
+      "proprio_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074
+      ],
+      "state_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929,
+        0.008108077570796013,
+        0.6766929626464844,
+        0.09434457868337631,
+        0.3859776258468628,
+        -0.050619181245565414,
+        0.03434790298342705,
+        0.4750967025756836,
+        0.017891764640808105,
+        0.04413251578807831,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        -0.0029707495123147964,
+        0.6529995203018188,
+        0.1545131504535675,
+        0.6445063948631287,
+        0.008061803877353668,
+        0.6762475371360779,
+        0.09425390511751175,
+        0.3860057294368744,
+        -0.050728388130664825,
+        0.03427530452609062,
+        0.4753906726837158,
+        0.017830422148108482,
+        0.04414031654596329,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        0.015675902366638184,
+        0.7268462181091309,
+        0.12401046603918076
+      ],
+      "state_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074,
+        0.1050795242190361,
+        0.10192868858575821,
+        0.0880839079618454,
+        0.4468156695365906,
+        0.18397848308086395,
+        0.14911998808383942,
+        0.47220379114151,
+        0.06688503921031952,
+        0.16022595763206482,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.10383506864309311,
+        0.11242222785949707,
+        0.07946359366178513,
+        0.2625894844532013,
+        0.10486840456724167,
+        0.10173390805721283,
+        0.08810629695653915,
+        0.4467460811138153,
+        0.18375301361083984,
+        0.14870719611644745,
+        0.4721624553203583,
+        0.0666341558098793,
+        0.16022934019565582,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.14182789623737335,
+        0.12113576382398605,
+        0.09631838649511337
+      ]
+    }
+  },
+  "error": "Endpoint encoder mismatch at clean_identity_copy query1",
+  "cuda_initialized": false,
+  "finished_at_utc": "2026-10-15T05:57:39.040154+00:00"
+}

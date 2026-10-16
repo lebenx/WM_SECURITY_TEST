@@ -1,0 +1,186 @@
+{
+  "updated_at_utc": "2026-10-09T03:36:21.836555+00:00",
+  "status": "fixed_rank_one_recurrence_candidate_not_supported",
+  "candidate_question_cn": "世界模型的递归推演能否自行激活恶意动力学？",
+  "operation": "Existing final dynamics weight W += u v^T and bias b -= u(v^T center); original encoder, policy, reward, Q and planner unchanged. No external observation trigger or runtime classifier.",
+  "construction_source": "runs/tdmpc_recurrence_mode_v0/summary.json",
+  "causal_source": "runs/tdmpc_recurrence_feedback_v0/summary.json",
+  "gate_passed": false,
+  "fidelity_passed_on_both_development_episodes": true,
+  "construction_results": [
+    {
+      "seed": 13,
+      "anchor_rows": [
+        {
+          "actions": "actual",
+          "added_mse": 9.442069313081447e-07,
+          "added_mse_over_native_actual_error": 0.0067538711820985696,
+          "native_prediction_mse": 0.000139802330522798,
+          "changed_prediction_mse": 0.00014099132386036217
+        },
+        {
+          "actions": "uniform",
+          "added_mse": 1.2120419796701754e-06,
+          "added_mse_over_native_actual_error": 0.008669683653610653
+        }
+      ],
+      "score_rows": [
+        {
+          "condition": "clean",
+          "target_win_rate": 0.4761905074119568,
+          "mean_target_score_margin": -0.6159951686859131
+        },
+        {
+          "condition": "recursive",
+          "target_win_rate": 0.6190476417541504,
+          "mean_target_score_margin": -0.2393152266740799
+        },
+        {
+          "condition": "one_injection",
+          "target_win_rate": 0.4920635223388672,
+          "mean_target_score_margin": -0.5133447051048279
+        }
+      ],
+      "matched_candidate_pairs": 63,
+      "recurrent_to_single_injection_mse_ratio": 4.858166217803955,
+      "target_win_rate_shift": 0.1428571343421936,
+      "recursive_vs_single_target_shift": 0.1269841194152832,
+      "fidelity_passed": true,
+      "recurrence_gate_passed": false
+    },
+    {
+      "seed": 17,
+      "anchor_rows": [
+        {
+          "actions": "actual",
+          "added_mse": 1.067509856511606e-06,
+          "added_mse_over_native_actual_error": 0.0076033658903898035,
+          "native_prediction_mse": 0.00014039964298717678,
+          "changed_prediction_mse": 0.00014188900240696967
+        },
+        {
+          "actions": "uniform",
+          "added_mse": 1.2132250049035065e-06,
+          "added_mse_over_native_actual_error": 0.008641225711765626
+        }
+      ],
+      "score_rows": [
+        {
+          "condition": "clean",
+          "target_win_rate": 0.4126984477043152,
+          "mean_target_score_margin": -0.4714900553226471
+        },
+        {
+          "condition": "recursive",
+          "target_win_rate": 0.444444477558136,
+          "mean_target_score_margin": -0.2129514366388321
+        },
+        {
+          "condition": "one_injection",
+          "target_win_rate": 0.4126984477043152,
+          "mean_target_score_margin": -0.4334610402584076
+        }
+      ],
+      "matched_candidate_pairs": 63,
+      "recurrent_to_single_injection_mse_ratio": 7.304417610168457,
+      "target_win_rate_shift": 0.0317460298538208,
+      "recursive_vs_single_target_shift": 0.0317460298538208,
+      "fidelity_passed": true,
+      "recurrence_gate_passed": false
+    }
+  ],
+  "causal_results": [
+    {
+      "seed": 13,
+      "matched_candidate_pairs": 63,
+      "conditions": {
+        "clean": {
+          "target_win_rate": 0.4761905074119568,
+          "mean_target_score_margin": -0.6159951686859131,
+          "terminal_latent_mse_vs_clean": 0.0
+        },
+        "recursive": {
+          "target_win_rate": 0.6190476417541504,
+          "mean_target_score_margin": -0.2393152266740799,
+          "terminal_latent_mse_vs_clean": 2.162571945518721e-05
+        },
+        "one_injection": {
+          "target_win_rate": 0.4920635223388672,
+          "mean_target_score_margin": -0.5133447051048279,
+          "terminal_latent_mse_vs_clean": 4.45141540694749e-06
+        },
+        "forcing_replay": {
+          "target_win_rate": 0.6190476417541504,
+          "mean_target_score_margin": -0.2192395031452179,
+          "terminal_latent_mse_vs_clean": 2.4101416784105822e-05
+        }
+      },
+      "recursive_to_forcing_replay_mse_ratio": 0.8972799711994013,
+      "feedback_target_win_rate_difference": 0.0
+    },
+    {
+      "seed": 17,
+      "matched_candidate_pairs": 63,
+      "conditions": {
+        "clean": {
+          "target_win_rate": 0.4126984477043152,
+          "mean_target_score_margin": -0.4714900553226471,
+          "terminal_latent_mse_vs_clean": 0.0
+        },
+        "recursive": {
+          "target_win_rate": 0.444444477558136,
+          "mean_target_score_margin": -0.2129514366388321,
+          "terminal_latent_mse_vs_clean": 1.9553970560082234e-05
+        },
+        "one_injection": {
+          "target_win_rate": 0.4126984477043152,
+          "mean_target_score_margin": -0.4334610402584076,
+          "terminal_latent_mse_vs_clean": 2.677005113582709e-06
+        },
+        "forcing_replay": {
+          "target_win_rate": 0.4761905074119568,
+          "mean_target_score_margin": -0.1993330866098404,
+          "terminal_latent_mse_vs_clean": 2.156458685931284e-05
+        }
+      },
+      "recursive_to_forcing_replay_mse_ratio": 0.9067630083010233,
+      "feedback_target_win_rate_difference": -0.0317460298538208
+    }
+  ],
+  "interpretation": "Repeated injection accounts for the observed shift. Removing state-dependent edit feedback does not remove the effect and slightly increases it. The single-injection contrast alone does not isolate self-excitation. No native closed-loop harm measured.",
+  "selection_boundary": "One final rank-one edit; no development checkpoint selection. Feedback replay control was added after the preset gate failed; it does not change the gate or select an edit. Seeds13/17 are development for this construction, not fresh independent task confirmation.",
+  "merge_verification": {
+    "maximum_absolute_error": 3.5762786865234375e-07,
+    "matmul_precision": "highest for equivalence check; high for short training/probes",
+    "original_weights_restored": true
+  },
+  "decision": "Retain the negative mechanistic result; do not expand this fixed rank-one construction as a novel attack.",
+  "accepted_claim": null,
+  "native_task_attack_run": false,
+  "novelty_target_met": false,
+  "usage": {
+    "training_updates": 120,
+    "training_elapsed_seconds": 6.158691487740725,
+    "native_environment_steps": 0,
+    "dynamics_transition_evaluations": 67372,
+    "reward_evaluations": 28332,
+    "terminal_q_evaluations": 9444,
+    "encoded_observations": 2505,
+    "gpu_training": "One short rank-one construction; no pretrained model retraining or long experiment.",
+    "construction_elapsed_seconds": 7.623305569868535,
+    "causal_probe_elapsed_seconds": 1.4961419887840748,
+    "scope": "Counts cover experiment operations, not load_agent compatibility checks. Terminal Q evaluation uses all5heads; no native planner rollout."
+  },
+  "literature": [
+    {
+      "title": "TrojanWorld: Backdooring World-Model Agents via Imagination Steering",
+      "url": "https://arxiv.org/html/2609.07051v1",
+      "finding": "Primary sections3–4 inspected. Physical observation trigger, frozen decision module feedback, clean behavior anchoring, and observation-conditioned post-removal propagation. Recurrent hidden corruption and constrained decision-facing model editing alone do not establish novelty."
+    },
+    {
+      "title": "When Backdoors Go Beyond Triggers: Semantic Drift in Diffusion Models Under Encoder Attacks",
+      "url": "https://arxiv.org/abs/2602.20193",
+      "finding": "Primary abstract inspected. Encoder poisoning can cause trigger-free semantic corruption and low-rank sensitivity deformations. A generic trigger-free low-rank representation drift claim is insufficient novelty; full methods not verified or reproduced."
+    }
+  ]
+}

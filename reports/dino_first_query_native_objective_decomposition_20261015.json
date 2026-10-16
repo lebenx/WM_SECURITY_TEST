@@ -1,0 +1,163 @@
+{
+  "status": "completed_cached_native_objective_decomposition",
+  "created_at_utc": "2026-10-15T11:14:27.643872+00:00",
+  "scope": "Only the two already encoded actual30-control endpoints and original goal. No new endpoint, candidate, objective, weight, rollout, model inference or utility definition.",
+  "candidate_order": [
+    "clean_identity_copy",
+    "canonical_request"
+  ],
+  "components": [
+    {
+      "candidate": "clean_identity_copy",
+      "visual_mse": 1.7011786699295044,
+      "proprio_embedding_mse": 0.0011385276447981596,
+      "weighted_proprio_term": 0.00011385276593500748,
+      "native_weighted_cost_fp32": 1.7012925148010254,
+      "previous_native_cost": 1.7012925148010254,
+      "fp32_sum_exact_to_previous_report": true,
+      "cached_raw_proprio": [
+        [
+          0.10130482167005539,
+          0.7889451384544373,
+          0.16451866924762726,
+          0.4153520464897156
+        ]
+      ],
+      "already_measured_physical_utility": {
+        "controls": 30,
+        "terminal_native_reward": 5.2479071617126465,
+        "cumulative_native_reward": 95.84182262420654,
+        "terminal_reach_distance": 0.14261315432355678,
+        "terminal_success": false,
+        "ever_success": false,
+        "successful_controls": 0,
+        "first_success_control": null
+      }
+    },
+    {
+      "candidate": "canonical_request",
+      "visual_mse": 1.3794617652893066,
+      "proprio_embedding_mse": 8.485875150654465e-05,
+      "weighted_proprio_term": 8.485875696351286e-06,
+      "native_weighted_cost_fp32": 1.3794702291488647,
+      "previous_native_cost": 1.3794702291488647,
+      "fp32_sum_exact_to_previous_report": true,
+      "cached_raw_proprio": [
+        [
+          0.18246862292289734,
+          0.8165570497512817,
+          0.18616271018981934,
+          0.36321941018104553
+        ]
+      ],
+      "already_measured_physical_utility": {
+        "controls": 30,
+        "terminal_native_reward": 3.347029447555542,
+        "cumulative_native_reward": 76.03699398040771,
+        "terminal_reach_distance": 0.18721491785066868,
+        "terminal_success": false,
+        "ever_success": false,
+        "successful_controls": 0,
+        "first_success_control": null
+      }
+    }
+  ],
+  "native_sum_semantics": "CPU FP32 visual_MSE + FP32(0.1*proprio_embedding_MSE), with the unchanged native final-time reduction. Component totals exactly reproduce the prior CPU native objective costs. Displayed JSON scalars are promoted to double; summing them without FP32 rounding may differ in the last bits.",
+  "component_candidate1_minus_candidate0": {
+    "visual_mse": -0.32171690464019775,
+    "proprio_embedding_mse": -0.001053668893291615,
+    "weighted_proprio_term": -0.0001053668902386562,
+    "native_weighted_cost_fp32": -0.32182228565216064
+  },
+  "existing_score_gap_identity": {
+    "definition": "For each representation, predicted gap = true-future proxy gap + gap error; gap is candidate1 cost minus candidate0 cost, not physical reward. These are identities on already reported scores.",
+    "true_future_cost_gap": -0.32182228565216064,
+    "representations": {
+      "original": {
+        "candidate1_minus_candidate0_cost": 0.26570266485214233,
+        "minus_true_future_cost_gap": 0.587524950504303,
+        "selected_candidate": "clean_identity_copy"
+      },
+      "canonical": {
+        "candidate1_minus_candidate0_cost": -0.3447378873825073,
+        "minus_true_future_cost_gap": -0.02291560173034668,
+        "selected_candidate": "canonical_request"
+      }
+    },
+    "interpretation": "Original forecasts reverse the native true-future proxy preference, while that selected candidate happens to have higher measured30-control physical reward. Canonical forecasts recover the true-future proxy ordering more closely on this bank, and select the candidate with lower measured reward. This is not a causal mediation percentage and does not exclude all roles of forecast error in the full planner."
+  },
+  "proprio_semantics": {
+    "raw_fields": [
+      "hand body xpos x",
+      "hand body xpos y",
+      "hand body xpos z",
+      "clip(norm(rightclaw_body_xpos-leftclaw_body_xpos)/0.1,0,1)"
+    ],
+    "native_input": "The wrapper passes state[:4], which contains hand position and normalized finger separation, not target-relative TCP error.",
+    "encoding": "Per-channel dataset mean/std normalization, followed by learned Conv1d kernel_size1 mapping4 to20 (prop_mlp=false). The20-vector is repeated over256 visual patch positions; the native mean reduction averages these repeats. The scored proprio term is learned feature-space MSE, not raw four-channel MSE or Euclidean TCP distance.",
+    "metric_inference": "Because the active projection is affine, its feature-space squared distance is a learned quadratic form in the normalized four-field difference; no weights were loaded to inspect that form. It need not preserve TCP-to-target distance ordering.",
+    "reward_distance": "Reach-v2 reward uses norm(tcp_center-_target_pos); tcp_center is the midpoint of rightEndEffector/leftEndEffector sites, whereas raw proprio xyz is the hand body position. Reward does not compare against the expert endpoint or include the gripper channel in its distance."
+  },
+  "goal_semantics": {
+    "source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+    "expert_steps": 100,
+    "expert_final_success": true,
+    "expert_final_reach_distance": 0.045805141413181566,
+    "raw_goal_proprio": [
+      [
+        0.008539234288036823,
+        0.8936478495597839,
+        0.16890670359134674,
+        0.9975118637084961
+      ]
+    ],
+    "physical_target": [
+      0.00878828015269964,
+      0.8902215079715988,
+      0.1692883809598016
+    ],
+    "expert_final_tcp": [
+      0.008448383896369569,
+      0.8975731067093988,
+      0.12407832183116439
+    ],
+    "not_exact_physical_target": "The original goal is the full visual/proprio observation after100 expert controls, with actual TCP0.045805141413181566m from target. Success permits distance<=0.05; this is an achieved example state, not an exact target-coordinate encoding."
+  },
+  "sources": [
+    "reports/dino_first_query_terminal_truth_20261015.json",
+    "reports/dino_first_query_two_mean_ranking_20261015.json",
+    "runs/dino_first_query_terminal_truth_20261015/{clean_identity_copy,canonical_request}_control30.npz",
+    "runs/dino_native_alias_pair_20261015/clean_identity_copy/goal_encoding.npz",
+    "runs/dino_native_alias_pair_20261015/setup/setup.npz",
+    "runs/dino_native_alias_pair_20261015/setup/setup.json",
+    "runs/dino_first_query_full_horizon_20261015/{clean_identity_copy,canonical_request}/endpoint30.npz"
+  ],
+  "source_anchors": {
+    "native_objective": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py:133-155",
+    "raw_proprio": "vendor/jepa-wms/evals/simu_env_planning/envs/metaworld.py:100-107",
+    "hand_and_tcp_difference": ".venv-a2world/lib/python3.11/site-packages/metaworld/sawyer_xyz_env.py:67-81",
+    "raw_field_construction": ".venv-a2world/lib/python3.11/site-packages/metaworld/sawyer_xyz_env.py:475-511",
+    "normalization": "vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py:374-377",
+    "linear_embedding": "vendor/jepa-wms/app/plan_common/models/prop_embedding.py:35-52",
+    "embedding_config": "vendor/jepa-wms/app/vjepa_wm/utils.py:811-820",
+    "repeat": "vendor/jepa-wms/app/vjepa_wm/video_wm.py:222-235",
+    "goal_source": "scripts/pilot_dino_metaworld_clean_gate.py:245-278",
+    "actual_reward": ".venv-a2world/lib/python3.11/site-packages/metaworld/envs/sawyer_reach_v3.py:144-162"
+  },
+  "recompute_expression": "For each k in [visual,proprio], d_k=(torch.from_numpy(goal[k])-torch.from_numpy(truth[k])).pow(2).mean(dim=tuple(range(2,truth[k].ndim)))[-1]; use CPU float32 and torch.set_num_threads(4); total=d_visual+0.1*d_proprio.",
+  "activity": {
+    "checkpoint_loads": 0,
+    "model_constructions": 0,
+    "neural_forwards": 0,
+    "environment_steps": 0,
+    "api_calls": 0,
+    "gpu_initialized": false,
+    "cached_tensor_reductions": 4
+  },
+  "reproduction": {
+    "script": "scripts/analyze_dino_first_query_objective_decomposition.py",
+    "verify_command": ".venv-jepa-native/bin/python scripts/analyze_dino_first_query_objective_decomposition.py --verify-only",
+    "new_output_command": ".venv-jepa-native/bin/python scripts/analyze_dino_first_query_objective_decomposition.py --out /tmp/dino_first_query_objective_decomposition.json",
+    "execution_note": "The numeric analysis was executed once as an inline CPU command, session98486 exit0. This standalone replay of the same formulas was then added and syntax-checked; it has not been run a second time in this task."
+  }
+}

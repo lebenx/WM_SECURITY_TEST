@@ -1,0 +1,62 @@
+{
+  "status": "completed_bounded_primary_source_review",
+  "review_date_utc": "2026-10-14",
+  "candidate": "An uncontrollable appearance difference in a goal image is incorrectly treated as achievable action-dependent progress by a frozen visual world-model planner.",
+  "decision": "NO_GO_AS_A_NEW_MECHANISM",
+  "reason": "The current proposal overlaps directly with published controllability factorization, common-mode rejection and documented spurious nuisance-action interactions. A frozen latent metric based on real/predicted action-response fidelity is also described in a current primary-source submission abstract. No distinct implementable security operation has been identified.",
+  "primary_sources": [
+    {
+      "title": "CF-JEPA: Improving Robustness of JEPA World Models via Controllability Factorization",
+      "arxiv": "2610.00727v1",
+      "submitted_utc": "2026-09-30T21:18:32Z",
+      "url": "https://arxiv.org/html/2610.00727",
+      "project": "https://morganbyrd03.github.io/cf-jepa/",
+      "verified_scope": "Primary abstract, full text and project page",
+      "relevant_location": "Section III",
+      "overlap": "Separate controllable and uncontrollable representations; action-conditioned versus action-free prediction; goal-image CEM uses the controllable representation.",
+      "caveat": "The project page and paper differ in the alpha/beta hyperparameter description. Do not infer exact reproduction settings from the project page alone. Author results have not been independently reproduced here."
+    },
+    {
+      "title": "Dueling World Models: Advantage-Style Action Channels for Common-Mode Distractor Rejection",
+      "arxiv": "2608.06706v1",
+      "submitted_utc": "2026-08-07T02:02:19Z",
+      "url": "https://arxiv.org/html/2608.06706v1",
+      "verified_scope": "Primary abstract and full text including appendices",
+      "relevant_location": "Section 3; Appendix I (Scope of the Claim); Appendix H (Extended Discussion)",
+      "overlap": "Action-mean centering applies to frozen predictors. Appendix I explicitly distinguishes physically action-independent nuisances from a learned nuisance-by-action interaction; a zero-mean interaction survives centering.",
+      "caveat": "The paper's control evidence has stated limits, including a failed DMC control gate. Algebraic cancellation does not guarantee successful planning or a nuisance-free learned action channel. Author experiments have not been independently reproduced here."
+    },
+    {
+      "title": "Latent Metrics for Planning with World Models",
+      "forum": "shrZrxHBY2",
+      "submission_number": 27943,
+      "venue_status": "ICLR 2027 Conference Submission; acceptance not established",
+      "url": "https://openreview.net/forum?id=shrZrxHBY2",
+      "primary_metadata_url": "https://api2.openreview.net/notes/search?term=Latent+Metrics+for+Planning+with+World+Models&limit=5",
+      "verified_scope": "Exact title, forum ID, submission number, venue status and abstract retrieved from the official OpenReview API",
+      "overlap": "With encoder and predictor frozen, the abstract proposes weighting latent planning directions using real-versus-predicted action-response consistency and prediction accuracy; it explicitly describes a fixed-candidate, fixed-prediction ranking comparison.",
+      "caveat": "Full PDF/forum content could not be accessed in this audit. Specific equations, tasks, data partitions and result tables are unverified. Abstract results are author claims and are not our experiments."
+    }
+  ],
+  "local_architecture_boundary": {
+    "model": "JEPA-WMs reproduced DINO-WM MetaWorld baseline",
+    "prediction_inputs": "Current encoded observation and candidate action sequence",
+    "goal_path": "Goal encoding enters the planning objective, not the world predictor",
+    "implication": "Changing only the goal cannot change forecasts for fixed observations and fixed candidate actions in this implementation. Ranking changes alone would not establish forecast contamination.",
+    "sources": [
+      "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py",
+      "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py"
+    ]
+  },
+  "retained_next_step": "Complete the separately specified ordinary Clean task readiness test. This does not authorize or establish the rejected mechanism, an attack, a defense, or paper-level novelty.",
+  "new_accepted_mechanisms": [],
+  "model_api_requests": 0,
+  "model_rollouts_in_this_audit": 0,
+  "training_updates": 0,
+  "limitations": [
+    "This is a bounded overlap audit, not an exhaustive novelty proof.",
+    "Finding prior work does not prove that every possible security formulation is unoriginal; the present proposal lacks an identified distinguishing mechanism.",
+    "No platform-restricted adaptive WorldAgen experiment was retried."
+  ]
+}

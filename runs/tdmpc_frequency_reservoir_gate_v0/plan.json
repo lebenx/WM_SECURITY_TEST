@@ -1,0 +1,22 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "validation_seed": 33,
+  "eval_seeds": [
+    41,
+    42
+  ],
+  "source_steps": 300,
+  "eval_steps": 300,
+  "updates": 80,
+  "learning_seed": 31,
+  "jacobian_states": 2,
+  "output": "runs/tdmpc_frequency_reservoir_gate_v0",
+  "operation": "Legal low-frequency source actions versus equal-envelope high-frequency and random controls; native TD-MPC2 full update; planner unchanged.",
+  "hypothesis": "A smooth source can reallocate shared representation capacity away from target high-frequency/contact action directions while preserving source legality and target one-step error.",
+  "promotion_gate": "Require low-frequency arm to reduce native MPC return on both seeds versus both controls, retain target one-step error <=1.05x random, show actor-only return preserved, and show a selective target action-Jacobian condition/effective-rank change. Otherwise reject.",
+  "api_requests": 0,
+  "gpu_work": "bounded native inference and full-update adaptation only"
+}

@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-09",
+  "status": "completed_public_experience_followup_no_method_advantage",
+  "claim_status": "unproven",
+  "carrier": {
+    "repository": "https://github.com/sankaranv/interphyre",
+    "pin": "1862d7175854b51e79128bd6ffbde970fe0589fa",
+    "native_task_predicate": "sustained green/blue contact for the unmodified default duration",
+    "default_physics_steps": 1000,
+    "certified_solutions_exposed_to_learner": false
+  },
+  "run": "runs/interphyre_program_search_v0",
+  "script": "scripts/pilot_interphyre_program_search.py",
+  "result": {
+    "status": "completed",
+    "run": "runs/interphyre_program_search_v0",
+    "elapsed_s": 8.140145535115153,
+    "native_placement_queries": 960,
+    "valid_physics_rollouts": 563,
+    "invalid_placement_queries": 397,
+    "physics_steps": 563000,
+    "source_queries": 768,
+    "target_queries": 192,
+    "results": {
+      "halton_sequence": {
+        "successes": 0,
+        "tasks": 16,
+        "placement_queries": 48
+      },
+      "learned_program": {
+        "successes": 0,
+        "tasks": 16,
+        "placement_queries": 48
+      },
+      "same_data_kernel_model": {
+        "successes": 0,
+        "tasks": 16,
+        "placement_queries": 48
+      },
+      "source_greedy_sequence": {
+        "successes": 0,
+        "tasks": 16,
+        "placement_queries": 48
+      }
+    },
+    "api_requests": 0,
+    "gpu_work": false,
+    "method_novelty_established": false,
+    "strong_baseline_advantage_established": false,
+    "scope": "Within-level unseen-seed development screen; not cross-level transfer or a new-method claim.",
+    "finished_at_utc": "2026-10-08T23:02:38.357648+00:00"
+  },
+  "assessment": {
+    "status": "completed_source_acquisition_failed_before_informative_method_comparison",
+    "script_sha256": "09178ccc461fcfeb6e3a5d79cdfdf6f2ace24ce3b02843fdabaf918f15218d0d",
+    "source_successes": 0,
+    "source_placement_queries": 768,
+    "learned_branch_nodes": 0,
+    "returned_programs": {
+      "catapult": {
+        "op": "sequence",
+        "actions": [
+          0,
+          1,
+          2
+        ]
+      },
+      "pass_the_parcel": {
+        "op": "sequence",
+        "actions": [
+          0,
+          1,
+          2
+        ]
+      }
+    },
+    "interpretation": "The source action library produced zero successes on both selected levels. Both learned programs reduce to the same index-tie-broken sequence [0,1,2]. All four target arms fail 0/16; this is not an informative test of adaptive structure transfer, nor evidence that the intended general mechanism is false.",
+    "action_grammar_scope": "Researcher-provided 32 Halton placements plus 16 object-relative drop expressions. The search can induce branch structure and thresholds but cannot invent new primitive action expressions or optimize their continuous arguments.",
+    "prior_art_boundary": "Program synthesis, adaptive decision trees, executable skill libraries, and learned program transformations are existing ideas. This implementation does not establish a new learning operation or novelty 7–7.5.",
+    "baseline_scope": "The kernel model and fixed source-coverage sequence are same-data numerical comparators, not a full reproduction of HExA, FlowEvo, or state-of-the-art physics solving.",
+    "native_controls": {
+      "certified_solution_successes": 4,
+      "certified_solution_cases": 4,
+      "published_literal_placement_successes": 3,
+      "published_literal_placement_queries": 8,
+      "interpretation": "Native known-solution replay passes 4/4. A single published HExA literal placement succeeds on 3/4 tested source seeds. These are post-screen controls and do not enter learning or establish HExA reproduction."
+    },
+    "total_new_placement_queries_including_controls": 972,
+    "valid_physics_rollouts_including_controls": 575,
+    "physics_steps_including_controls": 570614,
+    "api_requests": 0,
+    "gpu_work": false,
+    "accepted_novel_method": false,
+    "decision": "Do not scale this finite action catalog or report it as a learned branching success. Retain the working native carrier and source traces. Continuous argument/program generation must solve source tasks before a meaningful structure-transfer comparison. Existing generic program-transformation ideas are not by themselves the novel contribution.",
+    "checked_at_utc": "2026-10-08T23:06:51.495498+00:00"
+  },
+  "headline_cn": "公开实验经验带来了可用源样本，但程序与普通预测模型、固定经验序列同为 1/8；尚未学出新程序结构或取得方法优势。",
+  "report_note_cn": "新增 Interphyre 原生 CPU 筛查：catapult 与 pass_the_parcel 各 8 个源种子、48 个共有动作表达式，共 768 次源放置查询，没有成功样本。程序搜索返回固定序列 [0,1,2]，没有学出条件分支。各 8 个独立目标种子上，程序、同数据核预测模型、源贪心序列与 Halton 序列均为 0/16；这说明本次采集未满足有效比较的条件，不能据此否定一般的实验程序学习。另做 12 次原生控制：官方已知解 4/4 成功；HExA 论文中的两个字面放置动作共执行 8 次，其中一个动作解决 3/4 个源种子。控制结果不进入训练，也不算 HExA 复现。合计 972 次放置查询，575 次有效物理轨迹，无模型 API 或 GPU；固定候选库不扩量。 随后从 HExA 公开的 5 条源轨迹中提取 45 个尝试过的放置动作，向全部比较方法提供相同候选。新增 360 次源调用，在 3/8 个源种子上各得到 1 个成功动作；3 步固定序列已覆盖这些源成功，程序搜索仍没有产生分支。新的 catapult 目标种子 200–207 上，程序、同数据预测模型、固定源序列均成功 1/8，分别使用 24、23、24 次放置查询；按库顺序取前三个动作成功 0/8。后续共 455 次查询，其中 274 次有效物理轨迹。两次筛查加控制合计 1427 次查询、849 次有效轨迹；未调用模型 API 或 GPU。前后目标集合不同，不能把 0/16 与 1/8 当作经验库改进的因果对照。所有结果仍未支持新方法，固定候选排序路线不再扩量。",
+  "next_requirement": "Stop expanding finite catalog selection as a proposed novel mechanism. A next structural program-learning experiment must create program expressions/continuous arguments beyond literal replay and specify a substantive operation beyond existing program synthesis and code-transformation methods. Native HExA remains an unreproduced strong comparator.",
+  "updated_at_utc": "2026-10-08T23:09:44.115406+00:00",
+  "initial_status": "completed_source_acquisition_failed_before_informative_method_comparison",
+  "initial_headline_cn": "原生物理核心任务筛查已完成，但有限动作库未获得源任务成功样本，未学出条件分支；当前结果不支持新方法优势。",
+  "initial_report_note_cn": "新增 Interphyre 原生 CPU 筛查：catapult 与 pass_the_parcel 各 8 个源种子、48 个共有动作表达式，共 768 次源放置查询，没有成功样本。程序搜索返回固定序列 [0,1,2]，没有学出条件分支。各 8 个独立目标种子上，程序、同数据核预测模型、源贪心序列与 Halton 序列均为 0/16；这说明本次采集未满足有效比较的条件，不能据此否定一般的实验程序学习。另做 12 次原生控制：官方已知解 4/4 成功；HExA 论文中的两个字面放置动作共执行 8 次，其中一个动作解决 3/4 个源种子。控制结果不进入训练，也不算 HExA 复现。合计 972 次放置查询，575 次有效物理轨迹，无模型 API 或 GPU；固定候选库不扩量。",
+  "public_experience_followup": {
+    "run": "runs/interphyre_public_trace_program_v0",
+    "result": {
+      "status": "completed",
+      "run": "runs/interphyre_public_trace_program_v0",
+      "elapsed_s": 5.026034350972623,
+      "native_placement_queries": 455,
+      "valid_physics_rollouts": 274,
+      "invalid_placement_queries": 181,
+      "physics_steps": 270284,
+      "source_queries": 360,
+      "target_queries": 95,
+      "results": {
+        "learned_program": {
+          "successes": 1,
+          "tasks": 8,
+          "placement_queries": 24
+        },
+        "library_prefix": {
+          "successes": 0,
+          "tasks": 8,
+          "placement_queries": 24
+        },
+        "same_data_kernel_model": {
+          "successes": 1,
+          "tasks": 8,
+          "placement_queries": 23
+        },
+        "source_greedy_sequence": {
+          "successes": 1,
+          "tasks": 8,
+          "placement_queries": 24
+        }
+      },
+      "api_requests": 0,
+      "gpu_work": false,
+      "method_novelty_established": false,
+      "strong_baseline_advantage_established": false,
+      "scope": "Within-level unseen-seed development screen; not cross-level transfer or a new-method claim.",
+      "finished_at_utc": "2026-10-08T23:08:45.188218+00:00"
+    },
+    "assessment": {
+      "status": "completed_public_experience_followup_no_method_advantage",
+      "source_successful_queries": 3,
+      "source_tasks_with_any_success": 3,
+      "source_tasks": 8,
+      "source_queries": 360,
+      "learned_program": {
+        "op": "sequence",
+        "actions": [
+          10,
+          43,
+          44
+        ]
+      },
+      "learned_branch_nodes": 0,
+      "target_result": {
+        "learned_program": {
+          "successes": 1,
+          "tasks": 8,
+          "placement_queries": 24
+        },
+        "library_prefix": {
+          "successes": 0,
+          "tasks": 8,
+          "placement_queries": 24
+        },
+        "same_data_kernel_model": {
+          "successes": 1,
+          "tasks": 8,
+          "placement_queries": 23
+        },
+        "source_greedy_sequence": {
+          "successes": 1,
+          "tasks": 8,
+          "placement_queries": 24
+        }
+      },
+      "interpretation": "The public source trajectories provide successful candidate placements on 3/8 source seeds, unlike the blind library. At depth three, greedy replay already covers all three supported source worlds. The synthesized program therefore remains a fixed sequence, and no conditional branch is learned. On new target seeds 200–207, learned program, same-data kernel predictor, and source greedy replay each solve 1/8. The kernel uses 23 placement queries versus 24 for the other two; no efficiency or structural-learning gain is established.",
+      "scope": "Development follow-up in catapult only, with a different target cohort from the initial screen. Do not infer a causal bank-improvement effect by comparing its 1/8 with the earlier 0/16. Public trajectory acquisition is external, shared prior data and not a measured zero-cost training process.",
+      "public_source_repository": "https://github.com/General-Exp-3-Continual-Learning-Agent/HeXA-Hierarchical-Experimentalist-Agents",
+      "public_source_pin": "d7683fdc32b62954a978fa3a15c2430444b32e19",
+      "public_source_trajectory_count": 5,
+      "candidate_expression_count": 45,
+      "candidate_manifest": "configs/interphyre_public_trace_actions.json",
+      "certified_solutions_enter_learner": false,
+      "api_requests": 0,
+      "gpu_work": false,
+      "accepted_novel_method": false,
+      "decision": "Stop expanding finite catalog selection as a proposed novel mechanism. A next structural program-learning experiment must create program expressions/continuous arguments beyond literal replay and specify a substantive operation beyond existing program synthesis and code-transformation methods. Native HExA remains an unreproduced strong comparator.",
+      "checked_at_utc": "2026-10-08T23:09:44.115406+00:00"
+    }
+  },
+  "total_this_turn": {
+    "placement_queries": 1427,
+    "valid_physics_rollouts": 849,
+    "invalid_placements": 578,
+    "physics_steps": 840898,
+    "api_requests": 0,
+    "gpu_work": false
+  }
+}

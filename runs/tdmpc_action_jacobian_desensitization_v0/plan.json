@@ -1,0 +1,21 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "walker-stand",
+  "target_task": "reacher-easy",
+  "source_seed": 23,
+  "validation_seed": 33,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "source_steps": 50,
+  "eval_steps": 300,
+  "updates": 20,
+  "learning_seed": 31,
+  "jacobian_states": 4,
+  "output": "runs/tdmpc_action_jacobian_desensitization_v0",
+  "operation": "Legal high-frequency walker-stand dither versus equal-budget random source; native TD-MPC2 dynamics-only update; evaluate orthogonal reacher-easy action Jacobian and MPC.",
+  "falsification": "Require dither reach action-Jacobian Frobenius norm <=0.60x random, one-step error <=1.10x random, and MPC return <=0.50x random; otherwise reject C2.",
+  "api_requests": 0,
+  "gpu_work": "short native CUDA only"
+}

@@ -1,0 +1,11 @@
+1) **严格结论**：不足以支撑“重大新论文”。该构造只是已知的 discontinuous-reparameterization / moving-boundary autodiff bias：对每个 \((s,a)\)，若 \(U\sim\mathrm{Unif}(0,1)\)，则  
+\[
+\operatorname{frac}(U-k\mu/\sigma_{\rm ref})\sim\mathrm{Unif}(0,1),
+\]
+所以前向条件分布仍为同一高斯；变化仅在样本耦合及错误梯度。既有 gradient-masking/Facade 类工作也已覆盖“输出与梯度分离”的安全含义。必须改 sampler 源码而非权重，并不自动形成新威胁模型。
+
+2) **无法在给定约束下提供合格的新机制**。对原生 TD-MPC2/MPPI，若控制器只使用前向 rollout、代价和采样排序而不反传，则该攻击对其决策分布没有机制性影响；改变其结果必然依赖前向分布、跨时序耦合、实现缺陷或数据/不确定性操纵，而这些要么已被排除，要么属于你列出的既有机制。弱 CEM 上的有限样本耦合效应也不能升级为强控制器攻击，尤其已有失败记录。
+
+**有用的 no-go 约束**：在固定随机种子、相同候选动作及相同前向输出（或同分布独立重采样）的条件下，任何仅改变 autodiff 梯度的 sampler 编辑，对 gradient-free MPPI/TD-MPC2 的动作选择应严格不变。
+
+**决定性 gate**：将原 sampler 与攻击 sampler 接入同一冻结 TD-MPC2，逐步比较 rollout 状态、代价、MPPI 权重和最终动作；要求达到统计显著的性能下降且排除采样方差。最强直接基线是原生 TD-MPC2/MPPI，而非已知的弱 CEM 或梯度 MPC。

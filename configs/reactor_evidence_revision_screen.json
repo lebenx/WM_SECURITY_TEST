@@ -1,0 +1,95 @@
+{
+  "status": "completed_no_advantage_over_matched_noisy_input_fitting_or_simple_elimination",
+  "completed_at_utc": "2026-10-08T18:19:12.234552+00:00",
+  "candidate": "Feedback-constrained sparse revision of noisy reference inputs followed by symbolic refitting.",
+  "candidate_accepted_as_novel": false,
+  "screen_run": "runs/reactor_evidence_revision_v0",
+  "native_continuation_run": "runs/reactor_evidence_revision_continuation_v0",
+  "screen": {
+    "datasets": 4,
+    "unique_historical_worlds": 2,
+    "penalties_per_dataset": 4,
+    "primary_feedback_changed_decisions": 0,
+    "all_penalties_feedback_changed_decisions": 0,
+    "candidate_counts": [
+      174,
+      39,
+      174,
+      37
+    ],
+    "elapsed_s": 1.5083094369620085,
+    "new_native_actions": 0,
+    "comparison": "Same hypotheses, input-relaxation options and ranking in both selectors; only actual earlier failed-setting constraints differ.",
+    "scope": "Local single-reading perturbation family on displayed 0.01 grid; ranges are empirical search limits, not statistical confidence bounds. No global optimality claim."
+  },
+  "native": {
+    "historical_checkpoints": 1,
+    "unique_worlds": 1,
+    "new_worlds": 0,
+    "continuations": 4,
+    "by_method": {
+      "ordinary_refit": {
+        "completed_successfully": false,
+        "replayed_actions": 264,
+        "continuation_actions": 21,
+        "total_actions": 285
+      },
+      "finite_model_elimination": {
+        "completed_successfully": true,
+        "replayed_actions": 264,
+        "continuation_actions": 38,
+        "total_actions": 302
+      },
+      "errors_in_variables": {
+        "completed_successfully": true,
+        "replayed_actions": 264,
+        "continuation_actions": 37,
+        "total_actions": 301
+      },
+      "feedback_evidence_revision": {
+        "completed_successfully": true,
+        "replayed_actions": 264,
+        "continuation_actions": 37,
+        "total_actions": 301
+      }
+    },
+    "elapsed_s": 39.94536544196308,
+    "native_actions": 1189,
+    "replay_actions": 1056,
+    "continuation_actions": 133,
+    "scope": "One selected historical Challenge seed24 failure. All 264 prefix actions replayed independently for each method. Public physical checkpoint fields match. Selector inputs remain the same historical observations; newly drawn noise is logged but not used to reselect. This is not four independent test worlds or new autonomous full-task learning.",
+    "candidate_and_noisy_input_actions_identical": true
+  },
+  "supply_and_feedback": {
+    "supplied": "Existing expression grammar, isolated radiation readings, displayed 0.01 grid, single-entry input-relaxation family, model-complexity penalty, native2Hz activation tolerance, collection/navigation/parsers.",
+    "feedback_used": "Only actual failed target setpoints observed before calibration; post-calibration outcomes and hidden target frequencies are not inputs.",
+    "hypothetical_input": "10.08 is a candidate latent reference value inferred from a measured minimum10.09, not a fabricated observed reading. No remeasurement took place in this screen; the resulting model was evaluated by real native tuning."
+  },
+  "review": {
+    "run": "runs/counterexample_operator_review_20261008T180236Z",
+    "model": "qwen3.8-max",
+    "requests": 1,
+    "status": "success",
+    "primary_called": false,
+    "candidate": "Causal-Cut Residualization",
+    "accepted": false,
+    "assessment": "The proposal provides no demonstrated separating causal cut. Zero finite-difference/first-order influence alone does not prove finite-update invariance in a nonlinear graph, and the residual dimensions/update are underspecified. It was not used as experimental evidence or implemented as an accepted new method."
+  },
+  "prior_art": [
+    {
+      "title": "Learning programs by learning from failures",
+      "url": "https://arxiv.org/abs/2005.02259",
+      "scope": "Generate-test-constrain and generalisation/specialisation pruning are prior operations."
+    },
+    {
+      "title": "Learning logic programs by explaining their failures",
+      "url": "https://link.springer.com/article/10.1007/s10994-023-06358-1",
+      "scope": "Failing subprograms refine the hypothesis space beyond rejecting the whole program. Our numeric finite-model filter is not a reproduction of Hempel."
+    }
+  ],
+  "api_requests_experiments": 0,
+  "gpu_work": false,
+  "headline_cn": "反证驱动读数修正候选未超过匹配的测量误差拟合；普通模型排除也修复了选定的原生失败案例。",
+  "report_note_cn": "新增离线候选操作允许将一个参考读数解释为邻近的潜在值，然后重新拟合，并用此前实际失败的调谐结果约束模型。在4份真实记录（2个世界各2次运行）、4档复杂度惩罚下，加入反证均未改变匹配的测量误差拟合器的选择。对原先失败的Challenge种子24检查点，又分别重放264个原生动作并执行4种冻结选择：普通重拟合失败；有限候选模型排除成功（38个续跑动作）；普通测量误差拟合与候选均成功（各37个续跑动作，动作序列完全一致）。因此候选的额外操作没有带来收益，不作为新方法，不继续扩量。这里只有1个选定历史检查点；输入修正是待检验的潜在值假设，没有伪装成实际读数。",
+  "decision": "Retire this proposed feedback-evidence-revision operator as a contribution on the tested family. Retain the simple finite-model-elimination and noisy-input comparators. Stop expanding Reactor measurement/calibration variants as a novelty search. A new direction must specify a substantive changed learning operation and demonstrate a native benefit beyond the closest concrete baseline before scale-up."
+}

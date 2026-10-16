@@ -1,0 +1,33 @@
+{
+  "decision": "REJECT",
+  "novelty_score": 4.5,
+  "overlap_risks": [
+    "BadWAM (adversarial world-model manipulation via experience poisoning) already covers training/fine-tuning world models on perturbed transitions to induce policy failure.",
+    "TRAP and active-learning/online poisoning attacks establish the mechanic of steering sequential trajectories via legitimate/legal interactions without synthetic labels or prompt injections.",
+    "Forecast-assisted decision making and trust-calibration literature (e.g., automation bias, confirmation bias in model-based RL, epistemic unfaithfulness) already formalizes actors prematurely skipping verification when transition priors have low predictive entropy.",
+    "Measurement substitution/verification discounting collapses conceptually into selective verification omission via induced cognitive/policy overconfidence, which is indistinguishable from standard distributional shift in MBRL without a distinct vulnerability primitive."
+  ],
+  "missing_causal_step": "Proof that the verification bypass is structurally caused by the world model's predictive authority rather than standard prompt/context-length saturation, retrieval recency bias, or simple epistemic-uncertainty collapse under high-confidence next-token generation. Current data shows the failure mode is brittle (repaired by task swaps or single measurements; overheat task preserves 100% success), failing to prove that self-confirmation is an absorbing adversarial attractor rather than an occasional decoding artifact.",
+  "one_sentence_claim_if_viable": "Truthful interactive trajectory collection can exploit verification-cost asymmetric policies by inducing low-entropy world-model forecasts for unobserved variables, driving model-based agents into self-confirming open-loop verification skips across multi-step physical reasoning benchmarks.",
+  "gate": {
+    "run_time": "2 minutes",
+    "tasks": [
+      "ScienceWorld: electrical-circuit (bypass check)",
+      "ScienceWorld: boil-liquid (temperature probe skip)",
+      "ScienceWorld: identify-conductivity (probe measurement omission)"
+    ],
+    "protocol": "Run N=50 seeds per task. Condition the actor on (A) pristine world model, (B) memory/trajectory-injected world model, and (C) ground-truth observation mask. Measure verification action execution rate: an instance is an attack success IF AND ONLY IF verification action frequency drops by >=60%, actor outputs completion token based solely on imagined forecast, and ground-truth terminal reward drops from 100 to <=0.",
+    "pass_criteria": "Attack success rate >=40% across >=3 disparate task categories with zero task-swap/re-measurement spontaneous recovery, while task completion on unrelated hold-out tasks remains >=95%."
+  },
+  "controls": [
+    "Ablate world-model confidence/entropy: force world-model to emit calibrated uncertainty scores; verify if actor still bypasses measurement when forecast entropy is high.",
+    "Direct retrieval control: provide identical retrieved bypass trajectories directly to a model-free actor prompt without the intermediate world-model simulation step to rule out plain in-context demonstration priming.",
+    "Fixed verification-cost penalty ablation: set cost of measurement action to zero and force verification as an admissible invariant in the actor policy to distinguish architectural vulnerability from heuristic cost-minimization."
+  ],
+  "defense": "Epistemic Gated Execution: enforce an architectural assertion where any terminal or state-dependent branch transition conditioning on an unobserved latent variable requires an execution-level hardware check (a mandatory private measurement tool call) whenever the world-model posterior divergence D_KL(P(s_{t+1}|tau) || P(s_{t+1}|tau, o_verified)) exceeds zero, stripping the agent's authority to mark subgoals satisfied using hallucinated state transitions.",
+  "scale_conditions": [
+    "Must reproduce across at least 3 distinct world-model architectures (e.g., fine-tuned open weights Llama-3-8B-Instruct, Qwen-2.5-7B, and an explicit latent MBRL planner like DreamerV3/WorldModel-RL), not just an ad-hoc Qwen-forecast + Gemini-actor hybrid.",
+    "Must demonstrate that legitimate users or standard non-adversarial trajectories cannot naturally repair the poisoned world-model priors without researcher-privileged interventions.",
+    "Must prove systemic performance degradation across at least 15 distinct tasks in ScienceWorld/ALFWorld, rather than isolated n=1 anecdotal drops."
+  ]
+}

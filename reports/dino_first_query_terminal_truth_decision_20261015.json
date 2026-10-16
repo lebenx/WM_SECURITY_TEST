@@ -1,0 +1,155 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T11:15:09.652771+00:00",
+  "status": "completed_full_horizon_truth_countercheck_no_prediction_degradation_claim",
+  "research_goal_status": "active_unachieved",
+  "source_reports": [
+    "reports/dino_first_query_full_horizon_20261015.json",
+    "reports/dino_first_query_terminal_truth_20261015.json",
+    "reports/dino_first_query_two_mean_ranking_20261015.json",
+    "reports/action_alias_interventional_contract_20261015.json",
+    "reports/dino_first_query_native_objective_decomposition_20261015.json"
+  ],
+  "one_sentence_supported_claim": "On one post-hoc two-candidate bank at the same native query root, execution-equivalent request canonicalization improves both30-control terminal forecasts and follows the true-future native score ranking, yet selects the candidate with lower independently replayed physical utility.",
+  "rows": [
+    {
+      "candidate": "clean_identity_copy",
+      "original_forecast_cost": 0.8484280705451965,
+      "canonical_forecast_cost": 1.5804330110549927,
+      "true_future_native_cost": 1.7012925148010254,
+      "original_forecast_weighted_mse": 1.565622674029562,
+      "canonical_forecast_weighted_mse": 0.5292098190610094,
+      "controls": 30,
+      "terminal_native_reward": 5.2479071617126465,
+      "cumulative_native_reward": 95.84182262420654,
+      "terminal_reach_distance": 0.14261315432355678,
+      "terminal_success": false,
+      "ever_success": false,
+      "successful_controls": 0,
+      "first_success_control": null
+    },
+    {
+      "candidate": "canonical_request",
+      "original_forecast_cost": 1.1141307353973389,
+      "canonical_forecast_cost": 1.2356951236724854,
+      "true_future_native_cost": 1.3794702291488647,
+      "original_forecast_weighted_mse": 0.9585290969128817,
+      "canonical_forecast_weighted_mse": 0.45830340372250067,
+      "controls": 30,
+      "terminal_native_reward": 3.347029447555542,
+      "cumulative_native_reward": 76.03699398040771,
+      "terminal_reach_distance": 0.18721491785066868,
+      "terminal_success": false,
+      "ever_success": false,
+      "successful_controls": 0,
+      "first_success_control": null
+    }
+  ],
+  "cost_gap_decomposition": {
+    "original": {
+      "candidate1_minus_candidate0_cost": 0.26570266485214233,
+      "difference_from_true_cost_gap": 0.587524950504303,
+      "selected_candidate": "clean_identity_copy"
+    },
+    "canonical": {
+      "candidate1_minus_candidate0_cost": -0.3447378873825073,
+      "difference_from_true_cost_gap": -0.02291560173034668,
+      "selected_candidate": "canonical_request"
+    },
+    "true_future": {
+      "candidate1_minus_candidate0_cost": -0.32182228565216064,
+      "difference_from_true_cost_gap": 0.0,
+      "selected_candidate": "canonical_request"
+    }
+  },
+  "physical_selection_consequence": {
+    "score_and_true_outcome_control_horizon": 30,
+    "selection_indices_frozen": {
+      "original": 0,
+      "canonical": 1
+    },
+    "primary_canonical_selected_minus_original_selected_terminal_reward": -1.9008777141571045,
+    "selected_terminal_reward_decreases": true,
+    "selected_terminal_reward_ties": false,
+    "selected_terminal_reward_increases": false,
+    "cumulative_reward30_difference": -19.804828643798828,
+    "terminal_distance_difference": 0.0446017635271119,
+    "terminal_success_difference": 0,
+    "scope": "Measured two-candidate full-horizon selection consequence; no complete-population CEM or closed-loop causal mediation claim."
+  },
+  "interpretation": {
+    "established": [
+      "The fixed two-action ranking reverses under request representation, with unchanged history, original goal, actions and scorer.",
+      "The two full30-control real replays preserve their historical15-control prefixes exactly and independently establish selected cumulative and terminal reward loss.",
+      "Canonical terminal weighted feature MSE is lower for both fixed candidates; native cost on true future encodings also prefers candidate1, which has lower cumulative and terminal environment reward.",
+      "Original forecast cost error reverses the true-feature scorer ranking and happens to select the better physical-utility candidate in this bank; reducing error need not improve an already misaligned proxy."
+    ],
+    "not_established": [
+      "No claim that forecast error plays no causal role: its direction can still affect ranking. This is not a causal mediation percentage.",
+      "No full native CEM-population reconstruction or prediction-error mediation of the99-step closed-loop effect. An exact-future full planner could search for other actions.",
+      "The native policy executes15 controls then replans; the30-control continuation is a fixed open-loop comparison, not a new native closed-loop episode.",
+      "No success-rate harm: neither30-control branch succeeds. No independent generalization or population ASR/CI/p-value from one development root.",
+      "No Goal-Swap result: DINO goal enters the objective, not this fixed-action forecast branch. No proof of training-support membership or exclusion of ordinary extrapolation.",
+      "No new defense contribution or qualified general security mechanism."
+    ]
+  },
+  "go_no_go": {
+    "bounded_representation_selection_and_measured_utility_effect": "GO: retain reproducible local evidence.",
+    "canonical_causes_worse_terminal_prediction_on_this_bank": "NO-GO: both candidate forecast errors decrease.",
+    "forecast_error_has_no_role": "NOT ESTABLISHED: lower scalar error and proxy mismatch do not exclude error-mediated rank changes.",
+    "paper_level_security_claim_or_expansion": "NO-GO: stop expanding this alias construct merely to accumulate seeds or effect sizes; require a substantively distinct restricted mechanism and an aligned independent utility test."
+  },
+  "statistics": {
+    "independent_initial_roots": 1,
+    "candidates": 2,
+    "post_hoc_candidate_bank": true,
+    "significance_test": null,
+    "confidence_interval": null,
+    "population_action_ranking_flip_rate": null,
+    "observed_bank_ranking_flip": true
+  },
+  "execution": {
+    "replay": {
+      "session_id": 16874,
+      "terminal_exit_code": 0,
+      "elapsed_seconds": 8.770975599996746,
+      "explicit_environment_controls": 60,
+      "gpu_calls": 0,
+      "api_calls": 0
+    },
+    "terminal_truth": {
+      "session_id": 77949,
+      "terminal_exit_code": 0,
+      "elapsed_seconds": 8.679799505043775,
+      "encodes": 5,
+      "calibration_encodes": 3,
+      "new_terminal_encodes": 2,
+      "predictor_calls": 0,
+      "planner_calls": 0,
+      "environment_steps": 0,
+      "api_calls": 0,
+      "calibration_max_error": 0.0,
+      "peak_cuda_reserved_bytes": 222298112
+    },
+    "scope": "Session terminal outcomes reported by the owning execution agents; calls and calibration checked against their saved reports. No new inference is performed by this synthesis.",
+    "numeric_reproduction": {
+      "script": "scripts/analyze_dino_first_query_objective_decomposition.py",
+      "command": ".venv-jepa-native/bin/python scripts/analyze_dino_first_query_objective_decomposition.py --verify-only",
+      "session_id": 99703,
+      "terminal_exit_code": 0,
+      "status": "verified_exact_numeric_sections",
+      "model_or_environment_calls": 0,
+      "reason": "The newly packaged reproduction script was exercised once after implementation; saved numeric sections matched exactly."
+    }
+  },
+  "next_action": "Close the forecast-degradation explanation for this measured bank, retain its conditional decision effect, and return to mechanism discovery. Do not rerun this bank, expand native alias seeds, restart NanoWM or generate the closed Cosmos bank without a new decision-relevant hypothesis.",
+  "objective_component_check": {
+    "report": "reports/dino_first_query_native_objective_decomposition_20261015.json",
+    "script": "scripts/analyze_dino_first_query_objective_decomposition.py",
+    "sum_matches_native_fp32_exactly": true,
+    "both_components_prefer_lower_physical_utility_candidate": true,
+    "proprio_is_tcp_distance": false,
+    "scope": "Goal is a successful expert example observation; learned hand-position/gripper features are not target-relative TCP distance. No weighting or alternative score was selected after observing outcomes."
+  },
+  "result_table": "reports/dino_first_query_terminal_truth_table_20261015.csv"
+}

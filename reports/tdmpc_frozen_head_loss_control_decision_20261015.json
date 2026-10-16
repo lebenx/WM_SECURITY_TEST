@@ -1,0 +1,157 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "completed_real_experiment_independently_recomputed_no_selective_recovery",
+  "question": "Does restoring native reward/value loss gradients through frozen heads selectively remove the existing source23/seed31 cascade-vs-random return gap when only dynamics parameters change?",
+  "scope": "One previously used development root; methodology qualification of a researcher-defined offline-checkpoint adaptation. No Goal change, new attack, native full learner, fixed-candidate ranking or generalization claim.",
+  "artifacts": {
+    "protocol": "configs/tdmpc_frozen_head_loss_control_20261015.json",
+    "runner": "scripts/pilot_tdmpc_frozen_head_loss_control.py",
+    "immutable_launched_runner": "runs/tdmpc_frozen_head_loss_control_20261015/launched_script.py",
+    "raw_summary": "runs/tdmpc_frozen_head_loss_control_20261015/summary.json",
+    "independent_review": "reports/tdmpc_frozen_head_loss_control_review_20261015.json",
+    "analysis_script": "scripts/analyze_tdmpc_frozen_head_loss_control.py",
+    "results_csv": "runs/tdmpc_frozen_head_loss_control_20261015/analysis_results.csv"
+  },
+  "design": {
+    "checkpoint": "models/tdmpc2/mt30-48M.pt",
+    "source_revision": "e9f59321933cbc8e11a002b842adc7d4ffae8ff1",
+    "source_task": "cheetah-run",
+    "source_seed": 23,
+    "source_data": "Existing random/cascade real 300-transition caches; no recollection.",
+    "target_task": "walker-run",
+    "evaluation_seed": 31,
+    "real_controls_per_arm": 500,
+    "updates_per_arm": 300,
+    "optimizer": "Fresh Adam lr=3e-4, clipping20, H3, batch32; same saved CUDA batch-index bank.",
+    "only_trainable": "dynamics",
+    "frozen_parameters": "Encoder, reward, online/target Q, actor, task embeddings, all remaining model state.",
+    "added_loss": "Native soft_ce reward and TD-value losses, coefficients0.1/0.1, through frozen heads into predicted latent states; detached native targets from fixed true successor encodings.",
+    "mode": "eval, unchanged from original dynamics-only adaptation; not full native joint training.",
+    "target_rng": "Per-update forked CPU/current-CUDA seed314159+u, shared across sources, restored after native target sampling.",
+    "native_planner": "Unchanged horizon3/512samples/6iterations/64elites/24prior trajectories, original eval_mode=False.",
+    "candidate_boundary": "Closed-loop native planner: subsequent candidate/trajectory changes are downstream effects; candidates are not held fixed."
+  },
+  "historical_reconstruction": {
+    "both_300_step_logs_exact": true,
+    "fields": [
+      "weighted_consistency_loss",
+      "grad_norm"
+    ],
+    "both_full_returns_exact": true,
+    "old_adapted_weights_available": false,
+    "limitation": "Matching every learning log and the full return does not independently prove equality to unavailable historical adapted parameters. Newly adapted dynamics weights are saved.",
+    "historical_clean_return_not_rerun": 657.6172727290541
+  },
+  "results": [
+    {
+      "condition": "consistency_random",
+      "real_return": 612.082555025816,
+      "full_episode": true,
+      "controls": 500
+    },
+    {
+      "condition": "consistency_cascade",
+      "real_return": 495.2163214981556,
+      "full_episode": true,
+      "controls": 500
+    },
+    {
+      "condition": "task_loss_random",
+      "real_return": 563.6214331835508,
+      "full_episode": true,
+      "controls": 500
+    },
+    {
+      "condition": "task_loss_cascade",
+      "real_return": 543.6217695474625,
+      "full_episode": true,
+      "controls": 500
+    }
+  ],
+  "contrasts": {
+    "G0": 116.86623352766037,
+    "G1": 19.99966363608837,
+    "interaction": 96.866569891572,
+    "random_source_change": -48.46112184226513,
+    "cascade_source_change": 48.40544804930687,
+    "conditional_followup_signal": false,
+    "gap_fraction_reduction": 0.8288670471154119,
+    "original_loss_vs_random": 0.19093214235248263,
+    "task_loss_loss_vs_random": 0.03548421415261405,
+    "random_relative_change": -0.07917415950569147,
+    "cascade_relative_change": 0.09774606762327229
+  },
+  "prespecified_selective_recovery_checks": {
+    "positive_original_gap": {
+      "value": 116.86623352766037,
+      "passed": true
+    },
+    "remaining_gap_at_most_half": {
+      "value": 19.99966363608837,
+      "maximum": 58.433116763830185,
+      "passed": true
+    },
+    "cascade_gain_at_least_half_original_gap": {
+      "value": 48.40544804930687,
+      "minimum": 58.433116763830185,
+      "passed": false
+    },
+    "random_return_at_least_95_percent": {
+      "value": 563.6214331835508,
+      "minimum": 581.4784272745252,
+      "passed": false
+    },
+    "all_passed": false
+  },
+  "runtime_checks": {
+    "all_70_non_dynamics_state_entries_exact_before_after_training_and_evaluation": true,
+    "auxiliary_dynamics_gradient_norm": {
+      "task_loss_random": 0.005470302887260914,
+      "task_loss_cascade": 0.02090313285589218
+    },
+    "trace_proxy_equals_native_returned_data": true,
+    "observation": "These frozen-state and gradient checks are runtime assertions; independent review can inspect their implementation/logs without claiming a second full-state measurement."
+  },
+  "statistics": {
+    "unit": "One previously used development root, paired by seed, source-specific data and minibatch bank.",
+    "method": "Descriptive factorial contrast only; no population confidence interval, p-value or ASR.",
+    "independent_confirmation": false
+  },
+  "decision": {
+    "go": [
+      "The original source23/seed31 conditional return gap is exactly reproducible under the original adaptation.",
+      "Restoring these frozen-head task-loss paths changes the source contrast on this development case."
+    ],
+    "no_go": [
+      "The prespecified selective-recovery test fails: the random-source comparator degrades7.917%, and cascade gain is below half the original gap.",
+      "A smaller between-source gap is not sufficient to claim a useful defense.",
+      "No proof of non-normality, malicious source intent, unique prediction-error mediation, Goal-Bus decision harm or independent generalization."
+    ],
+    "next_action": "Archive this completed qualification and stop its automatic expansion. Do not tune coefficients, choose another seed or reinterpret the failed gate as defense success. A new pilot needs a substantive unresolved mechanism and a separately stated control."
+  },
+  "execution": {
+    "session_id": 55401,
+    "terminal_exit_code": 0,
+    "elapsed_seconds": 154.87498772499384,
+    "native_load_agent_calls": 1,
+    "source_environment_steps": 0,
+    "network_attempts": 0,
+    "optimizer_updates": 1200,
+    "physical_evaluation_controls": 2000,
+    "model_api_requests": 0,
+    "large_model_retraining": false,
+    "adaptation_training": "1200 small dynamics-only updates in four arms; this is training and must not be described as zero-training."
+  },
+  "related_read_only_correction": "reports/opine_native_planner_contract_correction_20261015.json",
+  "independent_review": {
+    "status": "completed_independent_cpu_saved_data_review",
+    "path": "reports/tdmpc_frozen_head_loss_control_review_20261015.json",
+    "real_reward_sums_exact": true,
+    "paired_initial_observations_exact": true,
+    "all_four_trajectories_complete": true,
+    "selective_recovery_checks_passed": 2,
+    "selective_recovery_checks_total": 4,
+    "evidence_boundary": "Returns, shapes, paired initial observations, recording equality, historical log comparisons, and decision criteria were independently recomputed. Frozen-state equality and first-batch backward-gradient checks are verified runtime attestations from the reviewed runner; frozen non-dynamics tensors were not saved, so they are not independently rehashed or re-executed here. Historical weights were not saved either."
+  }
+}

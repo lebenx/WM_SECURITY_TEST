@@ -1,0 +1,123 @@
+{
+  "status": "completed_no_forward_preserving_candidate",
+  "claim_status": "unproven",
+  "candidate_claim": "A world model can preserve predictive accuracy while corrupting the learning signal extracted from it.",
+  "candidate_claim_cn": "世界模型可以保持预测准确，却提供有害的学习方向。",
+  "scope": "A necessary-condition model-component experiment, not a complete DMO agent run, a demonstrated data-poisoning attack, or an action-only shared-experience attack.",
+  "upstream": {
+    "repository": "https://github.com/machines-in-motion/DMO_code",
+    "commit": "f60a9ddb8f0a840b2e00602cd51e627fba394b78",
+    "model": "StochSSM, nonrecurrent, hidden units [512,512], SiLU, no learned reward",
+    "retained": "Original model architecture and Gaussian NLL/Adam update; original code is not edited.",
+    "not_run": "The DFlex environment, DMO actor/critic, and full online training loop. Public repository has no pretrained checkpoint."
+  },
+  "preregistered_screen": {
+    "environment": "DMControl cartpole-balance",
+    "data": "True random-policy transitions; disjoint seeded train4096, dev1024, test2048, fresh_refit2048. All test decisions are held out from attack selection.",
+    "base_training": "1000 Gaussian NLL Adam updates, batch256, learning_rate0.002; training-input normalization, unnormalized state-increment targets.",
+    "normalization_adapter": "Fixed standardization of both observations and actions uses training statistics. This is a DMControl adapter choice, not a claim to reproduce the full native DMO preprocessing or actor-training loop.",
+    "attack_scope": "Only ordinary final-layer mean weights and bias; hidden layers, variance output rows and autograd implementation unchanged during construction.",
+    "objective": "For hidden features H and action derivatives D, solve (D^T D + lambda H^T H + ridge I) deltaW = -2 D^T D W. This targets the current model Jacobian, not an oracle policy gradient.",
+    "lambdas": [
+      1,
+      10,
+      100,
+      1000
+    ],
+    "selection": "Choose using dev only; preserve dev forward MSE within1.1x clean. Do not relax this gate after seeing results.",
+    "control": "Rotate the target mean-head perturbation in output coordinates with an orthogonal matrix: exact parameter norm and pointwise forward-drift norm match. Use dev only to choose among seeded rotations for similar ground-truth MSE; explicitly report this is a rotation control.",
+    "heldout_control_validation": "After dev selection is frozen, directed_before and random_before must have test center MSE and combined neighboring-action MSE differing by at most10% relative to directed_before. At every test center and both neighboring actions, compare each arm's prediction-drift norm relative to clean_before; all points must match within atol1e-6 + rtol1e-3 times the directed norm. Save center and neighboring predictions. Test is never used to reselect or rescale the rotation. Any failed matching check makes the screen inconclusive.",
+    "refit": "All network parameters normally trainable, original clean Adam state restored for each arm, identical128 minibatches from the cumulative old+fresh true-data replay.",
+    "true_derivative": "Central differences from separately restored simulator states at a+-0.01; legal bounded actions. Also evaluate true forward labels at both neighboring actions.",
+    "promotion_conditions": [
+      "Both clean_before and clean_refit test median action-Jacobian cosine against simulator finite differences must be at least0.9; failure of either reference makes the screen inconclusive.",
+      "After128 real-data updates, target center and neighboring-action prediction MSE at most1.1x paired clean-refit.",
+      "After refit, target median Jacobian cosine at most0 and at least25% of test points have negative cosine.",
+      "Target derivative error exceeds the rotation control; parameter-norm and dev matching must pass, directed_before versus random_before test center and neighboring-action ground-truth MSE differ by no more than10%, and every test center/neighbor forward-drift norm matches the clean_before-referenced rotation tolerance. Held-out validation never selects a new rotation; any matching failure is inconclusive."
+    ],
+    "resource_limit": "One initial seed31 screen; at most120 seconds of measured model/optimization execution on the4090, zero API requests. Data collection time reported separately.",
+    "interpretation": "Even a positive screen establishes only survival of a derivative perturbation under this model refit. Full closed-loop task harm, derivative rescue, data reachability, multiple instances, and novelty remain required."
+  },
+  "prior_art_constraints": [
+    {
+      "url": "https://arxiv.org/html/2606.18697v1",
+      "finding": "SWAAP already links small prediction deviations and world-model poisoning to harmful planning. Its parameter-gradient matching does not itself establish the specific all-real-forward, corrupted-input-Jacobian path."
+    },
+    {
+      "url": "https://arxiv.org/abs/1902.02041",
+      "finding": "Heo et al. already manipulate gradient explanations by ordinary weight fine-tuning while retaining prediction quality; output/derivative separation is not a new discovery."
+    },
+    {
+      "url": "https://aclanthology.org/2020.findings-emnlp.24/",
+      "finding": "Facade models already overwhelm input gradients without materially changing predictions. A new downstream use alone is an insufficient novelty argument."
+    },
+    {
+      "url": "https://arxiv.org/abs/2509.00215",
+      "finding": "DMO already uses true simulator transitions with learned-model derivatives. The proposed work must establish a distinct persistent failure under ordinary corrective training."
+    }
+  ],
+  "report_note_cn": "DMO网络必要条件短测已完成（seed31；真实DMControl数据；1000次初始NLL更新；模型计算5.95秒，采集2.78秒，0次API）。干净模型测试导数与真实有限差分的余弦中位数0.998。预先固定的4个末层扰动均未通过预测误差≤1.1倍门槛：lambda=1可翻转相对干净模型的dev导数（余弦−0.997），但dev预测MSE为769.7倍；lambda=1000的MSE最低，为1.226倍，导数方向基本不变。没有候选进入旋转对照或128次再训练，因此不能判断持续性，也不能声称正常学习清除了扰动。本结果仅否定该固定构造通过既定门槛，不否定一般机制；无actor或任务损害证据，不扩大此设置。",
+  "result": {
+    "source": "runs/dmo_jacobian_gate_v0/result.json",
+    "execution_status": "completed",
+    "classification": "negative",
+    "stage_reached": "initial forward-fidelity gate only; no candidate selected",
+    "seed": 31,
+    "clean_dev_mse": 3.58085321749968e-06,
+    "clean_test_mse": 3.941659088013694e-06,
+    "clean_test_jacobian_median_cosine": 0.9980660147168795,
+    "clean_test_standardized_jacobian_median_cosine": 0.9259587174790938,
+    "candidates": [
+      {
+        "lambda": 1.0,
+        "dev_mse": 0.002756101079285145,
+        "dev_mse_ratio": 769.6772003432144,
+        "dev_median_cosine_to_clean": -0.9973295331001282,
+        "delta_norm": 8.487261772155762,
+        "train_forward_drift_mse": 0.002624168759211898,
+        "dev_forward_drift_mse": 0.0027508996427059174,
+        "eligible": false
+      },
+      {
+        "lambda": 10.0,
+        "dev_mse": 0.0003548306995071471,
+        "dev_mse_ratio": 99.09110425780216,
+        "dev_median_cosine_to_clean": 0.9777036905288696,
+        "delta_norm": 15.583697319030762,
+        "train_forward_drift_mse": 0.00029388931579887867,
+        "dev_forward_drift_mse": 0.0003527897933963686,
+        "eligible": false
+      },
+      {
+        "lambda": 100.0,
+        "dev_mse": 2.3754286303301342e-05,
+        "dev_mse_ratio": 6.633694502531914,
+        "dev_median_cosine_to_clean": 0.9985983371734619,
+        "delta_norm": 13.41969108581543,
+        "train_forward_drift_mse": 1.1604856808844488e-05,
+        "dev_forward_drift_mse": 2.124324964825064e-05,
+        "eligible": false
+      },
+      {
+        "lambda": 1000.0,
+        "dev_mse": 4.38904635302606e-06,
+        "dev_mse_ratio": 1.2256984820200754,
+        "dev_median_cosine_to_clean": 0.9999473094940186,
+        "delta_norm": 7.310393333435059,
+        "train_forward_drift_mse": 3.295679107395699e-07,
+        "dev_forward_drift_mse": 1.0504272722755559e-06,
+        "eligible": false
+      }
+    ],
+    "pretrain_updates_completed": 1000,
+    "refit_updates_completed": 0,
+    "rotation_control_run": false,
+    "actor_run": false,
+    "api_requests": 0,
+    "compute_wall_seconds": 5.947621495928615,
+    "collection_seconds": 2.7773711909539998,
+    "total_wall_seconds": 8.801325272768736,
+    "interpretation": "This fixed final-layer construction and four-lambda screen did not preserve initial prediction MSE within 1.1x clean. Persistence under normal refitting was not tested. This does not disprove the general mechanism or known gradient-manipulation constructions.",
+    "decision": "Do not expand this fixed screen or relax the gate; no full-control training justified."
+  }
+}

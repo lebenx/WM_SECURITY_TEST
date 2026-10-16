@@ -1,0 +1,347 @@
+{
+  "date": "2026-10-09",
+  "status": "completed_exact_model_security_gate",
+  "candidate_claim_cn": "世界模型的逐动作预测可以保持正确，规划却能被预测样本间的随机耦合操纵。",
+  "claim_status": "Candidate mechanism has exact-model evidence; broad learned-world-model security claim, novelty 7–7.5 and ICLR-scale evaluation remain unproven.",
+  "headline_cn": "世界模型采样耦合出现安全机制信号：逐动作预测分布不变，16 样本规划成功率在两个地图下降 11.7／20.7 个百分点；学习型模型与高新意尚待验证。",
+  "report_note_cn": "按更新后的目标，主线回到世界模型安全。新候选只控制批量预测中不同候选动作的随机耦合，保持每个动作的整组 N 个样本仍服从原生独立同分布转移。使用未修改的 Gymnasium FrozenLake-v1 两个内置地图（两者当前注册包装器均为 100 步），以原生转移核作为精确世界模型；规划器由本项目实现，用精确最优后续价值做一步采样决策。在每动作 16 个样本时，精确成功率为独立采样 65.99%／48.47%，定向耦合 54.30%／27.81%；每种条件各 200 次原生执行为 68.5%／48.0% 对 56.0%／23.5%。64 样本下精确损失降至 2.89／7.48 个百分点。共享分位数采样接近精确期望规划，说明可信采样控制值得保留作强对照。逐动作粒子计数分布最大数值差约 1.21e-15；随机排列计数所得的完整粒子序列也保持 iid。另有解析例子证明：相同预测边缘分布和协方差可以对应 90% 与 10% 的劣动作选择概率。当前证据来自同一简单任务的两张地图、精确模型和自实现规划器，尚未证明学习型世界模型、真实第三方采样权限或新意 7–7.5；没有把基础耦合或蒙特卡洛方差现象宣称为新概念。",
+  "rows": [
+    {
+      "map": "4x4",
+      "particles": 1,
+      "time_limit": 100,
+      "independent_success": 0.044072501811069476,
+      "optimized_success": 0.004550203299632821,
+      "shared_quantile_success": 0.1609377403578431,
+      "random_phase_success": 0.05688560362521988,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 3.9522298511436653,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 6,
+        "success_rate": 0.03,
+        "discounted_return_mean": 0.02668514997030708,
+        "native_steps": 1648,
+        "predictive_particle_draws": 6592
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 1,
+        "success_rate": 0.005,
+        "discounted_return_mean": 0.004567586237418204,
+        "native_steps": 1222,
+        "predictive_particle_draws": 4888
+      },
+      "maximum_count_law_error": 1.1102230246251565e-16,
+      "maximum_expected_value_error": 3.2518432391270835e-13,
+      "source": "runs/coupled_sampling_security_v0/4x4_n1/summary.json"
+    },
+    {
+      "map": "4x4",
+      "particles": 4,
+      "time_limit": 100,
+      "independent_success": 0.1527966814089888,
+      "optimized_success": 0.04212054386881472,
+      "shared_quantile_success": 0.5714610360646999,
+      "random_phase_success": 0.15957015113669035,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 11.067613754017408,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 30,
+        "success_rate": 0.15,
+        "discounted_return_mean": 0.12240025883466178,
+        "native_steps": 3288,
+        "predictive_particle_draws": 52608
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 8,
+        "success_rate": 0.04,
+        "discounted_return_mean": 0.03371503362183323,
+        "native_steps": 2023,
+        "predictive_particle_draws": 32368
+      },
+      "maximum_count_law_error": 1.6653345369377348e-16,
+      "maximum_expected_value_error": 2.384759056894836e-13,
+      "source": "runs/coupled_sampling_security_v0/4x4_n4/summary.json"
+    },
+    {
+      "map": "4x4",
+      "particles": 16,
+      "time_limit": 100,
+      "independent_success": 0.6599382979810298,
+      "optimized_success": 0.5430058276143059,
+      "shared_quantile_success": 0.74014262129396,
+      "random_phase_success": 0.6174503837231586,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 11.693247036672382,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 137,
+        "success_rate": 0.685,
+        "discounted_return_mean": 0.48087024830225616,
+        "native_steps": 8592,
+        "predictive_particle_draws": 549888
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 112,
+        "success_rate": 0.56,
+        "discounted_return_mean": 0.4067646265103619,
+        "native_steps": 7486,
+        "predictive_particle_draws": 479104
+      },
+      "maximum_count_law_error": 5.614977039835123e-16,
+      "maximum_expected_value_error": 1.3034018309099338e-13,
+      "source": "runs/coupled_sampling_security_v0/4x4_n16/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 1,
+      "time_limit": 100,
+      "independent_success": 0.009388756086411494,
+      "optimized_success": 1.5082592826877354e-05,
+      "shared_quantile_success": 0.0366975980530736,
+      "random_phase_success": 0.01067098598553989,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 0.9373673493584617,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 3,
+        "success_rate": 0.015,
+        "discounted_return_mean": 0.01020903513412978,
+        "native_steps": 6868,
+        "predictive_particle_draws": 27472
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 0,
+        "success_rate": 0.0,
+        "discounted_return_mean": 0.0,
+        "native_steps": 4996,
+        "predictive_particle_draws": 19984
+      },
+      "maximum_count_law_error": 1.1102230246251565e-16,
+      "maximum_expected_value_error": 3.8902214782865485e-13,
+      "source": "runs/coupled_sampling_security_v0/8x8_n1/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 4,
+      "time_limit": 100,
+      "independent_success": 0.1332598498984799,
+      "optimized_success": 0.012476514060133727,
+      "shared_quantile_success": 0.42664094916546447,
+      "random_phase_success": 0.14585001970111686,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 12.078333583834617,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 32,
+        "success_rate": 0.16,
+        "discounted_return_mean": 0.08971684906277634,
+        "native_steps": 10769,
+        "predictive_particle_draws": 172304
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 4,
+        "success_rate": 0.02,
+        "discounted_return_mean": 0.010468946530361947,
+        "native_steps": 8026,
+        "predictive_particle_draws": 128416
+      },
+      "maximum_count_law_error": 1.6653345369377348e-16,
+      "maximum_expected_value_error": 3.2401858973685194e-13,
+      "source": "runs/coupled_sampling_security_v0/8x8_n4/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 16,
+      "time_limit": 100,
+      "independent_success": 0.48472272204454653,
+      "optimized_success": 0.2781456920869073,
+      "shared_quantile_success": 0.6315133042777676,
+      "random_phase_success": 0.4886208480874713,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 20.65770299576392,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 96,
+        "success_rate": 0.48,
+        "discounted_return_mean": 0.25711088477928945,
+        "native_steps": 14352,
+        "predictive_particle_draws": 918528
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 47,
+        "success_rate": 0.235,
+        "discounted_return_mean": 0.1240617688026571,
+        "native_steps": 14492,
+        "predictive_particle_draws": 927488
+      },
+      "maximum_count_law_error": 5.614977668492388e-16,
+      "maximum_expected_value_error": 3.1191715876843773e-13,
+      "source": "runs/coupled_sampling_security_v0/8x8_n16/summary.json"
+    },
+    {
+      "map": "4x4",
+      "particles": 64,
+      "time_limit": 100,
+      "independent_success": 0.7340008840545962,
+      "optimized_success": 0.705064941657438,
+      "shared_quantile_success": 0.7401648977587051,
+      "random_phase_success": 0.735546427703184,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 2.893594239715813,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 151,
+        "success_rate": 0.755,
+        "discounted_return_mean": 0.5293355056464932,
+        "native_steps": 8840,
+        "predictive_particle_draws": 2263040
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 144,
+        "success_rate": 0.72,
+        "discounted_return_mean": 0.5093868654537366,
+        "native_steps": 8586,
+        "predictive_particle_draws": 2198016
+      },
+      "maximum_count_law_error": 1.2072434559171723e-15,
+      "maximum_expected_value_error": 7.53563877964325e-14,
+      "source": "runs/coupled_sampling_security_n64/4x4_n64/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 64,
+      "time_limit": 100,
+      "independent_success": 0.5961263291003639,
+      "optimized_success": 0.5213063681971706,
+      "shared_quantile_success": 0.6317380009857488,
+      "random_phase_success": 0.6074662434964104,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 7.481996090319331,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 134,
+        "success_rate": 0.67,
+        "discounted_return_mean": 0.368329942985246,
+        "native_steps": 14387,
+        "predictive_particle_draws": 3683072
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 115,
+        "success_rate": 0.575,
+        "discounted_return_mean": 0.3025248202975042,
+        "native_steps": 15465,
+        "predictive_particle_draws": 3959040
+      },
+      "maximum_count_law_error": 1.2072434559171731e-15,
+      "maximum_expected_value_error": 1.3106182805699973e-13,
+      "source": "runs/coupled_sampling_security_n64/8x8_n64/summary.json"
+    }
+  ],
+  "implementation": {
+    "learner": "src/wm_security/coupled_sampling.py",
+    "runner": "scripts/pilot_coupled_sampling.py",
+    "operation": "Fixed state-conditioned cyclic quantile phases chosen to minimize expected true Q* of the selected action. Exact multinomial inverse CDF plus independent within-action permutations preserves the entire per-action iid particle law.",
+    "optimization": "24 random candidates and zero, then two 16-point coordinate sweeps; no gradient, neural update, API or hidden environment intervention."
+  },
+  "threat_model": {
+    "status": "Researcher-defined sampler-supply-chain threat model, not a found deployment vulnerability.",
+    "adversary_controls": "Cross-action coupling at batched world-model sampling; state-dependent phase map is frozen before episodes.",
+    "preserved": [
+      "transition kernel",
+      "complete per-action N-particle joint law",
+      "planning code",
+      "continuation value",
+      "actions available",
+      "real environment"
+    ],
+    "permissions_change": "This is a different candidate from the original action-only shared-experience poisoning threat model; no action-only realization is claimed."
+  },
+  "evidence_boundary": {
+    "task_families": 1,
+    "maps": 2,
+    "learned_world_model": false,
+    "upstream_agent": false,
+    "native_environment": true,
+    "exact_model": true,
+    "seed_schedule": "200 predetermined native seeds per condition; maps/particle budgets share the schedule, not independent datasets.",
+    "time_limit": "Both maps use FrozenLake-v1 with map_name; its wrapper is 100 steps. This is not the separately registered 200-step 8x8 benchmark.",
+    "scoring": "Success probability evaluated exactly from the induced decision kernel; separate real env.step episodes corroborate direction. Native counts remain finite-sample estimates.",
+    "asymptotic": "Per-action iid concentration still provides coupling-independent finite-action bounds; no asymptotic impossibility or irreparable attack claim."
+  },
+  "analytic_witness": {
+    "status": "analytic_witness",
+    "variables": "U uniform on [0,1), X=U+delta, Y=(U+c) mod 1; choose argmax(X,Y).",
+    "delta": 0.05,
+    "rows": [
+      {
+        "shift": 0.1,
+        "better_action_mean": 0.55,
+        "worse_action_mean": 0.5,
+        "each_action_variance": 0.08333333333333333,
+        "covariance": 0.03833333333333332,
+        "difference_variance": 0.09000000000000001,
+        "worse_action_selected_probability": 0.9
+      },
+      {
+        "shift": 0.9,
+        "better_action_mean": 0.55,
+        "worse_action_mean": 0.5,
+        "each_action_variance": 0.08333333333333333,
+        "covariance": 0.03833333333333334,
+        "difference_variance": 0.08999999999999998,
+        "worse_action_selected_probability": 0.09999999999999998
+      }
+    ],
+    "derivation": "Both Y laws are Uniform[0,1), E[X]=1/2+delta, E[Y]=1/2. Cov(X,Y)=1/12-c(1-c)/2. For c>delta, Y>X exactly on U<1-c. Thus c and 1-c share both marginal laws and covariance but induce different decisions.",
+    "independent_worse_action_probability": 0.45125,
+    "interpretation": "A constructed analytic example, not an additional native task. Pairwise covariance and each forecast law do not determine decision risk; the cyclic quantile construction uses established probability tools, not a claimed new theorem.",
+    "theorem_boundary": "With bounded returns and iid particles within each action, a union bound on per-action concentration still controls action-selection error regardless of cross-action dependence. The construction gives no asymptotic impossibility claim.",
+    "native_interactions": 0,
+    "api_requests": 0,
+    "gpu_work": false
+  },
+  "native_next_carrier": {
+    "repository": "https://github.com/facebookresearch/mbrl-lib",
+    "pin": "3f93cccfc8d635f74e335a2f07aab6e9a48fc021",
+    "local": "vendor/mbrl-lib",
+    "license": "MIT",
+    "native_batch_path": "mbrl/models/model_env.py:145 evaluate_action_sequences repeats candidate actions over particles, samples trajectories, then averages particle rewards.",
+    "native_sampler": "mbrl/models/model.py:426 sample_1d returns torch.normal(means,stds,generator=rng).",
+    "status": "Source cloned and interface inspected; no MBRL-Lib training, inference attack or claimed vulnerability yet."
+  },
+  "closest_priors": [
+    {
+      "title": "Variance Reduction in Monte-Carlo Tree Search",
+      "url": "https://mlanctot.info/files/papers/nips11vrmcts.pdf",
+      "boundary": "Common random numbers already modify cross-action dependence and decision variance; merely reversing the effect is not automatically a new concept. Current cyclic construction targets full decision probabilities and permits a same-covariance analytic contrast, but strong native security evidence is still required."
+    },
+    {
+      "title": "WorldKernel",
+      "url": "https://arxiv.org/html/2606.10934v1",
+      "boundary": "Already treats counterfactual coupling and joint-only failures. Here the physical kernel and optimal action values are fixed; the intervention targets Monte-Carlo sampling dependence in action selection rather than identifying a physical cross-world causal effect. This is a candidate operational distinction, not a novelty verdict."
+    }
+  ],
+  "usage": {
+    "api_requests": 0,
+    "failed_api_requests": 0,
+    "native_episodes": 3200,
+    "native_environment_steps": 131040,
+    "predictive_particle_draws": 15422808,
+    "coupling_objective_evaluations": 38976,
+    "experiment_wall_seconds": 29.211034405510873,
+    "neural_training_updates": 0,
+    "gpu_seconds": 0
+  },
+  "next_requirement": "Port the explicit measure-preserving coupling operation to an existing learned stochastic world-model planner with a competent clean policy. Keep predictor parameters, value/policy, per-action full particle laws and real environment fixed; compare independent, common-random-number, antithetic/random coupling and trusted sampling controls at matched budgets. Demonstrate native decision harm on multiple core task families and isolate a security contribution beyond classical common-random-number variance effects and generic counterfactual coupling. Do not claim a malicious sampler interface already exists in MBRL-Lib. No long GPU training until short evidence supports the final mechanism.",
+  "updated_at_utc": "2026-10-09T00:26:08.138323+00:00"
+}

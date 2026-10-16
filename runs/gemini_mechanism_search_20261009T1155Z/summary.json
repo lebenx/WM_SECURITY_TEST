@@ -1,0 +1,70 @@
+{
+  "status": "success",
+  "model": "gemini-3.8-flash",
+  "run": "runs/gemini_mechanism_search_20261009T1155Z",
+  "response": {
+    "candidates": [
+      {
+        "one_sentence_claim": "Recurrent world models possess an exploitable counterfactual horizon contract failure where sub-threshold state-transition drift forces policy-evaluation trajectories into a divergent attractor basin while preserving factual one-step reconstruction accuracy.",
+        "exact_security_operation": "Construct a norm-bounded additive residual perturbation $\\delta(s_t, a_t)$ with $\\|\\delta\\|_\\infty \\le \\epsilon$ targeting the transition function $T_\\theta(s_{t+1}|s_t, a_t)$ such that the Jacobian spectral radius $\\rho(\\nabla_s T_\\theta) > 1$ exclusively along the counterfactual action sequence manifold evaluated during CEM/MPPI rollouts, while keeping $\\rho(\\nabla_s T_\\theta) \\le 1$ under the factual behavioral policy distribution.",
+        "preserved_audit_invariants": "Standard offline 1-step validation MSE remains within $1.02\\times$ of nominal baseline; ensemble epistemic variance across 5 GaussianMLP members remains within $0.98\\times\\text{--}1.05\\times$ of unperturbed ensemble; real-trajectory rollout likelihood passes Chi-square goodness-of-fit.",
+        "expected_task_failure": "TD-MPC2 Walker and MBRL-Lib HalfCheetah produce unviable, hyper-optimistic imagined returns within the planner, leading to real-environment termination or catastrophic deceleration while planned value heads report near-optimal reward.",
+        "closest_direct_priors_and_urls": [
+          "Adversarial Attacks on Model-Based RL (Behzadan & Munir, 2017) [https://arxiv.org/abs/1707.03774]",
+          "Policy-poisoning in MBRL via hallucination traps (Sun et al., 2020) [https://proceedings.mlr.press/v119/sun20b.html]"
+        ],
+        "two_seed_gate": "Run MBRL-Lib HalfCheetah for seeds 42 and 1337: execute 10 CEM steps under the engineered residual perturbation; measure rollout divergence ratio $D = \\frac{\\mathbb{E}[\\|s_{t+H}^{sim} - s_{t+H}^{real}\\|]}{\\mathbb{E}[\\|s_{t+1}^{sim} - s_{t+1}^{real}\\|]}$. Gate passes if 1-step validation error increases by $<3\\%$ but $D > 15.0$ and episodic return drops $>60\\%$.",
+        "why_distinct": "Avoids static model poisoning or weight backdoors; exploits the algebraic discrepancy between the Jacobian conditioning of open-loop imagined counterfactual trajectories and closed-loop factual policy trajectories without triggering ensemble uncertainty thresholds."
+      },
+      {
+        "one_sentence_claim": "Model-predictive planners are vulnerable to credit-assignment inversion attacks where the world model's temporal difference projection preserves marginal state distributions while reversing the directional gradient of cumulative return with respect to action sequences.",
+        "exact_security_operation": "Inject an orthogonal skew transform $U \\in SO(d)$ into the terminal reward-prediction head $R_\\phi(z_t, a_t) = \\tilde{R}_\\phi(U z_t, a_t)$ paired with a reciprocal drift in the dynamic transition matrix such that $\\nabla_a \\sum_{\\tau=0}^H \\gamma^\\tau \\hat{r}_\\tau \\approx -\\nabla_a \\sum_{\\tau=0}^H \\gamma^\\tau r^*_\\tau$, while keeping the marginal projected latent density $p(z)$ invariant.",
+        "preserved_audit_invariants": "Marginal latent coverage matches empirical baseline under Wasserstein distance ($W_1 < 10^{-3}$); 1-to-5 step state prediction error remains within 95% baseline confidence interval; offline scalar reward distribution per state matches ground truth identically.",
+        "expected_task_failure": "Planner converges to the operational minimum of the true value function instead of the maximum, resulting in immediate stall or self-invertible failure on CartPole (active drop) and Reacher (moving directly away from target).",
+        "closest_direct_priors_and_urls": [
+          "Adversarial Reward Inversion (Rakhsha et al., 2021) [https://proceedings.mlr.press/v139/rakhsha21a.html]",
+          "Reward Tampering Problems in Reinforcement Learning (Everitt et al., 2021) [https://arxiv.org/abs/1908.04778]"
+        ],
+        "two_seed_gate": "On TD-MPC2 Reacher (seeds 0 and 1), execute 20 steps of MPPI. Log planned action alignment $\\cos(\\hat{a}, a^*)$. Pass if offline reward predictor validation loss is $<1.01\\times$ baseline while $\\cos(\\hat{a}, a^*) < -0.70$ over both seeds.",
+        "why_distinct": "Does not mutate the reward function globally or poison transition dynamics blindly; it decouples the directional action-value gradient from the forward trajectory state distribution, preserving state-prediction validity while inverting optimization geometry."
+      },
+      {
+        "one_sentence_claim": "Latent world models exhibit an unmonitored imagination-depth parity failure where consistency loss bounds remain tight across all single-step transitions while multi-step rollouts drift into non-invertible null-spaces of the decoder.",
+        "exact_security_operation": "Design a contractive projection operator $P_\\bot$ orthogonal to the decoder's high-singular-value manifold that is conditionally activated only when trajectory length $\\tau > k$ (accumulating via continuous recurrent state update: $h_t = f(h_{t-1}, a_{t-1}) + \\epsilon \\sum_{i=1}^t h_i$), collapsing latent expressive rank strictly outside 1-step autoencoding validation windows.",
+        "preserved_audit_invariants": "1-step reconstruction error $\\mathcal{L}_{rec}(s, \\hat{s}) \\le \\delta_{nominal}$; deterministic latent dynamic loss on training replays within $1\\sigma$; TD-error of Q-functions evaluated on 1-step replay buffer is indistinguishable from baseline.",
+        "expected_task_failure": "TD-MPC2 Reacher and Cup fail to manipulate or track goals beyond horizon $H > 3$; CEM collapses onto uniform random exploration because rollout representations contract into an uninformative fixed point, yielding zero trajectory variance.",
+        "closest_direct_priors_and_urls": [
+          "Representation Collapse in Self-Supervised World Models (Mazoure et al., 2021) [https://arxiv.org/abs/2103.05694]",
+          "Investigating and Mitigating Representation Deficits in Deep RL (Kumar et al., 2020) [https://proceedings.mlr.press/v119/kumar20f.html]"
+        ],
+        "two_seed_gate": "Pretrained TD-MPC2 Cup on seeds 101 and 202: evaluate 1-step autoencoder MSE vs $H=12$ rollout latent rank $\\mathrm{rank}_{0.99}(\\mathbf{Z})$. Pass if 1-step MSE increase is $<2\\%$, but effective latent rank at $\\tau=12$ drops by $\\ge 75\\%$, reducing episodic return to zero.",
+        "why_distinct": "Differs from standard latent perturbations or autoencoder collapse because the representation is mathematically non-collapsed on 1-step transitions, decaying only along the temporal planning dimension of the world model's internal simulator."
+      },
+      {
+        "one_sentence_claim": "Uncertainty-guided model-based planners are susceptible to an epistemic blind-spot synthesis where malicious inputs artificially suppress ensemble variance specifically along off-nominal, hazardous state manifolds.",
+        "exact_security_operation": "Co-train or regularize an auxiliary additive transition operator using an adversarial consensus loss $\\min_\\delta \\sum_{i,j} \\|f_i(s + \\delta, a) - f_j(s + \\delta, a)\\|^2_2$ constrained such that the predicted state moves directly toward non-recoverable physical boundaries while the ensemble variance collapses to zero on those counterfactual trajectories.",
+        "preserved_audit_invariants": "Total epistemic uncertainty across nominal validation rollouts is unchanged; nominal trajectory transition loss unchanged; variance bounds on out-of-distribution (OOD) diagnostic suites remain within normative calibration boundaries.",
+        "expected_task_failure": "MBRL-Lib CartPole and HalfCheetah fail under safety-constrained environments by driving directly into constraint violations, as the planner’s optimistic exploration metric treats lethal states as low-uncertainty high-value options.",
+        "closest_direct_priors_and_urls": [
+          "Fooling Uncertainty Estimation in Deep Neural Networks (Lakshminarayanan et al., 2017) [https://proceedings.neurips.cc/paper/2017/hash/9ef2ed4b7fd2c810847ffa5fa85bce38-Abstract.html]",
+          "Adversarial Attacks on Epistemic Uncertainty in Bayesian Neural Networks (Yuan & Li, 2022) [https://arxiv.org/abs/2202.08453]"
+        ],
+        "two_seed_gate": "Native MBRL-Lib CartPole on seeds 7 and 11: induce state near balance boundary $x > 1.8$; compute ensemble standard deviation $\\sigma(s_{t+1})$. Gate passes if nominal test $\\sigma$ matches baseline within $\\pm 4\\%$, while at boundary states $\\sigma(s_{t+1}) \\le 0.15 \\times \\sigma_{nominal}$, inducing uncorrected terminal fall-through.",
+        "why_distinct": "Does not cause global uncertainty collapse or desynchronization; selectively synthesizes zero epistemic variance strictly within policy-failure regions, tricking variance-aware optimistic planners (e.g., PETS) into fatal states."
+      },
+      {
+        "one_sentence_claim": "Trajectory-optimization world models can be selectively paralyzed via dynamic action-curvature poisoning, where the forward model accurately predicts state transitions under fixed inputs but corrupts the action-Hessian required by optimization samplers.",
+        "exact_security_operation": "Inject high-frequency phase shifts into the model's cross-derivative components $\\frac{\\partial^2 T_\\theta}{\\partial a_i \\partial a_j}$ via parameter-constrained harmonic perturbations that preserve the zero-order mapping $T_\\theta(s, a)$ and first-order bounds $\\|\\nabla_a T_\\theta\\|$, but disrupt the second-order curvature landscape used by gradient- and sampling-based planners.",
+        "preserved_audit_invariants": "Zero-order state trajectory prediction error identical to clean baseline ($L_2 < 10^{-4}$); first-order sensitivity matrix $\\nabla_a s_{t+1}$ norm matches empirical baseline; nominal replay simulation FID score matches clean model.",
+        "expected_task_failure": "CEM and MPPI in MBRL-Lib HalfCheetah and TD-MPC2 Walker experience sampling degeneracy: elite sample selection fails to converge within iteration budgets, devolving into high-variance exploratory jitter and severe task performance degradation.",
+        "closest_direct_priors_and_urls": [
+          "Curvature-based Attacks on Local Optimization (Goodfellow et al., 2015) [https://arxiv.org/abs/1412.6572]",
+          "On the Robustness of Sample-Efficient Model-Predictive Control (Kahn et al., 2018) [https://arxiv.org/abs/1709.07174]"
+        ],
+        "two_seed_gate": "Pretrained TD-MPC2 Walker on seeds 303 and 404: run 5 iterations of CEM over 50 actions. Gate passes if open-loop state prediction error on factual traces is $\\le 1.01\\times$ baseline, while the variance of the CEM elite parameter distribution fails to decrease across iterations ($V_{iter5}/V_{iter1} > 0.90$ vs nominal $< 0.15$), dropping score $> 70\\%$.",
+        "why_distinct": "Bypasses standard verification methods that monitor state-space trajectory tracking or gradient magnitudes by exploiting the mathematical interface between the forward model's curvature landscape and the planner's distribution-updating dynamics."
+      }
+    ]
+  },
+  "requests": 1
+}

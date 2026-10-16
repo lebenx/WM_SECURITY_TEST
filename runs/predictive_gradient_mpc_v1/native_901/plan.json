@@ -1,0 +1,31 @@
+{
+  "arguments": {
+    "output": "runs/predictive_gradient_mpc_v1/native_901",
+    "model": "runs/dmo_jacobian_gate_v0",
+    "condition": "native",
+    "seed": 901,
+    "horizon": 25,
+    "particles": 10,
+    "iterations": 12,
+    "replan": 5,
+    "lr": 0.1,
+    "strength": 1.0,
+    "grad_clip": 100.0,
+    "steps": 1000,
+    "max_seconds": 240.0
+  },
+  "hashes": {
+    "/home/xhj/WM_Security/scripts/pilot_predictive_gradient_mpc.py": "72f5d6416542fe2e20148ff49cae399d5e29991b64635a61d2ef324134787265",
+    "runs/dmo_jacobian_gate_v0/clean_model.pt": "608c1a1c42b797c13c822b81c72402e96a9c5746a61fcd427dc815529d47c0da",
+    "runs/dmo_jacobian_gate_v0/normalization.json": "a874934cc31da5ebcd24764572adc3a58bf38b535cdc08cb0a85984daff62c8c",
+    "/home/xhj/WM_Security/vendor/DMO_code/models/dyn_model.py": "702d2b7f529ea1961fb6a1dc5413396c56a794c40e8220a91fd80e3d390176f5"
+  },
+  "scope": "Native DMControl cartpole-balance with frozen DMO StochSSM component; researcher-defined Adam MPC, not native DMO control.",
+  "mechanism": "Independent fresh uniforms per coordinate and transition, shifted by -strength*next_mean/reference_sigma modulo 1. Standard normal conditional law unchanged in exact arithmetic.",
+  "permission": "Differentiable sampler source replacement; not weights-only, data-only, or action-only poisoning.",
+  "baseline_gate": "First full native-sampler episode must score at least 900/1000 before evaluating attacks.",
+  "planner": "Warm-started projected Adam on expected undiscounted native reward; execute first replan actions; no value oracle or custom backward.",
+  "api_requests": 0,
+  "training_updates": 0,
+  "gpu_work": false
+}

@@ -1,0 +1,8 @@
+{
+  "decision": "REJECT",
+  "novelty_score": 3,
+  "distinct_mechanism": "None. The mechanism relies entirely on an existing implementation bug: failing to separate termination (MDP absorbing state) from truncation (finite-horizon time limit), thoroughly formalized by Pardo et al. (2018). An adversary loitering until environment timeout does not create a new dynamic; it merely generates samples for a continuation predictor $\\gamma(s)$ or termination classifier $p(d|s)$ that is already broken by design. If the world model correctly excludes `truncated` flags from the terminal loss or includes remaining horizon $H - t$ in the state representation, the exploit has exactly zero effect.",
+  "native_carrier": "Inadmissible. An agent idling or executing no-ops until the external clock expires is generic MDP stalling, not an endogenous world-model carrier. It exploits external episode-management logic rather than latent transition dynamics.",
+  "gate": "FAIL",
+  "reason": "Reduces entirely to textbook RL time-limit bias (Pardo et al., 2018) weaponized via trivial stalling. The attack succeeds only when the target learner commits the known engineering defect of training termination/continuation predictors on truncation boundaries. Because the one-step dynamics remain intact and the failure mode is fully mitigated by standard Gymnasium termination/truncation separation or time-aware state augmentation, it fails the distinctness constraint."
+}

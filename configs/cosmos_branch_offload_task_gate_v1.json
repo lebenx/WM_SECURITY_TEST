@@ -1,0 +1,34 @@
+{
+  "registered_at_utc": "2026-10-14T06:15:23.726761+00:00",
+  "status": "prospective_end_to_end_resource_equivalence_check",
+  "purpose": "Enable the already registered native cross-task Clean gate without changing model math or renderer; not a new attack",
+  "artifacts": {
+    "scripts/pilot_cosmos_policy_branch_offload_task_gate.py": "1b5d91660ae6b0c592ef4b212c04bca5ed03c608738946de076fad70e9fb69d9",
+    "scripts/pilot_cosmos_policy_native_task_gate.py": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+    "scripts/cosmos_policy_cuda_branch_offload.py": "094e9b0c252cebd1791e010d91cbdc9687c0b0dfd52fb7e8e0eed7f39065004d",
+    "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+    "runs/cosmos_vae_branch_offload_parity_v1/completed.json": "1f2a1f7b17f7b7c4165a9e80f32966e469266e54a8b8ad56c3bd53d69b355989",
+    "runs/cosmos_policy_native_task_gate_clean_n2_v1/summary.json": "4e4e1ab55a414c575c391524f0009f9a04c7d11bec29ce9ba93cf67deae8d8f2"
+  },
+  "first_episode": {
+    "suite": "libero_goal",
+    "task_id": 0,
+    "init_id": 0,
+    "best_of_n": 2,
+    "seed": 31,
+    "env_seed": 0,
+    "max_steps": 300,
+    "settle_steps": 10,
+    "renderer": "unchanged NVIDIA EGL",
+    "cuda_allocator_fraction": 0.055
+  },
+  "pass": "All 29 recorded physical/protocol/selection/state/image comparisons exact against the completed original resident N2 episode",
+  "on_oom": "Preserve terminal resource failure; no unchanged retry and no interpretation as task failure",
+  "on_parity_failure": "Retain task outcome but do not extend this execution configuration as equivalent",
+  "cross_task_followup": "Only after parity passes: original ten tasks x three initial states, unchanged native gate >=24/30 and at least eight tasks with success",
+  "limitations": [
+    "Component VAE parity does not guarantee complete runtime memory fit",
+    "Equivalent torch adapter is not full upstream Transformer Engine parity",
+    "No Attack/Defense result is implied"
+  ]
+}

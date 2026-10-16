@@ -1,0 +1,42 @@
+{
+  "verdict": "PASS",
+  "candidate_claim": "In joint action-dynamics world models trained on mixture datasets containing execution failures, a downstream trajectory-value head induces an implicit non-causal feedback channel through shared trunk representations, allowing a legal, transient prefix action sequence to hijack future action decoding toward failure modes while maintaining nominal open-loop video and value prediction losses.",
+  "novelty_score": 7.2,
+  "novelty_argument": "This is fundamentally distinct from bidirectional diffusion nonlocality (e.g., A2World), trivial causal masking bugs, or compounding rollout error. It identifies an implicit multi-objective representation coupling unique to modern joint policy-world architectures (like FACT and OpenDW): the training objective supervises failure rollouts with low value and failed future dynamics while skipping action loss. Because representations in shared causal DiT/MoT trunks are optimized to predict long-horizon task progress/value from action prefixes, an adversary providing legal, in-distribution exploratory action prompts can deliberately steer the shared conditioning tokens into the failure-manifold subspace. In this subspace, future action generation is corrupted or suppressed, yet local forward simulation metrics (video MSE/LPIPS and value ranking) remain within normal validation bounds because the model correctly believes the trajectory is executing a recognized failure transition.",
+  "overlap_risks": [
+    "Causal masking relabeling: Must ensure the trunk attention mask is strictly causal (lower triangular); the leakage must operate through shared temporal latent representations across heterogeneous loss heads rather than explicit non-causal attention edges.",
+    "Generic adversarial action perturbation: Must prove the failure is not merely dynamic divergence or control instability, but an architectural bypass where the value head's supervisory signal dynamically coerces the action head through shared conditioning.",
+    "Ordinary out-of-distribution failure: The trigger sequence must be composed of strictly legal, in-support actions that execute without physical collision or divergence in the nominal environment."
+  ],
+  "short_gate": {
+    "carrier": "FACT (Bariona/FACT) with RoboTwin checkpoint",
+    "threat_model": "Attacker supplies a 3-step legal prefix action sequence during an interaction rollout (no weight modification, no poisoned training data, no gradient access).",
+    "gate_protocol": "1. Run nominal rollout on 'pick-place' task; record baseline task completion, action prediction error, and value prediction error.\n2. Injected test: Execute a bounded 3-step legal detouring prefix a_{1:3} selected from the training failure dataset's exploratory phase.\n3. Verify open-loop metrics: future video prediction loss (SSIM/LPIPS) and value classification error on horizon t+1:t+H stay within 1.05x of baseline.\n4. Measure downstream action divergence: check if action head logits for t > 3 collapse to high-variance or degenerate zero-action modes (as supervised by failure masking), causing execution stall or task drop > 40% compared to equivalent kinematic perturbations in an isolated policy."
+  },
+  "causal_repair": {
+    "mechanism": "Asymmetric Gradient Isolation & Latent Role Decoupling",
+    "intervention": "Enforce stop-gradient on the shared trunk representations with respect to the task-progress value and failure dynamics objectives, or factorize the DiT conditioning trunk into dual orthogonal streams (action generation stream vs. outcome evaluation stream) with unidirectional cross-attention only flowing from action latents to value/dynamics latents.",
+    "repair_verification": "Under the identical legal detouring prefix, the decoupled model maintains task completion rate (>80% of nominal) and eliminates the downstream action collapse without degrading value estimation accuracy."
+  },
+  "scale_plan": {
+    "tasks": [
+      "RoboTwin Pick-and-Place (rigid object manipulation with hard failure boundary)",
+      "RoboTwin Nut-Bolt Assembly (fine-grained contact dynamics vulnerable to stall failures)"
+    ],
+    "metrics": [
+      "Closed-loop Success Rate under Prefix Disturbance",
+      "Action Divergence Metric (Wasserstein distance between clean and hijacked action distributions)",
+      "Value/Video Prediction Fidelity (SSIM / Task Progress ROC-AUC under attack)"
+    ]
+  },
+  "falsifiers": [
+    "If applying the legal prefix to a decoupled, independently trained policy (e.g., ACT or Diffusion Policy conditioned on the same visual history) causes identical closed-loop task drops, falsifying the claim that the vulnerability arises from trunk-level value-to-action coupling.",
+    "If the action collapse is directly predicted by an immediate spike in single-step open-loop video prediction error (> 2.0x baseline), indicating standard kinematic OOD rather than silent representation hijacking.",
+    "If gradient-stopping the value/failure objective from the shared trunk fails to restore closed-loop robustness against the prefix action."
+  ],
+  "sources": [
+    "https://github.com/Bariona/FACT",
+    "https://github.com/dexmal/OpenDW",
+    "https://github.com/OpenWAM/OpenWAM"
+  ]
+}

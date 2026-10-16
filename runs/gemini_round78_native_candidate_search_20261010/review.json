@@ -1,0 +1,11 @@
+{
+  "name": "MoSim Lie-Generator Nilpotent Contraction Collapse",
+  "exact_source_path": "vendor/MoSim/MoSim/src/models/dynamics.py",
+  "legal_intervention": "在保持 action 处于标称有界约束 [-1, 1] 内的前提下，向连续控制输入注入特定高频交变反向对偶扰动序列 a_t = (-1)^t * epsilon * v_dominant（其中 v_dominant 为 dynamics.py 中由 action 线性映射生成的流代数基的极小奇异向量），不改动系统动力学权重、不违背非前瞻性、无 OOD 越界动作。",
+  "mediator": "dynamics.py 中由 Lie 生成元经 Magnus/Runge-Kutta 展开计算的局部 Jacobian 矩阵谱半径（尤其是伴随表示矩阵积 \\prod exp(ad_{A_t})）发生反常退化收缩至零空间，破坏 ODE flow map 的局部可逆性保真。",
+  "falsifiable_invariant": "在无攻状态下，连续 ODE flow map 沿轨迹的保积/体积收缩率 log|det(J_t)| 保持在有界李代数散度区间内；在合法扰动下，若生成元未发生病态收缩，则后继隐状态轨迹积分步与基准轨迹的测地距离误差应与扰动能量 ||a_t - a_clean|| 呈一阶线性 Lipschitz 连续，不应出现谱坍缩导致的局部 rank 亏损（dim(span(z_{t+1})) 突降）。",
+  "task_harm_gate": "在 horizon=10 的 cheetah rollout 中，隐状态动力学在 5 步内陷入近零流形（latent norm 下降 > 80%），导致解码器重构的关节角速度与接触力预测恒等为零，使得基于该世界模型的 MPC 规划产生死锁或零力矩输出，累计回报在 6 个随机种子下均下降超过 70%。",
+  "repair": "在 dynamics.py 的 flow 构造步引入李代数正交投影归一化（如对作用在生成元上的 action 变换核施加 Killing 型或仿射代数正定约束，强制 \\text{Tr}(ad_X ad_Y) 满足保积非退化条件），阻断反向交变输入在伴随乘积中的零特征值坍缩。",
+  "why_not_rejected": "它不是普通 OOD（动作严格位于合法动作空间凸包内且均值为 0），不是 TD-MPC2 式离散嵌入查找或 slot 伪机制，不依赖 A2World 已被证伪的全局/未来动作前瞻广播，而是直接基于 MoSim 连续 ODE 动力学矩阵生成元的微分几何与代数代换特性；在单步和短 horizon 上可直接通过监测隐空间 Jacobian 秩快速严格证伪。",
+  "predicted_novelty_1_to_10": 8
+}

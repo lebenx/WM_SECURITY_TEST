@@ -1,0 +1,419 @@
+{
+  "date": "2026-10-09",
+  "status": "completed_shared_full_voltage_forecaster",
+  "claim_status": "Shared comparator implemented; no distinct experiment-learning method or advantage established.",
+  "run": "runs/neuronbench_forecaster_v0",
+  "script": "scripts/fit_neuronbench_forecaster.py",
+  "assessment": {
+    "date": "2026-10-09",
+    "status": "completed_shared_full_voltage_forecaster",
+    "run": "runs/neuronbench_forecaster_v0",
+    "learner": "src/wm_security/neuron_forecaster.py",
+    "runner": "scripts/fit_neuronbench_forecaster.py",
+    "headline_cn": "同样的已有观测交给完整轨迹机制拟合器，两个任务的原生预测 MSE 均为 0；此前的失败未证明需要新实验。",
+    "report_note_cn": "已实现共享的完整电压轨迹预测器：从公开基础动力学与通用额外电流参数化出发，按训练轨迹选择模型，再自由运行预测。只复用上一轮两个机制各 3 次观测，原生六协议计数预测 MSE 从计数 LLM 的 60.75／200.75 降为 0／0；原生特征预测 MSE 分别约 1.61e-28／2.32e-30。钠疲劳选择了公开提供的慢钠动力学，钙反跳由通用单通道参数拟合得到。这是固定模型族内的常规系统辨识，未发现新的实验构造操作，也未复现完整 MDA。两个任务均为无噪声开发实例，部分评分协议与采集菜单重叠；结果不能外推到全部机制、噪声条件或严格未见协议。加速模拟器与原生实现的 8 次公开模型比较通过，最大电压差约 1.51e-11 mV。本轮新增真实采集 0 次、API 调用 0 次，训练用模型模拟 19431 次，预测模拟 12 次，双方一致性模拟各 8 次，隐藏评分轨迹 12 次；未使用 GPU。停止扩展这两个已被基线解决的设置，把预测器保留为后续相同推理能力的比较组件。",
+    "comparison": [
+      {
+        "world": "ca_rebound",
+        "prior_count_llm_mse": 60.75,
+        "public_plain_model_mse": 2.4166666666666665,
+        "fitted_model_mse": 0.0,
+        "fitted_feature_mse": 1.6052832470071527e-28,
+        "training_rmse_mV": 1.632661593710718e-11,
+        "native_score_protocols": 6,
+        "fit_seconds": 82.61167906410992,
+        "source": "runs/neuronbench_forecaster_v0/ca_rebound/summary.json"
+      },
+      {
+        "world": "na_fatigue",
+        "prior_count_llm_mse": 200.75,
+        "public_plain_model_mse": 109.58333333333333,
+        "fitted_model_mse": 0.0,
+        "fitted_feature_mse": 2.3178875980568e-30,
+        "training_rmse_mV": 7.404357062832232e-13,
+        "native_score_protocols": 6,
+        "fit_seconds": 0.3745303712785244,
+        "source": "runs/neuronbench_forecaster_v0/na_fatigue/summary.json"
+      }
+    ],
+    "results": {
+      "ca_rebound": {
+        "status": "completed",
+        "source": "runs/neuronbench_native_v0/ca_rebound",
+        "run": "runs/neuronbench_forecaster_v0/ca_rebound",
+        "world": "ca_rebound",
+        "training_rmse": 1.632661593710718e-11,
+        "selected_model": {
+          "parameters": [
+            3.1999999999913955,
+            119.99999999998174,
+            -54.000000000000085,
+            5.999999999999734,
+            2.000000000000046,
+            -86.99999999993571,
+            3.9999999999866356,
+            22.000000000000835
+          ],
+          "channel": true,
+          "slow": false,
+          "sign": 1,
+          "power": 2,
+          "inactivation": true
+        },
+        "predictions": {
+          "hyperpol -25 then release": 3,
+          "hyperpol -35 then release": 3,
+          "hyperpol -30 then release": 3,
+          "hyperpol -40 then release": 3,
+          "brief step (12 uA, 40 ms)": 3,
+          "long step (10 uA, 300 ms)": 21
+        },
+        "native_spike_forecast_mse": 0.0,
+        "native_feature_forecast_mse": 1.6052832470071527e-28,
+        "previous_llm_spike_mse": 60.75,
+        "previous_reference_spike_mse": 2.4166666666666665,
+        "model_simulations": {
+          "synchronized_simulations": 19371,
+          "free_simulations": 54
+        },
+        "forecast_model_simulations": 6,
+        "held_out_feature_scoring_trajectories": 6,
+        "new_oracle_experiments": 0,
+        "source_experiments_reused": 3,
+        "new_api_requests": 0,
+        "gpu_work": false,
+        "fit_seconds": 82.61167906410992,
+        "total_seconds": 84.48666839301586,
+        "scope": "Fixed-family mechanistic fit on existing noiseless voltage; no new experiment constructor or full MDA reproduction.",
+        "finished_at_utc": "2026-10-09T00:06:44.905855+00:00"
+      },
+      "na_fatigue": {
+        "status": "completed",
+        "source": "runs/neuronbench_native_v0/na_fatigue",
+        "run": "runs/neuronbench_forecaster_v0/na_fatigue",
+        "world": "na_fatigue",
+        "training_rmse": 7.404357062832232e-13,
+        "selected_model": {
+          "parameters": [
+            0.38729833462074176,
+            25.0,
+            -55.0,
+            5.477225575051661,
+            12.247448713915889,
+            -70.0,
+            5.477225575051661,
+            54.772255750516585
+          ],
+          "channel": false,
+          "slow": true,
+          "sign": 1,
+          "power": 1,
+          "inactivation": false
+        },
+        "predictions": {
+          "paired 10 uA/300+300": 7,
+          "paired 14 uA/250+250": 18,
+          "paired 12 uA/350+350": 13,
+          "paired 8 uA/300+300": 2,
+          "single long 12 uA/300 ms": 22,
+          "single long 10 uA/300 ms": 20
+        },
+        "native_spike_forecast_mse": 0.0,
+        "native_feature_forecast_mse": 2.3178875980568e-30,
+        "previous_llm_spike_mse": 200.75,
+        "previous_reference_spike_mse": 109.58333333333333,
+        "model_simulations": {
+          "synchronized_simulations": 0,
+          "free_simulations": 6
+        },
+        "forecast_model_simulations": 6,
+        "held_out_feature_scoring_trajectories": 6,
+        "new_oracle_experiments": 0,
+        "source_experiments_reused": 3,
+        "new_api_requests": 0,
+        "gpu_work": false,
+        "fit_seconds": 0.3745303712785244,
+        "total_seconds": 3.100513528101146,
+        "scope": "Fixed-family mechanistic fit on existing noiseless voltage; no new experiment constructor or full MDA reproduction.",
+        "finished_at_utc": "2026-10-09T00:05:23.523462+00:00"
+      }
+    },
+    "parity": {
+      "source": "runs/neuronbench_forecaster_v0/verification/parity.json",
+      "passed": true,
+      "comparisons": 8,
+      "max_voltage_error_mV": 1.5125678487493133e-11
+    },
+    "interpretation": "Available observations suffice for native scoring in these two deterministic instances under the public model family. This removes a weak-inference confound; no experiment-construction advantage has been demonstrated.",
+    "inference_boundary": "Labels and task identity are stripped before fitting. Source observations and learner hashes match frozen plans. Counts are scored against previously obtained targets; native hidden feature trajectories are generated only after the fitted model is saved. The analyst has inspected benchmark code; the learner does not access hidden world registry values.",
+    "model_family_boundary": "Public plain/slow-Na families plus one generic extra channel, eight sign/power/inactivation structures; not open-ended dynamics discovery. Sodium success selects an already supplied kinetic law.",
+    "evaluation_boundary": "Two noiseless development instances with native six-protocol scoring, some protocol overlap with the acquisition menu; no robustness, fully unseen-protocol, all-world, or full-MDA claim.",
+    "costs": {
+      "api_requests": 0,
+      "failed_api_requests": 0,
+      "new_native_experiments": 0,
+      "existing_true_cell_queries_reused": 6,
+      "fitted_model_training_simulations": 19431,
+      "fitted_model_forecast_simulations": 12,
+      "accelerated_parity_simulations": 8,
+      "public_native_parity_simulations": 8,
+      "held_out_feature_scoring_trajectories": 12,
+      "neural_training_updates": 0,
+      "gpu_seconds": 0
+    },
+    "new_method_tested": false,
+    "learned_constructor_tested": false,
+    "full_mda_reproduction": false,
+    "gpu_work": false,
+    "next_requirement": "Do not scale the two solved noiseless development instances or attribute the old count-only failure to missing experiments. Specify and implement a distinct experiment-learning update with source and target roles, then test whether it lowers total acquisition cost with this same full-trace forecaster and equal native control access. A fixed conditioning template, choosing a supplied model family, unspecified inverse program solver, or generic model-metamer construction is not an established new contribution. Keep MDA-style joint model/experiment design and same-prior continuous design as relevant comparators. Novelty and multiple core-task evidence remain required before GPU scale-up.",
+    "verified_at_utc": "2026-10-09T00:12:58.365715+00:00"
+  },
+  "headline_cn": "同样的已有观测交给完整轨迹机制拟合器，两个任务的原生预测 MSE 均为 0；此前的失败未证明需要新实验。",
+  "report_note_cn": "已实现共享的完整电压轨迹预测器：从公开基础动力学与通用额外电流参数化出发，按训练轨迹选择模型，再自由运行预测。只复用上一轮两个机制各 3 次观测，原生六协议计数预测 MSE 从计数 LLM 的 60.75／200.75 降为 0／0；原生特征预测 MSE 分别约 1.61e-28／2.32e-30。钠疲劳选择了公开提供的慢钠动力学，钙反跳由通用单通道参数拟合得到。这是固定模型族内的常规系统辨识，未发现新的实验构造操作，也未复现完整 MDA。两个任务均为无噪声开发实例，部分评分协议与采集菜单重叠；结果不能外推到全部机制、噪声条件或严格未见协议。加速模拟器与原生实现的 8 次公开模型比较通过，最大电压差约 1.51e-11 mV。本轮新增真实采集 0 次、API 调用 0 次，训练用模型模拟 19431 次，预测模拟 12 次，双方一致性模拟各 8 次，隐藏评分轨迹 12 次；未使用 GPU。停止扩展这两个已被基线解决的设置，把预测器保留为后续相同推理能力的比较组件。",
+  "next_requirement": "Do not scale the two solved noiseless development instances or attribute the old count-only failure to missing experiments. Specify and implement a distinct experiment-learning update with source and target roles, then test whether it lowers total acquisition cost with this same full-trace forecaster and equal native control access. A fixed conditioning template, choosing a supplied model family, unspecified inverse program solver, or generic model-metamer construction is not an established new contribution. Keep MDA-style joint model/experiment design and same-prior continuous design as relevant comparators. Novelty and multiple core-task evidence remain required before GPU scale-up.",
+  "updated_at_utc": "2026-10-09T00:12:58.365715+00:00",
+  "native_count_baseline": {
+    "run": "runs/neuronbench_native_v0",
+    "assessment": {
+      "status": "completed_native_partial_observation_capability_gate",
+      "accepted_novel_method": false,
+      "native_source": {
+        "repository": "https://github.com/murphyk/neuronbench",
+        "pin": "c354622458c460b419cab821d482c879f0578377",
+        "modified": false,
+        "python": "3.11.13",
+        "environment": ".venv-neuronbench"
+      },
+      "headline_cn": "新部分可观测任务已完成原生短测；完整轨迹含计数未保留的信息，尚不能把基线预测失败归因于缺少新实验。",
+      "results": [
+        {
+          "status": "completed",
+          "world": "ca_rebound",
+          "model": "glm-5.3",
+          "run": "runs/neuronbench_native_v0/ca_rebound",
+          "observed": [
+            [
+              "long step (10 uA, 300 ms)",
+              21
+            ],
+            [
+              "hyperpol conditioning + depol test (-30 uA/250 ms, then +12 uA)",
+              12
+            ],
+            [
+              "depolarising conditioning + test (+15 uA/250 ms, then +12 uA)",
+              31
+            ]
+          ],
+          "predictions": {
+            "hyperpol -25 then release": 11.0,
+            "hyperpol -35 then release": 13.0,
+            "hyperpol -30 then release": 12.0,
+            "hyperpol -40 then release": 14.0,
+            "brief step (12 uA, 40 ms)": 3.0,
+            "long step (10 uA, 300 ms)": 21.0
+          },
+          "reference_predictions": {
+            "hyperpol -25 then release": 1.0,
+            "hyperpol -35 then release": 1.0,
+            "hyperpol -30 then release": 1.0,
+            "hyperpol -40 then release": 1.0,
+            "brief step (12 uA, 40 ms)": 3.0,
+            "long step (10 uA, 300 ms)": 21.0
+          },
+          "held_out_targets": {
+            "hyperpol -25 then release": 3.0,
+            "hyperpol -35 then release": 3.0,
+            "hyperpol -30 then release": 3.0,
+            "hyperpol -40 then release": 3.0,
+            "brief step (12 uA, 40 ms)": 3.0,
+            "long step (10 uA, 300 ms)": 21.0
+          },
+          "native_llm_spike_forecast_mse": 60.75,
+          "plain_reference_spike_forecast_mse": 2.4166666666666665,
+          "oracle_experiments": 3,
+          "api_requests": 4,
+          "failed_api_requests": 0,
+          "reference_model_simulations": 6,
+          "held_out_scoring_trajectories": 6,
+          "feature_forecast_mse": null,
+          "metric_scope": "Native headline spike-count MSE only; the native count-only LLM baseline does not supply voltage trajectories.",
+          "new_method": false,
+          "full_mda_reproduction": false,
+          "gpu_work": false,
+          "elapsed_s": 54.243851428851485,
+          "finished_at_utc": "2026-10-08T23:55:30.704027+00:00"
+        },
+        {
+          "status": "completed",
+          "world": "na_fatigue",
+          "model": "glm-5.3",
+          "run": "runs/neuronbench_native_v0/na_fatigue",
+          "observed": [
+            [
+              "hyperpol conditioning + depol test (-30 uA/250 ms, then +12 uA)",
+              11
+            ],
+            [
+              "depolarising conditioning + test (+15 uA/250 ms, then +12 uA)",
+              30
+            ],
+            [
+              "brief hyperpol conditioning + test (-30 uA/40 ms, then +12 uA)",
+              11
+            ]
+          ],
+          "predictions": {
+            "paired 10 uA/300+300": 12.0,
+            "paired 14 uA/250+250": 42.0,
+            "paired 12 uA/350+350": 31.0,
+            "paired 8 uA/300+300": 0.0,
+            "single long 12 uA/300 ms": 13.0,
+            "single long 10 uA/300 ms": 6.0
+          },
+          "reference_predictions": {
+            "paired 10 uA/300+300": 21.0,
+            "paired 14 uA/250+250": 20.0,
+            "paired 12 uA/350+350": 26.0,
+            "paired 8 uA/300+300": 19.0,
+            "single long 12 uA/300 ms": 22.0,
+            "single long 10 uA/300 ms": 21.0
+          },
+          "held_out_targets": {
+            "paired 10 uA/300+300": 7.0,
+            "paired 14 uA/250+250": 18.0,
+            "paired 12 uA/350+350": 13.0,
+            "paired 8 uA/300+300": 2.0,
+            "single long 12 uA/300 ms": 22.0,
+            "single long 10 uA/300 ms": 20.0
+          },
+          "native_llm_spike_forecast_mse": 200.75,
+          "plain_reference_spike_forecast_mse": 109.58333333333333,
+          "oracle_experiments": 3,
+          "api_requests": 4,
+          "failed_api_requests": 0,
+          "reference_model_simulations": 6,
+          "held_out_scoring_trajectories": 6,
+          "feature_forecast_mse": null,
+          "metric_scope": "Native headline spike-count MSE only; the native count-only LLM baseline does not supply voltage trajectories.",
+          "new_method": false,
+          "full_mda_reproduction": false,
+          "gpu_work": false,
+          "elapsed_s": 50.90356366103515,
+          "finished_at_utc": "2026-10-08T23:55:27.363673+00:00"
+        }
+      ],
+      "observation_analysis": {
+        "status": "completed",
+        "observations": [
+          {
+            "world": "ca_rebound",
+            "query": 1,
+            "label": "long step (10 uA, 300 ms)",
+            "observed_spikes": 21.0,
+            "reference_spikes": 21,
+            "spike_count_difference": 0.0,
+            "voltage_rmse_mV": 26.59395195890792,
+            "voltage_max_abs_difference_mV": 105.65016244373538,
+            "pretest_voltage_rmse_mV": 0.04915921815457501,
+            "note": "Noiseless paired reference comparison, not an identifiability proof or a result for the noisy benchmark."
+          },
+          {
+            "world": "ca_rebound",
+            "query": 2,
+            "label": "hyperpol conditioning + depol test (-30 uA/250 ms, then +12 uA)",
+            "observed_spikes": 12.0,
+            "reference_spikes": 11,
+            "spike_count_difference": 1.0,
+            "voltage_rmse_mV": 19.522356299669294,
+            "voltage_max_abs_difference_mV": 101.99023415574455,
+            "pretest_voltage_rmse_mV": 0.014082630824960361,
+            "note": "Noiseless paired reference comparison, not an identifiability proof or a result for the noisy benchmark."
+          },
+          {
+            "world": "ca_rebound",
+            "query": 3,
+            "label": "depolarising conditioning + test (+15 uA/250 ms, then +12 uA)",
+            "observed_spikes": 31.0,
+            "reference_spikes": 31,
+            "spike_count_difference": 0.0,
+            "voltage_rmse_mV": 18.56280864685919,
+            "voltage_max_abs_difference_mV": 85.82122156723979,
+            "pretest_voltage_rmse_mV": 0.04915921815457501,
+            "note": "Noiseless paired reference comparison, not an identifiability proof or a result for the noisy benchmark."
+          },
+          {
+            "world": "na_fatigue",
+            "query": 1,
+            "label": "hyperpol conditioning + depol test (-30 uA/250 ms, then +12 uA)",
+            "observed_spikes": 11.0,
+            "reference_spikes": 11,
+            "spike_count_difference": 0.0,
+            "voltage_rmse_mV": 11.17021931568509,
+            "voltage_max_abs_difference_mV": 100.50302507402822,
+            "pretest_voltage_rmse_mV": 1.968611391815122e-05,
+            "note": "Noiseless paired reference comparison, not an identifiability proof or a result for the noisy benchmark."
+          },
+          {
+            "world": "na_fatigue",
+            "query": 2,
+            "label": "depolarising conditioning + test (+15 uA/250 ms, then +12 uA)",
+            "observed_spikes": 30.0,
+            "reference_spikes": 31,
+            "spike_count_difference": -1.0,
+            "voltage_rmse_mV": 26.4368990999037,
+            "voltage_max_abs_difference_mV": 103.46639787013369,
+            "pretest_voltage_rmse_mV": 6.771446672635777e-05,
+            "note": "Noiseless paired reference comparison, not an identifiability proof or a result for the noisy benchmark."
+          },
+          {
+            "world": "na_fatigue",
+            "query": 3,
+            "label": "brief hyperpol conditioning + test (-30 uA/40 ms, then +12 uA)",
+            "observed_spikes": 11.0,
+            "reference_spikes": 11,
+            "spike_count_difference": 0.0,
+            "voltage_rmse_mV": 14.670225632616043,
+            "voltage_max_abs_difference_mV": 100.50648185400388,
+            "pretest_voltage_rmse_mV": 4.17605539402068e-05,
+            "note": "Noiseless paired reference comparison, not an identifiability proof or a result for the noisy benchmark."
+          }
+        ],
+        "new_oracle_experiments": 0,
+        "public_reference_simulations": 6,
+        "api_requests": 0,
+        "gpu_work": false,
+        "elapsed_s": 1.3428393653593957
+      },
+      "interpretation": "The reference count-only LLM baseline has higher forecast error than the public plain mechanistic model on both selected worlds. Four of six observed counts exactly match the reference while raw traces differ. These runs motivate sharing a full-trace forecaster in an actual constructor comparison, not claiming a novel instrument or an impossibility of identifying the current model.",
+      "measurement_boundary": "The raw-voltage differences are noiseless trajectory differences and may include spike phase shifts. Their RMSE is not a proof of mechanism identifiability, robustness to stochastic channel noise, or a successful discovered model.",
+      "full_mda_reproduction": false,
+      "learned_constructor_tested": false,
+      "custom_programs_constructed": 0,
+      "held_out_scope": "Native six-protocol scoring set per world. The untouched native package has some protocol overlap with its acquisition menu; these scores are not asserted to be six wholly unseen protocols per episode.",
+      "api_requests": {
+        "constructive_proposal": 1,
+        "native_baseline": 8,
+        "total": 9,
+        "failed": 0,
+        "primary": 0
+      },
+      "interaction_accounting": {
+        "true_cell_queries": 6,
+        "reference_model_simulations": 18,
+        "held_out_scoring_trajectories": 12,
+        "native_simulations_total": 36
+      },
+      "prior_program_result_retained": "runs/interphyre_policy_generation_v0/assessment.json",
+      "proposal_assessment": "runs/experiment_representation_proposal_20261008T234605Z/assessment.json",
+      "new_primary_literature": [
+        "https://arxiv.org/abs/2608.09696",
+        "https://arxiv.org/abs/2609.35690"
+      ],
+      "decision": "Keep the new native partial-observation carrier; do not use these weak baseline scores as method evidence and do not scale up.",
+      "next_requirement": "Implement a concrete experiment-program constructor with its core learning/update steps executable, sharing a full-voltage mechanistic forecaster and identical native control access with its comparisons. Test whether source-learned transformations produce useful new temporal experiments on unseen mechanisms beyond same-prior continuous design and applicable MDA-style inference. Do not infer a need for new experiments from a count-only forecaster discarding available trace information; do not treat menu selection, a researcher-provided conditioning template, or undefined inverse-planning calls as the learned contribution. Preserve the broad novelty and multi-core-task objective; no long GPU work is warranted yet.",
+      "gpu_work": false,
+      "verified_at_utc": "2026-10-08T23:58:57.807775+00:00"
+    }
+  }
+}

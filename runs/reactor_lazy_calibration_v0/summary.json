@@ -1,0 +1,790 @@
+{
+  "status": "completed",
+  "episodes": 12,
+  "unique_worlds": 4,
+  "elapsed_s": 70.36754073761404,
+  "api_requests": 0,
+  "gpu_work": false,
+  "scope": "Native task-feedback baseline: calibrate only after a failed prediction.\n\nThis is an ordinary lazy repair baseline, not a proposed novel algorithm.\nIt has the same source-informed isolation/minimum operation as the fixed\ncalibration comparator. Task feedback selects WHEN to use that supplied\noperation; it does not discover an instrument, measurement program, or law.\nOnly public observations and actual actions enter decisions. Native instrument\nRNGs are unseeded upstream, so matching world seeds does not pair sensor noise.\n",
+  "results": [
+    {
+      "difficulty": "Normal",
+      "seed": 23,
+      "arm": "raw",
+      "collection_actions": 43,
+      "calibration_trigger": null,
+      "calibration_actions": 0,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": null,
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 28,
+          "result": {
+            "crystal": "quantum crystal 3",
+            "reactor_uuid": 10581,
+            "prediction_hz": 181.17633587199998,
+            "setpoint_hz": 181,
+            "public_reactor_name": "crystal reactor (uncalibrated)"
+          },
+          "activated": false
+        },
+        {
+          "phase": "raw",
+          "actions": 17,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 34810,
+            "prediction_hz": 3377.7715440879997,
+            "setpoint_hz": 3378,
+            "public_reactor_name": "crystal reactor (uncalibrated)"
+          },
+          "activated": false
+        }
+      ],
+      "total_actions": 88,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskNormal",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1 and Crystal 2, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 3 and Crystal 4, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": false,
+          "completedSuccessfully": false
+        }
+      ],
+      "completed_successfully": false
+    },
+    {
+      "difficulty": "Normal",
+      "seed": 23,
+      "arm": "fixed_calibration",
+      "collection_actions": 43,
+      "calibration_trigger": "unconditional",
+      "calibration_actions": 149,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": {
+        "program": {
+          "site": {
+            "kind": "native"
+          },
+          "count": 1,
+          "reducer": "first",
+          "instrument": null,
+          "estimated_actions_per_target": 0
+        },
+        "model": {
+          "sensor": "radiation",
+          "family": "affine",
+          "terms": [
+            "1",
+            "x"
+          ],
+          "coefficients": [
+            90.0,
+            94.0
+          ],
+          "encoded_coefficients": [
+            "90",
+            "94"
+          ],
+          "description_characters": 7,
+          "reference_max_error_hz": 0.0,
+          "target_predictions_hz": []
+        }
+      },
+      "events": [
+        {
+          "phase": "calibrated",
+          "actions": 14,
+          "result": {
+            "crystal": "quantum crystal 3",
+            "reactor_uuid": 10581,
+            "prediction_hz": 3794.5399999999995,
+            "setpoint_hz": 3795,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "calibrated",
+          "actions": 19,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 34810,
+            "prediction_hz": 4393.32,
+            "setpoint_hz": 4393,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 225,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskNormal",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1 and Crystal 2, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 3 and Crystal 4, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Normal",
+      "seed": 23,
+      "arm": "lazy_calibration",
+      "collection_actions": 43,
+      "calibration_trigger": "public_reactor_not_activated_after_predicted_setpoint",
+      "calibration_actions": 151,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": {
+        "program": {
+          "site": {
+            "kind": "native"
+          },
+          "count": 1,
+          "reducer": "first",
+          "instrument": null,
+          "estimated_actions_per_target": 0
+        },
+        "model": {
+          "sensor": "radiation",
+          "family": "affine",
+          "terms": [
+            "1",
+            "x"
+          ],
+          "coefficients": [
+            90.0,
+            94.0
+          ],
+          "encoded_coefficients": [
+            "90",
+            "94"
+          ],
+          "description_characters": 7,
+          "reference_max_error_hz": 0.0,
+          "target_predictions_hz": []
+        }
+      },
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 12,
+          "result": {
+            "crystal": "quantum crystal 3",
+            "reactor_uuid": 10581,
+            "prediction_hz": 4967.4245383,
+            "setpoint_hz": 4967,
+            "public_reactor_name": "crystal reactor (uncalibrated)"
+          },
+          "activated": false
+        },
+        {
+          "phase": "calibrated",
+          "actions": 17,
+          "result": {
+            "crystal": "quantum crystal 3",
+            "reactor_uuid": 10581,
+            "prediction_hz": 3795.48,
+            "setpoint_hz": 3795,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "calibrated",
+          "actions": 19,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 34810,
+            "prediction_hz": 4393.32,
+            "setpoint_hz": 4393,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 242,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskNormal",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1 and Crystal 2, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 3 and Crystal 4, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Normal",
+      "seed": 24,
+      "arm": "raw",
+      "collection_actions": 43,
+      "calibration_trigger": null,
+      "calibration_actions": 0,
+      "raw_targets_completed_before_calibration": 2,
+      "calibrated_model": null,
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 14,
+          "result": {
+            "crystal": "quantum crystal 3",
+            "reactor_uuid": 10581,
+            "prediction_hz": 6312.72,
+            "setpoint_hz": 6313,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "raw",
+          "actions": 18,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 34810,
+            "prediction_hz": 2656.86,
+            "setpoint_hz": 2657,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 75,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskNormal",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1 and Crystal 2, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 3 and Crystal 4, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Normal",
+      "seed": 24,
+      "arm": "fixed_calibration",
+      "collection_actions": 43,
+      "calibration_trigger": "unconditional",
+      "calibration_actions": 149,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": {
+        "program": {
+          "site": {
+            "kind": "native"
+          },
+          "count": 1,
+          "reducer": "first",
+          "instrument": null,
+          "estimated_actions_per_target": 0
+        },
+        "model": {
+          "sensor": "spectrum_5",
+          "family": "affine",
+          "terms": [
+            "1",
+            "x"
+          ],
+          "coefficients": [
+            91.0,
+            109.0
+          ],
+          "encoded_coefficients": [
+            "91",
+            "109"
+          ],
+          "description_characters": 8,
+          "reference_max_error_hz": 0.0,
+          "target_predictions_hz": []
+        }
+      },
+      "events": [
+        {
+          "phase": "calibrated",
+          "actions": 14,
+          "result": {
+            "crystal": "quantum crystal 3",
+            "reactor_uuid": 10581,
+            "prediction_hz": 6312.72,
+            "setpoint_hz": 6313,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "calibrated",
+          "actions": 18,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 34810,
+            "prediction_hz": 2656.86,
+            "setpoint_hz": 2657,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 224,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskNormal",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1 and Crystal 2, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 3 and Crystal 4, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Normal",
+      "seed": 24,
+      "arm": "lazy_calibration",
+      "collection_actions": 43,
+      "calibration_trigger": null,
+      "calibration_actions": 0,
+      "raw_targets_completed_before_calibration": 2,
+      "calibrated_model": null,
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 14,
+          "result": {
+            "crystal": "quantum crystal 3",
+            "reactor_uuid": 10581,
+            "prediction_hz": 6312.72,
+            "setpoint_hz": 6313,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "raw",
+          "actions": 18,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 34810,
+            "prediction_hz": 2656.86,
+            "setpoint_hz": 2657,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 75,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskNormal",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1 and Crystal 2, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 3 and Crystal 4, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Challenge",
+      "seed": 23,
+      "arm": "raw",
+      "collection_actions": 52,
+      "calibration_trigger": null,
+      "calibration_actions": 0,
+      "raw_targets_completed_before_calibration": 2,
+      "calibrated_model": null,
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 23,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 26424,
+            "prediction_hz": 2814.0571999999997,
+            "setpoint_hz": 2814,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "raw",
+          "actions": 29,
+          "result": {
+            "crystal": "quantum crystal 5",
+            "reactor_uuid": 42983,
+            "prediction_hz": 4104.0988,
+            "setpoint_hz": 4104,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 104,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskChallenge",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1, Crystal 2, and Crystal 3, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 4 and Crystal 5, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Challenge",
+      "seed": 23,
+      "arm": "fixed_calibration",
+      "collection_actions": 52,
+      "calibration_trigger": "unconditional",
+      "calibration_actions": 186,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": {
+        "program": {
+          "site": {
+            "kind": "native"
+          },
+          "count": 1,
+          "reducer": "first",
+          "instrument": null,
+          "estimated_actions_per_target": 0
+        },
+        "model": {
+          "sensor": "spectrum_5",
+          "family": "quadratic",
+          "terms": [
+            "1",
+            "x",
+            "x^2"
+          ],
+          "coefficients": [
+            326.0,
+            20.0,
+            12.0
+          ],
+          "encoded_coefficients": [
+            "326",
+            "20",
+            "12"
+          ],
+          "description_characters": 13,
+          "reference_max_error_hz": 0.004800000000045657,
+          "target_predictions_hz": []
+        }
+      },
+      "events": [
+        {
+          "phase": "calibrated",
+          "actions": 23,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 26424,
+            "prediction_hz": 2814.0571999999997,
+            "setpoint_hz": 2814,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "calibrated",
+          "actions": 29,
+          "result": {
+            "crystal": "quantum crystal 5",
+            "reactor_uuid": 42983,
+            "prediction_hz": 4104.0988,
+            "setpoint_hz": 4104,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 290,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskChallenge",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1, Crystal 2, and Crystal 3, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 4 and Crystal 5, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Challenge",
+      "seed": 23,
+      "arm": "lazy_calibration",
+      "collection_actions": 52,
+      "calibration_trigger": null,
+      "calibration_actions": 0,
+      "raw_targets_completed_before_calibration": 2,
+      "calibrated_model": null,
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 23,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 26424,
+            "prediction_hz": 2814.0571999999997,
+            "setpoint_hz": 2814,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "raw",
+          "actions": 29,
+          "result": {
+            "crystal": "quantum crystal 5",
+            "reactor_uuid": 42983,
+            "prediction_hz": 4104.0988,
+            "setpoint_hz": 4104,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 104,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskChallenge",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1, Crystal 2, and Crystal 3, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 4 and Crystal 5, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Challenge",
+      "seed": 24,
+      "arm": "raw",
+      "collection_actions": 52,
+      "calibration_trigger": null,
+      "calibration_actions": 0,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": null,
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 24,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 26424,
+            "prediction_hz": 2921.1847406,
+            "setpoint_hz": 2921,
+            "public_reactor_name": "crystal reactor (uncalibrated)"
+          },
+          "activated": false
+        },
+        {
+          "phase": "raw",
+          "actions": 15,
+          "result": {
+            "crystal": "quantum crystal 5",
+            "reactor_uuid": 42983,
+            "prediction_hz": 3875.1358894000005,
+            "setpoint_hz": 3875,
+            "public_reactor_name": "crystal reactor (uncalibrated)"
+          },
+          "activated": false
+        }
+      ],
+      "total_actions": 91,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskChallenge",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1, Crystal 2, and Crystal 3, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 4 and Crystal 5, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": false,
+          "completedSuccessfully": false
+        }
+      ],
+      "completed_successfully": false
+    },
+    {
+      "difficulty": "Challenge",
+      "seed": 24,
+      "arm": "fixed_calibration",
+      "collection_actions": 52,
+      "calibration_trigger": "unconditional",
+      "calibration_actions": 186,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": {
+        "program": {
+          "site": {
+            "kind": "native"
+          },
+          "count": 1,
+          "reducer": "first",
+          "instrument": null,
+          "estimated_actions_per_target": 0
+        },
+        "model": {
+          "sensor": "radiation",
+          "family": "quadratic",
+          "terms": [
+            "1",
+            "x",
+            "x^2"
+          ],
+          "coefficients": [
+            558.0,
+            21.0,
+            19.0
+          ],
+          "encoded_coefficients": [
+            "558",
+            "21",
+            "19"
+          ],
+          "description_characters": 13,
+          "reference_max_error_hz": 0.0030999999999039574,
+          "target_predictions_hz": []
+        }
+      },
+      "events": [
+        {
+          "phase": "calibrated",
+          "actions": 24,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 26424,
+            "prediction_hz": 4109.2711,
+            "setpoint_hz": 4109,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "calibrated",
+          "actions": 13,
+          "result": {
+            "crystal": "quantum crystal 5",
+            "reactor_uuid": 42983,
+            "prediction_hz": 6240.4375,
+            "setpoint_hz": 6240,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 275,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskChallenge",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1, Crystal 2, and Crystal 3, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 4 and Crystal 5, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    },
+    {
+      "difficulty": "Challenge",
+      "seed": 24,
+      "arm": "lazy_calibration",
+      "collection_actions": 52,
+      "calibration_trigger": "public_reactor_not_activated_after_predicted_setpoint",
+      "calibration_actions": 188,
+      "raw_targets_completed_before_calibration": 0,
+      "calibrated_model": {
+        "program": {
+          "site": {
+            "kind": "native"
+          },
+          "count": 1,
+          "reducer": "first",
+          "instrument": null,
+          "estimated_actions_per_target": 0
+        },
+        "model": {
+          "sensor": "radiation",
+          "family": "quadratic",
+          "terms": [
+            "1",
+            "x",
+            "x^2"
+          ],
+          "coefficients": [
+            558.0,
+            21.0,
+            19.0
+          ],
+          "encoded_coefficients": [
+            "558",
+            "21",
+            "19"
+          ],
+          "description_characters": 13,
+          "reference_max_error_hz": 0.0030999999999039574,
+          "target_predictions_hz": []
+        }
+      },
+      "events": [
+        {
+          "phase": "raw",
+          "actions": 24,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 26424,
+            "prediction_hz": 2921.1847406,
+            "setpoint_hz": 2921,
+            "public_reactor_name": "crystal reactor (uncalibrated)"
+          },
+          "activated": false
+        },
+        {
+          "phase": "calibrated",
+          "actions": 24,
+          "result": {
+            "crystal": "quantum crystal 4",
+            "reactor_uuid": 26424,
+            "prediction_hz": 4109.2711,
+            "setpoint_hz": 4109,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        },
+        {
+          "phase": "calibrated",
+          "actions": 13,
+          "result": {
+            "crystal": "quantum crystal 5",
+            "reactor_uuid": 42983,
+            "prediction_hz": 6240.4375,
+            "setpoint_hz": 6240,
+            "public_reactor_name": "crystal reactor (activated)"
+          },
+          "activated": true
+        }
+      ],
+      "total_actions": 301,
+      "public_task_progress": [
+        {
+          "taskName": "ReactorTaskChallenge",
+          "description": "You are at the Quantum Reactor Lab on Planet X. Quantum Crystals offer the potential to generate a great deal of power, but require their respective crystal reactors to be tuned to a specific frequency that appears unique for each crystal. Through great effort, a previous research scientist manually stumbled upon the correct frequencies for Crystal 1, Crystal 2, and Crystal 3, which are in their respective reactors. Your task is to use science to figure out the correct frequency for Crystal 4 and Crystal 5, set their reactors to the appropriate frequency, and install the crystals. Once all four crystals are installed, the reactor will be able to generate a great deal of power. To support your task, a number of scientific instruments are available in the lab. ",
+          "completed": true,
+          "completedSuccessfully": true
+        }
+      ],
+      "completed_successfully": true
+    }
+  ],
+  "by_arm": {
+    "raw": {
+      "successes": 2,
+      "episodes": 4,
+      "actions": 358,
+      "calibration_invocations": 0
+    },
+    "fixed_calibration": {
+      "successes": 4,
+      "episodes": 4,
+      "actions": 1014,
+      "calibration_invocations": 4
+    },
+    "lazy_calibration": {
+      "successes": 4,
+      "episodes": 4,
+      "actions": 722,
+      "calibration_invocations": 2
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-10",
+  "candidate_id": "H_planning_time_intervention_operator_rotation",
+  "one_sentence_claim_cn": "合法有序的源任务交互可能在共享动作条件世界模型中旋转面向规划的干预算子，同时保留当前状态捕获、奖励拟合和一步预测。",
+  "status": "diagnostic_no_selective_operator_separation_retain_negative",
+  "operation": "Reuse the legal monotonic cheetah-run cascade and matched random source trajectories; apply the native TD-MPC2 dynamics-only update and measure matched paired action contrasts on held-out walker-run roots.",
+  "carrier": "Official TD-MPC2 mt30-48M checkpoint, native model.encode/model.next and native adaptation routine.",
+  "diagnostic": {
+    "source": "runs/tdmpc_intervention_operator_v1/summary.json",
+    "task": "walker-run",
+    "paired_roots": 64,
+    "updates": 300,
+    "root_capture_mse": {
+      "clean": 18.40225601196289,
+      "random": 18.40225601196289,
+      "cascade": 18.40225601196289
+    },
+    "intervention_cosine_mean": {
+      "clean": 0.7857975959777832,
+      "random": 0.7603336572647095,
+      "cascade": 0.7770836353302002
+    },
+    "intervention_contrast_mse": {
+      "clean": 9.761116027832031,
+      "random": 10.850404739379883,
+      "cascade": 10.209426879882812
+    },
+    "intervention_norm_ratio_mean": {
+      "clean": 0.9597389101982117,
+      "random": 0.9806490540504456,
+      "cascade": 0.9309519529342651
+    }
+  },
+  "review": {
+    "source": "runs/gemini_action_operator_security_search_20261010T0000Z/review.json",
+    "verdict": "Reject",
+    "novelty_score": 4.0,
+    "reason": "The proposed framing overlaps intervention-fidelity audits and ordinary cross-task negative transfer; current task-family-specific harm does not establish a selective operator attack."
+  },
+  "decision_cn": "状态捕获因 dynamics-only 更新而保持不变，但 cascade 没有比 random 显示更大的干预算子偏差；相反 random 的余弦更低、对比误差更高。该诊断不能解释 walker-run 的回报损失，不升级、不扩展 GPU。",
+  "accepted_claim": null,
+  "api_requests": 1,
+  "gpu_work": true
+}

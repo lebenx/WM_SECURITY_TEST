@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "frozen_before_task_selection_and_environment_execution",
+  "purpose": "CPU-only task-selection feasibility for a separately scoped NanoWM PointMaze dataset-goal protocol. This does not execute or pass a Clean planner gate.",
+  "source_revision": "cc1f151a9d8c7d7afd0cdc5de6a9ae220a7c90c0",
+  "native_example": "vendor/nano-world-model/src/scripts/eval/planning_point_maze.sh",
+  "native_goal_method": "vendor/nano-world-model/src/experiments/planning_experiment.py:_sample_dset_goals",
+  "old_protocol_preserved": "reports/nanowm_clean_gate_protocol_20261015.json",
+  "old_results_preserved": "runs/nanowm_pointmaze_timing_v1",
+  "run_path": "runs/nanowm_heldout_pointmaze_tasks_v1",
+  "script": "scripts/probe_nanowm_heldout_pointmaze_tasks.py",
+  "source_data": {
+    "official_archive": "https://osf.io/download/vr5gy/",
+    "archive_size_bytes": 718363945,
+    "new_member_only": "point_maze/states.pth",
+    "reuse_actions": "runs/nanowm_resource_gate_v2/data/point_maze/actions.pth",
+    "reuse_lengths": "runs/nanowm_resource_gate_v2/data/point_maze/seq_lengths.pth",
+    "reuse_split": "runs/nanowm_resource_gate_v2/trajectory_split.json",
+    "reuse_statistics": "runs/nanowm_resource_gate_v2/data/point_maze/wm_stats_cache/action_train_6b5d3fb557871782.pt",
+    "resource_record": "runs/nanowm_resource_gate_v2/summary.json",
+    "download_limits": "Reuse the bounded official HTTP Range reader. Fetch only ZIP directory metadata and the single states.pth member; never the complete ZIP or videos. Preserve download errors. At most three ordinary public-download attempts per Range request as in the existing reader.",
+    "training_boundary": "Use the existing published-config seed42, 90/10 trajectory split. This is held out under that reconstructed split; the original author training cache was not available for independent comparison."
+  },
+  "fixed_sampling": {
+    "count": 3,
+    "seed": 42,
+    "episode_seeds": [42, 43, 44],
+    "frame_interval": 5,
+    "goal_H": 5,
+    "required_trajectory_length": 26,
+    "candidate_order": "Enumerate original global trajectory IDs in ascending order, retaining only IDs in the existing validation_ids and with seq_length>=26. This preserves the native eligible-list ordering while restricting the pool to the published validation split.",
+    "draws": "Create random.Random(42) once. For each of three instances in order: traj_id=rng.choice(valid_traj); offset=rng.randint(0, seq_lengths[traj_id]-26). Preserve native sampling with replacement and the alternating choice/offset RNG consumption.",
+    "no_selection_by_outcome": "Freeze all three source IDs and offsets before any environment step. Do not replace duplicates, initially successful instances, zero-control successes, reference failures or awkward layouts; do not draw additional instances.",
+    "goal_construction": "Use the source state at the fixed offset, convert states/actions to float32 exactly as the native method does, and replay the next25 original two-dimensional physical actions in the unchanged environment. The real final observation/state is the goal, not a saved dataset future or model prediction.",
+    "task_distribution_difference": "This is a new dataset-goal scope aligned with the official PointMaze example, not an unchanged continuation or successful result of the previous random-state protocol. The only sampling correction is explicit restriction to validation IDs because the native single-directory loader does not apply the train/validation split."
+  },
+  "prospective_planner_budget_not_executed": {
+    "horizon": 5,
+    "replan_every": 5,
+    "max_episode_model_steps": 10,
+    "max_real_steps": 50,
+    "cem_num_samples": 100,
+    "cem_topk": 10,
+    "cem_opt_steps": 30,
+    "ddim_steps": 20,
+    "scheduling_mode": "full_sequence",
+    "eta": 0.0,
+    "precision": "Unchanged native planning FP32 model/VAE path; no precision experiment in this task.",
+    "objective": "Native final-frame latent MSE if a separate planner execution is later approved. Reference actions and real candidate outcomes must not become planner inputs."
+  },
+  "cpu_conditions": {
+    "reference_goal_build": "One native reset and exactly25 source actions per fixed instance; save the initial and final goal images and every real transition.",
+    "reference_verification": "Independently reset the same native instance and replay the same25 source actions once. Verify every recorded physical state, native reward/done, simulator state and image against goal construction, and require the replay final state to satisfy native eval_state for the frozen goal. This checks deterministic replay and constructively establishes reachability; it is not a planner result.",
+    "physical_zero": "Reset the identical source state and submit [0,0] in physical action coordinates for at most50 real env.step calls. Check native success after real steps25 and50, stopping at the first successful checkpoint. Keep initial success separate. Do not use normalized model zeros.",
+    "maximum_environment_steps": 300,
+    "metrics": {
+      "success": "Native eval_state: Euclidean XY distance strictly below0.5.",
+      "state_dist": "Native four-dimensional [x,y,vx,vy] Euclidean distance; secondary diagnostic, not the success threshold.",
+      "reward": "Save environment reward for replay audit only. The internal OFF_TARGET reward is not the selected image-goal utility."
+    }
+  },
+  "preregistered_task_gate": {
+    "eligible_instance": "Reference replay passes all checks AND initial_success is false AND the completed physical-zero condition does not succeed at a native checkpoint within50 real steps.",
+    "pass": "At least2 of the fixed3 instances are eligible.",
+    "fail": "Fewer than2 eligible instances means this fixed panel is insufficiently discriminative. Report that outcome and do not expand, replace targets or launch Clean to rescue it.",
+    "technical_error": "Any invalid input, missing metadata, unsupported shape, nonfinite transition, replay discrepancy or environment error stops the run as technical_error; gate remains null rather than counting errors as task failures.",
+    "interpretation": "Passing establishes only that the fixed panel has at least2 constructively reachable, initially nontrivial tasks on which physical-zero control fails. It establishes neither Clean planner capability nor model necessity, security harm or population generalization.",
+    "no_auto_clean": "No GPU/model/Planner execution follows automatically. The earlier cost gate and any separate authorization remain independent."
+  },
+  "leakage_boundary": {
+    "reference_audit": "Store reference actions and transition traces in a separate reference_audit subdirectory for reachability verification.",
+    "planner_target_artifact": "Export only instance/seed/source IDs, initial state, frozen goal state and observation paths. Do not embed action arrays, candidate outcomes or reference sequence paths in planner_targets.json.",
+    "execution_claim": "No planner or model is imported or executed by this script. The target artifact boundary is checked structurally; isolation for a future consuming runner must be checked then and is not claimed here."
+  },
+  "execution_limits": {
+    "model_weights_loaded": 0,
+    "model_forwards": 0,
+    "planner_calls": 0,
+    "gpu_use": false,
+    "training": false,
+    "model_api_calls": 0,
+    "vendor_edits": false,
+    "old_protocol_or_result_edits": false,
+    "hash_scope": "Only the new script/protocol, small manifests and newly downloaded states metadata may be hashed. Do not scan or rehash model checkpoints or the existing dataset/cache tree."
+  },
+  "reporting": "Save all three fixed source IDs/offsets, source file paths, original split provenance, goal/initial images, reference replay checks, initial_success, zero results, exact step counts and the task_selection_gate_passed field. clean_gate_passed must remain null. Retain errors and every fixed instance; do not infer a success rate for a population."
+}

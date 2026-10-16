@@ -1,0 +1,107 @@
+{
+  "date": "2026-10-09",
+  "status": "completed_continuous_baselines_and_linear_operator_equivalence",
+  "claim_status": "unproven",
+  "run": "runs/interphyre_continuous_search_v1",
+  "source_repository": "https://github.com/sankaranv/interphyre",
+  "source_pin": "1862d7175854b51e79128bd6ffbde970fe0589fa",
+  "script": "scripts/screen_interphyre_continuous_search.py",
+  "result": {
+    "status": "completed",
+    "run": "runs/interphyre_continuous_search_v1",
+    "counts": {
+      "placement_queries": 565,
+      "valid_rollouts": 432,
+      "invalid_queries": 133,
+      "physics_steps": 429436
+    },
+    "results": {
+      "object_prior": {
+        "successes": 0,
+        "tasks": 8,
+        "queries": 200
+      },
+      "cma_es": {
+        "successes": 2,
+        "tasks": 8,
+        "queries": 186
+      },
+      "rbf_bo": {
+        "successes": 2,
+        "tasks": 8,
+        "queries": 179
+      }
+    },
+    "elapsed_s": 8.828920510131866,
+    "api_requests": 0,
+    "gpu_work": false,
+    "novel_method": false,
+    "scope": "Small native development comparison, not a new method or faithful Causal-PIK/HExA reproduction.",
+    "finished_at_utc": "2026-10-08T23:23:21.360907+00:00"
+  },
+  "assessment": {
+    "status": "completed_continuous_baselines_and_linear_operator_equivalence",
+    "native_results": {
+      "object_prior": {
+        "successes": 0,
+        "tasks": 8,
+        "queries": 200
+      },
+      "cma_es": {
+        "successes": 2,
+        "tasks": 8,
+        "queries": 186
+      },
+      "rbf_bo": {
+        "successes": 2,
+        "tasks": 8,
+        "queries": 179
+      }
+    },
+    "native_run": "runs/interphyre_continuous_search_v1",
+    "native_step_parity": "runs/interphyre_continuous_search_v1/native_step_parity.json",
+    "linear_operator_analysis": {
+      "status": "completed",
+      "source": "runs/interphyre_continuous_search_v1",
+      "clusters": 49,
+      "max_coefficient_error": 7.815970093361102e-14,
+      "max_proposal_error": 1.7601198276651076e-13,
+      "pairwise_regularization": 0.01,
+      "centered_regularization": "pairwise_regularization / cluster_size",
+      "native_queries": 0,
+      "api_requests": 0,
+      "gpu_work": false,
+      "scope": "Exact equivalence for complete unweighted pairwise linear secants with matched event groups, features and regularization. Does not cover arbitrary pair weights, learned nonlinear edit grammars, or establish a general impossibility of transferable experimentation.",
+      "finished_at_utc": "2026-10-08T23:24:27.937475+00:00"
+    },
+    "accepted_novel_method": false,
+    "interpretation": "Independent fresh-environment attempts confirm ordinary continuous optimizers can solve tasks beyond literal candidate replay. CMA-ES solves catapult seed303 and parcel seed303; RBF BO solves catapult seeds300 and303. Both are 2/8, object-prior random search is 0/8. This is a small development comparison with one optimizer seed per task, not superiority evidence for a new method or a reproduction of HExA/Causal-PIK.",
+    "operator_boundary": "For complete unweighted within-event pairs, linear secant least squares is exactly centered multivariate ridge regression at lambda/n. Independent code checks on 49 groups yield coefficient differences below 8e-14 and inverse proposals below 1.8e-13. Routing and representation are matched, not ablated. The claim does not cover other non-linear program construction mechanisms.",
+    "reset_correction": "v0 reused native reset_attempt, which preserves Box2D warm-start state. Its four successes reproduce in fresh environments, but some trajectories differ. v1 creates a fresh environment per query and supersedes v0 for standalone attempt comparisons. v1 parity matches success and step count on all six selected replay checks.",
+    "source_and_target": "No offline source training used in these continuous comparators. Each task gets the same five initial target proposals, charged to its 25-query budget. Cross-task transfer and new-method gain remain untested.",
+    "interaction_accounting": {
+      "authoritative_screen_placement_queries": 565,
+      "authoritative_screen_valid_rollouts": 432,
+      "superseded_v0_queries": 565,
+      "superseded_v0_valid_rollouts": 433,
+      "complete_verification_queries": 12,
+      "earlier_unpersisted_verification_query_range": [
+        2,
+        7
+      ],
+      "total_query_range": [
+        1144,
+        1149
+      ],
+      "note": "An assertion-stopped check executed 1–6 queries before losing in-memory records; one failed-serialization follow-up executed one. Their exact count is not asserted. Verification replays are not additional independent tasks."
+    },
+    "research_model_requests": 3,
+    "gpu_work": false,
+    "decision": "Retire the specified linear event-secant candidate as a novel learning rule; it has an exact ordinary-regression implementation. Do not expand task counts or run long GPU work for it. Retain the continuous native comparator harness for a substantively different learning operation.",
+    "verified_at_utc": "2026-10-08T23:26:05.974731+00:00"
+  },
+  "headline_cn": "连续搜索基线在原生核心任务上已跑通；当前事件割线候选与普通回归等价，仍未建立新方法。",
+  "report_note_cn": "新增连续动作搜索比较：catapult 与 pass_the_parcel 各 4 个固定开发种子，每种方法每任务最多 25 次放置，包含相同的 5 次初始尝试。采用每次新建环境的独立尝试后，CMA-ES 与 RBF 贝叶斯优化均成功 2/8，随机物体先验为 0/8；分别消耗 186、179、200 次查询。最终比较共 565 次查询、432 条有效物理轨迹，CPU 约 8.8 秒；这只是小规模开发基线，不是新方法优势或 HExA/Causal-PIK 复现。4 个成功动作与每类 1 个失败动作通过原生 env.step 重放，结果与步数一致。初版复用环境的结果保留但由独立重置版取代。另核验事件割线候选：在固定事件分组和完整等权样本对条件下，其线性学习规则与中心化岭回归严格等价；49 组原生数据上系数差低于 8e-14、动作建议差低于 1.8e-13。该候选不作为新机制扩量；非线性程序生成并未因此被否定。本轮主、备用 glm-5.3 评议均超时，已分别提醒，备用 deepseek-v4-pro 随后成功；模型意见经过独立代数与代码核验，没有被直接当作研究证据。未使用 GPU。",
+  "next_requirement": "Implement and test a substantively distinct operation that learns to construct experiments, beyond fixed catalog selection or linear inverse response fitting. Its native terminal-task gains must survive equal-data continuous optimization and applicable HExA/Causal-PIK comparisons. Generic representability in an existing framework is not a refutation, but an identical estimator is not a contribution. No long GPU run or scale-up is warranted yet.",
+  "updated_at_utc": "2026-10-08T23:26:05.974731+00:00"
+}

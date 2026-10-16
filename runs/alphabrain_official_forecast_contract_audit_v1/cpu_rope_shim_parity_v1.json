@@ -1,0 +1,88 @@
+{
+  "status": "passed",
+  "device": "cpu",
+  "seed": 471,
+  "model_weight_loads": 0,
+  "learned_model_forward_calls": 0,
+  "metadata": {
+    "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+    "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+    "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+    "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+    "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+    "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+    "full_transformer_engine_runtime_parity": false,
+    "cuda_fused_rope_parity": false,
+    "rmsnorm_fused_kernel_parity": false
+  },
+  "official_reference_path": "/home/xhj/WM_Security/runs/alphabrain_official_forecast_contract_audit_v1/sources/transformer_engine_v2_7_rope.py",
+  "position_source_sha256": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae",
+  "position_shape": [
+    1,
+    9,
+    14,
+    14,
+    2048
+  ],
+  "frequency_dtype": "torch.float32",
+  "official_unfused_exact_parity": [
+    {
+      "tensor_format": "bshd",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1,
+        1764,
+        16,
+        128
+      ],
+      "exact_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "tensor_format": "bshd",
+      "dtype": "torch.float32",
+      "shape": [
+        1,
+        1764,
+        16,
+        128
+      ],
+      "exact_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "tensor_format": "sbhd",
+      "dtype": "torch.bfloat16",
+      "shape": [
+        1764,
+        1,
+        16,
+        128
+      ],
+      "exact_equal": true,
+      "max_abs_difference": 0.0
+    },
+    {
+      "tensor_format": "sbhd",
+      "dtype": "torch.float32",
+      "shape": [
+        1764,
+        1,
+        16,
+        128
+      ],
+      "exact_equal": true,
+      "max_abs_difference": 0.0
+    }
+  ],
+  "legacy_shim_difference": {
+    "legacy_source_sha256": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+    "changed_elements": 352422,
+    "total_elements": 3612672,
+    "fraction_changed": 0.0975516214966774,
+    "max_abs_difference": 0.06640625,
+    "relative_l2": 0.0022829538211226463,
+    "task_outcome_measured": false
+  },
+  "limits": "CPU RoPE arithmetic only; not full TE/fused CUDA/DiT/task parity."
+}

@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "status": "completed_cache_analysis",
+  "question": "For the already identified Cosmos task3/init2 harmful first selection, do actual fixed-candidate 16-control future features restore the successful candidate ranking under the unchanged native Value scorer?",
+  "scope": "Post-hoc mechanism diagnostic of the sole known harmful root. Not a new attack, independent replication, new episode success estimate, or reopening of the failed 30-root expansion gate.",
+  "sources": {
+    "protocol": "runs/cosmos_first_query_truth_inference_20261015/launched_config.json",
+    "replay_summary": "runs/cosmos_first_query_truth_replay_20261015/summary.json",
+    "inference_summary": "runs/cosmos_first_query_truth_inference_20261015/summary.json",
+    "historical_episodes": [
+      "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json",
+      "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+    ],
+    "analysis_script": "scripts/analyze_cosmos_first_query_truth.py"
+  },
+  "checks": {
+    "launched_protocols_equal": true,
+    "fixed_root_and_two_candidates": true,
+    "recorded_physical_prefix_rows_exact": 32,
+    "historical_utilities_match_episode_files": true,
+    "historical_control_seed_value_bindings_exact": true,
+    "calibration_checks_passed": 18,
+    "historical_calibration_before_truth_encode": true,
+    "native_argmax_recomputed": true,
+    "no_value_ties": true,
+    "calls_match_frozen_budget": true
+  },
+  "historical_utilities": [
+    {
+      "candidate_index": 0,
+      "success": false,
+      "steps": 300,
+      "capped_steps": 300,
+      "source_episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+    },
+    {
+      "candidate_index": 1,
+      "success": true,
+      "steps": 170,
+      "capped_steps": 170,
+      "source_episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+    }
+  ],
+  "value_rankings": {
+    "clean": {
+      "values": [
+        0.17903518676757812,
+        0.17970061302185059
+      ],
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "candidate1_minus_candidate0_value": 0.0006654262542724609,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "source_episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      }
+    },
+    "swap": {
+      "values": [
+        0.17313751578330994,
+        0.17247232794761658
+      ],
+      "rank": [
+        0,
+        1
+      ],
+      "selected_index": 0,
+      "exact_tie": false,
+      "candidate1_minus_candidate0_value": -0.0006651878356933594,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "capped_steps": 300,
+        "source_episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+      }
+    },
+    "true_future": {
+      "values": [
+        0.17573776841163635,
+        0.17722132802009583
+      ],
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "candidate1_minus_candidate0_value": 0.0014835596084594727,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "source_episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      }
+    }
+  },
+  "forecast_errors": [
+    {
+      "candidate_index": 0,
+      "clean": {
+        "future_proprio_slot_mse": 9.414926060941641e-05,
+        "normalized_proprio_mse": null,
+        "future_wrist_slot_mse": 0.015153834703416498,
+        "future_primary_slot_mse": 0.001961538488795455,
+        "visual_latent_mse": 0.008557686596105977,
+        "all_future_slots_mse": 0.00573650748427379
+      },
+      "swap": {
+        "future_proprio_slot_mse": 0.00026029151331326137,
+        "normalized_proprio_mse": null,
+        "future_wrist_slot_mse": 0.15088265654062302,
+        "future_primary_slot_mse": 0.026625330049727856,
+        "visual_latent_mse": 0.08875399329517543,
+        "all_future_slots_mse": 0.05925609270122138
+      },
+      "visual_mse_swap_over_clean": 10.371260071099279,
+      "visual_mse_swap_minus_clean": 0.08019630669906945
+    },
+    {
+      "candidate_index": 1,
+      "clean": {
+        "future_proprio_slot_mse": 9.749714744469098e-05,
+        "normalized_proprio_mse": null,
+        "future_wrist_slot_mse": 0.0160301944437785,
+        "future_primary_slot_mse": 0.001919465836817481,
+        "visual_latent_mse": 0.008974830140297993,
+        "all_future_slots_mse": 0.0060157191426802245
+      },
+      "swap": {
+        "future_proprio_slot_mse": 0.0002586381102865687,
+        "normalized_proprio_mse": null,
+        "future_wrist_slot_mse": 0.14533761760429775,
+        "future_primary_slot_mse": 0.025200690918807667,
+        "visual_latent_mse": 0.08526915426155271,
+        "all_future_slots_mse": 0.05693231554446399
+      },
+      "visual_mse_swap_over_clean": 9.500921235120055,
+      "visual_mse_swap_minus_clean": 0.07629432412125471
+    }
+  ],
+  "findings": {
+    "swap_visual_mse_higher_for_both_candidates": true,
+    "truth_substitution_restores_clean_selection": true,
+    "clean_and_truth_choose_historically_successful_candidate": true,
+    "swap_chooses_historically_failed_candidate": true,
+    "selected_historical_capped_cost_swap_minus_clean": 130,
+    "new_full_task_or_recovery_episodes": 0,
+    "interpretation": "This fixed realization supports local predicted-future sensitivity: changing only the Future text changes the Value ranking; replacing the future slots with encoded measured consequences restores the successful candidate ordering. Compared with the separately replayed actual futures, visual forecast error is higher under Swap for each candidate; the two branches share one root and are not independent task samples. These are separate measured facts, not a mediation percentage or a universal error-to-harm law.",
+    "decision": "Local causal explanation strengthened; keep this post-hoc countercheck bounded. No new attack/generalization claim and no reopening of the failed30-root expansion gate."
+  },
+  "execution": {
+    "replay": {
+      "session_id": 66992,
+      "exit_code": 0,
+      "elapsed_seconds": 15.213660854962654,
+      "activity": {
+        "explicit_task_controls": 32,
+        "explicit_settling_controls": 20,
+        "environments_created": 2,
+        "reset_calls": 2,
+        "set_init_state_calls": 2,
+        "model_forward_calls": 0,
+        "vae_calls": 0,
+        "model_api_calls": 0,
+        "checkpoint_loads": 0,
+        "training_updates": 0,
+        "cuda_tensor_compute": false,
+        "egl_rendering": true,
+        "internal_initialization_steps": "Not instrumented; reset/set_init_state may step internally."
+      }
+    },
+    "inference": {
+      "session_id": 28845,
+      "exit_code": 0,
+      "elapsed_seconds": 7.219195979007054,
+      "activity": {
+        "policy": 2,
+        "future": 4,
+        "value": 6,
+        "vae_encode": 3,
+        "noise_calls": 12,
+        "environment_steps": 0,
+        "api_calls": 0,
+        "training_updates": 0,
+        "vae_decode": 0
+      },
+      "peak_cuda_allocated_bytes": 5039106560,
+      "peak_cuda_reserved_bytes": 5481955328
+    },
+    "session_metadata_source": "Parent agent launch/terminal reports; elapsed times and activity are read from the saved summaries.",
+    "analysis": {
+      "implementation": "Python standard library, cached JSON/JSONL only",
+      "model_calls": 0,
+      "environment_steps": 0,
+      "api_calls": 0,
+      "weight_loads": 0
+    }
+  },
+  "limits": [
+    "Actual-future selection of successful candidate1 supports local predicted-future sensitivity with a correctly ordering Value at measured truth, not full closed-loop mediation or general defense.",
+    "Actual-future selection of failed candidate0 identifies local Value/continuation-outcome mismatch; it does not erase the known failure or prove predictions have no causal effect.",
+    "Value target is discounted behavior return, not perfect success probability or optimal continuation; actual-future scoring is not an oracle planner.",
+    "Forecast feature error is relative to encoded real consequences, not pixel MSE, raw physical state error or task utility.",
+    "No significance, population ASR or independent generalization from a single post-hoc root. Preserve existing first-choice support bounds and failed extension gate.",
+    "Exact Value ties are reported separately as native tie-breaking selection; selecting index0 on a tie is not strict incorrect ranking.",
+    "Fixed distinct candidate seeds31/32 define the paired native stochastic realization, not expected Value ranking or calibrated success probabilities.",
+    "Truth ranking the successful branch higher does not exclude Value error off the measured truth or imply that Goal-Swap increases MSE; report these independently.",
+    "Actual full-task success/failure is reused from existing original-Goal continuations; the new physical work only reproduces32 controls, plus20 explicit settling controls.",
+    "Truth substitution restores a cached-score selection, not a newly executed successful recovery episode or Bus-Cut defense.",
+    "Exact initial pixels/state and recorded prefix fields do not prove equality of every unrecorded historical state; historical lossless endpoint images and full forecast latents were unavailable.",
+    "Forecast errors are native joint-VAE visual features. Slot5 compares tiled normalized-proprio targets; no native9D extraction or raw physical error is claimed. All-slot means are descriptive only.",
+    "The fixed candidate seeds31/32 represent one stochastic realization. Value is a discounted behavior-return proxy, not calibrated success probability.",
+    "One post-hoc known harmful root cannot estimate population ASR, independent generalization, or complete closed-loop mediation. Value error on predicted latents remains possible."
+  ],
+  "csv": "reports/cosmos_first_query_truth_decision_20261015.csv",
+  "reproduce": "python scripts/analyze_cosmos_first_query_truth.py --verify-only"
+}

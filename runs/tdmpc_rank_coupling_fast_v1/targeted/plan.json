@@ -1,0 +1,26 @@
+{
+  "arguments": {
+    "checkpoint": "models/tdmpc2/mt30-48M.pt",
+    "task": "walker-walk",
+    "steps": 500,
+    "seeds": [
+      17
+    ],
+    "output": "runs/tdmpc_rank_coupling_fast_v1/targeted",
+    "condition": "targeted"
+  },
+  "hashes": {
+    "scripts/pilot_tdmpc_rank_coupling.py": "d61c245fcd214071b780676273b272b4432e405dd26c2178490772628eef58c1",
+    "src/wm_security/rank_coupling.py": "6915f24539df333140fd4343bb42dea2fc554412781013f8f264d4880ee049d0",
+    "src/wm_security/tdmpc_native.py": "178c59c5d1c61360e2852854f39aa54a64fe354703b140ed6db7edbdd9abdc3b",
+    "vendor/tdmpc2/tdmpc2/tdmpc2.py": "de4531ce18fc1dd459f91a664c011a2db14324d34d1fc7b52e058db050c07ab8",
+    "vendor/tdmpc2/tdmpc2/common/world_model.py": "55b85a9481d131b6b42265e15ece17bcc05f4ddf83dfd12c5be74e3a04f0d737"
+  },
+  "scope": "Native pretrained TD-MPC2; terminal critic-head coupling only. Dynamics/reward/prior/weights and physical environment unchanged.",
+  "operation": "Enumerate all 10 unordered pairs of 5 native Q heads, then apply bank-dependent cyclic rank permutations and a fresh uniform row.",
+  "preservation": "Native two-head average samples each unordered pair with probability 1/10. Cyclic permutation preserves this exact law for each candidate, conditional on its terminal prior action and history.",
+  "compute": "All five Q heads are already computed by native Q(); no extra neural forward calls. CPU rank search adds measured wall time.",
+  "limits": "A different sampler surface from Gaussian dynamics; do not call the terminal critic stochastic dynamics. Only a bounded pilot, no training.",
+  "api_requests": 0,
+  "training_updates": 0
+}

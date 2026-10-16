@@ -1,0 +1,224 @@
+{
+  "schema_version": 1,
+  "status": "completed_independent_source_review",
+  "review_date_local": "2026-10-16",
+  "reviewer": "reach_wall_native_review",
+  "scope": "Read-only inspection of four pinned source/config files. This report records source implications, not a Clean evaluation, security experiment or deployed vulnerability.",
+  "source": {
+    "repository": "https://github.com/PKU-Alignment/SafeDreamer",
+    "revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+    "commit_url": "https://github.com/PKU-Alignment/SafeDreamer/commit/529221f02b54d5093e304d877eb2aaf6da63a9ff",
+    "local_provenance": "runs/safedreamer_source_screen_20261016/provenance.json",
+    "files_read": [
+      "runs/safedreamer_source_screen_20261016/source/SafeDreamer/configs.yaml",
+      "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+      "runs/safedreamer_source_screen_20261016/source/SafeDreamer/agent.py",
+      "runs/safedreamer_source_screen_20261016/source/SafeDreamer/nets.py"
+    ],
+    "revision_binding_scope": "Revision taken from the existing source-screen provenance; no new network or hash verification."
+  },
+  "findings": [
+    {
+      "id": "vector_zero_limit_strict_safe_gate",
+      "verdict": "supported_by_source_for_unmodified_osrp_vector_CCE_configuration",
+      "finding": "osrp_vector uses CCEPlanner, use_cost=False and cost_limit=0.0. CCE geometry converts each of eight reconstructed hazard distances to a 0/1 indicator and sums them. Its nonnegative trajectory sum can never satisfy the strict test traj_cost < 0.0, so num_safe_traj is zero and the planner ranks all candidates by negative geometric cost.",
+      "formula": "c_t = sum_{j=1..8} 1[||reconstructed_hazard_{t,j}|| <= 0.25]; C_i = sum_{t=0..H} c_{t,i}; safe_count = sum_i 1[C_i < 0] = 0",
+      "temporal_scope": "WorldModel.imagine prepends the current state. The CCE geometry branch evaluates and sums H+1 states including that start state, without the standard OSRP factor 1000/H.",
+      "limits": [
+        "This does not imply every trajectory is physically unsafe. Even zero predicted geometric cost fails this strict zero threshold.",
+        "Zero-cost ties are handled by top_k over negative cost, with no reward tie-break in this branch.",
+        "CCEPlanner.cost_from_recon counts hazards; the separate WorldModel.cost_from_recon and PID helper collapse to a binary indicator. Those helpers must not be substituted when describing CCE Vector behavior.",
+        "This is a source/configuration consequence, not a measured task failure or attack."
+      ],
+      "source_locations": [
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/configs.yaml",
+          "line_start": 213,
+          "line_end": 223,
+          "why": "Vector configuration"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+          "line_start": 297,
+          "line_end": 325,
+          "why": "Geometry, strict mask and fallback"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+          "line_start": 376,
+          "line_end": 387,
+          "why": "Trajectory sum and batch gate"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/agent.py",
+          "line_start": 233,
+          "line_end": 256,
+          "why": "H imagined transitions plus prepended initial state"
+        }
+      ]
+    },
+    {
+      "id": "standard_osrp_single_rollout_batch_gate",
+      "verdict": "supported_by_source_for_defaults_plus_osrp",
+      "configuration": {
+        "planner": "CCEPlanner",
+        "horizon": 15,
+        "gaussian_candidates": 500,
+        "elites": 50,
+        "iterations": 6,
+        "actor_mixture_coef": 0.0,
+        "cost_limit": 2.0,
+        "use_cost": true,
+        "use_cost_model": true
+      },
+      "finding": "Each candidate gets one stochastic RSSM trajectory in each optimization round, not an ensemble of repeated futures for a fixed candidate. The cost head returns a distribution mean per future latent; CCE sums those H values and multiplies by 1000/H. If fewer than 50 candidates meet the strict cost limit, the whole batch is ranked by negative cost; otherwise the safe-index reward branch is used.",
+      "formula": "C_i = (1000/H) * sum_{t=1..H} mean(cost_head(z_{t,i})); safe_count = sum_i 1[C_i < cost_limit]",
+      "cost_head_scope": "The configured symlog_disc head has signed support (-20, 20 in transformed coordinates); source does not constrain its predicted mean to be nonnegative. The Vector nonnegativity argument therefore does not apply to standard OSRP.",
+      "limits": [
+        "The count is over distinct candidate trajectories, not repeated success/safety observations for one candidate and not a chance-constraint confidence certificate.",
+        "The cost gate uses raw predicted cost means, not cost_ret, a terminal cost critic value, or a continuation-weighted sum.",
+        "No sampling-law, calibration, checkpoint quality or real task capability has been tested by this review."
+      ],
+      "source_locations": [
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/configs.yaml",
+          "line_start": 75,
+          "line_end": 111,
+          "why": "Cost distribution and inherited planner defaults"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/configs.yaml",
+          "line_start": 150,
+          "line_end": 178,
+          "why": "OSRP overrides"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+          "line_start": 39,
+          "line_end": 48,
+          "why": "Cost-head mean excludes current state"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+          "line_start": 337,
+          "line_end": 385,
+          "why": "Single candidate batch, H-step cost aggregation and all-batch gate"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/agent.py",
+          "line_start": 647,
+          "line_end": 660,
+          "why": "CostVFunction.score returns raw cost separately from cost return"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/nets.py",
+          "line_start": 103,
+          "line_end": 123,
+          "why": "One stochastic RSSM sample per batch row per transition"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/nets.py",
+          "line_start": 479,
+          "line_end": 481,
+          "why": "Signed symlog_disc support"
+        }
+      ]
+    },
+    {
+      "id": "safe_index_padding_reintroduces_candidate_zero",
+      "verdict": "source_level_selection_defect_or_confound_conditional_on_gate_and_scores",
+      "finding": "The reward branch calls jnp.nonzero(mask, size=mask.size) without fill_value, whose default zero-index padding produces a fixed-size list containing repeated candidate 0 when safe_count < N. Those entries are subsequently eligible for top_k.",
+      "trigger_scope": "The reward branch is selected when safe_count >= num_elites. Thus padding matters when num_elites <= safe_count < N. If candidate 0 is unsafe, padding can reintroduce it; if it is safe, repeated copies can still change elite multiplicities and the mean. Actual selection depends on its score and ties.",
+      "limits": [
+        "When all N candidates are safe there is no padding; below the elite count the cost-only branch is used.",
+        "This review did not execute JAX or observe a real candidate bank, so it does not establish occurrence or physical harm in a trained model.",
+        "No externally controllable writer or distinct adversarial mechanism has been demonstrated."
+      ],
+      "source_locations": [
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+          "line_start": 319,
+          "line_end": 325,
+          "why": "Fixed-size nonzero and conditional branch"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+          "line_start": 383,
+          "line_end": 391,
+          "why": "Gate, top_k and resulting mean"
+        }
+      ]
+    },
+    {
+      "id": "executed_smoothed_elite_mean_not_revalidated",
+      "verdict": "supported_by_source",
+      "finding": "CCE computes an elite action-sequence mean, applies configured momentum against the previous mean, and returns the first action of that updated mean. It does not re-run dynamics or cost validation on the final mean before returning it. The result is generally not an individual scored candidate, although coincidence is possible.",
+      "formula": "mu_new = momentum * mu_old + (1 - momentum) * mean(elite_sequences); executed_action = mu_new[0]; inherited momentum = 0.1",
+      "limits": [
+        "Safe scored elites do not by themselves certify the returned mean in a nonlinear environment.",
+        "The source gap does not prove that the returned mean is unsafe or that any real task suffers.",
+        "A hypothetical safety analysis must follow the returned mean, not attribute the outcome of one elite candidate to the executed action."
+      ],
+      "source_locations": [
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/configs.yaml",
+          "line_start": 111,
+          "line_end": 111,
+          "why": "Momentum default"
+        },
+        {
+          "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/behaviors.py",
+          "line_start": 387,
+          "line_end": 394,
+          "why": "Elite mean, smoothing and direct return"
+        }
+      ]
+    }
+  ],
+  "native_decision_consumption": {
+    "finding": "Agent constructs CCEPlanner from expl_behavior and explicitly selects expl_outs in eval mode for CCEPlanner. It also uses those outputs in train/explore modes and retains the returned action in recurrent state. Thus the reviewed planner output is on the native action path, not merely a diagnostic.",
+    "source_locations": [
+      {
+        "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/agent.py",
+        "line_start": 35,
+        "line_end": 45,
+        "why": "Planner construction"
+      },
+      {
+        "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/agent.py",
+        "line_start": 73,
+        "line_end": 95,
+        "why": "Planner outputs selected by policy mode"
+      },
+      {
+        "path": "runs/safedreamer_source_screen_20261016/source/SafeDreamer/agent.py",
+        "line_start": 109,
+        "line_end": 110,
+        "why": "Returned action retained in state"
+      }
+    ],
+    "boundary": "No environment execution, task success, real constraint violation or deployed external intervention is established by this source path."
+  },
+  "decision": {
+    "source_conclusions": "The four stated source facts are supported with the Vector/standard-OSRP distinctions above.",
+    "task_clean_qualification": "unmeasured_by_this_review",
+    "actual_safety_harm": "unmeasured",
+    "attack_success": "unmeasured",
+    "external_intervention_authority_or_reachability": "not_established",
+    "general_security_mechanism_or_novelty": "not_established",
+    "note": "These implementation and aggregation facts do not alone justify a trained-model safety claim or a new experiment."
+  },
+  "review_activity": {
+    "source_only": true,
+    "new_network_requests": 0,
+    "model_inference_calls": 0,
+    "checkpoint_loads": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "ast_method_executions": 0,
+    "jax_runtime_probes": 0,
+    "gpu_initializations": 0,
+    "other_files_modified": 0,
+    "report_serialization_only": true
+  }
+}

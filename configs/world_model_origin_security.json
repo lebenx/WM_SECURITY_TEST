@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-09",
+  "updated_at_utc": "2026-10-09T02:12:56.177162+00:00",
+  "status": "origin_signal_observed_fixed_probe_confirmation_gate_failed",
+  "candidate_question_cn": "世界模型能否从输入潜状态分辨现实观测与自身想象，从而在不添加外部观测触发器的情况下只对想象改变行为？",
+  "accepted_claim": null,
+  "source": "runs/tdmpc_latent_origin_confirmation_v0/assessment.json",
+  "raw_confirmation": "runs/tdmpc_latent_origin_confirmation_v0/summary.json",
+  "report_note_cn": "冻结 TD-MPC2 原生控制在两个新回合得994.12和974.09分，均通过900分基线门槛。固定来源识别器对匹配动作的一步／两步想象识别率为92.57%–98.19%，但真实状态误报分别为0.80%和1.61%，第二回合超过预设1%，因此整体确认失败。实际规划器抽样中，深度0误报为0，深度1／2被标记比例为70.69%–84.13%；这只是抽样来源信号，未修改世界模型、未运行攻击，也没有任务损害证据。LayerNorm结构必要条件未分离现实与想象。保留观察，不放宽门槛、不继续调此分类器；一般分布外路由与想象偏差已有先行工作，尚无达到新意目标的主张。",
+  "next_requirement": "Identify a substantive threat operation and causal property beyond ordinary OOD-based routing and latent checkpoint backdoors on a competent native controller. Do not tune this fixed origin classifier using seeds18/19 or interpret classification as task harm. Retain the original novelty and multiple-task goals; no long GPU experiment.",
+  "attack_run": false,
+  "native_task_harm": false,
+  "confirmation_gate_passed": false,
+  "usage": {
+    "new_native_environment_steps": 1000,
+    "completed_native_episodes": 2,
+    "predicted_transitions": 9223470,
+    "additional_encoded_observations": 2505,
+    "world_model_training_updates": 0,
+    "research_api_requests": 0,
+    "gpu_training": false,
+    "gpu_work": "Short frozen-model inference only.",
+    "initial_screen_elapsed_seconds": 10.423559225630015,
+    "initial_probe_cpu_seconds": 0.7653954080305994,
+    "invalid_rbf_cpu_seconds": 17.07534847315401,
+    "corrected_rbf_cpu_seconds": 9.251858947332948,
+    "native_confirmation_elapsed_seconds": 42.78725745109841,
+    "timing_limit": "Confirmation elapsed includes CPU probes and file writes; these are not GPU utilization measurements. Export parity verification CPU time was not measured."
+  },
+  "closest_priors": [
+    {
+      "title": "Fooling LIME and SHAP: Adversarial Attacks on Post hoc Explanation Methods",
+      "url": "https://arxiv.org/abs/1911.02508",
+      "finding": "Primary abstract, paper and official implementation inspected. An OOD detector distinguishes real examples from explainer perturbations and routes behavior. Merely recognizing query origin and conditionally changing outputs is not a new security operation. No reproduction."
+    },
+    {
+      "title": "TRAP: Tail-aware Ranking Attack for World-Model Planning",
+      "url": "https://arxiv.org/abs/2605.01950",
+      "finding": "Primary abstract describes a trigger-conditioned world-model backdoor targeting decision-critical imagined-trajectory ranking, with dual gates and experiments on DreamerV3 and TD-MPC2. Generic corruption of imagined-trajectory ranking already has a security prior. The abstract alone does not establish a parameter-free inference-only attack; no local reproduction."
+    },
+    {
+      "title": "A Control Theory of Predictability in Latent World Models",
+      "url": "https://arxiv.org/abs/2607.10362",
+      "finding": "Primary abstract and section structure inspected; full theorem assumptions not verified. Discusses planner trajectories leaving data support and the distinction between prediction error on observed data and control performance. Ordinary off-manifold rollout error is not itself a novel attack. No reproduction."
+    },
+    {
+      "title": "When the World Lies: Backdoor Attacks on Latent World Models for Downstream Control",
+      "url": "https://arxiv.org/abs/2609.15781",
+      "finding": "Primary abstract inspected. Poisoned checkpoints route externally triggered observations into altered latent dynamics that affect downstream control. Imagination-origin routing would need a substantive mechanistic distinction and native causal task harm, not merely another trigger label."
+    }
+  ]
+}

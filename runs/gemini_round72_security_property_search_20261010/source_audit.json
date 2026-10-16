@@ -1,0 +1,55 @@
+{
+  "round": 72,
+  "proposals": [
+    {
+      "one_sentence_claim": "在基于潜空间的世界模型中，若模型对同分布合法状态对的相对距离预测破坏了度量三角不等式，攻击者可通过注入合法的短程转移轨迹诱导跨步度量缺陷，导致长程打靶规划器在单步预测损失极低的条件下发生反事实可达性虚假短路。",
+      "carrier": "TD-MPC2 (nicklashansen/tdmpc2)",
+      "exact_native_path": "tdmpc2/models/world_model.py:WorldModel.next",
+      "attacker_capability": "攻击者仅能在合法物理转移分布内提交满足环境动力学约束的高频短程交互轨迹，不可篡改损失函数、不可注入对抗梯度、不可篡改评估目标。",
+      "invariant": "反事实可达性三角度量不变量 (Metric Triangle Inequality of Latent Compositional Reachability: $D(z_t, z_{t+k}) \\le \\sum_{i=0}^{k-1} D(z_{t+i}, z_{t+i+1})$)",
+      "why_not_prior": "不同于单纯的rollout compounding（单步误差随时间累积放大），本机制下的单步残差与自回归多步预测误差在统计上均保持在低阈值内；也非latent drift或OOD，状态始终处于训练流形上；其核心破坏的是跨时间步潜表征复合算子的次可加性度量契约，使得CEM在打靶反事实轨迹时误判不可达路径为高价值捷径。",
+      "two_core_tasks": [
+        "dmcontrol:walker-run",
+        "dmcontrol:humanoid-walk"
+      ],
+      "repair": "在潜空间动力学损失中显式施加度量传递约束：引入无参对比测地线正则项 $\\max(0, \\|z_{t+k} - z_t\\| - \\sum_{i=0}^{k-1}\\|z_{t+i+1} - z_{t+i}\\|)$，切断利用次可加性亏损进行的虚假度量捷径折叠。",
+      "short_gate": "单步预测MSE维持在基线±3%以内，但在打靶步长H=5上测地线度量违背率上升>40%，导致CEM回报下降>25%。",
+      "novelty_self_score": 7,
+      "verdict": "PROMOTED"
+    },
+    {
+      "one_sentence_claim": "在结合潜变量动力学与离散/连续分位数价值引导的异步世界模型中，攻击者通过在特定前驱状态下合规诱导转移算子的一阶协方差与时间差分算子在虚构反事实分支上产生非零非交换性，可在单步预测与边缘分布完全真实的前提下使规划器在分叉决策点发生分支不可交换性崩溃。",
+      "carrier": "DreamerV3 (danijar/dreamerv3)",
+      "exact_native_path": "dreamerv3/models.py:WorldModel.imagine",
+      "attacker_capability": "攻击者通过合法与环境交互，在特定合法流形边缘产生交替动作对，不操纵环境奖励标记、不修改重放缓存采样权重。",
+      "invariant": "分支可交换性不变量 (Counterfactual Branch Commutativity: $\\mathbb{E}[V(\\mathcal{T}(z, a_1, a_2))] = \\mathbb{E}[V(\\mathcal{T}(z, a_2, a_1))]$ 当且仅当物理轨迹满足可逆局部对称)",
+      "why_not_prior": "现有研究归结为动作不敏感（action insensitivity）或采样耦合（sampling coupling）。该机制中模型对单一动作敏感度与梯度均正常，边缘分布与无条件演化均符合真实基线，但在多步树状展开时，动作复合算子非阿贝尔失真破坏了分支组合顺序，导致规划器在对称任务分支中锁死在劣解。",
+      "two_core_tasks": [
+        "crafter:default",
+        "dmcontrol:quadruped-run"
+      ],
+      "repair": "在虚构轨迹生成步中引入局部动作对换对称性保护算子（Symmetric Commutator Regularizer），对无因果依赖的时序动作对强制实施反事实展开终态一致性约束。",
+      "short_gate": "在单一动作预测准确率与单步转移似然检验不受损（p>0.1）的情况下，对偶动作展开的潜状态对易子范数上升超过2倍，诱发固定视野内的规划价值排序逆转。",
+      "novelty_self_score": 7,
+      "verdict": "PROMOTED"
+    }
+  ],
+  "source_files": [
+    {
+      "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+      "sha256": "55b85a9481d131b6b42265e15ece17bcc05f4ddf83dfd12c5be74e3a04f0d737"
+    },
+    {
+      "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+      "sha256": "de4531ce18fc1dd459f91a664c011a2db14324d34d1fc7b52e058db050c07ab8"
+    }
+  ],
+  "native_facts": [
+    "TD-MPC2 native code path is tdmpc2/common/world_model.py, not tdmpc2/models/world_model.py.",
+    "WorldModel.next is a learned dynamics MLP returning latent z_next; native planning uses value/Q rollout and does not define a learned pairwise metric D or a triangle-inequality monitor.",
+    "Euclidean latent distance itself obeys the triangle inequality exactly; the proposed repair expression using Euclidean norms is identically nonpositive before hinge and cannot detect a violation.",
+    "TD-MPC2 uses deterministic learned latent transitions for a given z,a; its native planner does not expose a DreamerV3 asynchronous quantile-value path.",
+    "TD-MPC2 temporal commutator/order candidates have already been screened with matched controls and rejected; Dreamer/Crafter/Quadruped code paths are not present in this worktree."
+  ],
+  "audit_conclusion": "Both proposals fail source/path or novelty checks: first invents a metric and proposes a vacuous Euclidean inequality; second repeats previously rejected order-commutator/temporal composition mechanisms and cites an un-audited carrier."
+}

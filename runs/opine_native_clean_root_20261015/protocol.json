@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_one_cpu_clean",
+  "registered_utc": "2026-10-15 07:47:20 UTC",
+  "purpose": "One retrospective in-sample Clean capability probe of an unchanged published OPINE generated planner at one qualified native L6 root. This is not the historical online agent or a query-memory harm experiment.",
+  "upstream_commit": "cf957ffa660f72f19beeec0355bc350c774188d5",
+  "resource_run": "runs/opine_level_reset_replay_snapshotfix_20261015",
+  "snapshot": "root_before_762.pkl",
+  "root_metadata": "root_before_762.json",
+  "before_action_index": 762,
+  "level_index": 5,
+  "model_source": "runs/opine_query_memory_v0/round_086/game_engine.py",
+  "planner_source": "vendor/opine-world/src/opine_world/synth_loop/planner.py",
+  "native_loader_source": "scripts/probe_opine_level_reset_replay.py",
+  "runtime": {
+    "python": ".venv-opine/bin/python",
+    "required_versions": {
+      "arc-agi": "0.9.8",
+      "arcengine": "0.9.3",
+      "numpy": "2.5.3"
+    }
+  },
+  "resource_gate": [
+    "Resource summary status is completed_native_reset_replay and qualification is exactly true.",
+    "Root metadata is qualified_actual_native_root with qualified_by_completed_panel true, index762, level5 and zero full-frame mismatch.",
+    "Register the unchanged game/adapter modules through the resource helper before reading its local pickle; restore saved Python/NumPy RNG.",
+    "Loaded and deep-copied actual environment frames and counters equal the saved root. No archive frame or learned history is injected into the environment."
+  ],
+  "initialization": "Fresh load_model of round086 exactly once. No factual-prefix transition calls, memory overwrite, hypothetical pre-query, extra candidate enumeration, or completed-level verification. This isolates the released native planner component, not the complete engine gate/LLM/exploration/resynthesis loop.",
+  "planner": {
+    "calls": 1,
+    "frames_only": true,
+    "max_depth": 0,
+    "generated_default_depth": 40,
+    "max_nodes": 0,
+    "timeout_s": 30,
+    "available_actions": "Pass env.get_available_actions() unchanged; do not add L6 buttons, change keys, or invoke generic BFS.",
+    "instrumentation": "Only transparent call-count wrappers for transition_function/reward_function, shared by generated search and native validation; no extra model calls. Save initialized/final declared-global memory without modifying it."
+  },
+  "real_execution": {
+    "condition": "Only result.ok=true and a returned plan of length1..40 permit execution.",
+    "max_controls": 40,
+    "policy": "Execute returned native plan verbatim once on the root deepcopy. Stop at plan exhaustion, level advancement, game win, game over, or native done; never replan or invoke a fallback actor.",
+    "goal": "Native L6 completion: actual environment level advancement or game win. Preserve native reward, done, game state and level at every step.",
+    "metrics": [
+      "actual cumulative reward",
+      "actual level advancement",
+      "actual game win",
+      "native done",
+      "controls executed",
+      "actual frames"
+    ],
+    "no_plan": "Record no_plan, timeout or model_error distinctly. Environment return and task success remain null, controls remain0; no unexecuted task is counted as a failure."
+  },
+  "limits": {
+    "wallclock_s": 60,
+    "enforcement": "A separate parent process supervises one worker with timeout60seconds. It does not replace the worker's native SIGALRM planner deadline. Monotonic worker checks supplement the parent bound.",
+    "attempts": 1,
+    "api_calls": 0,
+    "gpu_calls": 0,
+    "training_updates": 0,
+    "attack_queries": 0,
+    "no_root_model_or_budget_replacement": true
+  },
+  "interpretation": "One frozen published-program component on one existing development root. Round086 postdates step762; do not claim the author used it online there. A no-plan result is bounded planner infeasibility at this root, not a task failure rate, general incapability or immunity. If a returned plan fails, report that single real outcome without changing the planner. No query-memory damage is tested.",
+  "default_output": "runs/opine_native_clean_root_20261015",
+  "preexecution_review": "Root and independent source review passed before planner import/call. Fresh native module component only; no factual-prefix warmup and no attack."
+}

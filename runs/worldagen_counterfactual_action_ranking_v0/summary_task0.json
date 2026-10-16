@@ -1,0 +1,130 @@
+{
+  "status": "completed_worldagen_counterfactual_action_ranking",
+  "planner": "independent_forecast_driven_clip_text_score",
+  "native_worldagen_policy_uses_forecast": false,
+  "candidate_set_frozen_across_conditions": true,
+  "selection_target_fixed_to_original_goal": true,
+  "future_observation_used_for_selection": false,
+  "actual_utility_source": "fresh LIBERO replay cumulative sparse reward, success, and environment steps",
+  "conditions": [
+    "clean",
+    "goal_swap",
+    "goal_swap_bus_cut",
+    "goal_swap_control_cut"
+  ],
+  "rows": [
+    {
+      "suite": "libero_goal",
+      "task_id": 0,
+      "task": "open the middle drawer of the cabinet",
+      "swapped_goal": "put the bowl on the stove",
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "clean_policy_once_plus_fixed_gaussian_perturbations",
+      "scores": {
+        "clean": [
+          0.23043052852153778,
+          0.24010133743286133,
+          0.22939108312129974,
+          0.2325933575630188,
+          0.2311418056488037,
+          0.23060114681720734,
+          0.23086842894554138,
+          0.22864092886447906
+        ],
+        "goal_swap": [
+          0.20234403014183044,
+          0.20876431465148926,
+          0.20404651761054993,
+          0.19557179510593414,
+          0.20401626825332642,
+          0.20148009061813354,
+          0.19620299339294434,
+          0.20134493708610535
+        ],
+        "goal_swap_bus_cut": [
+          0.20514458417892456,
+          0.2070942521095276,
+          0.20579731464385986,
+          0.19376707077026367,
+          0.2013096809387207,
+          0.21069218218326569,
+          0.19964680075645447,
+          0.18782523274421692
+        ],
+        "goal_swap_control_cut": [
+          0.20234403014183044,
+          0.20876431465148926,
+          0.20404651761054993,
+          0.19557179510593414,
+          0.20401626825332642,
+          0.20148009061813354,
+          0.19620299339294434,
+          0.20134493708610535
+        ]
+      },
+      "selected": {
+        "clean": 1,
+        "goal_swap": 1,
+        "goal_swap_bus_cut": 5,
+        "goal_swap_control_cut": 1
+      },
+      "ranking_flip_rate": {
+        "goal_swap": 0.5,
+        "goal_swap_bus_cut": 0.4642857142857143,
+        "goal_swap_control_cut": 0.5
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 6,
+          "forecast_error_mse": 1.9155480861663818,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 6,
+          "forecast_error_mse": 1.8215082883834839,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 6,
+          "forecast_error_mse": 1.8242450952529907,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        },
+        "goal_swap_control_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 6,
+          "forecast_error_mse": 1.8215082883834839,
+          "forecast_error_observation_steps": [
+            3,
+            6
+          ]
+        }
+      },
+      "decision_recovery": {
+        "bus_cut_selected_matches_clean": false,
+        "control_cut_selected_matches_clean": true
+      }
+    }
+  ],
+  "scope": "Minimal independent planner test; no claim about native WorldAgen action selection."
+}

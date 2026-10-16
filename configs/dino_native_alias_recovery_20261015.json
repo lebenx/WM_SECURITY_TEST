@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "status": "reviewed_frozen_before_execution",
+  "date": "2026-10-15",
+  "runner": "scripts/pilot_dino_native_alias_recovery.py",
+  "out_dir": "runs/dino_native_alias_recovery_20261015",
+  "source_run": "runs/dino_native_alias_pair_20261015",
+  "purpose": "One separately frozen causal recovery episode following the predeclared native-pair return-loss trigger; conventional trusted-candidate integrity restoration, not a novel defense mechanism.",
+  "known_before_registration": {
+    "clean_return99": 786.998547077179,
+    "canonical_return99": 702.1983199119568,
+    "relative_return_drop": 0.1077514405587664,
+    "both_final_success": false,
+    "both_ever_success": true,
+    "qualification": "Canonical improved terminal reward/distance and some success-timing metrics. The registered harm is cumulative native dense-return loss only; no lost final task success."
+  },
+  "fixed": {
+    "physical_seed": 4,
+    "cem_seed": 1,
+    "task": "mw-reach",
+    "samples": 300,
+    "iterations": 15,
+    "elites": 10,
+    "horizon": 6,
+    "num_act_stepped": 3,
+    "context_window": 2,
+    "macro_control_count": 5,
+    "total_episode_steps": 100,
+    "policy_controls": 99,
+    "precision": "FP32 full candidate batch; same native cfg_for/load_model/objective and original candidate/elite/mean/executor path.",
+    "goal": "Source seed4 original expert final image/proprio, with exact reconstruction checks; expert and cached Clean controls are never used to choose policy actions.",
+    "expected_query_elapsed": [
+      1,
+      16,
+      31,
+      46,
+      61,
+      76,
+      91
+    ],
+    "expected_horizons": [
+      6,
+      6,
+      6,
+      6,
+      6,
+      5,
+      2
+    ]
+  },
+  "reconstruction": {
+    "limitation": "Source snapshot.npz stores full integration/site/selected physical values and Torch RNG, but not complete serialized raw/wrapper or Python/NumPy RNG values. Do not claim direct restoration from a complete portable snapshot.",
+    "method": "Re-run the identical seed4 native setup_episode initialization to reconstruct those fields: expert100 controls plus root1 warmup, no Clean/attack/noop rerun. Require all saved setup arrays and expert trace equality, including true goal, initial image/proprio/state and expert endpoint; compare complete mjSTATE_INTEGRATION/site and physical arrays to source before restoring source integration/site/Torch RNG. Preserve freshly reconstructed raw/wrapper/Python/NumPy state and then take/restore an in-process complete snapshot.",
+    "before_planning_checks": "Initial pixels/proprio/state, original goal and true physical target must exactly match source. Encoded goal, first query encoded context and first full proposal must exactly match source Clean. Any mismatch is invalid_reconstruction_or_runtime, never a failed task or a reason to change seed/tolerance.",
+    "rng": "Fresh native GC_Agent with local generators seed1. Compare local CUDA generator state after all seven queries to archived source Clean; no rewrite/binding RNG use."
+  },
+  "guard": {
+    "trusted_side": "Before invoking the researcher-defined writer, privately clone the CURRENT native planner candidate request. This trusted reference is not given to the writer.",
+    "writer": "Same pre-fixed CPU float32 canonical-boundary operation on a distinct untrusted copy, for both B300 candidate and B1 mean calls. Preserve unsaturated normalized coordinates, raw gripper and clippedXYZ exactly. No adaptive search.",
+    "binding": "After the canonical writer returns, replace the outgoing request using the private current-candidate clone. Call the same native unroll exactly once. Preserve original objective actions, elite updates, final native mean and execution.",
+    "negative_scope": "No extra inference, oracle, cached-action substitution, forecast-output repair, retraining or new candidate. The trusted boundary is an explicit experimental permission assumption, not an established deployed API.",
+    "per_request_checks": "Canonical attempt actually computed; disjoint copy storage; trusted/caller inputs remain exact; effective actions unchanged; submitted request equals current trusted candidate bitwise; context/goal immutable; rewrite/binding consume no RNG."
+  },
+  "metrics": {
+    "primary": "Actual sum of99 native policy rewards; also full100 including identical warmup.",
+    "other": "Final and ever-success, final reward/distance, first-success control, success-control count, full trace; report all signed comparisons to both old arms.",
+    "mechanistic": "Per-query request rewrite/binding statistics, original final mean and actual actions, generator equality. Exactly210 native unrolls expected, no extra inference.",
+    "cached_references": "Source Clean initial/goal/proposal and RNG states are used only for identity checks. Source scalar outcomes are used only after recovery for comparisons. No source Clean executed action or future state is injected into the policy.",
+    "forecast_cache": "Native final-mean prediction/context and actual5-control endpoints may be saved from calls already made; no counterfactual/extra encoder calls. Final9-control chunk only aligns offset5."
+  },
+  "decision": {
+    "utility_recovered": "Complete valid episode has recovery_return99 >= source_clean_return99 -1e-6. Report recovered fraction (recovery-canonical)/(clean-canonical) without clipping, plus actual signed endpoint changes.",
+    "numerical_tolerance": "1e-6 only for comparison of saved cumulative reward; not a scientific effect-size threshold. No post-result relaxation.",
+    "other_results": "Lower return, null effect or further improvement are retained. No automatic extra episode, seed search or new mitigation. Conventional integrity restoration in one exploratory root cannot establish population/general safety."
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "minimum_start_free_mib": 5632,
+    "allocator_cap_gib": 5.0,
+    "allocator": "expandable_segments:True",
+    "threads": 4,
+    "wall_limit_seconds": 1200,
+    "outer_timeout_seconds": 1215,
+    "absolute_max_seconds": 2700,
+    "first_query_cost_limit_seconds": 1100,
+    "cost_gate": "After saving and executing the actual first recovery query, estimate remaining episode-scale planning as first_query_seconds*37/6. If>1100s, preserve prefix and resource_deferred; never restart.1200s total internal limit takes precedence.",
+    "limits": "GPU free is not reservation;5GiB allocator cap excludes context/other libraries. Single attempt. OOM/time/error preserved, no smaller batch/retry. No model/environment calls before review; no network/install/training or large-file hash."
+  },
+  "outputs": [
+    "summary.json",
+    "launched_config.json",
+    "launched_script.py",
+    "reconstructed_setup/*",
+    "snapshot.npz",
+    "snapshot_metadata.json",
+    "recovery/trace.jsonl",
+    "recovery/queries.json",
+    "recovery/query*_forecast_cache.npz"
+  ],
+  "registered_at_utc": "2026-10-15T05:58:04.693061+00:00",
+  "review": "Root and independent science reviewer read complete runner: trusted current candidate only, exact seed4 setup/integration/initial/proposal/goal checks, no old action substitution, same native budget, single bounded attempt. Success/return metrics kept separate.",
+  "reviewed_at_utc": "2026-10-15T05:58:29.533360+00:00"
+}

@@ -1,0 +1,7 @@
+{
+  "decision": "REJECT_ALL",
+  "novelty_score": 2.1,
+  "candidate": null,
+  "rationale": "The reported numbers (-4.6% vs +8.2% on seeds 31 and 32 with one-step ratio 0.993) confirm that the phenomenon collapses under actor restoration: the sign flips across the two seeds (-4.6% on seed 31, +8.2% on seed 32), with both seeds falling well within the stochastic variance band of default sampling-based MPC on TD-MPC2 mt30-48M. Evaluating an adapted dynamics model under a frozen original actor over 80 updates produces negligible divergence from reverse (+0.2%/+17.1%) and shuffle (-2.3%/+13.1%). Any proposed carrier mechanism operating purely through authentic transitions without value/reward shift reduces to residual transfer jitter and sample-efficiency variance rather than a reproducible, causal world-model security vulnerability distinct from the rejected families.",
+  "minimal_gate": "Run 80 updates of native_full on mt30-48M with cheetah-run cascade vs temporal reverse vs matched shuffle (batch size 256, lr 3e-4), reload pre-adaptation actor weights, and execute 300 steps of native MPC on walker-run across 5 seeds (31-35). If cascade does not exhibit a statistically significant negative drop (p < 0.05, mean degradation > 15% relative to shuffle/reverse across all seeds), terminate and reject."
+}

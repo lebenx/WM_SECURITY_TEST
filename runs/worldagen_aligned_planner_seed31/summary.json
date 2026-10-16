@@ -1,0 +1,2549 @@
+{
+  "protocol": "aligned_primary_step3_v1",
+  "task_ids": [
+    0,
+    2,
+    4,
+    6,
+    7,
+    9
+  ],
+  "seed": 31,
+  "forecast_horizon": 3,
+  "replay_horizon": 3,
+  "candidate_count": 8,
+  "candidate_sampling": "eight linspace start indices of recorded 30-step chunks; execute first three actions",
+  "candidate_data_root": "/tmp/worldagen_actions_merged3",
+  "candidate_map": "0:5:8,2:3:6,4:0:0,6:1:1,7:4:7,9:2:2",
+  "goal_offsets": [
+    1,
+    5
+  ],
+  "scorers": [
+    "global_minmax",
+    "reference_scalar"
+  ],
+  "scoring_goal": "original environment task, fixed for all conditions",
+  "primary_utility": "real simulator EEF distance-to-first-goal-entity progress, intermediate only",
+  "native_policy_uses_forecast": false,
+  "all_scores_computed_before_replay": true,
+  "note": "reference_scalar uses scalar patch stats over channels as in training; differs from legacy reference_patch heuristic",
+  "script_sha256": "5dda6082dd732f063709e3afc7bbbfdea55ed94ff73760a31484e81996dd7e66",
+  "status": "completed",
+  "rows": [
+    {
+      "task_id": 0,
+      "task": "put both the alphabet soup and the tomato sauce in the basket",
+      "initial_sim_sha256": "6072d924c198cda4082982702696e4db89115ce632fb9312610f57571e5088f2",
+      "initial_image_sha256": "e0640a69d039334d219dec9eb8217208a7902b6bfd1ce49736c3634917b275ad",
+      "candidate_sha256": "ada66745ca792790aef86ae8f9c1f6521053f0c0c3f271ab1dc29dfa610d82ec",
+      "goal_texts": {
+        "clean": "put both the alphabet soup and the tomato sauce in the basket",
+        "clean_bus_cut": "put both the alphabet soup and the tomato sauce in the basket",
+        "swap_1": "put both the cream cheese box and the butter in the basket",
+        "swap_1_bus_cut": "put both the cream cheese box and the butter in the basket",
+        "swap_1_control_cut": "put both the cream cheese box and the butter in the basket",
+        "swap_5": "pick up the book and place it in the back compartment of the caddy",
+        "swap_5_bus_cut": "pick up the book and place it in the back compartment of the caddy",
+        "swap_5_control_cut": "pick up the book and place it in the back compartment of the caddy"
+      },
+      "scores": {
+        "clean": {
+          "global_minmax": [
+            0.2056099772453308,
+            0.21130865812301636,
+            0.20961827039718628,
+            0.21522507071495056,
+            0.20891104638576508,
+            0.2087293565273285,
+            0.20827262103557587,
+            0.21264882385730743
+          ],
+          "reference_scalar": [
+            0.2073935568332672,
+            0.2087641805410385,
+            0.20608770847320557,
+            0.20620040595531464,
+            0.20662656426429749,
+            0.20739294588565826,
+            0.207530677318573,
+            0.2080172747373581
+          ]
+        },
+        "clean_bus_cut": {
+          "global_minmax": [
+            0.20731547474861145,
+            0.21007831394672394,
+            0.2058166265487671,
+            0.21143095195293427,
+            0.21166253089904785,
+            0.20851309597492218,
+            0.20676285028457642,
+            0.20414352416992188
+          ],
+          "reference_scalar": [
+            0.21090006828308105,
+            0.20916272699832916,
+            0.21205835044384003,
+            0.2094738632440567,
+            0.2113775759935379,
+            0.21250933408737183,
+            0.21089370548725128,
+            0.20585592091083527
+          ]
+        },
+        "swap_1": {
+          "global_minmax": [
+            0.20609578490257263,
+            0.20981928706169128,
+            0.20954668521881104,
+            0.20887716114521027,
+            0.20852147042751312,
+            0.20805983245372772,
+            0.20999355614185333,
+            0.20947469770908356
+          ],
+          "reference_scalar": [
+            0.21183936297893524,
+            0.21575403213500977,
+            0.21184436976909637,
+            0.2099817991256714,
+            0.2115185260772705,
+            0.21312880516052246,
+            0.21524934470653534,
+            0.21609890460968018
+          ]
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": [
+            0.20731547474861145,
+            0.21007831394672394,
+            0.2058166265487671,
+            0.21143095195293427,
+            0.21166253089904785,
+            0.20851309597492218,
+            0.20676285028457642,
+            0.20414352416992188
+          ],
+          "reference_scalar": [
+            0.21090006828308105,
+            0.20916272699832916,
+            0.21205835044384003,
+            0.2094738632440567,
+            0.2113775759935379,
+            0.21250933408737183,
+            0.21089370548725128,
+            0.20585592091083527
+          ]
+        },
+        "swap_1_control_cut": {
+          "global_minmax": [
+            0.20609578490257263,
+            0.20981928706169128,
+            0.20954668521881104,
+            0.20887716114521027,
+            0.20852147042751312,
+            0.20805983245372772,
+            0.20999355614185333,
+            0.20947469770908356
+          ],
+          "reference_scalar": [
+            0.21183936297893524,
+            0.21575403213500977,
+            0.21184436976909637,
+            0.2099817991256714,
+            0.2115185260772705,
+            0.21312880516052246,
+            0.21524934470653534,
+            0.21609890460968018
+          ]
+        },
+        "swap_5": {
+          "global_minmax": [
+            0.2157852202653885,
+            0.21848462522029877,
+            0.20991139113903046,
+            0.21047523617744446,
+            0.2106398493051529,
+            0.21533919870853424,
+            0.2085176259279251,
+            0.21185718476772308
+          ],
+          "reference_scalar": [
+            0.211360901594162,
+            0.21278426051139832,
+            0.2171248197555542,
+            0.21271023154258728,
+            0.2129058539867401,
+            0.20975913107395172,
+            0.21479171514511108,
+            0.20524051785469055
+          ]
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": [
+            0.20731547474861145,
+            0.21007831394672394,
+            0.2058166265487671,
+            0.21143095195293427,
+            0.21166253089904785,
+            0.20851309597492218,
+            0.20676285028457642,
+            0.20414352416992188
+          ],
+          "reference_scalar": [
+            0.21090006828308105,
+            0.20916272699832916,
+            0.21205835044384003,
+            0.2094738632440567,
+            0.2113775759935379,
+            0.21250933408737183,
+            0.21089370548725128,
+            0.20585592091083527
+          ]
+        },
+        "swap_5_control_cut": {
+          "global_minmax": [
+            0.2157852202653885,
+            0.21848462522029877,
+            0.20991139113903046,
+            0.21047523617744446,
+            0.2106398493051529,
+            0.21533919870853424,
+            0.2085176259279251,
+            0.21185718476772308
+          ],
+          "reference_scalar": [
+            0.211360901594162,
+            0.21278426051139832,
+            0.2171248197555542,
+            0.21271023154258728,
+            0.2129058539867401,
+            0.20975913107395172,
+            0.21479171514511108,
+            0.20524051785469055
+          ]
+        }
+      },
+      "selected": {
+        "clean": {
+          "global_minmax": 3,
+          "reference_scalar": 1
+        },
+        "clean_bus_cut": {
+          "global_minmax": 4,
+          "reference_scalar": 5
+        },
+        "swap_1": {
+          "global_minmax": 6,
+          "reference_scalar": 7
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": 4,
+          "reference_scalar": 5
+        },
+        "swap_1_control_cut": {
+          "global_minmax": 6,
+          "reference_scalar": 7
+        },
+        "swap_5": {
+          "global_minmax": 1,
+          "reference_scalar": 2
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": 4,
+          "reference_scalar": 5
+        },
+        "swap_5_control_cut": {
+          "global_minmax": 1,
+          "reference_scalar": 2
+        }
+      },
+      "candidate_replays": [
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.275490347876481,
+          "eef_approach_progress": 0.00026015334136697543
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.2630052650708617,
+          "eef_approach_progress": 0.012745236146986305
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.28488807050619075,
+          "eef_approach_progress": -0.00913756928834275
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.29394834762631283,
+          "eef_approach_progress": -0.018197846408464835
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.27871758903109717,
+          "eef_approach_progress": -0.0029670878132491696
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.2652020280517723,
+          "eef_approach_progress": 0.010548473166075711
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.29677889324864476,
+          "eef_approach_progress": -0.02102839203079676
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.338977478947279,
+          "true_progress_delta": -6.310009987853249e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.2728147093477986,
+          "eef_approach_progress": 0.002935791870049387
+        }
+      ],
+      "candidate_forecast_mse": {
+        "clean": [
+          1.8642432689666748,
+          1.8648444414138794,
+          1.8622353076934814,
+          1.8316837549209595,
+          1.8605753183364868,
+          1.8671023845672607,
+          1.8674935102462769,
+          1.868923306465149
+        ],
+        "clean_bus_cut": [
+          1.7924154996871948,
+          1.7786599397659302,
+          1.8109922409057617,
+          1.7995121479034424,
+          1.7893925905227661,
+          1.7767882347106934,
+          1.8003259897232056,
+          1.8110727071762085
+        ],
+        "swap_1": [
+          1.8297597169876099,
+          1.8071529865264893,
+          1.82807457447052,
+          1.829361915588379,
+          1.8348243236541748,
+          1.8271414041519165,
+          1.8466975688934326,
+          1.8546892404556274
+        ],
+        "swap_1_bus_cut": [
+          1.7924154996871948,
+          1.7786599397659302,
+          1.8109922409057617,
+          1.7995121479034424,
+          1.7893925905227661,
+          1.7767882347106934,
+          1.8003259897232056,
+          1.8110727071762085
+        ],
+        "swap_1_control_cut": [
+          1.8297597169876099,
+          1.8071529865264893,
+          1.82807457447052,
+          1.829361915588379,
+          1.8348243236541748,
+          1.8271414041519165,
+          1.8466975688934326,
+          1.8546892404556274
+        ],
+        "swap_5": [
+          1.730588674545288,
+          1.734352946281433,
+          1.7624943256378174,
+          1.775518536567688,
+          1.726628303527832,
+          1.7628484964370728,
+          1.7456704378128052,
+          1.7675143480300903
+        ],
+        "swap_5_bus_cut": [
+          1.7924154996871948,
+          1.7786599397659302,
+          1.8109922409057617,
+          1.7995121479034424,
+          1.7893925905227661,
+          1.7767882347106934,
+          1.8003259897232056,
+          1.8110727071762085
+        ],
+        "swap_5_control_cut": [
+          1.730588674545288,
+          1.734352946281433,
+          1.7624943256378174,
+          1.775518536567688,
+          1.726628303527832,
+          1.7628484964370728,
+          1.7456704378128052,
+          1.7675143480300903
+        ]
+      },
+      "evaluation_only_real_image_clip_scores": [
+        0.2316630333662033,
+        0.23368586599826813,
+        0.23294295370578766,
+        0.23326987028121948,
+        0.23255611956119537,
+        0.23586377501487732,
+        0.2337968349456787,
+        0.23534820973873138
+      ]
+    },
+    {
+      "task_id": 2,
+      "task": "turn on the stove and put the moka pot on it",
+      "initial_sim_sha256": "2db54bcf9fa92b5c9566ff123c2fcf72c076b91e8e6b4479248f3c63c917bae9",
+      "initial_image_sha256": "28e0fc258366ef5ac3ee3625389f9fe9bd9e29f43a2f75e23875842b051d898a",
+      "candidate_sha256": "4cc14b44703ecca422bcc9d1c1f221fce295f8f8d58e4c7f1fb1fd05521ea2f0",
+      "goal_texts": {
+        "clean": "turn on the stove and put the moka pot on it",
+        "clean_bus_cut": "turn on the stove and put the moka pot on it",
+        "swap_1": "put the black bowl in the bottom drawer of the cabinet and close it",
+        "swap_1_bus_cut": "put the black bowl in the bottom drawer of the cabinet and close it",
+        "swap_1_control_cut": "put the black bowl in the bottom drawer of the cabinet and close it",
+        "swap_5": "put both the alphabet soup and the cream cheese box in the basket",
+        "swap_5_bus_cut": "put both the alphabet soup and the cream cheese box in the basket",
+        "swap_5_control_cut": "put both the alphabet soup and the cream cheese box in the basket"
+      },
+      "scores": {
+        "clean": {
+          "global_minmax": [
+            0.2348552644252777,
+            0.24031272530555725,
+            0.24471785128116608,
+            0.2415584772825241,
+            0.22775566577911377,
+            0.24011333286762238,
+            0.2293063998222351,
+            0.2318965643644333
+          ],
+          "reference_scalar": [
+            0.21775829792022705,
+            0.22277142107486725,
+            0.21720094978809357,
+            0.22820588946342468,
+            0.222517728805542,
+            0.2179243266582489,
+            0.21597543358802795,
+            0.22517883777618408
+          ]
+        },
+        "clean_bus_cut": {
+          "global_minmax": [
+            0.22042103111743927,
+            0.23855780065059662,
+            0.23535513877868652,
+            0.24227260053157806,
+            0.23468619585037231,
+            0.22622673213481903,
+            0.2211018055677414,
+            0.2413158267736435
+          ],
+          "reference_scalar": [
+            0.2164309322834015,
+            0.22740688920021057,
+            0.2179516702890396,
+            0.2208687961101532,
+            0.2188805639743805,
+            0.21318002045154572,
+            0.2175014615058899,
+            0.21936504542827606
+          ]
+        },
+        "swap_1": {
+          "global_minmax": [
+            0.25917673110961914,
+            0.24864810705184937,
+            0.24418124556541443,
+            0.23221957683563232,
+            0.2228844165802002,
+            0.24047240614891052,
+            0.24506045877933502,
+            0.24592669308185577
+          ],
+          "reference_scalar": [
+            0.23888839781284332,
+            0.23664632439613342,
+            0.23988087475299835,
+            0.23380397260189056,
+            0.23527543246746063,
+            0.2332896739244461,
+            0.2345467507839203,
+            0.24144290387630463
+          ]
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": [
+            0.22042103111743927,
+            0.23855780065059662,
+            0.23535513877868652,
+            0.24227260053157806,
+            0.23468619585037231,
+            0.22622673213481903,
+            0.2211018055677414,
+            0.2413158267736435
+          ],
+          "reference_scalar": [
+            0.2164309322834015,
+            0.22740688920021057,
+            0.2179516702890396,
+            0.2208687961101532,
+            0.2188805639743805,
+            0.21318002045154572,
+            0.2175014615058899,
+            0.21936504542827606
+          ]
+        },
+        "swap_1_control_cut": {
+          "global_minmax": [
+            0.25917673110961914,
+            0.24864810705184937,
+            0.24418124556541443,
+            0.23221957683563232,
+            0.2228844165802002,
+            0.24047240614891052,
+            0.24506045877933502,
+            0.24592669308185577
+          ],
+          "reference_scalar": [
+            0.23888839781284332,
+            0.23664632439613342,
+            0.23988087475299835,
+            0.23380397260189056,
+            0.23527543246746063,
+            0.2332896739244461,
+            0.2345467507839203,
+            0.24144290387630463
+          ]
+        },
+        "swap_5": {
+          "global_minmax": [
+            0.22938662767410278,
+            0.22807113826274872,
+            0.22730425000190735,
+            0.23158563673496246,
+            0.224402517080307,
+            0.21902546286582947,
+            0.2232167273759842,
+            0.23691552877426147
+          ],
+          "reference_scalar": [
+            0.21484152972698212,
+            0.20945891737937927,
+            0.2126064896583557,
+            0.21871471405029297,
+            0.21229740977287292,
+            0.21899430453777313,
+            0.21678543090820312,
+            0.21567074954509735
+          ]
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": [
+            0.22042103111743927,
+            0.23855780065059662,
+            0.23535513877868652,
+            0.24227260053157806,
+            0.23468619585037231,
+            0.22622673213481903,
+            0.2211018055677414,
+            0.2413158267736435
+          ],
+          "reference_scalar": [
+            0.2164309322834015,
+            0.22740688920021057,
+            0.2179516702890396,
+            0.2208687961101532,
+            0.2188805639743805,
+            0.21318002045154572,
+            0.2175014615058899,
+            0.21936504542827606
+          ]
+        },
+        "swap_5_control_cut": {
+          "global_minmax": [
+            0.22938662767410278,
+            0.22807113826274872,
+            0.22730425000190735,
+            0.23158563673496246,
+            0.224402517080307,
+            0.21902546286582947,
+            0.2232167273759842,
+            0.23691552877426147
+          ],
+          "reference_scalar": [
+            0.21484152972698212,
+            0.20945891737937927,
+            0.2126064896583557,
+            0.21871471405029297,
+            0.21229740977287292,
+            0.21899430453777313,
+            0.21678543090820312,
+            0.21567074954509735
+          ]
+        }
+      },
+      "selected": {
+        "clean": {
+          "global_minmax": 2,
+          "reference_scalar": 3
+        },
+        "clean_bus_cut": {
+          "global_minmax": 3,
+          "reference_scalar": 1
+        },
+        "swap_1": {
+          "global_minmax": 0,
+          "reference_scalar": 7
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": 3,
+          "reference_scalar": 1
+        },
+        "swap_1_control_cut": {
+          "global_minmax": 0,
+          "reference_scalar": 7
+        },
+        "swap_5": {
+          "global_minmax": 7,
+          "reference_scalar": 5
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": 3,
+          "reference_scalar": 1
+        },
+        "swap_5_control_cut": {
+          "global_minmax": 7,
+          "reference_scalar": 5
+        }
+      },
+      "candidate_replays": [
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.3343616229408546,
+          "eef_approach_progress": -0.0006391650876778066
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.31756078618815575,
+          "eef_approach_progress": 0.016161671665021027
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.3224051991326484,
+          "eef_approach_progress": 0.011317258720528356
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.3137394910079147,
+          "eef_approach_progress": 0.019982966845262073
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.34980372991713077,
+          "eef_approach_progress": -0.01608127206395399
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.3303998017720717,
+          "eef_approach_progress": 0.003322656081105102
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.3359980000615616,
+          "eef_approach_progress": -0.0022755422083848287
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.36425129962323505,
+          "true_progress_final": -0.36425187378685964,
+          "true_progress_delta": -5.741636245892856e-07,
+          "eef_approach_distance_initial": 0.3337224578531768,
+          "eef_approach_distance_final": 0.3247408484326198,
+          "eef_approach_progress": 0.00898160942055698
+        }
+      ],
+      "candidate_forecast_mse": {
+        "clean": [
+          2.144132375717163,
+          2.1400885581970215,
+          2.155787467956543,
+          2.157336950302124,
+          2.141406297683716,
+          2.1431078910827637,
+          2.161569833755493,
+          2.1358165740966797
+        ],
+        "clean_bus_cut": [
+          2.1465718746185303,
+          2.1501872539520264,
+          2.1663525104522705,
+          2.184587001800537,
+          2.1535661220550537,
+          2.1770753860473633,
+          2.1566948890686035,
+          2.1260383129119873
+        ],
+        "swap_1": [
+          2.1518185138702393,
+          2.1811764240264893,
+          2.1712381839752197,
+          2.164026975631714,
+          2.1514549255371094,
+          2.154418468475342,
+          2.134394884109497,
+          2.131704092025757
+        ],
+        "swap_1_bus_cut": [
+          2.1465718746185303,
+          2.1501872539520264,
+          2.1663525104522705,
+          2.184587001800537,
+          2.1535661220550537,
+          2.1770753860473633,
+          2.1566948890686035,
+          2.1260383129119873
+        ],
+        "swap_1_control_cut": [
+          2.1518185138702393,
+          2.1811764240264893,
+          2.1712381839752197,
+          2.164026975631714,
+          2.1514549255371094,
+          2.154418468475342,
+          2.134394884109497,
+          2.131704092025757
+        ],
+        "swap_5": [
+          2.1343026161193848,
+          2.15018892288208,
+          2.144723653793335,
+          2.186192512512207,
+          2.1473982334136963,
+          2.1358730792999268,
+          2.147538900375366,
+          2.134882688522339
+        ],
+        "swap_5_bus_cut": [
+          2.1465718746185303,
+          2.1501872539520264,
+          2.1663525104522705,
+          2.184587001800537,
+          2.1535661220550537,
+          2.1770753860473633,
+          2.1566948890686035,
+          2.1260383129119873
+        ],
+        "swap_5_control_cut": [
+          2.1343026161193848,
+          2.15018892288208,
+          2.144723653793335,
+          2.186192512512207,
+          2.1473982334136963,
+          2.1358730792999268,
+          2.147538900375366,
+          2.134882688522339
+        ]
+      },
+      "evaluation_only_real_image_clip_scores": [
+        0.2910808324813843,
+        0.2963680028915405,
+        0.2912156581878662,
+        0.29475677013397217,
+        0.2966797947883606,
+        0.2918940484523773,
+        0.2897297143936157,
+        0.2935774028301239
+      ]
+    },
+    {
+      "task_id": 4,
+      "task": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+      "initial_sim_sha256": "f14e97b5ed59c13b89514bb38611cfaec473a8ac91be98572309b5bce3723cc8",
+      "initial_image_sha256": "9827bba6e660408ca1bff93cb19187dfd9dc2662a3639ee4a1b503986b9198d3",
+      "candidate_sha256": "aba0a1366e143957895aefe8f851b2560d6bc32bf944e9d2e7f7d864b6e54c01",
+      "goal_texts": {
+        "clean": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+        "clean_bus_cut": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+        "swap_1": "pick up the book and place it in the back compartment of the caddy",
+        "swap_1_bus_cut": "pick up the book and place it in the back compartment of the caddy",
+        "swap_1_control_cut": "pick up the book and place it in the back compartment of the caddy",
+        "swap_5": "put the yellow and white mug in the microwave and close it",
+        "swap_5_bus_cut": "put the yellow and white mug in the microwave and close it",
+        "swap_5_control_cut": "put the yellow and white mug in the microwave and close it"
+      },
+      "scores": {
+        "clean": {
+          "global_minmax": [
+            0.22165317833423615,
+            0.2188575714826584,
+            0.21789292991161346,
+            0.22534143924713135,
+            0.2366386353969574,
+            0.23598188161849976,
+            0.2183839976787567,
+            0.2340105175971985
+          ],
+          "reference_scalar": [
+            0.22135330736637115,
+            0.22361963987350464,
+            0.21931084990501404,
+            0.22459417581558228,
+            0.21912065148353577,
+            0.22600336372852325,
+            0.22224928438663483,
+            0.22135096788406372
+          ]
+        },
+        "clean_bus_cut": {
+          "global_minmax": [
+            0.20410595834255219,
+            0.19845478236675262,
+            0.21563708782196045,
+            0.2037660777568817,
+            0.22285564243793488,
+            0.2194606363773346,
+            0.20679031312465668,
+            0.22174414992332458
+          ],
+          "reference_scalar": [
+            0.23661817610263824,
+            0.22258996963500977,
+            0.22792232036590576,
+            0.21600088477134705,
+            0.23616096377372742,
+            0.23413494229316711,
+            0.22777976095676422,
+            0.2250591218471527
+          ]
+        },
+        "swap_1": {
+          "global_minmax": [
+            0.2047872394323349,
+            0.19853058457374573,
+            0.2271425575017929,
+            0.1963444948196411,
+            0.2067010998725891,
+            0.2147717922925949,
+            0.21009477972984314,
+            0.23028762638568878
+          ],
+          "reference_scalar": [
+            0.2221316248178482,
+            0.2132263034582138,
+            0.218499556183815,
+            0.2131168395280838,
+            0.22358015179634094,
+            0.22274570167064667,
+            0.21635638177394867,
+            0.22363555431365967
+          ]
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": [
+            0.20410595834255219,
+            0.19845478236675262,
+            0.21563708782196045,
+            0.2037660777568817,
+            0.22285564243793488,
+            0.2194606363773346,
+            0.20679031312465668,
+            0.22174414992332458
+          ],
+          "reference_scalar": [
+            0.23661817610263824,
+            0.22258996963500977,
+            0.22792232036590576,
+            0.21600088477134705,
+            0.23616096377372742,
+            0.23413494229316711,
+            0.22777976095676422,
+            0.2250591218471527
+          ]
+        },
+        "swap_1_control_cut": {
+          "global_minmax": [
+            0.2047872394323349,
+            0.19853058457374573,
+            0.2271425575017929,
+            0.1963444948196411,
+            0.2067010998725891,
+            0.2147717922925949,
+            0.21009477972984314,
+            0.23028762638568878
+          ],
+          "reference_scalar": [
+            0.2221316248178482,
+            0.2132263034582138,
+            0.218499556183815,
+            0.2131168395280838,
+            0.22358015179634094,
+            0.22274570167064667,
+            0.21635638177394867,
+            0.22363555431365967
+          ]
+        },
+        "swap_5": {
+          "global_minmax": [
+            0.20018108189105988,
+            0.1953076720237732,
+            0.21970337629318237,
+            0.20301929116249084,
+            0.21896886825561523,
+            0.21446730196475983,
+            0.19894039630889893,
+            0.21381120383739471
+          ],
+          "reference_scalar": [
+            0.21462640166282654,
+            0.21076379716396332,
+            0.21408921480178833,
+            0.21630750596523285,
+            0.22588272392749786,
+            0.22738158702850342,
+            0.21418067812919617,
+            0.21683800220489502
+          ]
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": [
+            0.20410595834255219,
+            0.19845478236675262,
+            0.21563708782196045,
+            0.2037660777568817,
+            0.22285564243793488,
+            0.2194606363773346,
+            0.20679031312465668,
+            0.22174414992332458
+          ],
+          "reference_scalar": [
+            0.23661817610263824,
+            0.22258996963500977,
+            0.22792232036590576,
+            0.21600088477134705,
+            0.23616096377372742,
+            0.23413494229316711,
+            0.22777976095676422,
+            0.2250591218471527
+          ]
+        },
+        "swap_5_control_cut": {
+          "global_minmax": [
+            0.20018108189105988,
+            0.1953076720237732,
+            0.21970337629318237,
+            0.20301929116249084,
+            0.21896886825561523,
+            0.21446730196475983,
+            0.19894039630889893,
+            0.21381120383739471
+          ],
+          "reference_scalar": [
+            0.21462640166282654,
+            0.21076379716396332,
+            0.21408921480178833,
+            0.21630750596523285,
+            0.22588272392749786,
+            0.22738158702850342,
+            0.21418067812919617,
+            0.21683800220489502
+          ]
+        }
+      },
+      "selected": {
+        "clean": {
+          "global_minmax": 4,
+          "reference_scalar": 5
+        },
+        "clean_bus_cut": {
+          "global_minmax": 4,
+          "reference_scalar": 0
+        },
+        "swap_1": {
+          "global_minmax": 7,
+          "reference_scalar": 7
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": 4,
+          "reference_scalar": 0
+        },
+        "swap_1_control_cut": {
+          "global_minmax": 7,
+          "reference_scalar": 7
+        },
+        "swap_5": {
+          "global_minmax": 2,
+          "reference_scalar": 5
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": 4,
+          "reference_scalar": 0
+        },
+        "swap_5_control_cut": {
+          "global_minmax": 2,
+          "reference_scalar": 5
+        }
+      },
+      "candidate_replays": [
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.292989009121514,
+          "eef_approach_progress": -8.096995880002567e-05
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.2808654990613922,
+          "eef_approach_progress": 0.012042540101321775
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.29865333096190994,
+          "eef_approach_progress": -0.005745291799195973
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.2818068039610411,
+          "eef_approach_progress": 0.011101235201672888
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.3057533754288452,
+          "eef_approach_progress": -0.012845336266131213
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.3063206931294148,
+          "eef_approach_progress": -0.013412653966700827
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.28067254673593556,
+          "eef_approach_progress": 0.012235492426778405
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458303924,
+          "true_progress_delta": -3.4256603109739103e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.30502259042084207,
+          "eef_approach_progress": -0.012114551258128103
+        }
+      ],
+      "candidate_forecast_mse": {
+        "clean": [
+          1.7818872928619385,
+          1.7737418413162231,
+          1.790994644165039,
+          1.7760813236236572,
+          1.7816803455352783,
+          1.7708806991577148,
+          1.77849280834198,
+          1.7232520580291748
+        ],
+        "clean_bus_cut": [
+          1.8005427122116089,
+          1.7794321775436401,
+          1.7839828729629517,
+          1.7661776542663574,
+          1.7882922887802124,
+          1.7895616292953491,
+          1.7871272563934326,
+          1.787989616394043
+        ],
+        "swap_1": [
+          1.7625041007995605,
+          1.7391973733901978,
+          1.732478380203247,
+          1.735633134841919,
+          1.7483702898025513,
+          1.7804079055786133,
+          1.7457947731018066,
+          1.7606676816940308
+        ],
+        "swap_1_bus_cut": [
+          1.8005427122116089,
+          1.7794321775436401,
+          1.7839828729629517,
+          1.7661776542663574,
+          1.7882922887802124,
+          1.7895616292953491,
+          1.7871272563934326,
+          1.787989616394043
+        ],
+        "swap_1_control_cut": [
+          1.7625041007995605,
+          1.7391973733901978,
+          1.732478380203247,
+          1.735633134841919,
+          1.7483702898025513,
+          1.7804079055786133,
+          1.7457947731018066,
+          1.7606676816940308
+        ],
+        "swap_5": [
+          1.7047953605651855,
+          1.7008254528045654,
+          1.7270089387893677,
+          1.696384072303772,
+          1.7489960193634033,
+          1.747590184211731,
+          1.7055984735488892,
+          1.7192091941833496
+        ],
+        "swap_5_bus_cut": [
+          1.8005427122116089,
+          1.7794321775436401,
+          1.7839828729629517,
+          1.7661776542663574,
+          1.7882922887802124,
+          1.7895616292953491,
+          1.7871272563934326,
+          1.787989616394043
+        ],
+        "swap_5_control_cut": [
+          1.7047953605651855,
+          1.7008254528045654,
+          1.7270089387893677,
+          1.696384072303772,
+          1.7489960193634033,
+          1.747590184211731,
+          1.7055984735488892,
+          1.7192091941833496
+        ]
+      },
+      "evaluation_only_real_image_clip_scores": [
+        0.28843191266059875,
+        0.2918054461479187,
+        0.29086926579475403,
+        0.2934539020061493,
+        0.2943904399871826,
+        0.29023122787475586,
+        0.2954829931259155,
+        0.294135719537735
+      ]
+    },
+    {
+      "task_id": 6,
+      "task": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "initial_sim_sha256": "1223e0a8fc16c08d0a9fd78f2459e957f9775b90aa19d2950d35e3fa2d6211bf",
+      "initial_image_sha256": "8177daa0a1bc2b02a1fd5c965d40e166ab7a6d02a34b28ef3d5a092bd8157201",
+      "candidate_sha256": "2384213cd075c193f24b7bee0dc2bdb1e6f0771d59a9b7c234386031c5eb6cca",
+      "goal_texts": {
+        "clean": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+        "clean_bus_cut": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+        "swap_1": "put both the alphabet soup and the cream cheese box in the basket",
+        "swap_1_bus_cut": "put both the alphabet soup and the cream cheese box in the basket",
+        "swap_1_control_cut": "put both the alphabet soup and the cream cheese box in the basket",
+        "swap_5": "put both the cream cheese box and the butter in the basket",
+        "swap_5_bus_cut": "put both the cream cheese box and the butter in the basket",
+        "swap_5_control_cut": "put both the cream cheese box and the butter in the basket"
+      },
+      "scores": {
+        "clean": {
+          "global_minmax": [
+            0.21523578464984894,
+            0.21288733184337616,
+            0.21068793535232544,
+            0.20924676954746246,
+            0.2117811143398285,
+            0.21453751623630524,
+            0.21109703183174133,
+            0.2124657779932022
+          ],
+          "reference_scalar": [
+            0.22816993296146393,
+            0.2255200892686844,
+            0.22436437010765076,
+            0.21658016741275787,
+            0.22407786548137665,
+            0.2270974963903427,
+            0.22554928064346313,
+            0.2228030413389206
+          ]
+        },
+        "clean_bus_cut": {
+          "global_minmax": [
+            0.19880835711956024,
+            0.21227499842643738,
+            0.19998948276042938,
+            0.20078334212303162,
+            0.1969519555568695,
+            0.2101529985666275,
+            0.20077088475227356,
+            0.19103790819644928
+          ],
+          "reference_scalar": [
+            0.22169162333011627,
+            0.22563476860523224,
+            0.21328088641166687,
+            0.22586113214492798,
+            0.20813101530075073,
+            0.22742998600006104,
+            0.20751909911632538,
+            0.21671202778816223
+          ]
+        },
+        "swap_1": {
+          "global_minmax": [
+            0.20960351824760437,
+            0.2104184478521347,
+            0.21131862699985504,
+            0.20756560564041138,
+            0.20901212096214294,
+            0.21021407842636108,
+            0.20730918645858765,
+            0.20848648250102997
+          ],
+          "reference_scalar": [
+            0.22435492277145386,
+            0.22568824887275696,
+            0.2231888324022293,
+            0.22740046679973602,
+            0.22338168323040009,
+            0.22840851545333862,
+            0.22355711460113525,
+            0.22438357770442963
+          ]
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": [
+            0.19880835711956024,
+            0.21227499842643738,
+            0.19998948276042938,
+            0.20078334212303162,
+            0.1969519555568695,
+            0.2101529985666275,
+            0.20077088475227356,
+            0.19103790819644928
+          ],
+          "reference_scalar": [
+            0.22169162333011627,
+            0.22563476860523224,
+            0.21328088641166687,
+            0.22586113214492798,
+            0.20813101530075073,
+            0.22742998600006104,
+            0.20751909911632538,
+            0.21671202778816223
+          ]
+        },
+        "swap_1_control_cut": {
+          "global_minmax": [
+            0.20960351824760437,
+            0.2104184478521347,
+            0.21131862699985504,
+            0.20756560564041138,
+            0.20901212096214294,
+            0.21021407842636108,
+            0.20730918645858765,
+            0.20848648250102997
+          ],
+          "reference_scalar": [
+            0.22435492277145386,
+            0.22568824887275696,
+            0.2231888324022293,
+            0.22740046679973602,
+            0.22338168323040009,
+            0.22840851545333862,
+            0.22355711460113525,
+            0.22438357770442963
+          ]
+        },
+        "swap_5": {
+          "global_minmax": [
+            0.20412711799144745,
+            0.2147773653268814,
+            0.20449741184711456,
+            0.21030773222446442,
+            0.20969095826148987,
+            0.21388395130634308,
+            0.20482516288757324,
+            0.19426320493221283
+          ],
+          "reference_scalar": [
+            0.22258922457695007,
+            0.22161543369293213,
+            0.22232872247695923,
+            0.22242337465286255,
+            0.22083993256092072,
+            0.22354811429977417,
+            0.21555276215076447,
+            0.2170533984899521
+          ]
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": [
+            0.19880835711956024,
+            0.21227499842643738,
+            0.19998948276042938,
+            0.20078334212303162,
+            0.1969519555568695,
+            0.2101529985666275,
+            0.20077088475227356,
+            0.19103790819644928
+          ],
+          "reference_scalar": [
+            0.22169162333011627,
+            0.22563476860523224,
+            0.21328088641166687,
+            0.22586113214492798,
+            0.20813101530075073,
+            0.22742998600006104,
+            0.20751909911632538,
+            0.21671202778816223
+          ]
+        },
+        "swap_5_control_cut": {
+          "global_minmax": [
+            0.20412711799144745,
+            0.2147773653268814,
+            0.20449741184711456,
+            0.21030773222446442,
+            0.20969095826148987,
+            0.21388395130634308,
+            0.20482516288757324,
+            0.19426320493221283
+          ],
+          "reference_scalar": [
+            0.22258922457695007,
+            0.22161543369293213,
+            0.22232872247695923,
+            0.22242337465286255,
+            0.22083993256092072,
+            0.22354811429977417,
+            0.21555276215076447,
+            0.2170533984899521
+          ]
+        }
+      },
+      "selected": {
+        "clean": {
+          "global_minmax": 0,
+          "reference_scalar": 0
+        },
+        "clean_bus_cut": {
+          "global_minmax": 1,
+          "reference_scalar": 5
+        },
+        "swap_1": {
+          "global_minmax": 2,
+          "reference_scalar": 5
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": 1,
+          "reference_scalar": 5
+        },
+        "swap_1_control_cut": {
+          "global_minmax": 2,
+          "reference_scalar": 5
+        },
+        "swap_5": {
+          "global_minmax": 1,
+          "reference_scalar": 5
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": 1,
+          "reference_scalar": 5
+        },
+        "swap_5_control_cut": {
+          "global_minmax": 1,
+          "reference_scalar": 5
+        }
+      },
+      "candidate_replays": [
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.2944017010380662,
+          "eef_approach_progress": -0.00040767299836758086
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.2831606446342379,
+          "eef_approach_progress": 0.010833383405460695
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.28736762318916104,
+          "eef_approach_progress": 0.0066264048505375595
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.30097556390601554,
+          "eef_approach_progress": -0.006981535866316946
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.29244950205123915,
+          "eef_approach_progress": 0.0015445259884594442
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.2869273572709248,
+          "eef_approach_progress": 0.0070666707687738195
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.29612600404452427,
+          "eef_approach_progress": -0.0021319760048256753
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308153483,
+          "true_progress_delta": -2.2702306701205544e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.2938640013858067,
+          "eef_approach_progress": 0.0001300266538918904
+        }
+      ],
+      "candidate_forecast_mse": {
+        "clean": [
+          1.7152801752090454,
+          1.707796573638916,
+          1.710317611694336,
+          1.6992812156677246,
+          1.710512399673462,
+          1.6947813034057617,
+          1.7153140306472778,
+          1.7351641654968262
+        ],
+        "clean_bus_cut": [
+          1.6979384422302246,
+          1.7060621976852417,
+          1.6764652729034424,
+          1.6967709064483643,
+          1.681097388267517,
+          1.727145791053772,
+          1.6789987087249756,
+          1.701066017150879
+        ],
+        "swap_1": [
+          1.7819023132324219,
+          1.786190152168274,
+          1.7765073776245117,
+          1.749313235282898,
+          1.7897921800613403,
+          1.7935975790023804,
+          1.718618392944336,
+          1.7722193002700806
+        ],
+        "swap_1_bus_cut": [
+          1.6979384422302246,
+          1.7060621976852417,
+          1.6764652729034424,
+          1.6967709064483643,
+          1.681097388267517,
+          1.727145791053772,
+          1.6789987087249756,
+          1.701066017150879
+        ],
+        "swap_1_control_cut": [
+          1.7819023132324219,
+          1.786190152168274,
+          1.7765073776245117,
+          1.749313235282898,
+          1.7897921800613403,
+          1.7935975790023804,
+          1.718618392944336,
+          1.7722193002700806
+        ],
+        "swap_5": [
+          1.7409230470657349,
+          1.7728039026260376,
+          1.7278106212615967,
+          1.7476094961166382,
+          1.735511064529419,
+          1.77702796459198,
+          1.6739963293075562,
+          1.7248919010162354
+        ],
+        "swap_5_bus_cut": [
+          1.6979384422302246,
+          1.7060621976852417,
+          1.6764652729034424,
+          1.6967709064483643,
+          1.681097388267517,
+          1.727145791053772,
+          1.6789987087249756,
+          1.701066017150879
+        ],
+        "swap_5_control_cut": [
+          1.7409230470657349,
+          1.7728039026260376,
+          1.7278106212615967,
+          1.7476094961166382,
+          1.735511064529419,
+          1.77702796459198,
+          1.6739963293075562,
+          1.7248919010162354
+        ]
+      },
+      "evaluation_only_real_image_clip_scores": [
+        0.2601923644542694,
+        0.2679656147956848,
+        0.2639080882072449,
+        0.2627326548099518,
+        0.2635236084461212,
+        0.26587456464767456,
+        0.265495240688324,
+        0.26157909631729126
+      ]
+    },
+    {
+      "task_id": 7,
+      "task": "put both the alphabet soup and the cream cheese box in the basket",
+      "initial_sim_sha256": "b1d004e18fba30bfe0900ed8c3039b58e109da61a79748f2015089ff2dc7b45f",
+      "initial_image_sha256": "2a15cac186164647c9541c7c4129b25faff599e60b1d7eaecbfc6ea79a67b291",
+      "candidate_sha256": "292e0cb1f846fe3c1fc0c12b34a31636e20ef8e5b52344128de3e30252550b2d",
+      "goal_texts": {
+        "clean": "put both the alphabet soup and the cream cheese box in the basket",
+        "clean_bus_cut": "put both the alphabet soup and the cream cheese box in the basket",
+        "swap_1": "put both moka pots on the stove",
+        "swap_1_bus_cut": "put both moka pots on the stove",
+        "swap_1_control_cut": "put both moka pots on the stove",
+        "swap_5": "turn on the stove and put the moka pot on it",
+        "swap_5_bus_cut": "turn on the stove and put the moka pot on it",
+        "swap_5_control_cut": "turn on the stove and put the moka pot on it"
+      },
+      "scores": {
+        "clean": {
+          "global_minmax": [
+            0.2057386338710785,
+            0.20797352492809296,
+            0.21060307323932648,
+            0.20696765184402466,
+            0.20165345072746277,
+            0.20125479996204376,
+            0.21197102963924408,
+            0.20592209696769714
+          ],
+          "reference_scalar": [
+            0.2138604372739792,
+            0.21340297162532806,
+            0.2132558673620224,
+            0.21319513022899628,
+            0.212844118475914,
+            0.21401144564151764,
+            0.2135729342699051,
+            0.21367700397968292
+          ]
+        },
+        "clean_bus_cut": {
+          "global_minmax": [
+            0.20194686949253082,
+            0.20433703064918518,
+            0.2087390422821045,
+            0.20917768776416779,
+            0.20063526928424835,
+            0.21368339657783508,
+            0.202596053481102,
+            0.20719046890735626
+          ],
+          "reference_scalar": [
+            0.21786727011203766,
+            0.21467001736164093,
+            0.2151986062526703,
+            0.21152929961681366,
+            0.21216435730457306,
+            0.21041133999824524,
+            0.20798130333423615,
+            0.21072101593017578
+          ]
+        },
+        "swap_1": {
+          "global_minmax": [
+            0.2045523226261139,
+            0.20359931886196136,
+            0.20585986971855164,
+            0.1989656388759613,
+            0.20093223452568054,
+            0.20483040809631348,
+            0.20812445878982544,
+            0.20100706815719604
+          ],
+          "reference_scalar": [
+            0.2105116993188858,
+            0.2148645669221878,
+            0.20758454501628876,
+            0.2091788500547409,
+            0.21055343747138977,
+            0.2135452777147293,
+            0.20756156742572784,
+            0.2114010453224182
+          ]
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": [
+            0.20194686949253082,
+            0.20433703064918518,
+            0.2087390422821045,
+            0.20917768776416779,
+            0.20063526928424835,
+            0.21368339657783508,
+            0.202596053481102,
+            0.20719046890735626
+          ],
+          "reference_scalar": [
+            0.21786727011203766,
+            0.21467001736164093,
+            0.2151986062526703,
+            0.21152929961681366,
+            0.21216435730457306,
+            0.21041133999824524,
+            0.20798130333423615,
+            0.21072101593017578
+          ]
+        },
+        "swap_1_control_cut": {
+          "global_minmax": [
+            0.2045523226261139,
+            0.20359931886196136,
+            0.20585986971855164,
+            0.1989656388759613,
+            0.20093223452568054,
+            0.20483040809631348,
+            0.20812445878982544,
+            0.20100706815719604
+          ],
+          "reference_scalar": [
+            0.2105116993188858,
+            0.2148645669221878,
+            0.20758454501628876,
+            0.2091788500547409,
+            0.21055343747138977,
+            0.2135452777147293,
+            0.20756156742572784,
+            0.2114010453224182
+          ]
+        },
+        "swap_5": {
+          "global_minmax": [
+            0.214259535074234,
+            0.210385262966156,
+            0.2050698697566986,
+            0.2111615389585495,
+            0.20821158587932587,
+            0.2120862901210785,
+            0.21295803785324097,
+            0.21540506184101105
+          ],
+          "reference_scalar": [
+            0.21343694627285004,
+            0.21063672006130219,
+            0.2146570384502411,
+            0.2110314816236496,
+            0.20764459669589996,
+            0.21361763775348663,
+            0.2137143462896347,
+            0.21508142352104187
+          ]
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": [
+            0.20194686949253082,
+            0.20433703064918518,
+            0.2087390422821045,
+            0.20917768776416779,
+            0.20063526928424835,
+            0.21368339657783508,
+            0.202596053481102,
+            0.20719046890735626
+          ],
+          "reference_scalar": [
+            0.21786727011203766,
+            0.21467001736164093,
+            0.2151986062526703,
+            0.21152929961681366,
+            0.21216435730457306,
+            0.21041133999824524,
+            0.20798130333423615,
+            0.21072101593017578
+          ]
+        },
+        "swap_5_control_cut": {
+          "global_minmax": [
+            0.214259535074234,
+            0.210385262966156,
+            0.2050698697566986,
+            0.2111615389585495,
+            0.20821158587932587,
+            0.2120862901210785,
+            0.21295803785324097,
+            0.21540506184101105
+          ],
+          "reference_scalar": [
+            0.21343694627285004,
+            0.21063672006130219,
+            0.2146570384502411,
+            0.2110314816236496,
+            0.20764459669589996,
+            0.21361763775348663,
+            0.2137143462896347,
+            0.21508142352104187
+          ]
+        }
+      },
+      "selected": {
+        "clean": {
+          "global_minmax": 6,
+          "reference_scalar": 5
+        },
+        "clean_bus_cut": {
+          "global_minmax": 5,
+          "reference_scalar": 0
+        },
+        "swap_1": {
+          "global_minmax": 6,
+          "reference_scalar": 1
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": 5,
+          "reference_scalar": 0
+        },
+        "swap_1_control_cut": {
+          "global_minmax": 6,
+          "reference_scalar": 1
+        },
+        "swap_5": {
+          "global_minmax": 7,
+          "reference_scalar": 7
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": 5,
+          "reference_scalar": 0
+        },
+        "swap_5_control_cut": {
+          "global_minmax": 7,
+          "reference_scalar": 7
+        }
+      },
+      "candidate_replays": [
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.24393961509233833,
+          "eef_approach_progress": 0.0033359750765848684
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.23466159091110325,
+          "eef_approach_progress": 0.012613999257819947
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.2690437108710941,
+          "eef_approach_progress": -0.02176812070217088
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.24914976503722308,
+          "eef_approach_progress": -0.0018741748682998827
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.24555019392401498,
+          "eef_approach_progress": 0.0017253962449082227
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.24026408046753353,
+          "eef_approach_progress": 0.007011509701389668
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.26398610852355786,
+          "eef_approach_progress": -0.016710518354634663
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.32094477332946697,
+          "true_progress_delta": -2.2352898143562783e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.24353700806756673,
+          "eef_approach_progress": 0.003738582101356469
+        }
+      ],
+      "candidate_forecast_mse": {
+        "clean": [
+          1.8693629503250122,
+          1.8842650651931763,
+          1.8625205755233765,
+          1.8516013622283936,
+          1.8776880502700806,
+          1.8771051168441772,
+          1.87053382396698,
+          1.8774257898330688
+        ],
+        "clean_bus_cut": [
+          1.8177671432495117,
+          1.828027606010437,
+          1.833729863166809,
+          1.8376691341400146,
+          1.8510262966156006,
+          1.8311185836791992,
+          1.8134230375289917,
+          1.8166790008544922
+        ],
+        "swap_1": [
+          1.7840486764907837,
+          1.7778868675231934,
+          1.8186906576156616,
+          1.8238446712493896,
+          1.8012452125549316,
+          1.778076171875,
+          1.8157947063446045,
+          1.7830461263656616
+        ],
+        "swap_1_bus_cut": [
+          1.8177671432495117,
+          1.828027606010437,
+          1.833729863166809,
+          1.8376691341400146,
+          1.8510262966156006,
+          1.8311185836791992,
+          1.8134230375289917,
+          1.8166790008544922
+        ],
+        "swap_1_control_cut": [
+          1.7840486764907837,
+          1.7778868675231934,
+          1.8186906576156616,
+          1.8238446712493896,
+          1.8012452125549316,
+          1.778076171875,
+          1.8157947063446045,
+          1.7830461263656616
+        ],
+        "swap_5": [
+          1.7414884567260742,
+          1.8064813613891602,
+          1.83424973487854,
+          1.8336507081985474,
+          1.7447377443313599,
+          1.7571438550949097,
+          1.8082339763641357,
+          1.8130820989608765
+        ],
+        "swap_5_bus_cut": [
+          1.8177671432495117,
+          1.828027606010437,
+          1.833729863166809,
+          1.8376691341400146,
+          1.8510262966156006,
+          1.8311185836791992,
+          1.8134230375289917,
+          1.8166790008544922
+        ],
+        "swap_5_control_cut": [
+          1.7414884567260742,
+          1.8064813613891602,
+          1.83424973487854,
+          1.8336507081985474,
+          1.7447377443313599,
+          1.7571438550949097,
+          1.8082339763641357,
+          1.8130820989608765
+        ]
+      },
+      "evaluation_only_real_image_clip_scores": [
+        0.2337946891784668,
+        0.22810500860214233,
+        0.22569741308689117,
+        0.23078222572803497,
+        0.2283322662115097,
+        0.23503288626670837,
+        0.2245572805404663,
+        0.23361898958683014
+      ]
+    },
+    {
+      "task_id": 9,
+      "task": "put the yellow and white mug in the microwave and close it",
+      "initial_sim_sha256": "c20f2d45f7f3e9137753662652b6419aaf014b5077dd245629ccee025fad8638",
+      "initial_image_sha256": "911e1c3941404af425eebf0e1bfd3bc4d51e1ae8e38e5f62a0071a5c3b744b36",
+      "candidate_sha256": "c1aafbc27a9ecdb3b1fa511c3f9562feff54c208481d317133a2050fb75258cd",
+      "goal_texts": {
+        "clean": "put the yellow and white mug in the microwave and close it",
+        "clean_bus_cut": "put the yellow and white mug in the microwave and close it",
+        "swap_1": "put both the alphabet soup and the tomato sauce in the basket",
+        "swap_1_bus_cut": "put both the alphabet soup and the tomato sauce in the basket",
+        "swap_1_control_cut": "put both the alphabet soup and the tomato sauce in the basket",
+        "swap_5": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+        "swap_5_bus_cut": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+        "swap_5_control_cut": "put the white mug on the left plate and put the yellow and white mug on the right plate"
+      },
+      "scores": {
+        "clean": {
+          "global_minmax": [
+            0.2374216914176941,
+            0.2256699800491333,
+            0.2399653196334839,
+            0.23657940328121185,
+            0.21548423171043396,
+            0.21599173545837402,
+            0.22168049216270447,
+            0.22240392863750458
+          ],
+          "reference_scalar": [
+            0.22237280011177063,
+            0.22575777769088745,
+            0.21668773889541626,
+            0.21051689982414246,
+            0.2148813009262085,
+            0.20799800753593445,
+            0.2121436893939972,
+            0.210638165473938
+          ]
+        },
+        "clean_bus_cut": {
+          "global_minmax": [
+            0.21828243136405945,
+            0.21642474830150604,
+            0.2141692042350769,
+            0.22061283886432648,
+            0.21418005228042603,
+            0.2112923264503479,
+            0.20456057786941528,
+            0.2221325784921646
+          ],
+          "reference_scalar": [
+            0.20675039291381836,
+            0.20301051437854767,
+            0.20099562406539917,
+            0.21042095124721527,
+            0.20926079154014587,
+            0.21007703244686127,
+            0.20082494616508484,
+            0.20879361033439636
+          ]
+        },
+        "swap_1": {
+          "global_minmax": [
+            0.20632290840148926,
+            0.21201522648334503,
+            0.20369736850261688,
+            0.21517929434776306,
+            0.2153925597667694,
+            0.20789244771003723,
+            0.2060980647802353,
+            0.22025689482688904
+          ],
+          "reference_scalar": [
+            0.20354078710079193,
+            0.20265589654445648,
+            0.2066163420677185,
+            0.2045123428106308,
+            0.20904970169067383,
+            0.2090909630060196,
+            0.20342789590358734,
+            0.2072591483592987
+          ]
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": [
+            0.21828243136405945,
+            0.21642474830150604,
+            0.2141692042350769,
+            0.22061283886432648,
+            0.21418005228042603,
+            0.2112923264503479,
+            0.20456057786941528,
+            0.2221325784921646
+          ],
+          "reference_scalar": [
+            0.20675039291381836,
+            0.20301051437854767,
+            0.20099562406539917,
+            0.21042095124721527,
+            0.20926079154014587,
+            0.21007703244686127,
+            0.20082494616508484,
+            0.20879361033439636
+          ]
+        },
+        "swap_1_control_cut": {
+          "global_minmax": [
+            0.20632290840148926,
+            0.21201522648334503,
+            0.20369736850261688,
+            0.21517929434776306,
+            0.2153925597667694,
+            0.20789244771003723,
+            0.2060980647802353,
+            0.22025689482688904
+          ],
+          "reference_scalar": [
+            0.20354078710079193,
+            0.20265589654445648,
+            0.2066163420677185,
+            0.2045123428106308,
+            0.20904970169067383,
+            0.2090909630060196,
+            0.20342789590358734,
+            0.2072591483592987
+          ]
+        },
+        "swap_5": {
+          "global_minmax": [
+            0.21655163168907166,
+            0.21189314126968384,
+            0.2040325105190277,
+            0.20487450063228607,
+            0.20096148550510406,
+            0.19939443469047546,
+            0.1994783580303192,
+            0.20495805144309998
+          ],
+          "reference_scalar": [
+            0.20299756526947021,
+            0.20501545071601868,
+            0.20158500969409943,
+            0.20363076031208038,
+            0.201735720038414,
+            0.1973586082458496,
+            0.20261304080486298,
+            0.20531845092773438
+          ]
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": [
+            0.21828243136405945,
+            0.21642474830150604,
+            0.2141692042350769,
+            0.22061283886432648,
+            0.21418005228042603,
+            0.2112923264503479,
+            0.20456057786941528,
+            0.2221325784921646
+          ],
+          "reference_scalar": [
+            0.20675039291381836,
+            0.20301051437854767,
+            0.20099562406539917,
+            0.21042095124721527,
+            0.20926079154014587,
+            0.21007703244686127,
+            0.20082494616508484,
+            0.20879361033439636
+          ]
+        },
+        "swap_5_control_cut": {
+          "global_minmax": [
+            0.21655163168907166,
+            0.21189314126968384,
+            0.2040325105190277,
+            0.20487450063228607,
+            0.20096148550510406,
+            0.19939443469047546,
+            0.1994783580303192,
+            0.20495805144309998
+          ],
+          "reference_scalar": [
+            0.20299756526947021,
+            0.20501545071601868,
+            0.20158500969409943,
+            0.20363076031208038,
+            0.201735720038414,
+            0.1973586082458496,
+            0.20261304080486298,
+            0.20531845092773438
+          ]
+        }
+      },
+      "selected": {
+        "clean": {
+          "global_minmax": 2,
+          "reference_scalar": 1
+        },
+        "clean_bus_cut": {
+          "global_minmax": 7,
+          "reference_scalar": 3
+        },
+        "swap_1": {
+          "global_minmax": 7,
+          "reference_scalar": 5
+        },
+        "swap_1_bus_cut": {
+          "global_minmax": 7,
+          "reference_scalar": 3
+        },
+        "swap_1_control_cut": {
+          "global_minmax": 7,
+          "reference_scalar": 5
+        },
+        "swap_5": {
+          "global_minmax": 0,
+          "reference_scalar": 7
+        },
+        "swap_5_bus_cut": {
+          "global_minmax": 7,
+          "reference_scalar": 3
+        },
+        "swap_5_control_cut": {
+          "global_minmax": 0,
+          "reference_scalar": 7
+        }
+      },
+      "candidate_replays": [
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3236149076827431,
+          "eef_approach_progress": 0.003632520403767714
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.32173632948063935,
+          "eef_approach_progress": 0.005511098605871456
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3258848817494145,
+          "eef_approach_progress": 0.0013625463370963153
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3304832109381166,
+          "eef_approach_progress": -0.0032357828516058063
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3288847076504992,
+          "eef_approach_progress": -0.001637279563988403
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3237877034607426,
+          "eef_approach_progress": 0.0034597246257682124
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.35014514936221447,
+          "eef_approach_progress": -0.022897721275703664
+        },
+        {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 3,
+          "true_progress_initial": -0.988785714131816,
+          "true_progress_final": -0.9887556903271782,
+          "true_progress_delta": 3.0023804637790974e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.31587538597255516,
+          "eef_approach_progress": 0.01137204211395565
+        }
+      ],
+      "candidate_forecast_mse": {
+        "clean": [
+          2.082596778869629,
+          2.079664707183838,
+          2.0784080028533936,
+          2.080732583999634,
+          2.0602619647979736,
+          2.077561378479004,
+          2.098517417907715,
+          2.059945583343506
+        ],
+        "clean_bus_cut": [
+          2.1181282997131348,
+          2.0655574798583984,
+          2.0752081871032715,
+          2.1277408599853516,
+          2.1112637519836426,
+          2.1222283840179443,
+          2.0841383934020996,
+          2.0843119621276855
+        ],
+        "swap_1": [
+          2.1063690185546875,
+          2.05769681930542,
+          2.0871682167053223,
+          2.1158549785614014,
+          2.0948774814605713,
+          2.111859083175659,
+          2.080796480178833,
+          2.087890625
+        ],
+        "swap_1_bus_cut": [
+          2.1181282997131348,
+          2.0655574798583984,
+          2.0752081871032715,
+          2.1277408599853516,
+          2.1112637519836426,
+          2.1222283840179443,
+          2.0841383934020996,
+          2.0843119621276855
+        ],
+        "swap_1_control_cut": [
+          2.1063690185546875,
+          2.05769681930542,
+          2.0871682167053223,
+          2.1158549785614014,
+          2.0948774814605713,
+          2.111859083175659,
+          2.080796480178833,
+          2.087890625
+        ],
+        "swap_5": [
+          2.0199930667877197,
+          2.051959276199341,
+          1.9540303945541382,
+          2.063493490219116,
+          2.0393855571746826,
+          2.0355470180511475,
+          2.0471620559692383,
+          2.067988634109497
+        ],
+        "swap_5_bus_cut": [
+          2.1181282997131348,
+          2.0655574798583984,
+          2.0752081871032715,
+          2.1277408599853516,
+          2.1112637519836426,
+          2.1222283840179443,
+          2.0841383934020996,
+          2.0843119621276855
+        ],
+        "swap_5_control_cut": [
+          2.0199930667877197,
+          2.051959276199341,
+          1.9540303945541382,
+          2.063493490219116,
+          2.0393855571746826,
+          2.0355470180511475,
+          2.0471620559692383,
+          2.067988634109497
+        ]
+      },
+      "evaluation_only_real_image_clip_scores": [
+        0.2539288401603699,
+        0.25433841347694397,
+        0.25331535935401917,
+        0.2582802176475525,
+        0.2585605978965759,
+        0.25512513518333435,
+        0.2585938274860382,
+        0.2511197030544281
+      ]
+    }
+  ]
+}

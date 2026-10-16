@@ -1,0 +1,307 @@
+{
+  "status": "completed_cpu_paired_goal_render_gate",
+  "started_at_utc": "2026-10-15T03:40:02.136332+00:00",
+  "script": {
+    "path": "/home/xhj/WM_Security/scripts/probe_dino_goal_observability.py",
+    "sha256": "9b699440fe039f8187006b81651d5ef8d9e3eb3e25fa04e81084ec27ed85dca4"
+  },
+  "source_setup": {
+    "path": "/home/xhj/WM_Security/runs/dino_metaworld_mujoco330_clean_v1/seed1_clean/setup.npz",
+    "sha256": "dcc58a0410049250eb3ec0ac4f24bd6528b4294f99534f301cf1b66ec31acfde"
+  },
+  "source_image": {
+    "path": "/home/xhj/WM_Security/runs/dino_metaworld_mujoco330_clean_v1/seed1_clean/initial.png",
+    "sha256": "cf9f05b207af47b94576d1046ace6dc7f2b8fce4cb0e6c018edd3507810dbdb5"
+  },
+  "protocol": {
+    "fixed_goals_before_rendering": {
+      "goal_a": [
+        -0.08,
+        0.84,
+        0.12
+      ],
+      "goal_b": [
+        0.08,
+        0.86,
+        0.24
+      ]
+    },
+    "source_seed": 1,
+    "operation": "Restore cached physical fields; change only target and its native visible goal site; render original/A/B/original without any policy step",
+    "goal_legality": "Native goal_space and planar object-goal distance >=0.15",
+    "restore_mismatch_rule": "If historical pixels do not match, label the reconstructed state explicitly; never claim exact archived observation reproduction",
+    "failure_rule": "Record failure and stop; no installation, dependency repair, alternate renderer or retries",
+    "service_scope": "New hypothetical client/service split, not an existing deployment"
+  },
+  "activity": {
+    "model_loads": 0,
+    "encoder_calls": 0,
+    "world_model_calls": 0,
+    "policy_calls": 0,
+    "explicit_environment_step_calls": 0,
+    "explicit_environment_reset_calls": 0,
+    "training_updates": 0,
+    "api_requests": 0,
+    "dependency_installs": 0,
+    "constructor_reset_note": "Native goal-observable environment construction may reset/simulate internally; all paired measurements follow cached-state restoration and use render/forward only"
+  },
+  "input_boundary": {
+    "actual_raw_model_observation": "visual RGB plus four-dimensional proprio=state[:4]; full 39D environment state is not supplied",
+    "actual_rollout_interface": "model.unroll(z_ctxt, act_suffix): encoded visual/proprio context plus proposed action suffix; no goal argument",
+    "coordinate_metadata": "Native goal-observable state[-3:] exposes target locally; this metadata is not automatically available to a forecast service",
+    "goal_encoder": "A private-goal split would also need local goal encoding; sending goal image to a remote encoder directly reveals it"
+  },
+  "native_mean_query_source_fact": {
+    "path": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+    "lines": [
+      303,
+      323,
+      333
+    ],
+    "finding": "Each of 15 CEM iterations calls unroll on the 300-candidate batch and then on its updated mean; the last mean query contains the returned first three macro actions. This is source inspection, not a measured query transcript.",
+    "privacy_limit": "Do not count the selected-action prefix in that mean query as information beyond the selected actions themselves"
+  },
+  "limits": [
+    "One fixed development physical state and two preselected goals, not independent samples or a task-capability test",
+    "Raw-pixel dependence only: no latent features, goal decoding, classifier accuracy, conditional leakage, attack success or task harm measured",
+    "A target is a native visible site and reward parameter; this probe does not hide or remove it"
+  ],
+  "runtime": {
+    "python": "3.11.13 (main, Sep 18 2025, 19:46:39) [Clang 20.1.4 ]",
+    "interpreter": "/home/xhj/WM_Security/.venv-jepa-native/bin/python",
+    "mujoco": "3.3.0",
+    "mujoco_module": "/home/xhj/WM_Security/.deps/dino_mujoco330/mujoco/__init__.py",
+    "renderer": "OSMesa",
+    "torch": "2.6.0+cu124"
+  },
+  "marker": {
+    "site_id": 0,
+    "rgba": [
+      0.800000011920929,
+      0.0,
+      0.0,
+      1.0
+    ],
+    "size": [
+      0.02,
+      0.005,
+      0.005
+    ],
+    "visibility_modified": false
+  },
+  "cached_integrator_fields_exact": {
+    "qpos": true,
+    "qvel": true,
+    "qacc_warmstart": true,
+    "ctrl": true,
+    "mocap_pos": true,
+    "mocap_quat": true
+  },
+  "goal_legality": {
+    "goal_a": {
+      "goal": [
+        -0.08,
+        0.84,
+        0.12
+      ],
+      "in_native_goal_space": true,
+      "planar_distance_from_source_object": 0.24660681942811896,
+      "passed": true
+    },
+    "goal_b": {
+      "goal": [
+        0.08,
+        0.86,
+        0.24
+      ],
+      "in_native_goal_space": true,
+      "planar_distance_from_source_object": 0.21955673717394317,
+      "passed": true
+    }
+  },
+  "state_origin": {
+    "mode": "cached_physics_restored_exact_historical_pixels",
+    "historical_initial_pixels_exact": true,
+    "historical_initial_proprio_exact": true,
+    "historical_pixel_max_absolute_difference": 0,
+    "note": "If pixels differ, the render is a reconstructed cached integration state, not an asserted exact historical observation"
+  },
+  "paired_pixel_comparison": {
+    "changed_pixels": 131,
+    "total_pixels": 50176,
+    "changed_pixel_fraction": 0.002610809948979592,
+    "changed_channel_values": 393,
+    "max_absolute_channel_difference": 224,
+    "mean_absolute_channel_difference": 0.2022813031462585,
+    "changed_pixel_bbox_yx_inclusive": [
+      [
+        91,
+        52
+      ],
+      [
+        111,
+        81
+      ]
+    ],
+    "raw_pixels_depend_on_target": true
+  },
+  "restoration": {
+    "original_pixels_exact": true,
+    "all_model_sites_exact": true,
+    "target_exact": true
+  },
+  "renders": {
+    "original": {
+      "goal": [
+        -0.09448817735138633,
+        0.8753513108674806,
+        0.18453582830481957
+      ],
+      "physical_exact_to_baseline_before_and_after_render": {
+        "qpos": true,
+        "qvel": true,
+        "qacc_warmstart": true,
+        "ctrl": true,
+        "mocap_pos": true,
+        "mocap_quat": true,
+        "time": true,
+        "object_position": true,
+        "tcp": true,
+        "previous_observation": true,
+        "current_proprio": true
+      },
+      "state_first4_actual_proprio": [
+        0.004601670429110527,
+        0.6010369658470154,
+        0.1949342042207718,
+        1.0
+      ],
+      "state_last3_local_target": [
+        -0.09448817372322083,
+        0.8753513097763062,
+        0.18453583121299744
+      ],
+      "pixel_artifact": {
+        "path": "/home/xhj/WM_Security/runs/dino_goal_observability_20261015/original.png",
+        "sha256": "cf9f05b207af47b94576d1046ace6dc7f2b8fce4cb0e6c018edd3507810dbdb5"
+      }
+    },
+    "goal_a": {
+      "goal": [
+        -0.08,
+        0.84,
+        0.12
+      ],
+      "physical_exact_to_baseline_before_and_after_render": {
+        "qpos": true,
+        "qvel": true,
+        "qacc_warmstart": true,
+        "ctrl": true,
+        "mocap_pos": true,
+        "mocap_quat": true,
+        "time": true,
+        "object_position": true,
+        "tcp": true,
+        "previous_observation": true,
+        "current_proprio": true
+      },
+      "state_first4_actual_proprio": [
+        0.004601670429110527,
+        0.6010369658470154,
+        0.1949342042207718,
+        1.0
+      ],
+      "state_last3_local_target": [
+        -0.07999999821186066,
+        0.8399999737739563,
+        0.11999999731779099
+      ],
+      "pixel_artifact": {
+        "path": "/home/xhj/WM_Security/runs/dino_goal_observability_20261015/goal_a.png",
+        "sha256": "009553b19d7652d3fbc960c49248016f3afc9cd3a2c8bbcf40a4476977b36379"
+      }
+    },
+    "goal_b": {
+      "goal": [
+        0.08,
+        0.86,
+        0.24
+      ],
+      "physical_exact_to_baseline_before_and_after_render": {
+        "qpos": true,
+        "qvel": true,
+        "qacc_warmstart": true,
+        "ctrl": true,
+        "mocap_pos": true,
+        "mocap_quat": true,
+        "time": true,
+        "object_position": true,
+        "tcp": true,
+        "previous_observation": true,
+        "current_proprio": true
+      },
+      "state_first4_actual_proprio": [
+        0.004601670429110527,
+        0.6010369658470154,
+        0.1949342042207718,
+        1.0
+      ],
+      "state_last3_local_target": [
+        0.07999999821186066,
+        0.8600000143051147,
+        0.23999999463558197
+      ],
+      "pixel_artifact": {
+        "path": "/home/xhj/WM_Security/runs/dino_goal_observability_20261015/goal_b.png",
+        "sha256": "55958d4d3e9dc2bc1a59a0a81b6c39c493a8a1eafe94a283b94b210896395890"
+      }
+    },
+    "restored": {
+      "goal": [
+        -0.09448817735138633,
+        0.8753513108674806,
+        0.18453582830481957
+      ],
+      "physical_exact_to_baseline_before_and_after_render": {
+        "qpos": true,
+        "qvel": true,
+        "qacc_warmstart": true,
+        "ctrl": true,
+        "mocap_pos": true,
+        "mocap_quat": true,
+        "time": true,
+        "object_position": true,
+        "tcp": true,
+        "previous_observation": true,
+        "current_proprio": true
+      },
+      "state_first4_actual_proprio": [
+        0.004601670429110527,
+        0.6010369658470154,
+        0.1949342042207718,
+        1.0
+      ],
+      "state_last3_local_target": [
+        -0.09448817372322083,
+        0.8753513097763062,
+        0.18453583121299744
+      ],
+      "pixel_artifact": {
+        "path": "/home/xhj/WM_Security/runs/dino_goal_observability_20261015/restored.png",
+        "sha256": "cf9f05b207af47b94576d1046ace6dc7f2b8fce4cb0e6c018edd3507810dbdb5"
+      }
+    }
+  },
+  "paired_observations": {
+    "path": "/home/xhj/WM_Security/runs/dino_goal_observability_20261015/paired_observations.npz",
+    "sha256": "b8b07b91e0b0e6759881e687d1da127bc454fdb76d706068e881f1c2286820d6"
+  },
+  "decision": {
+    "raw_pixel_goal_blindness": "rejected_for_this_pair",
+    "latent_only_service_goal_privacy": "unmeasured_not_rejected_by_pixel_difference",
+    "native_query_leakage_attack": "not_tested",
+    "task_capability_for_new_goals": "not_tested"
+  },
+  "cuda_initialized": false,
+  "finished_at_utc": "2026-10-15T03:40:06.723841+00:00"
+}

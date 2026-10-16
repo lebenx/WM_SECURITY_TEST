@@ -1,0 +1,53 @@
+{
+  "source": "runs/tdmpc_action_search_v0",
+  "selection": {
+    "selected": 5,
+    "max_error": 6,
+    "gate_passed": false,
+    "minimum_control_return": 954.8059848621488,
+    "selected_return": 927.9184417687356,
+    "gap": 26.887543093413115,
+    "selection_locked_before_test": true
+  },
+  "updates": [
+    120,
+    300
+  ],
+  "seed": 12,
+  "output": "runs/tdmpc_update_dose_v0",
+  "source_plan": {
+    "checkpoint": "models/tdmpc2/mt30-48M.pt",
+    "reference": "runs/tdmpc_clean_gate_v0/walker-walk_11_mpc.pt",
+    "source_task": "walker-walk-backwards",
+    "victim_task": "walker-walk",
+    "source_seed": 21,
+    "eval_seeds": [
+      12,
+      13
+    ],
+    "actions": 300,
+    "updates": 40,
+    "population": 8,
+    "generations": 2,
+    "output": "runs/tdmpc_action_search_v0",
+    "search_algorithm": "two-generation diagonal CEM over24 legal waveform parameters; top3 elites",
+    "selection": "Maximize clean-reference-model regret of new trajectory choices; centered-value MSE breaks ties.",
+    "max_error_baseline": "Largest pre-update native consistency loss from the identical candidate bank.",
+    "permissions": "White-box model and a clean reference victim trajectory; private reference source simulator. No state/reward/task-ID edits, model overwrite, or evaluation-return access during selection.",
+    "reference_simulator_action_budget": 4800,
+    "deployed_action_budget_per_arm": 300,
+    "learning": "40 or fewer calls to original full update, fresh Adam/scale per candidate, batch32, original lr. Offline checkpoint adaptation is a researcher-defined deployment setting.",
+    "evaluation": "Original MPC,500 actual steps; seeds excluded from search selection. Same task family, not a population ASR.",
+    "learning_seed": 31,
+    "search_seed": 4401
+  },
+  "files": {
+    "benign": "runs/tdmpc_action_search_v0/benign_deployed_data.pt",
+    "random": "runs/tdmpc_action_search_v0/random_deployed_data.pt",
+    "max_error": "runs/tdmpc_action_search_v0/candidate_06.pt",
+    "targeted": "runs/tdmpc_action_search_v0/candidate_05.pt"
+  },
+  "scope": "Fixed action curricula from completed search. Only update exposure changes. Fresh learner per arm/dose; original full update at batch32 and lr3e-4. One development target reset, no new search or population claim.",
+  "native_schedule_source": "vendor/tdmpc2/tdmpc2/trainer/online_trainer.py:115-122",
+  "update_exposure_note": "300 updates for300 new physical transitions is a1:1 count ratio. This is not the upstream replay-buffer protocol: only the recent source contribution is replayed here."
+}

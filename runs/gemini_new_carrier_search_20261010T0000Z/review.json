@@ -1,0 +1,14 @@
+{
+  "verdict": "REJECT",
+  "novelty_score": 4,
+  "one_sentence_claim": "In latent world models relying on recurrent state transitions under model-predictive control, counterfactual branch consistency across alternative imaginary actions cannot be guaranteed by trajectory predictive sufficiency alone, enabling targeted policy diversion without inducing observable trajectory prediction error.",
+  "operation": "Constructing counterfactual branch perturbations during parallel MPPI rollout evaluation that shift relative value ranking across candidate action sequences while maintaining zero-error prediction on the realized execution path.",
+  "carrier": "TD-MPC2 (`tdmpc2/models/world_model.py`, class `WorldModel`, specifically `predict` and `reward` methods during MPPI evaluation in `tdmpc2/trainer/online_trainer.py`)",
+  "exact_gate": "Counterfactual Commutativity Gate: measuring whether parallel branch latent evaluations preserve relative ordering under unselected action swaps without violating the forward latent consistency metric $\\|z_{t+1} - h(z_t, a_t)\\|_2 \\le \\epsilon$.",
+  "controls": {
+    "positive_control": "Latent state injection directly optimizing planner divergence via gradient-based perturbation on $z_0$.",
+    "falsifying_control": "Applying the same branch permutation to purely decoupled linear dynamics or single-trajectory shooting where branching aliasing trivially reduces to standard single-step rollout error."
+  },
+  "prior_art": "Reducible to known adversarial sensitivity in latent planner sampling (e.g., adversarial trajectory sampling against MPPI/CEM) and counterfactual rollout consistency regularization (e.g., Buesing et al., 2018; Zhang et al., 2021).",
+  "decision": "REJECT. Does not isolate an invariant structurally distinct from latent adversarial perturbation and planner-coupled sampling sensitivity. Fails the requirement for a genuinely new security invariant beyond known rollout and sampling dynamics."
+}

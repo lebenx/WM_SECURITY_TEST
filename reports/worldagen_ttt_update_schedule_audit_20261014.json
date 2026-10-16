@@ -1,0 +1,280 @@
+{
+  "schema_version": 1,
+  "kind": "source_audit_and_cpu_scalar_scheduler_reproduction_not_new_scientific_experiment",
+  "created_at_utc": "2026-10-14T06:13:59.803636+00:00",
+  "scope": "Read-only source audit plus CPU scalar optimizer semantics; no WorldAgen model, GPU, simulator, attack or training-dose expansion executed.",
+  "upstream": {
+    "repository": "https://github.com/mll-lab-nu/WorldAgen",
+    "commit": "1b66dabda8264576f737afa25daae3d42db2cbfb",
+    "git_status_porcelain": ""
+  },
+  "sources": [
+    {
+      "path": "vendor/WorldAgen/scripts/calvin/eval_ttt.sh",
+      "sha256": "0eba762b6377503909bbe1734c44025e91a383e8a0fa1ad41253d794574eb1ba"
+    },
+    {
+      "path": "vendor/WorldAgen/scripts/libero/eval_ttt.sh",
+      "sha256": "a0f2a6afb729c83fa42379f6a223ac7b59316f1cfd1b8224b894ba7bb9680d70"
+    },
+    {
+      "path": "vendor/WorldAgen/test_time_training/ttt.py",
+      "sha256": "a03c6b29dad11f16c8d6126533018e273f4ef410fe4856ebd08dbb8ce49f053c"
+    },
+    {
+      "path": "vendor/WorldAgen/test_time_training/lora.py",
+      "sha256": "06dd0aa6fb6bc3691d94c7a6543cc8732263fd6c750e234a4996cff97bf78110"
+    },
+    {
+      "path": "vendor/WorldAgen/utils/arguments_utils.py",
+      "sha256": "c655144007205ae217214cc8e609cacf78a72aba4012a8d81195c3c467025512"
+    },
+    {
+      "path": "vendor/WorldAgen/utils/eval_utils_calvin.py",
+      "sha256": "332f15858dd0ead1fd4ec72f8a02dba3504a5b96961609d34dbb1a26911b126a"
+    },
+    {
+      "path": "vendor/WorldAgen/utils/eval_utils_libero.py",
+      "sha256": "adc740ce44ae496504339c8c6618b62e7ca20f129bcfb435906f0c29ad89485b"
+    },
+    {
+      "path": "vendor/WorldAgen/utils/all_lang.json",
+      "sha256": "e41a0391e9f1771a1e7afcc2a5c4bd35fd25ff6949976efa04afe37c2dd41465"
+    },
+    {
+      "path": "scripts/pilot_worldagen_cached_metadata_ttt.py",
+      "sha256": "2700d2df908a93c5f2a6ad03cb41efdfeffd7571b96938d6da8f349d178c7619"
+    },
+    {
+      "path": "scripts/pilot_worldagen_forecast_ttt_task.py",
+      "sha256": "ea6d6f8d0ace782bc568c6fde440239ab81767ad8f73a5106a29e99dd40c2742"
+    }
+  ],
+  "runtime": {
+    "torch": "2.2.0+cu121",
+    "transformers": "4.52.4",
+    "cpu_only": true,
+    "cuda_initialized": false,
+    "declared_upstream_versions": {
+      "torch": "2.2.0+cu121",
+      "transformers": "4.52.0"
+    },
+    "version_limit": "Scalar reproduction used installed transformers 4.52.4, not a separately executed 4.52.0 environment. Scheduler source and installed source hashes are recorded."
+  },
+  "scheduler_sources": [
+    {
+      "path": "/home/xhj/WM_Security/.venv-worldagen/lib/python3.11/site-packages/transformers/optimization.py",
+      "sha256": "4331315559d1d4e32bacda5c1fa3b1a3e9c65c7c33afe1278c0578b5e0ef3a09",
+      "symbol": "get_cosine_schedule_with_warmup_lr_lambda",
+      "line": 324
+    },
+    {
+      "path": "/home/xhj/WM_Security/.venv-worldagen/lib/python3.11/site-packages/torch/optim/lr_scheduler.py",
+      "sha256": "094871b05b83f57fdecad4722b212c48ff1caf47a806629249b268744b90f70b",
+      "symbol": "LRScheduler._initial_step",
+      "line": 87
+    }
+  ],
+  "cpu_scalar_reproductions": [
+    {
+      "case": "released_calvin_launch_default",
+      "device": "cpu",
+      "dtype": "torch.float32",
+      "optimizer": "AdamW",
+      "configured_lr": 0.0005,
+      "weight_decay": 0.01,
+      "gradient": [
+        0.1
+      ],
+      "num_warmup_steps": 204,
+      "num_training_steps": 204,
+      "parameter_before": [
+        1.0
+      ],
+      "lr_before_scheduler_construction": 0.0005,
+      "lr_after_scheduler_construction": 0.0,
+      "first_optimizer_step_lr": 0.0,
+      "parameter_after_first_optimizer_step": [
+        1.0
+      ],
+      "parameter_unchanged_exact": true,
+      "lr_after_optimizer_step_before_scheduler_step": 0.0,
+      "lr_after_scheduler_step": 2.450980392156863e-06,
+      "optimizer_step_count": 1,
+      "cuda_initialized": false
+    },
+    {
+      "case": "libero_shell_with_calvin_trainer_hypothesis_only",
+      "device": "cpu",
+      "dtype": "torch.float32",
+      "optimizer": "AdamW",
+      "configured_lr": 0.0005,
+      "weight_decay": 0.01,
+      "gradient": [
+        0.1
+      ],
+      "num_warmup_steps": 0,
+      "num_training_steps": 0,
+      "parameter_before": [
+        1.0
+      ],
+      "lr_before_scheduler_construction": 0.0005,
+      "lr_after_scheduler_construction": 0.0005,
+      "first_optimizer_step_lr": 0.0005,
+      "parameter_after_first_optimizer_step": [
+        0.9994949698448181
+      ],
+      "parameter_unchanged_exact": false,
+      "lr_after_optimizer_step_before_scheduler_step": 0.0005,
+      "lr_after_scheduler_step": 0.0,
+      "optimizer_step_count": 1,
+      "cuda_initialized": false
+    },
+    {
+      "case": "current_reconstructed_pilot_no_scheduler",
+      "device": "cpu",
+      "dtype": "torch.float32",
+      "optimizer": "AdamW",
+      "configured_lr": 0.0005,
+      "weight_decay": 0.01,
+      "gradient": [
+        0.1
+      ],
+      "num_warmup_steps": null,
+      "num_training_steps": null,
+      "parameter_before": [
+        1.0
+      ],
+      "lr_before_scheduler_construction": 0.0005,
+      "lr_after_scheduler_construction": 0.0005,
+      "first_optimizer_step_lr": 0.0005,
+      "parameter_after_first_optimizer_step": [
+        0.9994949698448181
+      ],
+      "parameter_unchanged_exact": false,
+      "lr_after_optimizer_step_before_scheduler_step": 0.0005,
+      "lr_after_scheduler_step": null,
+      "optimizer_step_count": 1,
+      "cuda_initialized": false
+    }
+  ],
+  "released_calvin_default": {
+    "launch": "vendor/WorldAgen/scripts/calvin/eval_ttt.sh:7",
+    "task_count_from_all_lang_json": 34,
+    "ttt_num_samples": 34,
+    "ttt_sample_repeat": 6,
+    "selected_cache_windows": 204,
+    "ttt_batch_size": 1,
+    "generic_batch_size": 1,
+    "loader_microbatches": 204,
+    "window_length": 16,
+    "action_chunk_length": 5,
+    "predicted_chunks_per_window": 3,
+    "forecast_transitions_per_epoch": 612,
+    "ttt_epochs": 1,
+    "gradient_accumulation": 204,
+    "optimizer_step_calls": 1,
+    "lora_rank": 128,
+    "lora_alpha": 32,
+    "lora_dropout": 0,
+    "learning_rate_configured": 0.0005,
+    "warmup_epochs": 1,
+    "scheduler_warmup_steps": 204,
+    "scheduler_total_training_steps": 204,
+    "first_optimizer_step_effective_lr_in_installed_runtime": 0.0,
+    "notes": [
+      "Default assumes fresh complete sampler output and unchanged launch environment variables.",
+      "Generic --gradient_accumulation_steps 1 and --num_epochs 20 are not the TTT accumulation and epoch counts.",
+      "Gradient is clipped after each microbatch; loader shuffles, making order material.",
+      "The warmup/total scheduler counts are based on minibatches while scheduler.step runs only after optimizer.step.",
+      "Only LoRA parameters are trainable; one zero-LR optimizer call updates optimizer state but not parameters."
+    ]
+  },
+  "cache_and_reset": {
+    "references": [
+      "vendor/WorldAgen/test_time_training/ttt.py:69",
+      "vendor/WorldAgen/test_time_training/ttt.py:139",
+      "vendor/WorldAgen/test_time_training/ttt.py:158",
+      "vendor/WorldAgen/test_time_training/ttt.py:208",
+      "vendor/WorldAgen/test_time_training/ttt.py:284",
+      "vendor/WorldAgen/utils/eval_utils_calvin.py:141",
+      "vendor/WorldAgen/utils/eval_utils_calvin.py:406"
+    ],
+    "sampler": "Loops all 34 all_lang tasks, resets same initial state for each, produces 6 cached windows each; loader selects sorted first samples*repeat files unless all-data flag. Existing cache directory is not cleared.",
+    "text": "Policy sampling uses task language, but saved adaptation text is literal no lang. Dataset reads cached text and trainer passes it directly to forward.",
+    "reset": "Default train_once rebuilds model from checkpoint and injects PEFT adapters at first evaluation sequence only; subsequent sequences reuse adapted model. Optional ttt_train_every_test_sample rebuilds each sequence. wrapper.reset clears history queues only; init_model is a reference, not a backup."
+  },
+  "libero_release_gap": {
+    "launcher": "vendor/WorldAgen/scripts/libero/eval_ttt.sh:7",
+    "declared_lora_rank": 64,
+    "declared_windows": 30,
+    "declared_ttt_epochs": 1,
+    "declared_ttt_batch_size": 1,
+    "declared_generic_batch_size": 256,
+    "declared_lr": 0.0005,
+    "test_text_flag": "--ttt_use_test_text_instruction at line 73",
+    "missing_module": "vendor/WorldAgen/test_time_training/ttt_libero.py",
+    "module_exists": false,
+    "import_reference": "vendor/WorldAgen/utils/eval_utils_libero.py:459",
+    "limitations": [
+      "Cannot verify actual LIBERO scheduler, gradient accumulation or adaptation text behavior without its dedicated trainer.",
+      "CALVIN no-lang canonicalization does not establish that the missing LIBERO trainer uses no-lang; LIBERO launch explicitly requests test text.",
+      "Using generic batch_size256 with CALVIN trainer would yield warmup0 and first LR5e-4 for 30 windows, but this is a reconstruction hypothesis, not observed official LIBERO execution."
+    ]
+  },
+  "current_pilot": {
+    "source": "scripts/pilot_worldagen_cached_metadata_ttt.py:507",
+    "update_function": "scripts/pilot_worldagen_forecast_ttt_task.py:335",
+    "windows": 30,
+    "chunks_per_window": 2,
+    "forecast_transitions_per_epoch": 60,
+    "lora_rank": 64,
+    "lora_alpha": 32,
+    "lora_dropout": 0,
+    "optimizer_updates": 1,
+    "effective_lr": 0.0005,
+    "scheduler": "None; explicitly one non-warmup AdamW update",
+    "gradient_clip": 0.1,
+    "clip_after_each_microbatch": true,
+    "window_order": "Fixed rather than official shuffled loader",
+    "reset": "Same initial adapter restored before every paired condition",
+    "implementation": "Explicit LinearLoRA and frozen-encoder eval modes, not official PEFT execution; immutable fixed clean-trajectory data instead of official exploratory sampler",
+    "already_frozen_run_records": [
+      {
+        "summary_path": "runs/worldagen_cached_metadata_camera128_health_v1/summary.json",
+        "summary_sha256": "caa92d53cf614d06530d4b429a602e90b97a46599d900fcd3be445be11a7fcf8",
+        "condition": "Frozen",
+        "optimizer_updates": 0,
+        "microbatches": 0
+      },
+      {
+        "summary_path": "runs/worldagen_cached_metadata_camera128_health_v1/summary.json",
+        "summary_sha256": "caa92d53cf614d06530d4b429a602e90b97a46599d900fcd3be445be11a7fcf8",
+        "condition": "NoLangTTT",
+        "optimizer_updates": 1,
+        "microbatches": 30
+      },
+      {
+        "summary_path": "runs/worldagen_cached_metadata_camera128_swap_v1/summary.json",
+        "summary_sha256": "a4eccc84c7cf3649d18b86af3eee790ac256530ad3c34ddfd4b8ab1e5e4330a0",
+        "condition": "SwapTTT",
+        "optimizer_updates": 1,
+        "microbatches": 30
+      }
+    ]
+  },
+  "threat_boundary": {
+    "assumed_capability": "Write only pretokenized cache text metadata while physical observations, actions, labels, policy Goal and initialization remain fixed.",
+    "not_proven": [
+      "Attacker access to a deployment cache",
+      "Native online policy-Goal swap changes CALVIN adaptation text",
+      "Official LIBERO normal adaptation text convention",
+      "Decision harm or Bus-Cut repair from this source audit"
+    ]
+  },
+  "decision": {
+    "dose_expansion": "NO-GO: no source basis to increase epochs/updates and call it correction to native dose. 204 windows means one accumulated optimizer step, not 204 optimizer steps.",
+    "independent_issue": "GO for separate scheduler clarification/reproduction audit: installed default CALVIN first update is zero LR. Any corrected normal-adaptation implementation must be separately labeled, preregistered and health-tested independently of attack results.",
+    "existing_result_status": "Preserve one-step5e-4 LIBERO reconstruction results and their hashes; do not relabel them exact CALVIN or missing LIBERO trainer reproduction."
+  }
+}

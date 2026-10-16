@@ -1,0 +1,74 @@
+{
+  "status": "completed_no_downstream_return_loss",
+  "date": "2026-10-08",
+  "hypothesis": "Another agent can steer a victim through prediction queries that rewrite shared planner state, without changing learned model weights or physical victim state.",
+  "scope": "Researcher-defined sharing of an upstream single-agent planner instance; no native multi-tenant deployment claim.",
+  "run": "runs/tdmpc_query_interference_v0",
+  "entry_point": "scripts/pilot_tdmpc_query_interference.py",
+  "upstream": "https://github.com/nicklashansen/tdmpc2",
+  "commit": "e9f59321933cbc8e11a002b842adc7d4ffae8ff1",
+  "checkpoint_sha256": "bacb9ae1891a9b03dc3942a287080beb573220ea9d0263c5efd7a94a5c2ec419",
+  "source_task": "walker-walk-backwards",
+  "source_trajectory": "runs/tdmpc_adaptation_screen_v1/mpc_data.pt",
+  "target_task": "walker-walk",
+  "seed": 11,
+  "result": {
+    "status": "completed",
+    "results": [
+      {
+        "condition": "clean",
+        "task": "walker-walk",
+        "seed": 11,
+        "steps": 500,
+        "full_episode": true,
+        "return": 972.4091031141579,
+        "attacker_queries": 0,
+        "mean_query_warm_start_change_l2": 0,
+        "wall_seconds": 19.428479885216802
+      },
+      {
+        "condition": "shared_planner",
+        "task": "walker-walk",
+        "seed": 11,
+        "steps": 500,
+        "full_episode": true,
+        "return": 973.1084737386554,
+        "attacker_queries": 500,
+        "mean_query_warm_start_change_l2": 2.603639450788498,
+        "wall_seconds": 38.59717526799068
+      },
+      {
+        "condition": "restore_victim_warm_start",
+        "task": "walker-walk",
+        "seed": 11,
+        "steps": 500,
+        "full_episode": true,
+        "return": 972.4091031141579,
+        "attacker_queries": 500,
+        "mean_query_warm_start_change_l2": 2.756126492023468,
+        "wall_seconds": 38.49188933474943
+      }
+    ],
+    "shared_planner_return_drop": -0.6993706244975328,
+    "effect_gate_passed": false,
+    "restoration_exactly_reproduces_clean": true,
+    "model_and_policy_sha256_before": "ed703fcb518e49a48c1a7379c1f9a3b9b6d1edeee82e6cea679e528b324ca4fe",
+    "model_and_policy_sha256_after": "ed703fcb518e49a48c1a7379c1f9a3b9b6d1edeee82e6cea679e528b324ca4fe",
+    "interpretation": "Single development episode under explicit unsafe sharing assumption. State changes alone are not attack success. No learning, adversarial optimization, native multi-tenant deployment, generality or novelty claim."
+  },
+  "api_requests": 0,
+  "training_steps": 0,
+  "episode_wall_seconds": 96.51754448795691,
+  "decision": "Retire this fixed query-interleaving curriculum. The state path exists but causes no return loss on the native clean-capable walker episode. No optimized attack, second-task expansion, or broad novelty claim is warranted by this result.",
+  "limits": [
+    "One development seed and target; no estimate of population robustness.",
+    "Sharing a single-agent planner is researcher-defined and does not establish a vulnerability in an advertised multi-tenant service.",
+    "The restoration arm is a causal intervention on the victim warm start, not a complete implementation of per-tenant planning.",
+    "The fixed attacker queries cycle real recorded backward-walking observations; no adaptive adversarial query search was run."
+  ],
+  "additional_native_path_check": {
+    "source": "vendor/WorldEvolver/src/world_model/modules/selective_foresight.py",
+    "finding": "The confidence history is collected but the gate threshold is fixed. Query-history poisoning of an adaptive confidence threshold is not supported by this implementation. Source inspection only, no model test."
+  },
+  "report_note_cn": "只读规划查询候选完成短测：在研究者定义的共用单个 TD-MPC2 规划器服务中，每次受害者行动前插入一次反向行走历史观察的规划查询，共 500 次。正常回报 972.41，干扰后 973.11，没有下降；查询会改变热启动方案，但未造成任务损失。查询前后隔离随机数消耗，恢复受害者热启动方案后，全部观察、动作、奖励与正常轨迹逐项完全相同，世界模型与策略张量哈希也保持相同。三个完整 500 步回合的推理约 97 秒，训练和 API 调用均为零。这是单种子开发短测，不能外推鲁棒性，也不能称为原生多租户系统漏洞；停止扩展这条课程。"
+}

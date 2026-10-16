@@ -1,0 +1,4225 @@
+{
+  "status": "all_eligible_predictions_written_before_existing_outcome_join",
+  "gate_commit": "/home/xhj/WM_Security/runs/cosmos_action_representation_cuda_gate_v1/gate_commit.json",
+  "gate_commit_sha256": "021f2af662cbdfe07c5cec41a587607fde3e384b199918ccfc7ce8146b51bfbb",
+  "windows": [
+    {
+      "source": {
+        "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_000/snapshot.json",
+        "snapshot_sha256": "98636feee820825cbae1a087f7bf31b3e36e07615327df459db30295a10c0cda",
+        "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+        "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+        "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_000/observation.npz",
+        "observation_npz_sha256": "74fd96c4696a4f13b734782f79fc970e496bd78f4b966073afbe79c57a965231",
+        "state_sha256": "93c40df5ea37259059c519f3b87ee98025f5f4b1d1a372b0a9f27d6f0bb413d6",
+        "array_sha256": {
+          "agentview_image": "3a60ea1682a7e20c4e331b48af23f080ec59b311f815619bf019760a66f694b3",
+          "robot0_eye_in_hand_image": "0744a7cbdd174de69f9386284f247bfc28f5175bbbf9f832d797824eaf7ef69a",
+          "robot0_gripper_qpos": "1fc07a67df509d0310a943c8a04449a6add0ab791dfc9d2213a863975ada4c16",
+          "robot0_eef_pos": "7ff61b9cdb910bc99545fcce17defcc55c868efc5928fb6cf73dde1c671cf766",
+          "robot0_eef_quat": "acdb51bfe04a435d381b630c520bf6979db2d54a355845f739909b7ea3b32dba",
+          "sim_state": "9f052cf873bf9088e0f42155b5712cc524370bf5ebdcd8b23ecbc0a84ba20fa5"
+        },
+        "prefix_steps": 0,
+        "protocol": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "init_id": 0,
+          "seed": 31,
+          "environment_seed": 0,
+          "settle_steps": 10,
+          "max_steps": 300,
+          "original_goal": "open the middle drawer of the cabinet"
+        },
+        "source_checkpoint_provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          }
+        },
+        "sim_state_used_as_model_input": false,
+        "input_contract_sha256": "9a6a9806032752f140a5be58bc21f90821685ca0c38310ff9ce483aa8a976f9b",
+        "inference_provenance": {
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_cache_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "source_sha256": {
+            "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          }
+        }
+      },
+      "ranking_json": "/home/xhj/WM_Security/runs/cosmos_counterfactual_ranking_v1/prefix_000/ranking.json",
+      "ranking_sha256": "a533201ca6c37467172d81bc4dd68981d8893d98799cb7932369d2c35c16defe",
+      "conditions": {
+        "clean_raw": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.3293711841106415,
+              "future_audit": {
+                "input_latent_sha256": "80c6f0b7140afafeb8ac194549d85f84b8b3f29f128a994ccc5f3f5cd814e5bc",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "fb23ccc1bf05cd2cff97838069ddf18cc545b558be95c24d080f3098c999179b",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "9b365755886b66ae865c02d3e58365f66c180d3c6ffb0f435a26bbca5c2d2708",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "2d36ad86c52eb430f09edab736923d08a08d0571d86ace8fab22abce51bfda55",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_000/clean_raw/candidate_00_future.pt",
+                "file_sha256": "91e38791c4dab9b2f193884a30d43987a65a523c4b0aa6991ce05a824b424f8d",
+                "tensor_sha256": "9b365755886b66ae865c02d3e58365f66c180d3c6ffb0f435a26bbca5c2d2708",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_000/clean_raw/candidate_00_value.pt",
+                "file_sha256": "234cf2d3477f7f84a414c2884f430faee04586c0456042920b82ab71e9f5239f",
+                "tensor_sha256": "b0a811b5252651392db947119bf018b38f6a7cfc7bbb795611484b95150a7e91",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_000/clean_raw/candidate_00_wrist.npy",
+                  "file_sha256": "0c6831efe322dfd6a76362f0f472c1c286e6df6f7045f24e6c10ef0f3d6e8d26",
+                  "array_sha256": "728f6bc6da15ebab5c968c1539b5c06a8ce32f6a7b774d204ea0b6b719e81ce5",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_000/clean_raw/candidate_00_primary.npy",
+                  "file_sha256": "3ff9fab4dbf7b4d1a18fb28ffdc0f2f9154feb5d2159d531f582c7f40676833e",
+                  "array_sha256": "734e83554c0c7d7dde2c8f7c802b3cdc0b00c3fb9a83335fce6e0c90f96eca87",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.3293711841106415,
+                "audit": {
+                  "input_latent_sha256": "9b365755886b66ae865c02d3e58365f66c180d3c6ffb0f435a26bbca5c2d2708",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "2d36ad86c52eb430f09edab736923d08a08d0571d86ace8fab22abce51bfda55",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/clean_raw/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "299ba62a1885127846331845075c3569b6667fc2ebc65dc71adf799eaf4b65f9",
+                  "tensor_sha256": "9b365755886b66ae865c02d3e58365f66c180d3c6ffb0f435a26bbca5c2d2708",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/clean_raw/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "53b3eb596bc3ffe29a8cdcb93a5da485ce3eb4cee891853ac86c017e970125d3",
+                  "tensor_sha256": "b0a811b5252651392db947119bf018b38f6a7cfc7bbb795611484b95150a7e91",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.3293711841106415,
+                "audit": {
+                  "input_latent_sha256": "9b365755886b66ae865c02d3e58365f66c180d3c6ffb0f435a26bbca5c2d2708",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "2d36ad86c52eb430f09edab736923d08a08d0571d86ace8fab22abce51bfda55",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/clean_raw/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "90a0944d809998c5239454e60f9a87a7eca759b8a66d72b910d8f658c33adc03",
+                  "tensor_sha256": "9b365755886b66ae865c02d3e58365f66c180d3c6ffb0f435a26bbca5c2d2708",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/clean_raw/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "1a9d9cd385112a4faf05fc1abeed45feed30384153f8ab9d0fdd118971aced94",
+                  "tensor_sha256": "b0a811b5252651392db947119bf018b38f6a7cfc7bbb795611484b95150a7e91",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "57066088b9ba058f435c8b908f1522a1f51fcc1d2d2043b536194a41a51eb230",
+              "clean_repeat_against_committed_native": {
+                "future_tensor_exact": true,
+                "future_slots_mse": 0.0,
+                "native_score_exact": true,
+                "native_score_absolute_delta": 0.0
+              }
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.3285595774650574,
+              "future_audit": {
+                "input_latent_sha256": "1cd1ce95c01d99898a2df7c5e20d9e32e8e4217fe68fab797d32dd80caa71587",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "9525400221b78d9b45e31116f491674b85931eebfe1a32ddbdec7beaeee26382",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "d58275951098d752227058acc83cfb690c6407169c31d548ff862e599e73af6c",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "557d034e85bb835a74cdfe34d79a692bc01d9a0c9a1d2a58b90ce80e15d118f9",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_000/clean_raw/candidate_01_future.pt",
+                "file_sha256": "8b62c02c45194785729ba13736e821d5be850dcdd00e05fee5424e7cd813976f",
+                "tensor_sha256": "d58275951098d752227058acc83cfb690c6407169c31d548ff862e599e73af6c",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_000/clean_raw/candidate_01_value.pt",
+                "file_sha256": "31ab6b40d117679352db196995b29d8dcd101601765cfe7458307d8627ed81ef",
+                "tensor_sha256": "9eee34bd1ee427f19b1333294e05dbb1c02f5f396c91b69a1b88bf5d96bc7990",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_000/clean_raw/candidate_01_wrist.npy",
+                  "file_sha256": "f74b7121b43865ad219d6b1f3b0d972f3b00820374cf3f4a129c5c41ceb8bd6b",
+                  "array_sha256": "34ee4ffceb9c311fcf55162eef989434edef5033984b80989c14e29dd174a5ac",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_000/clean_raw/candidate_01_primary.npy",
+                  "file_sha256": "d742b47beb955819c19680e8a51b56d71ed51f29082eff0cd0c94604bfc56790",
+                  "array_sha256": "c194c1c1fce9a7a7faf4b973734cd562bd9e3390835c204da2843ecc1bd68c5e",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.3285595774650574,
+                "audit": {
+                  "input_latent_sha256": "d58275951098d752227058acc83cfb690c6407169c31d548ff862e599e73af6c",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "557d034e85bb835a74cdfe34d79a692bc01d9a0c9a1d2a58b90ce80e15d118f9",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/clean_raw/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "373a1224128b880cb89adb0bfdd6227e1949a442c3368d44c0a32b3b922248a2",
+                  "tensor_sha256": "d58275951098d752227058acc83cfb690c6407169c31d548ff862e599e73af6c",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/clean_raw/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "8769960a2571d986b05bc8854b895cf7026b27e1c3b0799fad798fcd93553569",
+                  "tensor_sha256": "9eee34bd1ee427f19b1333294e05dbb1c02f5f396c91b69a1b88bf5d96bc7990",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.3285595774650574,
+                "audit": {
+                  "input_latent_sha256": "d58275951098d752227058acc83cfb690c6407169c31d548ff862e599e73af6c",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "557d034e85bb835a74cdfe34d79a692bc01d9a0c9a1d2a58b90ce80e15d118f9",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/clean_raw/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "8dc435e9eb3891e70de0a4d399f937115dc67cde209d00f621004e144cd43fd3",
+                  "tensor_sha256": "d58275951098d752227058acc83cfb690c6407169c31d548ff862e599e73af6c",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/clean_raw/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "b8a05ebc58c4b176579baa6b02b13407bac9f2ab5dd22c446d247abc4e370819",
+                  "tensor_sha256": "9eee34bd1ee427f19b1333294e05dbb1c02f5f396c91b69a1b88bf5d96bc7990",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "abc36710417bd1ec6c1738caad42803925484f39dab9f3a584c927c1cc9389e5",
+              "clean_repeat_against_committed_native": {
+                "future_tensor_exact": true,
+                "future_slots_mse": 0.0,
+                "native_score_exact": true,
+                "native_score_absolute_delta": 0.0
+              }
+            }
+          ],
+          "selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.3293711841106415,
+              0.3285595774650574
+            ],
+            "margin": 0.0008116066455841064,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.3293711841106415,
+              0.3285595774650574
+            ],
+            "margin": 0.0008116066455841064,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.3293711841106415,
+              0.3285595774650574
+            ],
+            "margin": 0.0008116066455841064,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        },
+        "canonical_tile": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.32957732677459717,
+              "future_audit": {
+                "input_latent_sha256": "3a6e46bf9927f20752165d6baefe7fab7787484893dd4cdbc77b908bc4ad67d3",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "5f11fc93cb21d1d7ca820ff3b9b035842ddb73c12e24749046dc7b8ec391219e",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "e6464a6adc1e72b783c7703c96473843e252ee111204bbd1b08ace41f24a2fce",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "4c6f8882048c2f9ae74310a7da410612ffc71b95d9b245e7249e3b72af04d869",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_000/canonical_tile/candidate_00_future.pt",
+                "file_sha256": "7061ec369662753ba2a96a8147b5faef3678971c080bb4007e62e9cba5a0d4f7",
+                "tensor_sha256": "e6464a6adc1e72b783c7703c96473843e252ee111204bbd1b08ace41f24a2fce",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_000/canonical_tile/candidate_00_value.pt",
+                "file_sha256": "a98933f508e6c6c10dfeee76f25d1164cce2a387924da58d6f17e7fe52da2125",
+                "tensor_sha256": "6ce209b4e2945b2118f6fc8736d12af5b7cac54aa2123edfae82b37eddf450d0",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_000/canonical_tile/candidate_00_wrist.npy",
+                  "file_sha256": "aaf72792ff834a7635de5df276a119f4e12bfdf9d3a9c93a65515df778c84d72",
+                  "array_sha256": "2a1204fa8a497fef2e02cc877f70a520b4cb1cd891a6bc3142d302dfc5f1071f",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_000/canonical_tile/candidate_00_primary.npy",
+                  "file_sha256": "5fa30fb7462bcc7b86f1a05a44d4906b24cd5d0bf96e981000bd502889c44319",
+                  "array_sha256": "31bf049f7564a707e186012e8acec1a01c454e8a3d7e2edccd2cbb935efe510a",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.32958197593688965,
+                "audit": {
+                  "input_latent_sha256": "94729f5846f966f320138313c9a9fe871653c2196671a28e198a76a23c21b6c5",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "f545f8f164c5eeadc0a4bcdc78ea187b5f0545933d2baf75adb0a9f4d2bb4b03",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/canonical_tile/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "55f4c844377346c3f17ab9f56d0096b7f51e3e4ee2d406131c06a56b8e8fe130",
+                  "tensor_sha256": "94729f5846f966f320138313c9a9fe871653c2196671a28e198a76a23c21b6c5",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/canonical_tile/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "3b76cf34a969d08e87b9b69e9f7f307529f269ca1af51df9a3f2654c41eedaeb",
+                  "tensor_sha256": "6c10668a1a27fad3d1e8a021447c634671040caa94c49fd4805d59756a02c0a0",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.3293953537940979,
+                "audit": {
+                  "input_latent_sha256": "766a8c470731b0bdfaf0c7e14115adbb0aba2b0985ac2b1e08db5dc997169dcc",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "8823b1d00b8d8d3cf5032cc69d2f99a6a14eb04b502437059dedeb342820757a",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/canonical_tile/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "e933de0e2ebaf2b338bc74ba3ef2c2dc17c56205b1c67849845d2a889f35c201",
+                  "tensor_sha256": "766a8c470731b0bdfaf0c7e14115adbb0aba2b0985ac2b1e08db5dc997169dcc",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/canonical_tile/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "edf41ad7836de0a48c0fb21429b82f9539c7daf0948428408f8aaec27e3fd6d6",
+                  "tensor_sha256": "b2ddd5649f5e8468e21e3dd9f0a67d3dff4448aea7150613703b21744aa7a1dd",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "57066088b9ba058f435c8b908f1522a1f51fcc1d2d2043b536194a41a51eb230"
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.32853397727012634,
+              "future_audit": {
+                "input_latent_sha256": "6cd1c197a50e27cf5d33aa1eba17cf8a1b364dce9909b603cbf61ae318b98f75",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "d2bb6f4cedc87692c0215644e523c4efc95ee12ac36b41797df42a046f7df90b",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "f2e7c631e9e7dd140327fd37d1ad57b76ef5d88d740943d2b686ad9094f42664",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "b97e242660d55a0104cfa4bd6fa078c766f56fefd129c2585706cc382ae05da1",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_000/canonical_tile/candidate_01_future.pt",
+                "file_sha256": "43ce44714f14b7aff4e715a8982ab7b49717d6b60cb173ef55fb4ba815b7eb51",
+                "tensor_sha256": "f2e7c631e9e7dd140327fd37d1ad57b76ef5d88d740943d2b686ad9094f42664",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_000/canonical_tile/candidate_01_value.pt",
+                "file_sha256": "911a3adfa2212e1898498e3b0eaec8fe4b9f13289121e78893447529fd33737d",
+                "tensor_sha256": "641416489b56c77c398c7b1ef901186d033157613a432d6e74ba3632a151cc66",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_000/canonical_tile/candidate_01_wrist.npy",
+                  "file_sha256": "d700c48134fdf67a713a073a0f2b861471dddbfcca124a60c7efb1252522a189",
+                  "array_sha256": "e50ea8c9135fe340e32279afdc663ae4c96ece27199066d78c672e756aac9a03",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_000/canonical_tile/candidate_01_primary.npy",
+                  "file_sha256": "c3250398f634e7fba79b471125b1bbe7a22b640dbae63b8a218a156f5fadc9a7",
+                  "array_sha256": "8fa3c3760f4d103d2c275e4e2b28e335379b4feb2b2d3d28b0231ec1a73a59f6",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.32845455408096313,
+                "audit": {
+                  "input_latent_sha256": "ced9664e1aa3890403edd26a55bb3b28db4a6ecfab997ebc728ac90d34f8e136",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "171a8b7789486bb99a58d9a74df57cd33c5747001d1443739ba717df8d57b0bc",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/canonical_tile/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "c0d11b64358909d0884684aaeafcbe1c8be9740cb754969711b390b8dce23385",
+                  "tensor_sha256": "ced9664e1aa3890403edd26a55bb3b28db4a6ecfab997ebc728ac90d34f8e136",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/canonical_tile/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "f988e613f226f3b3c589ccbdb7bdd3f608c0409319b8b86201319b4377d7a344",
+                  "tensor_sha256": "4abc01ae6708dece1dac6f6cd28b755c1b6fb2f6d7d2e14d4b41d4cf64cc239c",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.3285273313522339,
+                "audit": {
+                  "input_latent_sha256": "e4187460214864cc1f6a26f88c4e5b4e43f7ddc599009e74843427e80681a52e",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "e7547500e8e70faa0010deb3403c35d037da23de09eff179b1a0e4621419c42e",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/canonical_tile/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "5b1f45774c96109f83222bf725e6e25048fd0675aa852fe7843b2f9980f789c6",
+                  "tensor_sha256": "e4187460214864cc1f6a26f88c4e5b4e43f7ddc599009e74843427e80681a52e",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/canonical_tile/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "e52587909a8242c3a757bfdacf720909f1fc9c45cf6ec2397a129fe3d4c46edb",
+                  "tensor_sha256": "58926ce3fb0b72b4f315f5439191e49daf9145d3d6d7c24c012d0872a557494f",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "abc36710417bd1ec6c1738caad42803925484f39dab9f3a584c927c1cc9389e5"
+            }
+          ],
+          "selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.32957732677459717,
+              0.32853397727012634
+            ],
+            "margin": 0.0010433495044708252,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.32958197593688965,
+              0.32845455408096313
+            ],
+            "margin": 0.0011274218559265137,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.3293953537940979,
+              0.3285273313522339
+            ],
+            "margin": 0.0008680224418640137,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        },
+        "reverse_copies": {
+          "candidates": [
+            {
+              "status": "skip_model_exact_gate_failed",
+              "index": 0,
+              "gate_status": "skip_model_projection_failed"
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.3283827304840088,
+              "future_audit": {
+                "input_latent_sha256": "292a51b4e5f77f6cc57e36b5717a1968380d0509b147375f5d927f6389400228",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "8fa7fda60fabf11d043b8ab9ce25a0b0ef6382f8360f07bc3c1acb48c613ce79",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "cffd974d509d7bd21158b92433b81a85ca753cbb3f2b100fcb5caf8e068f62fd",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "4d25b190774d5eba234ba6fe794ffbede8b66f81e3c73c471405250a33eb252b",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_000/reverse_copies/candidate_01_future.pt",
+                "file_sha256": "67d3cd000f8b02a03248b561e32dbe6e38f114bc1838fe3d1bed9561dac22b0e",
+                "tensor_sha256": "cffd974d509d7bd21158b92433b81a85ca753cbb3f2b100fcb5caf8e068f62fd",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_000/reverse_copies/candidate_01_value.pt",
+                "file_sha256": "49afce4d5d4388cfd34cc220b87a13996c2834d12b9dc4c18a0e5c21e66c2158",
+                "tensor_sha256": "d6f1b60aaccac8565c59ad851a0298bbc64ccb7bc61e11c5e00b8bf6f527d86b",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_000/reverse_copies/candidate_01_wrist.npy",
+                  "file_sha256": "5bcf7061add84f7938b4bd428316ff1d61ef200f44155af2f30e02c4287f4ee4",
+                  "array_sha256": "58b23b6d7510cb98a66802f502b5d93d3af4a457bdae18ecfa4b049cf5fcb398",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_000/reverse_copies/candidate_01_primary.npy",
+                  "file_sha256": "b2d414618b1cad50a7f5fc6df229d6d57444f37ecee00eea183b82c18d1f4d7c",
+                  "array_sha256": "839527cb17f4607f3bffd36b9236811c4f68d403f7372f7e1ee4d5281dc6b1a7",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.32838624715805054,
+                "audit": {
+                  "input_latent_sha256": "78b1b7a9748a05a84701f485666f1971d2286c4bcbb646d53267d42b72f0a635",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "b7c14a1d420d4d66037f1c8ce69b9d5ac80770edb47c8cf4e1b2c139aaf7c2d4",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/reverse_copies/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "7fd75ce56ebf0e4d8616e28fc29558cc54b3d9fe38a25d5ebcea27a5625949b5",
+                  "tensor_sha256": "78b1b7a9748a05a84701f485666f1971d2286c4bcbb646d53267d42b72f0a635",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/reverse_copies/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "9b4aedf670b4228a0f2902376ce0f53128fd0b575b148c1664563f2ea8d0dffa",
+                  "tensor_sha256": "26ed9b0957e0294126aac0136b7d873f49b99b65827b796e5f0ec006aeca4e07",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.32836878299713135,
+                "audit": {
+                  "input_latent_sha256": "dc3dfa7b29d6d2dd70c188c1cf4dc342c7c5172fe156d766db19db43d5ef4db1",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "d7b47f05980c7a3c81950a5763444862ac4b2f19d7c95ed3c0d6fccf0430172f",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_000/reverse_copies/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "a2e77fcadc509098300728e132cf5765d5b918dfd50f79cb5ae52200dde26c83",
+                  "tensor_sha256": "dc3dfa7b29d6d2dd70c188c1cf4dc342c7c5172fe156d766db19db43d5ef4db1",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_000/reverse_copies/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "6bbb4249986ae4a7f9c9546d3dcaef947f05773e52f49ea8ef2c17efd1dcb122",
+                  "tensor_sha256": "3f1d8cd569dcf4ebe79518576df47a390244f6e0b8bbbd6caf26344f4a2c8680",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "abc36710417bd1ec6c1738caad42803925484f39dab9f3a584c927c1cc9389e5"
+            }
+          ],
+          "selection": null,
+          "ranking_status": "unavailable_candidate_rejected_do_not_shrink_set",
+          "forecast_only_selection": null,
+          "value_direct_only_selection": null,
+          "ranking_flip_from_clean": null
+        }
+      }
+    },
+    {
+      "source": {
+        "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_016/snapshot.json",
+        "snapshot_sha256": "bb4ca66c842e2e906cc682aa5908540506928a1441ce37c085a9d468b02da7ad",
+        "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+        "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+        "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_016/observation.npz",
+        "observation_npz_sha256": "25c52593cb666c5d7b6f35b765de06bcbada15d6adc24caa98daeb0703cfe288",
+        "state_sha256": "682f27a0a045f2945b4ffa9f6e64d4195e7d828482b07d02f42171d4bd506e5e",
+        "array_sha256": {
+          "agentview_image": "323724a86b56326e891fceb2cf0c141337f013e2ef01ab611feb843f9b5cd2da",
+          "robot0_eye_in_hand_image": "fd40463dca0cb4cd560bddff3ed5dc4795ccf218027d4660dde57a14a94e2b21",
+          "robot0_gripper_qpos": "5f6b3a179a46ce512e93ab5daae5de9f83466453daa56824e868280aa8390236",
+          "robot0_eef_pos": "826f4163ac495e998d7e8eb015a23343dad1d626050d7703cf31edff62366517",
+          "robot0_eef_quat": "1417952a93c468957af675715d0464b2f3509801703ab83fe52f1c74b219cba2",
+          "sim_state": "c0e9581c2879033e85c65748b3c7f9cfeb94b368b8207737c4ebf35494dd570d"
+        },
+        "prefix_steps": 16,
+        "protocol": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "init_id": 0,
+          "seed": 31,
+          "environment_seed": 0,
+          "settle_steps": 10,
+          "max_steps": 300,
+          "original_goal": "open the middle drawer of the cabinet"
+        },
+        "source_checkpoint_provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          }
+        },
+        "sim_state_used_as_model_input": false,
+        "input_contract_sha256": "ed6cced366aece4ea2eec1f8c0f4147ce05aaeccda56f24d95ed5c4446bfa2ff",
+        "inference_provenance": {
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_cache_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "source_sha256": {
+            "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          }
+        }
+      },
+      "ranking_json": "/home/xhj/WM_Security/runs/cosmos_counterfactual_ranking_v1/prefix_016/ranking.json",
+      "ranking_sha256": "61c5417d9558b939dabcadb3d8243bfafe9bafb877c773ff2123d0309b79c3fc",
+      "conditions": {
+        "clean_raw": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.3687748908996582,
+              "future_audit": {
+                "input_latent_sha256": "e9ec080625b19f72418e002c369f3871fefe7971027ac4a22ab8d1d17d642a57",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "0fad5dee625d478eaf39bc9428c15d21f910556d23ece175f2dad8e0faf0310c",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "e067517a8d1cc67c0bdfed498293d581f81126a5a9519c588c3d917f0309909b",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "e2570622c8cd573405eb4365735b576d36935dfdb453459a045da5b032410f50",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_016/clean_raw/candidate_00_future.pt",
+                "file_sha256": "9ac8233b065c8c853a4b63e1ebbc553e5de107c46f9d703e55cc601ee19ade3b",
+                "tensor_sha256": "e067517a8d1cc67c0bdfed498293d581f81126a5a9519c588c3d917f0309909b",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_016/clean_raw/candidate_00_value.pt",
+                "file_sha256": "75f8f1605f11ccafba75fc991c6bd38f3501e1c909d5e8bcc84cf969b4150600",
+                "tensor_sha256": "d37e16d32e4d15adab3f0e55f684f212d8bcf9f2eb663b8ce69d0010dfd55d83",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_016/clean_raw/candidate_00_wrist.npy",
+                  "file_sha256": "e8e02e332c4b16bac784c529f72df12bbadb104aa455e0b98f93618ccbe629fc",
+                  "array_sha256": "aa578e7f4b5edce0d733df740c831e9484f6fd19712d98a1bc85db425de19c48",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_016/clean_raw/candidate_00_primary.npy",
+                  "file_sha256": "50fe826c575046b9b9c115829467f4b31225dcc5a25f47101012df1b8a406359",
+                  "array_sha256": "6c0a317d1f95b20cfd27befbb4ce000bf6b13ca7d0de0996f4da2577409432c8",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.3687748908996582,
+                "audit": {
+                  "input_latent_sha256": "e067517a8d1cc67c0bdfed498293d581f81126a5a9519c588c3d917f0309909b",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "e2570622c8cd573405eb4365735b576d36935dfdb453459a045da5b032410f50",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/clean_raw/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "b944a2b724904f69a3ed5cefe5f58025dc234a431fe8756f085ae97a05f7b3fb",
+                  "tensor_sha256": "e067517a8d1cc67c0bdfed498293d581f81126a5a9519c588c3d917f0309909b",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/clean_raw/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "8f46fb06a460f99c977ae8bc7f94dfb52e9474d28499896c7771e48047bf2555",
+                  "tensor_sha256": "d37e16d32e4d15adab3f0e55f684f212d8bcf9f2eb663b8ce69d0010dfd55d83",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.3687748908996582,
+                "audit": {
+                  "input_latent_sha256": "e067517a8d1cc67c0bdfed498293d581f81126a5a9519c588c3d917f0309909b",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "e2570622c8cd573405eb4365735b576d36935dfdb453459a045da5b032410f50",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/clean_raw/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "5e444cd583a66efcd55988260ea4a00422e637904161d7c31211ae48fa33a4cd",
+                  "tensor_sha256": "e067517a8d1cc67c0bdfed498293d581f81126a5a9519c588c3d917f0309909b",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/clean_raw/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "34aa20a11b138bd4873e1bd14d3bec543a2fd004c2dd4a19758eecd278297a5f",
+                  "tensor_sha256": "d37e16d32e4d15adab3f0e55f684f212d8bcf9f2eb663b8ce69d0010dfd55d83",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "e868e878d96b7659502bb78e64d46d72b00160b00ccce8631de16a62b9908c20",
+              "clean_repeat_against_committed_native": {
+                "future_tensor_exact": true,
+                "future_slots_mse": 0.0,
+                "native_score_exact": true,
+                "native_score_absolute_delta": 0.0
+              }
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.36908280849456787,
+              "future_audit": {
+                "input_latent_sha256": "c4356c6ff4998b7e2327671e7204fcfa2c169b726404c7a4fc59312aff1cb897",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "2dce8f045a0f32fd2fdf8a55acb84748b00d323cd4f241835d5317f2a618c8bb",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "7b35491cece8e7d57474d72fe7b3c363c6d54ad1e335db4620df1fc32b0d27c8",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "dd1092c09a7586c1280e477a561a917e77e4cd5e11f2ec37fe85d7d73975063d",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_016/clean_raw/candidate_01_future.pt",
+                "file_sha256": "5c89b62ba801e415af1094ee7f199f7984bc647a1dee437808c8d0f5a77f4ea8",
+                "tensor_sha256": "7b35491cece8e7d57474d72fe7b3c363c6d54ad1e335db4620df1fc32b0d27c8",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_016/clean_raw/candidate_01_value.pt",
+                "file_sha256": "84eb999d8fb61debe48e2ecf62dc3c759d46677e0571e0723d4186d88bce2afc",
+                "tensor_sha256": "af1e95f110a70f006c144ae33cb526e4ea84a6e485e30616618f3698f059c17e",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_016/clean_raw/candidate_01_wrist.npy",
+                  "file_sha256": "46c3aa5c2e0ee2a1fd14d8dd533e2ca64d4b25613aee8547848682534a510435",
+                  "array_sha256": "62bd8c47901f7afbf75bcca9d1f3f8769a16b2e821466e3152e788d6a955010c",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_016/clean_raw/candidate_01_primary.npy",
+                  "file_sha256": "04895481030fbe0e79e80f16a0a97185ebb4ecfbc675294ec55e62ac0155b3d1",
+                  "array_sha256": "545270d61a0bab985dfea4e39856f9cd1f869f0f14baf23368e9514977ca64c8",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.36908280849456787,
+                "audit": {
+                  "input_latent_sha256": "7b35491cece8e7d57474d72fe7b3c363c6d54ad1e335db4620df1fc32b0d27c8",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "dd1092c09a7586c1280e477a561a917e77e4cd5e11f2ec37fe85d7d73975063d",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/clean_raw/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "28054f6c1c0e4250aa1a4462c4211cb6abfaf3a349e7d7827743cccfde30387b",
+                  "tensor_sha256": "7b35491cece8e7d57474d72fe7b3c363c6d54ad1e335db4620df1fc32b0d27c8",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/clean_raw/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "f1b687faca609f3ca074cad3589c7de7f6f0335f8d103da49bce3f6bcf8fcc03",
+                  "tensor_sha256": "af1e95f110a70f006c144ae33cb526e4ea84a6e485e30616618f3698f059c17e",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.36908280849456787,
+                "audit": {
+                  "input_latent_sha256": "7b35491cece8e7d57474d72fe7b3c363c6d54ad1e335db4620df1fc32b0d27c8",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "dd1092c09a7586c1280e477a561a917e77e4cd5e11f2ec37fe85d7d73975063d",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/clean_raw/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "f2efc7a6b0eb3022b36e674ab228ac1affe598a6f30754933e00dd3c13c9d89d",
+                  "tensor_sha256": "7b35491cece8e7d57474d72fe7b3c363c6d54ad1e335db4620df1fc32b0d27c8",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/clean_raw/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "8fd8402c0cb44209d6692c1fdcdbac940b399c6dd0220763ffb69bdd1560942d",
+                  "tensor_sha256": "af1e95f110a70f006c144ae33cb526e4ea84a6e485e30616618f3698f059c17e",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "10d553c22338ddf39250a740219595ec18aeb38ce71b3c5a29b049bcdde7d6be",
+              "clean_repeat_against_committed_native": {
+                "future_tensor_exact": true,
+                "future_slots_mse": 0.0,
+                "native_score_exact": true,
+                "native_score_absolute_delta": 0.0
+              }
+            }
+          ],
+          "selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.3687748908996582,
+              0.36908280849456787
+            ],
+            "margin": 0.00030791759490966797,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.3687748908996582,
+              0.36908280849456787
+            ],
+            "margin": 0.00030791759490966797,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.3687748908996582,
+              0.36908280849456787
+            ],
+            "margin": 0.00030791759490966797,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        },
+        "canonical_tile": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.3687674403190613,
+              "future_audit": {
+                "input_latent_sha256": "92ebe17fc9350f2fe3a3fd116d54095d771860f26bd648f2d2ea059a8729495b",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "2e29e8a71587acb0246e38e27210bb769664b5ac8ec0259cca6433f9acd6e3c1",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "ab30cded7d3a98838663171a90798519e1dcd8baf30ec1db9d272a0a9534d831",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "2555716faf73acc6cdf7e37bd820d5fd902e54fe520279a7f958e46525e21581",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_016/canonical_tile/candidate_00_future.pt",
+                "file_sha256": "a9138d69a560936dece89206cfe62f10c5e7ccc6f78fc7ed9af4842cd4ecfc78",
+                "tensor_sha256": "ab30cded7d3a98838663171a90798519e1dcd8baf30ec1db9d272a0a9534d831",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_016/canonical_tile/candidate_00_value.pt",
+                "file_sha256": "e6df69e9e7ab7de522f4dd35d838de672b4a86f111d688759dbefaa71348a5eb",
+                "tensor_sha256": "7dd3b8a9535cab6dc0c4736835fbaae23fd84cbdd227c07f098419a793dd68c6",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_016/canonical_tile/candidate_00_wrist.npy",
+                  "file_sha256": "d842b8b15f18b677fe1321023040a0433d166dcdd57bbc89efccb0ed58f9acdc",
+                  "array_sha256": "a615cd96af05ba7dc20a5a63ea03e2276cb76c5f6a486d47791b78bd2bb1100d",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_016/canonical_tile/candidate_00_primary.npy",
+                  "file_sha256": "2a229a947b51574a992b888b7d157353241af6da703dc6df01afe6166163b463",
+                  "array_sha256": "90c3a2db630cb8901d655c4909d5cebdfc70152a18e1ad8f9cd2ae1f984a99fe",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.3686006963253021,
+                "audit": {
+                  "input_latent_sha256": "63ae163942b4dce4ee31dcbb5f657c2a909e6762caea91edb740e26301b341e9",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "bb3691d01ae11a7acf164a1c29aeaba5921dddc3eeaceee1c595c5acff00d957",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/canonical_tile/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "e2d2c7aab90464e256267ff7fff82fb7f4869d09516ac60103d9fbbae7e7fe7e",
+                  "tensor_sha256": "63ae163942b4dce4ee31dcbb5f657c2a909e6762caea91edb740e26301b341e9",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/canonical_tile/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "5ee0ec42666ffec218e7caa5bea902b0db6ddaf6f4ff6c9563616514f78b6ec5",
+                  "tensor_sha256": "f044b9bdc581c6e2bb92f48f069b466530f76935c1842230acd66e140b7273b9",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.3688451647758484,
+                "audit": {
+                  "input_latent_sha256": "75222a6ee02afa94148bc30eb54b4ef130c954a73710c97594da0d2342365090",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "75009807a187b30e81f11deb7ebb8a175fb77865685a020979670432894146f0",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/canonical_tile/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "d75466fecf9b8b46f7dfda54ca4c98fefbc9108c216093711873ea0c516aa007",
+                  "tensor_sha256": "75222a6ee02afa94148bc30eb54b4ef130c954a73710c97594da0d2342365090",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/canonical_tile/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "1385aed0280f87023c6f2d88627ced04d69ca6cc1a79e7a9c7158cf3218da9fc",
+                  "tensor_sha256": "5e8158e0f4c056bfea3d46ce40ffa1e878f989ba28892c896f5e7925a371a717",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "e868e878d96b7659502bb78e64d46d72b00160b00ccce8631de16a62b9908c20"
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.3691438138484955,
+              "future_audit": {
+                "input_latent_sha256": "fc66b38eb56dfbfa68c9e6abcf1b57083109a154212c46fe2a6dbf001f01c6fc",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "9b48720fc7fffce705c565d6ef7f48dcb3d79874f483938c57e4b992a90e2807",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "ec80d0a88d0a00c4e72e182169f65daf08a7fc5de0ae77625db80cce35bee547",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "7308edcd4ac2da18b4b4244a35e64560e4a5145f4456e99917c17146148e5d9a",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_016/canonical_tile/candidate_01_future.pt",
+                "file_sha256": "3074611c9082cbc1bbc2e93ff8aecfc3b7bd09566fba978a7a3d3fef2c00f912",
+                "tensor_sha256": "ec80d0a88d0a00c4e72e182169f65daf08a7fc5de0ae77625db80cce35bee547",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_016/canonical_tile/candidate_01_value.pt",
+                "file_sha256": "a54102a84817926606fd3ced93602b0ae6ce6adf4596a574166ffdb46c5e35f8",
+                "tensor_sha256": "14365b6bb64ccbbb6536823407464fd260e838626a768f0206da268778164bbc",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_016/canonical_tile/candidate_01_wrist.npy",
+                  "file_sha256": "ae28106871b8624bbb41df3f35625a5baf44f019d93c38512b0501d61eddfc32",
+                  "array_sha256": "93bb0a0a85a6d550f0e47097c798986535253ce84772a943ee798a5cc8a5a337",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_016/canonical_tile/candidate_01_primary.npy",
+                  "file_sha256": "8224966c90978772c24cc3d034b710ca798b4a19b62364dc159460b66b011d52",
+                  "array_sha256": "7f6ecbe16daaa1fcb52ec9074c369830c7509d592d3a6020cdc944c41fa0facf",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.3692096173763275,
+                "audit": {
+                  "input_latent_sha256": "8a747b1b72f16f36a5dfc5cda60157cbc89561bacc92a80458512431c9184eb8",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "2dc23cec6fdd26b0846be95d2355bc0054bf08df022a2b46bb90652a17e68516",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/canonical_tile/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "5ee4f4c93192e9659a61207f5994014c7e1b1dad28ff58ac0705fbf5e2f2ed9b",
+                  "tensor_sha256": "8a747b1b72f16f36a5dfc5cda60157cbc89561bacc92a80458512431c9184eb8",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/canonical_tile/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "4da089d65143d06a4015c91b9a0dbec48d48e6b4e5f0c2c62c7502fcc302f614",
+                  "tensor_sha256": "b9db65ac90a5a11cd3abd49daac5758ea5023668500f883da638126a393a6c08",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.3692699670791626,
+                "audit": {
+                  "input_latent_sha256": "059fefe884b5637ab411ba4a532495acf57f8db8f0c33265aeb85dfc5445f372",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "e44764b198f819ae3bcd12affc03472737d1804682f147927003cb1fb80494e8",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/canonical_tile/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "6dae8215bbe3a09e24493620e0e9688a51727750ff19180d4bb13479ccf494bd",
+                  "tensor_sha256": "059fefe884b5637ab411ba4a532495acf57f8db8f0c33265aeb85dfc5445f372",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/canonical_tile/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "c9b19bc973f99f5c2fe44a34b73a0a6a8ea43de73385aa06f4bd414fa0770e3b",
+                  "tensor_sha256": "6df44713461d80bbb98f22de3a32e6a0db1a68ca266308cec0de5b6e8acdf465",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "10d553c22338ddf39250a740219595ec18aeb38ce71b3c5a29b049bcdde7d6be"
+            }
+          ],
+          "selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.3687674403190613,
+              0.3691438138484955
+            ],
+            "margin": 0.0003763735294342041,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.3686006963253021,
+              0.3692096173763275
+            ],
+            "margin": 0.0006089210510253906,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.3688451647758484,
+              0.3692699670791626
+            ],
+            "margin": 0.000424802303314209,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        },
+        "reverse_copies": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.36878836154937744,
+              "future_audit": {
+                "input_latent_sha256": "c81e8dfa99cdd182fb4913f770320b11376fe83d3e242c5753ff9c55a9a96942",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "8c168422b95cc6a1f5e451b3e9080e1602b460f8486ea52faa5977d2a9e2afdf",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "b2b4fcdd5ea2439ae1c37d45fd5fb750902ec389813eb9652524972c2bbe63e2",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "4e21b3b86565c9b87a7dedf092b6b593402ea7592f475e14f9c685c358a51723",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_016/reverse_copies/candidate_00_future.pt",
+                "file_sha256": "44ae5e98ce6e2c5cde2957c3d45683b37592ee49cac0de973690401d3ec57c21",
+                "tensor_sha256": "b2b4fcdd5ea2439ae1c37d45fd5fb750902ec389813eb9652524972c2bbe63e2",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_016/reverse_copies/candidate_00_value.pt",
+                "file_sha256": "705086d4e6b1d3986a6760c8f9ed0603453b67c935477b0675b1759f256a1099",
+                "tensor_sha256": "d84fb54afff6105769fbf13beff6846c10eb7f15acdc1233fcecc999a2ea8e0f",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_016/reverse_copies/candidate_00_wrist.npy",
+                  "file_sha256": "906155015b9f1b8af7f56a363bec37859f54cddd540b2c21c3690ff37d1209b0",
+                  "array_sha256": "32b97d0f777669dace52dfff529e6ca2f4ed898b687805f297067f4a6705bf76",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_016/reverse_copies/candidate_00_primary.npy",
+                  "file_sha256": "1e49d10a5b09d506677f1bf7c3d53c6ffe8cf02ef5f1918352b95f890551a3f2",
+                  "array_sha256": "2c82726a2ac745f6024bf5677e1ef01463da20991f1473179f7ea95daed22872",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.36884158849716187,
+                "audit": {
+                  "input_latent_sha256": "6ed8c0ee2693641a29dc55738a204c3a46c34b2ae3e737a22a52626d96cb8264",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "2d4ec0210cba17e87101455cb8c19c9264e247472d4080087f11c1bdd22b97a8",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/reverse_copies/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "b473beb613326e5723b46c9fca0b9bcdc8f67290c39ed7124019a169010cb124",
+                  "tensor_sha256": "6ed8c0ee2693641a29dc55738a204c3a46c34b2ae3e737a22a52626d96cb8264",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/reverse_copies/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "5991285775c9814fa924d2107d0f36b2757ea82fd97bb6cb603264a0a8847f5a",
+                  "tensor_sha256": "778221274fa219c1c18e13780944a34c4256753b38ae3e96b98b32afb31953e7",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.36871078610420227,
+                "audit": {
+                  "input_latent_sha256": "0e27c151bab6a6506c4614938c69fd95a5dd64e904b62b13673dc390abffb72d",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "48d82493ba2a24a42c8d2966949e60c2cff26de10c9eb22d16006b324c62713d",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/reverse_copies/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "85821cbb9d7e0d08753c1bda766fcb4380157a2abb78082891d6f8389daa1dfe",
+                  "tensor_sha256": "0e27c151bab6a6506c4614938c69fd95a5dd64e904b62b13673dc390abffb72d",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/reverse_copies/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "f15ed371c13a62614bd430e3565dd2ea46b6bc00b1d05b809cacc993b7db9736",
+                  "tensor_sha256": "f5793d418b707ec093da57efe80132b504fd47ef0873c0750bac80ce28832ba6",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "e868e878d96b7659502bb78e64d46d72b00160b00ccce8631de16a62b9908c20"
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.36897969245910645,
+              "future_audit": {
+                "input_latent_sha256": "e73edee14365688f93faee6b94a893d2e067199f271e7c6f0db0f3f61bad6c31",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "873654729c0a3fe445e37d5fc3d8136c0eb7f56c6ffbbe151170420d04e70a9b",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "765c369e8a1bedf66d606f6277a9d94bc640b6c75b78c96af480db724563c593",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "d3722a52729cfbd0e47e934ac6f3d8561d4b6610dee9132f0034ab368784312b",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_016/reverse_copies/candidate_01_future.pt",
+                "file_sha256": "a1bc64d68fa2ff21280af3ebe3dfeec56faa86e0b5f47c0afaad976fdff094f3",
+                "tensor_sha256": "765c369e8a1bedf66d606f6277a9d94bc640b6c75b78c96af480db724563c593",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_016/reverse_copies/candidate_01_value.pt",
+                "file_sha256": "c7a6096b9dcc6c202533420871fd5d27c99c013c20592a098da56e090995ba7f",
+                "tensor_sha256": "919b6511bd0ccb0b3e7c4817e77b038fa21c593a7636421650511357c8dbb059",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_016/reverse_copies/candidate_01_wrist.npy",
+                  "file_sha256": "7ca8990b01fc36121dfe878f5b045e48ac020790b6822f2a24d3aeb5f110314c",
+                  "array_sha256": "f5498d1ea2efaf7ae117a689b0214e47ea70e9a53eecd9249d16ad0d3993a30e",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_016/reverse_copies/candidate_01_primary.npy",
+                  "file_sha256": "34e9f006acad7240846150acd270f844146177cc1613b0f55b7b41d73e51fc52",
+                  "array_sha256": "6fce80a56561900914bc8c22d95df19d9e05a682824427f037d54f459c742272",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.3689042925834656,
+                "audit": {
+                  "input_latent_sha256": "71c44bf8e0bd71b9fc0898168b10943028639476929d3f22a9f5fb477eb5483e",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "eee878d859e692527ce26fcf1aa975fc1adf27995916a6d3df69835cda166cc7",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/reverse_copies/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "e2a8e3eb3a6d19987e04535724bea4d81ef7935c17346736693abfdaab614ff1",
+                  "tensor_sha256": "71c44bf8e0bd71b9fc0898168b10943028639476929d3f22a9f5fb477eb5483e",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/reverse_copies/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "dacc1b0245bde3e9f89402ddaa32336ee66ca7947939040e58650c4c0b64e632",
+                  "tensor_sha256": "1a2fb4308570f7e09754da3d39223a5ffc0bc9122419a2d750ea99de15552e39",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.36918994784355164,
+                "audit": {
+                  "input_latent_sha256": "de1d3e9d5390c015714adbb26f7807e3c3d47e7532cbea3555f4fab85f724c4d",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "3ecd47d19ab633a706c0084fd56ba20eb0ee7f5d832b374be4d70ab8604ba8d2",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_016/reverse_copies/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "214bd6fab55736cca67db013322a8b4679bd6dab7e9e5f22a606b67fcd341ee8",
+                  "tensor_sha256": "de1d3e9d5390c015714adbb26f7807e3c3d47e7532cbea3555f4fab85f724c4d",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_016/reverse_copies/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "d07b8ac7452cb2eb4e24d939c3359f8c83f09641ac40b34a50eac48dacea088c",
+                  "tensor_sha256": "dca1d78eae23ef084652e1b7e1b171394fc72f4fd6b0fd526b8a2af33365e874",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "10d553c22338ddf39250a740219595ec18aeb38ce71b3c5a29b049bcdde7d6be"
+            }
+          ],
+          "selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.36878836154937744,
+              0.36897969245910645
+            ],
+            "margin": 0.0001913309097290039,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.36884158849716187,
+              0.3689042925834656
+            ],
+            "margin": 6.270408630371094e-05,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              1,
+              0
+            ],
+            "selected_index": 1,
+            "scores": [
+              0.36871078610420227,
+              0.36918994784355164
+            ],
+            "margin": 0.00047916173934936523,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        }
+      }
+    },
+    {
+      "source": {
+        "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_080/snapshot.json",
+        "snapshot_sha256": "f49e474feac7ad5f36ea987e8021443bc7b276af4d9f25864fef49355b10a0bf",
+        "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+        "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+        "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_080/observation.npz",
+        "observation_npz_sha256": "244260cf26ed61b16bdafaee093e9af8fd17584fefd0243d088a6010d00603f9",
+        "state_sha256": "c39020d63bbffc4cde8d5c4c90fdebed5285346a9ad8b12f1effd9e0fd5e8452",
+        "array_sha256": {
+          "agentview_image": "c02d4c2663e42f8992777561e35c4effc2109d6520a9ff67d2815cf131205c1e",
+          "robot0_eye_in_hand_image": "c24ea4b78fd5bc19755482b872190117522c81c059d387a730bbf244ad9cb3b7",
+          "robot0_gripper_qpos": "cd3ac8af31b5893b5da4a080315a18b9203bb4d5e294c2331a7209707682cb56",
+          "robot0_eef_pos": "8a9ae06a17606838c0ce135fb89e2659924b3feae30dcc7bda9857b538d3d2fb",
+          "robot0_eef_quat": "96c40ed922fc82fd061f1b575c6cedeb2bddd05f1e7e3d51f713655d624465e4",
+          "sim_state": "c4c517996eddcb371ca564e8ee674ca46c9ad600ea1e0c159bffc8070eb04369"
+        },
+        "prefix_steps": 80,
+        "protocol": {
+          "suite": "libero_goal",
+          "task_id": 0,
+          "init_id": 0,
+          "seed": 31,
+          "environment_seed": 0,
+          "settle_steps": 10,
+          "max_steps": 300,
+          "original_goal": "open the middle drawer of the cabinet"
+        },
+        "source_checkpoint_provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          }
+        },
+        "sim_state_used_as_model_input": false,
+        "input_contract_sha256": "eb6cab8a984321e809f37e0133206bab1d4b0fd4e25947064a480f50e77dc0f8",
+        "inference_provenance": {
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_cache_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "source_sha256": {
+            "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          }
+        }
+      },
+      "ranking_json": "/home/xhj/WM_Security/runs/cosmos_counterfactual_ranking_v1/prefix_080/ranking.json",
+      "ranking_sha256": "603ccbf5781dc8fc8c450f924ebc010d42b1eab9c293d00c524a0e03ff9ebdfa",
+      "conditions": {
+        "clean_raw": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.6347740888595581,
+              "future_audit": {
+                "input_latent_sha256": "064960b8e7c38b753b7a43e4524b73457d08800d37ce43cdea999930729d925b",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "c36940ac79a8f59ee3ecb829b788c3deb76adbdddb1a9f79163760aef5ad9c08",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "55ed3705d65119d54f3a797f38c25b05f087f17b022cef21870223a2be5e0fb9",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "b21f9cbb9a471f3a42ddfe12c4ba8c18fe986710d5e4a202321f35d9d8003b42",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_080/clean_raw/candidate_00_future.pt",
+                "file_sha256": "0bc0ebc39d07159e0366ba2f8a708833171340cf4b223a13d651a860063eed72",
+                "tensor_sha256": "55ed3705d65119d54f3a797f38c25b05f087f17b022cef21870223a2be5e0fb9",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_080/clean_raw/candidate_00_value.pt",
+                "file_sha256": "57271463f345ee6cb0c6a8b4bef603d3d3b7ca2dfff108eb691866566eadc7fb",
+                "tensor_sha256": "194d1a42935ad06290822414c54f7b1c36d1c22236a7eef18cd2a84c000bc286",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_080/clean_raw/candidate_00_wrist.npy",
+                  "file_sha256": "9341296136a13c6b307b5e55a4a8e0332ef94da7ff645cc723584a2ea0a00cb2",
+                  "array_sha256": "2c910190ee6ee44b330bd90c6533695cf4e68276a26b0e67f9746ab89b004197",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_080/clean_raw/candidate_00_primary.npy",
+                  "file_sha256": "294b1c2da53e12315b21869ffd8dde352926d46e7415818fbfad3b0ff11bc3e2",
+                  "array_sha256": "4b2f6a1ca000cd697d76007667e6db784f274107764128fb06b6de26233e5d13",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.6347740888595581,
+                "audit": {
+                  "input_latent_sha256": "55ed3705d65119d54f3a797f38c25b05f087f17b022cef21870223a2be5e0fb9",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "b21f9cbb9a471f3a42ddfe12c4ba8c18fe986710d5e4a202321f35d9d8003b42",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/clean_raw/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "5836576e42ac37a8cb6a8800ec609307ec70ea04a118e7398dfbb7e14de1c30f",
+                  "tensor_sha256": "55ed3705d65119d54f3a797f38c25b05f087f17b022cef21870223a2be5e0fb9",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/clean_raw/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "f4a4c4cd87504fc94067f9aa29e11f0c2f287cbd184754b794c3ba94f996ca9d",
+                  "tensor_sha256": "194d1a42935ad06290822414c54f7b1c36d1c22236a7eef18cd2a84c000bc286",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.6347740888595581,
+                "audit": {
+                  "input_latent_sha256": "55ed3705d65119d54f3a797f38c25b05f087f17b022cef21870223a2be5e0fb9",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "b21f9cbb9a471f3a42ddfe12c4ba8c18fe986710d5e4a202321f35d9d8003b42",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/clean_raw/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "e9c696c6db51b0b59a21f5852b45fe15610f2b90f5b4ac341e837b132525ebea",
+                  "tensor_sha256": "55ed3705d65119d54f3a797f38c25b05f087f17b022cef21870223a2be5e0fb9",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/clean_raw/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "98c6ae1918fae740bae905dbf2e25565a68590d8678e1ee2a4eeec207ca1dcfe",
+                  "tensor_sha256": "194d1a42935ad06290822414c54f7b1c36d1c22236a7eef18cd2a84c000bc286",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "0a3927c9a01750d786d2f324a95e814f388d4cba5ac351b9ae2eb3d8174e76ea",
+              "clean_repeat_against_committed_native": {
+                "future_tensor_exact": true,
+                "future_slots_mse": 0.0,
+                "native_score_exact": true,
+                "native_score_absolute_delta": 0.0
+              }
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.6259958148002625,
+              "future_audit": {
+                "input_latent_sha256": "f7dd7c548c21c95ac742130ea8cf5c785813136ba1a2516abdb63f45b7ba03bf",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "83c8019c6ce6c95d61f920908ee3e2a2b22b44ef43c96724e45de1403cfbf0e0",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "afb25737c9895f9878322873a91e2e3902cfe3dc5a19d6485173f12ebee05bce",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "21b99b5dc646f8b4f44bbc017805121a39bdc8025b74b59a0d40edf8c61c0d15",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_080/clean_raw/candidate_01_future.pt",
+                "file_sha256": "465010cca6a526e4fb9bd8eb670a983d8754c560a6e13c91cf1fd5d835536860",
+                "tensor_sha256": "afb25737c9895f9878322873a91e2e3902cfe3dc5a19d6485173f12ebee05bce",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_080/clean_raw/candidate_01_value.pt",
+                "file_sha256": "d357f93e5e17ed6ef5fb8bfe838b07c5df17f4f4295a6cdc739023907d29bd55",
+                "tensor_sha256": "1313de8edda8fa8639cbce1645e3908118edce8cc56fefefd9e6cdfb7e154846",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_080/clean_raw/candidate_01_wrist.npy",
+                  "file_sha256": "7da7c50559a1ee36c8a44643ade806bd001637c610677278f223dddd10deadce",
+                  "array_sha256": "73fc151f8e93c8d8c42700f1ee349087b6d226ca13c36f33048cc64847015288",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_080/clean_raw/candidate_01_primary.npy",
+                  "file_sha256": "a65289c99eb7eb21566c7a4370065a3a8b2872b02290371bedc901c3f53d10dd",
+                  "array_sha256": "32dadcac9f4897591383415c9889aefc3f68174f2fe741c4024218d744367438",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.6259958148002625,
+                "audit": {
+                  "input_latent_sha256": "afb25737c9895f9878322873a91e2e3902cfe3dc5a19d6485173f12ebee05bce",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "21b99b5dc646f8b4f44bbc017805121a39bdc8025b74b59a0d40edf8c61c0d15",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/clean_raw/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "33d7d0f1411a757a654b36d1a27f6eb76870c964d7b8d9133849755104817958",
+                  "tensor_sha256": "afb25737c9895f9878322873a91e2e3902cfe3dc5a19d6485173f12ebee05bce",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/clean_raw/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "e8abc588ed4ad5b391c6ca717c0906b7e0e0b1b2352c02beb1073c9dc3543d94",
+                  "tensor_sha256": "1313de8edda8fa8639cbce1645e3908118edce8cc56fefefd9e6cdfb7e154846",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.6259958148002625,
+                "audit": {
+                  "input_latent_sha256": "afb25737c9895f9878322873a91e2e3902cfe3dc5a19d6485173f12ebee05bce",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "21b99b5dc646f8b4f44bbc017805121a39bdc8025b74b59a0d40edf8c61c0d15",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/clean_raw/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "1c2b1e2ada619783c95bb6cbfb31970ceff4e9fdfb7b89c44303749b5ad686b2",
+                  "tensor_sha256": "afb25737c9895f9878322873a91e2e3902cfe3dc5a19d6485173f12ebee05bce",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/clean_raw/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "3598b4ac4fa183b8df2f50a9ba814f18ef106d4f9fa20653468c9491eb0d2f75",
+                  "tensor_sha256": "1313de8edda8fa8639cbce1645e3908118edce8cc56fefefd9e6cdfb7e154846",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": true,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "72d49cffd09fc64a40366211e43bb66937e50daf58a648d23fd7854c1d9afcec",
+              "clean_repeat_against_committed_native": {
+                "future_tensor_exact": true,
+                "future_slots_mse": 0.0,
+                "native_score_exact": true,
+                "native_score_absolute_delta": 0.0
+              }
+            }
+          ],
+          "selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6347740888595581,
+              0.6259958148002625
+            ],
+            "margin": 0.008778274059295654,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6347740888595581,
+              0.6259958148002625
+            ],
+            "margin": 0.008778274059295654,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6347740888595581,
+              0.6259958148002625
+            ],
+            "margin": 0.008778274059295654,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        },
+        "canonical_tile": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.6348769664764404,
+              "future_audit": {
+                "input_latent_sha256": "ef061c2bee6b105802e9a358973279ae2c051c971eb049307f33f6db4bb95c2f",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "dd61ed3cf9a485fae1bdb1e9d08e16062224092daf41992c810b7d7dc510b154",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "4126720aacf408399caff15ec1b0957fcada7edd62c2bc3e9da24d93af477a47",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "3efaafd161a2ba307ba36b2da256dfb028ea265ff12583471ddf214c7c3d67fc",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_080/canonical_tile/candidate_00_future.pt",
+                "file_sha256": "7812a88b907a899ce4e9ba7063ea4f47c9a0d6f1aa3cb5f436e41845e675eca7",
+                "tensor_sha256": "4126720aacf408399caff15ec1b0957fcada7edd62c2bc3e9da24d93af477a47",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_080/canonical_tile/candidate_00_value.pt",
+                "file_sha256": "70e8b138fe9bbb0be802e0abb7f80027223ffab3520f4299d9e510abd3e52b02",
+                "tensor_sha256": "820de7775c667372edb0f012e60f15e436a3ea109ca0ab2ef15d102941ab9ed4",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_080/canonical_tile/candidate_00_wrist.npy",
+                  "file_sha256": "a59030be391f173063a3b3cee571a33876f399a5e746930c44eb63a7b0c7a469",
+                  "array_sha256": "85979296af0f92466256b8107d17ccd8d0cbb621ef31c2b2135dffeef9c092bc",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_080/canonical_tile/candidate_00_primary.npy",
+                  "file_sha256": "e0f6b9d2d5648e2635c92276ed77792d5ca9b1f0afb448477ce83b7048f30752",
+                  "array_sha256": "538cc90fa69b26709eb2434781a61af9e7462922ef54d93a24ac995de1eb13ad",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.6347772479057312,
+                "audit": {
+                  "input_latent_sha256": "ea005f1d80114d61c4a57e8428a2dacbf48d497b86a3e8ebe1be0c86ce540a0e",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "7a457d0768a439d6a581d51144239772a3b72600ddc638b881e580d966abb989",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/canonical_tile/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "27e1acf19b381088fac6c6568e8edf6156fb54a778fdc3ffe28a4542e0f335dc",
+                  "tensor_sha256": "ea005f1d80114d61c4a57e8428a2dacbf48d497b86a3e8ebe1be0c86ce540a0e",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/canonical_tile/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "0c510208fd7bd245b079f2b7fcf883d429bfc1e9cc344a4539dac53285757c03",
+                  "tensor_sha256": "e1a3b8e431a9992c8dddc700d5fdb40d37527322bd6764ef87b33d47170e6960",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.6346892714500427,
+                "audit": {
+                  "input_latent_sha256": "4d3e79b490c7e0d900b1e51116694ddb3aa43409677c0d0b25eef527a5da85b0",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "87737e409a1b95d656478b50d5dc8795daa0d4c2d3d661a76a2ac792fabfa1a8",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/canonical_tile/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "0fc707b216b3332bf8d40656e16acbf83a7b0bd64369ab75658686ad8962d993",
+                  "tensor_sha256": "4d3e79b490c7e0d900b1e51116694ddb3aa43409677c0d0b25eef527a5da85b0",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/canonical_tile/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "314c925f7cf65e462f3211214a122c49742658da3643e844e9387627b782bca9",
+                  "tensor_sha256": "ddac4492b2d9b7326c21e3380a088117d83e861bc4bbdeabc329a57af9b159b7",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "0a3927c9a01750d786d2f324a95e814f388d4cba5ac351b9ae2eb3d8174e76ea"
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.6263219118118286,
+              "future_audit": {
+                "input_latent_sha256": "1847ac13630a3b47b3969717a7d196a2601543d81a3ffa484b731797e0078ae0",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "2c70883599a2e855e2970cf5417695517c39b21f17f41cba1163cd4e3decdc05",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "99ed22e567e941d993130741a6cf2737796801f983d9f195b0849daed62dd18f",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "e136c36c973d7c4ec6b5c7d5f548d607b3dad0312a719581ad91b7d33a10bdb7",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_080/canonical_tile/candidate_01_future.pt",
+                "file_sha256": "af53afec2e98bfcf9ca04262a63763b90adfbe3170d1f5a59cf26ebfdcc6b774",
+                "tensor_sha256": "99ed22e567e941d993130741a6cf2737796801f983d9f195b0849daed62dd18f",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_080/canonical_tile/candidate_01_value.pt",
+                "file_sha256": "11a72434809137f6217114e909c5feb1eb9eae5278e1afcd23f833408c9be409",
+                "tensor_sha256": "3ff0c9a19ddeaacd5b93075a627e8b5fe8ca77d613b43c6dd53d6f7086940c26",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_080/canonical_tile/candidate_01_wrist.npy",
+                  "file_sha256": "1a63055fde3654baef78b3e14352ccbb385568f6c62188ca62ed60e195ddd6d5",
+                  "array_sha256": "0b487458cf546dcfcd5f88801161399b2bd02c88adde0a604af6e214f32f54b1",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_080/canonical_tile/candidate_01_primary.npy",
+                  "file_sha256": "1ef3bb62f786e6e66695ac9f40e42bad2af80cd580e9a848a5b9c754df9265e8",
+                  "array_sha256": "4c55d46b75a89fb86c54ecbbee001e4ebf7f0802a4dd01f4eed541cc8e5e8a47",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.6265093088150024,
+                "audit": {
+                  "input_latent_sha256": "c79022b921079062dd0631ddc24cbecd3f695de07be9e59751c0cea8e558d360",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "de970fdd6d502ccdcfac4dad3e342c6f19d207003bbabfb09118b04f66f9e274",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/canonical_tile/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "81c7261754a93b69932766518ff91fe6517e06a10a1746e9f446840aded80bcb",
+                  "tensor_sha256": "c79022b921079062dd0631ddc24cbecd3f695de07be9e59751c0cea8e558d360",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/canonical_tile/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "4c0aa88683b8bbcfff35cfe52dadd084f95a0b40aa0c6263d7504eeda13f6317",
+                  "tensor_sha256": "6bac6feaccc42b68d3ec1b0ed3457dc3de5de68c3afe375a349413d85abdb542",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.6257451772689819,
+                "audit": {
+                  "input_latent_sha256": "b03a662a1ecc70deb34747b205adac8288911722b3836a4a4d40d24b1bb14095",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "3aa4f9aeaccac18301ba5d9a6129672258e8002871068e2561902f44d84404e9",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/canonical_tile/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "d16e5b1c08b78c5e18f496f73345784bb508bf55583b96912c53ec5fd778a7d9",
+                  "tensor_sha256": "b03a662a1ecc70deb34747b205adac8288911722b3836a4a4d40d24b1bb14095",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/canonical_tile/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "b7debd190958936d4a69b225fec07cbf4a88dad86e25c78be1cf86bd376f114b",
+                  "tensor_sha256": "672d08415cf4387ed775318ad391ac57b460ddc1e6227351c55ee945b56e1ff1",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "72d49cffd09fc64a40366211e43bb66937e50daf58a648d23fd7854c1d9afcec"
+            }
+          ],
+          "selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6348769664764404,
+              0.6263219118118286
+            ],
+            "margin": 0.008555054664611816,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6347772479057312,
+              0.6265093088150024
+            ],
+            "margin": 0.00826793909072876,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6346892714500427,
+              0.6257451772689819
+            ],
+            "margin": 0.008944094181060791,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        },
+        "reverse_copies": {
+          "candidates": [
+            {
+              "status": "predicted",
+              "seed": 31,
+              "predicted_value": 0.6325493454933167,
+              "future_audit": {
+                "input_latent_sha256": "aa7e0a8007af0a0a2e6971f91f2c809f8c63657557bf9ee1f0797da7dec408fa",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "b8929aad28a66dc6d3b6be837d279075defab63f034b1b0225f669cc4a0b93c4",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "46740a3610a61c59b53efe17a5c0641f8d1e1f1e8f387cb295e0863ef6fdf854",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "94b1cb3ce453db8d38e6492f22e859a7c322b3207cea536b297a4bd2907a6730",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 31,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                  "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_080/reverse_copies/candidate_00_future.pt",
+                "file_sha256": "02fe4b583a90943033e88b8f6f3098a8a80b881cf37e8c586b787aed86e4d951",
+                "tensor_sha256": "46740a3610a61c59b53efe17a5c0641f8d1e1f1e8f387cb295e0863ef6fdf854",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_080/reverse_copies/candidate_00_value.pt",
+                "file_sha256": "c7f08731fbbdf323b1efc1d383fd8732dd4f1d12058005292c0797f686896452",
+                "tensor_sha256": "2351d7279e6e5c108d409957f96744def91702e7b95e83c60f10eb1b92df8ff6",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_080/reverse_copies/candidate_00_wrist.npy",
+                  "file_sha256": "b74098ed0d643202a1bedb237950289b2e62180b90194bf6d8a16d65759499f9",
+                  "array_sha256": "90a2ea7c071e0178e0965db5844689f6a6e9777a74d94ce60a5cea401c7a3bd4",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_080/reverse_copies/candidate_00_primary.npy",
+                  "file_sha256": "576f4606ad795d685034203910b44f04706826b75799d9ae5a662252936cc87f",
+                  "array_sha256": "da017653408b821f091116911cc1c23d479c15355d017f3a44274eeedc1391d2",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.6325368881225586,
+                "audit": {
+                  "input_latent_sha256": "b0a15c8b2563bafcb7c974ee9909eb34b0026513c42c53b7b169ef48298b68be",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "c9ca759b496bd6e8e8fa7b4e47e3e810feb4dbecf984f9ee6c97c14a3a4c7054",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/reverse_copies/candidate_00_forecast_only_value_control_input.pt",
+                  "file_sha256": "188e33c50972d9249bb1a19bb0e34a7552896a68c8f735fe66397602a7b56fbb",
+                  "tensor_sha256": "b0a15c8b2563bafcb7c974ee9909eb34b0026513c42c53b7b169ef48298b68be",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/reverse_copies/candidate_00_forecast_only_value_control_output.pt",
+                  "file_sha256": "ec2c0bad2012770afe8eaceb9a4d8f1c176a43c09e20895df00027062fedf4ab",
+                  "tensor_sha256": "ac22db58cb9db035b0857ec1f46d6a3aef0d13975a64e7c5a0684bb4d04e13e9",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.6347753405570984,
+                "audit": {
+                  "input_latent_sha256": "bd753401421d4a32189ec4d30d2eb0e64ce409f87d3e43e7c62ce05640ce2319",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "2a305cffe4bf373389908de844f3015edc72245d7afce471c0baafc5ff8ccde9",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 31,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "9a891c05acf13d183796547f86562c0460053ccb4d7449b8822b9854c72774ab",
+                    "sigma80_noise_sha256": "4b2ca377c62a78f636a61e12f9b142ce90880c04e5d92dd971ce48a577932fcf"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/reverse_copies/candidate_00_value_direct_only_control_input.pt",
+                  "file_sha256": "053bd6de14b822edd199ebcaf32bd230d23e25d560d7ea54ab5818d4aae0b968",
+                  "tensor_sha256": "bd753401421d4a32189ec4d30d2eb0e64ce409f87d3e43e7c62ce05640ce2319",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/reverse_copies/candidate_00_value_direct_only_control_output.pt",
+                  "file_sha256": "357af6998a262bc6f6b356d0244ee012ba3e4c687c358799f917fb9812a5acd3",
+                  "tensor_sha256": "70ee2beda2c0888dc59ecab9d0a2e4e5e439e9d6f7b52e562522ca6d6d98eff5",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 0,
+              "candidate_actions_sha256": "0a3927c9a01750d786d2f324a95e814f388d4cba5ac351b9ae2eb3d8174e76ea"
+            },
+            {
+              "status": "predicted",
+              "seed": 32,
+              "predicted_value": 0.6260411739349365,
+              "future_audit": {
+                "input_latent_sha256": "7e16c1da09c06293bfc85ada13ae596eb5fbef71318d1ff7bcef386da78e466a",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "919fcb16b2d23880096d45641fe5531239f2d6b2df26959e8ed065d57ade34ca",
+                "conditioning_prefix_slots": 5,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "value_audit": {
+                "input_latent_sha256": "791cfe37ab1016754706765f4ec60b063e724f94c58eae532598276c0d555622",
+                "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                "conditioning_prefix_sha256": "718d5c0b978e0a7e008c402665c312b2719cea97074e4871989535a39bf6489b",
+                "conditioning_prefix_slots": 8,
+                "rng": {
+                  "seed": 32,
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                  "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                }
+              },
+              "future_latent": {
+                "path": "prefix_080/reverse_copies/candidate_01_future.pt",
+                "file_sha256": "5e0a285864762483fe6b88990ebc2e16e908e4bba9fd250fdd5eccc8f4ee9529",
+                "tensor_sha256": "791cfe37ab1016754706765f4ec60b063e724f94c58eae532598276c0d555622",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "value_latent": {
+                "path": "prefix_080/reverse_copies/candidate_01_value.pt",
+                "file_sha256": "c5c8b3bc75d6bfd5d6f3e85cc797052bd5262f0541c3decb13a61ebbb9826484",
+                "tensor_sha256": "ef138e8ff82a14ff69f7e5251662ba537e623d4017a75513d40db332844a940f",
+                "shape": [
+                  1,
+                  16,
+                  9,
+                  28,
+                  28
+                ],
+                "dtype": "torch.float32"
+              },
+              "decoded_future_images": {
+                "wrist": {
+                  "path": "prefix_080/reverse_copies/candidate_01_wrist.npy",
+                  "file_sha256": "c657b0cc6e625715555c0242b4851311ea1b759e869ed1f34b2ebce55c3d8d55",
+                  "array_sha256": "445be74cabdd879bdc2ef6aee966960d15f6fe9e992c0de959bec62b84f87c00",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                },
+                "primary": {
+                  "path": "prefix_080/reverse_copies/candidate_01_primary.npy",
+                  "file_sha256": "02a46d6d6ebeff4aa09ff1fe32318f29040eb6ab286f34dc0a17ac9010327996",
+                  "array_sha256": "40100904e41f685e51e27a6c42cdd7e89bd75189d70890fdcfab1906ad28cc82",
+                  "shape": [
+                    1,
+                    224,
+                    224,
+                    3
+                  ],
+                  "dtype": "|u1"
+                }
+              },
+              "forecast_only_value_control": {
+                "predicted_value": 0.62577885389328,
+                "audit": {
+                  "input_latent_sha256": "7d48c46bb24417086c47c10d80a83cf0044a24d43ffe85de452de4e1e846d8e3",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "fe63a06f08fe770645240db47f90d9c4c9409d2ab6debf875ff7103d73f1e51b",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/reverse_copies/candidate_01_forecast_only_value_control_input.pt",
+                  "file_sha256": "05ba45d54e0f38420fcd9380f69566c0780572355eaafa2004c0fc6be0fb93df",
+                  "tensor_sha256": "7d48c46bb24417086c47c10d80a83cf0044a24d43ffe85de452de4e1e846d8e3",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/reverse_copies/candidate_01_forecast_only_value_control_output.pt",
+                  "file_sha256": "645c23c318d4e6039cb76f14a670ba1a6932daaf3bc65126ed07522e75ea58d7",
+                  "tensor_sha256": "0838ea08aec651e112fc4cd2b0882fab5bd730bc8378115945fff2aa7bec0cdd",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "rawA + aliasF: restore committed original raw action slot4, retain alias future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "value_direct_only_control": {
+                "predicted_value": 0.6265662908554077,
+                "audit": {
+                  "input_latent_sha256": "77a61eb888320a11bd504a5f310060b9e688994b2c40c0a5da206bb2d75bd0ca",
+                  "text_sha256": "345b51f5220fc1991885446c0d9c72f4abece0d2db46bb2afa908e6fbb96e837",
+                  "conditioning_prefix_sha256": "0a687d75c01923129aa9a3a81fabdad2914a3c5f44971cf25945230428a5d793",
+                  "conditioning_prefix_slots": 8,
+                  "rng": {
+                    "seed": 32,
+                    "shape": [
+                      1,
+                      16,
+                      9,
+                      28,
+                      28
+                    ],
+                    "unit_noise_sha256": "02583789bd02d7bba51915fd2ef7b8d06b96bca3725d5cadafed192fa97439e3",
+                    "sigma80_noise_sha256": "62869f2c8d839e5d30932bd7a4ca0daacae843098a3e60f1a2fe3730067dae29"
+                  }
+                },
+                "value_input": {
+                  "path": "prefix_080/reverse_copies/candidate_01_value_direct_only_control_input.pt",
+                  "file_sha256": "9a2d100dd3c0600a409b7bb05e03ff0bd8379ad28549f6721dc3661d49be0b2b",
+                  "tensor_sha256": "77a61eb888320a11bd504a5f310060b9e688994b2c40c0a5da206bb2d75bd0ca",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "value_latent": {
+                  "path": "prefix_080/reverse_copies/candidate_01_value_direct_only_control_output.pt",
+                  "file_sha256": "ed63e9141ad765e791949985ea6df47d2d97e02ed10ec511b023af1592415f5d",
+                  "tensor_sha256": "4b1ab7f2d2d98555dc9ecdd4bb866f7425ab5a6e90d3c8f4c373879d2b322c11",
+                  "shape": [
+                    1,
+                    16,
+                    9,
+                    28,
+                    28
+                  ],
+                  "dtype": "torch.float32"
+                },
+                "reuses_identical_native_conditioning": false,
+                "operation": "aliasA + cleanF: use alias action slot4 and matched Clean future slots5:8; original Goal and RNG. Mechanism ablation, not native execution."
+              },
+              "index": 1,
+              "candidate_actions_sha256": "72d49cffd09fc64a40366211e43bb66937e50daf58a648d23fd7854c1d9afcec"
+            }
+          ],
+          "selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6325493454933167,
+              0.6260411739349365
+            ],
+            "margin": 0.006508171558380127,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_status": "available",
+          "forecast_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6325368881225586,
+              0.62577885389328
+            ],
+            "margin": 0.0067580342292785645,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "value_direct_only_selection": {
+            "rank": [
+              0,
+              1
+            ],
+            "selected_index": 0,
+            "scores": [
+              0.6347753405570984,
+              0.6265662908554077
+            ],
+            "margin": 0.008209049701690674,
+            "exact_tie": false,
+            "near_tie_le_1e_6": false,
+            "tie_rule": "first candidate index, matching native max"
+          },
+          "ranking_flip_from_clean": false
+        }
+      }
+    }
+  ],
+  "arms": [
+    "clean_raw",
+    "canonical_tile",
+    "reverse_copies"
+  ],
+  "original_goal": "open the middle drawer of the cabinet",
+  "value_path_controls": "full 2x2",
+  "proposal_queries_generated": 0,
+  "api_requests": 0,
+  "training_updates": 0,
+  "forecast_error": null,
+  "real_utility": null,
+  "outcome_values_not_parsed_or_used": true,
+  "limitations": [
+    "Internal representation intervention requiring write access; no external attack demonstrated.",
+    "No Goal changes: this does not establish the Goal-Bus hypothesis.",
+    "Same executed actions do not prove that official forecasts promised to ignore internal latent residuals.",
+    "CPU equivalence does not certify CUDA equivalence; deployment-device gate is mandatory.",
+    "Predicted values and ranking flips are not actual utility or attack success.",
+    "Native Value directly sees action slot4 as well as forecast slots5:8; native ranking effects need not be forecast-mediated.",
+    "Fixed-seed paired sample differences do not establish a difference between output distributions.",
+    "Native proposal/future/value reuse candidate seed31 or32; residual representations may couple to the shared model-sampling index. Independent forecast/value seeds are a future follow-up, not part of this registered probe.",
+    "Projected canonical tensors have a small final-copy correction; they are not exactly tiled actions.",
+    "Three correlated prefixes from one successful trajectory, two candidates each; no population inference.",
+    "Existing outcomes were available during design. Reuse is developmental, not a new blinded or held-out experiment.",
+    "Recorded utility is fixed candidate plus original-goal native N1 continuation, not full-episode native N2 utility."
+  ],
+  "backend": {
+    "device": "cuda",
+    "offload": false,
+    "native_helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+    "cudnn_deterministic": true,
+    "full_transformer_engine_parity_established": false,
+    "compatibility_shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809"
+  }
+}

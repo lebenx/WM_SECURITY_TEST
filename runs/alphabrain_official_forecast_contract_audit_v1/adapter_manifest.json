@@ -1,0 +1,60 @@
+{
+  "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+  "files": [
+    {
+      "path": "scripts/cosmos_policy_native_inference.py",
+      "sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf"
+    },
+    {
+      "path": "scripts/cosmos_policy_codecs.py",
+      "sha256": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330"
+    },
+    {
+      "path": "scripts/cosmos_policy_wan_vae.py",
+      "sha256": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1"
+    },
+    {
+      "path": "scripts/cosmos_policy_cuda_offload.py",
+      "sha256": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025"
+    },
+    {
+      "path": "scripts/check_cosmos_policy_native_inference.py",
+      "sha256": "90aaebdbe64faa806dc8a70e8a17579ed6decb2c0ab816f3581e8fe72391fc32"
+    },
+    {
+      "path": "scripts/pilot_cosmos_policy_native_task_gate.py",
+      "sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94"
+    },
+    {
+      "path": "scripts/download_cosmos_policy_checkpoint.py",
+      "sha256": "2f907694f38d32beed65e16c52576674c0eb9aee35e76570c4f08b9fd059cb51"
+    },
+    {
+      "path": "scripts/cosmos_policy_torch_compat.py",
+      "sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809"
+    },
+    {
+      "path": "scripts/pilot_cosmos_counterfactual_action_ranking.py",
+      "sha256": "088392537593572e031b3ea6a8671d1b6abba7e03e6e661b5474090ac8bae942"
+    },
+    {
+      "path": "scripts/cosmos_counterfactual_replay.py",
+      "sha256": "4f09405a0d8cfb499e8e7c91843d42f5ee4ee758746c68683858f4f648f03ae6"
+    }
+  ],
+  "gpu_execution": "not started; parent requested deferral while shared GPU has ~1.2GB free",
+  "weights": "NVIDIA checkpoint + independently verified original tokenizer; no Alpha learned DiT weights used",
+  "strict_cpu_verification": "cpu_full_checkpoint_verification_corrected_rope.json",
+  "historical_strict_cpu_verification": "cpu_full_checkpoint_verification.json",
+  "rope_component_verification": "cpu_rope_shim_parity_v1.json",
+  "ranking_contract_verification": "ranking_cpu_contract_test.json",
+  "verification_scope": {
+    "strict_weight_loading": true,
+    "copied_codec_and_vae_ast_parity": true,
+    "denoise_sampler_noise_checks": "Captured/fake DiT inputs and synthetic functions, not learned attention forward",
+    "rope_check": "CPU exact vs TE v2.7 official unfused arithmetic; does not prove CUDA fused equality",
+    "offload_check": "Reference-vs-offloaded same adapted implementation; does not establish upstream parity",
+    "full_transformer_engine_equivalence": false,
+    "ranking_contract_tests": "Synthetic CPU endpoints only; no actual rank-flip/forecast-error/utility evidence"
+  }
+}

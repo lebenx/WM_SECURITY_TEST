@@ -1,0 +1,33 @@
+```json
+{
+  "candidates": [
+    {
+      "name": "cross_task_slot_assignment_hijacking",
+      "one_sentence_claim": "在共享实体槽位的对象感知世界模型中，特定任务特异的交互槽位如果被极微弱的输入引导诱导发生隐式槽位置换（slot permutation），动力学预测虽然单步均方误差保持极低，但因槽位语义拓扑反转导致以槽位特征为条件的交互控制发生全局性反向决策。",
+      "carrier_and_exact_code_path": "vendor/ActSWM (具体路径: vendor/ActSWM/models/slot_attention.py 中的 SlotAttention 模块与 vendor/ActSWM/models/world_model.py 中的 transition 预测)",
+      "attacker_capability": "仅限测试期/规划时观察输入注入微小不可感知的高频扰动（L_infinity <= 2/255），无权重修改、无离线投毒能力。",
+      "mechanism_not_in_excluded_families": "不依赖 OOD 几何漂移或动作不敏感性；属于注意力竞争机制下的'对称性破缺鞍点扰动'（Permutation Equivariance Subversion）。Slot Attention 本身对槽位无序等变，但下游基于槽位索引或槽位相关性构建的交互策略依赖局部槽位的语义连续性。微小扰动改变了 Slot Attention 迭代的初始化竞争盆地，造成离散槽位配对互换，使得交互实体与背景实体的动态预测在槽空间完成拓扑交换。",
+      "short_falsification_experiment": "使用 vendor/ActSWM 在其内置多物体交互环境中运行 50 步轨迹，通过 FGSM 在 slot_attention 的 k/q 点积投影上求解扰动，促使 Slot 0 与 Slot 1 的 assignment weights 发生互换。门槛检验：检查在重建误差变化小于 5% 的同时，Slot 特征与下游 Action 预测的相关性矩阵是否发生置换（Permutation Matrix），导致闭环动作方差在特定物体接触帧突增 >300%。",
+      "observable_invariant": "Slot Attention 的注意力矩阵跨物体分配熵（Cross-Entropy between slot assignments and true mask）发生跳变，且 Slot 特征的置换矩阵检验 Trace(P^T * P_target) == N_slots。",
+      "repair": "在 SlotAttention 迭代更新后引入基于跨时间步匈牙利算法（Hungarian Matching）的槽位身份锚定锁（Slot Identity Anchor），强制时序相邻步的槽位特征余弦相似度最大化配对，消除竞争对称性鞍点。",
+      "novelty_score": 8,
+      "breadth_score": 8,
+      "main_risk": "ActSWM 的多物体环境如果槽位数量过少（例如仅2个）或背景Slot占主导，扰动可能直接退化为普通重建噪声，破坏潜空间重构而非离散语义置换。"
+    },
+    {
+      "name": "multitask_task_embedding_manifold_stitching_vulnerability",
+      "one_sentence_claim": "多任务TD-MPC2中离散任务Embedding驱动的条件化LayerNorm在插值流形上存在'几何空洞'，导致恶意诱导的任务相似度扰动使单步潜状态动力学陷入伪吸引子，造成CEM轨迹优化在连续多步内退化为完全确定性的错误极限环。",
+      "carrier_and_exact_code_path": "vendor/tdmpc2/tdmpc2/models/world_model.py (具体行号逻辑: WorldModel._dynamics 中的 task_emb 调制层与 forward/predict 中的 task 条件分支，对应 src/wm_security/tdmpc_native.py 的 native 封装)",
+      "attacker_capability": "仅限测试期对初始观测添加 bounded 扰动，或在多任务推断时假定任务指示向量存在微弱浮点校准噪声（epsilon < 1e-3）。",
+      "mechanism_not_in_excluded_families": "不属于 shared-trunk negative transfer（非跨任务数据污染）或 latent drift；属于条件调制网络（Task-conditioned FiLM/AdaLN）在离散任务簇边界外的'非线性吸引子塌缩'（Manifold Stitching Singularity）。当任务向量微调偏离正交基时，连续化残差动力学矩阵从发散转变为收缩射影，剥夺了 CEM 优化器探索真实动作梯度的能力，迫使所有 CEM 采样点坍缩至单一低维流形。",
+      "short_falsification_experiment": "在 src/wm_security/tdmpc_native.py 中加载 official TD-MPC2 mt30-48M，选取 2 个具有中等相关性的任务（例如 walker-walk 与 walker-run）。在 walker-run 推断时，对 task_emb 施加沿跨任务测地线方向的微弱投影偏移（alpha ∈ [0.01, 0.05]）。运行 20 步原生 CEM，记录 CEM 在各迭代轮次中采样候选轨迹的互方差（cross-sample variance）与动力学 Jacobian 谱半径。",
+      "observable_invariant": "CEM 第0轮到最后一轮轨迹分布的样本协方差矩阵迹 Trace(Cov(A_samples)) 在受扰后单调降至 clean 的 10% 以下，且动力学转移函数对动作的局部 Jacobian 矩阵奇异值比 clean 骤降 >2 个数量级。",
+      "repair": "在 Task Embedding 输入层增加正交基硬投影（Hard Simplex Projection）与 Lipschitz 正则化缩放门控，截断 FiLM/AdaLN 参数在偏离已注册任务流形时的调制增益。",
+      "novelty_score": 7,
+      "breadth_score": 8,
+      "main_risk": "mt30-48M 内部 task embedding 可能是离散 Embedding table 索引而非连续输入；若 native forward 中 task 为离散 int index，该扰动需要在其内部查找表输出处做数学等价映射，纯黑盒 API 无法直接注入。"
+    }
+  ],
+  "recommended_next_step": "立即在 vendor/tdmpc2 与 src/wm_security/tdmpc_native.py 上编写单个单文件脚本，针对 official mt30-48M 执行 candidate 2 的短门验证：提取 walker 族任务的 Task Embedding 输出向量，施加沿流形差向量的 3% 微扰，单卡在 15 分钟内测量 CEM 内部轨迹协方差矩阵迹及谱半径是否发生骤降，以快速排除其是否仅是普通敏感性退化。"
+}
+```

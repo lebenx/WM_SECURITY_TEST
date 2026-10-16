@@ -1,0 +1,40 @@
+{
+  "verdict": "REJECT_ALL",
+  "candidate_claim": "A world-model trajectory verifier factorized into forward state plausibility and sparse inverse-action reachability admits an in-support bypass where legal actions leave the factorized subspace fully reachable and plausible while accumulating irreversible downstream drift in unmonitored collateral dynamics, fixable by checking orthogonal causal invariants rather than expanding the inverse dynamics action dimension.",
+  "novelty_score": 5,
+  "novelty_argument": "Factorizing dynamics into action-relevant control subspaces and passive/collateral state subspaces is a well-established concept in robotics and control theory (e.g., zero dynamics, unobservable subspaces, uncontrollable modes). When a verifier projects reachability onto a sparse subspace, failing to verify the orthogonal zero dynamics is functionally equivalent to an unobserved subspace or partial specification defect. The claim is mechanistically true but standard: restricting verification to a projection allows adversarial drift in its kernel.",
+  "overlap_risks": [
+    "Classical non-minimum phase systems and unstable internal/zero dynamics in nonlinear control theory.",
+    "Partial observability / unmonitored coordinate leakage in trajectory safety filters and control barrier functions (CBFs).",
+    "Known limitations of factorized and sparse world models (e.g., action-conditioned representation learning with invariant causal mechanisms, bisimulation metrics that contract task-irrelevant state)."
+  ],
+  "minimum_gate": {
+    "protocol": "Find an open-loop or closed-loop policy sequence entirely in the nominal support of the dataset where: (1) WAV state plausibility score exceeds nominal threshold tau_p, (2) WAV inverse reachability loss is below nominal reconstruction threshold tau_r across all timesteps, (3) safety invariant on collateral state C is violated at horizon H, and (4) an intervention using causal complement bounds catches the violation while a naive 2x denser inverse model fails.",
+    "metrics": [
+      "Bypass Success Rate (BSR): Fraction of runs where verifier accepts (p_score >= tau_p, r_loss <= tau_r) yet safety predicate S(s_H) = 0.",
+      "In-Support Wasserstein Distance: W1 distance of action distribution relative to nominal RoboMimic/ManiSkill demonstrations to guarantee strict legal in-support execution without out-of-distribution actuation."
+    ]
+  },
+  "repair": "Construct a complement-state invariant via Lie-derivative / monotonic energy dissipation bounds on the orthogonal subspace (ker(P_action)), certifying that passive/unmonitored state drift remains strictly bounded within the invariant set without feeding the raw collateral coordinates directly into the action inverse model.",
+  "scale_plan": {
+    "tasks": [
+      "ManiSkill PickSingleYCB / TurnFaucet with structural thermal/joint wear or unlatched environmental constraints as collateral state.",
+      "RoboMimic Can / ToolHang with fragile workspace boundaries where unmonitored passive object tipping occurs under legal gripper motions."
+    ],
+    "baselines": [
+      "Standard WAV (baseline sparse inverse reachability)",
+      "Dense WAV (inverse dynamics model trained on all state dimensions)",
+      "Hamilton-Jacobi Reachability / CBF safety filter over full state space",
+      "Bisimulation-contracted world model verifier"
+    ]
+  },
+  "falsifiers": [
+    "If dense full-state inverse reachability or standard state plausibility generators naturally flag collateral state deviations because real-world physics tightly couples action-insensitive variables to action-sensitive variables.",
+    "If adversarial action trajectories that corrupt collateral state inevitably induce out-of-distribution transitions in the action-relevant subspace, collapsing the attack into ordinary OOD detection failure."
+  ],
+  "sources": [
+    "Isidori, A. (1995). Nonlinear Control Systems (Zero Dynamics and Internal Stability).",
+    "Zhang et al. (2020). Invariant Causal Mechanisms through Action-Conditioned Representations / Learning Invariant Representations for Reinforcement Learning (Bisimulation Metrics).",
+    "Ames et al. (2019). Control Barrier Functions: Theory and Applications."
+  ]
+}

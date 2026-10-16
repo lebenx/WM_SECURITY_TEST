@@ -1,0 +1,183 @@
+{
+  "status": "completed_native_first_query_preflight",
+  "protocol": "configs/safedreamer_mode_mediator_gate_20261016.json",
+  "backend": "gpu",
+  "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+  "checkpoint": "models/SafeDreamer/osrp_pointgoal1_seed0.ckpt",
+  "stage": "terminal",
+  "activity": {
+    "checkpoint_load_attempts": 1,
+    "checkpoint_loads": 1,
+    "environment_constructions_attempted": 1,
+    "environment_constructions_completed": 1,
+    "environment_resets_attempted": 1,
+    "environment_resets": 1,
+    "environment_steps": 0,
+    "native_policy_queries": 1,
+    "native_policy_queries_completed": 1,
+    "policy_state_initializations": 1,
+    "policy_state_initializations_completed": 1,
+    "native_cem_rounds": 6,
+    "imagined_candidate_transitions": 45000,
+    "counterfactual_queries": 0,
+    "training_updates": 0,
+    "model_api_calls": 0
+  },
+  "clean_competence_measured": false,
+  "attack_measured": false,
+  "mode_gate_passed": null,
+  "peak_process_gpu_mib": 5122,
+  "adapters": [
+    "Native inner Agent + nj.pure(create=False); no dummy training initialization",
+    "Consume and record the constructor's one NumPy RNG draw before the native first policy draw",
+    "AST adds only prior RNG and planner audit output leaves; native expressions retained",
+    "Seed injected at the actual first underlying reset, no preliminary reset",
+    "No eval reporting/video inference and no action execution"
+  ],
+  "elapsed_seconds": 23.765349964029156,
+  "gpu_before": {
+    "index": 0,
+    "uuid": "GPU-5e6f1afb-d1c8-f7ac-9f06-fd6d3622ec5b",
+    "total_mib": 24564,
+    "free_mib": 20852
+  },
+  "allocator_fraction": 0.2,
+  "allocator_budget_mib": 4912.8,
+  "versions": {
+    "jax": "0.3.25",
+    "jaxlib": "0.3.25+cuda11.cudnn82",
+    "numpy": "1.23.5",
+    "optax": "0.1.4",
+    "tensorflow-probability": "0.18.0",
+    "safety-gymnasium": "1.2.0",
+    "gymnasium": "0.28.1",
+    "mujoco": "2.3.3"
+  },
+  "safety_gymnasium_origin": {
+    "url": "file:///home/xhj/WM_Security/runs/safedreamer_mode_mediator_gate_20261016/environment_continuation_20261016/safety-gymnasium-ae966e511b9927f06b39c727ca5c650136a4e696.zip",
+    "archive_info": {}
+  },
+  "safety_gymnasium_training_revision_known": false,
+  "observation_space": {
+    "image": {
+      "shape": [
+        64,
+        64,
+        3
+      ],
+      "dtype": "uint8"
+    },
+    "reward": {
+      "shape": [],
+      "dtype": "float32"
+    },
+    "cost": {
+      "shape": [],
+      "dtype": "float32"
+    },
+    "is_first": {
+      "shape": [],
+      "dtype": "bool"
+    },
+    "is_last": {
+      "shape": [],
+      "dtype": "bool"
+    },
+    "is_terminal": {
+      "shape": [],
+      "dtype": "bool"
+    },
+    "image2": {
+      "shape": [
+        64,
+        64,
+        3
+      ],
+      "dtype": "uint8"
+    }
+  },
+  "action_space": {
+    "action": {
+      "shape": [
+        2
+      ],
+      "dtype": "float32",
+      "low": [
+        -1.0,
+        -1.0
+      ],
+      "high": [
+        1.0,
+        1.0
+      ]
+    },
+    "reset": {
+      "shape": [],
+      "dtype": "bool",
+      "low": false,
+      "high": true
+    }
+  },
+  "observation_shapes": {
+    "image": [
+      64,
+      64,
+      3
+    ],
+    "reward": [],
+    "cost": [],
+    "is_first": [],
+    "is_last": [],
+    "is_terminal": [],
+    "image_orignal": [
+      1024,
+      1024,
+      3
+    ],
+    "image_far": [
+      1024,
+      1024,
+      3
+    ],
+    "image_orignal2": [
+      1024,
+      1024,
+      3
+    ],
+    "image2": [
+      64,
+      64,
+      3
+    ]
+  },
+  "native_rng": {
+    "constructor_draw_consumed": 5874934615388537134,
+    "first_policy_draw": 2488343231644625808,
+    "post_draw_numpy_state": {
+      "bit_generator": "PCG64",
+      "state": {
+        "state": 143609658456486183636066271097634410721,
+        "inc": 87136372517582989555478159403783844777
+      },
+      "has_uint32": 0,
+      "uinteger": 0
+    }
+  },
+  "partial_count_rule": "An interrupted JIT query has unknown completed inner rounds, never zero by assumption",
+  "query_wall_seconds": 15.576673812000081,
+  "native_final_round": {
+    "safe_count": 462,
+    "mode": "safe_reward",
+    "selected_padding": false,
+    "returned_action": [
+      [
+        -0.5591078996658325,
+        0.040787335485219955
+      ]
+    ],
+    "minimum_cost": 0.00011920928227482364,
+    "maximum_cost": 2365.017822265625,
+    "inference_consumed_keys": 79
+  },
+  "next_stage": "independent_replay_calibration_and_fixed_shared_sampler_gate_not_executed"
+}

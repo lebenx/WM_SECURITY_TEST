@@ -1,0 +1,44 @@
+```json
+{
+  "iclr_decision": "Reject",
+  "score": 5.5,
+  "confidence": 4,
+  "novelty_assessment": {
+    "verdict": "Below target (5.5 vs 7.0-7.5 target). The claim of 'temporal-order imprinting' via truthful interaction is an interesting narrative frame, but the empirical support currently conflates directional representation shift/catastrophic forgetting in multi-task latent dynamics with an intentional, MPC-amplified security primitive. Without isolating the geometry of the latent rollouts, it borders on known out-of-distribution dynamics degradation under non-i.i.d. online adaptation.",
+    "closest_prior_overlap": [
+      "Online continual learning / catastrophic forgetting in shared multi-task latent dynamics (e.g., Continual World, Wolczyk et al., NeurIPS 2021; multi-task representation drift under non-stationary updates).",
+      "Model-poisoning and unforced degradation in MBRL where policy-induced data distribution shift degrades planning horizons without altering 1-step validation loss (e.g., Lambert et al., 'Objective Mismatch in Model-based Reinforcement Learning', CoRL 2020; Xiao et al., 'Fresh Dynamics', 2023)."
+    ],
+    "claim_soundness_critique": "The phrase 'alters task-conditioned finite-horizon action-effect geometry without changing one-step branch marginals' is under-evidenced. A single 1-step error ratio of 0.922 across 2 seeds on Walker-Run does not prove marginal invariant geometry. Because the actor is frozen, the degraded target performance (drop from ~670 to ~520) could simply reflect higher multi-step compounding error along the specific high-frequency actuation sub-manifold prioritized by Cheetah-Run's cascade. The effect selectively hitting Walker-Run and Hopper (locomotion with strict phase sync) while sparing Cup-Catch and Walker-Walk strongly suggests kinematic/frequency-band interference in the shared MLP blocks rather than an adversarial geometric imprinting."
+  },
+  "exact_missing_causal_experiment": {
+    "name": "Latent Horizon Jacobian & Open-Loop Planning Interception",
+    "protocol": "To substantiate that the failure is (a) temporal-order specific and (b) amplified by MPC rather than latent value/rollout bias: Compute the multi-step action Jacobian matrix norm ||\\nabla_{a_t} z_{t+k}|| for horizons k \\in {1, 3, 5, 10} under the 4 conditions (Cascade, Reverse, Shuffled, Random) evaluated along the unperturbed target expert trajectories. Then, test an open-loop model rollout evaluation across horizons k \\in {1..12} paired with counterfactual planner ablation: replace CEM with an exhaustive grid/random shooting planner and an oracle planner using true simulator dynamics but evaluating on the adapted latent Q-function. If the open-loop trajectory divergence does not monotonically grow with k solely under the Cascade condition, the amplification mechanism is disproven."
+  },
+  "minimum_iclr_level_table": {
+    "description": "Cross-Horizon Latent Divergence and Planning Sensitivity Matrix (Mean over >= 10 seeds, Walker-Run)",
+    "columns": [
+      "Source Condition",
+      "1-step Dyn Loss (\\times 10^{-3})",
+      "Horizon-5 Latent Drifts (\\ell_2)",
+      "Horizon-10 Latent Drifts (\\ell_2)",
+      "Open-Loop Dyn Error (H=10)",
+      "CEM Return (Plan H=12)",
+      "Random-Shoot Return (Plan H=12)",
+      "Dyn-Adapted Return (Fixed Actor)"
+    ],
+    "required_baselines": [
+      "No Adaptation (Clean Zero-Shot)",
+      "Cascade (Monotone 300-step)",
+      "Reverse Cascade (Temporal Reversal)",
+      "Shuffled Multiset (Marginal-Matched)",
+      "Gaussian Matched Random",
+      "Passive Replay (Target In-Distribution Observation)"
+    ]
+  },
+  "material_upgrade_to_reach_target": {
+    "proposed_concept": "Directional Order Steganography: Passive Latent Asymmetry Injection via Order-Preserving Phase Alignment",
+    "execution_details": "Pivot from a negative 'degradation/poisoning' claim (which reviewers will dismiss as directional forgetting/interference) to an 'asymmetric stealth conditioning' primitive. Engineer a clean-label, fully truthful 300-step source trajectory that acts as an operational trojan: when executed, the multi-task model preserves target forward-prediction accuracy (zero performance loss on standard target tracking), but injects a directed phase bias such that target MPC performance only degrades or sharply changes behavior when triggered by an in-distribution temporal sub-sequence (e.g., a specific legal 3-step gait cadence). Demonstrate that the reverse and shuffled source conditions fail to embed this triggerable vulnerability. This converts an ambiguous interference phenomenon into a rigorous, targeted backdoor vulnerability intrinsic to the temporal inductive bias of Transformer/MLP dynamics in TD-MPC2."
+  }
+}
+```

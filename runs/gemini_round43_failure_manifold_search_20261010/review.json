@@ -1,0 +1,18 @@
+{
+  "verdict": "REJECT_ALL",
+  "candidate_claim": "One-sided supervision in failure-aware world models (training value/dynamics while zeroing action gradients on failure traces) causes closed-loop action collapse/stalls under valid in-distribution prefixes, distinct from distribution shift or standard imitation objective underspecification.",
+  "novelty_score": 3,
+  "why_or_why_not": "The proposed reframe merely re-describes standard partial-information behavior cloning and missing action supervision under selective imitation. Zeroing the imitation loss on negative trajectories inevitably leaves policy actions unregularized (underdetermined) on states visited exclusively during failures. Calling this a 'failure-manifold action underdetermination' is relabeling standard policy-support mismatch (covariate shift / unconstrained policy logits outside positive demonstration support). Furthermore, without empirical proof connecting the shared transformer trunk's consequence-supervision to an induced destabilization of in-support policy heads, this remains a speculative hypothesis.",
+  "minimum_gate": "Demonstrate on the FACT architecture (or exact synthetic analog) a specific transient state sequence S_t where: (1) S_t lies strictly within the convex hull/support of positive demonstration prefixes, (2) injecting failure-only value/future tokens alters the shared representation such that closed-loop policy variance explodes or action norms collapse to zero, and (3) standard BC with identical architecture does not experience this collapse.",
+  "repair": "Ablate the shared prefix representations: train a model with fully decoupled trunks (one dedicated to the policy trained only on successes, one dedicated to world model/value trained on all trajectories). If the failure-induced action collapse only manifests when the prefix is shared, the causal link between consequence-only updates on shared features and action degradation is isolated.",
+  "falsifiers": [
+    "Decoupling the policy trunk from the value/dynamics trunk yields the exact same closed-loop stall/action collapse rate, proving the issue is basic policy out-of-distribution drift rather than consequence-supervision interference.",
+    "Applying an explicit entropy regularizer or fallback prior to action logits on negative trajectories resolves the collapse without altering failure-aware value estimation.",
+    "The policy output maintains non-zero, high-confidence trajectory predictions that match standard covariate shift errors (e.g., repeating the last positive action) rather than an underdetermined action-null/stalling mode."
+  ],
+  "scale_plan": [
+    "Phase 1: Build a minimal, 2D continuous-control or gridworld transformer (e.g., MinAtar or PointMaze) mirroring FACT's exact masking, shared prefix trunk, and loss-masking rules to test the gate in <1 hour of compute.",
+    "Phase 2: Quantify action entropy, cosine distance of shared prefix embeddings, and closed-loop task stall rates across three variants: Shared Trunk (FACT), Decoupled Trunks, and Standard BC.",
+    "Phase 3: Download the 10.4GB FACT checkpoint to a cloud instance (e.g., RunPod/Lambda) to reproduce the specific failing closed-loop rollouts only if Phase 1-2 confirm a shared-trunk causal dependency."
+  ]
+}

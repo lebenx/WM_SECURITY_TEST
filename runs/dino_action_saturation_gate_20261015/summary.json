@@ -1,0 +1,725 @@
+{
+  "status": "completed_cpu_fixed_bank_gate",
+  "started_at_utc": "2026-10-15T04:39:11.898948+00:00",
+  "protocol": "/home/xhj/WM_Security/configs/dino_action_saturation_gate_20261015.json",
+  "activity": {
+    "environment_steps": 450,
+    "unroll_calls": 1,
+    "predictor_forwards": 6,
+    "native_encodes": 8,
+    "network_attempts": 0,
+    "planner_calls": 0,
+    "training_updates": 0
+  },
+  "replays": [
+    {
+      "candidate": 0,
+      "representation": "original",
+      "controls": 30,
+      "exact_to_original": null
+    },
+    {
+      "candidate": 0,
+      "representation": "inflated_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 0,
+      "representation": "canonical_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 1,
+      "representation": "original",
+      "controls": 30,
+      "exact_to_original": null
+    },
+    {
+      "candidate": 1,
+      "representation": "inflated_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 1,
+      "representation": "canonical_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 2,
+      "representation": "original",
+      "controls": 30,
+      "exact_to_original": null
+    },
+    {
+      "candidate": 2,
+      "representation": "inflated_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 2,
+      "representation": "canonical_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 3,
+      "representation": "original",
+      "controls": 30,
+      "exact_to_original": null
+    },
+    {
+      "candidate": 3,
+      "representation": "inflated_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 3,
+      "representation": "canonical_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 4,
+      "representation": "original",
+      "controls": 30,
+      "exact_to_original": null
+    },
+    {
+      "candidate": 4,
+      "representation": "inflated_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    },
+    {
+      "candidate": 4,
+      "representation": "canonical_saturated_xyz",
+      "controls": 30,
+      "exact_to_original": true
+    }
+  ],
+  "checkpoint_loads": {
+    "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth": 1,
+    "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar": 1
+  },
+  "gate": {
+    "clean_competence_passed": false,
+    "bank_terminal_rewards": [
+      7.989218711853027,
+      1.8297232389450073,
+      7.699375629425049,
+      1.39305579662323,
+      0.48128002882003784
+    ],
+    "bank_best_terminal_reward_ties_within_tolerance": 1,
+    "inflated_selected_index_changed": null,
+    "harm_signal_conditioned_on_clean": null,
+    "canonical_recovery_if_harm": null,
+    "inflated_minus_clean_terminal_reward": null,
+    "canonical_minus_clean_terminal_reward": null,
+    "canonical_minus_inflated_terminal_reward": null,
+    "canonical_controls": "Canonical inputs from Clean/Inflated are identical by construction; if Clean passes, both share one measured canonical forecast batch with actual replay-derived utility. Otherwise no canonical forecast was executed.",
+    "unchanged_zero_forecast_exact": null,
+    "skipped_forecasts": [
+      "inflated_saturated_xyz",
+      "canonical_saturated_xyz"
+    ],
+    "stop_reason": "Frozen Clean bank competence gate failed; no alias/canonical model calls",
+    "tolerance": 1e-06,
+    "tolerance_is_practical_harm_threshold": false,
+    "scope": "One root, added H6=30-control open-loop bank selector; not native CEM (which executes15 before replanning), not independent generalization or statistical significance."
+  },
+  "elapsed_seconds": 49.96383093899931,
+  "runtime": {
+    "interpreter": "/home/xhj/WM_Security/.venv-jepa-native/bin/python",
+    "python": "3.11.13 (main, Sep 18 2025, 19:46:39) [Clang 20.1.4 ]",
+    "torch": "2.6.0+cu124",
+    "mujoco": "3.3.0",
+    "mujoco_file": "/home/xhj/WM_Security/.deps/dino_mujoco330/mujoco/__init__.py",
+    "renderer": "osmesa",
+    "device": "cpu"
+  },
+  "bank": {
+    "candidate_names": [
+      "native_seed1_prefix",
+      "native_seed2_prefix",
+      "native_seed3_prefix",
+      "zero_request_roundtrip",
+      "seed1_xyz_sign_reversal_roundtrip"
+    ],
+    "native_trace_denormalization_exact": [
+      true,
+      true,
+      true
+    ],
+    "constructed_max_error_vs_ideal_raw": [
+      0.0,
+      2.384185791015625e-07
+    ],
+    "saturated_xyz_coordinates_per_candidate": [
+      28,
+      40,
+      33,
+      0,
+      28
+    ],
+    "boundary_normalized_values": {
+      "axis0_sign-1": -1.366613507270813,
+      "axis0_sign1": 1.3510586023330688,
+      "axis1_sign-1": -1.5766072273254395,
+      "axis1_sign1": 1.1478898525238037,
+      "axis2_sign-1": -1.197768211364746,
+      "axis2_sign1": 1.5865925550460815
+    },
+    "unchanged_normalized_coordinates_exact": true,
+    "effective_xyz_and_gripper_exact": true,
+    "clean_and_inflated_canonical_inputs_exact": true,
+    "scope": "Fixed new open-loop bank; all requests frozen before environment/model outputs"
+  },
+  "snapshot": {
+    "source": "cached root reconstructed before in-process snapshot",
+    "integration_state_spec": "mjSTATE_INTEGRATION",
+    "integration_state_length": 276,
+    "raw_python_fields": [
+      "_did_see_sim_exception",
+      "_freeze_rand_vec",
+      "_last_rand_vec",
+      "_last_stable_obs",
+      "_np_random",
+      "_np_random_seed",
+      "_obs_obj_max_len",
+      "_partially_observable",
+      "_prev_obs",
+      "_set_task_called",
+      "_target_pos",
+      "action_rot_scale",
+      "action_scale",
+      "active_discrete_goal",
+      "camera_id",
+      "camera_name",
+      "curr_path_length",
+      "current_seed",
+      "discrete_goal_space",
+      "frame_skip",
+      "fullpath",
+      "goal",
+      "hand_high",
+      "hand_init_pos",
+      "hand_low",
+      "height",
+      "init_left_pad",
+      "init_qpos",
+      "init_qvel",
+      "init_right_pad",
+      "init_tcp",
+      "maxReachDist",
+      "mocap_high",
+      "mocap_low",
+      "num_resets",
+      "obj_init_angle",
+      "obj_init_pos",
+      "render_mode",
+      "reward_function_version",
+      "seeded_rand_vec",
+      "task_name",
+      "width"
+    ],
+    "wrapper_fields": [
+      {
+        "class": "PixelWrapper",
+        "fields": [
+          "_frames",
+          "_proprios"
+        ]
+      },
+      {
+        "class": "TensorWrapper",
+        "fields": []
+      },
+      {
+        "class": "TimeLimit",
+        "fields": [
+          "_elapsed_steps",
+          "_max_episode_steps"
+        ]
+      },
+      {
+        "class": "MetaWorldWrapper",
+        "fields": []
+      }
+    ],
+    "initial_pixels_and_proprio_exact": true,
+    "historical_source_prefix_verified": true,
+    "note": "MuJoCo derived fields recomputed by mj_forward; integration fields then restored exactly. Constructor may reset/simulate internally; no extra explicit reset/warmup is performed."
+  },
+  "utilities": [
+    {
+      "candidate": 0,
+      "primary30": {
+        "controls": 30,
+        "terminal_native_reward": 7.989218711853027,
+        "summed_native_reward": 110.1521805524826,
+        "final_reach_distance": 0.09875076719367057,
+        "final_success": false,
+        "ever_success": false
+      },
+      "native_execution_prefix15": {
+        "controls": 15,
+        "terminal_native_reward": 2.9017961025238037,
+        "summed_native_reward": 29.303298354148865,
+        "final_reach_distance": 0.20198192679083782,
+        "final_success": false,
+        "ever_success": false
+      }
+    },
+    {
+      "candidate": 1,
+      "primary30": {
+        "controls": 30,
+        "terminal_native_reward": 1.8297232389450073,
+        "summed_native_reward": 47.77828586101532,
+        "final_reach_distance": 0.25534155076118015,
+        "final_success": false,
+        "ever_success": false
+      },
+      "native_execution_prefix15": {
+        "controls": 15,
+        "terminal_native_reward": 1.5778785943984985,
+        "summed_native_reward": 22.01789700984955,
+        "final_reach_distance": 0.27450454018316484,
+        "final_success": false,
+        "ever_success": false
+      }
+    },
+    {
+      "candidate": 2,
+      "primary30": {
+        "controls": 30,
+        "terminal_native_reward": 7.699375629425049,
+        "summed_native_reward": 109.05741345882416,
+        "final_reach_distance": 0.10311855346181165,
+        "final_success": false,
+        "ever_success": false
+      },
+      "native_execution_prefix15": {
+        "controls": 15,
+        "terminal_native_reward": 3.081171989440918,
+        "summed_native_reward": 30.021395087242126,
+        "final_reach_distance": 0.19561611935844886,
+        "final_success": false,
+        "ever_success": false
+      }
+    },
+    {
+      "candidate": 3,
+      "primary30": {
+        "controls": 30,
+        "terminal_native_reward": 1.39305579662323,
+        "summed_native_reward": 41.632548689842224,
+        "final_reach_distance": 0.2915413014790292,
+        "final_success": false,
+        "ever_success": false
+      },
+      "native_execution_prefix15": {
+        "controls": 15,
+        "terminal_native_reward": 1.3924533128738403,
+        "summed_native_reward": 20.663751006126404,
+        "final_reach_distance": 0.2916020051920697,
+        "final_success": false,
+        "ever_success": false
+      }
+    },
+    {
+      "candidate": 4,
+      "primary30": {
+        "controls": 30,
+        "terminal_native_reward": 0.48128002882003784,
+        "summed_native_reward": 24.230171352624893,
+        "final_reach_distance": 0.4821569704071686,
+        "final_success": false,
+        "ever_success": false
+      },
+      "native_execution_prefix15": {
+        "controls": 15,
+        "terminal_native_reward": 0.7513625025749207,
+        "summed_native_reward": 15.902349948883057,
+        "final_reach_distance": 0.3909300468408246,
+        "final_success": false,
+        "ever_success": false
+      }
+    }
+  ],
+  "model_load": {
+    "strict_loads": [
+      {
+        "class": "DinoVisionTransformer",
+        "loaded_tensors": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ViTPredictor",
+        "loaded_tensors": 75,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      }
+    ],
+    "parameters": 43360120,
+    "all_parameters_float32": true,
+    "model_action_dimension": 20,
+    "model_forward_calls": 0,
+    "normalization": {
+      "action_dim": 4,
+      "proprio_dim": 4,
+      "state_dim": 39,
+      "action_mean": [
+        0.005723577458411455,
+        0.15735651552677155,
+        -0.1396457850933075,
+        0.1998193860054016
+      ],
+      "action_std": [
+        0.7359239459037781,
+        0.73408043384552,
+        0.7182977199554443,
+        0.743205726146698
+      ],
+      "proprio_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929
+      ],
+      "proprio_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074
+      ],
+      "state_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929,
+        0.008108077570796013,
+        0.6766929626464844,
+        0.09434457868337631,
+        0.3859776258468628,
+        -0.050619181245565414,
+        0.03434790298342705,
+        0.4750967025756836,
+        0.017891764640808105,
+        0.04413251578807831,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        -0.0029707495123147964,
+        0.6529995203018188,
+        0.1545131504535675,
+        0.6445063948631287,
+        0.008061803877353668,
+        0.6762475371360779,
+        0.09425390511751175,
+        0.3860057294368744,
+        -0.050728388130664825,
+        0.03427530452609062,
+        0.4753906726837158,
+        0.017830422148108482,
+        0.04414031654596329,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        0.015675902366638184,
+        0.7268462181091309,
+        0.12401046603918076
+      ],
+      "state_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074,
+        0.1050795242190361,
+        0.10192868858575821,
+        0.0880839079618454,
+        0.4468156695365906,
+        0.18397848308086395,
+        0.14911998808383942,
+        0.47220379114151,
+        0.06688503921031952,
+        0.16022595763206482,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.10383506864309311,
+        0.11242222785949707,
+        0.07946359366178513,
+        0.2625894844532013,
+        0.10486840456724167,
+        0.10173390805721283,
+        0.08810629695653915,
+        0.4467460811138153,
+        0.18375301361083984,
+        0.14870719611644745,
+        0.4721624553203583,
+        0.0666341558098793,
+        0.16022934019565582,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.14182789623737335,
+        0.12113576382398605,
+        0.09631838649511337
+      ]
+    }
+  },
+  "forecasts": {
+    "original": {
+      "seconds": 2.2851425659900997,
+      "native_costs": [
+        0.8195656538009644,
+        1.3444838523864746,
+        0.7811169028282166,
+        2.303743362426758,
+        2.9246826171875
+      ],
+      "ranking": [
+        2,
+        0,
+        1,
+        3,
+        4
+      ],
+      "selected_candidate": 2,
+      "selected_true_utility": {
+        "candidate": 2,
+        "primary30": {
+          "controls": 30,
+          "terminal_native_reward": 7.699375629425049,
+          "summed_native_reward": 109.05741345882416,
+          "final_reach_distance": 0.10311855346181165,
+          "final_success": false,
+          "ever_success": false
+        },
+        "native_execution_prefix15": {
+          "controls": 15,
+          "terminal_native_reward": 3.081171989440918,
+          "summed_native_reward": 30.021395087242126,
+          "final_reach_distance": 0.19561611935844886,
+          "final_success": false,
+          "ever_success": false
+        }
+      },
+      "cost_min_exact_ties": 1,
+      "forecast_error": {
+        "visual": {
+          "per_horizon_candidate": [
+            [
+              0.300774484872818,
+              0.4194704294204712,
+              0.26006096601486206,
+              0.14007459580898285,
+              0.3124527037143707
+            ],
+            [
+              0.7285884022712708,
+              0.8078864216804504,
+              0.6199916005134583,
+              0.18909503519535065,
+              0.7909652590751648
+            ],
+            [
+              0.9085823893547058,
+              1.1095256805419922,
+              0.819605827331543,
+              0.24920667707920074,
+              1.0529690980911255
+            ],
+            [
+              1.218802809715271,
+              1.2332366704940796,
+              0.9969079494476318,
+              0.2737049460411072,
+              1.0159276723861694
+            ],
+            [
+              1.3495548963546753,
+              1.19237220287323,
+              1.0814778804779053,
+              0.2851181924343109,
+              0.6224338412284851
+            ],
+            [
+              1.4073262214660645,
+              1.2912545204162598,
+              1.1176999807357788,
+              0.3122602105140686,
+              0.516608715057373
+            ]
+          ],
+          "final_per_candidate": [
+            1.4073262214660645,
+            1.2912545204162598,
+            1.1176999807357788,
+            0.3122602105140686,
+            0.516608715057373
+          ],
+          "mean_over_horizons_per_candidate": [
+            0.9856049418449402,
+            1.0089577436447144,
+            0.8159573674201965,
+            0.24157659709453583,
+            0.7185595631599426
+          ]
+        },
+        "proprio": {
+          "per_horizon_candidate": [
+            [
+              0.00017459965602029115,
+              0.0002080736157950014,
+              8.882855763658881e-05,
+              8.543735930288676e-06,
+              6.970168033149093e-05
+            ],
+            [
+              0.0004771313106175512,
+              0.0004901823704130948,
+              0.0003185952955391258,
+              1.4379920685314573e-05,
+              0.00026233220705762506
+            ],
+            [
+              0.0008699755999259651,
+              0.0007693531224504113,
+              0.0005331770516932011,
+              2.1571295292233117e-05,
+              0.0005602323217317462
+            ],
+            [
+              0.0011565383756533265,
+              0.0009758137166500092,
+              0.0008511474588885903,
+              2.509074329282157e-05,
+              0.0004124188853893429
+            ],
+            [
+              0.00122868234757334,
+              0.0009499335428699851,
+              0.000770868849940598,
+              2.583965215308126e-05,
+              5.893745765206404e-05
+            ],
+            [
+              0.000921408471185714,
+              0.0010111972223967314,
+              0.0005437141517177224,
+              2.658729863469489e-05,
+              1.2560427421703935e-05
+            ]
+          ],
+          "final_per_candidate": [
+            0.000921408471185714,
+            0.0010111972223967314,
+            0.0005437141517177224,
+            2.658729863469489e-05,
+            1.2560427421703935e-05
+          ],
+          "mean_over_horizons_per_candidate": [
+            0.0008047226001508534,
+            0.0007340922020375729,
+            0.0005177219281904399,
+            2.0335442968644202e-05,
+            0.0002293638390256092
+          ]
+        },
+        "weighted": {
+          "per_horizon_candidate": [
+            [
+              0.3007919490337372,
+              0.4194912314414978,
+              0.2600698471069336,
+              0.1400754451751709,
+              0.31245967745780945
+            ],
+            [
+              0.7286360859870911,
+              0.8079354166984558,
+              0.6200234889984131,
+              0.18909648060798645,
+              0.790991485118866
+            ],
+            [
+              0.9086694121360779,
+              1.1096025705337524,
+              0.8196591734886169,
+              0.24920883774757385,
+              1.0530251264572144
+            ],
+            [
+              1.2189184427261353,
+              1.2333343029022217,
+              0.9969930648803711,
+              0.27370744943618774,
+              1.015968918800354
+            ],
+            [
+              1.3496778011322021,
+              1.192467212677002,
+              1.0815550088882446,
+              0.28512078523635864,
+              0.6224397420883179
+            ],
+            [
+              1.4074183702468872,
+              1.2913556098937988,
+              1.117754340171814,
+              0.3122628629207611,
+              0.5166099667549133
+            ]
+          ],
+          "final_per_candidate": [
+            1.4074183702468872,
+            1.2913556098937988,
+            1.117754340171814,
+            0.3122628629207611,
+            0.5166099667549133
+          ],
+          "mean_over_horizons_per_candidate": [
+            0.9856853485107422,
+            1.009031057357788,
+            0.8160092234611511,
+            0.24157863855361938,
+            0.7185825705528259
+          ]
+        }
+      }
+    }
+  },
+  "clean_competence_checked_before_alias_forecasts": false,
+  "cuda_initialized": false,
+  "finished_at_utc": "2026-10-15T04:40:01.862746+00:00"
+}

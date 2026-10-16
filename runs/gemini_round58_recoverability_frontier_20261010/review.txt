@@ -1,0 +1,19 @@
+`must_exclude_prior_families` explicitly forbids (`branch inconsistency/joint-support holes/causal confounding`).
+        - Furthermore, "downstream reachability loss" occurring past the horizon or omitted due to low likelihood is either **horizon shadowing** or **rare-event underprediction**, both of which are in `must_exclude_prior_families`.
+        - Calling it "Causal Path Divergence" or "Temporal Recoverability Masking" is textbook **rebranding**!
+
+    *   Let's check another angle:
+        What if an attacker manipulates the world-model/planner interface specifically?
+        Let's look at the exclusions on the planner interface:
+        "CEM/MPPI covariance pinching, action sampling coupling, action encoding or token collisions"
+        What else exists at the WM/planner interface?
+        In model-based planning (e.g., DreamerV3 actor-critic or TD-MPC2 MPPI):
+        - Reward model prediction
+        - Terminal value prediction
+        - Discount factor ($\gamma$) prediction
+        Could the vulnerability be in the **continuation flag ($\gamma$-predictor)**?
+        In DreamerV3, the world model predicts continuation $\gamma_t \in [0, 1]$ to detect episode termination or safety limits.
+        If an attacker causes $\gamma_t$ misprediction:
+        Why would $\gamma_t$ be mispredicted? Because of rare-event underprediction (terminal states are rare), or distribution shift, or causal confounding. All excluded.
+
+    *

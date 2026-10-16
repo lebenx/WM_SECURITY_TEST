@@ -1,0 +1,1322 @@
+{
+  "status": "completed_worldagen_activation_patch_action_ranking",
+  "planner": "independent_forecast_driven_clip_text_score",
+  "native_worldagen_policy_uses_forecast": false,
+  "candidate_set_frozen_across_conditions": true,
+  "selection_target_fixed_to_original_goal": true,
+  "future_observation_used_for_selection": false,
+  "activation_patch_layers": [
+    4,
+    8
+  ],
+  "activation_patch_source": "same-candidate Clean-goal action-token hidden states",
+  "clip_reconstruction": "global_minmax",
+  "actual_utility_source": "fresh LIBERO replay simulator state and sparse reward",
+  "conditions": [
+    "clean",
+    "goal_swap",
+    "goal_swap_bus_cut",
+    "goal_swap_activation_patch_l4",
+    "goal_swap_activation_patch_l8"
+  ],
+  "rows": [
+    {
+      "suite": "libero_10",
+      "task_id": 0,
+      "task": "put both the alphabet soup and the tomato sauce in the basket",
+      "swapped_goal": "put both the cream cheese box and the butter in the basket",
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_task_index": 5,
+      "candidate_episode": 8,
+      "clip_reconstruction": "global_minmax",
+      "scores": {
+        "clean": [
+          0.2056099772453308,
+          0.21130859851837158,
+          0.20961828529834747,
+          0.21522507071495056,
+          0.20891106128692627,
+          0.2087293565273285,
+          0.20827268064022064,
+          0.21264885365962982
+        ],
+        "goal_swap": [
+          0.20609578490257263,
+          0.2098192572593689,
+          0.20954670011997223,
+          0.20887717604637146,
+          0.20852148532867432,
+          0.20805983245372772,
+          0.20999357104301453,
+          0.20947469770908356
+        ],
+        "goal_swap_bus_cut": [
+          0.20731548964977264,
+          0.21007829904556274,
+          0.2058166116476059,
+          0.21143096685409546,
+          0.21166256070137024,
+          0.208513081073761,
+          0.20676285028457642,
+          0.2041434943675995
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.20719751715660095,
+          0.2103656530380249,
+          0.20874068140983582,
+          0.21439215540885925,
+          0.20705623924732208,
+          0.2149135172367096,
+          0.21103772521018982,
+          0.21206648647785187
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.2072538435459137,
+          0.20831742882728577,
+          0.21082159876823425,
+          0.21671131253242493,
+          0.20725560188293457,
+          0.20767629146575928,
+          0.21098005771636963,
+          0.21244999766349792
+        ]
+      },
+      "forecast_relative_l2_to_clean": {
+        "clean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "goal_swap": [
+          0.22755554187242114,
+          0.288424414714944,
+          0.24022306551871284,
+          0.24524351262094438,
+          0.21941461018686836,
+          0.23283356365528035,
+          0.19594912587356442,
+          0.2060589350341904
+        ],
+        "goal_swap_bus_cut": [
+          0.3510973083813475,
+          0.3878497343550934,
+          0.2900523221435884,
+          0.32795915995929037,
+          0.3928218419158903,
+          0.44404065967372086,
+          0.3409510124595027,
+          0.28525815809047567
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.07572976851261584,
+          0.0927058958012815,
+          0.09076159395330433,
+          0.10811154378743622,
+          0.08640975296140321,
+          0.10025999786177285,
+          0.08095191458871383,
+          0.11861583750210616
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.06640947416072147,
+          0.09787241318989146,
+          0.07508674485985684,
+          0.11950670067390777,
+          0.0781923373756027,
+          0.09072050977549999,
+          0.08033856547756506,
+          0.09978056505115952
+        ]
+      },
+      "selected": {
+        "clean": 3,
+        "goal_swap": 6,
+        "goal_swap_bus_cut": 4,
+        "goal_swap_activation_patch_l4": 5,
+        "goal_swap_activation_patch_l8": 3
+      },
+      "ranking_flip_rate": {
+        "goal_swap": 0.39285714285714285,
+        "goal_swap_bus_cut": 0.4642857142857143,
+        "goal_swap_activation_patch_l4": 0.32142857142857145,
+        "goal_swap_activation_patch_l8": 0.21428571428571427
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.4402393716054094,
+          "eef_approach_progress": -0.16448887038756138,
+          "forecast_error_mse": 1.8316837549209595,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.5797768383507891,
+          "eef_approach_progress": -0.3040263371329411,
+          "forecast_error_mse": 1.8466975688934326,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.21904569108235766,
+          "eef_approach_progress": 0.056704810135490336,
+          "forecast_error_mse": 1.7893925905227661,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l4": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.1569759961435896,
+          "eef_approach_progress": 0.11877450507425841,
+          "forecast_error_mse": 1.8558690547943115,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l8": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3389768479462802,
+          "true_progress_final": -0.33897747897271757,
+          "true_progress_delta": -6.310264373809993e-07,
+          "eef_approach_distance_initial": 0.275750501217848,
+          "eef_approach_distance_final": 0.4402393716054094,
+          "eef_approach_progress": -0.16448887038756138,
+          "forecast_error_mse": 1.836416244506836,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_bus_cut": false,
+        "goal_swap_activation_patch_l4": false,
+        "goal_swap_activation_patch_l8": true
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 2,
+      "task": "turn on the stove and put the moka pot on it",
+      "swapped_goal": "put the black bowl in the bottom drawer of the cabinet and close it",
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_task_index": 3,
+      "candidate_episode": 6,
+      "clip_reconstruction": "global_minmax",
+      "scores": {
+        "clean": [
+          0.23781952261924744,
+          0.2310647964477539,
+          0.2458139955997467,
+          0.2455700933933258,
+          0.22936832904815674,
+          0.2406051754951477,
+          0.23776374757289886,
+          0.2347644865512848
+        ],
+        "goal_swap": [
+          0.2597137689590454,
+          0.25059056282043457,
+          0.25026735663414,
+          0.2325328290462494,
+          0.226877823472023,
+          0.24073532223701477,
+          0.2450474500656128,
+          0.2418171763420105
+        ],
+        "goal_swap_bus_cut": [
+          0.22594866156578064,
+          0.2332879900932312,
+          0.22326725721359253,
+          0.23788240551948547,
+          0.2196124643087387,
+          0.21927595138549805,
+          0.2279319018125534,
+          0.22372370958328247
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.2250543236732483,
+          0.23075836896896362,
+          0.22368228435516357,
+          0.23151037096977234,
+          0.23041844367980957,
+          0.22607505321502686,
+          0.2274586707353592,
+          0.258679062128067
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.22819264233112335,
+          0.22968870401382446,
+          0.22368362545967102,
+          0.23338282108306885,
+          0.22883029282093048,
+          0.22791820764541626,
+          0.22708313167095184,
+          0.24420028924942017
+        ]
+      },
+      "forecast_relative_l2_to_clean": {
+        "clean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "goal_swap": [
+          0.7524900694230773,
+          0.7132835119047702,
+          0.7311891102499951,
+          0.7076059919198844,
+          0.7371976572933865,
+          0.7395590691891786,
+          0.7556167776718916,
+          0.7396060331358365
+        ],
+        "goal_swap_bus_cut": [
+          0.45455495527442424,
+          0.38451060901921724,
+          0.395819887547138,
+          0.30488499705779964,
+          0.4547519163615612,
+          0.3976781495026762,
+          0.4694026092955967,
+          0.3934678889134362
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.15383577840775334,
+          0.2147822969548901,
+          0.16299238969755736,
+          0.18660713584038752,
+          0.15604903612391083,
+          0.165641068337392,
+          0.19383244612770942,
+          0.31657555671001036
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.16433311393947406,
+          0.17468231125660894,
+          0.19165955772437743,
+          0.129524270981251,
+          0.1805637743813068,
+          0.148254388454872,
+          0.20193718363984084,
+          0.1586506606829542
+        ]
+      },
+      "selected": {
+        "clean": 2,
+        "goal_swap": 0,
+        "goal_swap_bus_cut": 3,
+        "goal_swap_activation_patch_l4": 7,
+        "goal_swap_activation_patch_l8": 7
+      },
+      "ranking_flip_rate": {
+        "goal_swap": 0.4642857142857143,
+        "goal_swap_bus_cut": 0.5,
+        "goal_swap_activation_patch_l4": 0.6785714285714286,
+        "goal_swap_activation_patch_l8": 0.6428571428571429
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.19315527549565223,
+          "eef_approach_progress": 0.1392615569290109,
+          "forecast_error_mse": 2.169551134109497,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.332431519790557,
+          "eef_approach_progress": -1.4687365893883975e-05,
+          "forecast_error_mse": 2.1573891639709473,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.46784567268064114,
+          "eef_approach_progress": -0.135428840255978,
+          "forecast_error_mse": 2.1854517459869385,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l4": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.2592763683140182,
+          "eef_approach_progress": 0.07314046411064495,
+          "forecast_error_mse": 2.15453839302063,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l8": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.3598192605810222,
+          "true_progress_final": -0.35981987030625784,
+          "true_progress_delta": -6.097252356340732e-07,
+          "eef_approach_distance_initial": 0.33241683242466313,
+          "eef_approach_distance_final": 0.2592763683140182,
+          "eef_approach_progress": 0.07314046411064495,
+          "forecast_error_mse": 2.1521904468536377,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_bus_cut": false,
+        "goal_swap_activation_patch_l4": false,
+        "goal_swap_activation_patch_l8": false
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 4,
+      "task": "put the white mug on the left plate and put the yellow and white mug on the right plate",
+      "swapped_goal": "pick up the book and place it in the back compartment of the caddy",
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_task_index": 0,
+      "candidate_episode": 0,
+      "clip_reconstruction": "global_minmax",
+      "scores": {
+        "clean": [
+          0.22165325284004211,
+          0.21885760128498077,
+          0.2178928554058075,
+          0.22534142434597015,
+          0.23663866519927979,
+          0.23598189651966095,
+          0.21838395297527313,
+          0.23401053249835968
+        ],
+        "goal_swap": [
+          0.20478729903697968,
+          0.19853061437606812,
+          0.22714263200759888,
+          0.1963445097208023,
+          0.2067011445760727,
+          0.2147718071937561,
+          0.21009469032287598,
+          0.23028764128684998
+        ],
+        "goal_swap_bus_cut": [
+          0.20410597324371338,
+          0.19845476746559143,
+          0.21563708782196045,
+          0.20376604795455933,
+          0.22285564243793488,
+          0.2194606363773346,
+          0.2067902833223343,
+          0.2217440903186798
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.2198171317577362,
+          0.2171599417924881,
+          0.2275102734565735,
+          0.220461905002594,
+          0.2274186611175537,
+          0.23009797930717468,
+          0.21914052963256836,
+          0.2228776514530182
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.22649842500686646,
+          0.22102519869804382,
+          0.21915428340435028,
+          0.2134999781847,
+          0.22246308624744415,
+          0.22244447469711304,
+          0.2171694040298462,
+          0.2095242440700531
+        ]
+      },
+      "forecast_relative_l2_to_clean": {
+        "clean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "goal_swap": [
+          0.5374258843279894,
+          0.5401116938696204,
+          0.5598276944029661,
+          0.5780706916147826,
+          0.47622536094270435,
+          0.4893981247002812,
+          0.5207153880349615,
+          0.46293748917108823
+        ],
+        "goal_swap_bus_cut": [
+          0.4266969163753557,
+          0.42117494356568674,
+          0.4271305831371726,
+          0.4584267495966244,
+          0.4338162913451053,
+          0.47962794621590804,
+          0.41977656162474625,
+          0.43705462892716446
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.04726596591071606,
+          0.05766031053482934,
+          0.07118331699910417,
+          0.06649735874304395,
+          0.04876236751748935,
+          0.060420406602572946,
+          0.05479005341522127,
+          0.07557890655089843
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.10347337662043551,
+          0.0849150755089596,
+          0.1167369841364686,
+          0.10974557160739085,
+          0.13342694323878385,
+          0.12297518419988847,
+          0.1237203296022265,
+          0.1253698438367538
+        ]
+      },
+      "selected": {
+        "clean": 4,
+        "goal_swap": 7,
+        "goal_swap_bus_cut": 4,
+        "goal_swap_activation_patch_l4": 5,
+        "goal_swap_activation_patch_l8": 0
+      },
+      "ranking_flip_rate": {
+        "goal_swap": 0.5357142857142857,
+        "goal_swap_bus_cut": 0.32142857142857145,
+        "goal_swap_activation_patch_l4": 0.2857142857142857,
+        "goal_swap_activation_patch_l8": 0.42857142857142855
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.49255332948205904,
+          "eef_approach_progress": -0.19964529031934508,
+          "forecast_error_mse": 1.7816803455352783,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.2847996796893409,
+          "eef_approach_progress": 0.008108359473373072,
+          "forecast_error_mse": 1.7606676816940308,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.49255332948205904,
+          "eef_approach_progress": -0.19964529031934508,
+          "forecast_error_mse": 1.7882927656173706,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l4": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.32881198900350206,
+          "eef_approach_progress": -0.035903949840788096,
+          "forecast_error_mse": 1.7686073780059814,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l8": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.2110999942404732,
+          "true_progress_final": -0.21109999458305462,
+          "true_progress_delta": -3.425814076862821e-10,
+          "eef_approach_distance_initial": 0.29290803916271396,
+          "eef_approach_distance_final": 0.1894161963541876,
+          "eef_approach_progress": 0.10349184280852636,
+          "forecast_error_mse": 1.7768751382827759,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_bus_cut": true,
+        "goal_swap_activation_patch_l4": false,
+        "goal_swap_activation_patch_l8": false
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 6,
+      "task": "put the white mug on the plate and put the chocolate pudding to the right of the plate",
+      "swapped_goal": "put both the alphabet soup and the cream cheese box in the basket",
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_task_index": 1,
+      "candidate_episode": 1,
+      "clip_reconstruction": "global_minmax",
+      "scores": {
+        "clean": [
+          0.21523581445217133,
+          0.21288733184337616,
+          0.21068799495697021,
+          0.20924676954746246,
+          0.21178114414215088,
+          0.21453751623630524,
+          0.21109706163406372,
+          0.21246576309204102
+        ],
+        "goal_swap": [
+          0.20960350334644318,
+          0.2104184329509735,
+          0.21131864190101624,
+          0.207565575838089,
+          0.20901210606098175,
+          0.21021415293216705,
+          0.20730918645858765,
+          0.20848646759986877
+        ],
+        "goal_swap_bus_cut": [
+          0.19880834221839905,
+          0.21227499842643738,
+          0.19998951256275177,
+          0.20078331232070923,
+          0.1969519853591919,
+          0.2101529836654663,
+          0.20077086985111237,
+          0.19103792309761047
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.2208949774503708,
+          0.21380290389060974,
+          0.2136133313179016,
+          0.21033670008182526,
+          0.21291610598564148,
+          0.21084490418434143,
+          0.21251225471496582,
+          0.2104485183954239
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.2143869400024414,
+          0.20909303426742554,
+          0.20910018682479858,
+          0.21022437512874603,
+          0.212508887052536,
+          0.20263685286045074,
+          0.21067962050437927,
+          0.21262063086032867
+        ]
+      },
+      "forecast_relative_l2_to_clean": {
+        "clean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "goal_swap": [
+          0.5253467522015801,
+          0.5742555662208569,
+          0.5511326797855279,
+          0.5567451219454415,
+          0.5165226487977196,
+          0.5816644380781762,
+          0.5688504424860823,
+          0.4731337105853296
+        ],
+        "goal_swap_bus_cut": [
+          0.6318188865159243,
+          0.5749037120079992,
+          0.8256323819126695,
+          0.5038190106826942,
+          0.7513098390427476,
+          0.5729769882948689,
+          0.7783235932635914,
+          0.7475716881263695
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.11512467907176424,
+          0.12613016354960044,
+          0.0965389453738259,
+          0.08968484043239433,
+          0.11200355264651488,
+          0.14528728633118487,
+          0.09960167547952792,
+          0.07348424819722212
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.15019510999235136,
+          0.15973137084788963,
+          0.1769895791070808,
+          0.19417686058456704,
+          0.1670523768216705,
+          0.20103083270270217,
+          0.2159868705108321,
+          0.1867397102479841
+        ]
+      },
+      "selected": {
+        "clean": 0,
+        "goal_swap": 2,
+        "goal_swap_bus_cut": 1,
+        "goal_swap_activation_patch_l4": 0,
+        "goal_swap_activation_patch_l8": 0
+      },
+      "ranking_flip_rate": {
+        "goal_swap": 0.39285714285714285,
+        "goal_swap_bus_cut": 0.5357142857142857,
+        "goal_swap_activation_patch_l4": 0.32142857142857145,
+        "goal_swap_activation_patch_l8": 0.42857142857142855
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.21393680545383598,
+          "eef_approach_progress": 0.08005722258586262,
+          "forecast_error_mse": 1.7152801752090454,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.42275639140972426,
+          "eef_approach_progress": -0.12876236337002567,
+          "forecast_error_mse": 1.7765073776245117,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.26542649620469855,
+          "eef_approach_progress": 0.02856753183500005,
+          "forecast_error_mse": 1.7060621976852417,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l4": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.21393680545383598,
+          "eef_approach_progress": 0.08005722258586262,
+          "forecast_error_mse": 1.720648169517517,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l8": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.23806405285451177,
+          "true_progress_final": -0.23806405308154488,
+          "true_progress_delta": -2.270331145304283e-10,
+          "eef_approach_distance_initial": 0.2939940280396986,
+          "eef_approach_distance_final": 0.21393680545383598,
+          "eef_approach_progress": 0.08005722258586262,
+          "forecast_error_mse": 1.7069039344787598,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_bus_cut": false,
+        "goal_swap_activation_patch_l4": true,
+        "goal_swap_activation_patch_l8": true
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 7,
+      "task": "put both the alphabet soup and the cream cheese box in the basket",
+      "swapped_goal": "put both moka pots on the stove",
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_task_index": 4,
+      "candidate_episode": 7,
+      "clip_reconstruction": "global_minmax",
+      "scores": {
+        "clean": [
+          0.2057386338710785,
+          0.20797356963157654,
+          0.21060311794281006,
+          0.2069675773382187,
+          0.2016534060239792,
+          0.20125475525856018,
+          0.21197101473808289,
+          0.20592212677001953
+        ],
+        "goal_swap": [
+          0.20455244183540344,
+          0.20359936356544495,
+          0.20585983991622925,
+          0.1989656388759613,
+          0.20093218982219696,
+          0.2048303782939911,
+          0.20812444388866425,
+          0.20100706815719604
+        ],
+        "goal_swap_bus_cut": [
+          0.20194688439369202,
+          0.20433706045150757,
+          0.20873905718326569,
+          0.2091776728630066,
+          0.20063522458076477,
+          0.21368339657783508,
+          0.20259606838226318,
+          0.20719052851200104
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.2071983814239502,
+          0.2137315571308136,
+          0.21090522408485413,
+          0.20604382455348969,
+          0.20225538313388824,
+          0.2030681073665619,
+          0.21398165822029114,
+          0.20590433478355408
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.20230916142463684,
+          0.20968100428581238,
+          0.21064229309558868,
+          0.20925958454608917,
+          0.20008400082588196,
+          0.2101345658302307,
+          0.20758575201034546,
+          0.20238113403320312
+        ]
+      },
+      "forecast_relative_l2_to_clean": {
+        "clean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "goal_swap": [
+          0.5413561333789018,
+          0.4738792117521152,
+          0.26279795880201406,
+          0.22599561973722543,
+          0.36691240251096724,
+          0.4679973667125208,
+          0.3576465784396228,
+          0.5034750266831737
+        ],
+        "goal_swap_bus_cut": [
+          0.26186915203936817,
+          0.2548628257759633,
+          0.17814880075441702,
+          0.17723683234855966,
+          0.216028355907511,
+          0.2425777370222382,
+          0.2728882079983294,
+          0.293086919396841
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.06918303345734599,
+          0.06265508864147343,
+          0.05472816660994121,
+          0.07678904901493812,
+          0.07232415202769261,
+          0.06106820375262745,
+          0.080996095508344,
+          0.06615871764340368
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.09822685847873051,
+          0.06978101422354485,
+          0.09050680111700561,
+          0.07282705993618499,
+          0.0782337702135232,
+          0.07266356147828991,
+          0.0880304342443528,
+          0.10011404362967176
+        ]
+      },
+      "selected": {
+        "clean": 6,
+        "goal_swap": 6,
+        "goal_swap_bus_cut": 5,
+        "goal_swap_activation_patch_l4": 6,
+        "goal_swap_activation_patch_l8": 2
+      },
+      "ranking_flip_rate": {
+        "goal_swap": 0.35714285714285715,
+        "goal_swap_bus_cut": 0.5,
+        "goal_swap_activation_patch_l4": 0.14285714285714285,
+        "goal_swap_activation_patch_l8": 0.32142857142857145
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.44062996847747776,
+          "eef_approach_progress": -0.19335437830855456,
+          "forecast_error_mse": 1.8705335855484009,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.44062996847747776,
+          "eef_approach_progress": -0.19335437830855456,
+          "forecast_error_mse": 1.8157947063446045,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.19477801586913174,
+          "eef_approach_progress": 0.05249757429979146,
+          "forecast_error_mse": 1.8311188220977783,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l4": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.44062996847747776,
+          "eef_approach_progress": -0.19335437830855456,
+          "forecast_error_mse": 1.86469566822052,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l8": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.32094454980048553,
+          "true_progress_final": -0.3209447733380616,
+          "true_progress_delta": -2.235375760606395e-07,
+          "eef_approach_distance_initial": 0.2472755901689232,
+          "eef_approach_distance_final": 0.573621522035687,
+          "eef_approach_progress": -0.32634593186676375,
+          "forecast_error_mse": 1.8608771562576294,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_bus_cut": false,
+        "goal_swap_activation_patch_l4": true,
+        "goal_swap_activation_patch_l8": false
+      }
+    },
+    {
+      "suite": "libero_10",
+      "task_id": 9,
+      "task": "put the yellow and white mug in the microwave and close it",
+      "swapped_goal": "put both the alphabet soup and the tomato sauce in the basket",
+      "candidate_count": 8,
+      "candidate_seed": 17,
+      "candidate_source": "recorded",
+      "candidate_task_index": 2,
+      "candidate_episode": 2,
+      "clip_reconstruction": "global_minmax",
+      "scores": {
+        "clean": [
+          0.23961691558361053,
+          0.2351614534854889,
+          0.2324228435754776,
+          0.24156546592712402,
+          0.21711373329162598,
+          0.22517600655555725,
+          0.21518036723136902,
+          0.22558119893074036
+        ],
+        "goal_swap": [
+          0.2054835855960846,
+          0.2182977795600891,
+          0.20122185349464417,
+          0.2118789553642273,
+          0.22624816000461578,
+          0.2091025710105896,
+          0.20738978683948517,
+          0.21673044562339783
+        ],
+        "goal_swap_bus_cut": [
+          0.21092066168785095,
+          0.20883339643478394,
+          0.20501035451889038,
+          0.20756816864013672,
+          0.22435158491134644,
+          0.2127109318971634,
+          0.20653162896633148,
+          0.2208554446697235
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.21666771173477173,
+          0.23222309350967407,
+          0.2225806713104248,
+          0.2127293050289154,
+          0.2059328854084015,
+          0.2022254467010498,
+          0.19941987097263336,
+          0.21460285782814026
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.22922587394714355,
+          0.228296160697937,
+          0.21353371441364288,
+          0.22895732522010803,
+          0.20883122086524963,
+          0.21730494499206543,
+          0.21552351117134094,
+          0.2232026606798172
+        ]
+      },
+      "forecast_relative_l2_to_clean": {
+        "clean": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "goal_swap": [
+          0.7722894266649213,
+          0.7280763155050407,
+          0.7632820546854538,
+          0.7569449902204588,
+          0.750143659080086,
+          0.721682810425604,
+          0.7477294981954435,
+          0.7311686436114322
+        ],
+        "goal_swap_bus_cut": [
+          0.7720022481707406,
+          0.7103605998542611,
+          0.7652502828650893,
+          0.7633976473945256,
+          0.7412435322195284,
+          0.7238472556140451,
+          0.7294712684687659,
+          0.7344383201711773
+        ],
+        "goal_swap_activation_patch_l4": [
+          0.14625213935711356,
+          0.12255328574270201,
+          0.2323304978047217,
+          0.28377648586343857,
+          0.3554433040676435,
+          0.5923776593313658,
+          0.2815619446801978,
+          0.274695484829131
+        ],
+        "goal_swap_activation_patch_l8": [
+          0.15151178183329078,
+          0.11391457875333895,
+          0.14106085201703755,
+          0.1714468914038391,
+          0.1856187608721356,
+          0.244604707943975,
+          0.12262137342392017,
+          0.12133820697530907
+        ]
+      },
+      "selected": {
+        "clean": 3,
+        "goal_swap": 4,
+        "goal_swap_bus_cut": 4,
+        "goal_swap_activation_patch_l4": 1,
+        "goal_swap_activation_patch_l8": 0
+      },
+      "ranking_flip_rate": {
+        "goal_swap": 0.5357142857142857,
+        "goal_swap_bus_cut": 0.6071428571428571,
+        "goal_swap_activation_patch_l4": 0.25,
+        "goal_swap_activation_patch_l8": 0.17857142857142858
+      },
+      "replays": {
+        "clean": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.3537921385735148,
+          "eef_approach_progress": -0.02654471048700402,
+          "forecast_error_mse": 2.0824098587036133,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.4022667484828552,
+          "eef_approach_progress": -0.0750193203963444,
+          "forecast_error_mse": 2.095014810562134,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_bus_cut": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.4022667484828552,
+          "eef_approach_progress": -0.0750193203963444,
+          "forecast_error_mse": 2.1187233924865723,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l4": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.20837026083378826,
+          "eef_approach_progress": 0.11887716725272254,
+          "forecast_error_mse": 2.071378231048584,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        },
+        "goal_swap_activation_patch_l8": {
+          "cumulative_reward": 0.0,
+          "max_reward": 0.0,
+          "success": false,
+          "environment_steps": 30,
+          "true_progress_initial": -0.9836332843476238,
+          "true_progress_final": -0.9836018352584637,
+          "true_progress_delta": 3.144908916008493e-05,
+          "eef_approach_distance_initial": 0.3272474280865108,
+          "eef_approach_distance_final": 0.23438802064514458,
+          "eef_approach_progress": 0.09285940744136623,
+          "forecast_error_mse": 2.0713887214660645,
+          "forecast_error_observation_steps": [
+            3
+          ]
+        }
+      },
+      "decision_recovery": {
+        "goal_swap_bus_cut": false,
+        "goal_swap_activation_patch_l4": false,
+        "goal_swap_activation_patch_l8": false
+      }
+    }
+  ],
+  "scope": "Activation-patch repair diagnostic; no claim about native WorldAgen action selection.",
+  "forecast_error_protocol": "v2_primary_view_first_chunk_step3_only"
+}

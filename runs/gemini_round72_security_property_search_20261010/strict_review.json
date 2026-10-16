@@ -1,0 +1,29 @@
+{
+  "overall_verdict": "REJECT",
+  "reviews": [
+    {
+      "candidate": "反事实可达性三角度量不变量破坏诱导长程打靶规划虚假短路 (TD-MPC2)",
+      "carrier_match": 2,
+      "novelty": 3,
+      "mechanism_specificity": 2,
+      "breadth": 4,
+      "actionability": 1,
+      "verdict": "REJECT",
+      "reason": "代码路径与数学机制双重失真：1. TD-MPC2 原生代码路径位于 tdmpc2/common/world_model.py 而非 tdmpc2/models/world_model.py；2. TD-MPC2 的 CEM 打靶规划仅依赖潜变量 Q 值与奖励展开，并不存在原生配对度量 D；3. Repair 中所提的正则化项使用欧几里得范数 ||z_{t+k} - z_t|| - \\sum ||z_{t+i+1} - z_{t+i}||，根据欧氏空间几何三角不等式，该项恒小于等于 0，hinge 损失 max(0, ·) 恒等于 0，约束数学上平凡失效。",
+      "minimal_falsification_experiment": "在 tdmpc2/common/world_model.py 的 rollout 阶段计算潜状态轨迹欧氏范数差值并验证 max(0, ||z_{t+k} - z_t|| - \\sum ||z_{t+i+1} - z_{t+i}||)，确认其恒为 0，无法施加任何有效梯度更新。",
+      "needed_revision": "修正载体路径为真实存在的模块；若要构建度量破坏假说，必须定义受学习参数影响的非平凡准度量/神经测地距离网络，并避免采用数学上恒真的范数次可加性作为监控指标。"
+    },
+    {
+      "candidate": "分支不可交换性崩溃与局部对称对易子失真 (DreamerV3)",
+      "carrier_match": 1,
+      "novelty": 2,
+      "mechanism_specificity": 3,
+      "breadth": 3,
+      "actionability": 1,
+      "verdict": "REJECT",
+      "reason": "载体不可行且包含已被筛除的重合思路：1. 当前工作区无 DreamerV3/Crafter 代码树，载体无法审计与落实；2. 动作对易子 (temporal/action commutator) 与可交换性假设在先前的轮次中已被严格筛除，环境转移算子在一般 MDP 中本就不具备可交换局部对称性，假设过于理想化且无通用物理支撑。",
+      "minimal_falsification_experiment": "检查工作区文件树以证 DreamerV3 源码缺失；在标准非交换控制环境 (如 walker) 中任意采样正交动作对并计算物理动力学展开，证明环境物理层面即不满足 E[V(T(s, a1, a2))] = E[V(T(s, a2, a1))]，模型层面对易子非零属于真实物理映射而非对抗脆弱性。",
+      "needed_revision": "仅针对当前工作区存在的真实代码库 (如 TD-MPC2) 提交；放弃非交换性/对易子等已证伪假设，转向已确认存在的真实表征坍缩或值高估失效模式。"
+    }
+  ]
+}

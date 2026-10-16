@@ -1,0 +1,44 @@
+{
+  "status": "stopped_at_native_replay_compatibility_gate",
+  "run": "runs/opine_state_synchronization_v0",
+  "script": "scripts/pilot_opine_state_synchronization.py",
+  "candidate": "Learn actions that reduce the effect of hidden history on future predictions.",
+  "novelty_status": "Generic idea already covered by synchronization and homing strategies; no distinct new learning operator established.",
+  "baseline": "Ordinary breadth-first search in the product of two unchanged author-learned simulator states; only planned, not executed.",
+  "planned_alias_steps": [
+    762,
+    766
+  ],
+  "actual_result": {
+    "matching_actions": 482,
+    "executed_actions": 483,
+    "first_mismatch_step_zero_based": 482,
+    "different_scene_pixels": 6,
+    "native_level_index": 4,
+    "second_reset_replay_reproduces_difference": true,
+    "animation_ticks_at_mismatch": 1,
+    "root_cause": "Unresolved; no claim that a particular game-version, adapter, or archive component caused the difference."
+  },
+  "search_executed": false,
+  "native_synchronization_evaluation_executed": false,
+  "task_success_claim": false,
+  "causal_claim": false,
+  "api_requests": 0,
+  "gpu_work": false,
+  "versions": {
+    "arc-agi": "0.9.8",
+    "arcengine": "0.9.3",
+    "numpy": "2.5.3"
+  },
+  "native_game_sha256": "4c9bff3e972616e55e2a3ef95d865aa4a9319faf99ce932fbbad7f175c6439ff",
+  "learned_model_sha256": "1dc3e690598f6184731207c6f39e726c93fb7726a1bbff01d1882b09932cbf6f",
+  "archive_sha256": "021c05c27a46b2a60743083bba89873f44c050d8317ea6d1f56b9587db40498b",
+  "source_scope": "Native game downloaded from a public mirror. Author archive and learned program are public in-sample artifacts. Native hidden state was not inspected or supplied to a learner.",
+  "decision": "Preserve the mismatch and stop the planned synchronization comparison. Do not relax scene equality or treat this as method failure. Requires compatible replay before any native paired-state conclusion.",
+  "direct_prior": {
+    "title": "Reinforcement Learning in POMDPs Without Resets",
+    "url": "https://homes.cs.washington.edu/~sham/papers/rl/learn_pomdp.pdf",
+    "finding": "Section 3 defines an action-based approximate reset strategy that contracts dependence on starting beliefs. Generic action-based removal of history dependence is therefore not a new concept."
+  },
+  "report_note_cn": "新增的状态同步基线检查停在原生重放兼容性门槛：DC22 前482个动作与作者存档逐像素一致，第483个动作（索引482）出现6个场景像素差异。第二次从初态重放复现差异，该动作只有一个动画帧，未发现可替代的匹配中间帧；原因仍未查明。尚未到达计划比较的第762/766步，因此同步搜索和原生后续探针均未运行，不能记为方法成功或失败。通过行动降低对历史的依赖已有 homing/reset 策略先例；新学习操作和任务收益仍未建立。本项未使用模型API或GPU。"
+}

@@ -1,0 +1,27 @@
+{
+  "status": "success",
+  "model": "gemini-3.8-flash",
+  "response": {
+    "directions": [
+      {
+        "direction": "Temporal Trajectory Alignment Side-Channel across Planning Horizons",
+        "threat_operation": "An adversarial transition service passively monitors the rollout tree topology across successive model-predictive control (MPC) cycles. Instead of measuring instantaneous action moments, the adversary tracks the tree-reuse depth and branching entropy shifts induced by warm-starting or receding-horizon shifts under weak terminal signals.",
+        "required_evidence": "Statistically significant mutual information or preference-reconstruction accuracy above chance between observed multi-step tree-pruning patterns and client preferences, specifically in the weak-preference regime where single-step query moments and executed actions appear identical.",
+        "strongest_reason_it_may_be_preempted": "Stochastic trajectory sampling noise, warm-start resets, or fixed compute-budget pruning schedules in native MPC can decorrelate planning-tree topology from weak preference gradients."
+      },
+      {
+        "direction": "Latent State Visitation Covariance Leakage",
+        "threat_operation": "The transition service computes the covariance matrix of hypothetical latent states passed to it over the planning horizon. Even when executed actions and native rewards dominate local choices, weak terminal objectives can skew the exploration envelope in latent space toward specific coordinate sub-manifolds.",
+        "required_evidence": "Demonstrable reconstruction of private objective weights from spectral decompositions (e.g., principal component shifts) of the queried latent coordinates, holding query action marginals strictly invariant.",
+        "strongest_reason_it_may_be_preempted": "Latent representations learned by models like TD-MPC2 are often non-linearly entangled, non-stationary, and bounded by learned consistency losses that may suppress preference-specific directional variance."
+      },
+      {
+        "direction": "Timing and Convergence Profiling of Iterative Trajectory Refinement",
+        "threat_operation": "The service measures the exact computational latency or iteration count required by the client's internal optimizer (e.g., Cross-Entropy Method or gradient updates) between successive batches of transition queries, inferring preference conflict or curvature alignment with the native proxy.",
+        "required_evidence": "A consistent, detectable divergence in query-batch inter-arrival times or optimizer termination steps that maps systematically to private objective scaling, even when the terminal preference weight is near zero (e.g., 0.05).",
+        "strongest_reason_it_may_be_preempted": "Hardware jitter, batching asynchronous execution pipelines, and fixed-iteration sampling configurations commonly enforce uniform inter-query timing regardless of optimization landscape curvature."
+      }
+    ]
+  },
+  "scope": "Idea review only; not experimental evidence."
+}

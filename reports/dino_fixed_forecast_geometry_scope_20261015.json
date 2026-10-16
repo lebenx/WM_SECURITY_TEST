@@ -1,0 +1,235 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "completed_source_only_exclusion_under_fixed_forecast_and_protected_candidate_contract",
+  "question": "Can an executor-equivalent rewrite confined to a copied forecast request change native DINO CEM decisions through a distinct quotient-action-space geometry mechanism when the forecasts themselves remain unchanged?",
+  "decision": {
+    "fixed_forecast_copy_only_mechanism": "NO_GO_SOURCE_EXCLUDED_UNDER_STATED_CONDITIONS",
+    "expanded_original_candidate_geometry_operation": "A different operation; not supported as a new security mechanism by this review.",
+    "repeat_canonical_seed_expansion": false,
+    "existing_causal_results_invalidated": false,
+    "summary": "The existing copied-request operation can affect decisions through changed forecast costs. With those costs fixed and original candidate storage protected, it has no additional native CEM geometry path. A raw-action coordinate rewrite that changes elite averaging crosses the original permission boundary."
+  },
+  "falsifiable_proposition": {
+    "statement": "With identical initial context, target, original candidates, planner state and proposal RNG; identical per-candidate forecast tensors and costs at corresponding iterations; and no additional state or RNG side effects, a rewrite of only the copied forecast-request action representation changes the selected executable native CEM mean.",
+    "source_verdict": "False for the inspected active native implementation under these conditions.",
+    "what_would_falsify_the_exclusion": "A reproducible difference in original native CEM output despite all listed inputs, per-candidate costs, candidate order, tie behavior and relevant execution state remaining identical would reveal an omitted implementation dependency or violated assumption. No such result is present.",
+    "meaning_of_fixed_forecasts": "Exact candidate-index-aligned tensors, not equal marginal distributions, equal average error, reordered outputs, or merely equal selected-mean forecasts.",
+    "meaning_of_fixed_execution": "Each corresponding candidate keeps its physical executor meaning. If every final selected physical action were also fixed throughout a deterministic closed loop, a utility change could not be attributed to a changed action decision."
+  },
+  "conditions": [
+    "Same native ReprTargetDistMPCObjective instance/configuration and encoded target; no objective, score, goal or context mutation.",
+    "Same plan length, action dimensions, candidate count, elite count, momentum, initial mean/std, native clipping configuration and fixed candidate ordering.",
+    "Original candidate tensors and elite-coordinate storage remain immutable to the request writer.",
+    "At each corresponding population call, forecast tensors and resulting cost vectors are exactly identical by candidate index.",
+    "Same proposal RNG stream and no hidden state or RNG side effects from the writer or the unroll calls, including B1 mean-logging calls.",
+    "Same execution backend, precision, topk/tie behavior and native call ordering; this is not a cross-device approximate equality theorem.",
+    "The active local planning path is considered; no new distributed topology, external request service, optimizer or authority boundary is assumed."
+  ],
+  "induction": [
+    {
+      "step": "Base case",
+      "argument": "Native plan initializes the same mean and std for the same plan length and var_scale. With the same local generator, it samples identical first-round actions, replaces candidate0 with the same mean, and applies the same optional clipping.",
+      "source": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "line_anchors": [
+        276,
+        277,
+        290,
+        291,
+        294,
+        296,
+        301
+      ]
+    },
+    {
+      "step": "Cost equality",
+      "argument": "cost_function passes predictions and original actions to the objective. The active ReprTargetDistMPCObjective computes feature differences from the fixed target and does not use its actions argument. Identical forecast tensors therefore produce identical cost vectors.",
+      "sources": [
+        {
+          "path": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+          "line_anchors": [
+            48,
+            49,
+            50
+          ]
+        },
+        {
+          "path": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py",
+          "line_anchors": [
+            112,
+            129,
+            130,
+            135,
+            140,
+            145,
+            149,
+            152
+          ]
+        }
+      ]
+    },
+    {
+      "step": "Elite and update equality",
+      "argument": "Given the same ordered costs and tie behavior, topk returns the same indices. all_actions refers to original candidates in the local path. Selecting the same original elite tensors gives the same mean/std and the same momentum updates.",
+      "source": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "line_anchors": [
+        303,
+        310,
+        311,
+        312,
+        317,
+        318,
+        320,
+        321
+      ]
+    },
+    {
+      "step": "Inductive continuation",
+      "argument": "The next round starts from the same updated mean/std and generator state, so proposals and all subsequent updates remain equal. The B1 mean unroll is appended to prediction logs; it does not update mean/std or candidate scores. Its lack of additional state/RNG side effects is part of the conditions.",
+      "source": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "line_anchors": [
+        290,
+        291,
+        323,
+        324,
+        332,
+        333
+      ]
+    },
+    {
+      "step": "Returned action",
+      "argument": "The planner returns the same prefix of its final mean. Applying the unchanged preprocessing and physical executor yields the same controls. No separate quotient-geometry effect remains under the copy-only fixed-forecast contract.",
+      "source": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "line_anchors": [
+        332,
+        333,
+        336,
+        337
+      ]
+    }
+  ],
+  "geometry_counterexample": {
+    "type": "Algebraic illustration, not a measured native task result",
+    "executor": "q(u)=clip(u,-1,1) on one physical XYZ axis, with other axes and gripper unchanged.",
+    "original_two_elite_coordinates": [
+      2,
+      -1
+    ],
+    "replacement_two_elite_coordinates": [
+      1,
+      -1
+    ],
+    "individual_executed_coordinates_both_cases": [
+      1,
+      -1
+    ],
+    "original_raw_mean": 0.5,
+    "replacement_raw_mean": 0,
+    "consequence": "Individual executor equivalence is not preserved by arithmetic averaging of different representatives. Replicating each coordinate equally extends the illustration to an even elite count. A fixed affine normalization does not remove this mean difference; common momentum scales it by (1-momentum_mean).",
+    "limitation": "This illustration does not assert the actual saved native elites have these values, does not hold updated covariance or subsequent proposals fixed, and does not establish real task harm.",
+    "permission_boundary": "Producing this change requires replacing coordinates in original candidate/elite storage used by the optimizer. The completed DINO experiments explicitly protect that storage and rewrite only a separate forecast request.",
+    "interpretation": "This is noncommutativity of clipping and averaging, or optimizer parameterization dependence. By itself it is neither evidence of corrupted predictions nor an additional security mechanism under the old writer permission."
+  },
+  "binding_boundary": {
+    "source": "scripts/pilot_dino_native_alias_recovery.py",
+    "line_anchors": [
+      176,
+      178,
+      180,
+      189,
+      192,
+      194,
+      195,
+      213,
+      214
+    ],
+    "finding": "The guard preserves a private clone of the current native candidate, lets the writer transform a separate copy, and forwards a fresh copy of the protected original to native unroll.",
+    "supported": "Conventional current-input integrity restoration under the researcher-defined trust boundary.",
+    "not_supported": [
+      "A newly discovered native externally writable forecast interface",
+      "A proof that the original representative is physically more correct",
+      "An optimizer defined intrinsically on executor-equivalence classes",
+      "A new general defense or quotient-optimality guarantee"
+    ]
+  },
+  "existing_experiment_scope": {
+    "sources": [
+      "reports/dino_native_alias_synthesis_20261015.json",
+      "reports/dino_native_alias_claim_review_20261015.json",
+      "reports/dino_alias_writer_boundary_20261015.json",
+      "reports/dino_native_alias_recovery_decision_20261015.json",
+      "reports/dino_native_alias_forecast_gpu_decision_20261015.json"
+    ],
+    "independent_physical_roots": 1,
+    "clean_return": 786.998547077179,
+    "canonical_return": 702.1983199119568,
+    "relative_dense_return_drop": 0.1077514405587664,
+    "recovery_return": 786.998547077179,
+    "recovery_trace_rows_exact": 99,
+    "clean_first_success_policy_step": 56,
+    "canonical_first_success_policy_step": 53,
+    "clean_success_controls": 24,
+    "canonical_success_controls": 33,
+    "clean_final_success": false,
+    "canonical_final_success": false,
+    "clean_terminal_reward": 9.806612968444824,
+    "canonical_terminal_reward": 9.983182907104492,
+    "clean_last_reach_distance": 0.06366712546756458,
+    "canonical_last_reach_distance": 0.05399451826056728,
+    "forecast_diagnostic": "Same-GPU paired final-mean executed-prefix analysis found approximately24.95percent lower average feature error on the Clean-origin fixed actions and6.58percent lower on canonical-origin fixed actions, with mixed local signs. These are two within-query panels, not a causal subtraction between trajectories.",
+    "established": "A controlled execution-equivalent copied-request transformation changed native planning and cumulative dense return; conventional binding restored the same-root trajectory.",
+    "limits": [
+      "The original operation changes forecast values; the fixed-forecast premise in this report was not the completed intervention.",
+      "The lower cumulative return coexists with better success timing/count and terminal metrics, so it is not demonstrated lost task success or uniform utility degradation.",
+      "Lower average prefix feature error does not prove full-horizon accuracy or native candidate-ranking mediation; no universal prediction-damage claim follows.",
+      "One physical root does not establish population ASR, independent generalization or statistical significance.",
+      "Missing deployed writer evidence limits deployment claims but does not invalidate the researcher-defined controlled experiment."
+    ]
+  },
+  "source_contract": [
+    {
+      "path": "scripts/pilot_dino_native_alias_pair.py",
+      "line_anchors": [
+        262,
+        267,
+        268,
+        279,
+        280,
+        281,
+        303,
+        304,
+        305,
+        306,
+        313
+      ],
+      "fact": "Only copied action requests are rewritten; executor equivalence, untouched gripper, RNG and protected caller/context/goal tensors are checked."
+    },
+    {
+      "path": "configs/dino_native_alias_pair_20261015.json",
+      "fact": "Frozen protocol protects original CEM mean/std/elite geometry and original candidate tensors supplied to the native objective."
+    },
+    {
+      "path": "reports/dino_alias_writer_boundary_20261015.json",
+      "fact": "The isolated copy/writer/binding were introduced by the research runners; a pre-existing restricted external writer was not found in the scoped native source path."
+    }
+  ],
+  "verification_choice": {
+    "native_objective_or_CEM_call_needed": false,
+    "reason": "This is a control-flow exclusion under explicit exact-equality conditions. A test that replaces forecasts with fixed outputs and replays the same candidate arithmetic would mirror the inspected implementation, adding no decisive empirical information. No such test or model run is proposed.",
+    "no_mirror_test_written": true,
+    "publication_claim": "No novel mechanism or exhaustive prior-art conclusion is asserted. No unverified paper name has been introduced."
+  },
+  "activity": {
+    "model_loads": 0,
+    "model_forward_calls": 0,
+    "planner_calls": 0,
+    "environment_instances": 0,
+    "environment_steps": 0,
+    "api_requests": 0,
+    "gpu_jobs": 0,
+    "new_network_reads": 0,
+    "central_archive_edits": 0,
+    "vendor_changes": 0,
+    "experiment_result_edits": 0
+  }
+}

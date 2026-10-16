@@ -1,0 +1,77 @@
+{
+  "status": "stopped_after_clean_controller_gate_failed",
+  "claim_supported": false,
+  "attack_run": false,
+  "repair_run": false,
+  "baseline": {
+    "status": "completed",
+    "condition": "native",
+    "seed": 901,
+    "return_": 364.3241068879394,
+    "steps": 1000,
+    "full_native_episode": true,
+    "reward_parity_max_error": 7.069446616991826e-08,
+    "predictive_transitions": 600000,
+    "action_optimizer_steps": 2400,
+    "training_updates": 0,
+    "elapsed_seconds": 75.90034262789413,
+    "api_requests": 0,
+    "gpu_work": false,
+    "finished_at_utc": "2026-10-09T01:42:52.823906+00:00"
+  },
+  "required_clean_return": 900,
+  "source": "scripts/pilot_predictive_gradient_mpc.py",
+  "model_source": "runs/dmo_jacobian_gate_v0/clean_model.pt",
+  "interpretation": "One-step accurate frozen DMO Gaussian component does not supply a competent closed-loop gradient MPC in this fixed configuration. No attacked agent or safety effect was measured. Do not use its failure as attack evidence or expand this weak baseline.",
+  "initialization_failure": "runs/predictive_gradient_mpc_v0/native_901/summary.json",
+  "compatibility_fix": "Restored upstream fixed max_logvar=.5 and min_logvar=-10 only when absent from GPU checkpoint; all learned parameters loaded strictly.",
+  "usage": {
+    "completed_native_episodes": 1,
+    "native_environment_steps": 1000,
+    "predictive_transitions": 600000,
+    "action_optimizer_steps": 2400,
+    "neural_training_updates": 0,
+    "evaluation_elapsed_seconds": 75.90034262789413,
+    "api_requests": 0,
+    "gpu_work": false,
+    "reference_sigma_calibration_model_inputs": 4096
+  },
+  "carrier_checks": [
+    {
+      "name": "MBDPO",
+      "repository": "https://github.com/Edmond1Cheng/MBDPO",
+      "commit": "ede0cedc502b04fb7d9504c9a0b72ae0c169946a",
+      "evidence": [
+        "vendor/MBDPO/MBDPO/common/world_model.py:180",
+        "vendor/MBDPO/MBDPO/diffusion.py:59"
+      ],
+      "finding": "Latent transition is deterministic; native diffusion planner is explicitly gradient-free and decorated no_grad. Unsuitable for the proposed sampler-gradient operation."
+    },
+    {
+      "name": "GRASP",
+      "url": "https://www.michaelpsenka.io/grasp/",
+      "paper": "https://arxiv.org/abs/2602.00475",
+      "finding": "Stochasticity described in inspected paper concerns state iterates of the optimizer; that is not evidence of a stochastic transition sampler."
+    },
+    {
+      "name": "ITPO",
+      "url": "https://arxiv.org/html/2603.22430v2",
+      "finding": "Paper has differentiable stochastic diffusion rollouts and pretrained offline policies; no callable public repository or checkpoint located in this search. This is an availability observation, not proof that none exists."
+    }
+  ],
+  "mathematical_constraints": [
+    {
+      "name": "Fixed Gaussian sampler cannot support this exact weights-only attack",
+      "statement": "On an open input domain, equality of nonsingular diagonal Gaussian laws forces equality of mean and positive standard deviation functions. Wherever differentiable, their Jacobians agree; a fixed mu(x)+sigma(x)*epsilon sampler therefore has identical pathwise derivatives at the same epsilon.",
+      "scope": "Exact conditional law equality over all inputs; does not rule out approximate fidelity attacks, finite test-set matching, or different sampler architectures.",
+      "novel_theorem": false
+    },
+    {
+      "name": "Forward-only adaptive planners are invariant to whole conditional oracle-law preservation",
+      "statement": "If every forecast response has the same conditional joint law given the entire prior query-response transcript, an adaptive planner observing only forward responses has the same action distribution by induction. Independent law-preserving noise reparameterizations meet this condition.",
+      "scope": "Does not apply to the old rank-coupling operation, which preserves individual candidate marginals but changes their joint response law. Gradients are extra observations and need not be preserved.",
+      "novel_theorem": false
+    }
+  ],
+  "updated_at_utc": "2026-10-09T01:46:44.032652+00:00"
+}

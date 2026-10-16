@@ -1,0 +1,217 @@
+{
+  "schema_version": 1,
+  "id": "cosmos_future_modality_factorial_20261016",
+  "frozen_at_utc": "2026-10-15T16:33:40.941071+00:00",
+  "question": "In the fixed known harmful Cosmos first decision, does the Value ordering depend on future visual slots, future proprio slot, or their interaction?",
+  "scope": "One post-hoc root and fixed historical candidates; exhaustive output-slot conditional-dependence diagnostic, not new attack discovery, ASR, defense, closed-loop recovery or independent generalization.",
+  "source_dir": "runs/cosmos_first_query_truth_inference_20261015",
+  "source_summary": "runs/cosmos_first_query_truth_inference_20261015/summary.json",
+  "historical_utility_report": "reports/cosmos_first_query_truth_decision_20261015.json",
+  "output": "runs/cosmos_future_modality_factorial_20261016_resume1",
+  "task_id": 3,
+  "init_id": 2,
+  "candidate_indices": [
+    0,
+    1
+  ],
+  "candidate_seeds": [
+    31,
+    32
+  ],
+  "factor_levels": [
+    "clean",
+    "swap",
+    "truth"
+  ],
+  "factors": {
+    "P": {
+      "slots": [
+        5
+      ],
+      "meaning": "future proprio representation"
+    },
+    "V": {
+      "slots": [
+        6,
+        7
+      ],
+      "meaning": "jointly encoded future wrist and primary visual representations; keep both cameras together"
+    }
+  },
+  "conditions": [
+    {
+      "name": "p_clean_v_clean",
+      "P": "clean",
+      "V": "clean"
+    },
+    {
+      "name": "p_clean_v_swap",
+      "P": "clean",
+      "V": "swap"
+    },
+    {
+      "name": "p_clean_v_truth",
+      "P": "clean",
+      "V": "truth"
+    },
+    {
+      "name": "p_swap_v_clean",
+      "P": "swap",
+      "V": "clean"
+    },
+    {
+      "name": "p_swap_v_swap",
+      "P": "swap",
+      "V": "swap"
+    },
+    {
+      "name": "p_swap_v_truth",
+      "P": "swap",
+      "V": "truth"
+    },
+    {
+      "name": "p_truth_v_clean",
+      "P": "truth",
+      "V": "clean"
+    },
+    {
+      "name": "p_truth_v_swap",
+      "P": "truth",
+      "V": "swap"
+    },
+    {
+      "name": "p_truth_v_truth",
+      "P": "truth",
+      "V": "truth"
+    }
+  ],
+  "execution_order": [
+    "p_clean_v_clean",
+    "p_swap_v_swap",
+    "p_truth_v_truth",
+    "p_clean_v_swap",
+    "p_clean_v_truth",
+    "p_swap_v_clean",
+    "p_swap_v_truth",
+    "p_truth_v_clean",
+    "p_truth_v_swap"
+  ],
+  "construction": "For each candidate clone its cached Clean full future, replace slot5 with chosen P source and slots6:8 with chosen V source. Keep all other slots exact, including inert slot8 from Clean. Value conditions only0:8, so slot8 input must have no effect and pure-source diagonals must reproduce cached complete Value outputs exactly.",
+  "sources": {
+    "clean": {
+      "file": "clean_candidate{candidate}.pt",
+      "tensor_key": "future_latent"
+    },
+    "swap": {
+      "file": "swap_candidate{candidate}.pt",
+      "tensor_key": "future_latent"
+    },
+    "truth": {
+      "file": "truth_candidate{candidate}_input.pt",
+      "tensor_key": "value_input"
+    }
+  },
+  "protected": [
+    "candidate-specific full prefix0:5 including actual action representation",
+    "candidate environment control sequence and original task",
+    "original_text only for Value",
+    "frozen released checkpoint and exact historical runtime/backend",
+    "B1 native Value one-denoising-step call with candidate0 seed31 and candidate1 seed32",
+    "two visual slots always from one matching candidate/source",
+    "original full source tensors unchanged"
+  ],
+  "shape": [
+    1,
+    16,
+    9,
+    28,
+    28
+  ],
+  "dtype": "torch.float32",
+  "calibration": {
+    "order": "All six Clean/Swap/Truth diagonal Value calls first; then12 mixed calls only if all exact checks passed. Reuse diagonal scores as experimental cells.",
+    "exact_checks": [
+      "all source prefixes0:5 equal to their own Clean candidate prefix",
+      "cached candidate source/action/seed/utility bindings",
+      "original text fixed",
+      "each actual RNG tensor equals cached noise_seed31/32.unit_noise",
+      "complete diagonal Value latent and scalar equal the historical cached values",
+      "native conditioned prefix0:8 retained and input/text/source arrays unmutated"
+    ],
+    "truth_reference_file": "truth_candidate{candidate}_value.pt",
+    "failure": "Abort on first failed exact check, unexpected shape, nonfinite, resource cap or runtime change; save partial/error status without interpreting scientific comparisons. No tolerance changes or scientific retries."
+  },
+  "max_activity": {
+    "value_sampler_calls": 18,
+    "denoiser_forward_calls": 18,
+    "noise_calls": 18,
+    "checkpoint_loads": 2,
+    "policy_sampler_calls": 0,
+    "future_sampler_calls": 0,
+    "vae_encodes": 0,
+    "vae_decodes": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "training_updates": 0
+  },
+  "resources": {
+    "cuda_visible_devices": "0",
+    "minimum_free_gpu_mib": 8192,
+    "cuda_memory_fraction": 0.28,
+    "hard_wall_seconds": 120,
+    "verify_checkpoint_hashes": false,
+    "offload": false,
+    "use_existing_loader": "Load existing DiT and VAE once through verified native helper; immediately discard unused VAE. No VAE inference, network or new assets."
+  },
+  "analysis": {
+    "every_cell": "Report both native values, Value1-Value0 margin, native selected index, exact tie, each candidate slot5 and slots6:8 MSE against cached encoded real consequences, and selected historical success/capped controls.",
+    "tie_rule": "Native max takes candidate0 on exact ties, but ties never satisfy a strict directional interpretation.",
+    "visual_bidirectional_clean_swap": "p_clean_v_swap strictly selects0 AND p_swap_v_clean strictly selects1.",
+    "proprio_bidirectional_clean_swap": "p_swap_v_clean strictly selects0 AND p_clean_v_swap strictly selects1.",
+    "truth_counterchecks": "p_truth_v_swap and p_swap_v_truth separately test Swap effects with other block at truth; do not choose only the better restoration.",
+    "interaction": "Report all fixed-P visual changes and fixed-V proprio changes in signed margin; clean/swap factorial interaction is m(S,S)-m(S,C)-m(C,S)+m(C,C). This is numerical conditional dependence, not a causal mediation percentage.",
+    "utility_source": "candidate0 actual historical original-Goal continuation failed at300 controls; candidate1 succeeded at170. Reuse previously measured branches, with no new physical execution.",
+    "statistics": "No p-value, confidence interval or ASR;9cells and2candidates are not independent roots.",
+    "stop": "Complete the frozen9cells once, report every result, and close this diagnostic. Do not split cameras, search slots/layers/strengths/seeds/roots or expand episodes to rescue an explanation."
+  },
+  "limits": [
+    "Mixed outputs may be physically inconsistent or outside model training support. Identify Value input dependence, not semantic attribution of a realized physical scene.",
+    "Truth components are researcher diagnostics, not a deployable repair.",
+    "Large visual MSE and actual task loss remain distinct measurements.",
+    "The earlier direct text-to-action-entry selectivity failure, failed30-root expansion gate and coupling null remain unchanged.",
+    "Cannot infer a new external writer, universal Goal invariance, effective Bus-Cut/Control-Cut or fulfilled paper objective."
+  ],
+  "artifacts": [
+    "launched_config.json",
+    "launched_script.py",
+    "summary.json",
+    "one input and value latent artifact per candidate/cell",
+    "CSV and deterministic cached analysis after completion"
+  ],
+  "technical_resume": {
+    "recorded_before_any_value_result_at_utc": "2026-10-15T16:40:40.940483+00:00",
+    "failed_output": "runs/cosmos_future_modality_factorial_20261016",
+    "failed_session": 45357,
+    "exit_code": 1,
+    "elapsed_seconds": 3.8961563679622486,
+    "failed_activity": {
+      "value_sampler_calls": 0,
+      "denoiser_forward_calls": 0,
+      "noise_calls": 0,
+      "checkpoint_loads": 1,
+      "policy_sampler_calls": 0,
+      "future_sampler_calls": 0,
+      "vae_encodes": 0,
+      "vae_decodes": 0,
+      "environment_steps": 0,
+      "model_api_calls": 0,
+      "training_updates": 0
+    },
+    "successful_checkpoint_loads_before_failure": 0,
+    "reason": "Harness converted filename string to pathlib.Path; Torch2.2 mmap requires str. Failure preceded all Value/model forward calls.",
+    "only_code_fix": "Pass str(path) from load_once to original torch.load; new output directory preserves all failed artifacts.",
+    "scientific_fields_unchanged": true,
+    "original_frozen_protocol": "runs/cosmos_future_modality_factorial_20261016/launched_config.json",
+    "not_scientific_result_retry": true
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "validation_seed": 33,
+  "eval_seeds": [
+    41,
+    42
+  ],
+  "source_steps": 300,
+  "eval_steps": 300,
+  "updates": 80,
+  "learning_seed": 31,
+  "jacobian_states": 2,
+  "output": "runs/tdmpc_semigroup_defect_gate_v0",
+  "operation": "Legal stationary source actions versus random control; native TD-MPC2 full update; planner unchanged.",
+  "hypothesis": "Valid stationary experience can create a semigroup/three-step composition defect while preserving target one-step prediction, selectively harming native MPC rather than the actor.",
+  "promotion_gate": "Require stationary arm to reduce native MPC return on both seeds, retain one-step error <=1.05x random, increase three-step defect >=1.25x random, and preserve actor return. Otherwise reject.",
+  "api_requests": 0,
+  "gpu_work": "bounded native inference and full-update adaptation only"
+}

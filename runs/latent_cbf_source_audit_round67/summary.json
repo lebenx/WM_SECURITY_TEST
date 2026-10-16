@@ -1,0 +1,37 @@
+{
+  "status": "candidate_source_mismatch",
+  "candidate": "latent contraction stretching dissociation",
+  "carrier": "vendor/latent-cbf",
+  "source_checks": {
+    "src/latent_cbf/controllers/diffusion_controller.py": {
+      "sha256": "37b806e7861e8ff3fe948c0cf07c6e2ffab8c8bffbc04c13762ff6cba517f5ae",
+      "lines": 549,
+      "has_lie_derivative": false,
+      "max_normalization": true,
+      "imagine_with_action": false
+    },
+    "dreamerv3_torch/models.py": {
+      "sha256": "3daf903c6f1317adebead5e6ccf1e46c4d5bf9c7d4d853874693f5b7ab33a92e",
+      "lines": 165,
+      "has_lie_derivative": false,
+      "max_normalization": false,
+      "imagine_with_action": true
+    },
+    "dreamerv3_torch/networks.py": {
+      "sha256": "ce33d25d8cc22fcac5a854e18f33a215d5233b233329031e86920e5a41584025",
+      "lines": 821,
+      "has_lie_derivative": false,
+      "max_normalization": false,
+      "imagine_with_action": true
+    },
+    "src/latent_cbf/configs/dreamer_conf.py": {
+      "sha256": "ac11b60f47eaf4a163ce07cc33b0df599cca6fa3f3598c8c0d253170a09cfeac",
+      "lines": 133,
+      "has_lie_derivative": false,
+      "max_normalization": false,
+      "imagine_with_action": false
+    }
+  },
+  "native_finding": "The deployed FilteredDiffusionController builds one latent feature from a five-step observation/action history, evaluates the critic on the raw action plus 25 evenly spaced actions, computes dec=qvals/qvals.max(), and accepts actions with dec>cbf_gamma. It does not compute an HJ Lie derivative or a CBF-QP in this path. The world model has separate margin_nogp/margin_gp/cont heads, but the shown deployment filter uses critic_old Q values. Therefore the proposed latent-metric contraction mechanism is not the native decision path; a corrected candidate would concern batch-relative Q normalization and candidate-set dependence, likely ordinary value-estimation/sampling sensitivity.",
+  "decision": "Do not launch the proposed pilot until a corrected mechanism passes strict novelty review."
+}

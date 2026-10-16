@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "registered_before_new_runner_or_model_execution",
+  "question": "Can the released native NanoWM PointMaze planner solve at least two fixed feasible validation-trajectory tasks, including at least one task that physical zero control fails?",
+  "scope": "A three-instance Clean development capability gate only. No security harm, model-necessity, population success, or full benchmark claim.",
+  "source": {
+    "revision": "cc1f151a9d8c7d7afd0cdc5de6a9ae220a7c90c0",
+    "vendor": "vendor/nano-world-model",
+    "official_planning_example": "vendor/nano-world-model/src/scripts/eval/planning_point_maze.sh",
+    "native_experiment": "vendor/nano-world-model/src/experiments/planning_experiment.py",
+    "resource_helper": "scripts/pilot_nanowm_pointmaze_clean.py",
+    "resource_helper_protocol": "reports/nanowm_clean_gate_protocol_20261015.json",
+    "resource_summary": "runs/nanowm_resource_gate_v2/summary.json"
+  },
+  "fixed_tasks": {
+    "planner_targets": "runs/nanowm_heldout_pointmaze_tasks_v1/planner_targets.json",
+    "task_summary": "runs/nanowm_heldout_pointmaze_tasks_v1/summary.json",
+    "instances": [
+      0,
+      1,
+      2
+    ],
+    "seeds": [
+      42,
+      43,
+      44
+    ],
+    "trajectory_ids": [
+      1584,
+      64,
+      646
+    ],
+    "offsets": [
+      14,
+      35,
+      28
+    ],
+    "zero_success": [
+      true,
+      false,
+      false
+    ],
+    "selection": "Reuse the complete independently frozen validation task panel in its original order. Never resample, select only zero failures, or hide unsuccessful Clean rows.",
+    "heldout_limit": "Validation membership is reconstructed from published native split settings. Original author training cache was not published or directly compared."
+  },
+  "planner_input_boundary": {
+    "target_keys": [
+      "instance",
+      "seed",
+      "trajectory_id",
+      "offset",
+      "source_split",
+      "init_state",
+      "goal_state",
+      "initial_image",
+      "goal_image"
+    ],
+    "images": "Read only each approved initial.png and goal.png, using the native observation conversion. Pass these via native PlanningGoal.init_obs and goal_obs.",
+    "summary_access": "Read task gate completion/status and the matched zero-control metrics only. Do not read reference action arrays, source actions, source states, intermediate reference frames, or reference trajectories.",
+    "zero": "Reuse completed CPU zero controls. Do not rerun them. Zero is a passive-control/triviality baseline, not a strong planner baseline.",
+    "independence": "Real states and goal state are used only for reset, audit and env.eval_state. They are never candidate scores or world-model inputs beyond native rendered images."
+  },
+  "budget": {
+    "environment": "point_maze",
+    "goal_source": "frozen_heldout_dset_replay",
+    "goal_H": 5,
+    "horizon": 5,
+    "replan_every": 5,
+    "max_episode_steps": 10,
+    "frame_interval": 5,
+    "raw_action_dim": 2,
+    "packed_action_dim": 10,
+    "max_physical_steps": 50,
+    "max_replans": 2,
+    "cem": {
+      "num_samples": 100,
+      "topk": 10,
+      "opt_steps": 30,
+      "var_scale": 1.0,
+      "eval_every": 5,
+      "sigma_min": 0.001,
+      "action_low": null,
+      "action_high": null,
+      "rollout_batch_size": 16
+    },
+    "diffusion": {
+      "num_sampling_steps": 20,
+      "scheduling_mode": "full_sequence",
+      "eta": 0.0
+    },
+    "objective": {
+      "mode": "last",
+      "visual_metric": "mse",
+      "alpha": 1.0,
+      "base": 2.0
+    },
+    "precision": "Native FP32 parameters and VAE; native matmul precision high. No extra autocast, compilation, posterior replacement, batching adjustment or model change.",
+    "microbatch_boundary": "Native supported microbatch 16 preserves candidate/elite/iteration/step budgets but is not a claim of full-batch RNG or bitwise parity.",
+    "other_model_settings": "Use matched released training configuration, temporal dimensions, action normalization, diffusion schedule and history stabilization unchanged."
+  },
+  "randomness": {
+    "construction_seed": 42,
+    "cost_probe_seed": 42,
+    "per_instance_seed": [
+      42,
+      43,
+      44
+    ],
+    "rule": "Seed Python, NumPy, Torch CPU and CUDA before construction and reseed all immediately before the first native plan of each fixed instance. Save RNG states before every plan. The one-shot cost probe has a separate recorded RNG state. No reseeding inside CEM/rollouts/diffusion.",
+    "eta_limit": "Eta zero leaves VAE posterior, initial diffusion and context-stabilization noise active."
+  },
+  "shared_gpu": {
+    "gpu_index": 0,
+    "inspection": "nvidia-smi GPU inventory and compute-process PID queries only, before CUDA initialization. Never stop another process.",
+    "wait_seconds": 1800,
+    "poll_seconds": 30,
+    "busy_rule": "Any other compute PID on the selected GPU means busy. Save each sample and elapsed wait.",
+    "timeout": "resource_deferred; no model load and no Clean failure.",
+    "race_boundary": "An empty process snapshot does not reserve the GPU. Record process snapshots before and after the cost probe and before each rollout; if another process appears, defer without changing its process."
+  },
+  "cost_probe": {
+    "after": "Completed resource/config checks and an idle shared GPU",
+    "instance": 0,
+    "candidates": 16,
+    "horizon": 5,
+    "packed_action_dim": 10,
+    "rollout_calls": 1,
+    "actions": "One fixed-seed zero-mean unit-standard-deviation Gaussian candidate batch, with first sequence set to the mean. No optimization or candidate selection.",
+    "operation": "One unchanged native DiffusionWorldModel.rollout on the real task initial observation, after one model load. Synchronize for timing and record peak GPU allocation/reservation and finite output shape.",
+    "estimate": "Measured seconds * ceil(100/16) * 30 * 2; excludes non-rollout overhead and is not a certified runtime bound.",
+    "maximum_estimated_seconds_per_root": 2700,
+    "maximum_panel_estimate_seconds": 8100,
+    "decision": "Above the per-root estimate limit, return resource_deferred. Do not lower model/planner budgets, repeat probes, or count the probe as a task episode.",
+    "contention_limit": "Timing measured with other GPU work is not intrinsic model cost or clean hardware throughput."
+  },
+  "wall_clock": {
+    "task_phase_limit_seconds": 8100,
+    "starts": "Immediately before the first Clean episode, excluding GPU wait, resource preparation and one-shot timing probe.",
+    "checks": "Before every native rollout and before each plan/episode. A currently executing rollout may finish; do not launch the next after the deadline.",
+    "on_expiry": "Save partial traces and resource_deferred; the current instance is incomplete, not a completed failure, and aggregate gate is null."
+  },
+  "metrics": {
+    "success": "Unchanged env.eval_state: XY distance strictly less than 0.5 at native checkpoints every 25 physical steps, with the native final evaluation.",
+    "state_dist": "Four-dimensional native state distance is diagnostic, not the success criterion.",
+    "real_utility": "Only real environment state and env.eval_state. OFF_TARGET environment reward is logged for audit and never treated as image-goal utility.",
+    "evidence": [
+      "Frozen target and image identities",
+      "Each real state, submitted/clipped physical action, simulator time, audit-only native reward/done, XY distance and native checkpoint evaluations",
+      "Each native plan RNG state, returned normalized action sequence, predicted-loss history labelled not real utility",
+      "Per-instance completed success/failure, technical error, deferred/incomplete and not-run status"
+    ]
+  },
+  "gate": {
+    "pass": "At least two of the three initially non-successful instances complete successfully, including at least one instance whose matched zero condition failed.",
+    "order": "Attempt instances 0,1,2 in order; keep instance 0 even though its zero control succeeds.",
+    "early_stop": "Stop only when remaining fixed instances cannot attain two Clean successes or cannot attain a Clean-success/zero-failure contrast. Preserve later rows as not_run, never failures.",
+    "resource_or_technical_error": "Stop and preserve completed and partial evidence. Aggregate gate remains null. Technical errors, interruptions, resource limits and unrun instances are not Clean failures.",
+    "statistics": "Descriptive fixed-panel counts only; no significance or population estimates."
+  },
+  "resource_reuse_boundary": "The older helper preflight uses its older protocol solely to validate the same checkpoint, VAE, statistics, imports and source revision. Before any forward, replace and record the actual heldout protocol and max_episode_steps=10 runtime config. Do not present the old max50 task budget as this run.",
+  "output": "A new exclusive output directory; retain earlier runs and protocols. Record source paths/file sizes and strict state-dict success without repeated checkpoint hashes.",
+  "authorization_scope": "Implementation and CPU import/config checks first. Root agent reviews and separately starts the GPU wait/probe/task execution."
+}

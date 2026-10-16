@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "status": "completed_independent_cpu_cache_review",
+  "source_status": "completed",
+  "source_run": "runs/tdmpc_nullspace_action_logs_20261015",
+  "activity": {
+    "new_model_calls": 0,
+    "new_environment_steps": 0,
+    "new_training_updates": 0,
+    "model_api_calls": 0,
+    "cuda_calls": 0
+  },
+  "conditional_harm_gate_passed": false,
+  "method": "Independent CPU reads of saved data tensors and JSON; no checkpoint or environment loading.",
+  "reproduction": ".venv-native-local/bin/python scripts/review_tdmpc_nullspace_action_logs.py --verify-only",
+  "data_controls": {
+    "action_checks": {
+      "zero": {
+        "active_actions_exact": true,
+        "mask_recovers_source_exact": true,
+        "bounded_finite": true
+      },
+      "correlated": {
+        "active_actions_exact": true,
+        "mask_recovers_source_exact": true,
+        "bounded_finite": true
+      },
+      "permuted": {
+        "active_actions_exact": true,
+        "mask_recovers_source_exact": true,
+        "bounded_finite": true
+      }
+    },
+    "joint_tail_multiset_exact": true,
+    "complete_row_permutation_seed17_exact": true,
+    "encoding_uses_only_active_actions": true,
+    "physical_replay_observations_rewards_done_exact": true,
+    "source_task": 4,
+    "source_seed": 21,
+    "source_transitions": 300,
+    "protected_data_boundary": "Saved action variants preserve active actions/order. Both physical replays match source obs/reward exactly. All arms use one source obs/reward/task/seed object in launched runner; separate per-arm protected tensors were not saved. Source reward is not used by the consistency-only adaptation.",
+    "mask_is_input_identity_not_executed_defense": true
+  },
+  "evaluation_rows": [
+    {
+      "arm": "clean",
+      "real_reward_sum_float64": 983.0,
+      "steps": 500,
+      "paired_initial_obs_exact": true,
+      "physical_trace_exact": true,
+      "native_tail_zero": true
+    },
+    {
+      "arm": "zero",
+      "real_reward_sum_float64": 984.0,
+      "steps": 500,
+      "paired_initial_obs_exact": true,
+      "physical_trace_exact": true,
+      "native_tail_zero": true
+    },
+    {
+      "arm": "correlated",
+      "real_reward_sum_float64": 985.0,
+      "steps": 500,
+      "paired_initial_obs_exact": true,
+      "physical_trace_exact": true,
+      "native_tail_zero": true
+    },
+    {
+      "arm": "permuted",
+      "real_reward_sum_float64": 984.0,
+      "steps": 500,
+      "paired_initial_obs_exact": true,
+      "physical_trace_exact": true,
+      "native_tail_zero": true
+    }
+  ],
+  "returns": {
+    "clean": 983.0,
+    "zero": 984.0,
+    "correlated": 985.0,
+    "permuted": 984.0
+  },
+  "baseline_checks": {
+    "clean": {
+      "passed": true,
+      "historical_return": 983.0,
+      "actual_return": 983.0,
+      "full_historical_trace_equal_diagnostic": true
+    },
+    "zero": {
+      "passed": true,
+      "historical_return": 984.0,
+      "actual_return": 984.0,
+      "full_historical_trace_equal_diagnostic": true
+    }
+  },
+  "training_checks": {
+    "zero": {
+      "updates": 40,
+      "non_dynamics_state_exact_recorded": true,
+      "historical_all40_passed": true,
+      "historical_all40_exact": true,
+      "maximum_absolute_errors": {
+        "weighted_consistency_loss": 0.0,
+        "grad_norm": 0.0
+      }
+    },
+    "correlated": {
+      "updates": 40,
+      "non_dynamics_state_exact_recorded": true
+    },
+    "permuted": {
+      "updates": 40,
+      "non_dynamics_state_exact_recorded": true
+    }
+  },
+  "minibatch_bank": {
+    "shape": [
+      40,
+      32
+    ],
+    "valid_indices": true,
+    "boundary": "One saved CUDA-generated index bank reused by runner; no CUDA RNG regeneration in this CPU audit."
+  },
+  "relative_loss_correlated": {
+    "zero": -0.00101626016260159,
+    "permuted": -0.00101626016260159
+  },
+  "permuted_minus_correlated_return": -1.0,
+  "decision": "No-Go_fixed_correlation_specific_candidate",
+  "registered_execution_counts": {
+    "checkpoint_loads": 1,
+    "training_updates": 120,
+    "source_replay_controls": 600,
+    "evaluation_controls": 2000,
+    "explicit_environment_resets": 6,
+    "evaluation_episodes_completed": 4,
+    "model_api_requests": 0
+  },
+  "frozen_state_evidence_boundary": "Verified non-dynamics equality records from launched runner. Full non-dynamics state snapshots were not saved; no independent tensor comparison or checkpoint rehash is claimed.",
+  "statistics": {
+    "independent_evaluation_roots": 1,
+    "seed": 11,
+    "p_value": null,
+    "confidence_interval": null,
+    "scope": "Four paired closed-loop conditions, not four independent roots or fixed candidate-ranking comparisons."
+  },
+  "limitations": [
+    "Added dynamics-only consistency adaptation, not native full joint continuation or a deployed data-ingestion service.",
+    "Forecast MSE is not recomputed and never substitutes for real utility.",
+    "Only the registered reacher task is evaluated; this is not cross-task victim harm.",
+    "A positive gate alone does not establish a new poisoning concept or deployable defense."
+  ],
+  "source_paths": [
+    "runs/tdmpc_nullspace_action_logs_20261015/summary.json",
+    "runs/tdmpc_nullspace_action_logs_20261015/frozen_protocol.json",
+    "runs/tdmpc_nullspace_action_logs_20261015/launched_script.py",
+    "runs/tdmpc_nullspace_action_logs_20261015/action_variants.pt",
+    "runs/tdmpc_nullspace_action_logs_20261015/training_starts.pt",
+    "runs/tdmpc_adaptation_screen_v0/random_data.pt",
+    "runs/tdmpc_adaptation_screen_v0/clean_reacher-easy.pt",
+    "runs/tdmpc_adaptation_screen_v0/random_reacher-easy_evaluation.pt",
+    "runs/tdmpc_adaptation_screen_v0/random_adaptation.json"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+  "method": "AST-read conditioner dropout declarations in relevant inheritance chain; execute unchanged pinned get_condition_uncondition method with capture embedders",
+  "config_chain": {
+    "shared": {
+      "fps": 0.0,
+      "padding_mask": 0.0,
+      "text": 0.2,
+      "use_video_condition": 0.2
+    },
+    "stage_c_index_102": {
+      "fps": 0.0,
+      "padding_mask": 0.0,
+      "text": 0.2,
+      "use_video_condition": 0.0
+    },
+    "libero": {
+      "fps": 0.0,
+      "padding_mask": 0.0,
+      "text": 0.0,
+      "use_video_condition": 0.0
+    },
+    "inference_only_override": "sde sigma_max=80/sigma_min=4; no conditioner override"
+  },
+  "source_branch_test": {
+    "uncondition_is_none": true,
+    "conditioner_forward_calls": 1,
+    "override_dropout_rates": [
+      {
+        "fps": 0.0,
+        "padding_mask": 0.0,
+        "text": 0.0,
+        "use_video_condition": 0.0
+      }
+    ],
+    "negative_control_text_dropout_0_2": {
+      "uncondition_is_not_none": true,
+      "conditioner_forward_calls": 2,
+      "override_dropout_rates": [
+        {
+          "fps": 0.0,
+          "padding_mask": 0.0,
+          "text": 0.0,
+          "use_video_condition": 0.0
+        },
+        {
+          "fps": 0.0,
+          "padding_mask": 0.0,
+          "text": 1.0,
+          "use_video_condition": 0.0
+        }
+      ]
+    }
+  },
+  "conclusion": "No omitted classifier-free guidance in the pinned LIBERO configuration: upstream uncondition is None and its CFG branch is skipped. Pure conditional denoise matches this branch choice.",
+  "scope": {
+    "full_hydra_composition_executed": false,
+    "learned_conditioner_forward_executed": false,
+    "gpu_used": false,
+    "full_learned_x0_fn_equivalence_proven": false
+  },
+  "sources": [
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/conditioner.py",
+      "sha256": "00c7255ea3cd869f3a914830c703b207a45e6176e5442e4a2e87052cd05879b6",
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/conditioner.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/config/conditioner/video2world_conditioner.py",
+      "sha256": "df4ee8cd88c4062e02981f144ea5d91182507c9fe73e3830dc90709bb44b1661",
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/config/conditioner/video2world_conditioner.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/_src/predict2/configs/video2world/experiment/resume_text2world/stage3_2B_ablation.py",
+      "sha256": "7ce7c325d33ac5568ce5dc17233da52cd69944dfe1104dbdd4c032b3540afbcd",
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/_src/predict2/configs/video2world/experiment/resume_text2world/stage3_2B_ablation.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/config/experiment/cosmos_policy_experiment_configs.py",
+      "sha256": "16b8c0d1e2112ebf09cc5393f3f38f07cbc82b9ee2844ad79f35fd6532a566fb",
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/config/experiment/cosmos_policy_experiment_configs.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/config/config_v2.py",
+      "sha256": "1b3a92e03f7a7794292c000497be043d51b347cd3ebab468f8cb5f6f0c3873c6",
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/config/config_v2.py"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/models/policy_video2world_model.py",
+      "sha256": "4f5314fdea8f3f05d210f99923ca07e3c05fe9e0756b71f77b201f4b52e460eb",
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/models/policy_video2world_model.py"
+    }
+  ]
+}

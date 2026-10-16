@@ -1,0 +1,2890 @@
+{
+  "schema_version": 1,
+  "status": "completed",
+  "condition": "first_candidate_utility_recovery",
+  "scope": "clean_native_first_query_ranking_contribution",
+  "execution_scope": "post_interruption_amended_development_analysis",
+  "execution_mode": "fresh_process_recovery_single_attempt",
+  "config": {
+    "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+    "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+  },
+  "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+  "source_summary": {
+    "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+    "sha256": "075fe874619b45e9f1dde03ceafcfee238063e06f97ad104bd9cd97f93b0b50a"
+  },
+  "original_run_summary": {
+    "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+    "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+  },
+  "protocol": {
+    "suite": "libero_goal",
+    "task_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "init_ids": [
+      0,
+      1,
+      2
+    ],
+    "candidate_indices": [
+      0,
+      1
+    ],
+    "seed": 31,
+    "env_seed": 0,
+    "settle_steps": 10,
+    "max_steps": 300,
+    "best_of_n": 2,
+    "camera_size": 256,
+    "candidate_seeds": [
+      31,
+      32
+    ],
+    "chunk_length": 16,
+    "offload": false,
+    "cuda_memory_fraction": 0.28,
+    "video_stride": 2,
+    "continuation": "original task Goal, native N=2 argmax at every query after the first",
+    "stopping": "unchanged native stop immediately on environment success or done; otherwise 300 actions",
+    "execution_order": "task ascending, init ascending, original Clean selected candidate then the other candidate",
+    "seed_rule": "native run_episode resets seed31 independently for every fresh branch; order never enters seeds"
+  },
+  "resource_gate": {
+    "primary": "mean(success_native_argmax - (success_candidate0 + success_candidate1)/2)",
+    "minimum_native_minus_alternate_net_successes": 3,
+    "minimum_native_minus_uniform_success_rate": 0.05,
+    "minimum_tasks_with_positive_native_minus_alternate_net_successes": 2,
+    "secondary": "failure-penalized completion cost: successful steps, otherwise 300; cannot rescue primary gate",
+    "controls": [
+      "fixed_candidate0",
+      "fixed_candidate1",
+      "uniform_expectation",
+      "two_candidate_hindsight_oracle"
+    ],
+    "incomplete": "No verdict until all60 valid and all30 original-selected trajectories pass exact parity",
+    "uncertainty": "Exploratory task-cluster summaries; 10 tasks, not 30 independent tasks",
+    "stop_rule": "If the fixed gate fails, do not select another query, continuation or horizon to search for a positive result"
+  },
+  "planned_recovery_branches": [
+    {
+      "task_id": 8,
+      "init_id": 1,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 1,
+      "role": "native_selected"
+    },
+    {
+      "task_id": 8,
+      "init_id": 1,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 1,
+      "role": "alternate"
+    },
+    {
+      "task_id": 8,
+      "init_id": 2,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 0,
+      "role": "native_selected"
+    },
+    {
+      "task_id": 8,
+      "init_id": 2,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 0,
+      "role": "alternate"
+    },
+    {
+      "task_id": 9,
+      "init_id": 0,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 0,
+      "role": "native_selected"
+    },
+    {
+      "task_id": 9,
+      "init_id": 0,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 0,
+      "role": "alternate"
+    },
+    {
+      "task_id": 9,
+      "init_id": 1,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 0,
+      "role": "native_selected"
+    },
+    {
+      "task_id": 9,
+      "init_id": 1,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 0,
+      "role": "alternate"
+    },
+    {
+      "task_id": 9,
+      "init_id": 2,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 1,
+      "role": "native_selected"
+    },
+    {
+      "task_id": 9,
+      "init_id": 2,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 1,
+      "role": "alternate"
+    }
+  ],
+  "execution": {
+    "maximum_new_child_attempts": 10,
+    "attempts_per_registered_branch": 1,
+    "fresh_process_per_branch": true,
+    "child_timeout_seconds": 900,
+    "parallel_children": 1,
+    "on_any_error": "terminal; no replacement, retry or remaining branches",
+    "prior_unmatched_attempt_retained": true,
+    "scientific_protocol": "Original candidate order, original Goal, seed31/32, N2 continuation, 300-step budget and exact checks unchanged"
+  },
+  "provenance": {
+    "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+    "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+    "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+    "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+    "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+    "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+    "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+    "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+    "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+    "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+    "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+    "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+    "source_sha256": {
+      "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+      "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+      "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+      "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+      "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+      "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+      "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+    },
+    "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+    "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+    "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+    "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+    "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+    "settle_action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "chunk_length": 16,
+    "action_steps": 5,
+    "future_steps": 1,
+    "value_steps": 1,
+    "sampler_seeds": [
+      31,
+      32
+    ],
+    "sigma_min": 4.0,
+    "sigma_max": 80.0,
+    "condition_timestep": 0.0,
+    "policy_condition_slots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "native_ar_forecast_condition_slots": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "native_ar_value_condition_slots": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "selection": "native argmax predicted value",
+    "goal_routing": "original task goal in all policy, forecast, and value calls",
+    "attention_backend": "torch with existing TE compatibility shim",
+    "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+    "cudnn_deterministic": true,
+    "success_source": "LIBERO environment check_success() after each physical action",
+    "external_planner": false,
+    "training_updates": 0,
+    "api_requests": 0,
+    "torch_version": "2.2.0+cu121",
+    "numpy_version": "1.26.4",
+    "runtime_compatibility": {
+      "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+      "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+      "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+      "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+      "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+      "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+      "full_transformer_engine_runtime_parity": false,
+      "cuda_fused_rope_parity": false,
+      "rmsnorm_fused_kernel_parity": false
+    },
+    "first_candidate_utility_wrapper": {
+      "config": {
+        "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+        "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+      },
+      "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+      "scope": "clean_native_first_query_ranking_contribution",
+      "execution_mode": "fresh_process_recovery_single_attempt",
+      "original_interrupted_run": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+        "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+      },
+      "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+    }
+  },
+  "results": [
+    {
+      "task_id": 8,
+      "init_id": 1,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 1,
+      "role": "native_selected",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 8,
+        "init_id": 1,
+        "task_name": "put_the_bowl_on_the_plate",
+        "goal": "put the bowl on the plate",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "458b021de5c47d7b23306d6e7f714ef3c2c55174aa4b2281816d6c3792f408cb",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl",
+        "bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+        "init_file_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 71,
+        "action_chunks": 5,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.3260787864957604,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean.mp4",
+        "elapsed_seconds": 12.325295068993,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean.json",
+        "sha256": "afb5a2f9dc2d58ba54dab58cd443fc07dd66316201b9566a3da9b9f96a75c56f"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init01_clean.json",
+        "sha256": "1a176177f525cb8121dad346d2a85b671b68f7a56beaf526d24bfd7555c0329e"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/first_query_parity.json",
+        "sha256": "35598a0053949894651937051f35fbf2ddc0ba8fb6bc41810a9c6559fa90bfce",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init01_clean_states.npz",
+          "sha256": "6feca1876956fec135de753bf3c946f939892c99947cd01976ad53fbbc6c181e"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init01_clean_initial.png",
+          "sha256": "ca12a8fdbea175841d3ea2608f613d75737d2bada944721828b794cefa980042"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_initial.png",
+          "sha256": "ca12a8fdbea175841d3ea2608f613d75737d2bada944721828b794cefa980042"
+        }
+      },
+      "selected_arm_parity": {
+        "reference_summary": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+        "task_id": 8,
+        "init_id": 1,
+        "all_exact": true,
+        "checks": {
+          "episode_status": true,
+          "episode_condition": true,
+          "episode_suite": true,
+          "episode_best_of_n": true,
+          "episode_task_id": true,
+          "episode_init_id": true,
+          "episode_task_name": true,
+          "episode_goal": true,
+          "episode_seed": true,
+          "episode_environment_seed": true,
+          "episode_max_steps": true,
+          "episode_settle_steps": true,
+          "episode_initial_state_sha256": true,
+          "episode_bddl_sha256": true,
+          "episode_init_file_sha256": true,
+          "episode_success_at_start": true,
+          "episode_success": true,
+          "episode_terminal_done": true,
+          "episode_environment_steps": true,
+          "episode_action_chunks": true,
+          "episode_reward_sum": true,
+          "episode_final_reward": true,
+          "episode_action_norm_mean": true,
+          "all_trace_fields": true,
+          "all_candidate_values_selections_and_actions": true,
+          "state_array_names": true,
+          "state_initial_dtype_shape_bytes": true,
+          "state_settled_dtype_shape_bytes": true,
+          "state_final_dtype_shape_bytes": true,
+          "state_eef_path_dtype_shape_bytes": true,
+          "initial_image_png_bytes": true,
+          "final_image_png_bytes": true
+        },
+        "reference_trace_sha256": "1ed2a610cda1426cc362ecb7e5f94179d5176c9c3b52333dd66df0cf1631deab",
+        "actual_trace_sha256": "1ed2a610cda1426cc362ecb7e5f94179d5176c9c3b52333dd66df0cf1631deab",
+        "scope": "Recorded physical trace, both candidates' values/actions, selection, state dtype+shape+bytes and PNG; not full latent-tensor parity",
+        "trace_file_bytes_exact": true
+      },
+      "artifacts": {
+        "libero_goal_task08_init01_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean.jsonl",
+          "sha256": "1ed2a610cda1426cc362ecb7e5f94179d5176c9c3b52333dd66df0cf1631deab"
+        },
+        "libero_goal_task08_init01_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_chunks.jsonl",
+          "sha256": "1b661874897a7525391f35698a8a9e2c688cd11a6f1271e3a3ad5ef36939d7a3"
+        },
+        "libero_goal_task08_init01_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_initial.png",
+          "sha256": "ca12a8fdbea175841d3ea2608f613d75737d2bada944721828b794cefa980042"
+        },
+        "libero_goal_task08_init01_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_final.png",
+          "sha256": "1f558c9b2bd7ce0eb5256ce7435627a8194f1ca13a161e77a57fc373ab7459b4"
+        },
+        "libero_goal_task08_init01_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/libero_goal_task08_init01_clean_states.npz",
+          "sha256": "6feca1876956fec135de753bf3c946f939892c99947cd01976ad53fbbc6c181e"
+        }
+      }
+    },
+    {
+      "task_id": 8,
+      "init_id": 1,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 1,
+      "role": "alternate",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 8,
+        "init_id": 1,
+        "task_name": "put_the_bowl_on_the_plate",
+        "goal": "put the bowl on the plate",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "458b021de5c47d7b23306d6e7f714ef3c2c55174aa4b2281816d6c3792f408cb",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl",
+        "bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+        "init_file_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 72,
+        "action_chunks": 5,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.3251219669220125,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean.mp4",
+        "elapsed_seconds": 11.8803608030139,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean.json",
+        "sha256": "615a5c52756199e01b1ce9fd449e0f3a3c22d1f89472c7c2905b094dd933b774"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init01_clean.json",
+        "sha256": "1a176177f525cb8121dad346d2a85b671b68f7a56beaf526d24bfd7555c0329e"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/first_query_parity.json",
+        "sha256": "9b761998d026fa68b36ce8577ad8c6d9ab1f72b7792321b57930a705d6cd985b",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init01_clean_states.npz",
+          "sha256": "6feca1876956fec135de753bf3c946f939892c99947cd01976ad53fbbc6c181e"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init01_clean_initial.png",
+          "sha256": "ca12a8fdbea175841d3ea2608f613d75737d2bada944721828b794cefa980042"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_initial.png",
+          "sha256": "ca12a8fdbea175841d3ea2608f613d75737d2bada944721828b794cefa980042"
+        }
+      },
+      "selected_arm_parity": null,
+      "artifacts": {
+        "libero_goal_task08_init01_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean.jsonl",
+          "sha256": "96aa76bd4f7741e033b9907dd1e920e06d66d225af6e321fe603d7a1e9912007"
+        },
+        "libero_goal_task08_init01_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_chunks.jsonl",
+          "sha256": "331042a312c674e3ca6ab3dec0dfb2d2147dae4ffecc37928df2c7d12a6e990e"
+        },
+        "libero_goal_task08_init01_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_initial.png",
+          "sha256": "ca12a8fdbea175841d3ea2608f613d75737d2bada944721828b794cefa980042"
+        },
+        "libero_goal_task08_init01_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_final.png",
+          "sha256": "2e0777d1ff2fde8dc86d8dac580455e5c630e4252a20368c55fe0c64e89c05a0"
+        },
+        "libero_goal_task08_init01_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/libero_goal_task08_init01_clean_states.npz",
+          "sha256": "8b165cad03a0054c7cd0e5e20b62778027926af31b211a0e3711863659f5d699"
+        }
+      }
+    },
+    {
+      "task_id": 8,
+      "init_id": 2,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 0,
+      "role": "native_selected",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 8,
+        "init_id": 2,
+        "task_name": "put_the_bowl_on_the_plate",
+        "goal": "put the bowl on the plate",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "e92c3b68aa6af756d9ae0fbee9eefd5c04fb9d5739453b832e9707c8fe290096",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl",
+        "bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+        "init_file_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 74,
+        "action_chunks": 5,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.2963044681476148,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean.mp4",
+        "elapsed_seconds": 12.074477349990048,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean.json",
+        "sha256": "0ec422cfb081a6e5232b583b93fe72ea6ff2a8caf65ad5cf4485040a8ad36f30"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init02_clean.json",
+        "sha256": "2fb513ceaddd3741b041b8d9d220f6af4584d5772eab63e812d07ddb6f74e548"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/first_query_parity.json",
+        "sha256": "b0094209db1440896126eca3597ca75b3fc2ad3d0f26f05ce9a65f02d99b6d40",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init02_clean_states.npz",
+          "sha256": "a21df8731032171cb89b5bcd9988e6cf89e35e433e9e77bc1d7a35e5c20b21e5"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init02_clean_initial.png",
+          "sha256": "01e25dee051db63ab56dff592cccd85eac0766ab32aeb230f0d8dd69f22d55ca"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_initial.png",
+          "sha256": "01e25dee051db63ab56dff592cccd85eac0766ab32aeb230f0d8dd69f22d55ca"
+        }
+      },
+      "selected_arm_parity": {
+        "reference_summary": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+        "task_id": 8,
+        "init_id": 2,
+        "all_exact": true,
+        "checks": {
+          "episode_status": true,
+          "episode_condition": true,
+          "episode_suite": true,
+          "episode_best_of_n": true,
+          "episode_task_id": true,
+          "episode_init_id": true,
+          "episode_task_name": true,
+          "episode_goal": true,
+          "episode_seed": true,
+          "episode_environment_seed": true,
+          "episode_max_steps": true,
+          "episode_settle_steps": true,
+          "episode_initial_state_sha256": true,
+          "episode_bddl_sha256": true,
+          "episode_init_file_sha256": true,
+          "episode_success_at_start": true,
+          "episode_success": true,
+          "episode_terminal_done": true,
+          "episode_environment_steps": true,
+          "episode_action_chunks": true,
+          "episode_reward_sum": true,
+          "episode_final_reward": true,
+          "episode_action_norm_mean": true,
+          "all_trace_fields": true,
+          "all_candidate_values_selections_and_actions": true,
+          "state_array_names": true,
+          "state_initial_dtype_shape_bytes": true,
+          "state_settled_dtype_shape_bytes": true,
+          "state_final_dtype_shape_bytes": true,
+          "state_eef_path_dtype_shape_bytes": true,
+          "initial_image_png_bytes": true,
+          "final_image_png_bytes": true
+        },
+        "reference_trace_sha256": "8960692b108b760873ec5d906160c2f2e6f16268a68afad2b7a1c700413d4807",
+        "actual_trace_sha256": "8960692b108b760873ec5d906160c2f2e6f16268a68afad2b7a1c700413d4807",
+        "scope": "Recorded physical trace, both candidates' values/actions, selection, state dtype+shape+bytes and PNG; not full latent-tensor parity",
+        "trace_file_bytes_exact": true
+      },
+      "artifacts": {
+        "libero_goal_task08_init02_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean.jsonl",
+          "sha256": "8960692b108b760873ec5d906160c2f2e6f16268a68afad2b7a1c700413d4807"
+        },
+        "libero_goal_task08_init02_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_chunks.jsonl",
+          "sha256": "f0706c24d7cc9a694e688b4a64ee545cef65c46664cc4e9adc8a4edd94d6f84e"
+        },
+        "libero_goal_task08_init02_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_initial.png",
+          "sha256": "01e25dee051db63ab56dff592cccd85eac0766ab32aeb230f0d8dd69f22d55ca"
+        },
+        "libero_goal_task08_init02_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_final.png",
+          "sha256": "740514daac265e21757baaa01a011326f1a53fe215816b87b0fd48f14eee907a"
+        },
+        "libero_goal_task08_init02_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/libero_goal_task08_init02_clean_states.npz",
+          "sha256": "a21df8731032171cb89b5bcd9988e6cf89e35e433e9e77bc1d7a35e5c20b21e5"
+        }
+      }
+    },
+    {
+      "task_id": 8,
+      "init_id": 2,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 0,
+      "role": "alternate",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 8,
+        "init_id": 2,
+        "task_name": "put_the_bowl_on_the_plate",
+        "goal": "put the bowl on the plate",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "e92c3b68aa6af756d9ae0fbee9eefd5c04fb9d5739453b832e9707c8fe290096",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_bowl_on_the_plate.bddl",
+        "bddl_sha256": "358b7781437e412c67d6a7648c1c28796b6b1bf117a25e61316cb8dfeb940e5b",
+        "init_file_sha256": "ef3466ffad734754dc40eba1f6f5712e37aa46b9692c595e0da34f16d3a0c668",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 73,
+        "action_chunks": 5,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.298584502065826,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean.mp4",
+        "elapsed_seconds": 12.130996683001285,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean.json",
+        "sha256": "c0d266f59882df7a6e7a966a7bb21e93c6e9758c33abba45b80141f91d1cbcdc"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init02_clean.json",
+        "sha256": "2fb513ceaddd3741b041b8d9d220f6af4584d5772eab63e812d07ddb6f74e548"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/first_query_parity.json",
+        "sha256": "27d48434d68e37cf1856146b18eddc49427d422b5d4a68919724f0e62c8a2b4d",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init02_clean_states.npz",
+          "sha256": "a21df8731032171cb89b5bcd9988e6cf89e35e433e9e77bc1d7a35e5c20b21e5"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task08_init02_clean_initial.png",
+          "sha256": "01e25dee051db63ab56dff592cccd85eac0766ab32aeb230f0d8dd69f22d55ca"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_initial.png",
+          "sha256": "01e25dee051db63ab56dff592cccd85eac0766ab32aeb230f0d8dd69f22d55ca"
+        }
+      },
+      "selected_arm_parity": null,
+      "artifacts": {
+        "libero_goal_task08_init02_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean.jsonl",
+          "sha256": "69606a4148bf8612e4c816c0e25efe715b7482956ef8307f2c00aad434d87da9"
+        },
+        "libero_goal_task08_init02_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_chunks.jsonl",
+          "sha256": "e51278ca91acb27c5c277db693148722f29b8842495c2af06890cd813b5ee434"
+        },
+        "libero_goal_task08_init02_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_initial.png",
+          "sha256": "01e25dee051db63ab56dff592cccd85eac0766ab32aeb230f0d8dd69f22d55ca"
+        },
+        "libero_goal_task08_init02_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_final.png",
+          "sha256": "65fd32eb8feb5f47c67a14662a667ea35a4904815df05759776d351c064e88b5"
+        },
+        "libero_goal_task08_init02_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/libero_goal_task08_init02_clean_states.npz",
+          "sha256": "30ef6b39b69c09d4a730f5477d91b43490f266328e8c1fa27a58ef7b7f39d058"
+        }
+      }
+    },
+    {
+      "task_id": 9,
+      "init_id": 0,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 0,
+      "role": "native_selected",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 9,
+        "init_id": 0,
+        "task_name": "put_the_wine_bottle_on_the_rack",
+        "goal": "put the wine bottle on the rack",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "c12cdf642eb5c7b4fd04e4d3b55870f592770742ee5434ad8f80eda6168c9654",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_wine_bottle_on_the_rack.bddl",
+        "bddl_sha256": "3d3ee18139056aa3780572cde17b1c50dc20ae0d299403f65e514e8471ba0e8e",
+        "init_file_sha256": "fa09aa4ade871c1c6be3dd8c93eb3437ea15190fd7dc73b8c986c8d2d3cfb062",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 131,
+        "action_chunks": 9,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.1531148275191254,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean.mp4",
+        "elapsed_seconds": 19.552780201018322,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean.json",
+        "sha256": "23595f1a82bd2439a45cf80675e8a06e2c38b1bfae6e4feef0d6e6d94491fc8d"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init00_clean.json",
+        "sha256": "b5cd15c242e488d16a215d19d90680b3dccb52e57671be4ed2e81c9b57d8c587"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/first_query_parity.json",
+        "sha256": "1f6d5bf1436f9e8d9b27b5ebe9dccc00b7d035e20d827bef5fe2a95511c16cd5",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init00_clean_states.npz",
+          "sha256": "629cc00818481da87720578055a311cbf0b89b713222b3e707c59fadd1b323ba"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init00_clean_initial.png",
+          "sha256": "9af017cdaad349b7721fe71bdb9a5eaf8828385db85bef3e78b0848e24f2a9a1"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_initial.png",
+          "sha256": "9af017cdaad349b7721fe71bdb9a5eaf8828385db85bef3e78b0848e24f2a9a1"
+        }
+      },
+      "selected_arm_parity": {
+        "reference_summary": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+        "task_id": 9,
+        "init_id": 0,
+        "all_exact": true,
+        "checks": {
+          "episode_status": true,
+          "episode_condition": true,
+          "episode_suite": true,
+          "episode_best_of_n": true,
+          "episode_task_id": true,
+          "episode_init_id": true,
+          "episode_task_name": true,
+          "episode_goal": true,
+          "episode_seed": true,
+          "episode_environment_seed": true,
+          "episode_max_steps": true,
+          "episode_settle_steps": true,
+          "episode_initial_state_sha256": true,
+          "episode_bddl_sha256": true,
+          "episode_init_file_sha256": true,
+          "episode_success_at_start": true,
+          "episode_success": true,
+          "episode_terminal_done": true,
+          "episode_environment_steps": true,
+          "episode_action_chunks": true,
+          "episode_reward_sum": true,
+          "episode_final_reward": true,
+          "episode_action_norm_mean": true,
+          "all_trace_fields": true,
+          "all_candidate_values_selections_and_actions": true,
+          "state_array_names": true,
+          "state_initial_dtype_shape_bytes": true,
+          "state_settled_dtype_shape_bytes": true,
+          "state_final_dtype_shape_bytes": true,
+          "state_eef_path_dtype_shape_bytes": true,
+          "initial_image_png_bytes": true,
+          "final_image_png_bytes": true
+        },
+        "reference_trace_sha256": "ef80d3631455b2dfcc829c1b8c3a17c3a470e85cee0f85768becde132ca0d480",
+        "actual_trace_sha256": "ef80d3631455b2dfcc829c1b8c3a17c3a470e85cee0f85768becde132ca0d480",
+        "scope": "Recorded physical trace, both candidates' values/actions, selection, state dtype+shape+bytes and PNG; not full latent-tensor parity",
+        "trace_file_bytes_exact": true
+      },
+      "artifacts": {
+        "libero_goal_task09_init00_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean.jsonl",
+          "sha256": "ef80d3631455b2dfcc829c1b8c3a17c3a470e85cee0f85768becde132ca0d480"
+        },
+        "libero_goal_task09_init00_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_chunks.jsonl",
+          "sha256": "95500f04d7a281f788ec74d7f88d0a9354eb3cce6b8ef1540c0e5e95686f1863"
+        },
+        "libero_goal_task09_init00_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_initial.png",
+          "sha256": "9af017cdaad349b7721fe71bdb9a5eaf8828385db85bef3e78b0848e24f2a9a1"
+        },
+        "libero_goal_task09_init00_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_final.png",
+          "sha256": "e49ee30a5d92722cff71e08ccbb5d3c24ea871a776c40b308d8c0d6f676ac084"
+        },
+        "libero_goal_task09_init00_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/libero_goal_task09_init00_clean_states.npz",
+          "sha256": "629cc00818481da87720578055a311cbf0b89b713222b3e707c59fadd1b323ba"
+        }
+      }
+    },
+    {
+      "task_id": 9,
+      "init_id": 0,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 0,
+      "role": "alternate",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 9,
+        "init_id": 0,
+        "task_name": "put_the_wine_bottle_on_the_rack",
+        "goal": "put the wine bottle on the rack",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "c12cdf642eb5c7b4fd04e4d3b55870f592770742ee5434ad8f80eda6168c9654",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_wine_bottle_on_the_rack.bddl",
+        "bddl_sha256": "3d3ee18139056aa3780572cde17b1c50dc20ae0d299403f65e514e8471ba0e8e",
+        "init_file_sha256": "fa09aa4ade871c1c6be3dd8c93eb3437ea15190fd7dc73b8c986c8d2d3cfb062",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 122,
+        "action_chunks": 8,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.155848722384834,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean.mp4",
+        "elapsed_seconds": 18.38983618299244,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean.json",
+        "sha256": "6ff98e357977bd283378df072d2746621c46a8ba3422538d42ac9383f645bbc6"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init00_clean.json",
+        "sha256": "b5cd15c242e488d16a215d19d90680b3dccb52e57671be4ed2e81c9b57d8c587"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/first_query_parity.json",
+        "sha256": "ec056db960f9664b1dbdd45e9171c0ef8038bfaa8f0d040a55bb01a0da606e7d",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init00_clean_states.npz",
+          "sha256": "629cc00818481da87720578055a311cbf0b89b713222b3e707c59fadd1b323ba"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init00_clean_initial.png",
+          "sha256": "9af017cdaad349b7721fe71bdb9a5eaf8828385db85bef3e78b0848e24f2a9a1"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_initial.png",
+          "sha256": "9af017cdaad349b7721fe71bdb9a5eaf8828385db85bef3e78b0848e24f2a9a1"
+        }
+      },
+      "selected_arm_parity": null,
+      "artifacts": {
+        "libero_goal_task09_init00_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean.jsonl",
+          "sha256": "fac3b46e43e035bf8b5b8faa1892fe2fb66d1e74369f46072f6861ae52dfd843"
+        },
+        "libero_goal_task09_init00_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_chunks.jsonl",
+          "sha256": "8070a19857eeed3b13231dc2eda2a61a66debc15278589304d147b705b722a5f"
+        },
+        "libero_goal_task09_init00_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_initial.png",
+          "sha256": "9af017cdaad349b7721fe71bdb9a5eaf8828385db85bef3e78b0848e24f2a9a1"
+        },
+        "libero_goal_task09_init00_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_final.png",
+          "sha256": "e463b9032b9b7fd3dc0ec50ff7409cbbbfae1357cfc9399ffa6326dafdb2e4f4"
+        },
+        "libero_goal_task09_init00_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/libero_goal_task09_init00_clean_states.npz",
+          "sha256": "888c1f0d086decf15a37c09c87ec3b8a06d44c92c57f9df179840545cedff5b8"
+        }
+      }
+    },
+    {
+      "task_id": 9,
+      "init_id": 1,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 0,
+      "role": "native_selected",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 9,
+        "init_id": 1,
+        "task_name": "put_the_wine_bottle_on_the_rack",
+        "goal": "put the wine bottle on the rack",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "f1c7fced4b7c530aed064a27d8714e966e8a2a9c12a4abf8ba2bbb56b9d2a483",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_wine_bottle_on_the_rack.bddl",
+        "bddl_sha256": "3d3ee18139056aa3780572cde17b1c50dc20ae0d299403f65e514e8471ba0e8e",
+        "init_file_sha256": "fa09aa4ade871c1c6be3dd8c93eb3437ea15190fd7dc73b8c986c8d2d3cfb062",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 140,
+        "action_chunks": 9,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.1311833651741539,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean.mp4",
+        "elapsed_seconds": 29.15323808201356,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean.json",
+        "sha256": "c85403d7f4b31cd5cc14d5dc769b121cdb5f1d4bfb9dad1213b2fdcb3e218f79"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init01_clean.json",
+        "sha256": "7fab6e358430bf1240ae634c20dc11722a32b096a42ddf6f40bcf8e69d90c413"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/first_query_parity.json",
+        "sha256": "8d952eac14b055682e2a6e283f1d9b98e809d3fd52a038fbde20e6ce738128d8",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init01_clean_states.npz",
+          "sha256": "dfd04ba7aaa5aa870edf3b07ba3b32dd543bbb2c8b7c70b3abe12ffcf88c2b28"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init01_clean_initial.png",
+          "sha256": "9194f33db31b99e815a19ef9385bed17ea026bf24bae8c79d2da4c4a3b0df9a4"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_initial.png",
+          "sha256": "9194f33db31b99e815a19ef9385bed17ea026bf24bae8c79d2da4c4a3b0df9a4"
+        }
+      },
+      "selected_arm_parity": {
+        "reference_summary": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+        "task_id": 9,
+        "init_id": 1,
+        "all_exact": true,
+        "checks": {
+          "episode_status": true,
+          "episode_condition": true,
+          "episode_suite": true,
+          "episode_best_of_n": true,
+          "episode_task_id": true,
+          "episode_init_id": true,
+          "episode_task_name": true,
+          "episode_goal": true,
+          "episode_seed": true,
+          "episode_environment_seed": true,
+          "episode_max_steps": true,
+          "episode_settle_steps": true,
+          "episode_initial_state_sha256": true,
+          "episode_bddl_sha256": true,
+          "episode_init_file_sha256": true,
+          "episode_success_at_start": true,
+          "episode_success": true,
+          "episode_terminal_done": true,
+          "episode_environment_steps": true,
+          "episode_action_chunks": true,
+          "episode_reward_sum": true,
+          "episode_final_reward": true,
+          "episode_action_norm_mean": true,
+          "all_trace_fields": true,
+          "all_candidate_values_selections_and_actions": true,
+          "state_array_names": true,
+          "state_initial_dtype_shape_bytes": true,
+          "state_settled_dtype_shape_bytes": true,
+          "state_final_dtype_shape_bytes": true,
+          "state_eef_path_dtype_shape_bytes": true,
+          "initial_image_png_bytes": true,
+          "final_image_png_bytes": true
+        },
+        "reference_trace_sha256": "4b3cfa7bfa50de8ecbb14630a8259b76ec3b8a3bc1e49a86e672793533761282",
+        "actual_trace_sha256": "4b3cfa7bfa50de8ecbb14630a8259b76ec3b8a3bc1e49a86e672793533761282",
+        "scope": "Recorded physical trace, both candidates' values/actions, selection, state dtype+shape+bytes and PNG; not full latent-tensor parity",
+        "trace_file_bytes_exact": true
+      },
+      "artifacts": {
+        "libero_goal_task09_init01_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean.jsonl",
+          "sha256": "4b3cfa7bfa50de8ecbb14630a8259b76ec3b8a3bc1e49a86e672793533761282"
+        },
+        "libero_goal_task09_init01_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_chunks.jsonl",
+          "sha256": "c325d6145dad3a1c2fef41c6888d3e2beec42330a9ec2f2b774e7ceff30b5307"
+        },
+        "libero_goal_task09_init01_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_initial.png",
+          "sha256": "9194f33db31b99e815a19ef9385bed17ea026bf24bae8c79d2da4c4a3b0df9a4"
+        },
+        "libero_goal_task09_init01_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_final.png",
+          "sha256": "7c9515ce152a04f680fcf87b267a65a4e835992b88279682b80c8d03ecc916a1"
+        },
+        "libero_goal_task09_init01_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/libero_goal_task09_init01_clean_states.npz",
+          "sha256": "dfd04ba7aaa5aa870edf3b07ba3b32dd543bbb2c8b7c70b3abe12ffcf88c2b28"
+        }
+      }
+    },
+    {
+      "task_id": 9,
+      "init_id": 1,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 0,
+      "role": "alternate",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 9,
+        "init_id": 1,
+        "task_name": "put_the_wine_bottle_on_the_rack",
+        "goal": "put the wine bottle on the rack",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "f1c7fced4b7c530aed064a27d8714e966e8a2a9c12a4abf8ba2bbb56b9d2a483",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_wine_bottle_on_the_rack.bddl",
+        "bddl_sha256": "3d3ee18139056aa3780572cde17b1c50dc20ae0d299403f65e514e8471ba0e8e",
+        "init_file_sha256": "fa09aa4ade871c1c6be3dd8c93eb3437ea15190fd7dc73b8c986c8d2d3cfb062",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 143,
+        "action_chunks": 9,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.1319755881416422,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean.mp4",
+        "elapsed_seconds": 19.633603625989053,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean.json",
+        "sha256": "192c9faf609dc4416552a6b30905035f3878ea325b4aea6eaeabcace2ebfbb4b"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init01_clean.json",
+        "sha256": "7fab6e358430bf1240ae634c20dc11722a32b096a42ddf6f40bcf8e69d90c413"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/first_query_parity.json",
+        "sha256": "0d08b7b1b476d9abd0619fb1da23c82acde1ba9af96a4eb1cfbf08e7a9de93dc",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init01_clean_states.npz",
+          "sha256": "dfd04ba7aaa5aa870edf3b07ba3b32dd543bbb2c8b7c70b3abe12ffcf88c2b28"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init01_clean_initial.png",
+          "sha256": "9194f33db31b99e815a19ef9385bed17ea026bf24bae8c79d2da4c4a3b0df9a4"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_initial.png",
+          "sha256": "9194f33db31b99e815a19ef9385bed17ea026bf24bae8c79d2da4c4a3b0df9a4"
+        }
+      },
+      "selected_arm_parity": null,
+      "artifacts": {
+        "libero_goal_task09_init01_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean.jsonl",
+          "sha256": "2f019b39e09d371ee2b94ecb40169ca898d765ebe21c9e3f8cf3a8471af35c5b"
+        },
+        "libero_goal_task09_init01_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_chunks.jsonl",
+          "sha256": "bca0cf51911ee08ba67085693ec37dff5ecab03716229e66315d4e35fcfce399"
+        },
+        "libero_goal_task09_init01_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_initial.png",
+          "sha256": "9194f33db31b99e815a19ef9385bed17ea026bf24bae8c79d2da4c4a3b0df9a4"
+        },
+        "libero_goal_task09_init01_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_final.png",
+          "sha256": "c4d10133c693c7f0dd75a24de48532e47b4a2263a339bfebec1083c4276f4f13"
+        },
+        "libero_goal_task09_init01_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/libero_goal_task09_init01_clean_states.npz",
+          "sha256": "8884faa4e84fef91b3dcb2bf100dce56c92c6d4dcbd1793dd504441c5764fd02"
+        }
+      }
+    },
+    {
+      "task_id": 9,
+      "init_id": 2,
+      "forced_candidate_index": 1,
+      "source_native_selected_index": 1,
+      "role": "native_selected",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 9,
+        "init_id": 2,
+        "task_name": "put_the_wine_bottle_on_the_rack",
+        "goal": "put the wine bottle on the rack",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "dda954afd150660760d0fb98ac9ba4a26f0cbc8b96385242673145d8aef60a35",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_wine_bottle_on_the_rack.bddl",
+        "bddl_sha256": "3d3ee18139056aa3780572cde17b1c50dc20ae0d299403f65e514e8471ba0e8e",
+        "init_file_sha256": "fa09aa4ade871c1c6be3dd8c93eb3437ea15190fd7dc73b8c986c8d2d3cfb062",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 131,
+        "action_chunks": 9,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.151754883981756,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean.mp4",
+        "elapsed_seconds": 20.00802391199977,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean.json",
+        "sha256": "c2c6f30cc1e88850b043f2f8cca918a8747676ce6c59839ecd86d9ad16ef9e3e"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init02_clean.json",
+        "sha256": "121af9629043bd4bf22ed6ee70137f7d356f008032ebdb42ae727e5691fe77c6"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/first_query_parity.json",
+        "sha256": "12226c5613102b6ea1e3dbcfdb53151302a2113993bf09554e18c11239bdeca7",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init02_clean_states.npz",
+          "sha256": "c6d86f89c170d6e572172cb0b5150fbae4deac5f70c875eaf983b886ba29cf3c"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init02_clean_initial.png",
+          "sha256": "0151b3f68c57f25d711164057ae190994fb66cd18afb5108cb8238b29972b487"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_initial.png",
+          "sha256": "0151b3f68c57f25d711164057ae190994fb66cd18afb5108cb8238b29972b487"
+        }
+      },
+      "selected_arm_parity": {
+        "reference_summary": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+        "task_id": 9,
+        "init_id": 2,
+        "all_exact": true,
+        "checks": {
+          "episode_status": true,
+          "episode_condition": true,
+          "episode_suite": true,
+          "episode_best_of_n": true,
+          "episode_task_id": true,
+          "episode_init_id": true,
+          "episode_task_name": true,
+          "episode_goal": true,
+          "episode_seed": true,
+          "episode_environment_seed": true,
+          "episode_max_steps": true,
+          "episode_settle_steps": true,
+          "episode_initial_state_sha256": true,
+          "episode_bddl_sha256": true,
+          "episode_init_file_sha256": true,
+          "episode_success_at_start": true,
+          "episode_success": true,
+          "episode_terminal_done": true,
+          "episode_environment_steps": true,
+          "episode_action_chunks": true,
+          "episode_reward_sum": true,
+          "episode_final_reward": true,
+          "episode_action_norm_mean": true,
+          "all_trace_fields": true,
+          "all_candidate_values_selections_and_actions": true,
+          "state_array_names": true,
+          "state_initial_dtype_shape_bytes": true,
+          "state_settled_dtype_shape_bytes": true,
+          "state_final_dtype_shape_bytes": true,
+          "state_eef_path_dtype_shape_bytes": true,
+          "initial_image_png_bytes": true,
+          "final_image_png_bytes": true
+        },
+        "reference_trace_sha256": "c8f1ae48a7442e42ecd7d4edca00127a0e8cac7f0d52ecec2027e3c127376a75",
+        "actual_trace_sha256": "c8f1ae48a7442e42ecd7d4edca00127a0e8cac7f0d52ecec2027e3c127376a75",
+        "scope": "Recorded physical trace, both candidates' values/actions, selection, state dtype+shape+bytes and PNG; not full latent-tensor parity",
+        "trace_file_bytes_exact": true
+      },
+      "artifacts": {
+        "libero_goal_task09_init02_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean.jsonl",
+          "sha256": "c8f1ae48a7442e42ecd7d4edca00127a0e8cac7f0d52ecec2027e3c127376a75"
+        },
+        "libero_goal_task09_init02_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_chunks.jsonl",
+          "sha256": "fb45a9c77dd9844df157e822862f7a3df82c5ae1a2b99f878c9c5a2d6b26e9ca"
+        },
+        "libero_goal_task09_init02_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_initial.png",
+          "sha256": "0151b3f68c57f25d711164057ae190994fb66cd18afb5108cb8238b29972b487"
+        },
+        "libero_goal_task09_init02_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_final.png",
+          "sha256": "2f10040a3700ac2c407468d53c5903f2ed2c3d941c8fe5bcaf70361357a28e29"
+        },
+        "libero_goal_task09_init02_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/libero_goal_task09_init02_clean_states.npz",
+          "sha256": "c6d86f89c170d6e572172cb0b5150fbae4deac5f70c875eaf983b886ba29cf3c"
+        }
+      }
+    },
+    {
+      "task_id": 9,
+      "init_id": 2,
+      "forced_candidate_index": 0,
+      "source_native_selected_index": 1,
+      "role": "alternate",
+      "condition": "first_candidate_utility",
+      "episode": {
+        "status": "completed",
+        "model": "NVIDIA Cosmos Policy LIBERO 40K (torch adapter)",
+        "condition": "clean",
+        "suite": "libero_goal",
+        "best_of_n": 2,
+        "task_id": 9,
+        "init_id": 2,
+        "task_name": "put_the_wine_bottle_on_the_rack",
+        "goal": "put the wine bottle on the rack",
+        "max_steps": 300,
+        "settle_steps": 10,
+        "seed": 31,
+        "environment_seed": 0,
+        "initial_state_sha256": "dda954afd150660760d0fb98ac9ba4a26f0cbc8b96385242673145d8aef60a35",
+        "bddl": "/home/xhj/WM_Security/vendor/LIBERO/libero/libero/bddl_files/libero_goal/put_the_wine_bottle_on_the_rack.bddl",
+        "bddl_sha256": "3d3ee18139056aa3780572cde17b1c50dc20ae0d299403f65e514e8471ba0e8e",
+        "init_file_sha256": "fa09aa4ade871c1c6be3dd8c93eb3437ea15190fd7dc73b8c986c8d2d3cfb062",
+        "trace": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean.jsonl",
+        "chunks": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_chunks.jsonl",
+        "provenance": {
+          "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+          "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+          "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+          "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+          "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+          "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+          "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+          "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+          "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+          "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+          "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+          "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+          "source_sha256": {
+            "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+            "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+            "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+            "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+            "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+          },
+          "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+          "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+          "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+          "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+          "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+          "settle_action": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "chunk_length": 16,
+          "action_steps": 5,
+          "future_steps": 1,
+          "value_steps": 1,
+          "sampler_seeds": [
+            31,
+            32
+          ],
+          "sigma_min": 4.0,
+          "sigma_max": 80.0,
+          "condition_timestep": 0.0,
+          "policy_condition_slots": [
+            0,
+            1,
+            2,
+            3
+          ],
+          "native_ar_forecast_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4
+          ],
+          "native_ar_value_condition_slots": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "selection": "native argmax predicted value",
+          "goal_routing": "original task goal in all policy, forecast, and value calls",
+          "attention_backend": "torch with existing TE compatibility shim",
+          "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+          "cudnn_deterministic": true,
+          "success_source": "LIBERO environment check_success() after each physical action",
+          "external_planner": false,
+          "training_updates": 0,
+          "api_requests": 0,
+          "torch_version": "2.2.0+cu121",
+          "numpy_version": "1.26.4",
+          "runtime_compatibility": {
+            "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+            "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+            "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+            "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+            "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+            "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+            "full_transformer_engine_runtime_parity": false,
+            "cuda_fused_rope_parity": false,
+            "rmsnorm_fused_kernel_parity": false
+          },
+          "first_candidate_utility_wrapper": {
+            "config": {
+              "path": "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json",
+              "sha256": "1cd4682af29dda1f0d018b4eb692923ff4caa35f476fd4d68c4ae97e9aea0ffb"
+            },
+            "runner_sha256": "f62822e1b5490c4355540064d2e64c5472b3410e031bf449b56602bed514fdab",
+            "scope": "clean_native_first_query_ranking_contribution",
+            "execution_mode": "fresh_process_recovery_single_attempt",
+            "original_interrupted_run": {
+              "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_matched30_v1/summary.json",
+              "sha256": "7648a0edb1d8c151b3a4cce1a3223a22879bfe187041319d9a4bad1c770e5a47"
+            },
+            "first_selection": "registered original candidate index; native original Goal N2 continuation thereafter"
+          }
+        },
+        "success_at_start": false,
+        "success": true,
+        "terminal_done": true,
+        "environment_steps": 127,
+        "action_chunks": 8,
+        "reward_sum": 1.0,
+        "final_reward": 1.0,
+        "action_norm_mean": 1.1504237486532516,
+        "initial_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_initial.png",
+        "final_image": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_final.png",
+        "video": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean.mp4",
+        "elapsed_seconds": 17.47366511198925,
+        "cuda_peak_allocated_bytes": 5034091008,
+        "cuda_peak_reserved_bytes": 5479858176
+      },
+      "episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean.json",
+        "sha256": "474ba39341a766b6bb149c2bb9a9006e90953d2798ac1cb00205f1e5eab8605a"
+      },
+      "source_episode_json": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init02_clean.json",
+        "sha256": "121af9629043bd4bf22ed6ee70137f7d356f008032ebdb42ae727e5691fe77c6"
+      },
+      "first_query_parity": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/first_query_parity.json",
+        "sha256": "1e7f65ec73ce52d5413885544e0dc8e8ae8fc05c9a02ef585b1f389f7f6dc6e8",
+        "all_exact": true
+      },
+      "initial_parity": {
+        "all_exact": true,
+        "checks": {
+          "initial_dtype_shape_bytes": true,
+          "settled_dtype_shape_bytes": true,
+          "initial_png_bytes": true,
+          "first_eef_position": true
+        },
+        "source_state_file": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init02_clean_states.npz",
+          "sha256": "c6d86f89c170d6e572172cb0b5150fbae4deac5f70c875eaf983b886ba29cf3c"
+        },
+        "source_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/libero_goal_task09_init02_clean_initial.png",
+          "sha256": "0151b3f68c57f25d711164057ae190994fb66cd18afb5108cb8238b29972b487"
+        },
+        "actual_initial_image": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_initial.png",
+          "sha256": "0151b3f68c57f25d711164057ae190994fb66cd18afb5108cb8238b29972b487"
+        }
+      },
+      "selected_arm_parity": null,
+      "artifacts": {
+        "libero_goal_task09_init02_clean.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean.jsonl",
+          "sha256": "ba4dd4dc485eed34bae4ccd75b7ab4128d2acc31ccc168b0e5b6cbc2d2522102"
+        },
+        "libero_goal_task09_init02_clean_chunks.jsonl": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_chunks.jsonl",
+          "sha256": "5c56bfa734ca0ed702364606591399b8502ca63cee28bdad4d3fe78a7a0e7a46"
+        },
+        "libero_goal_task09_init02_clean_initial.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_initial.png",
+          "sha256": "0151b3f68c57f25d711164057ae190994fb66cd18afb5108cb8238b29972b487"
+        },
+        "libero_goal_task09_init02_clean_final.png": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_final.png",
+          "sha256": "c3d60113b9253c335611d666bfebc3b11ac99c811b833adbe1d7c750d582eb69"
+        },
+        "libero_goal_task09_init02_clean_states.npz": {
+          "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/libero_goal_task09_init02_clean_states.npz",
+          "sha256": "09924a051c9a3067d65a1fa79022ef5acf01070c537769d31e4587dc1cc85182"
+        }
+      }
+    }
+  ],
+  "attempts": [
+    {
+      "index": 0,
+      "branch": {
+        "task_id": 8,
+        "init_id": 1,
+        "forced_candidate_index": 1,
+        "source_native_selected_index": 1,
+        "role": "native_selected"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "0",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/attempt_reservation.json",
+        "sha256": "c98353d33fdb670110dfd8b06ba55c8b2520ce83e39b0d92fa2590b50aeeb085"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/child_summary.json",
+        "sha256": "eed1f810334dd5ccbee02e1c3c79e35d31b35e797f82b1a0532c0214dff22e09"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate1/child.log",
+        "sha256": "cd142314b26d65906999f1bba8789d32892334d26d17eb1a097b78e0f0c8aef9"
+      }
+    },
+    {
+      "index": 1,
+      "branch": {
+        "task_id": 8,
+        "init_id": 1,
+        "forced_candidate_index": 0,
+        "source_native_selected_index": 1,
+        "role": "alternate"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "1",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/attempt_reservation.json",
+        "sha256": "657b1b6d80f67dc7aec83ef23e43a3d0a67f17d759d7874f470054eab485a392"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/child_summary.json",
+        "sha256": "73c2bf90c0feb97a65f9219be36d4dfc481c9be4a81e39113d2e1f68479e7c03"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init01/candidate0/child.log",
+        "sha256": "f2732d0a7d49ea36c36940de80b772cf4a6a1ae40341663cf3bd7fecb6126e6d"
+      }
+    },
+    {
+      "index": 2,
+      "branch": {
+        "task_id": 8,
+        "init_id": 2,
+        "forced_candidate_index": 0,
+        "source_native_selected_index": 0,
+        "role": "native_selected"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "2",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/attempt_reservation.json",
+        "sha256": "0c1f9460c26601df6e46fed37bdf6da93c28a0ce0e354f085e13f2e75c8ff20e"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/child_summary.json",
+        "sha256": "7f383fceab03fa9742d8975ac0113b11d9e14c0cbe1cd70025699934498f8284"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate0/child.log",
+        "sha256": "c47165803be3b205a4d36e9c4f68deb02358d3b1a9d7cfd9fbd95e19515299c5"
+      }
+    },
+    {
+      "index": 3,
+      "branch": {
+        "task_id": 8,
+        "init_id": 2,
+        "forced_candidate_index": 1,
+        "source_native_selected_index": 0,
+        "role": "alternate"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "3",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/attempt_reservation.json",
+        "sha256": "2fa3079b3aecccf2aa6d9f8481953fff2c8a98baa12047fae3ac55c2a13304a9"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/child_summary.json",
+        "sha256": "b5ee9c3474a10e3ade44a0988795f976d4e34357ed74eca32984d3497675b46a"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task08_init02/candidate1/child.log",
+        "sha256": "5ce25fd85a105a686c6c6eb6cb5a7bcce8a42c5d0e08d8a969c2ea331479bbe6"
+      }
+    },
+    {
+      "index": 4,
+      "branch": {
+        "task_id": 9,
+        "init_id": 0,
+        "forced_candidate_index": 0,
+        "source_native_selected_index": 0,
+        "role": "native_selected"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "4",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/attempt_reservation.json",
+        "sha256": "ecd7980689b8e03a2188332ff918124090017ce6a21aa63c13cdee61e35c6391"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/child_summary.json",
+        "sha256": "105eb28fcb34a5f5fdcc3ea945114a940db20be07b4bdeeabaf8dac5e0c3e039"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate0/child.log",
+        "sha256": "7fbf11766195fd96b90e9a48e808db62aa29d5a717a812d5560f4ebcd45a7293"
+      }
+    },
+    {
+      "index": 5,
+      "branch": {
+        "task_id": 9,
+        "init_id": 0,
+        "forced_candidate_index": 1,
+        "source_native_selected_index": 0,
+        "role": "alternate"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "5",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/attempt_reservation.json",
+        "sha256": "708ecc8bda2e6f4a202391ac72974f2083330a8d68272ab4f9e62fd0b0c434d1"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/child_summary.json",
+        "sha256": "97ab3a04d370e3c843ece1371068992c6238273594b104dc54fe339485042489"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init00/candidate1/child.log",
+        "sha256": "a7ec226628632794db534d42ff2ccc1ceccf5af3adfef8dd6d51a7da45d77b3b"
+      }
+    },
+    {
+      "index": 6,
+      "branch": {
+        "task_id": 9,
+        "init_id": 1,
+        "forced_candidate_index": 0,
+        "source_native_selected_index": 0,
+        "role": "native_selected"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "6",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/attempt_reservation.json",
+        "sha256": "3067d6c929e33311710a9632f1d17273a07aa8f7906a26df2306f6504d369906"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/child_summary.json",
+        "sha256": "8d82062909c695f9f8f5cf2dacfa74c473baeef99196428264e1a9b99626ab85"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate0/child.log",
+        "sha256": "7586b204a484ec2d4051dda920b6d40d16379942ea83062fc7d63470cfbf5cc3"
+      }
+    },
+    {
+      "index": 7,
+      "branch": {
+        "task_id": 9,
+        "init_id": 1,
+        "forced_candidate_index": 1,
+        "source_native_selected_index": 0,
+        "role": "alternate"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "7",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/attempt_reservation.json",
+        "sha256": "c639d30e1bbee5ce659ad33743476b0ebd2fb7220acbc84412c725c9b2c5f83d"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/child_summary.json",
+        "sha256": "608951f30bff61d613535eb491f6a7d46256018da5e2e9b5e9c413bb6ae5a556"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init01/candidate1/child.log",
+        "sha256": "32bf7c9fcfc2c6068495c4d07260f33cc796f3646d6b28d0fae38b0afb8a7b7f"
+      }
+    },
+    {
+      "index": 8,
+      "branch": {
+        "task_id": 9,
+        "init_id": 2,
+        "forced_candidate_index": 1,
+        "source_native_selected_index": 1,
+        "role": "native_selected"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "8",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/attempt_reservation.json",
+        "sha256": "37bb151de6e46a2539291c8e0bf90754ccc905b16522150d4a82b2f49c528a39"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/child_summary.json",
+        "sha256": "6b4800529757f3422efe7aa1eaababd0fb0aab177d5d73f45b058f423aacdbaf"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate1/child.log",
+        "sha256": "447cf0575797733af2108c3f186a1783791fb42d5d2f375fabad5e10532d7c8f"
+      }
+    },
+    {
+      "index": 9,
+      "branch": {
+        "task_id": 9,
+        "init_id": 2,
+        "forced_candidate_index": 0,
+        "source_native_selected_index": 1,
+        "role": "alternate"
+      },
+      "status": "validated",
+      "command": [
+        "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+        "/home/xhj/WM_Security/scripts/pilot_cosmos_first_candidate_utility_recovery.py",
+        "--child",
+        "--child-index",
+        "9",
+        "--config",
+        "/home/xhj/WM_Security/configs/cosmos_first_candidate_utility_recovery_v1.json"
+      ],
+      "reservation": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/attempt_reservation.json",
+        "sha256": "cdbd351e8c6b1d295f6c71271907e975fd4fabb825f50c52409f86be5f4e2d14"
+      },
+      "exit_code": 0,
+      "child_summary": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/child_summary.json",
+        "sha256": "9ef576414f41fabe84907701f85410b6979692ede90e629588a0782845c3a85e"
+      },
+      "log": {
+        "path": "/home/xhj/WM_Security/runs/cosmos_first_candidate_utility_recovery_v1/task09_init02/candidate0/child.log",
+        "sha256": "83fdbd2ce1027c0ef2f11441fd7d0177dc6434a6e5abd88ccb5aa6fc010c3477"
+      }
+    }
+  ],
+  "api_requests": 0,
+  "training_updates": 0,
+  "elapsed_seconds": 512.3515347079956
+}

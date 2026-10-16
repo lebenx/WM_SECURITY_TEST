@@ -1,0 +1,27 @@
+```json
+{
+  "verdict": "REJECT",
+  "novelty_score": 4.5,
+  "distinctness": "Weak. Framing multi-adapter interference as a 'mixed latent-transition operator' is largely a mathematical restatement of known non-linear interference in parameter arithmetic (e.g., TIES, task vectors, representation merging) transferred into recurrent transitions. The closed-loop manifestation is standard rollout compounding over perturbed dynamics, not a fundamentally distinct transition-geometry phenomenon.",
+  "fatal_flaws": [
+    "Rebranding multi-task interference and adapter merge degradation: In non-linear deep models (LLMs, vision, dynamics), composing low-rank weight updates without merge-aware training has always yielded destructive interference through cross-layer and cross-weight non-linearities.",
+    "Lack of targeted adversarial integrity failure: The threat model describes accidental destructive interference or generic model degradation rather than an intentional, stealthy, exploitable backdoor. The claim that an attacker exploits 'counterfactual reachability' without base access or knowledge of the co-tenant adapter reduces to relying on random destructive interference to break policy stability.",
+    "Trivial falsification via baseline merge literature: Any standard composition mechanism that breaks or degrades the dynamic operator (such as unweighted weight summation) will cause CEM/MPC to exploit hallucinatory short-cuts (delusional dynamics), which is an already well-documented failure mode of model-based RL under out-of-distribution dynamics."
+  ],
+  "short_pilot": {
+    "carrier": "TD-MPC2 on DMControl (e.g., Walker-run and Walker-walk) with rank-8 LoRA applied to the latent dynamics MLP.",
+    "protocol": "Train Adapter A on Walker-run and Adapter B on Walker-flip. Verify both maintain <5% 1-step latent error and near-expert return independently. Merge via standard linear weight addition (alpha=0.5). Evaluate: (1) 1-step validation loss on merged data vs. (2) H-step imagination divergence, and (3) closed-loop task return under CEM.",
+    "controls": [
+      "Random weight perturbation baseline matched to the spectral norm of the cross-term update.",
+      "Linear dynamics baseline (where cross-terms strictly vanish) to isolate non-linear operator effects.",
+      "Task-arithmetic mitigations (TIES-merging, DARE) to verify if the failure is just unmitigated parameter collision."
+    ],
+    "falsification_condition": "Falsified if the failure rate in closed-loop planning correlates strictly with naive parameter-space interference metrics, or if simple task-vector pruning (e.g., TIES) eliminates the 'false reachability' without needing dynamics-specific geometric constraints."
+  },
+  "repair_assessment": "The proposed repair (combinatorial rollout screening) is computationally intractable (O(N^k) for k-adapter compositions). Dynamics Jacobian orthogonality is over-constraining, mathematically near-identical to tangent-space gradient projection (GEM/A-GEM in continual learning), and computationally prohibitive for high-dimensional latent states during adapter verification.",
+  "alternative": {
+    "title": "Bilinear Transition Cloaking in Composed Dynamics Adapters",
+    "mechanism": "An attacker crafts an adapter with rank-1 factors orthogonal to clean task dynamics, but possessing a directional resonance with a target victim adapter's low-rank subspace that mathematically zeroes out base dynamics only under joint matrix-product cross-terms, injecting a specific, predictable latent trap state exclusively under joint inference."
+  }
+}
+```

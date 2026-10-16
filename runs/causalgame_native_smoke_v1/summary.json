@@ -1,0 +1,773 @@
+{
+  "status": "offline_tool_smoke",
+  "api_requests": 0,
+  "before": {
+    "drones_remaining": 200,
+    "drones_used": 0,
+    "total_drones": 200,
+    "history_count": 50,
+    "victory_threshold": 0.75,
+    "stage2_fleet_size": 1000,
+    "experiment": {
+      "name": "mission",
+      "display_name": "Canyon Mission"
+    },
+    "game_over": false,
+    "final_evaluation": null,
+    "deployments_used": 0,
+    "deployments_remaining": 10,
+    "stage1_deployment_budget": 10,
+    "env_queries_used": 0,
+    "env_queries_remaining": 10,
+    "env_query_budget": 10,
+    "token_usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    }
+  },
+  "action_space": {
+    "api_version": "v2",
+    "experiment_name": "mission",
+    "action_space": {
+      "numerical": {
+        "engine_def": {
+          "min": 0,
+          "max": 50,
+          "default": 20,
+          "step": 1,
+          "description": "Engine armor plating. Higher values provide better protection against damage."
+        },
+        "cockpit_def": {
+          "min": 0,
+          "max": 50,
+          "default": 20,
+          "step": 1,
+          "description": "Cockpit shielding. Critical component for pilot safety."
+        },
+        "wing_def": {
+          "min": 0,
+          "max": 50,
+          "default": 15,
+          "step": 1,
+          "description": "Wing reinforcement. Protects flight surfaces from damage."
+        },
+        "body_def": {
+          "min": 0,
+          "max": 50,
+          "default": 15,
+          "step": 1,
+          "description": "Main fuselage armor. Houses critical systems."
+        },
+        "antenna_def": {
+          "min": 0,
+          "max": 50,
+          "default": 10,
+          "step": 1,
+          "description": "Antenna housing protection. Antenna handles communication and data transmission."
+        },
+        "camera_def": {
+          "min": 0,
+          "max": 50,
+          "default": 5,
+          "step": 1,
+          "description": "Camera system casing. Enables visual reconnaissance."
+        },
+        "gun_def": {
+          "min": 0,
+          "max": 50,
+          "default": 5,
+          "step": 1,
+          "description": "Weapon system armor. Protects offensive capabilities."
+        }
+      },
+      "discrete": {
+        "coating": {
+          "description": "Surface coating material for the drone hull.",
+          "type": "single_choice",
+          "options": {
+            "standard": {
+              "name": "Standard Coating",
+              "description": "Factory default coating. Balanced characteristics."
+            },
+            "stealth": {
+              "name": "Stealth Coating",
+              "description": "Radar-absorbing material. May reduce radar cross-section.",
+              "cost": 5
+            },
+            "reflective": {
+              "name": "Reflective Armor",
+              "description": "Hardened surface coating. May provide additional protection.",
+              "cost": 5
+            }
+          },
+          "default": "standard"
+        },
+        "antenna_mode": {
+          "description": "Antenna operating mode during mission.",
+          "type": "single_choice",
+          "options": {
+            "active": {
+              "name": "Active Mode",
+              "description": "Continuous transmission for real-time communication."
+            },
+            "passive": {
+              "name": "Passive Mode",
+              "description": "Receive-only mode. Reduced communication capability."
+            },
+            "burst": {
+              "name": "Burst Mode",
+              "description": "Periodic short transmissions. Balanced approach."
+            }
+          },
+          "default": "active"
+        }
+      },
+      "boolean": {
+        "emergency_beacon": {
+          "description": "Enable emergency locator beacon for search and rescue.",
+          "default": true
+        }
+      },
+      "constraints": {
+        "total_def_budget": 90
+      }
+    },
+    "defaults": {
+      "engine_def": 20,
+      "cockpit_def": 20,
+      "wing_def": 15,
+      "body_def": 15,
+      "antenna_def": 10,
+      "camera_def": 5,
+      "gun_def": 5,
+      "equipment": {
+        "coating": "standard",
+        "antenna_mode": "active"
+      },
+      "emergency_beacon": true
+    }
+  },
+  "history": [
+    {
+      "id": "INIT-002",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 5,
+      "was_detected": true,
+      "environment": {
+        "wind_speed": 18.522331227862516,
+        "humidity": 58.49816165168407,
+        "temperature": 31.336659538415432
+      }
+    },
+    {
+      "id": "INIT-003",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 74.08292911225237,
+        "humidity": 75.62497201056303,
+        "temperature": 16.212490289500035
+      }
+    },
+    {
+      "id": "INIT-004",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 72.6427960677236,
+        "humidity": 70.42843490893425,
+        "temperature": 19.43229565147513
+      }
+    },
+    {
+      "id": "INIT-006",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 5,
+      "was_detected": true,
+      "environment": {
+        "wind_speed": 7.636136083549747,
+        "humidity": 54.53426558182885,
+        "temperature": 29.40697673229588
+      }
+    },
+    {
+      "id": "INIT-008",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 76.90323653737393,
+        "humidity": 85.1493384241235,
+        "temperature": 11.070435465058644
+      }
+    },
+    {
+      "id": "INIT-009",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 78.69017635280068,
+        "humidity": 70.63944180390091,
+        "temperature": 13.403923171315887
+      }
+    },
+    {
+      "id": "INIT-010",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 5,
+      "was_detected": true,
+      "environment": {
+        "wind_speed": 18.507966419052522,
+        "humidity": 48.28854175733629,
+        "temperature": 26.53314986399713
+      }
+    },
+    {
+      "id": "INIT-012",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 72.85041582425353,
+        "humidity": 85.53852126668086,
+        "temperature": 10.279057951757789
+      }
+    },
+    {
+      "id": "INIT-014",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 3,
+      "was_detected": true,
+      "environment": {
+        "wind_speed": 7.098023790209682,
+        "humidity": 53.36444526282703,
+        "temperature": 22.95395766286122
+      }
+    },
+    {
+      "id": "INIT-015",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 4,
+      "was_detected": true,
+      "environment": {
+        "wind_speed": 8.694639889535651,
+        "humidity": 44.51258686283585,
+        "temperature": 21.12067575512541
+      }
+    },
+    {
+      "id": "INIT-016",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 73.99252450180398,
+        "humidity": 73.88455163948885,
+        "temperature": 19.220372380491128
+      }
+    },
+    {
+      "id": "INIT-017",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 78.08962992358335,
+        "humidity": 85.35320098245123,
+        "temperature": 13.513463074807063
+      }
+    },
+    {
+      "id": "INIT-019",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 3,
+      "was_detected": true,
+      "environment": {
+        "wind_speed": 12.762168343281356,
+        "humidity": 32.685983999562765,
+        "temperature": 27.122078146894925
+      }
+    },
+    {
+      "id": "INIT-021",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 60.94952009614197,
+        "humidity": 82.27012042920303,
+        "temperature": 19.592446964991503
+      }
+    },
+    {
+      "id": "INIT-023",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 67.27672780544864,
+        "humidity": 83.07134123528621,
+        "temperature": 18.537186575122465
+      }
+    },
+    {
+      "id": "INIT-026",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 65.0797740937562,
+        "humidity": 88.5393606837837,
+        "temperature": 10.318505830397491
+      }
+    },
+    {
+      "id": "INIT-027",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 70.57538588078452,
+        "humidity": 88.67178701679151,
+        "temperature": 16.382324243118084
+      }
+    },
+    {
+      "id": "INIT-029",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 78.11740191143122,
+        "humidity": 88.77565477540983,
+        "temperature": 19.738557382515037
+      }
+    },
+    {
+      "id": "INIT-030",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 78.59028052465908,
+        "humidity": 80.1328919329789,
+        "temperature": 10.085091185693893
+      }
+    },
+    {
+      "id": "INIT-033",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 70.19037827476627,
+        "humidity": 85.89194212387827,
+        "temperature": 13.35195866248743
+      }
+    },
+    {
+      "id": "INIT-034",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 52.72938870780774,
+        "humidity": 89.72271129932219,
+        "temperature": 17.959607263254213
+      }
+    },
+    {
+      "id": "INIT-037",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 65.41276178981994,
+        "humidity": 70.57658569801318,
+        "temperature": 12.763821752400002
+      }
+    },
+    {
+      "id": "INIT-038",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 75.22500488502673,
+        "humidity": 74.85207681806622,
+        "temperature": 10.374749342375223
+      }
+    },
+    {
+      "id": "INIT-039",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 76.26973687025645,
+        "humidity": 70.3733431491121,
+        "temperature": 12.507145896645943
+      }
+    },
+    {
+      "id": "INIT-042",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 64.73836870472174,
+        "humidity": 78.43500292211314,
+        "temperature": 12.174450169540597
+      }
+    },
+    {
+      "id": "INIT-044",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 61.67508080342186,
+        "humidity": 70.533906457973,
+        "temperature": 11.746324512170172
+      }
+    },
+    {
+      "id": "INIT-045",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 63.85021965811657,
+        "humidity": 91.28180381374834,
+        "temperature": 17.519649692054116
+      }
+    },
+    {
+      "id": "INIT-048",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 59.480989543557484,
+        "humidity": 76.88751681961419,
+        "temperature": 16.742403597915093
+      }
+    },
+    {
+      "id": "INIT-050",
+      "design": {
+        "engine_def": 20,
+        "cockpit_def": 20,
+        "wing_def": 15,
+        "body_def": 15,
+        "antenna_def": 10,
+        "camera_def": 5,
+        "gun_def": 5
+      },
+      "status": "RETURNED",
+      "hit_count": 0,
+      "was_detected": false,
+      "environment": {
+        "wind_speed": 67.80662991823894,
+        "humidity": 71.5563659643905,
+        "temperature": 15.569160319366954
+      }
+    }
+  ],
+  "deployment": {
+    "status": "BATCH_COMPLETE",
+    "deployed": 1,
+    "survived": 0,
+    "destroyed": 1,
+    "average_hit_count": 66.0,
+    "drones_remaining": 199,
+    "results": [],
+    "environment": {
+      "wind_speed": 63.71251971195866,
+      "humidity": 84.64728030317761,
+      "temperature": 16.904494053402786
+    }
+  },
+  "after": {
+    "drones_remaining": 199,
+    "drones_used": 1,
+    "total_drones": 200,
+    "history_count": 51,
+    "victory_threshold": 0.75,
+    "stage2_fleet_size": 1000,
+    "experiment": {
+      "name": "mission",
+      "display_name": "Canyon Mission"
+    },
+    "game_over": false,
+    "final_evaluation": null,
+    "deployments_used": 1,
+    "deployments_remaining": 9,
+    "stage1_deployment_budget": 10,
+    "env_queries_used": 0,
+    "env_queries_remaining": 10,
+    "env_query_budget": 10,
+    "token_usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0
+    }
+  },
+  "elapsed_s": 1.0713520720601082
+}

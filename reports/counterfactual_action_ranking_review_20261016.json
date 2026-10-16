@@ -1,0 +1,272 @@
+{
+  "schema_version": 1,
+  "reviewed_at_utc": "2026-10-15T18:41:07.263646+00:00",
+  "status": "passed_independent_cpu_logic_and_cache_review",
+  "scope": "Unified diagnostic over two already measured post-hoc fixed banks. No new scientific experiment and no model/environment execution.",
+  "reviewed_artifacts": [
+    "scripts/analyze_counterfactual_action_ranking.py",
+    "reports/counterfactual_action_ranking_audit_20261016.json",
+    "reports/counterfactual_action_ranking_audit_20261016.csv"
+  ],
+  "verification": {
+    "command": "python scripts/analyze_counterfactual_action_ranking.py --verify-only",
+    "exit_code": 0,
+    "chunk_id": "18691e",
+    "stdout_status": "verified",
+    "banks": 2,
+    "source_files": 9,
+    "json_and_csv_exact": true
+  },
+  "synthetic_checks": {
+    "valid_fixture": {
+      "name": "synthetic_direction_and_signed_identity",
+      "scores": {
+        "baseline": [
+          1.0,
+          2.0
+        ],
+        "intervention": [
+          2.0,
+          1.0
+        ],
+        "true_future": [
+          3.0,
+          1.0
+        ]
+      },
+      "utilities": [
+        7.0,
+        3.0
+      ],
+      "lower_is_better": true,
+      "baseline": "baseline",
+      "intervention": "intervention",
+      "forecast_errors": {
+        "baseline": [
+          2.0,
+          3.0
+        ],
+        "intervention": [
+          1.0,
+          1.0
+        ]
+      },
+      "metric": "synthetic_only",
+      "scope": "Arithmetic fixture; no model or environment"
+    },
+    "lower_is_better_selected_indices": [
+      0,
+      1,
+      1
+    ],
+    "sign_reversal_with_higher_is_better_preserves_all_decisions_and_decomposition": true,
+    "polarity_only_reversal_selected_indices": [
+      1,
+      0,
+      0
+    ],
+    "signed_negative_term_confirmed": -4.0,
+    "invalid_inputs": [
+      {
+        "case": "missing_truth_scores",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Need two conditions plus measured-future native scoring"
+      },
+      {
+        "case": "different_candidate_counts",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Candidate sets differ"
+      },
+      {
+        "case": "nonfinite_utility",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Missing/nonfinite measured utility or score"
+      },
+      {
+        "case": "nonfinite_score",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Missing/nonfinite measured utility or score"
+      },
+      {
+        "case": "native_score_tie",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Tied native scores: separate tie analysis needed"
+      },
+      {
+        "case": "negative_forecast_error",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Forecast errors must be finite, nonnegative and candidate aligned"
+      },
+      {
+        "case": "unaligned_forecast_error",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Forecast errors must be finite, nonnegative and candidate aligned"
+      },
+      {
+        "case": "nonfinite_forecast_error",
+        "rejected": true,
+        "exception": "ValueError",
+        "message": "Forecast errors must be finite, nonnegative and candidate aligned"
+      }
+    ],
+    "invalid_inputs_rejected": 8,
+    "method": "Import only the stdlib analyzer and call audit_bank with small synthetic arrays; no external package or model import."
+  },
+  "independent_result_arithmetic": [
+    {
+      "system": "Cosmos",
+      "independent_arithmetic_matches": true,
+      "rows": [
+        {
+          "condition": "clean",
+          "selected_index": 1,
+          "total_regret": 0,
+          "truth_score_mismatch": 0,
+          "signed_forecast_selection_difference": 0
+        },
+        {
+          "condition": "swap",
+          "selected_index": 0,
+          "total_regret": 1,
+          "truth_score_mismatch": 0,
+          "signed_forecast_selection_difference": 1
+        },
+        {
+          "condition": "true_future",
+          "selected_index": 1,
+          "total_regret": 0,
+          "truth_score_mismatch": 0,
+          "signed_forecast_selection_difference": 0
+        }
+      ]
+    },
+    {
+      "system": "DINO-WM",
+      "independent_arithmetic_matches": true,
+      "rows": [
+        {
+          "condition": "original",
+          "selected_index": 0,
+          "total_regret": 0.0,
+          "truth_score_mismatch": 1.9008777141571045,
+          "signed_forecast_selection_difference": -1.9008777141571045
+        },
+        {
+          "condition": "canonical",
+          "selected_index": 1,
+          "total_regret": 1.9008777141571045,
+          "truth_score_mismatch": 1.9008777141571045,
+          "signed_forecast_selection_difference": 0.0
+        },
+        {
+          "condition": "true_future",
+          "selected_index": 1,
+          "total_regret": 1.9008777141571045,
+          "truth_score_mismatch": 1.9008777141571045,
+          "signed_forecast_selection_difference": 0.0
+        }
+      ]
+    }
+  ],
+  "utility_provenance": {
+    "Cosmos": [
+      {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "first_chunk_selected_index": 0,
+        "first_chunk_controls": 16,
+        "original_goal_matches": true,
+        "seed": 31,
+        "environment_seed": 0,
+        "source_episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json",
+        "source_first_chunk": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean_chunks.jsonl"
+      },
+      {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "first_chunk_selected_index": 1,
+        "first_chunk_controls": 16,
+        "original_goal_matches": true,
+        "seed": 31,
+        "environment_seed": 0,
+        "source_episode": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json",
+        "source_first_chunk": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean_chunks.jsonl"
+      }
+    ],
+    "DINO_WM": [
+      {
+        "candidate_index": 0,
+        "trace": "runs/dino_first_query_full_horizon_20261015/clean_identity_copy/trace.jsonl",
+        "controls": 30,
+        "policy_steps_contiguous": true,
+        "terminal_reward": 5.2479071617126465,
+        "cumulative_reward": 95.84182262420654,
+        "terminal_success": false,
+        "historical_prefix_exact_steps_attested": 15
+      },
+      {
+        "candidate_index": 1,
+        "trace": "runs/dino_first_query_full_horizon_20261015/canonical_request/trace.jsonl",
+        "controls": 30,
+        "policy_steps_contiguous": true,
+        "terminal_reward": 3.347029447555542,
+        "cumulative_reward": 76.03699398040771,
+        "terminal_success": false,
+        "historical_prefix_exact_steps_attested": 15
+      }
+    ]
+  },
+  "scientific_checks": {
+    "regret_identity_signs_correct": true,
+    "truth_scoring_not_called_oracle_optimal": true,
+    "signed_term_not_causal_mediation_fraction": true,
+    "fixed_native_score_polarities_correct": {
+      "Cosmos": "maximize",
+      "DINO_WM": "minimize"
+    },
+    "cosmos_forecast16_vs_historical_full_continuation_utility_explicit": true,
+    "dino_forecast_and_primary_utility_both_control30": true,
+    "dino_native_replans_after15_controls_scope_explicit": true,
+    "fixed_bank_two_means_not_full_CEM_scope_explicit": true,
+    "both_1_of_1_flips_are_within_bank_only": true,
+    "population_ASR_CI_pvalue_not_reported": true,
+    "BusCut_and_ControlCut_unmeasured_null": true,
+    "different_systems_roots_not_pooled_as_replications": true,
+    "representation_style_or_codec_causality_not_excluded": true
+  },
+  "nonblocking_source_wording_issue": {
+    "path": "reports/cosmos_first_query_truth_decision_20261015.json",
+    "field": "limits",
+    "text": "Actual-future selection of failed candidate0 identifies local Value/continuation-outcome mismatch; it does not erase the known failure or prove predictions have no causal effect.",
+    "problem": "This generic counterfactual branch lacks an explicit If and can read as an observed result. The actual current true_future selected_index is1, not0. The unified analyzer reads the measured rankings and does not adopt this false branch.",
+    "suggested_fix": "Prefix with If actual-future scoring were to select failed candidate0, or remove the unused hypothetical statement.",
+    "source_modified": false
+  },
+  "limits": [
+    "Physical replay/prefix and tensor calibration qualifications are inherited from completed source audits; this review did not rerun them.",
+    "Cosmos success and completion steps were checked against completed historical episode summaries and first-chunk selection metadata, not independently re-executed.",
+    "DINO terminal and cumulative rewards were independently recomputed from30existing trace rows per candidate; the rows are correlated trajectory observations, not independent samples.",
+    "A nonnegative truth-score mismatch is relative to the stated measured utility and fixed bank, not proof of a universal scoring-function defect.",
+    "The signed forecast-selection difference is an arithmetic comparison of choices, not an identified mediation share or a universal prediction-error effect.",
+    "No new novelty, external writer, deployment defense or generalization claim follows."
+  ],
+  "activity": {
+    "model_calls": 0,
+    "environment_controls": 0,
+    "api_calls": 0,
+    "training_updates": 0,
+    "checkpoint_loads": 0,
+    "gpu_calls": 0,
+    "existing_model_weight_hashes": 0
+  },
+  "verdict": "No material mathematical or scientific error in the unified diagnostic. Pass, with the nonblocking upstream hypothetical-wording clarification above."
+}

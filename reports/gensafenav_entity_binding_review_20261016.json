@@ -1,0 +1,110 @@
+{
+  "status": "passed_independent_read_only_review_no_material_error",
+  "reviewed_at_utc": "2026-10-15T18:44:01.920004+00:00",
+  "report": "reports/gensafenav_entity_binding_audit_20261016.json",
+  "analyzer": "scripts/analyze_gensafenav_entity_binding.py",
+  "raw_inputs": [
+    "runs/gensafenav_feedback_selection_gate_20261015/issues.jsonl",
+    "runs/gensafenav_feedback_selection_gate_20261015/physical_steps.jsonl"
+  ],
+  "verification": {
+    "command": "python scripts/analyze_gensafenav_entity_binding.py --verify-only",
+    "executions": 1,
+    "exit_code": 0,
+    "saved_report_equals_recomputed_report": true,
+    "independent_check": "Separate standard-library arithmetic read the two raw JSONL files, joined physical frames and lifetime IDs, reconstructed FP32 current-point ownership, and checked native distance admission and sampled-center distances. No import of the audited analyzer for this independent calculation.",
+    "source_review": "Read fixed local native observation generation, replacement, sorting, talk2Env admission, recorder and radius initialization paths."
+  },
+  "independently_recomputed": {
+    "issue_frames": 119,
+    "entity_rows": 2380,
+    "mismatch_frames": [
+      32,
+      55,
+      65,
+      84,
+      98
+    ],
+    "visible_current_point_mismatches": 24,
+    "gst_eligible_rows_rejected": 21,
+    "accepted_gst_rows_same_id_and_recorded_full_future_exact": 939,
+    "accepted_mismatched_current_points": 0,
+    "mismatch_rows_with_nonempty_interval": 0,
+    "new_lifetimes": {
+      "20": 32,
+      "21": 40,
+      "22": 55,
+      "23": 56,
+      "24": 65,
+      "25": 84,
+      "26": 93,
+      "27": 98
+    },
+    "replacement_frames_with_mismatch": 5,
+    "replacement_events": 8,
+    "minimum_sampled_center_distance": 1.0492767517487371,
+    "minimum_at": {
+      "reset_index": 1,
+      "physical_index": 104,
+      "lifetime_id": 11
+    },
+    "minimum_sampled_physical_surface_clearance_closed_bound": [
+      0.2492767517487371,
+      0.4492767517487371
+    ]
+  },
+  "source_supported_findings": [
+    {
+      "sources": [
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred.py:204",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred.py:213",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py:82"
+      ],
+      "finding": "Observation generation precedes end-goal Human replacement; talk2Env subsequently sorts current Human objects by actual center distance. The five recorded mismatch frames coincide with replacement. No radius-causality claim follows."
+    },
+    {
+      "sources": [
+        "vendor/GenSafeNav/rl/vec_env/vec_pretext_normalize.py:191",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py:93",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py:105"
+      ],
+      "finding": "Wrapper spatial rows are sorted by observed relative distance, whereas talk2Env assigns them by all-human actual center distance. All observed current-point mismatches fail the native <0.1 gate and receive no native interval; the source returns zero conformity rows there. Actor-input tensors and counterfactual actions were not independently measured."
+    },
+    {
+      "sources": [
+        "vendor/GenSafeNav/trained_models/Ours_GST/configs/config.py:48",
+        "vendor/GenSafeNav/trained_models/Ours_GST/configs/config.py:120",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_var_num.py:143",
+        "vendor/GenSafeNav/crowd_sim/envs/utils/agent.py:44"
+      ],
+      "finding": "randomize_attributes=True invokes initial Human attribute sampling, including radius uniform(0.3,0.5); random_radii=False does not disable that call. Replacement invokes the same generator."
+    },
+    {
+      "sources": [
+        "vendor/GenSafeNav/trained_models/Ours_GST/configs/config.py:135",
+        "vendor/GenSafeNav/crowd_sim/envs/utils/agent.py:19",
+        "vendor/GenSafeNav/crowd_sim/envs/utils/agent.py:52",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_var_num.py:119"
+      ],
+      "finding": "The active holonomic reset preserves robot radius 0.3. Human radii are not logged, so min(d)-0.8 <= minimum sampled surface clearance <= min(d)-0.6; this is a bound, not recovered radius draws."
+    }
+  ],
+  "accepted_limits": [
+    "The 939 full-future same-ID checks reuse recorder attestations in issues.jsonl. This review did not reopen predictor NPZs or establish forecast accuracy, lifetime-history purity, or cross-entity noninterference beyond those recorded checks.",
+    "The 24 mismatches concern visible current-point ownership; identical invisible dummy rows have no uniquely inferred permutation.",
+    "The old 0.44927675174873716 is a fixed-0.3-radii proxy and an upper bound, not the measured physical minimum clearance. Last-bit differences reflect floating-point subtraction order.",
+    "The clearance bound covers recorded before/after positions only; it is not a swept-volume or between-sample collision certificate.",
+    "No modified ordering, actor counterfactual, repair, attack or real task harm was tested."
+  ],
+  "material_errors": [],
+  "activity": {
+    "analyzer_verify_only_runs": 1,
+    "independent_stdlib_cache_recomputations": 1,
+    "new_model_calls": 0,
+    "new_environment_steps": 0,
+    "api_calls": 0,
+    "gpu_calls": 0,
+    "new_random_draws": 0,
+    "raw_or_audited_files_modified": 0
+  }
+}

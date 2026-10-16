@@ -1,0 +1,20 @@
+{
+  "verdict": "REJECT_ALL",
+  "candidate_claim": "counterfactual branch arbitrage / mechanism inconsistency attack",
+  "novelty_score": 4.0,
+  "why_or_why_not": "The submission fails the novelty bar because 'counterfactual mechanism inconsistency across candidate action rollouts' is the exact foundational problem formulation and motivation defined by OneWorld (2024/2026), not an unstudied attack surface. Framing cross-branch latent mechanism divergence as an 'attacker exploiting the planner via branch-set action choice' is a relabeling of standard counterfactual inconsistency and model over-optimism (optimism-under-uncertainty / epistemic exploitation). Without weight, observation, or gradient poisoning, an 'attacker' presenting legal action sequences to a native planner is merely the planner querying its own candidate distribution; finding that a multi-hypothesis world model evaluates branches under mutually inconsistent latents is known model bias, not a new planner-level security primitive.",
+  "minimum_gate": "To establish a distinct security vulnerability beyond ordinary epistemic drift: (1) Identify a public simulator/world-model stack (e.g., OpenWAM or OneWorld's release). (2) Construct two distinct candidate action sequences, A_opt and A_safe, such that individual marginal likelihoods p(traj | A) pass standard validation filters (L_marginal < threshold). (3) Demonstrate that when evaluated jointly within the planner's scoring pool, A_opt forces an implicit latent mechanism assignment theta_opt that contradicts the baseline belief theta_0 while suppressing A_safe. (4) Apply a causal repair that forces conditioning on a single shared latent sample across all branch evaluations (theta ~ p(theta | obs_{1:t}) fixed across all branches), proving A_opt drops below A_safe in rank while individual marginal likelihoods remain invariant.",
+  "repair": "Pivot away from claiming 'branch arbitrage' as an adversarial attack. Instead, formulate it as 'Counterfactual Arbitrage in Multi-Hypothesis World Models': an algorithmic failure mode of MPC/tree search where uncoupled latent sampling rewards branches that hallucinate favorable physics. Demonstrate how an adversary who controls a prompt prefix or action-proposal policy can induce catastrophic planning failure without triggering per-step epistemic uncertainty monitors.",
+  "scale_plan": "1. Deploy OpenWAM / OneWorld on continuous control benchmark (e.g., Isaac Gym or Meta-World with hidden parameters like friction or mass). 2. Implement standard CEM/MPPI sampling where latents are drawn conditionally per rollout vs. batched with shared context. 3. Characterize the delta between joint mechanism likelihood and the sum of marginal branch likelihoods across 10,000 planning cycles. 4. Measure execution regret when the chosen optimistic branch fails upon execution under the true singular environment mechanism.",
+  "falsifiers": [
+    "If fixing the random seed for the latent physics variable theta across candidate branches (standard common random numbers) does not alter the ranking between A_opt and A_safe.",
+    "If the performance collapse of A_opt is fully predicted by single-branch ensemble disagreement metrics (e.g., standard variance in TD-MPC2 / PETS) without requiring cross-branch mutual information terms.",
+    "If candidate selection variance completely masks the ranking inversion across random seeds (indistinguishable from ordinary CEM/MCTS sample noise)."
+  ],
+  "sources": [
+    "OneWorld: Consistent World Generation across Counterfactual Futures (arXiv:2609.30946)",
+    "Hansen et al., 'TD-MPC2: Scalable Robust World Models for Continuous Control', ICLR 2024",
+    "Chua et al., 'Deep Reinforcement Learning in a Handful of Trials using Probabilistic Dynamics Models (PETS)', NeurIPS 2018",
+    "Lambert et al., 'Objective Mismatch in Model-based Reinforcement Learning', CoRL 2020"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-09",
+  "status": "retired_after_native_geometry_search_no_execution_indistinguishable_leakage",
+  "candidate_claim_cn": "即使世界模型诚实返回预测，规划器查询过的未执行反事实也可能暴露本地私有偏好；若偏好只是主任务的小次级项，查询泄漏应在执行动作明显改变前出现。",
+  "source_runs": [
+    "runs/private_counterfactual_query_v0/summary.json",
+    "runs/private_counterfactual_query_v1/summary.json"
+  ],
+  "v0": {
+    "query_only_goal_classification_accuracy": 0.9583333333333334,
+    "paired_first_action_mean_abs_difference": 0.22323192024810448,
+    "selected_pair_common_seed_first_action_mean_abs_difference": 0.12135308980941772,
+    "query_count_per_run": 1920,
+    "interpretation": "Strong query distinguishability with a large action difference; this does not establish execution-indistinguishable leakage."
+  },
+  "v1": {
+    "private_objective": "native reward proxy plus 0.05 times a private terminal latent preference",
+    "query_only_goal_classification_accuracy": 0.0,
+    "paired_first_action_mean_abs_difference": 0.0,
+    "selected_pair_common_seed_first_action_mean_abs_difference": 0.0,
+    "query_count_per_run": 1920,
+    "interpretation": "Small secondary preference preserved the first action in this screen but produced no query classification signal."
+  },
+  "threat_model": "Researcher-defined client/service split: service sees latent/action queries and returns the unchanged native TD-MPC2 transition; it does not see the terminal preference. No active response manipulation, model poisoning, private task utility, or closed-loop harm was tested.",
+  "novelty_boundary": "Query-only and optimization-objective privacy have direct prior art (Private Sequential Learning, Learner-Private Convex Optimization, and Fisher-information privacy for quadratic optimization). World-model-specific execution-indistinguishable leakage remains unestablished. BadWAM already studies imagination/action desynchronization, which is a separate integrity threat.",
+  "accepted_claim": null,
+  "next_requirement": "Retire this candidate unless a pre-registered genuine private cost/constraint and utility-preserving leakage gate can be realized; the broader 240-pair search did not provide a near-identical-action witness.",
+  "report_note_cn": "新增原生 TD-MPC2 反事实查询短测：诚实动力学服务只看到1920个未执行 latent/action 查询，不接收终端偏好。纯终端偏好下，留一分类准确率95.8%，但首动作平均差异0.223；把偏好降为原生奖励的小次级项后，首动作差异为0，但查询分类为0%。随后在 walker-walk、cup-catch、reacher-easy 三个原生任务上扩大 latent/action 查询几何搜索，weight0.20 的三任务验证分类均为0；weight0.80 的 walker-walk 强化搜索仍为0，首动作配对差异为0。执行不可区分而查询可分的门槛未出现，因此退休该隐私候选，不启动长实验。",
+  "additional_pair_search": {
+    "pairs_tested": 240,
+    "best_common_seed_first_action_mean_abs_difference": 0.08220072835683823,
+    "elapsed_s": 8.921684172004461,
+    "task": "walker-walk",
+    "state_seed": 31,
+    "interpretation": "A broader fixed-state random pair search still did not find a pair below the 0.04 execution-indistinguishability target; this is a search diagnostic, not evidence of impossibility."
+  },
+  "geometry_search_v0": {
+    "run": "runs/private_query_geometry_search_v0/summary.json",
+    "tasks": ["walker-walk", "cup-catch", "reacher-easy"],
+    "private_weight": 0.2,
+    "result": "首动作可做到几乎完全相同，但三任务的查询几何留一分类准确率均为0；没有可分离的查询侧信道。"
+  },
+  "geometry_search_v1": {
+    "run": "runs/private_query_geometry_search_v1/summary.json",
+    "task": "walker-walk",
+    "private_weight": 0.8,
+    "result": "加强私有偏好后，最佳搜索对的首动作差异0.0715，验证首动作配对差异为0且查询分类准确率为0；仍未形成 execution-indistinguishable leakage。"
+  },
+  "retirement_decision": "Do not scale the privacy candidate. The stronger held-out geometry searches failed to produce a query-distinguishable / execution-indistinguishable pair across three native tasks."
+}

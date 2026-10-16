@@ -1,0 +1,404 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T06:50:32.569175+00:00",
+  "status": "completed_source_only_no_requested_executed_history_mismatch_in_inspected_paths",
+  "question": "After a native safety filter replaces a nominal action, does the next world-model belief/history still receive the rejected nominal action?",
+  "scope": "UNISafe isaaclab branch only: official teleoperation and quantitative evaluation action/feedback chains. Not a full code audit, checkpoint evaluation, or proof of general safety. Dubins branch and pretrained-package task correspondence are handled separately by root.",
+  "repository": {
+    "official_url": "https://github.com/CMU-IntentLab/UNISafe",
+    "branch": "isaaclab",
+    "revision": "ab0fdf87f38edefa48b54a291ec5b7156c17b6e0",
+    "commit_api_url": "https://api.github.com/repos/CMU-IntentLab/UNISafe/commits/isaaclab",
+    "tree_api_url": "https://api.github.com/repos/CMU-IntentLab/UNISafe/git/trees/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0?recursive=1",
+    "tree_entries": 95,
+    "tree_truncated": false,
+    "saved_metadata": "runs/unisafe_source_feasibility_20261015/isaaclab/source_metadata.json",
+    "saved_tree": "runs/unisafe_source_feasibility_20261015/isaaclab/tree.json",
+    "saved_source_files": [
+      {
+        "repository_path": "dreamer_wrapper.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamer_wrapper.py",
+        "bytes": 6671,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamer_wrapper.py"
+      },
+      {
+        "repository_path": "dreamerv3_torch/dreamer.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/dreamer.py",
+        "bytes": 8647,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/dreamer.py"
+      },
+      {
+        "repository_path": "dreamerv3_torch/envs/wrappers.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/envs/wrappers.py",
+        "bytes": 4019,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/envs/wrappers.py"
+      },
+      {
+        "repository_path": "dreamerv3_torch/tools.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/tools.py",
+        "bytes": 58413,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/tools.py"
+      },
+      {
+        "repository_path": "reachability/config.yaml",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/reachability/config.yaml",
+        "bytes": 4099,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/reachability/config.yaml"
+      },
+      {
+        "repository_path": "reachability/env/takeoff_wm_failure.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/reachability/env/takeoff_wm_failure.py",
+        "bytes": 12642,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/reachability/env/takeoff_wm_failure.py"
+      },
+      {
+        "repository_path": "reachability/evaluate_reachability_filter.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/reachability/evaluate_reachability_filter.py",
+        "bytes": 16768,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/reachability/evaluate_reachability_filter.py"
+      },
+      {
+        "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+        "bytes": 19536,
+        "raw_url": "https://raw.githubusercontent.com/CMU-IntentLab/UNISafe/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py"
+      }
+    ]
+  },
+  "teleoperation_path": {
+    "finding": "The safety replacement, executor input, posterior update and saved action history use the same already-filtered normalized action tensor.",
+    "chain": [
+      {
+        "operation": "Read nominal teleoperation action and clamp it to [-1,1].",
+        "source": {
+          "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+          "line_anchors": [
+            377,
+            380,
+            381
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py#L377"
+        }
+      },
+      {
+        "operation": "Predict next latent for the nominal action, evaluate its best-next-action minimum safety critic value, and combine that with ensemble uncertainty for the filtering decision.",
+        "source": {
+          "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+          "line_anchors": [
+            384,
+            389,
+            391,
+            393,
+            394,
+            395,
+            399
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py#L384"
+        }
+      },
+      {
+        "operation": "If rejected, write the safety-policy action into actions[:, :6] in place; the gripper command is preserved. Safety post-processing clamps its input to [-1,1].",
+        "source": {
+          "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+          "line_anchors": [
+            173,
+            175,
+            176,
+            177,
+            178,
+            399,
+            401,
+            403
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py#L173"
+        }
+      },
+      {
+        "operation": "Execute env.step(actions), pass that same filtered actions argument to forward_latent, and save it into transitions[action].",
+        "source": {
+          "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+          "line_anchors": [
+            415,
+            417,
+            418,
+            423
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py#L415"
+        }
+      },
+      {
+        "operation": "forward_latent consumes act_prev in RSSM.obs_step with the observed successor.",
+        "source": {
+          "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+          "line_anchors": [
+            230,
+            232,
+            233,
+            236
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py#L230"
+        }
+      }
+    ],
+    "normalization_scope": {
+      "finding": "The caller wraps DreamerVecEnvWrapper with NormalizeActions. The caller operates in normalized action coordinates; the wrapper maps [-1,1] to the advertised physical limits. DreamerVecEnvWrapper sets ac_lim=0.15 and clips again before the underlying executor. Different coordinate values across these layers are not by themselves a rejected-nominal history mismatch.",
+      "sources": [
+        {
+          "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+          "line_anchors": [
+            51,
+            52,
+            53
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py#L51"
+        },
+        {
+          "repository_path": "dreamerv3_torch/envs/wrappers.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/envs/wrappers.py",
+          "line_anchors": [
+            29,
+            35,
+            36,
+            42,
+            46,
+            48
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/envs/wrappers.py#L29"
+        },
+        {
+          "repository_path": "dreamer_wrapper.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamer_wrapper.py",
+          "line_anchors": [
+            24,
+            58,
+            61,
+            62,
+            86,
+            87,
+            88,
+            89
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamer_wrapper.py#L24"
+        }
+      ],
+      "limit": "No numerical execution, simulator-control telemetry, or general claim about all downstream actuator behavior was made."
+    }
+  },
+  "quantitative_evaluation_path": {
+    "finding": "Both the nominal Dreamer policy state and the separately maintained world-model belief receive the filtered action. An apparent missing reassignment of the policy state tuple is not a retained-nominal-action bug in this source.",
+    "shared_tensor_counterexample_to_apparent_bug": [
+      {
+        "operation": "Dreamer._policy returns policy_output[action]=action and state=(latent,action), using the same detached tensor, without cloning it between these two containers.",
+        "source": {
+          "repository_path": "dreamerv3_torch/dreamer.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/dreamer.py",
+          "line_anchors": [
+            202,
+            206,
+            209,
+            224,
+            229,
+            230,
+            231
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/dreamer.py#L202"
+        }
+      },
+      {
+        "operation": "evaluate_venv_filtering obtains both containers, modifies the gripper component in place, and supplies the output dictionary to filter_action.",
+        "source": {
+          "repository_path": "dreamerv3_torch/tools.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/tools.py",
+          "line_anchors": [
+            638,
+            639,
+            644,
+            645,
+            646
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/tools.py#L638"
+        }
+      },
+      {
+        "operation": "filter_action binds action=actions[action], then writes action[:, :6] in place and returns that same tensor. Therefore the tensor referenced by agent_state is also modified.",
+        "source": {
+          "repository_path": "dreamerv3_torch/tools.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/tools.py",
+          "line_anchors": [
+            515,
+            517,
+            531,
+            532,
+            533,
+            536
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/tools.py#L515"
+        }
+      },
+      {
+        "operation": "The returned tensor is assigned back to the dictionary, executed, and used for the independent latent posterior update.",
+        "source": {
+          "repository_path": "dreamerv3_torch/tools.py",
+          "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/tools.py",
+          "line_anchors": [
+            647,
+            649,
+            650,
+            660
+          ],
+          "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/tools.py#L647"
+        }
+      },
+      {
+        "operation": "The next nominal policy call reads the same tensor from its state tuple; forward_latent separately reads the filtered dictionary action.",
+        "sources": [
+          {
+            "repository_path": "dreamerv3_torch/dreamer.py",
+            "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/dreamer.py",
+            "line_anchors": [
+              206,
+              209
+            ],
+            "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/dreamer.py#L206"
+          },
+          {
+            "repository_path": "dreamerv3_torch/tools.py",
+            "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/tools.py",
+            "line_anchors": [
+              496,
+              502
+            ],
+            "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/tools.py#L496"
+          }
+        ]
+      }
+    ],
+    "additional_diffusion_evaluation_variant": {
+      "finding": "The optional diffusion evaluation variant also executes its filtered_action, reconstructs the action dictionary from it, and passes that dictionary to forward_latent.",
+      "source": {
+        "repository_path": "dreamerv3_torch/tools.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/tools.py",
+        "line_anchors": [
+          885,
+          890,
+          892,
+          895,
+          897,
+          898,
+          901,
+          909
+        ],
+        "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/tools.py#L885"
+      }
+    },
+    "evidence_type": "Static Python tensor-reference and in-place-assignment reasoning; no tensor probe, policy invocation or environment execution."
+  },
+  "forecast_to_filter_chain": {
+    "native_path_exists": true,
+    "description": "The learned dynamics img_step predicts a future latent. A safety policy chooses a next action there; two reachability critics evaluate it, and their minimum joins an uncertainty threshold in deciding whether to replace the current nominal action. The replacement is produced from current features.",
+    "sources": [
+      {
+        "repository_path": "teleop_dreamer/filter_with_dreamer_failure.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/teleop_dreamer/filter_with_dreamer_failure.py",
+        "line_anchors": [
+          385,
+          386,
+          387,
+          389,
+          390,
+          391,
+          393,
+          394,
+          395,
+          399,
+          401,
+          403
+        ],
+        "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/teleop_dreamer/filter_with_dreamer_failure.py#L385"
+      },
+      {
+        "repository_path": "dreamerv3_torch/tools.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/dreamerv3_torch/tools.py",
+        "line_anchors": [
+          518,
+          519,
+          521,
+          522,
+          523,
+          525,
+          526,
+          527,
+          531,
+          532,
+          533
+        ],
+        "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/dreamerv3_torch/tools.py#L518"
+      }
+    ],
+    "claim_limit": "This establishes a native learned-future decision consumer and normal safety-filter behavior at source level. It is not evidence of a new attack, filter failure, task utility, or measured forecast damage."
+  },
+  "configuration_and_resource_limits": {
+    "missing_file": {
+      "path": "reachability/config_filter_normal.yaml",
+      "referenced_by": {
+        "repository_path": "reachability/evaluate_reachability_filter.py",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/reachability/evaluate_reachability_filter.py",
+        "line_anchors": [
+          433
+        ],
+        "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/reachability/evaluate_reachability_filter.py#L433"
+      },
+      "not_present_in_complete_pinned_tree": true,
+      "raw_fetch_status_observed": 404
+    },
+    "public_config": {
+      "source": {
+        "repository_path": "reachability/config.yaml",
+        "saved_path": "runs/unisafe_source_feasibility_20261015/isaaclab/reachability/config.yaml",
+        "line_anchors": [
+          32,
+          37,
+          39,
+          70
+        ],
+        "url": "https://github.com/CMU-IntentLab/UNISafe/blob/ab0fdf87f38edefa48b54a291ec5b7156c17b6e0/reachability/config.yaml#L32"
+      },
+      "finding": "The published config.yaml names the model/filter paths and Isaac-Takeoff-Franka-IK-Rel-v0, but does not contain action_denom. The quantitative loop references config.action_denom."
+    },
+    "resulting_limit": "Do not claim the quantitative evaluator is immediately reproducible or that every possible configured post-filter value remains inside the executor range. Altering an unspecified denominator to manufacture clipping would be a new configuration, not a demonstrated native history mismatch.",
+    "pretrained_bundle": "README advertises a pretrained world-model/reachability-filter bundle. This sub-review did not fetch, inspect, load, or validate it; branch/task correspondence and availability are being reviewed separately by root.",
+    "runtime": "No IsaacLab installation, import, model load, inference, task reset or physics step was attempted."
+  },
+  "deduplication": {
+    "archive_read_first": "reports/research_archive/mechanisms.json",
+    "distinct_from_dino": "This screen concerns feedback of actually filtered actions into a recurrent belief, not execution-equivalent copied forecast requests.",
+    "latent_cbf": "A local nominal-history write before filtering was found in latent-cbf and handed to corrected_planner_feasibility for its own review; it is not attributed to UNISafe.",
+    "excluded_paths": "No blocked WorldAgen/GammaWorld work or repeat JOWA copy-isolation experiment was performed."
+  },
+  "decision": {
+    "candidate": "NONE for the rejected-nominal-after-filter feedback hypothesis in these inspected UNISafe native paths.",
+    "why": "The modified action tensor reaches execution, saved history and subsequent belief updates; the quantitative policy-state tensor is updated through deliberate shared storage and in-place writes.",
+    "resource_spend": "No task experiment, checkpoint download or IsaacLab setup is justified by this specific source hypothesis.",
+    "limits": "A source exclusion of this route is not a proof of global robustness, a novelty assessment, or a reason to deny other separately specified research."
+  },
+  "activity": {
+    "source_acquisition_for_completed_review": "Official GitHub metadata/tree and eight selected text files, now copied from the existing temporary cache without new network access.",
+    "source_files_preserved": 8,
+    "new_network_calls_for_this_save": 0,
+    "full_repository_clones": 0,
+    "weight_downloads": 0,
+    "model_loads": 0,
+    "model_calls": 0,
+    "environment_steps": 0,
+    "gpu_execution": 0,
+    "training_updates": 0,
+    "new_hashes": 0,
+    "archive_or_html_modified": false
+  }
+}

@@ -1,0 +1,317 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "completed_fixed_panel_independent_cache_analysis_passed",
+  "question": "Does removing within-query elite-dispersion updates remove the existing boundary-data return deficit in the original CartPole planner?",
+  "one_sentence_finding": "在原固定面板中，移除精英方差更新后边界数据模型的回报变化为+4/-7/+34/-4，平均仅提高6.75、中位数0，且相对随机源仍差56.5分；该更新不是这一平均损害存在的必要条件。",
+  "new_reason_to_run": "A source/saved-log audit found that the old summary pooled sampled covariance across different visited states and wrongly attributed the carrier to TD-MPC2. Native strict-best CEM often fixes its returned solution at iteration0, so a direct intervention was needed before claiming covariance mediation.",
+  "carrier_scope": "Three existing locally trained MBRL-Lib GaussianMLP CartPole checkpoints; original four development seeds810..813. Unchanged native optimizer class with the historical reduced100-candidate/3-iteration/best-candidate setting, not a released pretrained model or the stronger350/5/elite-mean protocol.",
+  "protocol": "configs/mbrl_dispersion_control_20261015.json",
+  "operation": "Only replace each native update returned dispersion with that query's initial variance0.25. Preserve native mean-update rule, mean-dependent legal-bound variance cap, candidate sampling, model/reward, strict-best tie behavior, warm start and100×3×H15×10 budget. Mean values and later candidates may legitimately diverge as consequences.",
+  "execution": {
+    "session_id": 98655,
+    "exit_code": 0,
+    "terminal_chunk_id": "d5f320",
+    "elapsed_seconds": 163.97788138402393,
+    "episodes": 24,
+    "environment_steps": 4174,
+    "model_batch_evaluations": 12522,
+    "imagined_particle_transitions": 187830000,
+    "checkpoint_loads": 3,
+    "training_updates": 0,
+    "api_calls": 0,
+    "gpu_model_calls": 0,
+    "imagined_transition_count_basis": "Runner counter, independently checked against cached population/horizon dimensions times the registered10 particles; not a new model execution by the analyst."
+  },
+  "rows": [
+    {
+      "mode": "random",
+      "seed": 810,
+      "native_return": 200.0,
+      "fixed_dispersion_return": 200.0,
+      "delta": 0.0,
+      "native_reached_200_step_cap": true,
+      "fixed_reached_200_step_cap": true
+    },
+    {
+      "mode": "random",
+      "seed": 811,
+      "native_return": 200.0,
+      "fixed_dispersion_return": 200.0,
+      "delta": 0.0,
+      "native_reached_200_step_cap": true,
+      "fixed_reached_200_step_cap": true
+    },
+    {
+      "mode": "random",
+      "seed": 812,
+      "native_return": 200.0,
+      "fixed_dispersion_return": 200.0,
+      "delta": 0.0,
+      "native_reached_200_step_cap": true,
+      "fixed_reached_200_step_cap": true
+    },
+    {
+      "mode": "random",
+      "seed": 813,
+      "native_return": 185.0,
+      "fixed_dispersion_return": 199.0,
+      "delta": 14.0,
+      "native_reached_200_step_cap": false,
+      "fixed_reached_200_step_cap": false
+    },
+    {
+      "mode": "boundary",
+      "seed": 810,
+      "native_return": 114.0,
+      "fixed_dispersion_return": 118.0,
+      "delta": 4.0,
+      "native_reached_200_step_cap": false,
+      "fixed_reached_200_step_cap": false
+    },
+    {
+      "mode": "boundary",
+      "seed": 811,
+      "native_return": 173.0,
+      "fixed_dispersion_return": 166.0,
+      "delta": -7.0,
+      "native_reached_200_step_cap": false,
+      "fixed_reached_200_step_cap": false
+    },
+    {
+      "mode": "boundary",
+      "seed": 812,
+      "native_return": 122.0,
+      "fixed_dispersion_return": 156.0,
+      "delta": 34.0,
+      "native_reached_200_step_cap": false,
+      "fixed_reached_200_step_cap": false
+    },
+    {
+      "mode": "boundary",
+      "seed": 813,
+      "native_return": 137.0,
+      "fixed_dispersion_return": 133.0,
+      "delta": -4.0,
+      "native_reached_200_step_cap": false,
+      "fixed_reached_200_step_cap": false
+    },
+    {
+      "mode": "interior",
+      "seed": 810,
+      "native_return": 200.0,
+      "fixed_dispersion_return": 200.0,
+      "delta": 0.0,
+      "native_reached_200_step_cap": true,
+      "fixed_reached_200_step_cap": true
+    },
+    {
+      "mode": "interior",
+      "seed": 811,
+      "native_return": 134.0,
+      "fixed_dispersion_return": 137.0,
+      "delta": 3.0,
+      "native_reached_200_step_cap": false,
+      "fixed_reached_200_step_cap": false
+    },
+    {
+      "mode": "interior",
+      "seed": 812,
+      "native_return": 200.0,
+      "fixed_dispersion_return": 200.0,
+      "delta": 0.0,
+      "native_reached_200_step_cap": true,
+      "fixed_reached_200_step_cap": true
+    },
+    {
+      "mode": "interior",
+      "seed": 813,
+      "native_return": 200.0,
+      "fixed_dispersion_return": 200.0,
+      "delta": 0.0,
+      "native_reached_200_step_cap": true,
+      "fixed_reached_200_step_cap": true
+    }
+  ],
+  "means": {
+    "random": {
+      "native": 196.25,
+      "fixed": 199.75,
+      "delta_mean": 3.5,
+      "delta_median": 0.0,
+      "positive_deltas": 1,
+      "negative_deltas": 0,
+      "native_cap_count": 3,
+      "fixed_cap_count": 3
+    },
+    "boundary": {
+      "native": 136.5,
+      "fixed": 143.25,
+      "delta_mean": 6.75,
+      "delta_median": 0.0,
+      "positive_deltas": 2,
+      "negative_deltas": 2,
+      "native_cap_count": 0,
+      "fixed_cap_count": 0
+    },
+    "interior": {
+      "native": 183.5,
+      "fixed": 184.25,
+      "delta_mean": 0.75,
+      "delta_median": 0.0,
+      "positive_deltas": 1,
+      "negative_deltas": 0,
+      "native_cap_count": 3,
+      "fixed_cap_count": 3
+    }
+  },
+  "paired_interactions": [
+    {
+      "seed": 810,
+      "delta_return": {
+        "random": 0.0,
+        "boundary": 4.0,
+        "interior": 0.0
+      },
+      "boundary_minus_random_delta": 4.0,
+      "boundary_minus_interior_delta": 4.0
+    },
+    {
+      "seed": 811,
+      "delta_return": {
+        "random": 0.0,
+        "boundary": -7.0,
+        "interior": 3.0
+      },
+      "boundary_minus_random_delta": -7.0,
+      "boundary_minus_interior_delta": -10.0
+    },
+    {
+      "seed": 812,
+      "delta_return": {
+        "random": 0.0,
+        "boundary": 34.0,
+        "interior": 0.0
+      },
+      "boundary_minus_random_delta": 34.0,
+      "boundary_minus_interior_delta": 34.0
+    },
+    {
+      "seed": 813,
+      "delta_return": {
+        "random": 14.0,
+        "boundary": -4.0,
+        "interior": 0.0
+      },
+      "boundary_minus_random_delta": -18.0,
+      "boundary_minus_interior_delta": -4.0
+    }
+  ],
+  "remaining_return_gap": {
+    "random_minus_boundary_native": 59.75,
+    "random_minus_boundary_fixed": 56.5,
+    "interior_minus_boundary_native": 47.0,
+    "interior_minus_boundary_fixed": 41.0
+  },
+  "runtime_validation": {
+    "all12_native_real_trajectories_exactly_reconstructed": true,
+    "all_native_observational_stats_exact": true,
+    "frozen_model_and_normalizer_checks": [
+      {
+        "mode": "random",
+        "state_dict_exact": true,
+        "input_normalizer_mean_std_exact": true,
+        "parameter_tensors": 8
+      },
+      {
+        "mode": "boundary",
+        "state_dict_exact": true,
+        "input_normalizer_mean_std_exact": true,
+        "parameter_tensors": 8
+      },
+      {
+        "mode": "interior",
+        "state_dict_exact": true,
+        "input_normalizer_mean_std_exact": true,
+        "parameter_tensors": 8
+      }
+    ],
+    "same_input_effective_variance_changed_queries": 1527,
+    "same_input_non_ceiling_effective_variance_changed_queries": 16,
+    "shared_query_rng_checks": 2054,
+    "interior813_full_trajectory_negative_control_exact": true
+  },
+  "independent_analysis": {
+    "path": "reports/mbrl_dispersion_control_analysis_20261015.json",
+    "status": "completed_read_only_analysis",
+    "session_id": 12085,
+    "exit_code": 0,
+    "audit_issue_count": 0,
+    "totals": {
+      "observed_real_steps": 4174,
+      "cached_native_batch_evaluations": 12522,
+      "derived_imagined_particle_transitions": 187830000,
+      "particle_transition_basis": "Cached population iteration/candidate/horizon dimensions times the registered10 particles; not an additional execution counter.",
+      "shared_query_rng_checks": 2054,
+      "individual_rng_array_comparisons": 8216,
+      "same_input_queries": 1527,
+      "effective_variance_changed_same_input": 1527,
+      "non_ceiling_effective_variance_changed_same_input": 16,
+      "action_changed_same_input": 8,
+      "full_sequence_changed_same_input": 11,
+      "warm_after_changed_same_input": 11,
+      "ceiling_locked_same_input_queries": 1511
+    },
+    "activity": {
+      "unique_query_caches_audited": 4174,
+      "model_loads": 0,
+      "environment_steps": 0,
+      "api_calls": 0,
+      "training_updates": 0,
+      "elapsed_seconds": 18.996101233991794
+    }
+  },
+  "interpretation": [
+    "The intervention has real but heterogeneous causal effects in this fixed system. Two boundary episodes improve and two worsen; do not call it universally irrelevant.",
+    "The mean return deficits persist when elite-dispersion updating is removed. These results do not support the claim that this update is necessary for the existing harm or a reliable recovery mechanism.",
+    "Fixed dispersion does not remove mean-dependent boundary clipping, model error, normalization differences, data coverage differences or all possible candidate covariance changes.",
+    "A positive mean interaction is not sufficient evidence of a special boundary-data mechanism: random and interior controls each began with3/4 ceiling episodes, and there are only four reused development roots.",
+    "The selected complete sequence also supplies the next-query warm start. A changed unexecuted tail can precede later decision differences even if the immediate first action is equal; this is not a new attack result.",
+    "No attack success rate, confidence interval or significance claim is inferred from dependent planner queries or24 paired conditions."
+  ],
+  "go_no_go": {
+    "old_real_source_distribution_return_difference": "Go within the reproduced local setting",
+    "elite_dispersion_update_necessary_for_observed_mean_harm": "No-Go: the deficit persists without this update",
+    "reliable_selective_recovery_or_new_security_mechanism": "No-Go",
+    "pretrained_WM_or_Goal_Bus_decision_harm_claim": "Not established by this experiment",
+    "expand_seeds_or_tune_variance_floor": "No",
+    "overall_research_goal_complete": false
+  },
+  "stop_decision": "Close this fixed covariance-pinching construction without tuning floors or adding seeds. Preserve the local source-distribution return effects and reusable causal-control code. A different, concrete model/interface mechanism is needed for a new paper-level experiment.",
+  "other_scope_corrections": {
+    "parity": "Development704 attack175 exceeds independent137 despite falling below actively optimized parity-control200;705 falls below both. Heldout706 ties and707 improves versus parity-control.",
+    "dino": "The separate fixed-forecast/source proof excludes an additional geometry path under the old copy-only authority; measured earlier return loss and recovery are unchanged.",
+    "nanowm": "Native Clean remains unmeasured. This turn's GPU observation was17864/24564MiB and100percent utilization; no NanoWM model was launched or new capability outcome claimed. A valid capability question does not require prior attack success, but one passive-control-successful root cannot establish a strong clean planner."
+  },
+  "sources": [
+    "reports/cem_dispersion_action_source_audit_20261015.json",
+    "reports/dino_fixed_forecast_geometry_scope_20261015.json",
+    "scripts/pilot_mbrl_dispersion_control.py",
+    "runs/mbrl_dispersion_control_20261015/summary.json",
+    "reports/nanowm_security_readiness_decision_20261015.json"
+  ],
+  "reproduction": {
+    "execution": ".venv-native-local/bin/python scripts/pilot_mbrl_dispersion_control.py --output <fresh-output-directory>",
+    "cache_analysis": ".venv-native-local/bin/python scripts/analyze_mbrl_dispersion_control.py --verify-only",
+    "boundary": "Execution refuses an existing output directory. Cache-only --verify-only recomputes and compares the saved JSON/CSV without overwriting them, ignoring elapsed-analysis time; no model or environment load."
+  },
+  "warmstart_example": {
+    "mode": "boundary",
+    "seed": 812,
+    "query_indices_zero_based": true,
+    "query28": "With identical observation and warm start, the returned sequence first differs at[13,0], while the executed first action remains identical.",
+    "query29": "The carried warm start now differs and the executed first action changes.",
+    "query30": "The physical observation first differs.",
+    "interpretation": "A current-first-action-only check would miss this route through the returned planning tail. This describes the variance-control data, not a separate new attack."
+  }
+}

@@ -1,0 +1,268 @@
+{
+  "schema_version": 1,
+  "recorded_on": "2026-10-15",
+  "status": "awaiting_experimental_gate",
+  "decision": "A bounded fixed-bank diagnostic has a new concrete source/cache basis; no physics-equivalence, forecast-invariance, ranking-harm or defense experiment has been executed for this candidate.",
+  "research_question": "Can different finite action representations with exactly the same executed XYZ controls change deterministic DINO-WM forecasts and native-objective ranking enough to select a physically worse action sequence?",
+  "scope": "Read-only source inspection and one JSON-only count of existing actually executed Clean actions. No model loading, inference, environment execution, API request, training, checkpoint download or weight hashing.",
+  "execution_priority": "Do not start this second model/environment experiment in the present round. The separately selected action-geometry coupling gate has priority.",
+  "existing_carrier": {
+    "checkpoint": "models/DINO_WM/mw_dino-wm.pth.tar",
+    "backbone": "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+    "native_configuration": "vendor/jepa-wms/configs/evals/simu_env_planning/mw/dino-wm/reach_L2_cem_sourcexp_H6_nas3_ctxt2_r224_alpha0.1_ep48_decode.yaml",
+    "loader": "scripts/pilot_dino_metaworld_clean_gate.py:126-162",
+    "clean_evidence": "runs/dino_metaworld_mujoco330_analysis_v1/analysis.json",
+    "clean_result": "Two of three fixed development episodes have final native success. This is a small normal-capability panel, not general strong-controller evidence.",
+    "strong_control_evidence": "runs/dino_metaworld_servo_analysis_v1/analysis.json",
+    "strong_control_limit": "The matched servo has final success 0/3 but ever-success 3/3 and higher cumulative reward on all three roots. Preserve both final-success and reward/ever-success conclusions; a later prefix diagnostic does not inherit a forecast-selection advantage.",
+    "native_selection": "CEM uses 300 candidates, 15 iterations, 10 elites, H6 and returns three macro actions. Each 20D macro is five consecutive 4D physical controls. The fixed native objective is final visual-feature MSE plus 0.1 times proprio-feature MSE."
+  },
+  "source_chain": [
+    {
+      "path": "vendor/jepa-wms/app/plan_common/datasets/preprocessor.py",
+      "lines": [
+        30,
+        40
+      ],
+      "fact": "Normalization is (a - mean) / std; denormalization is z * std + mean. Neither operation clips actions."
+    },
+    {
+      "path": "vendor/jepa-wms/app/plan_common/datasets/__init__.py",
+      "lines": [
+        26,
+        33
+      ],
+      "fact": "The published MetaWorld four-coordinate action mean/std are used by the existing loader, repeated by reshaping each five-control macro rather than treating normalized [-1,1] as executor bounds."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "lines": [
+        223,
+        224,
+        276,
+        303,
+        311,
+        333
+      ],
+      "fact": "CEM samples normalized proposals. Its optional max_norms defaults to None and is absent in the inspected native reach configuration. Proposals enter cost_function before elite selection; the returned action is the first three rows of the final elite mean."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "lines": [
+        48,
+        50
+      ],
+      "fact": "cost_function calls unroll(z_init, actions), then the native objective on its forecast."
+    },
+    {
+      "path": "vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py",
+      "lines": [
+        289,
+        353
+      ],
+      "fact": "EncPredWM.unroll receives normalized act_suffix[T,B,20], rearranges it, encodes actions and calls forward_pred autoregressively. It does not denormalize and apply the MetaWorld XYZ clip before action encoding."
+    },
+    {
+      "path": "vendor/jepa-wms/app/vjepa_wm/video_wm.py",
+      "lines": [
+        199,
+        215,
+        315,
+        330
+      ],
+      "fact": "Action encoding consumes the supplied values; the dino_wm forecast concatenates observation/action/proprio features and applies its predictor. This is an evaluation-mode feedforward forecast path, not a diffusion conditional sampler. No new repeatability test was performed."
+    },
+    {
+      "path": "scripts/pilot_dino_metaworld_clean_gate.py",
+      "lines": [
+        491,
+        505
+      ],
+      "fact": "Returned normalized macros are reshaped into 4D controls and affine-denormalized before env.step. Logged action values are these raw requested controls, not executor-clipped values."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/envs/wrappers/tensor.py",
+      "lines": [
+        45,
+        46
+      ],
+      "fact": "The tensor wrapper passes action.numpy() onward."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/envs/metaworld.py",
+      "lines": [
+        100,
+        108
+      ],
+      "fact": "The MetaWorld wrapper passes action.copy() into the underlying environment."
+    },
+    {
+      "path": ".venv-a2world/lib/python3.11/site-packages/metaworld/sawyer_xyz_env.py",
+      "lines": [
+        320,
+        336,
+        591,
+        601
+      ],
+      "fact": "set_xyz_action first applies np.clip(action,-1,1), scales the result, updates bounded mocap position and fixes mocap orientation. step passes action[:3] to this function and the unchanged gripper scalar to do_simulation([a_g,-a_g])."
+    },
+    {
+      "path": ".venv-a2world/lib/python3.11/site-packages/metaworld/envs/sawyer_reach_v3.py",
+      "lines": [
+        82,
+        98,
+        140,
+        181
+      ],
+      "fact": "Reach success and reward are derived from TCP/finger position relative to the fixed target. The inspected reach reward does not penalize the raw XYZ command. This claim is not generalized to tasks with raw-action costs."
+    }
+  ],
+  "exact_alias_contract": {
+    "domain": "Finite 4D requested controls a=(ax,ay,az,ag), evaluated at the actual execution dtype after the native affine denormalizer.",
+    "definition": "a ~ b iff np.clip(a[:3],-1,1) equals np.clip(b[:3],-1,1) coordinatewise and b[3] equals a[3] exactly. Apply this condition to every corresponding physical sub-control in a sequence.",
+    "allowed_edit": "Only XYZ representations already on the same saturation side may differ; keep all unsaturated XYZ coordinates and the gripper unchanged. Do not change action order, sequence length, timing, target, observation, weights, scoring or other candidates.",
+    "sufficient_source_conditions": [
+      "Start from the same complete simulator and wrapper state, including mocap, integration/warm-start fields, task parameters, RNG where applicable, counters and observation history.",
+      "Use the same action scaling, frameskip, control count, simulator implementation and timestep.",
+      "Preserve the raw gripper control exactly; do not rely on a second actuator-clipping equivalence claim.",
+      "For this reach task, equal physical transitions imply equal state-based reward and success. Other tasks with raw-command penalties require a separate utility-equivalence check."
+    ],
+    "deployment_precision_caveat": "An algebraic normalize/denormalize round trip may round a canonical boundary to just inside +/-1. Verify the actual float32-denormalized and np.clip results, and preserve untouched normalized coordinates bit-for-bit, before accepting any alias. No such numerical/physics acceptance test was executed in this report.",
+    "source_inference_not_measurement": "Under these conditions the inspected executor should issue the same mocap and gripper controls. Exact whole-trajectory, rendered-observation and utility equivalence remain to be measured, not asserted from the count."
+  },
+  "existing_action_log_count": {
+    "source_template": "runs/dino_metaworld_mujoco330_clean_v1/seed{1,2,3}_clean/trace.jsonl",
+    "scope": "Actually executed policy controls only; excludes the one warmup control and all unexecuted CEM candidates. Counts are over raw logged action[:3], before executor clipping.",
+    "predicate": "abs(float(a[j])) > 1 for j in {0,1,2}",
+    "rows": [
+      {
+        "seed": 1,
+        "executed_controls": 99,
+        "controls_with_any_xyz_clip": 50,
+        "control_fraction": 0.5050505050505051,
+        "xyz_coordinate_clip_counts": [
+          15,
+          38,
+          5
+        ],
+        "xyz_components_clipped": 58,
+        "xyz_component_fraction": 0.19528619528619529,
+        "xyz_max_absolute_requested_value": [
+          2.6061508655548096,
+          4.882570266723633,
+          2.3334648609161377
+        ],
+        "first_requested_action": [
+          -0.0125505942851305,
+          3.9130611419677734,
+          1.610151767730713,
+          -0.5721297860145569
+        ],
+        "nonfinite_values": 0
+      },
+      {
+        "seed": 2,
+        "executed_controls": 99,
+        "controls_with_any_xyz_clip": 53,
+        "control_fraction": 0.5353535353535354,
+        "xyz_coordinate_clip_counts": [
+          19,
+          36,
+          17
+        ],
+        "xyz_components_clipped": 72,
+        "xyz_component_fraction": 0.24242424242424243,
+        "xyz_max_absolute_requested_value": [
+          3.3835551738739014,
+          4.791901111602783,
+          2.7804675102233887
+        ],
+        "first_requested_action": [
+          1.8764342069625854,
+          3.738809823989868,
+          -0.6745582818984985,
+          -1.3577182292938232
+        ],
+        "nonfinite_values": 0
+      },
+      {
+        "seed": 3,
+        "executed_controls": 99,
+        "controls_with_any_xyz_clip": 44,
+        "control_fraction": 0.4444444444444444,
+        "xyz_coordinate_clip_counts": [
+          16,
+          30,
+          8
+        ],
+        "xyz_components_clipped": 54,
+        "xyz_component_fraction": 0.18181818181818182,
+        "xyz_max_absolute_requested_value": [
+          2.2187883853912354,
+          4.13650369644165,
+          1.4521141052246094
+        ],
+        "first_requested_action": [
+          -2.091404914855957,
+          3.885124921798706,
+          -1.0224881172180176,
+          1.0176877975463867
+        ],
+        "nonfinite_values": 0
+      }
+    ],
+    "pooled": {
+      "controls": 297,
+      "controls_with_any_xyz_clip": 147,
+      "control_fraction": 0.494949494949495,
+      "xyz_components": 891,
+      "xyz_components_clipped": 184,
+      "xyz_component_fraction": 0.20650953984287318
+    },
+    "interpretation": "Executor saturation occurs frequently in existing native Clean trajectories, before any proposed intervention. This does not establish training-distribution membership, forecast error, alias invariance failure, attack reachability or task harm."
+  },
+  "relation_to_archived_work": {
+    "registry": "reports/research_archive/mechanisms.json",
+    "wav_source": "configs/world_model_wav_alias_screen.json",
+    "wav_correction": "At inspection the registry labelled the direction untested, although the original config records a one-step diagnostic on 128 states and 151 oracle alias groups (93.38%-96.69% split rates across four checkpoints). Root subsequently corrected that registry label to observed_dependence_only. No attacker/controller task harm is established; neither the old diagnostic nor a new DINO result was rerun.",
+    "cosmos_source": "configs/cosmos_action_representation_probe_v1.json",
+    "cosmos_difference": "Earlier Cosmos alias conditions were fed to a joint conditional generative sampler; identical actuator decoding alone does not require identical joint conditional samples. Its valid action-alias windows showed no ranking flips or harm. The present DINO path uses deterministic action-conditioned forecasts, and the exact executor saturation map is exercised by native Clean actions. This is a better-defined causal action-equivalence diagnostic, not evidence that the old Cosmos negative result was wrong.",
+    "new_fact": "Available checkpoint plus native forecast-based CEM, a measured small Clean gate, explicit normalized-proposal/raw-executor clipping mismatch, and 147/297 naturally saturated requested controls.",
+    "novelty_limit": "Action equivalence, model exploitation, clipping mismatches and quotient-MDP abstractions are not new principles. No new literature search or novelty claim is made. A useful systems-security contribution still needs a stated representation-writer permission, measured decision harm and selective recovery."
+  },
+  "minimal_interface_and_diagnostic_boundary": {
+    "interface": "The concrete research hook is the act_suffix argument at native cost_function -> EncPredWM.unroll. It can change only an equivalent XYZ representation in a copied forecast request while retaining candidate identity, raw executable control sequence, original goal and native scoring. No deployed low-trust remote writer has been identified.",
+    "candidate_bank": "A separately preregistered fixed bank can reuse existing actual action sequences and initial-state/goal caches, with real prefix outcomes obtained from matching saved trajectories or exact environment replays. Freeze its roots, candidates, horizon, alias rule and utility before any new predictions; do not select aliases or candidates by observed forecast error or utility.",
+    "existing_cache_limit": "queries.json stores the returned three-macro prefix and per-iteration minimum costs, not all 300 CEM candidates, full unexecuted H6 tails or forecast arrays. Concatenating later closed-loop actions produces a new fixed open-loop sequence, not the original H6 candidate. It must be labelled accordingly.",
+    "decision_scope": "Using native model/unroll/objective on a fixed bank is an added diagnostic selector, not a replay of complete native adaptive CEM. Short-prefix distance/reward is real measured utility but is not whole-episode success or a native closed-loop attack success rate.",
+    "cem_geometry_limit": "Clipping is nonlinear: averaging different alias representations can change the executable mean. Editing the candidate tensors used by CEM elite averaging would therefore add an optimizer-geometry path. A forecast-request-only diagnostic must retain the original candidate tensors and identity mapping to isolate forecast sensitivity.",
+    "necessary_gate_before_claim": [
+      "At actual precision, verify every proposed alias gives the same effective XYZ controls and unchanged gripper; replay source and alias from identical restored state to check physical trajectories, images, reward and success.",
+      "Measure fixed-action forecast error against independently observed physical consequences; visual/proprio divergence alone is not an error or attack success.",
+      "Measure ranking and selected-candidate utility using the same original native objective and real candidate outcomes. Show a competent Clean selector on that fixed bank rather than inheriting the full-policy 2/3 result.",
+      "Any canonicalization repair must use the executor-equivalent representation at deployment precision, retain equal model calls and scoring, and report its Clean cost. Recovery of feature equality alone is insufficient."
+    ],
+    "current_measurements": {
+      "new_physics_equivalence_replays": 0,
+      "new_forecast_calls": 0,
+      "alias_forecast_invariance": null,
+      "ranking_flips": null,
+      "selected_action_utility_effect": null,
+      "defense_recovery": null,
+      "complete_native_cem_effect": null
+    }
+  },
+  "activity": {
+    "json_action_count_passes": 1,
+    "existing_trace_rows_counted": 297,
+    "model_loads": 0,
+    "model_forward_calls": 0,
+    "environment_steps": 0,
+    "api_requests": 0,
+    "gpu_jobs": 0,
+    "training_updates": 0,
+    "checkpoint_hashes": 0,
+    "vendor_changes": 0,
+    "archive_changes": 0
+  }
+}

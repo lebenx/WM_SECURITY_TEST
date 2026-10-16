@@ -1,0 +1,38 @@
+{
+  "checkpoint": "/home/xhj/WM_Security/models/tdmpc2/mt30-48M.pt",
+  "reference": "/home/xhj/WM_Security/runs/tdmpc_clean_gate_v0/walker-walk_11_mpc.pt",
+  "reference_sha256": "1efe80159df2ce21f8087d7d7797772ccb1448009087e82d5834c73f8e7d1dc3",
+  "target_task": "walker-walk",
+  "reference_seed": 11,
+  "eval_seed": 12,
+  "update_rng_seed": 31,
+  "updates": 40,
+  "batch_size": 32,
+  "evaluation_steps": 500,
+  "conditions": [
+    "clean",
+    "benign_scale",
+    "max_error_scale"
+  ],
+  "empirical_initial_scales": {
+    "benign_scale": {
+      "value": 4.680334091186523,
+      "path": "/home/xhj/WM_Security/runs/tdmpc_update_dose_v0/benign_300_learning.json",
+      "sha256": "2128d25e454af331259fe33965da1dc1ed2d7b9251c86a85de5deb8c7efd15d6",
+      "source_update": 300
+    },
+    "max_error_scale": {
+      "value": 10.673142433166504,
+      "path": "/home/xhj/WM_Security/runs/tdmpc_update_dose_v0/max_error_300_learning.json",
+      "sha256": "6fd9393a9bb1824bf7c0587b68a597bf355a0672abeb5ef2cdd34cd081b80b9d",
+      "source_update": 300
+    }
+  },
+  "clean_return_gate": 900.0,
+  "absolute_return_drop_gate": 100.0,
+  "continuation_gate": "max_error_scale loses at least100 return versus both clean and benign_scale",
+  "scope": "Researcher do(scale) carryover sensitivity intervention; not a complete attack or native online/shared protocol.",
+  "learning": "Fixed encoder/dynamics/reward/Q/task tensors;40 original update_pi calls on the same real walker-walk sequence, identical sampled batches and RNG, fresh Adam per arm. Native scale update remains active.",
+  "evaluation": "Full original MPC, original horizon/samples/iterations/policy proposals/terminal bootstrap; no planner weakening.",
+  "limitations": "One held-out reset seed. Source scales came from prior full-update adaptation with fresh scale=1, not a persisted online checkpoint. This screen tests causal sensitivity only."
+}

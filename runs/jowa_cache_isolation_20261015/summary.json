@@ -1,0 +1,138 @@
+{
+  "status": "passed_cpu_cache_unit_checks",
+  "scope": "Upstream cache unit semantics and an unchanged AST-isolated step method with synthetic outputs; not model inference or an environment experiment",
+  "source_revision": "8cb02c5e6768a948c566a9012ac8a4fc420c6970",
+  "interpreter": "/home/xhj/WM_Security/.venv-jepa-native/bin/python",
+  "python": "3.11.13",
+  "checks": [
+    {
+      "name": "source_revision_matches",
+      "passed": true
+    },
+    {
+      "name": "positive_control_deliberate_alias_changes_owner_prefix_and_size",
+      "passed": true
+    },
+    {
+      "name": "deepcopy_child_append_and_prefix_write_preserve_root",
+      "passed": true
+    },
+    {
+      "name": "deepcopy_has_distinct_storage",
+      "passed": true
+    },
+    {
+      "name": "deepcopy_updates_child_size_only",
+      "passed": true
+    },
+    {
+      "name": "concate_preserves_prefix_order_and_repetition",
+      "passed": true
+    },
+    {
+      "name": "concate_append_preserves_both_parent_prefixes_and_sizes",
+      "passed": true
+    },
+    {
+      "name": "concate_mutates_only_new_batch_size",
+      "passed": true
+    },
+    {
+      "name": "split_preserves_each_row_and_size",
+      "passed": true
+    },
+    {
+      "name": "split_child_write_preserves_other_siblings",
+      "passed": true
+    },
+    {
+      "name": "split_child_write_preserves_batch_and_root",
+      "passed": true
+    },
+    {
+      "name": "prune_keeps_selected_rows_and_sequence_length",
+      "passed": true
+    },
+    {
+      "name": "pruned_write_preserves_previous_batch_storage",
+      "passed": true
+    },
+    {
+      "name": "pruned_write_preserves_roots_and_surviving_siblings",
+      "passed": true
+    },
+    {
+      "name": "initial_observation_slice_is_a_view",
+      "passed": true
+    },
+    {
+      "name": "observation_cat_rebinding_and_later_write_preserve_real_buffer",
+      "passed": true
+    },
+    {
+      "name": "synthetic_producer_cpu_only",
+      "passed": true
+    },
+    {
+      "name": "real_step_advances_explicit_cache_by_action_plus_observation_tokens",
+      "passed": true
+    },
+    {
+      "name": "real_step_does_not_rebind_or_advance_member_root_cache",
+      "passed": true
+    },
+    {
+      "name": "real_step_rebinds_observation_without_writing_real_buffer",
+      "passed": true
+    },
+    {
+      "name": "real_step_returns_synthetic_generated_observation",
+      "passed": true
+    },
+    {
+      "name": "mcts_member_cache_save_would_save_stale_prefix",
+      "passed": true
+    },
+    {
+      "name": "cuda_never_initialized",
+      "passed": true
+    }
+  ],
+  "model_weights_loaded": 0,
+  "neural_model_forwards": 0,
+  "task_environment_steps": 0,
+  "network_requests": 0,
+  "vendor_files_modified": 0,
+  "torch_version": "2.6.0+cu124",
+  "torch_path": "/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/__init__.py",
+  "numpy_version": "1.26.4",
+  "cache_import": "Direct file import of src/models/kv_caching.py; no models package import",
+  "positive_control": "Deliberately shared reference changes its owner; validates detector sensitivity only, not an upstream aliasing flaw",
+  "step_probe": {
+    "source": "vendor/JOWA/src/envs/world_model_env.py",
+    "line": 191,
+    "body": "Unmodified upstream AST; original torch.no_grad decorator retained",
+    "substitutions": "Synthetic parameter-free tensor producer, action readout and token-copy decoder; real upstream cache implementation",
+    "synthetic_producer_calls": 3,
+    "member_cache_tokens": 2,
+    "explicit_cache_tokens": 5,
+    "saved_like_mcts_tokens": 2
+  },
+  "cuda_initialized": false,
+  "interpretation": "The checked branch-copy operations isolate root/sibling valid prefixes and sizes. Explicit-cache step updates do not update the member cache; current MCTS call-site therefore saves a stale child prefix. No model predictions, task utility, malicious interface or security harm were tested.",
+  "limitations": [
+    "Small synthetic cache tensors; no checkpoint, neural inference, Atari environment, full Agent/MCTS execution or concurrency test.",
+    "Only valid prefixes and sequence sizes are compared; unused torch.empty capacity is not meaningful data.",
+    "The stale-child observation is an implementation/call-site correctness issue, not rejected-branch contamination of real history.",
+    "Observation ownership is checked for the source's view-then-cat-rebinding operations; arbitrary external in-place edits are not an identified native interface.",
+    "Complete Agent execution across two planning calls, RNG behavior and shared neural-model buffers were not tested; these unit results do not establish whole-system isolation."
+  ],
+  "check_count": 23,
+  "launched_script_snapshot": "runs/jowa_cache_isolation_20261015/launched_probe_jowa_cache_isolation.py",
+  "command": ".venv-jepa-native/bin/python scripts/probe_jowa_cache_isolation.py",
+  "post_execution_changes": {
+    "script": "scripts/probe_jowa_cache_isolation.py",
+    "change": "Added optional --out CLI with unchanged default and no-overwrite behavior after the single completed run; no assertion or scientific operation changed. Added explicit untested whole-Agent/RNG/shared-buffer scope.",
+    "rerun": false
+  }
+}

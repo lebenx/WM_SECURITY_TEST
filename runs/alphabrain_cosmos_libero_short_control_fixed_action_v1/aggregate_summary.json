@@ -1,0 +1,91 @@
+{
+  "status": "completed_alphabrain_libero_short_control_fixed_action_aggregate",
+  "suites": [
+    "libero_spatial",
+    "libero_object",
+    "libero_goal"
+  ],
+  "conditions": [
+    "native",
+    "fixed_action_world_cut"
+  ],
+  "cut_mode": "fixed_action_world",
+  "episodes": 6,
+  "steps_per_episode": 32,
+  "results": [
+    {
+      "suite": "libero_spatial",
+      "task": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "condition": "native",
+      "success": false,
+      "environment_steps": 32,
+      "action_norm_mean": 0.2096984013915062
+    },
+    {
+      "suite": "libero_spatial",
+      "task": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+      "condition": "fixed_action_world_cut",
+      "success": false,
+      "environment_steps": 32,
+      "action_norm_mean": 0.477798655629158
+    },
+    {
+      "suite": "libero_object",
+      "task": "pick up the alphabet soup and place it in the basket",
+      "condition": "native",
+      "success": false,
+      "environment_steps": 32,
+      "action_norm_mean": 0.5160815417766571
+    },
+    {
+      "suite": "libero_object",
+      "task": "pick up the alphabet soup and place it in the basket",
+      "condition": "fixed_action_world_cut",
+      "success": false,
+      "environment_steps": 32,
+      "action_norm_mean": 1.1517886519432068
+    },
+    {
+      "suite": "libero_goal",
+      "task": "open the middle drawer of the cabinet",
+      "condition": "native",
+      "success": false,
+      "environment_steps": 32,
+      "action_norm_mean": 0.519721120595932
+    },
+    {
+      "suite": "libero_goal",
+      "task": "open the middle drawer of the cabinet",
+      "condition": "fixed_action_world_cut",
+      "success": false,
+      "environment_steps": 32,
+      "action_norm_mean": 0.3304058313369751
+    }
+  ],
+  "aggregate": {
+    "native": {
+      "successes": 0,
+      "episodes": 3,
+      "success_rate": 0.0,
+      "environment_steps": [
+        32,
+        32,
+        32
+      ],
+      "action_norm_mean_mean": 0.41516702125469845
+    },
+    "fixed_action_world_cut": {
+      "successes": 0,
+      "episodes": 3,
+      "success_rate": 0.0,
+      "environment_steps": [
+        32,
+        32,
+        32
+      ],
+      "action_norm_mean_mean": 0.6533310463031133
+    }
+  },
+  "finding": "Across one initial state in each of LIBERO spatial, object, and goal task families, native and corrected fixed-action world cut both had 0/3 successes at the deliberately short 32-step horizon. This is a corrected control-preservation sanity check, not a task-harm or success-rate claim.",
+  "scope": "Three task families, one task and one initial state per family, two sampler action chunks per condition; corrected world-branch cut; clean task gate and full-horizon evaluation remain separate."
+}

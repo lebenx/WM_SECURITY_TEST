@@ -1,0 +1,246 @@
+{
+  "schema_version": 1,
+  "status": "completed_independent_cpu_saved_data_review",
+  "source_run": "runs/tdmpc_frozen_head_loss_control_20261015",
+  "source_status": "completed",
+  "method": "Independent CPU deserialization of evaluation/recording tensors and JSON logs; no model/environment loading or inference.",
+  "activity": {
+    "new_model_calls": 0,
+    "new_environment_steps": 0,
+    "new_training_updates": 0,
+    "model_api_calls": 0,
+    "cuda_calls": 0
+  },
+  "rows": [
+    {
+      "arm": "consistency_random",
+      "source": "random",
+      "loss": "consistency",
+      "seed": 31,
+      "real_controls": 500,
+      "real_reward_sum_float64": 612.082555025816,
+      "recorded_trace_exact": true,
+      "paired_initial_observation_exact": true,
+      "observation_shape": [
+        501,
+        24
+      ],
+      "action_shape": [
+        500,
+        6
+      ]
+    },
+    {
+      "arm": "consistency_cascade",
+      "source": "cascade",
+      "loss": "consistency",
+      "seed": 31,
+      "real_controls": 500,
+      "real_reward_sum_float64": 495.2163214981556,
+      "recorded_trace_exact": true,
+      "paired_initial_observation_exact": true,
+      "observation_shape": [
+        501,
+        24
+      ],
+      "action_shape": [
+        500,
+        6
+      ]
+    },
+    {
+      "arm": "task_loss_random",
+      "source": "random",
+      "loss": "consistency_reward_value",
+      "seed": 31,
+      "real_controls": 500,
+      "real_reward_sum_float64": 563.6214331835508,
+      "recorded_trace_exact": true,
+      "paired_initial_observation_exact": true,
+      "observation_shape": [
+        501,
+        24
+      ],
+      "action_shape": [
+        500,
+        6
+      ]
+    },
+    {
+      "arm": "task_loss_cascade",
+      "source": "cascade",
+      "loss": "consistency_reward_value",
+      "seed": 31,
+      "real_controls": 500,
+      "real_reward_sum_float64": 543.6217695474625,
+      "recorded_trace_exact": true,
+      "paired_initial_observation_exact": true,
+      "observation_shape": [
+        501,
+        24
+      ],
+      "action_shape": [
+        500,
+        6
+      ]
+    }
+  ],
+  "statistics": {
+    "independent_development_roots": 1,
+    "evaluation_seed": 31,
+    "p_value": null,
+    "confidence_interval": null,
+    "note": "Four arms share one previously used root; not four independent replications."
+  },
+  "historical_reconstruction": {
+    "consistency_random": {
+      "updates": 300,
+      "max_absolute_errors": {
+        "weighted_consistency_loss": 0.0,
+        "grad_norm": 0.0
+      },
+      "all_logged_fields_exact": true,
+      "return_exact": true
+    },
+    "consistency_cascade": {
+      "updates": 300,
+      "max_absolute_errors": {
+        "weighted_consistency_loss": 0.0,
+        "grad_norm": 0.0
+      },
+      "all_logged_fields_exact": true,
+      "return_exact": true
+    }
+  },
+  "recorded_frozen_state_checks": {
+    "consistency_random": {
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_training": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_evaluation": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    },
+    "consistency_cascade": {
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_training": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_evaluation": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    },
+    "task_loss_random": {
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_training": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_evaluation": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    },
+    "task_loss_cascade": {
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_training": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "frozen_after_evaluation": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    }
+  },
+  "recorded_auxiliary_gradient_checks": {
+    "task_loss_random": {
+      "weighted_auxiliary_dynamics_grad_norm": 0.005470302887260914,
+      "reward_prediction_requires_grad": true,
+      "Q_prediction_requires_grad": true,
+      "target_requires_grad": false,
+      "separate_optimizer_steps": 0,
+      "target_rng_restored_updates": 300
+    },
+    "task_loss_cascade": {
+      "weighted_auxiliary_dynamics_grad_norm": 0.02090313285589218,
+      "reward_prediction_requires_grad": true,
+      "Q_prediction_requires_grad": true,
+      "target_requires_grad": false,
+      "separate_optimizer_steps": 0,
+      "target_rng_restored_updates": 300
+    }
+  },
+  "evidence_boundary": "Returns, shapes, paired initial observations, recording equality, historical log comparisons, and decision criteria were independently recomputed. Frozen-state equality and first-batch backward-gradient checks are verified runtime attestations from the reviewed runner; frozen non-dynamics tensors were not saved, so they are not independently rehashed or re-executed here. Historical weights were not saved either.",
+  "batch_bank": {
+    "shape": [
+      300,
+      32
+    ],
+    "valid_indices": true,
+    "seed": 31,
+    "scope": "One saved bank reused by reviewed runner; no CUDA RNG regeneration in this audit."
+  },
+  "metrics": {
+    "G0": 116.86623352766037,
+    "G1": 19.99966363608837,
+    "interaction": 96.866569891572,
+    "gap_reduction_fraction": 0.8288670471154119,
+    "random_return_change": -48.46112184226513,
+    "random_relative_change": -0.07917415950569147,
+    "cascade_return_change": 48.40544804930687,
+    "cascade_relative_change": 0.09774606762327229
+  },
+  "registered_conditions": {
+    "old_gap_positive": {
+      "actual": 116.86623352766037,
+      "threshold": 0,
+      "comparison": ">",
+      "passed": true
+    },
+    "new_gap_at_most_half_old_gap": {
+      "actual": 19.99966363608837,
+      "threshold": 58.433116763830185,
+      "comparison": "<=",
+      "passed": true
+    },
+    "cascade_gain_at_least_half_old_gap": {
+      "actual": 48.40544804930687,
+      "threshold": 58.433116763830185,
+      "comparison": ">=",
+      "passed": false
+    },
+    "random_preserves_at_least_95_percent": {
+      "actual": 563.6214331835508,
+      "threshold": 581.4784272745252,
+      "comparison": ">=",
+      "passed": false
+    }
+  },
+  "selective_recovery_gate_passed": false,
+  "decision": "NO_GO_selective_recovery_claim",
+  "interpretation": "The conditional gap is sensitive to the added native-form reward/value gradients. Gap reduction alone is not selective recovery: source-specific changes and all four frozen criteria determine the result. This is a protocol qualification control, not a new attack, universal defense, proof of non-normality, or independent replication. Closed-loop candidates may differ downstream; no same-state ranking-flip inference.",
+  "artifact_paths": {
+    "source_summary": "runs/tdmpc_frozen_head_loss_control_20261015/summary.json",
+    "launched_protocol": "runs/tdmpc_frozen_head_loss_control_20261015/launched_config.json",
+    "launched_runner": "runs/tdmpc_frozen_head_loss_control_20261015/launched_script.py"
+  },
+  "reproduction": ".venv-native-local/bin/python scripts/analyze_tdmpc_frozen_head_loss_control.py --verify-only"
+}

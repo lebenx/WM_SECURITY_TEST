@@ -1,0 +1,26 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "eval_seed": 41,
+  "source_steps": 300,
+  "victim_steps": 200,
+  "source_updates": 40,
+  "continuation_updates": 20,
+  "learning_seed": 31,
+  "output": "runs/tdmpc_corrective_starvation_gate_v0",
+  "hypothesis": "A legal source contribution can steer the native planner away from corrective states; truthful victim MPC updates then preserve the loss, while exploration-mixed corrective data repairs it.",
+  "arms": [
+    "clean_mpc",
+    "random_source_mpc",
+    "cascade_source_mpc"
+  ],
+  "continuation": [
+    "mpc_only",
+    "mixed_random"
+  ],
+  "gate": "Support-specific persistence requires cascade mpc_only harm >=15% versus clean, mixed_random recovery >=70% of loss, and cascade mpc_only action support lower than mixed_random; otherwise no promotion.",
+  "native_planner_unchanged": true,
+  "api_requests": 0
+}

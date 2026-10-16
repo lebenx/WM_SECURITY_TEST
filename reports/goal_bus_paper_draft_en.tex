@@ -1,0 +1,253 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.78in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\hypersetup{colorlinks=true,linkcolor=blue,urlcolor=blue,citecolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{4pt}
+\newcommand{\cut}{\textsc{fixed-action world cut}}
+\title{Shared Action-Token Causal Buses in Instruction-Conditioned World Models}
+\author{Working research report}
+\date{October 2026}
+\begin{document}
+\maketitle
+
+\begin{center}
+\fbox{\parbox{0.92\linewidth}{\textbf{HISTORICAL PACKAGE --- NOT CURRENT EVIDENCE OR A SUBMISSION.}
+This document retains superseded protocols, target codecs, capability assessments and scientific claims. It is preserved for provenance, not evidence of a validated security mechanism or completed research goal. The current, explicitly incomplete working report is \texttt{world\_model\_decision\_audit\_working.pdf}; authoritative results are indexed in \texttt{research\_progress.html}. The original source and PDF are preserved under \texttt{historical\_goal\_bus\_package\_20261015/}.}}
+\end{center}
+\pagestyle{plain}
+
+\begin{abstract}
+Instruction-conditioned robot world models often place task text, observations, actions, and imagined futures in one spatiotemporal Transformer. We study a legal instruction-switch intervention: the current image, proprioception, executed action chunk, reward, labels, weights, and gradients remain fixed, while the attacker selects another supported task instruction. Our claim is that instruction-conditioned world models can write task text into a shared action-token causal bus, allowing the goal to change a physical future forecast even when direct goal-to-world edges are masked. A matched split of this bus restores goal-invariant world prediction while retaining goal-conditioned policy outputs.
+
+The evidence spans two released carriers. On WorldAgen, 30 real LIBERO-10 windows from 10 episodes show a native goal-swap world relative L2 of 0.2999; cutting the nine native goal-to-input-action edges gives exact world invariance in 30/30 windows while the policy relative L2 remains 0.1760. A same-episode alternate-action control across 30 windows changes the repaired world output in every window (mean relative L2 0.1655, cluster-bootstrap CI [0.1469, 0.1855]). On AlphaBrain CosmosPolicy, an expanded held-out matrix covers 21 fixed image/state/recorded-action windows from seven real episodes. Native goal swaps are nonzero in all 21 windows (mean 0.05317, episode-cluster bootstrap 95\% CI [0.04512, 0.06180]); the corrected \cut{} is exactly invariant in all 21. The same cut preserves action-to-world sensitivity in a three-window alternate-action control (mean 0.08715). A seed-1 held-out repair MSE increase of 0.04899 is conditional: independent noise seeds 2 and 3 preserve exact invariance but produce mean repair deltas of -0.00079 and -0.03820. Thus invariance and action sensitivity are the stable mechanism evidence; forecast-fidelity direction is sampler-dependent.
+An additional WorldAgen activation mediation patch injects recorded-goal action-token states into swapped-goal forwards across 21 windows (seven episodes at frames 30, 60, and 90): layer 4/8 world residuals fall to 0.2062/0.1998 with movement toward the recorded goal in all 21 windows, while policy residuals remain 0.9555/0.9643.
+
+The released WorldAgen and AlphaBrain checkpoints do not pass the LIBERO clean-task gate. We therefore make no task-harm or closed-loop attack claim.
+
+The local resource audit records that the released AlphaBrain 2B inference weights, statistics, T5 embeddings, and official trainer/loader are present, but no compatible \texttt{success\_only}/\texttt{all\_episodes} LIBERO-Cosmos-Policy training dataset is available. The learned shared-context comparator is therefore a bounded forecast control, not a full matched dynamics-head fine-tune.
+\end{abstract}
+
+\section{Threat model and invariant}
+The attacker may select another legal task instruction exposed by the supported multitask interface. The current image, proprioception, recorded executed action chunk, reward, termination label, model weights, training data, and gradients remain fixed. The attacker cannot spoof observations or rewards, change parameters, inject out-of-distribution actions, or alter inference settings.
+
+The first gate is causal rather than adversarial. Let $S_t$ be the complete physical state, $A_{t:t+H}$ the executed action sequence, $G$ the legal task instruction, and $Y^{phys}$ the future physical target. When Goal denotes only task preference, reward, termination, or semantic labeling, the environment has $G\to A_t$, $(S_t,A_{t:t+H})\to Y^{phys}$, and $G\to(R,\mathrm{terminal},Y^{semantic})$. Under a fixed state and $do(A=a)$, the estimand is therefore $Y^{phys}\perp G\mid S_t,A_{t:t+H}$. This is a transition-property claim, not a demand that every goal-conditioned output be identical.
+
+The premise has a strict boundary. With partial observation $O_t$, a legal Goal can be informative about an unobserved component of $S_t$, so $P(Y^{phys}\mid O_t,A,G)$ may depend on Goal without any environment violation. A Goal-dependent reset or scene definition also changes the estimand. The same-scene replay therefore establishes the environment side first; physical-target error, rather than forecast divergence alone, is required before calling a model change harmful. The current 120/120 exact replay passes the environment-side gate, while the mixed-sign target-MSE audit leaves model sufficiency and universal fidelity harm open.
+
+For a fixed physical state and fixed executed action, task text should not change the world model's forecast of the next physical observation unless the task explicitly represents a hidden physical variable. Policy outputs may remain goal-conditioned because different tasks can legitimately require different controls. Our intervention changes only frozen attention paths; it does not update weights. The premise has a falsification boundary: if a legal instruction identifies an unobserved physical-state variable, or if it changes the simulator reset, Goal-invariance is not the correct estimand. The audit fixes simulator state and executed actions, excludes policy, value, reward, termination, and goal-relative semantic channels from the physical target, and records partial observability as an open falsification condition.
+
+Our contributions are threefold. First, we make fixed-state/fixed-action world invariance under a legal task-text switch an explicit, testable security invariant. Second, across WorldAgen and AlphaBrain, native swaps, matched edge cuts, alternate-action controls, and held-out forecasts localize a shared action-token causal bus. Third, we provide a frozen-model repair and boundary audit that separates stable invariance/action-sensitivity evidence, sampler-dependent forecast-fidelity results, and the task-level harm claim that remains unestablished.
+
+\subsection{Estimands and falsification criteria}
+Let the frozen model's world forecast under image, state, executed action, instruction $g$, and path intervention $m$ be $F_\theta(x,s,u,g;m)$, and its policy output be $P_\theta(x,s,u,g;m)$. For two legal instructions $g,g'$, the fixed-physical-input goal effect is
+\[
+\Delta_g^W(m)=d\!\left(F_\theta(x,s,u,g;m),F_\theta(x,s,u,g';m)\right).
+\]
+For two same-episode executed action chunks $u,u'$ under one instruction, action sensitivity is
+\[
+\Delta_u^W(m)=d\!\left(F_\theta(x,s,u,g;m),F_\theta(x,s,u',g;m)\right).
+\]
+The distance $d$ is the relative L2 or latent distance recorded by each carrier; values across carriers are not treated as one common scale.
+
+For a WorldAgen layer-$l$ activation patch, $B\leftarrow A;l$ denotes a swapped-goal $B$ forward in which the recorded-goal $A$ action-token hidden state is injected. We report
+\[
+\rho_l^W=\frac{d(F_{B\leftarrow A;l},F_A)}{d(F_B,F_A)},
+\]
+and the analogous policy residual $\rho_l^P$. A localized pattern with $\rho_l^W<1$ and $\rho_l^P\approx1$ supports mediation through the intermediate action state; it is an internal localization diagnostic, not an attacker capability.
+
+The primary criteria are native $\Delta_g^W>0$, recovery to $\Delta_g^W\approx0$ under the matched fixed-action cut, and retained policy goal sensitivity or alternate-action $\Delta_u^W$. Held-out forecast MSE repair is a secondary fidelity estimand interpreted only at fixed sampler/noise settings. The claim is falsified by native goal invariance, failure of the cut to restore invariance, loss of real action sensitivity after the cut, or absence of localized recovery around the intermediate action state.
+
+\section{Related work and positioning}
+\href{https://arxiv.org/abs/2506.21539}{WorldVLA} unifies action and image generation and uses an attention mask to reduce prior-action error propagation. \href{https://arxiv.org/abs/2601.21998}{Causal World Modeling for Robot Control} uses a shared latent space for vision and action tokens with closed-loop execution. \href{https://arxiv.org/abs/2609.22332}{AffordanceWAM} separates World and Action Experts and couples them through masked joint self-attention, while \href{https://arxiv.org/abs/2605.06222}{When to Trust Imagination} verifies imagined futures against real observations to adapt action chunks. These works motivate structured world-action pathways, but they do not formulate legal task-text changes under fixed physical state and executed action as a security invariant or test a frozen-weight edge split that restores it.
+
+Our claim is broader than a single prompt-leak example but narrower than a universal statement about all world-action models: existing architectures can expose a security-relevant intermediate action-token bus through which legal task text changes a fixed-state/fixed-action world forecast. The direct-world cut, carrier cut, and alternate-action control distinguish this mechanism from direct language conditioning, ordinary action-mask design, and parameter-update interference.
+
+\section{Mechanism hypothesis}
+In WorldAgen's native attention mask, the goal has no direct edge to the world-output token. It can nevertheless write a contextualized input-action token, which can then write the future-world token. We call this two-hop route a shared action-token causal bus. Cutting the nine goal-to-input-action edges removes the route to the world branch while leaving the policy branch goal-sensitive.
+
+AlphaBrain CosmosPolicy provides an independent carrier. A T5-conditioned DiT jointly produces action, future proprioception, future wrist, future primary-image, and value latent slots. We apply a matched row-wise cut: condition text is removed from the action/value carriers and world rows, while world rows retain self-attention to the recorded action carrier. Images, state, recorded actions, condition masks, time steps, and sampler noise are held fixed.
+
+A causal ladder localizes the mediator. Removing only the world rows' direct text cross-attention leaves a nonzero future-world difference (mean 0.04235, 3/3 windows). Removing text from the action/value carriers as well restores exact fixed-action invariance. This is consistent with text first entering an action carrier and then being read by the world branch.
+
+\subsection{Activation mediation by layer}
+To move beyond edge necessity, we run an activation patch across WorldAgen's 24-layer Transformer. On 21 fixed real windows (seven episodes at frames 30, 60, and 90), we first record the action-token hidden states for recorded goal A. We then rerun the identical image, state, executed-action, and swapped-goal B input, replacing only the two chunks' input-action hidden states at one selected layer with A's states. The patch is an internal diagnostic rather than an attacker capability. We report a residual ratio: the patched-B-to-A output distance divided by the native B-to-A distance, separately for world and policy outputs.
+
+At layers 4 and 8, the mean world residual falls to 0.2062 (cluster-bootstrap CI [0.1678, 0.2482]) and 0.1998 ([0.1796, 0.2202]), with movement toward A in all 21 windows, while the policy residual remains 0.9555 and 0.9643. An initial seven-window layer sweep gives residuals 0.8898, 0.4851, 0.6916, and 0.8723 at layers 0, 12, 16, and 20; patching the final layer has no downstream effect. The layer-localized pattern---strong world restoration from a mid-network action-carrier patch with the policy branch remaining B-sensitive---is consistent with mediation through the shared action-token bus and complements the direct edge-cut result. See the aggregate machine-readable result and layer plot.
+
+We next crossed all ten legal LIBERO-Goal texts with the same physical BDDL scene, three complete initial simulator states, and four fixed action sequences. After removing language, goal predicates, and object-of-interest fields, the ten BDDL definitions share the same physical scene. Across 120 fresh replays, initial simulator state, qpos/qvel/contact, and the three-step future observation were exact in 120/120 cases. This is an environment-side conditional-invariance control: the Goal label did not change the true physical future. On the same fixed inputs, native WorldAgen forecast Goal effects averaged 0.4913 MSE for non-Clean goals and were nonzero in every case; the matched Bus-Cut had maximum cross-goal variance $6.2\times10^{-15}$ and retained nonzero action sensitivity. Cell-level target-MSE changes remained mixed-sign (mean +0.0869, range -0.1610 to +0.2006). Averaging uniformly sampled non-Clean legal Goals within each shared initial-state cluster gives positive deltas for all three states (+0.0615/+0.1260/+0.1021), overall +0.0965 with a state-cluster bootstrap interval [+0.0615,+0.1260]. This is descriptive evidence that the Clean Goal is not an unbiased physical-target comparator, not a claim that every Goal worsens every forecast. Although the Bus-Cut restores cross-Goal invariance, its baseline target MSE is +0.0884 above native Clean on average (+0.0530/+0.1425/+0.0696 by state), showing that forecast repair can carry a fidelity cost. See \url{runs/worldagen_same_scene_goal_v1/analysis.json} and \url{figures/worldagen_same_scene_goal_target_delta.svg}.
+We then extended the empty-instruction (\texttt{Goal=""}) prompt-independent diagnostic to all 50 legal initial simulator states and four fixed actions. All 200 physical target replays were exact. Relative to Clean, empty-Goal target MSE was higher in all 50 state clusters, with mean +0.0744 and a state-cluster bootstrap interval [+0.0665,+0.0824]; empty-versus-Clean forecast MSE was 0.2139. This shows that Clean text carries a stable task prior for this checkpoint, but the empty prompt is not a trained goal-free dynamics head and does not make Goal universally beneficial. See \url{runs/worldagen_same_scene_empty_goal_all50_v1/summary.json}, \url{figures/worldagen_empty_goal_comparator.svg}, \url{runs/worldagen_same_scene_empty_goal_v1/summary.json}, and \url{scripts/pilot_worldagen_same_scene_empty_goal.py}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/worldagen_activation_mediation.pdf}
+\caption{Activation mediation on 21 fixed real windows (seven episodes at three time points). Replacing recorded-goal action-token states in a swapped-goal forward strongly reduces the world residual at middle layers while leaving the policy residual near one.}
+\label{fig:activation-mediation}
+\end{figure}
+
+\section{Experimental evidence}
+\begin{table}[h]
+\centering\scriptsize
+\caption{Goal sensitivity and matched causal repair. Repeated windows are clustered by physical episode for confidence intervals.}
+\begin{tabular}{p{0.29\linewidth}p{0.13\linewidth}p{0.27\linewidth}p{0.25\linewidth}}
+\toprule
+Carrier / experiment & Windows & Native world change & Corrected cut / control \\
+\midrule
+WorldAgen real-input swap & 30 / 10 ep. & rel. L2 0.2999 & 30/30 exact; policy 0.17596 \\
+WorldAgen nine legal goal offsets & 270 / 30 physical windows & 0.3247 [0.2860,0.3613] & 270/270 exact; policy 0.2000 [0.1632,0.2401] \\
+AlphaBrain one-step real input & 7 / 7 ep. & 0.03105 & 7/7 exact; policy 0.01629 \\
+AlphaBrain legal offsets 1/5/9 & 9 / 3 ep. & 0.07452 [0.02845,0.10800] & 9/9 exact \\
+AlphaBrain held-out matrix, seed 1 & 21 / 7 ep. & 0.05317 [0.04512,0.06180] & 21/21 exact \\
+Noise seed 2 & 3 & all nonzero; 0.06270 & 3/3 exact; MSE -0.00079 \\
+Noise seed 3 & 3 & all nonzero; 0.12544 & 3/3 exact; MSE -0.03820 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/goal_bus_evidence_summary.pdf}
+\caption{Native goal sensitivity and matched repair across legal goal offsets and task-A groups. The cut world values are exactly zero in the underlying machine-readable results.}
+\label{fig:goal-bus-summary}
+\end{figure}
+
+\subsection{WorldAgen comparator}
+On 30 public LIBERO-10 windows, the native goal swap changes the world output by relative L2 0.2999. The explicit empty-goal comparator is 0.2704. The edge-cut world output is exactly invariant in every window, while the policy remains goal-sensitive. Recorded-goal, swapped-goal, and edge-cut primary forecast MSEs are 1.4228, 1.4960, and 1.4841; the swapped-minus-recorded MSE bootstrap CI is [0.0465, 0.1030].
+
+As a matched specificity control, we delete nine finite goal edges of the same cardinality but target the future-action policy rows rather than the input-action carrier. The policy-only cut leaves the world goal-swap relative L2 at 0.2999 in all 30 windows, whereas the proposed carrier cut has exact-zero world difference; the control rules out edge-count deletion as the explanation.
+
+Crossing the same 30 physical windows with all nine legal task offsets gives 270 paired rows. Native world relative L2 averages 0.3247 with a physical-window cluster-bootstrap CI [0.2860, 0.3613]; all 270 corrected world outputs are exactly invariant, while policy relative L2 averages 0.2000. The swapped-minus-recorded primary MSE delta averages 0.0779 with CI [0.0626, 0.0940]. Repeated offsets expand instruction coverage but are not counted as independent physical worlds.
+
+As a matched physical-action control, we keep the current image, state, and recorded instruction fixed and replace only the six-step action chunk with another real chunk from the same episode. Across 30 windows (10 episodes, frames 30/60/90), native world sensitivity is 0.1623 (episode-cluster CI [0.1426, 0.1839]) and the nine-edge cut remains action-sensitive at 0.1655 (CI [0.1469, 0.1855]); all 30 repaired differences are nonzero. The cut therefore removes instruction dependence without freezing the WorldAgen dynamics response to executed actions.
+
+Leave-one-offset-out stability gives native means between 0.31685 and 0.33044 after omitting any single offset. Across offsets, the smallest native mean is 0.27854 and the largest is 0.38725, while corrected world outputs remain exactly invariant at every offset. The effect is therefore not driven by one semantic distance.
+
+Grouping the same 30 windows by recorded legal task text gives six task groups (3--9 windows each). Every group has nonzero native world sensitivity and exact-zero cut output; group means range from 0.0972 to 0.5792. This is descriptive task coverage, with repeated time points interpreted within their physical episodes.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.98\linewidth]{figures/worldagen_action_control.pdf}
+\caption{WorldAgen action-preservation and task coverage. Replacing a real same-episode action chunk leaves nonzero world sensitivity after the goal-bus cut in all 30 windows; the six legal task groups likewise remain native-sensitive while the cut is exactly invariant.}
+\label{fig:worldagen-action-control}
+\end{figure}
+
+\subsection{Fixed-action AlphaBrain replication}
+The public compatible Wan2.1 VAE encodes real LIBERO images into the Cosmos latent shape $[1,16,9,28,28]$. Every probe uses the recorded 16-step executed action chunk rather than a zero-action placeholder. Native future-world goal swaps are nonzero in all seven one-step windows and all nine legal-offset rows. The corrected action-bus cut is exactly invariant in every corresponding window, while action/value policy slots remain goal-sensitive.
+
+The expanded seed-1 matrix uses three time points in each of seven real episodes. Native world differences are nonzero in all 21 windows and the corrected cut is exactly invariant in all 21. In the separate alternate-action control, replacing the recorded action chunk with another same-episode recorded chunk changes the repaired world output in all three windows (mean 0.08715), so the cut does not erase physical action conditioning.
+
+On the same three episodes at frame 30, the descriptive legal goal-swap world effect averages 0.07137 versus 0.08715 for the repaired alternate-action effect, a goal-to-action scale ratio of 0.819. This is an effect-size comparison rather than a three-episode significance test; it shows that the goal effect is on the scale of a real action intervention, not merely numerically nonzero.
+
+\subsection{Forecast fidelity and sampler dependence}
+For each matrix window, the observed frame 16 steps later is encoded as a held-out target; the target is never supplied to the denoiser. Seed 1 gives a mean repair MSE delta of +0.04899 with an episode-cluster CI [0.03321, 0.06798], positive in all seven episode means. Repeating fixed-action probes at noise seed 2 and seed 3 preserves exact repaired invariance, but gives negative repair deltas of -0.00079 and -0.03820. We therefore do not claim that repair universally increases forecast error.
+
+AlphaBrain has no precomputed empty-instruction embedding. Zero T5 context is only a prompt-independent diagnostic, not a trained goal-free dynamics baseline. WorldAgen's empty-goal condition is the formal no-goal comparator.
+
+Task-stratifying the matrix by task-A text gives five legal task groups. After adding the three seed-3 repeat windows, every group remains nonzero under the native goal swap and exactly invariant under the corrected cut; group native means are 0.04878, 0.04118, 0.04450, 0.12809, and 0.06945. This is descriptive core-task coverage, with repeated time points interpreted within physical episodes rather than as independent worlds.
+
+\subsection{A bounded learned goal-free-context comparator}
+To separate a zero-context diagnostic from a trainable comparator, we froze the released 2B DiT and VAE and optimized only one shared $512\times1024$ instruction-free context tensor. The initial short comparator used three frame-30 windows from episodes 3--5 for training and the disjoint episodes 6--9 for evaluation. Two independent seeds (17 and 23), each using eight steps at learning rate 0.001, reduced one-step future-world MSE from 0.58519 for zero context to 0.46215 and 0.46219 on the four held-out windows. As a short multi-timepoint check, we kept the same disjoint episode split and optimization budget but used frames 30, 60, and 90: nine training windows and twelve held-out windows. Seed 29 reduced held-out MSE from 0.60197 to 0.47852; the four episode-cluster delta means give a bootstrap 95\% CI of [-0.18414, -0.01299]. The same budget at learning rate 0.05 increased the held-out MSE to 1.47141, so this low-capacity comparator is optimization-sensitive.
+
+This is evidence that a shared learned context can serve as a goal-free forecast comparator. It is not a retrained dynamics head, policy fine-tuning, environment rollout, or task-success result; the full matched goal-free dynamics baseline remains open.
+
+The resource audit makes this limitation reproducible: the inference artifacts and official trainer/loader are present, but the compatible local trajectory layout is absent. We therefore do not describe the learned context as a completed fine-tuned dynamics head.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.92\linewidth]{figures/goal_free_context_baseline.pdf}
+\caption{Bounded goal-free-context comparator. The released DiT and VAE remain frozen; bars show held-out one-step MSE only.}
+\label{fig:goal-free-context}
+\end{figure}
+
+\subsection{Baseline ladder}
+\begin{table}[h]
+\centering\small
+\caption{Baseline responsibilities.}
+\begin{tabular}{p{0.30\linewidth}p{0.26\linewidth}p{0.34\linewidth}}
+\toprule
+Baseline / intervention & Scope & Interpretation \\
+\midrule
+Native mask & WorldAgen, 30 windows & exposes native goal leakage \\
+Empty-goal & WorldAgen, same windows & explicit no-goal comparator \\
+Matched policy-only edge cut & WorldAgen, 30 windows & same 9-edge budget leaves world rel. L2 0.2999; 30/30 nonzero \\
+Same-episode alternate-action control & WorldAgen, 30 windows & cut action-world rel. L2 0.1655; all nonzero \\
+World-text-only cut & AlphaBrain, 3 windows & direct world text removal is insufficient \\
+Fixed-action world cut & AlphaBrain, 21 windows & main causal repair \\
+Alternate-action control & AlphaBrain, 3 windows & verifies retained physical action sensitivity \\
+Independent sampler seeds & AlphaBrain, 6 windows & separates invariance from sampler-dependent fidelity \\
+Learned goal-free context & AlphaBrain, 3 train / 4 held-out episodes, seeds 17/23 & trainable one-step no-goal comparator; not a full dynamics head \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Counterfactual action ranking and real consequences}
+The feasibility audit is negative for native decision use: WorldAgen emits its policy action before calling the World Forecast, and AlphaBrain decodes its action latent directly. We therefore evaluate decision consequences only with an explicitly separate forecast-driven planner. The planner freezes eight recorded LIBERO action trajectories per task, scores them from the WorldAgen primary-view forecast under the original clean goal, and ignores the policy head. Candidate actions, scoring text, checkpoint, initial state, and replay horizon are fixed across Clean, Goal-Swap, Goal-Swap + Bus-Cut, and matched Control-Cut. Selected trajectories are executed in fresh LIBERO environments; utility is read from simulator EEF state after 30 steps.
+
+As a cross-carrier feasibility gate, one AlphaBrain forecast-driven planner pilot fixed task 0/seed 17, eight action candidates, the initial state, and 30-step LIBERO replay. A CLIP score on the future-primary forecast selected candidate 4 under Clean (regret 0.0621 m) and candidate 6 under Goal-Swap (regret 0.4228 m). The fixed-action Bus-Cut made Clean and Swap scores exactly identical but selected candidate 6 in both cases, retaining regret 0.4228 m. This is a single-task negative repair result and feasibility gate only; it does not establish cross-carrier task harm or universal decision repair.
+
+We then extended the same protocol to tasks 0/2/4 with seed 17, eight frozen candidates per task, a 16-step forecast, and 30-step replay. Goal-Swap changed the selected action in 2/3 tasks. Mean regret was 0.1836 m for Clean native, 0.2251 m for Goal-Swap, and 0.2796 m for fixed-action Bus-Cut; Clean and Swap cut scores were exactly identical task by task. The direction was task-dependent: on task 4, Goal-Swap reduced regret from 0.3765 m to 0.1402 m. Bus-Cut recovered the Clean action in 1/3 tasks. This supports cross-carrier planner reachability, not universal utility harm, native-policy damage, or task-success loss. See \url{runs/alphabrain_forecast_planner_multitask_v1/summary.json}.
+
+To avoid treating the three-task pilot as the main result, we extended the same protocol to the six tasks used by the WorldAgen sweep (0/2/4/6/7/9), still with seed 17 and the fixed candidate, scorer, and replay protocol. Goal-Swap changed the selected action in 5/6 tasks. Mean regret was 0.1646 m for Clean, 0.1911 m for Goal-Swap, and 0.2433 m for Bus-Cut; tasks 4 and 6 improved under the swap while tasks 0, 7, and 9 worsened, giving a net difference of only +0.0265 m. Bus-Cut recovered 2/6 Clean actions and its Clean/Swap scores remained exactly identical. This strengthens cross-carrier planner reachability while directly ruling out universal utility harm and complete decision repair. See \url{runs/alphabrain_forecast_planner_six_task_v1/summary.json}.
+We then replayed this six-task planner at three explicit LIBERO initial states (\texttt{init\_index}=0/1/2), using the seed only for RNG and selecting the physical initial state explicitly, giving 18 task-state rows. Goal-Swap changed 15/18 selected actions. Mean Clean, Swap, and Bus-Cut regret was 0.1511/0.1885/0.2607 m, with Swap minus Clean +0.0374 m. The initial-state-cluster bootstrap interval was [+0.0098,+0.0758] m, whereas the task-cluster interval was [-0.1086,+0.1931] m. The effect is descriptive across states, not a universal cross-task harm result. Bus-Cut recovered 3/18 Clean actions; Clean and Swap cut scores were exactly identical, so it cuts the Goal ranking path while introducing a new planner baseline. This supports cross-state planner reachability without establishing a native-policy attack or universal repair. See \url{runs/alphabrain_forecast_planner_replicates_v1/statistics.json} and \url{scripts/aggregate_alphabrain_forecast_planner_replicates.py}.
+
+The aligned protocol scores only the first primary-view future chunk and executes the first three actions before the 30-step replay. Across six LIBERO tasks (0, 2, 4, 6, 7, 9), three seeds, and all nine legal Goal offsets, this gives 18 task-seed pairs and 162 counterfactuals. The calibrated \texttt{reference\_scalar} planner has Clean regret 0.0758 m versus a uniform-random baseline of 0.1345 m. The mean EEF delta is negative for every offset, ranging from -0.0193 to -0.1330 m; offset 5 gives -0.0723 m EEF delta and 0.1481 m regret, reproducing the fixed-offset six-task result. Pairwise Action Ranking Flip Rate ranges from 0.448 to 0.556 and selected-action change from 0.722 to 1.000. Some individual tasks have positive deltas, so the cross-task mean is not a universal single-task harm claim. Sparse task success is not used as an endpoint.
+
+Bus-Cut reduces regret to 0.0373 m and selects the replay-best candidate in 12/18 task-seed pairs, but recovers the Clean selected action in 0/18 cases. Matched Control-Cut is score-identical to Goal-Swap. A forecast-error mediation diagnostic over the same 162 records gives pooled Spearman correlations of only 0.099 with ranking flip, -0.080 with EEF delta, and -0.080 with regret, with signs changing across offsets. Forecast Error therefore is not a sufficient proxy for decision harm. A fixed Clean-anchor/Bus-Cut rank interpolation exposes the repair tradeoff: Clean weight 0.75 recovers 0.778 of Clean actions at regret 0.0483 m, while weight 0.25 lowers regret to 0.0291 m but recovers only 0.056. These weights were fixed before replay utility was read; the path requires a Clean reference branch and is a planner-level diagnostic. These results establish planner-mediated decision perturbation, not native-policy attack or complete repair. See \url{runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/statistics.json}, \url{runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/mediation_statistics.json}, \url{runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/decision_repair_path.json}, and \url{figures/worldagen_decision_repair_path.pdf}.
+Before treating this divergence as a security event, we audited the conditional physical target. For every frozen candidate, the aligned sweep stores one real primary-view patch after the first three executed actions from the same initial simulator state; Clean, Goal-Swap, Bus-Cut, and Control-Cut only change the forecast branch. Across 18 task-seed pairs and 162 counterfactuals, recomputing target MSE reproduced the stored values with maximum absolute error 0. Goal-Swap latent divergence averaged 0.4603, while its physical-target MSE difference from Clean was mixed-sign: overall mean -0.0121 with task-cluster bootstrap CI [-0.0434, 0.0181]; offset 2 was -0.0581 and offset 3 was +0.0340. Spearman correlation between model-space divergence and physical-error change was only 0.117 (p=0.139). Control-Cut matched the corresponding Goal-Swap target MSE exactly, while Bus-Cut differed from Clean by -0.0144. This establishes the matched-target invariance audit, but not a universal physical-error increase: Goal changes the forecast under a fixed physical future, while the direction of target error depends on the offset. The target is a decoded primary-view patch after three actions, not a complete latent-state or task-success target. A post-hoc attempt to extract qpos/qvel/contact targets was invalidated: matching the reconstructed initial simulator hash did not reproduce stored EEF replays (maximum mismatch 0.3046 m) because controller/global RNG state was not persisted, so no reconstructed state target enters the analysis. Within the original ranking process, the repeat-3 fresh-environment audit has zero span for all recorded EEF/progress metrics; this establishes in-process determinism only. See \url{runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/goal_invariance_physical_audit.json}.
+To extend the physical target beyond pixels, we added an AlphaBrain CosmosPolicy future-output slot audit. We fixed 21 real image/state/recorded-action windows (seven episodes), the same observed +16-frame target, and the same sampler noise, then compared a legal Goal swap with the matched fixed-action world cut. Native Goal-Swap changed the future-proprio slot in 21/21 windows, with mean absolute latent delta 0.0607 and episode-cluster bootstrap CI [0.0376, 0.0970]; future-wrist and future-primary deltas were 0.0521 [0.0401, 0.0632] and 0.0462 [0.0303, 0.0687]. The fixed-action cut was exactly zero for all three slots in all 21 windows. Against the observed +16-frame target, however, the future-proprio MSE difference was +0.0084 with CI [-0.0139, 0.0325], future-wrist was +0.0248 with CI [0.0091, 0.0394], and the primary-image interval crossed zero. This directly strengthens the claim that Goal changes a future physical-output slot, while preserving the distinction between changing a forecast and making its physical error universally worse. Extending the legal offset to 1, 5, and 9 gives 63 windows: the future-proprio absolute Goal effect is nonzero in 21/21 windows at each offset, with means 0.0512, 0.0607, and 0.0728; the fixed-action cut remains exactly zero in all three slots across all 63 windows. See \url{runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/physical_slot_audit.json} and \url{runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/physical_slot_offsets.json}.
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.96\linewidth]{figures/alphabrain_physical_slot_offsets.pdf}
+\caption{AlphaBrain fixed-state/fixed-action Goal intervention across legal offsets 1, 5, and 9 (63 windows). Native Goal-Swap changes future proprio, wrist, and primary output slots; the fixed-action world cut is exactly invariant. Target-error changes are shown separately and can have mixed signs.}
+\label{fig:alphabrain-physical-slots}
+\end{figure}
+As a small semantic-surface control, we fixed image, state, recorded actions, masks, and RNG on three real windows while editing only the same task text's surface form. Double spaces and lowercasing were exactly invariant in all 3/3 native and Bus-Cut windows. Appending a period changed the native world output by relative L2 0.00259 on average (maximum 0.00279), while Bus-Cut remained exactly invariant in 3/3 windows. This is a text-surface fragility control, not physical error, attack success, or a paraphrase benchmark. See \url{runs/worldagen_semantic_goal_invariance_v0/summary.json}.
+We then added a meaning-preserving paraphrase control. On the same three real windows, each task received two hand-written paraphrases while image, state, executed action, RNG, and attention mask were fixed. Native world relative L2 was nonzero for all six paraphrase pairs (mean 0.00844, maximum 0.01131); Bus-Cut was exactly invariant for all six, while policy outputs remained text-sensitive. The effect is much smaller than the legal Goal-Swap effect, so this control shows that the bus is not responding only to punctuation or whitespace, without turning paraphrase sensitivity into physical-harm evidence. See \url{runs/worldagen_semantic_paraphrase_v0/summary.json} and \url{scripts/pilot_worldagen_semantic_paraphrase_control.py}.
+To repair the state/contact-target reproducibility gap, we ran an isolated RNG-persisted audit without rerunning model inference. Across all six tasks (0, 2, 4, 6, 7, 9) and seeds 17, 31, and 37, each of 144 frozen candidates was replayed twice in a fresh environment after restoring Python/NumPy/Torch/CUDA RNG states. Initial simulator hashes, qpos, qvel, contact counts, three-step image hashes, EEF progress, and true progress matched exactly for 144/144 candidates (288 replay episodes). This validates the state-target persistence protocol across the full task-seed set, but adds no Goal effect or attack estimate. See \url{runs/worldagen_reproducible_state_target_all6_replicates_v1/statistics.json}.
+As a forecast-only attacker check, we let the attacker choose one legal offset using only model score vectors, selecting the largest pairwise ranking flip before any replay utility is read. This gives EEF delta -0.0995 m and regret 0.1753 m, compared with -0.0717 m and 0.1475 m for the paired uniform expectation; the task-cluster bootstrap CI for the regret increase is [-0.0230, 0.0786] m. Rank-L1 and z-score-L1 divergence selectors improve on the uniform expectation. Maximizing forecast/ranking divergence is therefore not a reliable attack objective, which keeps Forecast Divergence separate from attack success. See \url{runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/forecast_only_attacker.json}.
+Selecting offsets directly from saved WorldAgen \texttt{worlds\_step3} tensors gives the same boundary. The largest mean candidate latent MSE selector has regret 0.1711 m, a 0.0235 m increase over the uniform offset expectation with task-cluster CI [-0.0558, 0.1111] m; the largest candidate MSE selector has a 0.0262 m increase with CI [-0.0533, 0.1132] m. Model-space Forecast Divergence is directionally compatible with worse consequences but is not a reliable attack law or a physical error metric. See \url{runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/latent_divergence_attacker.json}.
+
+We also ran a leave-one-seed-out transfer test. For each held-out seed, one legal offset was chosen from forecast divergence features on the other two seeds and then applied to all six held-out tasks; replay utility was read only after this choice. Latent-MSE and raw-z-L1 selectors chose offset 9 in all three folds and gave regret 0.1138 m versus 0.1475 m for the paired uniform expectation (difference -0.0338 m, task-cluster CI [-0.1053, 0.0534] m). Pairwise-flip chose 7/9/7 (difference -0.0245 m, CI [-0.0985, 0.0446] m), and rank-L1 chose 2/9/9 (difference -0.0428 m, CI [-0.1002, 0.0246] m). Divergence-based offset selection therefore did not transfer as a stronger attack across seeds. See \url{runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/oos_attacker.json}.
+
+\section{Core-task boundary}
+We ran frozen control pilots on LIBERO spatial, object, and goal task families. WorldAgen native and edge-cut controls both obtain 0/3 successes at the official 600-step pilot; AlphaBrain native and corrected fixed-action controls both obtain 0/3 at the short 32-step pilot. A separate AlphaBrain spatial run to 608 steps is also 0/1 for both conditions. These pilots are negative controls for immediate control collapse, not task success-rate or task-harm evidence. A task-level conclusion requires a clean task-capable checkpoint and a matched trained goal-free dynamics head.
+
+We then reran the same spatial initial state with the official CosmosPolicy JPEG/center-crop preprocessing, proprio min-max normalization, and five-step sampler. Native and fixed-action cut again obtain 0/1 at 608 steps, with mean action norms 0.25785 and 0.29310. Because the checkpoint configuration declares \texttt{dataset\_mix: libero\_goal}, we also evaluated matching Goal-suite tasks 0--2 for 304 steps each with the same official pipeline; native and fixed-action cut obtain 0/3 for both conditions, with mean action norms 0.36723 and 0.32465. The clean-task failure is therefore not explained by the earlier local preprocessing path or only by evaluating the Spatial suite; it remains a capability boundary rather than task-harm evidence.
+
+\section{Limitations and conclusion}
+The evidence supports a cross-carrier prediction-level mechanism: legal task text can reach a physical future forecast through a shared action-token bus even when direct goal-to-world edges are masked; splitting the bus restores fixed-action world invariance while retaining policy and action sensitivity. The direction of any forecast-fidelity cost depends on sampler noise.
+
+An additional sampled AlphaBrain activation patch on three windows did not reproduce WorldAgen's strong layer-localized return: action/value-carrier patches gave world residuals of roughly 0.81--1.06, and the sampler rewrites the action slot as a fixed input, so policy retention cannot be inferred directly from that output. We therefore do not count this diagnostic as positive mediation evidence; the AlphaBrain mechanism claim remains limited to the row-wise causal ladder, fixed-action cut, and alternate-action control.
+
+The evidence does not establish that every instruction-conditioned world model has this vulnerability, that repair always degrades accuracy, or that task performance is harmed. Current experiments use two released carriers, compatible public VAE encoding for AlphaBrain, frozen weights, and LIBERO trajectory windows; they do not yet include a trained goal-free AlphaBrain head or a successful clean closed-loop baseline.
+
+We inspected the other local checkpoints before selecting the paper scope. A2World has an action-conditioning probe but no comparable legal task-instruction goal interface; FACT targets RoboTwin rather than the current LIBERO threat model; and TD-MPC2 does not expose the proposed goal-to-world action-token bus. They are therefore not presented as artificial third-carrier replications.
+
+\section*{Reproduction}
+\begin{itemize}[leftmargin=*]
+\item Chinese focused draft: \url{reports/goal_bus_paper_draft_cn.md}
+\item Reproduction manifest: \url{reports/goal_bus_reproduction_manifest_cn.md}
+\item Submission package README: \url{reports/README_goal_bus_submission.md}
+\item WorldAgen aggregate: \url{runs/worldagen_goal_bus_replicate_v2/summary.json}
+\item WorldAgen offset stability: \url{runs/worldagen_goal_bus_offset_stability_v0/summary.json}
+\item AlphaBrain seed-1 matrix: \url{runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v0/aggregate.json}
+\item AlphaBrain seed-2 replicate: \url{runs/alphabrain_cosmos_policy_real_input_sampler_noise2_v0/summary.json}
+\item AlphaBrain seed-3 matrix: \url{runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_seed3_v0/aggregate.json}
+\item AlphaBrain task-stratified matrix: \url{runs/alphabrain_cosmos_policy_real_input_sampler_forecast_by_task_v0/aggregate.json}
+\item Bounded learned goal-free context baseline: \url{runs/alphabrain_goal_free_context_v1/summary.json}
+\item Learned context multi-timepoint check: \url{runs/alphabrain_goal_free_context_v3/summary.json}
+\item AlphaBrain training-resource audit: \url{runs/alphabrain_training_resource_audit_v0/summary.json}
+\item AlphaBrain matching LIBERO-Goal tasks 0--2 aggregate: \url{runs/alphabrain_cosmos_libero_goal_control_v0/aggregate_summary.json}
+\item Learned context seed-23 replicate: \url{runs/alphabrain_goal_free_context_v2/summary.json}
+\item Corrected official-preprocess 608-step pilot: \url{runs/alphabrain_cosmos_libero_full_control_v2/spatial_600.json}
+\item Main aggregate: \url{runs/goal_bus_main_results_v0/summary.json}
+\end{itemize}
+\end{document}

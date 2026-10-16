@@ -1,0 +1,90 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "The pilot field contains 6 soil plots for testing: uuids 41671, 40815, 36757, 56968, 24902, 1787, each with a randomly chosen nutrient.",
+      "step": 2
+    },
+    {
+      "measurement": "Soil nutrient meter (uuid 14424) readings: soil 41671 = thorium high; soil 36757 = titanium high; soil 40815 = lithium high; soil 56968 = barium high; none of these plots showed potassium or any second nutrient high.",
+      "step": 9
+    },
+    {
+      "measurement": "A pink mushroom (uuid 776) is located on soil 36757; no mushroom was observed at soils 41671, 40815, or 56968.",
+      "step": 9
+    },
+    {
+      "measurement": "Soils 24902 and 1787 have not yet been tested. Soil 24902 is at (15,15) and is currently accessible to the agent; soil 1787 has no nutrient or mushroom observation recorded.",
+      "step": 11
+    },
+    {
+      "hypothesis": "IF the soil nutrient meter (uuid 14424) is used on a soil plot, THEN it reports which candidate nutrient is high in that plot.",
+      "status": "confirmed",
+      "step": 9,
+      "supporting_evidence": "It identified thorium in 41671, titanium in 36757, lithium in 40815, and barium in 56968."
+    },
+    {
+      "hypothesis": "IF a soil plot contains high titanium, THEN pink mushrooms can grow in that soil.",
+      "status": "pending",
+      "step": 9,
+      "supporting_evidence": "Soil 36757 is the only titanium-high plot tested and has mushroom 776; thorium-, lithium-, and barium-high plots had no mushroom. More titanium plots are needed to confirm."
+    },
+    {
+      "hypothesis": "IF a soil plot contains high thorium, THEN a pink mushroom can grow in that soil.",
+      "status": "rejected",
+      "step": 5,
+      "supporting_evidence": "Soil 41671 measured high thorium but had no pink mushroom."
+    },
+    {
+      "hypothesis": "IF a soil plot contains high lithium, THEN a pink mushroom can grow in that soil.",
+      "status": "rejected",
+      "step": 7,
+      "supporting_evidence": "Soil 40815 measured high lithium but had no pink mushroom."
+    },
+    {
+      "hypothesis": "IF a soil plot contains high barium, THEN a pink mushroom can grow in that soil.",
+      "status": "rejected",
+      "step": 9,
+      "supporting_evidence": "Soil 56968 measured high barium but had no pink mushroom."
+    },
+    {
+      "measurement": "Soil 24902 (uuid 24902) measured with soil nutrient meter (uuid 14424): potassium is high; titanium, barium, lithium, and thorium are zero. No pink mushroom was observed at that plot.",
+      "step": 13
+    },
+    {
+      "measurement": "Soil 1787 (uuid 1787) has a pink mushroom (uuid 18573) at its location. Its nutrient content has not yet been measured with the soil nutrient meter.",
+      "step": 13
+    },
+    {
+      "hypothesis": "IF a soil plot contains high potassium, THEN a pink mushroom can grow in that soil.",
+      "status": "rejected",
+      "step": 13,
+      "supporting_evidence": "Soil 24902 measured high potassium but had no pink mushroom."
+    },
+    {
+      "hypothesis": "IF soil 1787 (uuid 1787) is measured with the soil nutrient meter (uuid 14424), THEN it will report titanium high.",
+      "status": "pending",
+      "step": 13,
+      "supporting_evidence": "The five measured plots (41671, 36757, 40815, 56968, 24902) contain thorium, titanium, lithium, barium, and potassium, covering all five candidate nutrients. Soil 1787 has pink mushroom 18573, like titanium-high soil 36757, suggesting the growth nutrient is titanium and soil 1787 is the duplicate titanium plot."
+    },
+    {
+      "measurement": "Soil 1787 (uuid 1787) measured with soil nutrient meter (uuid 14424): titanium is high; potassium, barium, lithium, and thorium are zero.",
+      "step": 14
+    },
+    {
+      "measurement": "Pink mushroom (uuid 18573) is located at/on soil 1787 (uuid 1787), which is titanium-high.",
+      "step": 14
+    },
+    {
+      "hypothesis": "IF a soil plot contains high titanium, THEN pink mushrooms can grow in that soil.",
+      "status": "confirmed",
+      "step": 14,
+      "supporting_evidence": "Both titanium-high soil plots, 36757 and 1787, have pink mushrooms (776 and 18573 respectively); thorium-high (41671), lithium-high (40815), barium-high (56968), and potassium-high (24902) plots had no pink mushroom. With all six plots measured and all five candidate nutrients represented, titanium is the only nutrient uniquely associated with mushroom growth."
+    },
+    {
+      "hypothesis": "IF soil 1787 (uuid 1787) is measured with the soil nutrient meter (uuid 14424), THEN it will report titanium high.",
+      "status": "confirmed",
+      "step": 14,
+      "supporting_evidence": "The measurement returned titanium high. This matched the prediction because soil 1787 is the duplicate plot among the five candidate nutrients, and it has a pink mushroom like titanium-high soil 36757."
+    }
+  ]
+}

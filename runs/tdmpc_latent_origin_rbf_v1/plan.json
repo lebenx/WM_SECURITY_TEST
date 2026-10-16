@@ -1,0 +1,15 @@
+{
+  "training": "v0 train seed12 only",
+  "development": [
+    "v0 dev seed13",
+    "v0 previously tested seed17, now explicitly development"
+  ],
+  "method": "StandardScaler + RBF SVC(C=1,gamma=scale); no tuning",
+  "threshold": "99.5 percentile pooled development real-state scores, higher order statistic",
+  "development_gate": "Both development episodes real FPR<=1% and TPR>=80% at depths1,2",
+  "if_passes": "Collect untouched native walker-walk seeds18,19; require full native returns>=900 before scoring frozen detector; no threshold or classifier changes.",
+  "scope": "Necessary-condition origin classifier, not world-model poisoning or new method.",
+  "world_model_training_updates": 0,
+  "api_requests": 0,
+  "gpu_work": false
+}

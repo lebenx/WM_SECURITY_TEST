@@ -1,0 +1,16 @@
+{
+  "verdict": "REJECT",
+  "novelty_score": 5,
+  "distinctness": "Partially distinct framing via Lie brackets/commutator geometry, but mechanically collapses into sequential evasion of a myopic martingale/residual detector. It exploits the classical vulnerability of markovian/one-step anomaly detectors against multi-step integrated drift rather than exposing an intrinsic failure mode unique to world-model rollouts.",
+  "fatal_flaws": [
+    "The core dynamic—that alternating zero-mean perturbations can cancel in first-order observation/residual space while rectifying along nonlinear state trajectories (via the Lie bracket [f_A, f_B])—is well-established non-holonomic control and vibrational stabilization theory applied as standard multi-step adversarial evasion.",
+    "Trivial threat model mismatch: Real safety architectures for world models audit latent divergence/uncertainty or cumulative trajectory energy, not isolated per-step observation reconstruction thresholds. Evading an artificially weak per-step L2 residual detector is a strawman.",
+    "Compounding vs. Laundering conflation: The paper cannot cleanly separate 'residual laundering' from standard open-loop error integration (horizon compounding) unless the perturbation sequence is explicitly shown to fail in open-loop but succeed strictly through closed-loop recurrent state feedback."
+  ],
+  "decisive_pilot": {
+    "setup": "Use OpenWAM or an isolated RSSM (DreamerV3 latent space). Construct a 10-step sequence with budget ||delta_t||_p <= epsilon. Run projected gradient descent (PGD) optimizing for maximal latent drift ||z_T - z_0|| subject to: (1) Per-step residual monitor score R(x_t + delta_t) < tau; (2) Zero-sum observation constraint sum(delta_t) = 0.",
+    "falsifier": "If a matched-norm random walk or standard sign-alternating square wave achieves >=80% of the directed latent drift attained by the commutator-optimized attack, the phenomenon is driven by generic rollout compounding under noise rather than coherent nonlinear residual laundering."
+  },
+  "repair_assessment": "The proposed 'commutator audit' repair is mathematically brittle and computationally intractable for high-dimensional neural vector fields. Second-order vector field Lie derivatives require Hessian-vector products across recurrent rollouts, introducing a 5-10x compute overhead that breaks online deployment. Conversely, simple cumulative CUSUM or trajectory-level latent Wasserstein monitoring trivialize and nullify the attack without needing commutator math.",
+  "stronger_alternative": "Counterfactual Horizon Forking: Perturbations designed to keep the nominal world-model rollout identical to the clean trajectory (zero latent displacement under the main branch) while selectively forcing all counterfactual branch evaluations (e.g., CEM policy evaluations or imagined hazard rollouts) to hallucinate catastrophic costs, paralyzing the planner into deadlocks without ever triggering trajectory-level or per-step monitors."
+}

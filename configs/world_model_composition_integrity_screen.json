@@ -1,0 +1,20 @@
+{
+  "id": "H_compositional_integrity",
+  "candidate_claim": "Legal source experience can preserve local one-step prediction while selectively changing how action-conditioned transition operators compose on unexecuted counterfactual sequences.",
+  "evidence": {
+    "heldout_cascade": "Official TD-MPC2 mt30-48M walker-run cascade loses 19.1/19.3 percent versus random and 19.3/18.2 percent versus same-action-multiset shuffled controls, with lower one-step error; cup-catch and walker-run-backwards do not replicate.",
+    "commutator": "The native two-step latent commutator does not increase selectively under cascade: walker-run 0.762 cascade versus 0.862 random, cup-catch 0.497 versus 0.505, walker-walk 0.817 versus 0.914.",
+    "worldagen": "Released WorldAgen weights show indirect goal-to-input-action-to-world dependence after the direct goal-to-world path is masked, but this is an architecture audit with no attack-specific task loss."
+  },
+  "distinguishing_invariant": "A composition defect must exceed the Lipschitz-weighted accumulation of local one-step errors on unobserved action permutations while matching observed-support predictions.",
+  "novelty_review": {
+    "source": "runs/gemini_compositional_integrity_review_20261010T0000Z/review.txt",
+    "score": 3,
+    "decision": "reject",
+    "reason": "The umbrella combines ordinary multi-step exposure/compounding error, policy-conditioned input leakage, and a structural noncommutativity claim that the commutator diagnostic does not support."
+  },
+  "status": "rejected_vague_umbrella_and_mechanism_falsified",
+  "gpu_work": true,
+  "api_requests": 1,
+  "scope": "Held-out TD-MPC2 task-family boundary and mechanism diagnostic; no scale-up."
+}

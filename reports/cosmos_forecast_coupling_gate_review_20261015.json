@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "independent_source_and_result_review_passed_bounded_negative",
+  "experiment": "runs/cosmos_forecast_coupling_gate_20261015/summary.json",
+  "decision": "reports/cosmos_forecast_coupling_gate_decision_20261015.json",
+  "protocol": "configs/cosmos_forecast_coupling_gate_20261015.json",
+  "execution_receipt": {
+    "command": ".venv-worldagen/bin/python scripts/probe_cosmos_forecast_coupling_gate.py",
+    "root_owned_session": 80631,
+    "terminal_exit_code": 0,
+    "elapsed_seconds_from_run": 7.631398209021427,
+    "new_environment_steps": 0,
+    "model_api_calls": 0
+  },
+  "independent_review": {
+    "reviewer": "/root/corrected_planner_feasibility",
+    "scope": "Read-only protocol, implementation, launch snapshots, source binding and result review; no model or environment rerun.",
+    "material_errors_found": false,
+    "checks": [
+      "Current code and protocol agree with actual launch snapshots.",
+      "Candidates bind the original task3/init2 Goal and measured historical continuations: failure300 and success170.",
+      "Both original Future tensors and both original Value scores passed exact calibration.",
+      "Runtime checks preserve action latent, Goal and forecast conditioning prefix; Value noise remains31/32.",
+      "18Future and18Value calls include the two-candidate calibration; no additional physical execution.",
+      "Disjoint finite score support proves all64 pairings select candidate1, without relying on the matching algorithm or the advance threshold."
+    ]
+  },
+  "independent_cpu_analysis": {
+    "analyst": "/root/reach_wall_analysis_review",
+    "script": "scripts/analyze_cosmos_forecast_coupling_gate.py",
+    "execution_exit_code": 0,
+    "self_tests": "Seven score cases checked against exhaustive permutations withK<=4, including ties; two additional generic matching cases passed.",
+    "maximum_bad_candidate_probability": 0,
+    "independent_bad_candidate_probability": 0,
+    "candidate1_min_minus_candidate0_max": 0.00041410326957702637,
+    "advance_gate_passed": false
+  },
+  "verdict": "No-Go for extending this fixed operation. Preserve the negative result, without new seed searches or changing Value noise to seek harm.",
+  "claim_boundary": "One known posthoc root under an explicitly added finite-bank protocol. The original native Action/Future/Value seed relationship is changed. The result is neither general diffusion-law safety nor a new independently executed100-percent success experiment.",
+  "overall_goal_complete": false
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T05:13:03.339339+00:00",
+  "status": "reviewed_before_first_native_pair_execution",
+  "previous_goal_turn_classification": "progress: completed separate fixed-bank alias forecasts and a true-future objective comparator; updated reproducible tables and archive. The fixed +2 operation was stopped and a canonicalization side effect identified.",
+  "research_goal_status": "active_unachieved",
+  "source_result": "reports/dino_action_alias_exploratory_decision_20261015.json",
+  "new_hypothesis": "A constrained writer changing only execution-equivalent copied forecast requests to the previously fixed canonical boundary representation can reduce full native CEM real utility on a previously unused development root.",
+  "hypothesis_not_yet_measured": true,
+  "reason_for_one_pair": "Test whether native replanning corrects the previously measured open-loop selection loss. This is a distinct, explicitly recorded hypothesis after exploratory evidence, not retrospective success of the failed +2 operation.",
+  "mechanism_scope": "The causal path is request representation -> forecast -> native objective -> elite selection/mean -> executed controls. The writer cannot change original candidate storage, goal, observation, score function, model weights, physical controls or RNG. Changed later CEM proposals can be mediated consequences, not an independently changed action-space confound.",
+  "existing_pretrained_path": {
+    "runner": "scripts/pilot_dino_metaworld_clean_gate.py",
+    "checkpoint": "models/DINO_WM/mw_dino-wm.pth.tar",
+    "native_clean": "runs/dino_metaworld_mujoco330_analysis_v1/analysis.json",
+    "clean_summary": "Native final success2/3 versus noop0/3; ever success3/3. The matched servo has higher cumulative reward on all3 and ever success3/3, so no general forecast superiority claim.",
+    "hook": "agent.planner.unroll; preserve both B300 population and B1 mean-logging calls and pass original actions to objective."
+  },
+  "independence_scope": "Freeze physical seed4 before outputs. Previously unused development root, not proven training-heldout task. Native proposal RNG starts from the same seed1 in both fresh agents, rather than continuing the old3episode random stream.",
+  "runtime_evidence": {
+    "source": "runs/dino_metaworld_mujoco330_clean_v1/summary.json",
+    "historical_peak_allocated_bytes": 5160841728,
+    "historical_pair_planning_seconds_range": [
+      366.6,
+      631.41
+    ],
+    "current_gpu_observation": "RTX4090 total24564MiB,used18218MiB,utilization100%,four other compute processes. Read-only; no process changes.",
+    "interpretation": "Available memory is not a reservation. A bounded shared-resource attempt may be possible; historical times are not current shared-load guarantees. Allocator cap excludes CUDA context and some external allocations."
+  },
+  "pre_output_execution_rules": {
+    "root_count": 1,
+    "arms": [
+      "original_identity_copy",
+      "canonical_equivalent_request"
+    ],
+    "native_budget": "300 candidates,15 iterations,10 elites,H6,nas3,FP32 whole batch,100 total environment controls including1warmup",
+    "startup_min_free_mib": 5632,
+    "allocator_cap_gib": 5.0,
+    "first_native_query_reused_in_clean": true,
+    "first_query_pair_projection_limit_seconds": 2400,
+    "process_limit_seconds": 2700,
+    "no_resource_fallback": "OOM/time/resource failure keeps partial results; no batch reduction, newseed or silent restart.",
+    "advance_signal": "Clean success lost, or at least10percent return reduction with Clean return above matched noop; an exploratory trigger for causal restoration, not statistical proof.",
+    "no_signal": "Stop this fixed canonical transformation; no magnitude/metric/seed search."
+  },
+  "prediction_accuracy_boundary": "Do not transfer lower feature error from the old bank to new trajectories. Save matched context/action/forecast and every5control actual observations. If a native utility effect appears, compare original and canonical forecasts against the same executed-action truths within each saved query; no cross-trajectory error attribution.",
+  "potential_recovery_scope": "Only if native harm appears: independently trusted candidate/request binding can restore original request bytes without new weights or oracle utilities. This is a conventional integrity baseline, not claimed novel, and assumes the guard/original candidate storage are outside writer control. No recovery episode has been run.",
+  "consultation": {
+    "path": "runs/dino_alias_native_design_review_20261015/response.txt",
+    "model": "gemini-3.8-flash",
+    "api_requests": 1,
+    "http_status": 200,
+    "use": "Non-empirical design advice. Bounded pair suggestion accepted; unsupported mechanistic claims rejected.",
+    "corrections": [
+      "The prior test comprised30control sequences, not a single-step environment test.",
+      "True-future scoring selecting the same candidate does not prove100percent attribution to objective defects or absence of a world-model causal path.",
+      "Single-root descriptive loss is not statistical significance. Proposed Jacobian penalties are unvalidated ideas, not effective defenses."
+    ]
+  },
+  "bounded_literature_check": {
+    "queries": 3,
+    "scope": "Primary-domain search for world-model action canonicalization/equivalence and model-based action clipping.",
+    "result": "No directly decisive new source located in this small search. This is not evidence of novelty or absence of prior work. Existing CAPG/model-exploitation and action-equivalence boundaries remain."
+  },
+  "new_execution_so_far": {
+    "model_calls": 0,
+    "environment_steps": 0,
+    "gpu_jobs": 0,
+    "training_updates": 0
+  },
+  "scientific_limit": "A positive one-root native pair would justify causal recovery work, not independent generalization, a deployed exploit, an effective new defense, a novelty score or a paper-ready claim.",
+  "protocol": "configs/dino_native_alias_pair_20261015.json",
+  "pre_execution_resource_amendment": {
+    "recorded_at_utc": "2026-10-15T05:21:31.212383+00:00",
+    "before_any_native_pair_outputs": true,
+    "actual_free_mib": 5863,
+    "correction": "total-used=6346MiB overstated available VRAM by omitting driver-reserved memory; use actual memory.free.",
+    "old_free_gate_mib": 6144,
+    "new_free_gate_mib": 5632,
+    "old_allocator_cap_gib": 5.25,
+    "new_allocator_cap_gib": 5.0,
+    "interpretation": "Lower per-process cap; unchanged whole-batch native budget.512MiB nonallocator allowance is an estimate, not a reservation. A single OOM ends this attempt, with no reduced-budget retry."
+  },
+  "implementation_review": {
+    "root": "Reviewed native path and resource amendment; root owns launch session.",
+    "native_reviewer": "Focused static PASS;8 CPU source-hook/real-Preprocessor cases with recording unroll stub and mocked CUDA RNG only; no model/environment/CUDA execution.",
+    "scientific_reviewer": "Read-only complete runner/protocol PASS; no additional gate required.",
+    "validation": "Python py_compile passed; JSON parsed. No pilot model/environment execution."
+  }
+}

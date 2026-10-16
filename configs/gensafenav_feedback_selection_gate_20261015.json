@@ -1,0 +1,123 @@
+{
+  "schema_version": 1,
+  "experiment": "gensafenav_single_clean_feedback_selection_qualification",
+  "status_at_write": "preregistered_before_first_clean_execution_root_reviewed",
+  "question": "On the first predetermined visibility reentry in official test case0, does the native feedback admission gate preferentially omit larger actual GST forecast errors and produce narrower consumed uncertainty than full issued-forecast feedback and one equal-count error-independent missingness control, after correcting physical-time pairing in all shadow analyses?",
+  "source_repository": "https://github.com/tasl-lab/GenSafeNav",
+  "source_revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+  "source_root": "vendor/GenSafeNav",
+  "prior_source_root": "runs/gensafenav_feasibility_20261015/sources",
+  "prior_time_binding_evidence": "reports/forecast_feedback_binding_screen_20261015.json",
+  "runner": "scripts/probe_gensafenav_feedback_selection.py",
+  "output": "runs/gensafenav_feedback_selection_gate_20261015",
+  "native_assets": {
+    "actor": "trained_models/Ours_GST/checkpoints/05207.pt",
+    "saved_config": "trained_models/Ours_GST/configs/config.py",
+    "saved_arguments": "trained_models/Ours_GST/arguments.py",
+    "predictor": "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+    "predictor_arguments": "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/args.pickle",
+    "resource_rule": "Use the official matching actor, saved task configuration and configured predictor. Strict checkpoint loading; no replacement model, retraining, oracle controller or hand-tuned actor. Record actual runtime and any behavior-preserving dependency adapters before execution."
+  },
+  "fixed_run": {
+    "phase": "test",
+    "test_case": 0,
+    "num_envs": 1,
+    "official_seed": 42,
+    "expected_environment_seed": 1042,
+    "actor_deterministic": true,
+    "execution_device": "cpu",
+    "time_step_seconds": 0.25,
+    "prediction_time_step_seconds": 0.25,
+    "time_limit_seconds": 50,
+    "prediction_horizons": [1, 2, 3, 4, 5],
+    "aci_alpha": 0.1,
+    "maximum_physical_steps": 202,
+    "physical_guard_rule": "ceil(native time_limit/native time_step)+2; stop at the first native done, which may occur earlier. Assert the listed official timing rather than changing it to fit the protocol.",
+    "model_environment_wall_seconds": 600,
+    "episodes": 1,
+    "extra_attack_episodes": 0,
+    "extra_recovery_episodes": 0,
+    "model_api_calls": 0,
+    "training_updates": 0,
+    "execution_boundary": "Run at most one complete original native Clean episode, preserving actor/GST calls, masks, native ACI behavior, actual controls and environment rules. Three timestamp-correct shadow calibrators are observational diagnostics and never affect this actor or trajectory. Dependency download/compilation time is recorded separately from the600-second model/environment budget.",
+    "terminal_boundary": "Record terminal true states before any vector-environment automatic reset. Do not step another case. If an unavoidable native auto-reset occurs, count and identify it, exclude its new state/predictions from this episode, and never join across episodes. Predictions not yet mature at termination remain right-censored.",
+    "failure_policy": "Preserve all outputs and actual call/step counts. Technical compatibility failures may receive behavior-preserving fixes and restart this same case with the same seed; retain every failed attempt and its activity. Do not restart a completed scientific negative, change seed/case or use retries to seek a favorable outcome. Time or resource exhaustion is incomplete/deferred, not Clean failure."
+  },
+  "source_contract": {
+    "issue_and_validity": "crowd_sim/envs/crowd_sim_pred_real_gst.py:talk2Env",
+    "truth_update": "crowd_sim/envs/crowd_sim_pred.py:step",
+    "old_time_indexing": "crowd_sim/envs/utils/human.py:update_aci",
+    "gst_validity": "gst_updated/scripts/wrapper/crowd_nav_interface_parallel.py:forward",
+    "wrapper_clock_and_mask": "rl/vec_env/vec_pretext_normalize.py:process_obs_rew",
+    "calibrator": "dt_aci/one_step_dtai.py:DtACI",
+    "official_rollout": "test.py and rl/evaluation.py",
+    "model_scope": "Pretrained pedestrian-history forecasting plus a native RL navigation consumer; GST does not condition on candidate robot actions or a separate Goal. Do not label this an action-conditioned world-model rollout."
+  },
+  "time_and_identity": {
+    "clock": "Integer physical step t denotes state immediately after t actual transitions, beginning at reset t=0. Retain exact physical seconds and wrapper prediction sampling interval. Forecast issued at i for horizon h targets i+h*pred_interval, not the h-th later valid event.",
+    "entity": "Stable lifetime ID combines environment slot/native human ID with object generation. A replacement Human starts a new lifetime even if its slot/id is reused. No history, prediction or truth joins across lifetimes or episode reset.",
+    "v_definition": "v_t is native human.prediction_valid immediately after talk2Env at physical time t: the issued start position agrees with the actual human position within the native threshold0.1. It is not interchangeable with visible_masks or GST out_mask.",
+    "native_feedback_gate": "Truth at target time t is appended after the previous physical transition only when v_(t-1) was true. Correctly timestamped shadow admission therefore uses v_(target-1), while retaining the original issue+horizon target.",
+    "record_separately": ["native prediction_valid", "physical visible_masks", "raw GST input_binary_mask", "raw GST output mask", "actual predictions delivered to talk2Env", "true physical position", "object generation", "physical issue and target times"]
+  },
+  "forecast_populations": {
+    "primary": "Only genuinely GST-produced forecasts with native v_issue=true and raw GST out_mask_issue=true. Their actual predicted coordinates must exactly match raw GST for that human after the native float32 robot-relative subtraction. Any mismatch in this population invalidates the attribution check; do not silently filter mismatches to create a passing subset. A pair becomes eligible only when the same lifetime has a real target-time physical position within the recorded episode.",
+    "dummy_inclusive_diagnostic": "Separately analyze all native-issued forecasts, including v_issue=true but GST out_mask=false. The RealGST wrapper can retain repeated current-position placeholders at reentry; these are stationary predictions, not necessarily distant15-valued or high-error predictions. Never call their residuals learned-model prediction errors.",
+    "primary_vs_native": "Removing dummy forecasts defines a researcher shadow population. The actual Clean rollout retains the original native data path, including its known valid-event indexing behavior. Do not claim the live policy's calibrator was repaired or that every native update was a genuine GST forecast.",
+    "no_label_fabrication": "Full feedback uses simulator truth for predictions actually issued on this recorded trajectory. It does not invent forecasts at invalid issue times, fabricate unchosen robot-action outcomes, or give evaluator-only truth to the live actor."
+  },
+  "first_reentry": {
+    "selection": "Use the earliest physical time with a same-lifetime prior valid-to-invalid-to-valid episode, the two most recent GST-sampled visibility masks both true, current GST out_mask true, and current native prediction_valid true. Break simultaneous human ties by stable lifetime ID. The previous visibility sample before these two must be false, so a later continuously visible point cannot replace the actual first recovery.",
+    "independent_of_outcomes": "Select by recorded masks, physical time and identity only, without examining residual size, interval width, collision proximity, missing-count adequacy or task outcome. Freeze this root before computing selection-bias or interval contrasts.",
+    "history_cutoff": "Primary feedback and calibration use only forecasts whose target time is at or before this first event. Do not use later labels to construct the root's equal-count control. Native update-before-query ordering must be retained at the event.",
+    "stop": "If no event occurs or this first event lacks support/fails qualification, stop the candidate. Do not inspect later roots to find a passing event. Whole-episode aggregate diagnostics may describe the fixed collected episode but cannot replace the primary root."
+  },
+  "shadow_conditions": {
+    "naming_boundary": "The name native_gate denotes only the original v_(target-1) admission predicate. These actual-GST-only, timestamp-correct shadow states are not the recorded native DtACI states, which can include dummy forecasts and old valid-event time mismatches.",
+    "native_gate_time_correct": "Replay actual GST residuals paired by physical issue+horizon time; admit each matured residual iff v_(target-1)=true.",
+    "full_issued_time_correct": "Same issued GST forecasts, physical target positions, horizon, score and ordering; admit every matured eligible residual, regardless of v_(target-1). This is an evaluator oracle-feedback control, not a deployable defense.",
+    "matched_missing_time_correct": "For each lifetime and horizon among rows matured by the primary event, retain exactly the native-gate count using seed17 error-independent priorities over the entire eligible set. Preserve chronological target-time order when replaying the retained rows. No residual, interval or outcome enters priority generation.",
+    "matched_missing_seed": 17,
+    "mask_construction": "Generate deterministic local uniform priorities keyed by seed17, lifetime ID, horizon and target physical time; choose the required count with smallest priorities, ties by target time. Freeze a stable key encoding; do not use Python process-randomized hash or consume native model/environment RNG. This is a retrospective equal-count causal diagnostic, not an online deployable masking policy.",
+    "score": "Native Euclidean distance in meters between an issued forecast at its declared horizon and the actual position at exactly its target time.",
+    "calibration_replay": "Use the original DtACI update/prediction algorithms, native alpha and initial predictions. All shadow arms share prediction-request times and differ only in residual admission. Do not share mutable calibrators across arms, lifetimes or horizons.",
+    "calibrator_rng": "Bind any stochastic calibration choice to common local uniforms addressed by lifetime ID, horizon and target physical time, so skipped updates cannot shift the random stream seen by another condition. Preserve and restore global RNG state around shadow computations. Record the precise address-to-choice adapter; it must preserve native per-call sampling law and introduce no learned prediction or true-label access.",
+    "interval": "Primary q is the consumed native conformity radius clipped to[0,1], as returned by talk2Env. Raw unbounded q is secondary. Do not qualify a decision-relevant interval difference if clipping removes it."
+  },
+  "negative_controls": {
+    "horizon1": "For every actual issued primary forecast, target=issue+1 because pred_interval=1, so v_(target-1)=v_issue=true. All primary h1 rows must be admitted under all three conditions. Retained residual sequences and paired raw/clipped q must be bitwise identical; failure is an implementation/clock/RNG invalidation, not evidence of selection bias.",
+    "dummy_reentry": "Report whether apparent selective omission or interval narrowing is present only when stationary reentry placeholders are included. Such a signal fails the learned-forecast qualification and cannot motivate physical attack expansion.",
+    "same_count": "Report exact eligible, retained and omitted counts per lifetime/horizon at the primary cutoff. The matched-missing condition must have the same retained count as native-gate for every stratum. A difference against full feedback alone does not isolate informative selection from sample count.",
+    "time_binding": "Every scored pair must satisfy target_time=issue_time+horizon*prediction_interval. No use of native valid-event list offsets in any primary shadow. Source-native wrong-time errors, if logged, remain a separate known implementation defect."
+  },
+  "qualification_gate": {
+    "numerical_direction_tolerance_meters": 0.000001,
+    "clean": "One complete native goal-reaching episode with no collision. Failure or timeout does not establish competence for this case; no replacement case. This is a one-instance capability check, not a success-rate estimate.",
+    "first_root": "The frozen first reentry exists within a single continuing human lifetime and passes source/schema/time/h1 controls.",
+    "actual_omission": "At least one genuine GST forecast with h in2..5 has matured and is omitted by v_(target-1); at least one higher-horizon stratum has both retained and omitted primary residuals.",
+    "residual_direction": "Let J be the subset of the fixed horizons2..5 having both retained and omitted primary rows at this root. J is determined only by counts, never residuals. The equal-weight mean over J of omitted-minus-retained mean residual exceeds1e-6m, and the mean over J of matched-missing-retained minus native-gate-retained mean residual exceeds1e-6m. Report all counts and all horizon values, including unsupported horizons as null.",
+    "interval_direction": "At this same root, the fixed equal-weight mean across horizons2..5 of consumed q_full minus q_native_gate exceeds1e-6m, and q_matched_missing minus q_native_gate also exceeds1e-6m. No horizon may be selected after examining effects.",
+    "all_required": true,
+    "positive_scope": "Only qualifies a natural feedback-selection and interval-direction signature on one fixed Clean trace. It does not establish an attacker, new conditional-coverage theorem, an action change, actual safety harm, or a working defense.",
+    "negative_scope": "A failed or unsupported first-root gate stops this candidate at case0. It does not prove no such effect can occur elsewhere. No new seed, case, horizon subset, feedback budget or residual threshold search."
+  },
+  "required_outputs": [
+    "Exact launched configuration/script, runtime and official asset filenames/loading metadata; no credential material.",
+    "Complete native physical trace, actual actor controls, rewards/costs, terminal reason, goal success, collision indicator and actual native model/environment call counts.",
+    "Issue records keyed by lifetime/physical time, raw GST forecasts and masks, actual delivered predictions, actual native ACI outputs/state, and all real target positions.",
+    "Selected first-reentry identity/time with the mask-only selection evidence; no residual-based alternative root.",
+    "Per-pair timestamp, horizon, eligibility, true residual, native admission, seed17 priority/admission and source reference.",
+    "Three shadow raw/clipped q vectors at the fixed first root, h1 exact checks, count-matching checks, all horizon contrasts and separate dummy-inclusive diagnostics.",
+    "Qualification passed/failed/unsupported versus technical invalid/deferred; actual harm and recovery metrics explicitly unmeasured.",
+    "Partial outputs and exact failure traces for every technical attempt; no overwriting earlier attempts."
+  ],
+  "interpretation_limits": [
+    "This episode contains only original native pedestrian/environment behavior. It tests naturally occurring selection, not an adversary's ability to control visibility through legal motion. Directly editing masks would be a separate intervention and cannot be silently reclassified as physical behavior.",
+    "Timestamp correction is confined to shadows. The native Clean trajectory may still reflect the existing time-binding defect; this test does not show that removing that defect changes safety.",
+    "First-event selection avoids choosing a large observed effect but does not make one reentry an independent population sample. No p-values, confidence intervals, ASR or generalized success-loss claims.",
+    "A successful complete-case calibration pattern need not imply good conditional coverage. Conversely, selective labels and informative missingness are established prior concepts; a positive gate alone is not a new security contribution.",
+    "A later actual-utility experiment would have to hold the current physical state, visibility, point forecasts and policy inputs fixed while isolating the retained calibration state, excluding danger caused directly by loss of visibility. No such rollout is authorized or claimed by this qualification protocol.",
+    "Full evaluator feedback is privileged diagnostic information. It cannot be presented as an available deployment repair, especially where unseen outcomes have zero observation probability."
+  ],
+  "research_goal": "active_unachieved"
+}

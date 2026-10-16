@@ -1,0 +1,15 @@
+{
+  "status": "invalidated_not_used",
+  "attempt": "extract simulator qpos/qvel/contact targets by replaying the same 144 frozen candidates for the aligned Goal sweep",
+  "initial_state_hash_check": "passed for the reconstructed benchmark init and warmup state",
+  "failure": "fresh replay EEF outcomes did not reproduce the stored candidate_replays despite matching task, seed, candidate action, and initial simulator state hash",
+  "max_observed_eef_progress_mismatch": 0.30457781116459287,
+  "interpretation": "LIBERO replay depends on controller/global RNG state that was not persisted by the original sweep; reconstructed state targets are not matched targets and are excluded from all analyses.",
+  "artifacts_removed": [
+    "physical_targets.json",
+    "physical_targets.npz"
+  ],
+  "next_requirement": "Persist Python/NumPy/Torch/MuJoCo/controller RNG states or simulator state targets during the original replay, then rerun the state/contact target audit.",
+  "api_requests": 0,
+  "model_inference": false
+}

@@ -1,0 +1,232 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated reactor (uuid: 8549); Crystal 2 (uuid: 21559) is installed in activated reactor (uuid: 51739); Crystal 3 (uuid: 24678) is installed in uncalibrated reactor (uuid: 33120).",
+      "step": 11
+    },
+    {
+      "measurement": "Spectrometer readings: Crystal 1 (uuid: 13162): C1=40.61, C5=63.61, reactor set to 2680.26 Hz; Crystal 2 (uuid: 21559): C1=39.40, C5=31.24, reactor set to 2600.4 Hz; Crystal 3 (uuid: 24678): C1=57.38, C5=19.67, target frequency unknown.",
+      "step": 10
+    },
+    {
+      "measurement": "All crystal reactors (empty, uncalibrated, activated) give identical baseline spectrometer readings (C1=0.50, C5=0.10, others 0.00) regardless of proximity or facing direction; Crystal 3 alone reads C1=57.38, C5=19.67.",
+      "step": 47
+    },
+    {
+      "measurement": "Crystal reactors are not readable and not activatable/deactivatable; READ and ACTIVATE/DEACTIVATE actions failed on empty, uncalibrated, and activated reactors.",
+      "step": 18
+    },
+    {
+      "measurement": "Generator core (uuid: 11878) is described as 'generator core (66% activated)' and is not a valid teleport target from multiple positions.",
+      "step": 48
+    },
+    {
+      "measurement": "Generator core (uuid: 11878) is 2 tiles north of (16, 18); generator (uuid: 42960) is 3 tiles north-east; generator (uuid: 46683) is 3 tiles north-west. Movement north from (16, 18) is blocked by table (uuid: 55934).",
+      "step": 35
+    },
+    {
+      "measurement": "Uncalibrated reactor (uuid: 33120) with Crystal 3 is 2 tiles north-east of (16, 18); activated reactor with Crystal 1 (uuid: 8549) is 2 tiles north-west.",
+      "step": 35
+    },
+    {
+      "measurement": "Table (uuid: 57736) is not readable; READ action failed.",
+      "step": 38
+    },
+    {
+      "measurement": "Sign (uuid: 31729) reads only 'Quantum Reactor Lab' and contains no calibration instructions or frequency information.",
+      "step": 41
+    },
+    {
+      "measurement": "A closed locked door (uuid: 33841) blocks the direct northern path from (16, 21) and is located at (16, 19); a wall (uuid: 41671) is directly north at distance 1. OPEN action failed with message 'That object (door) requires a key to open.'",
+      "step": 51
+    },
+    {
+      "measurement": "From position (16, 19), the only direction the agent can move is north; east, south, and west are blocked.",
+      "step": 50
+    },
+    {
+      "hypothesis": "If the spectrometer is used on a quantum crystal, then the non-zero channel values indicate the frequency that the crystal's reactor should be tuned to.",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "Crystal 1 and Crystal 2 are correctly installed and both show non-zero values only on Channels 1 and 5."
+    },
+    {
+      "hypothesis": "If the correct reactor frequency is a linear combination of Channel 1 and Channel 5 values, then the coefficients can be solved from Crystal 1 and Crystal 2, giving frequency ≈ 66 * Channel 1.",
+      "status": "pending",
+      "step": 15,
+      "supporting evidence": "Solving the linear system gives a ≈ 66.0 and b ≈ 0.0. Crystal 3 estimate: 66 * 57.38 ≈ 3787 Hz."
+    },
+    {
+      "hypothesis": "If a crystal is placed into an empty reactor, then the reactor becomes 'uncalibrated' and must be tuned to the correct frequency before it becomes 'activated'.",
+      "status": "pending",
+      "step": 11,
+      "supporting_evidence": "After PUT Crystal 3 into empty reactor (uuid: 33120), the reactor's name changed to 'crystal reactor (uncalibrated)'."
+    },
+    {
+      "hypothesis": "If spectrometer readings are unaffected by proximity or facing direction, then the target frequency for Crystal 3 must be derived from the crystal's channel values, not from the reactor or spatial orientation.",
+      "status": "confirmed",
+      "step": 32,
+      "supporting_evidence": "Repeated measurements of Crystal 3 and the uncalibrated reactor from different positions and facing directions gave identical values."
+    },
+    {
+      "hypothesis": "If the spectrometer on the uncalibrated reactor (uuid: 33120) with Crystal 3 installed returns only the reactor baseline and not the crystal's channel values, then the calibration interface must be a separate object that accepts a frequency input.",
+      "status": "pending",
+      "step": 47,
+      "supporting_evidence": "Spectrometer on uncalibrated reactor with Crystal 3 installed returned C1=0.50, C5=0.10, identical to baseline reactor readings; Crystal 3 alone reads C1=57.38, C5=19.67."
+    },
+    {
+      "hypothesis": "If the generator core (uuid: 11878) is 66% activated and two of three crystals are already installed and activated, then the core's activation percentage reflects the number of correctly tuned crystals, and it may not be the calibration interface for Crystal 3.",
+      "status": "pending",
+      "step": 45,
+      "supporting_evidence": "Generator core description shows '66% activated'; two crystals (Crystal 1 and Crystal 2) are already installed in activated reactors."
+    },
+    {
+      "hypothesis": "If the calibration interface is not accessible via reactors, tables, signs, or the generator core, then it is likely a control panel or computer terminal located inside the building, possibly behind the closed locked door (uuid: 33841).",
+      "status": "pending",
+      "step": 51,
+      "supporting_evidence": "All exterior objects failed to provide calibration interaction; a closed locked door blocks northern access and requires a key."
+    },
+    {
+      "hypothesis": "If the closed locked door (uuid: 33841) requires a key to open, then the key is likely located somewhere in the accessible environment, possibly on a table, near a generator, or in another container, and must be found before the door can be opened.",
+      "status": "pending",
+      "step": 51,
+      "supporting_evidence": "OPEN action on door (uuid: 33841) failed with 'requires a key'; no key has been observed in inventory or nearby objects."
+    },
+    {
+      "measurement": "The closed locked door (uuid: 33841) is located at (16, 19) and requires a key to open; OPEN action failed with message 'That object (door) requires a key to open.'",
+      "step": 52
+    },
+    {
+      "measurement": "From position (16, 19) facing south, the only direction the agent can move is north; east, south, and west are blocked.",
+      "step": 52
+    },
+    {
+      "hypothesis": "If the closed locked door (uuid: 33841) requires a key, then the key is likely hidden somewhere in the accessible environment, possibly on a table, near a generator, or in a container, and must be found before the door can be opened.",
+      "status": "pending",
+      "step": 52,
+      "supporting_evidence": "OPEN action on door (uuid: 33841) failed with 'requires a key'; no key has been observed in inventory or nearby objects."
+    },
+    {
+      "hypothesis": "If the calibration interface is not accessible via reactors, tables, signs, or the generator core, then it is likely a control panel or computer terminal located inside the building, possibly behind the closed locked door (uuid: 33841).",
+      "status": "pending",
+      "step": 52,
+      "supporting_evidence": "All exterior objects failed to provide calibration interaction; a closed locked door blocks northern access and requires a key."
+    },
+    {
+      "measurement": "Using the spectrometer on the uncalibrated reactor (uuid: 33120) while directly in front of it and facing north returns only the reactor baseline readings (C1=0.50, C5=0.10, others 0.00), not the crystal's channel values.",
+      "step": 53
+    },
+    {
+      "hypothesis": "If the spectrometer on the uncalibrated reactor (uuid: 33120) returns only baseline readings even when directly in front of it, then the reactor itself does not expose the crystal's channel values and the calibration interface must be a separate object.",
+      "status": "confirmed",
+      "step": 53,
+      "supporting_evidence": "Repeated spectrometer use on the uncalibrated reactor from different positions and facing directions, including directly in front, consistently returned only baseline readings (C1=0.50, C5=0.10)."
+    },
+    {
+      "hypothesis": "If the calibration interface is not accessible via the uncalibrated reactor, tables, signs, or the generator core, then it is likely a control panel or computer terminal located behind the closed locked door (uuid: 33841) or in an unexplored area.",
+      "status": "pending",
+      "step": 53,
+      "supporting_evidence": "All accessible exterior objects have been examined without finding a calibration interface; the closed locked door remains the primary unexplored access point."
+    },
+    {
+      "measurement": "Crystal 3 (uuid: 24678) was successfully picked up from the uncalibrated reactor (uuid: 33120) and is now in the agent's inventory.",
+      "step": 54
+    },
+    {
+      "hypothesis": "If Crystal 3 is examined directly with the spectrometer while in the agent's inventory, then it will reveal the same channel values (C1=57.38, C5=19.67) as when it was installed in the uncalibrated reactor, confirming that the crystal's spectral signature is independent of its location.",
+      "status": "pending",
+      "step": 54,
+      "supporting_evidence": "Crystal 3 previously read C1=57.38, C5=19.67 when installed in the uncalibrated reactor; the crystal is now in inventory and can be measured directly."
+    },
+    {
+      "hypothesis": "If the calibration interface is not accessible via the uncalibrated reactor, tables, signs, or the generator core, and the crystal itself does not provide calibration interaction when in inventory, then the calibration interface is likely a separate object that may require a key to access, possibly behind the closed locked door (uuid: 33841).",
+      "status": "pending",
+      "step": 54,
+      "supporting_evidence": "All accessible exterior objects have been examined without finding a calibration interface; the closed locked door remains the primary unexplored access point; Crystal 3 is now in inventory for direct examination."
+    },
+    {
+      "measurement": "Crystal 3 (uuid: 24678) reads C1=57.38, C5=19.67 when examined directly with the spectrometer while in the agent's inventory, identical to its reading when installed in the uncalibrated reactor (uuid: 33120).",
+      "step": 55
+    },
+    {
+      "hypothesis": "If Crystal 3's spectrometer reading is identical in the reactor and in the agent's inventory, then the crystal's spectral signature is independent of its location and the target frequency must be derived from the crystal's channel values alone.",
+      "status": "confirmed",
+      "step": 55,
+      "supporting_evidence": "Crystal 3 read C1=57.38, C5=19.67 both when installed in the uncalibrated reactor and when examined directly in inventory."
+    },
+    {
+      "hypothesis": "If the uncalibrated reactor (uuid: 33120) returns only baseline readings even when directly in front of it and facing it, then the reactor itself does not provide a calibration interface for setting Crystal 3's frequency.",
+      "status": "confirmed",
+      "step": 55,
+      "supporting_evidence": "Spectrometer use on the uncalibrated reactor while directly in front of it returned only C1=0.50, C5=0.10, identical to baseline reactor readings."
+    },
+    {
+      "hypothesis": "If the calibration interface is not accessible via the uncalibrated reactor, tables, signs, the generator core, or the crystal itself, then it is likely a separate object located behind the closed locked door (uuid: 33841) or in an unexplored area.",
+      "status": "pending",
+      "step": 55,
+      "supporting_evidence": "All accessible exterior objects and the crystal itself have been examined without finding a calibration interface; the closed locked door remains the primary unexplored access point."
+    },
+    {
+      "measurement": "Crystal 3 (uuid: 24678) reads C1=57.38, C5=19.67 when examined directly with the spectrometer while in the agent's inventory, identical to its reading when installed in the uncalibrated reactor (uuid: 33120).",
+      "step": 56
+    },
+    {
+      "hypothesis": "If Crystal 3's spectrometer reading is identical in the reactor and in the agent's inventory, then the crystal's spectral signature is independent of its location and the target frequency must be derived from the crystal's channel values alone.",
+      "status": "confirmed",
+      "step": 56,
+      "supporting_evidence": "Crystal 3 read C1=57.38, C5=19.67 both when installed in the uncalibrated reactor and when examined directly in inventory."
+    },
+    {
+      "hypothesis": "If the uncalibrated reactor (uuid: 33120) returns only baseline readings even when directly in front of it and facing it, then the reactor itself does not provide a calibration interface for setting Crystal 3's frequency.",
+      "status": "confirmed",
+      "step": 56,
+      "supporting_evidence": "Spectrometer use on the uncalibrated reactor while directly in front of it returned only C1=0.50, C5=0.10, identical to baseline reactor readings."
+    },
+    {
+      "hypothesis": "If the calibration interface is not accessible via the uncalibrated reactor, tables, signs, the generator core, or the crystal itself, then it is likely a separate object located behind the closed locked door (uuid: 33841) or in an unexplored area.",
+      "status": "pending",
+      "step": 56,
+      "supporting_evidence": "All accessible exterior objects and the crystal itself have been examined without finding a calibration interface; the closed locked door remains the primary unexplored access point."
+    },
+    {
+      "measurement": "The closed locked door (uuid: 33841) at (16, 19) still requires a key to open; OPEN action failed again with message 'That object (door) requires a key to open.'",
+      "step": 57
+    },
+    {
+      "measurement": "The closed locked door (uuid: 33841) at (16, 19) still requires a key to open; OPEN action failed again with message 'That object (door) requires a key to open.'",
+      "step": 58
+    },
+    {
+      "measurement": "The uncalibrated reactor (uuid: 33120) is now empty (no crystal present) after Crystal 3 was picked up; its description is 'crystal reactor (no crystal present)'.",
+      "step": 58
+    },
+    {
+      "hypothesis": "If the closed locked door (uuid: 33841) requires a key and no key has been found on any accessible exterior object, then the key may be hidden inside a container, on an agent, or in a location not yet searched, and systematic search of all accessible objects is required.",
+      "status": "pending",
+      "step": 58,
+      "supporting_evidence": "OPEN action on door failed twice with 'requires a key'; no key observed in inventory or nearby objects."
+    },
+    {
+      "hypothesis": "If the uncalibrated reactor (uuid: 33120) does not provide a calibration interface even when directly in front of it with Crystal 3 in inventory, then the calibration interface is likely a separate object that may be behind the closed locked door (uuid: 33841) or in an unexplored area.",
+      "status": "pending",
+      "step": 58,
+      "supporting_evidence": "Repeated spectrometer use and interaction attempts on the uncalibrated reactor failed to reveal any calibration interface; the reactor is now empty."
+    },
+    {
+      "measurement": "Using the spectrometer on the empty crystal reactor (uuid: 33120) while Crystal 3 (uuid: 24678) is in the agent's inventory returns only baseline readings (C1=0.50, C5=0.10, others 0.00), identical to the reactor's baseline when no crystal is installed.",
+      "step": 59
+    },
+    {
+      "hypothesis": "If the empty crystal reactor (uuid: 33120) returns only baseline spectrometer readings even when Crystal 3 is in the agent's inventory, then the reactor itself does not provide any calibration interface or crystal-specific spectral information, and the calibration interface must be a separate object.",
+      "status": "confirmed",
+      "step": 59,
+      "supporting_evidence": "Spectrometer use on the empty reactor returned C1=0.50, C5=0.10, others 0.00, identical to baseline reactor readings; Crystal 3 alone reads C1=57.38, C5=19.67."
+    },
+    {
+      "hypothesis": "If the calibration interface is not accessible via the empty reactor, the crystal itself, tables, signs, or the generator core, then it is likely a separate object located behind the closed locked door (uuid: 33841) or in an unexplored area.",
+      "status": "pending",
+      "step": 59,
+      "supporting_evidence": "All accessible exterior objects, the crystal, and the empty reactor have been examined without finding a calibration interface; the closed locked door remains the primary unexplored access point."
+    }
+  ]
+}

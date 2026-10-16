@@ -1,0 +1,66 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated crystal reactor (uuid: 8549); Crystal 2 (uuid: 21559) is installed in activated crystal reactor (uuid: 51739); Crystal 3 (uuid: 24678) is on a table (uuid: 57306) south-east of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "There is an empty crystal reactor (uuid: 33120) north-east of the agent, and a spectrometer (uuid: 24266) was on a table (uuid: 58937) south-west of the agent.",
+      "step": 1
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is 33% activated, with two of three crystals installed.",
+      "step": 1
+    },
+    {
+      "measurement": "The spectrometer (uuid: 24266) is in the agent's inventory.",
+      "step": 3
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 1 (uuid: 13162): Channel 1 = 40.61, Channel 5 = 63.61, other channels 0.00. Its reactor (uuid: 8549) is set to 2680.26 Hz.",
+      "step": 6
+    },
+    {
+      "measurement": "Spectrometer reading for Crystal 2 (uuid: 21559): Channel 1 = 39.40, Channel 5 = 31.24, other channels 0.00. Its reactor (uuid: 51739) is set to 2600.4 Hz.",
+      "step": 10
+    },
+    {
+      "hypothesis": "If the spectrometer is used on a quantum crystal, then the non-zero channel values indicate the frequency that the crystal's reactor should be tuned to.",
+      "status": "pending",
+      "step": 5,
+      "supporting evidence": "Crystal 1 and Crystal 2 are correctly installed and both show non-zero values only on Channels 1 and 5."
+    },
+    {
+      "hypothesis": "If the correct reactor frequency for a crystal is encoded by its spectrometer readings, then the encoding is likely a mathematical function of the Channel 1 and Channel 5 values.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Two data points are available: Crystal 1 (40.61, 63.61 -> 2680.26 Hz) and Crystal 2 (39.40, 31.24 -> 2600.4 Hz). Simple concatenation and multiplication/addition hypotheses were rejected."
+    },
+    {
+      "hypothesis": "If the encoding formula is determined from Crystal 1 and Crystal 2, then Crystal 3's correct reactor frequency can be calculated from its spectrometer reading.",
+      "status": "pending",
+      "step": 10,
+      "supporting evidence": "Crystal 3 is the only remaining crystal and must be installed in the empty reactor to activate the generator."
+    },
+    {
+      "measurement": "After teleporting to the spectrometer (uuid: 24266), the agent is at (15, 18) facing south. The spectrometer is on the table (uuid: 58937) directly south at distance 1, and it is listed as accessible but is not yet in the agent's inventory.",
+      "step": 2
+    },
+    {
+      "hypothesis": "If the agent picks up the spectrometer (uuid: 24266) and uses it on Crystal 3 (uuid: 24678), then the spectrometer will report non-zero values on exactly two channels, as it did for Crystal 1 and Crystal 2, and those values will determine the correct reactor frequency for Crystal 3.",
+      "status": "pending",
+      "step": 2,
+      "supporting evidence": "Crystal 1 (uuid: 13162) and Crystal 2 (uuid: 21559) both produced non-zero readings only on Channels 1 and 5; Crystal 3 is the only remaining crystal without a tuned reactor."
+    },
+    {
+      "measurement": "For Crystal 1 (uuid: 13162), reactor frequency 2680.26 Hz divided by spectrometer Channel 1 value 40.61 equals 66.0. For Crystal 2 (uuid: 21559), reactor frequency 2600.4 Hz divided by Channel 1 value 39.40 equals 66.0.",
+      "step": 3
+    },
+    {
+      "hypothesis": "If a quantum crystal is measured with the spectrometer and gives a non-zero Channel 1 value, then the correct reactor frequency for that crystal is 66.0 times the Channel 1 value.",
+      "status": "pending",
+      "step": 3,
+      "supporting evidence": "Crystal 1: 40.61 * 66 = 2680.26 Hz, which matches its reactor setting (uuid: 8549). Crystal 2: 39.40 * 66 = 2600.4 Hz, which matches its reactor setting (uuid: 51739). This should be tested by measuring Crystal 3 (uuid: 24678) and applying the resulting frequency to the empty reactor (uuid: 33120)."
+    }
+  ]
+}

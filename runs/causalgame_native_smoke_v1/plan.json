@@ -1,0 +1,36 @@
+{
+  "purpose": "clean native capability gate; no attacker or new mechanism claimed",
+  "model": "glm-5.3",
+  "backend_identity_verified": false,
+  "experiment": "antenna_trap",
+  "seed": 2,
+  "commit": "34223510a0e7466ad399ff19714425f8708b7fbe",
+  "mode": "hybrid",
+  "native_runner": "run_agent.run_agent_session",
+  "runner_max_turns_argument": 100,
+  "turn_note": "Upstream maps default 100 to deployment budget + 10 (20 turns).",
+  "max_api_requests": 80,
+  "api_timeout_s": 180,
+  "generation": {
+    "temperature": 0,
+    "max_tokens": 4096,
+    "thinking": false,
+    "retry_truncated": true
+  },
+  "seed_scope": "Python random and NumPy in a fresh single-session backend; UUIDs vary.",
+  "adaptations": [
+    "logged compatible transport",
+    "model registration",
+    "isolated backend/session/workspace paths",
+    "localhost bypasses the external HTTP proxy"
+  ],
+  "collect_only": true,
+  "packages": {
+    "openai": "3.26.1",
+    "requests": "2.31.0",
+    "numpy": "1.26.4",
+    "pandas": "3.0.6",
+    "fastapi": "0.109.0",
+    "pydantic": "2.6.0"
+  }
+}

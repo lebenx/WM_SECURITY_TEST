@@ -1,0 +1,44 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Current state (step 31): Agent has spectrometer (uuid: 24266) and quantum crystal 3 (uuid: 24678) in inventory; crystal reactor 33120 is accessible and empty, currently reporting 3788 Hz (allowed range 0-10000 Hz). Crystal reactor 8549 contains crystal 1 at 2680.26 Hz; crystal reactor 51739 contains crystal 2 at 2600.4 Hz.",
+      "step": 31
+    },
+    {
+      "measurement": "Spectrometer measurements: crystal 1 (uuid: 13162) installed at 2680.26 Hz has Channel 1 = 40.61, Channel 5 = 63.61; crystal 2 (uuid: 21559) installed at 2600.4 Hz has Channel 1 = 39.40, Channel 5 = 31.24; crystal 3 (uuid: 24678) has Channel 1 = 57.38, Channel 5 = 19.67. Channels 2-4 are 0 in all measured crystals.",
+      "step": "5-23"
+    },
+    {
+      "hypothesis": "If a quantum crystal is measured with the spectrometer, then the crystal's resonance frequency equals 66 times its Channel 1 value.",
+      "status": "confirmed",
+      "step": 23,
+      "supporting_evidence": "Crystal 1: 40.61 * 66 = 2680.26 Hz, matching reactor 8549. Crystal 2: 39.40 * 66 = 2600.4 Hz, matching reactor 51739."
+    },
+    {
+      "hypothesis": "If crystal reactor 33120 is adjusted to 3787 Hz and quantum crystal 3 (uuid: 24678) is installed, then the reactor will activate and accept the crystal.",
+      "status": "pending",
+      "step": 31,
+      "supporting_evidence": "Confirmed mapping gives 57.38 * 66 = 3787.08 Hz, so the closest integer is 3787 Hz. Reactor 33120 is currently at 3788 Hz, and one -1 Hz decrement will reach 3787 Hz."
+    },
+    {
+      "measurement": "On crystal reactor 33120, dialog controls 'Decrease frequency by 1000/100/10/1 Hz' changed its reported frequency exactly as labeled: 5000 -> 4000, 4000 -> 3900, 3900 -> 3800, 3800 -> 3790, 3790 -> 3789, 3789 -> 3788.",
+      "step": 31
+    },
+    {
+      "hypothesis": "If a crystal reactor dialog option states 'Decrease frequency by X Hz', then selecting it changes the reactor's frequency by exactly X Hz.",
+      "status": "confirmed",
+      "step": 27,
+      "supporting_evidence": "Observed exact decrements on reactor 33120 for 1000 Hz, 100 Hz, 10 Hz, and 1 Hz."
+    },
+    {
+      "measurement": "Crystal reactor (uuid: 33120) now reports resonance frequency 3787 Hz, after using dialog option 'Decrease frequency by 1 Hz' from 3788 Hz. The reactor has no crystal present and the allowable range is 0-10000 Hz.",
+      "step": 32
+    },
+    {
+      "hypothesis": "If crystal reactor (uuid: 33120) is set to 3787 Hz and quantum crystal 3 (uuid: 24678) is placed inside it, then the reactor will activate and accept the crystal.",
+      "status": "pending",
+      "step": 32,
+      "supporting_evidence": "Spectrometer mapping predicts 57.38 * 66 = 3787.08 Hz; reactor 33120 has now been tuned to 3787 Hz (the closest integer). The next step is to install quantum crystal 3 and observe whether the reactor activates."
+    }
+  ]
+}

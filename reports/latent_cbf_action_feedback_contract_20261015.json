@@ -1,0 +1,323 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "revision": "d644309db5d46d414ac70b18bed085b030ff9e5c",
+  "status": "source_contract_and_single_cpu_routing_probe_completed_no_task_effect_measured",
+  "question": "Does the native filtered diffusion controller feed executed controls or rejected nominal controls back into its RSSM posterior?",
+  "conclusion": {
+    "nominal_action_history_not_a_misleading_name": true,
+    "execution_action_written_back_to_history": false,
+    "indexing_off_by_one_in_the_inspected_action_observation_pairing": false,
+    "finding": "The native filter appends the clipped nominal request before computing the filtered action, returns both, and never replaces history with the selected or physically clipped execution. The collector executes the filtered element. On later calls, true observations are consequently paired with nominal actions whenever filtering changes the physical input.",
+    "conditional_not_measured": "The mismatch matters only when a nominal differs from the actual applied control in one of the effective four historical transitions. Whether published weights cause a materially different posterior, unsafe acceptance or task loss is unmeasured.",
+    "scope": "A source-confirmed observer-input consistency issue in the native simulation pipeline. It is neither the excluded saturation-alias operation nor evidence of a novel security contribution or a demonstrated attack.",
+    "execution_recommended_now": false,
+    "resource_gate": "The matched diffusion/RSSM/safety-policy checkpoints and normalization bundle were not found in the checked official publication surfaces; no local Clean baseline or intervention trajectory is available."
+  },
+  "source_facts": [
+    {
+      "path": "src/latent_cbf/controllers/diffusion_controller.py",
+      "lines": [
+        256,
+        257,
+        258,
+        259,
+        426,
+        427,
+        429,
+        479,
+        494
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L256",
+      "fact": "Base compute_action clips nominal to [-2,2]. The filter immediately appends raw_ac; only later it computes ac=safe_ac*ac_max and returns (ac,raw_ac). No history rewrite follows."
+    },
+    {
+      "path": "src/latent_cbf/scripts/collect_trajs.py",
+      "lines": [
+        114,
+        117,
+        118,
+        138,
+        139,
+        140,
+        141,
+        142,
+        150,
+        153,
+        156,
+        162
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/scripts/collect_trajs.py#L114",
+      "fact": "Collector resets controller, chooses tuple element0, records that selected request, calls env.step, and uses the resulting actual observation on the next compute_action call. There is no executed-action feedback call to the controller."
+    },
+    {
+      "path": "src/latent_cbf/dubins/dubins_env.py",
+      "lines": [
+        159,
+        160,
+        163,
+        172
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/dubins/dubins_env.py#L159",
+      "fact": "The environment clips the selected request again before both physical state update and reward. The strict feedback target is therefore this applied action, not merely the pre-executor selected request if a custom normalization/bound configuration causes additional clipping."
+    },
+    {
+      "path": "src/latent_cbf/controllers/diffusion_controller.py",
+      "lines": [
+        432,
+        433,
+        435,
+        436,
+        437,
+        443,
+        447,
+        451,
+        453,
+        454,
+        455,
+        456
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L432",
+      "fact": "The hard-coded H=5 window uses current real observations with previous nominal actions; the current nominal is excluded from the slice. wm_history_length does not select this H in the inspected method."
+    },
+    {
+      "path": "dreamerv3_torch/models.py",
+      "lines": [
+        125,
+        126,
+        127,
+        128,
+        131,
+        140,
+        141
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/dreamerv3_torch/models.py#L125",
+      "fact": "WorldModel.preprocess casts the action entries to float32 without replacing, normalizing or recovering the executed actions. Image scaling does not repair action provenance."
+    },
+    {
+      "path": "dreamerv3_torch/networks.py",
+      "lines": [
+        127,
+        132,
+        133,
+        136,
+        143,
+        154,
+        159,
+        174,
+        176,
+        178,
+        195,
+        196,
+        202,
+        205,
+        216
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/dreamerv3_torch/networks.py#L127",
+      "fact": "observe returns the posterior. is_first resets the window and zeros its first incoming action; later steps use the supplied action in img_step. Posterior features concatenate stochastic state with the prior-derived deterministic state, so observing the real image does not structurally erase all action-history dependence. Numerical sensitivity is not established by this fact."
+    },
+    {
+      "path": "src/latent_cbf/controllers/diffusion_controller.py",
+      "lines": [
+        348,
+        496,
+        497,
+        498,
+        499,
+        500
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L348",
+      "fact": "init_wm inserts one dummy zero, but the native collector subsequently calls reset, which clears all histories including that zero and resets the diffusion buffer. No persistent posterior is carried between rolling windows."
+    },
+    {
+      "path": "dreamerv3_torch/tools.py",
+      "lines": [
+        318,
+        319,
+        320,
+        323,
+        324,
+        328,
+        335,
+        343,
+        345,
+        346,
+        350,
+        354,
+        591,
+        597,
+        598
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/dreamerv3_torch/tools.py#L318",
+      "fact": "Offline training uses stored observation[t] and stored action[t-1], with zero incoming action at episode start. Sampled training windows also mark their first element is_first. The t<T loop omits the last stored post-action observation; that separate endpoint detail does not explain nominal-versus-executed mismatch."
+    },
+    {
+      "path": "src/latent_cbf/scripts/collect_batch_diffusion.sh",
+      "lines": [
+        41,
+        42,
+        43,
+        44,
+        49
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/scripts/collect_batch_diffusion.sh#L41",
+      "fact": "The published exploration collection invokes diffusion without --use_wm_prediction or a filter. With official bounds, its clipped nominal request is the applied control. Training therefore has no special nominal-action semantic contract that would justify using rejected nominal controls during filtered deployment."
+    },
+    {
+      "path": "src/latent_cbf/scripts/combine_trajectories.py",
+      "lines": [
+        20,
+        22,
+        33,
+        44,
+        46
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/scripts/combine_trajectories.py#L20",
+      "fact": "The world-model buffer combines stored HDF5 trajectories without changing their action labels. Actual checkpoint training contents are unavailable; arbitrary files in that directory could change the dataset composition, so author-run distributions are not inferred."
+    },
+    {
+      "path": "src/latent_cbf/scripts/dreamer_offline.py",
+      "lines": [
+        178,
+        188,
+        189,
+        194,
+        200,
+        442,
+        443
+      ],
+      "url": "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/scripts/dreamer_offline.py#L178",
+      "fact": "Training consumes those aligned stored-action sequences in the same dynamics.observe function. The inspected path trains observation/posterior consistency on recorded controls, not a counterfactual nominal sequence."
+    }
+  ],
+  "time_alignment": {
+    "notation": "At zero-based call t, o_t is the actual observation before applying the current action, u_t is the base clipped nominal, b_t is the filter-selected request, and a_t=env_clip(b_t) is the applied input producing o_(t+1).",
+    "history_after_append": "nominal_history=[u_0,...,u_t], observation_history=[o_0,...,o_t].",
+    "window": "For t>=6, obs[-5:]=[o_(t-4),...,o_t] and nominal[-6:-1]=[u_(t-5),...,u_(t-1)]. Each noninitial row has the expected previous-time index, but it should carry a_j instead of u_j when filtering intervened.",
+    "effective_transitions": "is_first[0]=1 zeros the first incoming action. The last four transitions use u_(t-4),...,u_(t-1) rather than a_(t-4),...,a_(t-1).",
+    "first_possible_activation": "After native reset, calls t=0..5 bypass filtering; t=6 is the first filter call. If a_6 differs from u_6, call t=7 is the first posterior window using that incorrect nominal alongside the observation caused by a_6.",
+    "bounded_memory": "That particular action is directly used by the next four posterior windows, then becomes the zeroed first incoming action and later leaves the five-observation window. Any continued physical-trajectory effects are separate; this code is not an indefinitely accumulated hidden posterior.",
+    "same_input_negative_control": "If u_j==a_j for all four effective historical transitions, a feedback-only repair changes no action input. With matched posterior sampling, that case should remain unchanged."
+  },
+  "feedback_to_decision": {
+    "path": "filter correction b_t -> environment applies a_t -> true o_(t+1) -> next RSSM observe uses old u_t instead of a_t -> posterior feature -> safety critic evaluates the unchanged current nominal plus fixed grid -> acceptance/replacement.",
+    "acceptance_sources": [
+      "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L409",
+      "https://github.com/CMU-IntentLab/latent_cbf/blob/d644309db5d46d414ac70b18bed085b030ff9e5c/src/latent_cbf/controllers/diffusion_controller.py#L459"
+    ],
+    "actual_interface": "Native internal controller history append and missing execution feedback; no invented external writer or direct state/observation overwrite is required for natural activation.",
+    "not_established": "No malicious-provider permission, adversarial activation, posterior error, acceptance change or collision has been measured. Pure latent difference would not by itself establish harm."
+  },
+  "archive_duplicate_screen": {
+    "registry": "reports/research_archive/mechanisms.json",
+    "exact_nominal_vs_applied_feedback_entry_found": false,
+    "closest_entries": [
+      {
+        "id": "wm_branch_provenance",
+        "difference": "Replaces valid observation cues from a different hidden branch in a researcher toy POMDP; no native safety-filter action feedback path."
+      },
+      {
+        "id": "opine_query_memory",
+        "difference": "Hypothetical model queries mutate program globals; native planner probes did not trigger the side effect. Here the actual filter loop explicitly appends a rejected nominal control, without mutable query side effects."
+      },
+      {
+        "id": "jowa_rejected_branch_cache",
+        "difference": "Tests cache/storage isolation between hypothetical search branches and factual history; that candidate was blocked by native copying. This controller explicitly chooses the wrong action source, rather than a reference alias writing through storage."
+      },
+      {
+        "id": "wm_rejected_future",
+        "difference": "Rejected options affect batch-adaptive scoring; not a belief-state update with a mismatched action history."
+      },
+      {
+        "id": "tdmpc_query_interference",
+        "difference": "Shared planner warm starts affect proposals; no false action/real-observation pairing."
+      }
+    ],
+    "interpretation": "Distinct concrete source path from those archived tests, but not evidence that the observer-input principle is novel. Correct action feedback is a conventional state-estimation contract."
+  },
+  "minimal_falsifiable_hypothesis": {
+    "claim": "On a preregistered competent native task where the filter naturally changes a control, using nominal rather than applied past controls can change a subsequent safety acceptance and worsen an independently measured physical safety outcome.",
+    "first_decisive_diagnostic": "With a released matched bundle and one fixed seed, retain the first naturally changed control, actual observation window, current nominal/grid, full simulator state and posterior RNG. Compare native nominal history against the exact applied-action history, changing only those historical action values. Do not alter observations, goals, current nominal candidates, critic weights or thresholds.",
+    "measurements": "First separate posterior dependence, acceptance/selected-action difference, and actual replayed safety outcome. Independent physical rollout from the same state is needed for the last claim; learned Q alone is insufficient.",
+    "negative_controls": "An unchanged-action window must be identical under the feedback-only change; pair all RSSM stochastic samples. A seed with no natural correction is nonactivation, not a reason to search another seed.",
+    "failure_interpretation": "No posterior or decision change would refute local relevance in that fixed case. Changed features without changed safety decisions/outcomes would leave the safety hypothesis unsupported. Repair benefit alone identifies an implementation/estimation issue, not a new adversarial mechanism.",
+    "not_a_protocol_or_execution_authorization": "No runner, model experiment, seed search or numerical gate was created in this source review."
+  },
+  "resource_gap": {
+    "source": "reports/latent_cbf_alias_carrier_screen_20261015.json",
+    "missing": [
+      "matched diffusion policy and normalization/configuration files",
+      "trained RSSM",
+      "trained safety critic/actor",
+      "native Clean task evidence and an observed natural correction trace"
+    ],
+    "published_surface_scope": "Previous fixed-revision README/recursive tree/GitHub Releases check found no reusable bundle; no claim about private author assets.",
+    "current_action": "Record this source finding; do not train models, download weights or claim an executed safety experiment."
+  },
+  "activity": {
+    "model_loads": 0,
+    "model_inference_calls": 0,
+    "environment_constructions": 0,
+    "environment_steps": 0,
+    "gpu_calls": 0,
+    "model_api_calls": 0,
+    "training_updates": 0,
+    "weight_downloads": 0,
+    "full_repository_clones": 0,
+    "archive_modified": false,
+    "network_access": "Five selected official fixed-revision text source files; remaining sources reused from /tmp. No upstream source executed.",
+    "files_written": [
+      "reports/latent_cbf_action_feedback_contract_20261015.json"
+    ],
+    "followup_probe_record": "Original activity counts describe the source-only review. The separate cpu_route_probe.activity records the single subsequent method-routing run; all real model/environment counts remain zero."
+  },
+  "cpu_route_probe": {
+    "status": "completed_cpu_route_semantics_only",
+    "script": "scripts/probe_latent_cbf_action_feedback.py",
+    "summary": "runs/latent_cbf_action_feedback_20261015/summary.json",
+    "fixed_source_copy": "runs/latent_cbf_action_feedback_20261015/upstream_diffusion_controller.py",
+    "launched_script_copy": "runs/latent_cbf_action_feedback_20261015/launched_probe.py",
+    "source_sha256": "37b806e7861e8ff3fe948c0cf07c6e2ffab8c8bffbc04c13762ff6cba517f5ae",
+    "extracted_original_methods": {
+      "compute_action": [
+        426,
+        494
+      ],
+      "reset": [
+        496,
+        500
+      ]
+    },
+    "command": "timeout 60s .venv-jepa-native/bin/python scripts/probe_latent_cbf_action_feedback.py",
+    "runtime": {
+      "python": "3.11.13",
+      "numpy": "1.26.4",
+      "torch": "2.6.0+cu124",
+      "torch_path": "/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/__init__.py"
+    },
+    "elapsed_seconds": 1.246920878009405,
+    "terminal_session": 80642,
+    "exit_code": 0,
+    "checks": {
+      "accepted_nominal_history_matches_returned_controls": true,
+      "after_one_filter_next_observe_receives_unexecuted_nominal": true,
+      "one_feedback_assignment_repairs_the_corresponding_noninitial_slot_only": true,
+      "original_reset_clears_three_histories_and_calls_stub_base_reset": true
+    },
+    "observed_routing": "After call t=6 returns selected=-1.0 rather than nominal=0.5, call t=7 passes incoming actions [0.5,0.5,0.5,0.5,0.5] to observe for observation IDs [3,4,5,6,7]. A single post-return feedback assignment changes only the final action slot to -1.0. The unfiltered route matches returned controls; reset clears histories.",
+    "fixture_limit": "Both fixture controls are strictly within the native bounds, so final clipping would preserve them. No physical environment is executed. In general the correct feedback must come after executor clipping; missing real ac_max files prevent assuming every filtered return equals the applied control.",
+    "inference_limit": "The original compute_action/reset methods ran on a stub nominal provider, recording WM and forced critic. No RSSM/critic checkpoint or physical environment ran; no latent error, unsafe acceptance, task outcome, empirical fix benefit or novelty is established.",
+    "activity": {
+      "real_model_loads": 0,
+      "real_model_inference_calls": 0,
+      "physical_environment_steps": 0,
+      "network_calls": 0,
+      "training_updates": 0,
+      "original_compute_action_calls_on_stubs": 24,
+      "recording_observe_calls": 6,
+      "stub_critic_calls": 6,
+      "cuda_initialized": false
+    },
+    "stop": "The one authorized routing probe is complete. No further model/environment/parameter exploration is performed."
+  }
+}

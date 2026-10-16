@@ -1,0 +1,780 @@
+{
+  "date": "2026-10-09",
+  "status": "limited_mechanism_evidence_rejected_cross_task_native_gate",
+  "candidate_claim_cn": "世界模型对每个候选动作的完整预测分布不变，跨候选采样耦合仍可操纵规划决策。",
+  "claim_status": "Rank coupling remains bounded CartPole evidence and failed stronger HalfCheetah, Pusher, and TD-MPC2 native gates; no broad cross-task security claim. WAV aliases, boundary stiffness, replay-priority starvation, and timeout laundering were rejected as ordinary failure modes. No scale-up.",
+  "headline_cn": "跨任务强模型短门槛未复现损害：HalfCheetah 25步目标耦合−4.38，独立抽样−4.84，等预算平均−5.56；目标臂反而最好。保留 CartPole 机制证据，不升级主张。",
+  "report_note_cn": "在此前精确模型机制证据之后，已完成 MBRL-Lib 连续 CartPole 的学习型模型短测。使用一个由 3000 条原生随机交互训练的五成员 GaussianMLP，冻结模型与归一化参数，保留原生 ModelEnv、奖励、终止条件与 CEM 实现。每次请求生成 K=8 组新预测，按各候选的预测回报排序；在抽取新的均匀随机行之前选择循环排列，仅改变候选间的配对。对任意候选，条件于整个预测库，每个原生预测批次仍以 1/K 概率被选中，因此保持完整 N=10 粒子预测批次的原生分布。两个开发种子独立选秩对照为 120、200，定向耦合为 92、110；随后两个新种子为 200、200 对 86、100。合计 4/4 成对下降，平均 180 对 97（下降 46.1%）；开发种子的共享分位数对照为 150、200。此前两个高斯近似构造未造成定向损害，负结果保留。",
+  "rows": [
+    {
+      "map": "4x4",
+      "particles": 1,
+      "time_limit": 100,
+      "independent_success": 0.044072501811069476,
+      "optimized_success": 0.004550203299632821,
+      "shared_quantile_success": 0.1609377403578431,
+      "random_phase_success": 0.05688560362521988,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 3.9522298511436653,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 6,
+        "success_rate": 0.03,
+        "discounted_return_mean": 0.02668514997030708,
+        "native_steps": 1648,
+        "predictive_particle_draws": 6592
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 1,
+        "success_rate": 0.005,
+        "discounted_return_mean": 0.004567586237418204,
+        "native_steps": 1222,
+        "predictive_particle_draws": 4888
+      },
+      "maximum_count_law_error": 1.1102230246251565e-16,
+      "maximum_expected_value_error": 3.2518432391270835e-13,
+      "source": "runs/coupled_sampling_security_v0/4x4_n1/summary.json"
+    },
+    {
+      "map": "4x4",
+      "particles": 4,
+      "time_limit": 100,
+      "independent_success": 0.1527966814089888,
+      "optimized_success": 0.04212054386881472,
+      "shared_quantile_success": 0.5714610360646999,
+      "random_phase_success": 0.15957015113669035,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 11.067613754017408,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 30,
+        "success_rate": 0.15,
+        "discounted_return_mean": 0.12240025883466178,
+        "native_steps": 3288,
+        "predictive_particle_draws": 52608
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 8,
+        "success_rate": 0.04,
+        "discounted_return_mean": 0.03371503362183323,
+        "native_steps": 2023,
+        "predictive_particle_draws": 32368
+      },
+      "maximum_count_law_error": 1.6653345369377348e-16,
+      "maximum_expected_value_error": 2.384759056894836e-13,
+      "source": "runs/coupled_sampling_security_v0/4x4_n4/summary.json"
+    },
+    {
+      "map": "4x4",
+      "particles": 16,
+      "time_limit": 100,
+      "independent_success": 0.6599382979810298,
+      "optimized_success": 0.5430058276143059,
+      "shared_quantile_success": 0.74014262129396,
+      "random_phase_success": 0.6174503837231586,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 11.693247036672382,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 137,
+        "success_rate": 0.685,
+        "discounted_return_mean": 0.48087024830225616,
+        "native_steps": 8592,
+        "predictive_particle_draws": 549888
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 112,
+        "success_rate": 0.56,
+        "discounted_return_mean": 0.4067646265103619,
+        "native_steps": 7486,
+        "predictive_particle_draws": 479104
+      },
+      "maximum_count_law_error": 5.614977039835123e-16,
+      "maximum_expected_value_error": 1.3034018309099338e-13,
+      "source": "runs/coupled_sampling_security_v0/4x4_n16/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 1,
+      "time_limit": 100,
+      "independent_success": 0.009388756086411494,
+      "optimized_success": 1.5082592826877354e-05,
+      "shared_quantile_success": 0.0366975980530736,
+      "random_phase_success": 0.01067098598553989,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 0.9373673493584617,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 3,
+        "success_rate": 0.015,
+        "discounted_return_mean": 0.01020903513412978,
+        "native_steps": 6868,
+        "predictive_particle_draws": 27472
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 0,
+        "success_rate": 0.0,
+        "discounted_return_mean": 0.0,
+        "native_steps": 4996,
+        "predictive_particle_draws": 19984
+      },
+      "maximum_count_law_error": 1.1102230246251565e-16,
+      "maximum_expected_value_error": 3.8902214782865485e-13,
+      "source": "runs/coupled_sampling_security_v0/8x8_n1/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 4,
+      "time_limit": 100,
+      "independent_success": 0.1332598498984799,
+      "optimized_success": 0.012476514060133727,
+      "shared_quantile_success": 0.42664094916546447,
+      "random_phase_success": 0.14585001970111686,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 12.078333583834617,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 32,
+        "success_rate": 0.16,
+        "discounted_return_mean": 0.08971684906277634,
+        "native_steps": 10769,
+        "predictive_particle_draws": 172304
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 4,
+        "success_rate": 0.02,
+        "discounted_return_mean": 0.010468946530361947,
+        "native_steps": 8026,
+        "predictive_particle_draws": 128416
+      },
+      "maximum_count_law_error": 1.6653345369377348e-16,
+      "maximum_expected_value_error": 3.2401858973685194e-13,
+      "source": "runs/coupled_sampling_security_v0/8x8_n4/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 16,
+      "time_limit": 100,
+      "independent_success": 0.48472272204454653,
+      "optimized_success": 0.2781456920869073,
+      "shared_quantile_success": 0.6315133042777676,
+      "random_phase_success": 0.4886208480874713,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 20.65770299576392,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 96,
+        "success_rate": 0.48,
+        "discounted_return_mean": 0.25711088477928945,
+        "native_steps": 14352,
+        "predictive_particle_draws": 918528
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 47,
+        "success_rate": 0.235,
+        "discounted_return_mean": 0.1240617688026571,
+        "native_steps": 14492,
+        "predictive_particle_draws": 927488
+      },
+      "maximum_count_law_error": 5.614977668492388e-16,
+      "maximum_expected_value_error": 3.1191715876843773e-13,
+      "source": "runs/coupled_sampling_security_v0/8x8_n16/summary.json"
+    },
+    {
+      "map": "4x4",
+      "particles": 64,
+      "time_limit": 100,
+      "independent_success": 0.7340008840545962,
+      "optimized_success": 0.705064941657438,
+      "shared_quantile_success": 0.7401648977587051,
+      "random_phase_success": 0.735546427703184,
+      "exact_expectation_success": 0.7401648977587051,
+      "success_drop_pp": 2.893594239715813,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 151,
+        "success_rate": 0.755,
+        "discounted_return_mean": 0.5293355056464932,
+        "native_steps": 8840,
+        "predictive_particle_draws": 2263040
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 144,
+        "success_rate": 0.72,
+        "discounted_return_mean": 0.5093868654537366,
+        "native_steps": 8586,
+        "predictive_particle_draws": 2198016
+      },
+      "maximum_count_law_error": 1.2072434559171723e-15,
+      "maximum_expected_value_error": 7.53563877964325e-14,
+      "source": "runs/coupled_sampling_security_n64/4x4_n64/summary.json"
+    },
+    {
+      "map": "8x8",
+      "particles": 64,
+      "time_limit": 100,
+      "independent_success": 0.5961263291003639,
+      "optimized_success": 0.5213063681971706,
+      "shared_quantile_success": 0.6317380009857488,
+      "random_phase_success": 0.6074662434964104,
+      "exact_expectation_success": 0.6317380009857634,
+      "success_drop_pp": 7.481996090319331,
+      "native_independent": {
+        "episodes": 200,
+        "successes": 134,
+        "success_rate": 0.67,
+        "discounted_return_mean": 0.368329942985246,
+        "native_steps": 14387,
+        "predictive_particle_draws": 3683072
+      },
+      "native_optimized": {
+        "episodes": 200,
+        "successes": 115,
+        "success_rate": 0.575,
+        "discounted_return_mean": 0.3025248202975042,
+        "native_steps": 15465,
+        "predictive_particle_draws": 3959040
+      },
+      "maximum_count_law_error": 1.2072434559171731e-15,
+      "maximum_expected_value_error": 1.3106182805699973e-13,
+      "source": "runs/coupled_sampling_security_n64/8x8_n64/summary.json"
+    }
+  ],
+  "implementation": {
+    "learner": "src/wm_security/coupled_sampling.py",
+    "runner": "scripts/pilot_coupled_sampling.py",
+    "operation": "Fixed state-conditioned cyclic quantile phases chosen to minimize expected true Q* of the selected action. Exact multinomial inverse CDF plus independent within-action permutations preserves the entire per-action iid particle law.",
+    "optimization": "24 random candidates and zero, then two 16-point coordinate sweeps; no gradient, neural update, API or hidden environment intervention."
+  },
+  "threat_model": {
+    "status": "Researcher-defined sampler-supply-chain threat model, not a found deployment vulnerability.",
+    "adversary_controls": "Cross-candidate coupling at a researcher-defined batched world-model sampler. Exact-model map phases are fixed before execution; the learned sampler chooses bank-dependent cyclic permutations before drawing a fresh uniform output row on each request.",
+    "preserved": [
+      "learned model weights and saved input normalization",
+      "complete native per-candidate forecast-batch law",
+      "upstream CEM algorithm and its configured parameters",
+      "native reward and termination functions",
+      "actions available",
+      "real environment; for the earlier exact-model study, native kernel and continuation values"
+    ],
+    "permissions_change": "This is a different candidate from the original action-only shared-experience poisoning threat model; no action-only realization is claimed."
+  },
+  "evidence_boundary": {
+    "task_families": 2,
+    "maps": 2,
+    "learned_world_model": true,
+    "upstream_agent": true,
+    "native_environment": true,
+    "exact_model": true,
+    "seed_schedule": "200 predetermined native seeds per condition; maps/particle budgets share the schedule, not independent datasets.",
+    "time_limit": "Both maps use FrozenLake-v1 with map_name; its wrapper is 100 steps. This is not the separately registered 200-step 8x8 benchmark.",
+    "scoring": "Success probability evaluated exactly from the induced decision kernel; separate real env.step episodes corroborate direction. Native counts remain finite-sample estimates.",
+    "asymptotic": "Per-action iid concentration still provides coupling-independent finite-action bounds; no asymptotic impossibility or irreparable attack claim.",
+    "scope": "Earlier exact-model FrozenLake with a project planner, plus one learned continuous-CartPole model with native CEM. Not multiple learned-world-model core tasks.",
+    "learned_seed_schedule": "Two development seeds 704/705 and subsequent seeds 706/707, same one trained checkpoint; pooled statistic is exploratory."
+  },
+  "analytic_witness": {
+    "status": "analytic_witness",
+    "variables": "U uniform on [0,1), X=U+delta, Y=(U+c) mod 1; choose argmax(X,Y).",
+    "delta": 0.05,
+    "rows": [
+      {
+        "shift": 0.1,
+        "better_action_mean": 0.55,
+        "worse_action_mean": 0.5,
+        "each_action_variance": 0.08333333333333333,
+        "covariance": 0.03833333333333332,
+        "difference_variance": 0.09000000000000001,
+        "worse_action_selected_probability": 0.9
+      },
+      {
+        "shift": 0.9,
+        "better_action_mean": 0.55,
+        "worse_action_mean": 0.5,
+        "each_action_variance": 0.08333333333333333,
+        "covariance": 0.03833333333333334,
+        "difference_variance": 0.08999999999999998,
+        "worse_action_selected_probability": 0.09999999999999998
+      }
+    ],
+    "derivation": "Both Y laws are Uniform[0,1), E[X]=1/2+delta, E[Y]=1/2. Cov(X,Y)=1/12-c(1-c)/2. For c>delta, Y>X exactly on U<1-c. Thus c and 1-c share both marginal laws and covariance but induce different decisions.",
+    "independent_worse_action_probability": 0.45125,
+    "interpretation": "A constructed analytic example, not an additional native task. Pairwise covariance and each forecast law do not determine decision risk; the cyclic quantile construction uses established probability tools, not a claimed new theorem.",
+    "theorem_boundary": "With bounded returns and iid particles within each action, a union bound on per-action concentration still controls action-selection error regardless of cross-action dependence. The construction gives no asymptotic impossibility claim.",
+    "native_interactions": 0,
+    "api_requests": 0,
+    "gpu_work": false
+  },
+  "native_next_carrier": {
+    "repository": "https://github.com/facebookresearch/mbrl-lib",
+    "pin": "3f93cccfc8d635f74e335a2f07aab6e9a48fc021",
+    "local": "vendor/mbrl-lib",
+    "license": "MIT",
+    "native_batch_path": "mbrl/models/model_env.py:145 evaluate_action_sequences repeats candidate actions over particles, samples trajectories, then averages particle rewards.",
+    "native_sampler": "mbrl/models/model.py:426 sample_1d returns torch.normal(means,stds,generator=rng).",
+    "status": "Native GaussianMLP trained once on CPU and evaluated with native ModelEnv/CEM. Fresh-bank rank coupling caused paired return drops on four seeds; reduced pilot configuration, not a found deployment vulnerability."
+  },
+  "closest_priors": [
+    {
+      "title": "Variance Reduction in Monte-Carlo Tree Search",
+      "url": "https://mlanctot.info/files/papers/nips11vrmcts.pdf",
+      "boundary": "Common random numbers already modify cross-action dependence and decision variance; merely reversing the effect is not automatically a new concept. Current cyclic construction targets full decision probabilities and permits a same-covariance analytic contrast, but strong native security evidence is still required."
+    },
+    {
+      "title": "WorldKernel",
+      "url": "https://arxiv.org/html/2606.10934v1",
+      "boundary": "Already treats counterfactual coupling and joint-only failures. Here the physical kernel and optimal action values are fixed; the intervention targets Monte-Carlo sampling dependence in action selection rather than identifying a physical cross-world causal effect. This is a candidate operational distinction, not a novelty verdict."
+    }
+  ],
+  "usage": {
+    "api_requests": 0,
+    "failed_api_requests": 0,
+    "gpu_seconds": null,
+    "native_evaluation_episodes": 3224,
+    "native_environment_steps": 137991,
+    "exact_model": {
+      "api_requests": 0,
+      "failed_api_requests": 0,
+      "native_episodes": 3200,
+      "native_environment_steps": 131040,
+      "predictive_particle_draws": 15422808,
+      "coupling_objective_evaluations": 38976,
+      "experiment_wall_seconds": 29.211034405510873,
+      "neural_training_updates": 0,
+      "gpu_seconds": 0
+    },
+    "learned_model": {
+      "api_requests": 0,
+      "failed_api_requests": 0,
+      "gpu_seconds": 0,
+      "native_evaluation_episodes": 24,
+      "native_evaluation_steps": 3951,
+      "native_collection_steps": 3000,
+      "native_environment_steps": 6951,
+      "native_predictive_transitions": 637065000,
+      "additional_surrogate_forward_transitions": 17100000,
+      "surrogate_backward_work": "Additional autodiff in the trajectory construction; no equivalent FLOP count recorded.",
+      "neural_training_updates": 2580,
+      "training_cpu_elapsed_seconds": 4.230480143800378,
+      "summed_evaluation_process_elapsed_seconds": 538.3463145792484,
+      "timing_scope": "Sum of per-process elapsed times, not total wall time or measured CPU utilization; some runs overlapped."
+    },
+    "accounting_note": "Total environment steps include 3000 learned-model collection steps; evaluation episode count excludes collection resets. Prediction draws and learned rollout transitions are itemized separately.",
+    "robustness_followup": {
+      "api_requests": 0,
+      "failed_api_requests": 0,
+      "completed_native_evaluation_episodes": 22,
+      "completed_native_evaluation_steps": 4723,
+      "native_collection_steps": 15000,
+      "recorded_snapshot_check_native_steps": 3,
+      "other_live_simulator_diagnostic_steps": 5,
+      "incomplete_run_native_steps_lower_bound": 100,
+      "incomplete_run_exact_step_count": null,
+      "completed_mbrl_prediction_transitions": 2208280000,
+      "completed_tdmpc_estimator_evaluations": 6000,
+      "tdmpc_parity_estimator_evaluations": 4,
+      "tdmpc_additional_head_law_check_forward_calls": 1,
+      "neural_training_updates": 10440,
+      "cpu_training_seconds": 34.56248448882252,
+      "completed_evaluation_process_elapsed_seconds": 1881.1461237920448,
+      "gpu_work": "Frozen TD-MPC2 inference only; no GPU training. Process elapsed includes CPU search; GPU utilization time not measured.",
+      "incomplete_run_usage": "Brute-force TD-MPC2 search explicitly stopped for CPU cost. At least 100 real steps/600 estimations/201 wall seconds/771 CPU seconds observed; exact totals unavailable and excluded from completed-run sums.",
+      "native_environment_steps_lower_bound": 19831
+    },
+    "gpu_work_note": "Earlier exact/Gaussian pilots used no GPU; the follow-up used frozen TD-MPC2 inference only. No GPU training. Device utilization time was not measured.",
+    "cumulative_environment_steps_lower_bound": 157822,
+    "native_environment_steps_scope": "native_environment_steps retains the earlier exact/Gaussian subtotal; cumulative_environment_steps_lower_bound includes the strong-baseline follow-up and observed interrupted-run work."
+  },
+  "next_requirement": "Stop expanding the current CartPole rank search and weak HalfCheetah fitting. A new candidate concerns prediction-law-preserving sampler reparameterizations that corrupt autodiff planning gradients. It has only a mathematical witness, is closely related to known missing-boundary gradient terms, and needs a strong existing differentiable stochastic controller, native task harm, correct-gradient/derivative-free controls and a distinct security contribution before adoption or GPU training.",
+  "updated_at_utc": "2026-10-09T01:28:55.839338+00:00",
+  "exact_model_report_note_cn": "按更新后的目标，主线回到世界模型安全。新候选只控制批量预测中不同候选动作的随机耦合，保持每个动作的整组 N 个样本仍服从原生独立同分布转移。使用未修改的 Gymnasium FrozenLake-v1 两个内置地图（两者当前注册包装器均为 100 步），以原生转移核作为精确世界模型；规划器由本项目实现，用精确最优后续价值做一步采样决策。在每动作 16 个样本时，精确成功率为独立采样 65.99%／48.47%，定向耦合 54.30%／27.81%；每种条件各 200 次原生执行为 68.5%／48.0% 对 56.0%／23.5%。64 样本下精确损失降至 2.89／7.48 个百分点。共享分位数采样接近精确期望规划，说明可信采样控制值得保留作强对照。逐动作粒子计数分布最大数值差约 1.21e-15；随机排列计数所得的完整粒子序列也保持 iid。另有解析例子证明：相同预测边缘分布和协方差可以对应 90% 与 10% 的劣动作选择概率。当前证据来自同一简单任务的两张地图、精确模型和自实现规划器，尚未证明学习型世界模型、真实第三方采样权限或新意 7–7.5；没有把基础耦合或蒙特卡洛方差现象宣称为新概念。",
+  "learned_result": {
+    "source": "runs/mbrl_rank_coupling_cartpole_v2/assessment.json",
+    "proof_source": "runs/mbrl_rank_coupling_cartpole_v2/preservation_argument.json",
+    "implementation": "src/wm_security/rank_coupling.py",
+    "runner": "scripts/pilot_mbrl_rank_coupling.py",
+    "aggregation": "scripts/summarize_mbrl_coupling.py",
+    "task": "MBRL-Lib native continuous CartPole, researcher episode cap 200 matching tutorial",
+    "trained_checkpoints": 1,
+    "paired_seeds": 4,
+    "paired_declines": 4,
+    "independent_mean": 180.0,
+    "targeted_mean": 97.0,
+    "relative_mean_return_drop": 0.46111111111111114,
+    "paired_rows": [
+      {
+        "stage": "development",
+        "seed": 704,
+        "independent_return": 120.0,
+        "targeted_return": 92.0,
+        "shared_return": 150.0,
+        "return_drop": 28.0,
+        "independent_source": "runs/mbrl_rank_coupling_cartpole_v2/independent/episode_704.json",
+        "targeted_source": "runs/mbrl_rank_coupling_cartpole_v2/targeted/episode_704.json"
+      },
+      {
+        "stage": "development",
+        "seed": 705,
+        "independent_return": 200.0,
+        "targeted_return": 110.0,
+        "shared_return": 200.0,
+        "return_drop": 90.0,
+        "independent_source": "runs/mbrl_rank_coupling_cartpole_v2/independent/episode_705.json",
+        "targeted_source": "runs/mbrl_rank_coupling_cartpole_v2/targeted/episode_705.json"
+      },
+      {
+        "stage": "new_seed_confirmation",
+        "seed": 706,
+        "independent_return": 200.0,
+        "targeted_return": 86.0,
+        "shared_return": null,
+        "return_drop": 114.0,
+        "independent_source": "runs/mbrl_rank_coupling_cartpole_confirm_v2/independent/episode_706.json",
+        "targeted_source": "runs/mbrl_rank_coupling_cartpole_confirm_v2/targeted/episode_706.json"
+      },
+      {
+        "stage": "new_seed_confirmation",
+        "seed": 707,
+        "independent_return": 200.0,
+        "targeted_return": 100.0,
+        "shared_return": null,
+        "return_drop": 100.0,
+        "independent_source": "runs/mbrl_rank_coupling_cartpole_confirm_v2/independent/episode_707.json",
+        "targeted_source": "runs/mbrl_rank_coupling_cartpole_confirm_v2/targeted/episode_707.json"
+      }
+    ],
+    "model_state_hash": "06f5b4a4625ff4306bbf4ec6a186be299e3760e849606a8bd4a26fd274126fc2",
+    "planner": {
+      "native_implementation": true,
+      "cem_iterations": 3,
+      "population": 100,
+      "elite_count": 10,
+      "horizon": 15,
+      "particles": 10,
+      "bank_size": 8,
+      "full_pets_reproduction": false
+    },
+    "negative_constructions": [
+      {
+        "construction": "Stepwise Gaussian projection and quantile phases",
+        "seeds": [
+          700,
+          701
+        ],
+        "native_returns": [
+          200,
+          173
+        ],
+        "targeted_returns": [
+          190,
+          200
+        ],
+        "source": "runs/mbrl_coupling_cartpole_v0/targeted/summary.json",
+        "conclusion": "No directional task harm. The antithetic CLI arm is actually a half-cycle quantile shift; its two-seed outcome is not a validated antithetic attack. Fresh independent random phases preserve the independent Gaussian law in distribution."
+      },
+      {
+        "construction": "Whole-trajectory Gaussian projection using a smooth-survival gradient",
+        "seeds": [
+          702,
+          703
+        ],
+        "native_returns": [
+          200,
+          140
+        ],
+        "targeted_returns": [
+          200,
+          180
+        ],
+        "source": "runs/mbrl_trajectory_coupling_cartpole_v1/targeted/summary.json",
+        "conclusion": "No directional task harm; surrogate forward and backward compute retained in costs."
+      }
+    ],
+    "limits": [
+      "One trained checkpoint, four evaluation seeds, one continuous-control task.",
+      "Two discovery and two subsequent confirmation seeds; pooled four-seed result is not an independent confirmation study.",
+      "K=8 model-generation budget matched per evaluation; phase optimization adds attacker work and episode lengths differ.",
+      "Independent control selects each candidate rank independently; native ensemble allocation can still couple underlying candidate predictions.",
+      "Both arms return one N=10 forecast aggregate; this is not an all-80-particle averaging baseline.",
+      "Native CEM and model classes, but reduced pilot settings; not full PETS benchmark reproduction.",
+      "Rank-law preservation concerns learned predictions, not accuracy against the physical environment.",
+      "Confirmation plans retain a stale stage text naming seeds 704/705; their arguments and episode records correctly specify 706/707.",
+      "The v0 antithetic label implements a half-cycle quantile shift, not Gaussian sign-reversal antithetic sampling.",
+      "No broad novelty or deployed sampler vulnerability claim.",
+      "Subsequent stronger planner and pretrained critic-head checks did not establish meaningful task harm; see robustness_result."
+    ],
+    "verification": {
+      "frozen_plans_checked": 13,
+      "all_recorded_source_hashes_match": true,
+      "all_episode_rewards_and_lengths_match": true,
+      "paired_initial_observations_match": true,
+      "model_state_hash": "06f5b4a4625ff4306bbf4ec6a186be299e3760e849606a8bd4a26fd274126fc2",
+      "current_model_file_hashes": {
+        "model.pth": "256d6b6a437059739f5d345c508773d390f48d6d6892c57cc9e6af091de3b46c",
+        "env_stats.pickle": "9decb33026b492020a5d9c0fe2ba179874207a3a5b0e91525e7715345952b3ed"
+      },
+      "normalizer_scope": "Loaded from one saved training artifact in all runs; current digest is not a separately recorded pre-run normalizer digest.",
+      "mbrl_pin": "3f93cccfc8d635f74e335a2f07aab6e9a48fc021",
+      "vendor_worktree_clean": true
+    },
+    "usage": {
+      "api_requests": 0,
+      "failed_api_requests": 0,
+      "gpu_seconds": 0,
+      "native_evaluation_episodes": 24,
+      "native_evaluation_steps": 3951,
+      "native_collection_steps": 3000,
+      "native_environment_steps": 6951,
+      "native_predictive_transitions": 637065000,
+      "additional_surrogate_forward_transitions": 17100000,
+      "surrogate_backward_work": "Additional autodiff in the trajectory construction; no equivalent FLOP count recorded.",
+      "neural_training_updates": 2580,
+      "training_cpu_elapsed_seconds": 4.230480143800378,
+      "summed_evaluation_process_elapsed_seconds": 538.3463145792484,
+      "timing_scope": "Sum of per-process elapsed times, not total wall time or measured CPU utilization; some runs overlapped."
+    },
+    "report_limits_cn": "最初 4 个成对种子来自一个训练检查点和缩小的最佳候选 CEM 设置，不能独立支撑广泛结论。后续第二个训练检查点仅 1/2 种子受损，上游默认精英均值 CEM 的一组复核两臂均为 200。原 K=8 采样器有 8 倍隐藏模型计算及额外搜索成本；全预测平均对照达到 200、200。保持学习型模型预测分布不等于物理模型完全正确。没有建立高新意、多核心任务损害或可扩大训练的证据。"
+  },
+  "exact_model_usage": {
+    "api_requests": 0,
+    "failed_api_requests": 0,
+    "native_episodes": 3200,
+    "native_environment_steps": 131040,
+    "predictive_particle_draws": 15422808,
+    "coupling_objective_evaluations": 38976,
+    "experiment_wall_seconds": 29.211034405510873,
+    "neural_training_updates": 0,
+    "gpu_seconds": 0
+  },
+  "robustness_result": {
+    "source": "runs/mbrl_rank_official_planner_v0/assessment.json",
+    "official_cartpole_planner": {
+      "independent": [
+        200.0
+      ],
+      "targeted": [
+        200.0
+      ],
+      "settings": "Upstream CartPole CEM: 350 candidates, 5 iterations, 20 particles, horizon 15, elite-mean output; same original small trained model, not full upstream PETS training.",
+      "conclusion": "One paired seed, no task loss; not a universal defense claim."
+    },
+    "all_bank_mean": {
+      "returns": [
+        200.0,
+        200.0
+      ],
+      "conclusion": "Two original development seeds reach 200 with all 80 predictions averaged. Same model-generation budget as K=8 original attack, but not an attacked 80-particle sampler or certified defense."
+    },
+    "independent_training": {
+      "independent": [
+        200.0,
+        118.0
+      ],
+      "targeted": [
+        86.0,
+        119.0
+      ],
+      "paired_declines": 1,
+      "pairs": 2,
+      "conclusion": "Mean decrease but only one of two paired seeds harmed; original reduced best-candidate planner."
+    },
+    "halfcheetah": {
+      "uncorrected": "Excluded: previous-position aliasing made forward reward zero. Collection, training and evaluation costs retained.",
+      "corrected_initial_returns": [
+        17.287759739478773,
+        10.069542668622173
+      ],
+      "corrected_random_returns": [
+        -65.75683181148561,
+        -5.185917788910407
+      ],
+      "refit_stronger_returns": [
+        -21.76786125400822,
+        -32.036575776417855
+      ],
+      "refit_random_returns": [
+        -76.15671921431793,
+        -92.28418828855078
+      ],
+      "conclusion": "No strong locomotion baseline established, even after one ordinary data refit and larger planner. No attack run and no second-task harm claimed."
+    },
+    "tdmpc_terminal_value": {
+      "native": [
+        974.2680277954787
+      ],
+      "targeted": [
+        973.3963107001036
+      ],
+      "scope": "Pretrained mt30-48M, full native Walker-walk episode; terminal two-head value sampling, not stochastic dynamics. Exact per-candidate head-pair law; no extra neural forward calls.",
+      "search": "One sweep over 128 optimistic candidates, native MPPI settings retained. Earlier full search interrupted explicitly for CPU cost; its partial result is not a completed attack episode.",
+      "conclusion": "Less than one return point lost on a roughly 974-point baseline; no meaningful task harm demonstrated."
+    },
+    "usage": {
+      "api_requests": 0,
+      "failed_api_requests": 0,
+      "completed_native_evaluation_episodes": 22,
+      "completed_native_evaluation_steps": 4723,
+      "native_collection_steps": 15000,
+      "recorded_snapshot_check_native_steps": 3,
+      "other_live_simulator_diagnostic_steps": 5,
+      "incomplete_run_native_steps_lower_bound": 100,
+      "incomplete_run_exact_step_count": null,
+      "completed_mbrl_prediction_transitions": 2208280000,
+      "completed_tdmpc_estimator_evaluations": 6000,
+      "tdmpc_parity_estimator_evaluations": 4,
+      "tdmpc_additional_head_law_check_forward_calls": 1,
+      "neural_training_updates": 10440,
+      "cpu_training_seconds": 34.56248448882252,
+      "completed_evaluation_process_elapsed_seconds": 1881.1461237920448,
+      "gpu_work": "Frozen TD-MPC2 inference only; no GPU training. Process elapsed includes CPU search; GPU utilization time not measured.",
+      "incomplete_run_usage": "Brute-force TD-MPC2 search explicitly stopped for CPU cost. At least 100 real steps/600 estimations/201 wall seconds/771 CPU seconds observed; exact totals unavailable and excluded from completed-run sums.",
+      "native_environment_steps_lower_bound": 19831
+    },
+    "decision": "Do not scale the existing rank-coupling operation or extend weak HalfCheetah fitting. Preserve the limited original mechanism result, investigate a substantively different security operation with native strong-policy evidence before making a high-novelty claim.",
+    "report_note_cn": "后续强对照改变了结论：同一冻结模型配上游默认 CartPole CEM（350 候选、5 次迭代、20 粒子、精英均值输出），单个成对种子两臂均为 200。另一个独立训练模型在原缩小设置下，对照为 200、118，定向耦合为 86、119，仅 1/2 成对受损。把全部 80 个预测用于平均的同模型计算预算对照为 200、200，但这不是被攻击的 80 粒子采样器或认证防御。预训练 TD-MPC2 的终端价值头抽样也能保持逐候选分布而改变配对，且不增加网络前向；完整 Walker-walk 回合为 974.27 对 973.40，未产生有意义损害。该入口是价值估计，不是随机动力学。HalfCheetah 的前进奖励兼容问题已修正，但一次短重拟合及更大规划预算后仍未建立强干净策略，因此未运行攻击，不计作第二类任务支持。"
+  },
+  "followup_halfcheetah_gate": {
+    "model": "runs/mbrl_rank_halfcheetah_refit_v2/model",
+    "task": "HalfCheetah",
+    "seed": 812,
+    "strong_settings": {
+      "particles": 20,
+      "bank_size": 8,
+      "population": 200,
+      "iterations": 5,
+      "horizon": 20,
+      "elite_ratio": 0.1,
+      "max_steps": 25,
+      "return_mean_elites": true
+    },
+    "prefix_returns": {
+      "independent": -4.844585433602333,
+      "bank_mean": -5.561089240014553,
+      "targeted": -4.378791019320488
+    },
+    "full_control_runs": {
+      "independent_50": -11.375932902097702,
+      "bank_mean_50": -14.31277696043253
+    },
+    "targeted_episodes": 1,
+    "targeted_phase_candidates": 400125,
+    "model_hash_unchanged": true,
+    "predictive_law_note": "The cyclic sampler construction is unchanged; exact pair-law preservation is separately checked in runs/tdmpc_rank_coupling_v0/pair_law_check.json.",
+    "decision": "No cross-task harmful effect at the short gate; stop before a 50-step targeted run or additional seeds."
+  },
+  "limits": [
+    "HalfCheetah follow-up used a stronger refit checkpoint and matched CEM settings; target coupling improved rather than degraded the comparable 25-step prefix, so CartPole-only harm is not a broad claim."
+  ],
+  "followup_pusher_gate": {
+    "model": "runs/mbrl_rank_pusher_v1/model",
+    "task": "Pusher",
+    "train_settings": {
+      "transitions": 3000,
+      "epochs": 60,
+      "ensemble_size": 5,
+      "model_hash": "ec2a75a3340fd08c38c4a0f50b5c1d83cd7d797c3d8556caf026d4a1e11262b7",
+      "validation_loss": 0.050947774201631546
+    },
+    "strong_settings": {
+      "particles": 20,
+      "bank_size": 8,
+      "population": 200,
+      "iterations": 5,
+      "horizon": 20,
+      "elite_ratio": 0.1,
+      "max_steps": 50,
+      "return_mean_elites": true
+    },
+    "returns": {
+      "native_50": -39.18774738386477,
+      "independent_50": -40.25873109336794,
+      "bank_mean_50": -39.75445780766837,
+      "targeted_25": -23.13419928475451,
+      "independent_25": -23.195971615685448,
+      "bank_mean_25": -23.064040376239372
+    },
+    "sources": {
+      "native": "runs/mbrl_rank_pusher_v1/native_strong_seed812_v1/summary.json",
+      "independent": "runs/mbrl_rank_pusher_v1/independent_strong_seed812/summary.json",
+      "bank_mean": "runs/mbrl_rank_pusher_v1/bank_mean_strong_seed812/summary.json",
+      "targeted": "runs/mbrl_rank_pusher_v1/targeted_strong_seed812_25/summary.json"
+    },
+    "decision": "No targeted harm at the comparable 25-step prefix: target -23.134 is slightly better than independent -23.196 and slightly worse than bank mean -23.064. Full controls remain near -39 to -40; stop rank-coupling expansion.",
+    "limits": "One trained Pusher checkpoint and one seed; the model/planner is a short PETS reproduction, not a full benchmark. This is a falsification gate, not a second-task positive claim."
+  },
+  "updated_at": "2026-10-10T20:55:00Z",
+  "pusher_headline_cn": "Pusher 强 PETS 分流也未复现损害：目标耦合25步−23.13，独立−23.20，等预算平均−23.06；停止该方向扩展。",
+  "followup_defense_confirmation_v1": {
+    "source": "runs/mbrl_rank_bank_mean_confirm_v1/bank_mean/summary.json",
+    "task": "CartPole",
+    "model": "runs/mbrl_coupling_cartpole_v0/model",
+    "seeds": [
+      706,
+      707
+    ],
+    "settings": {
+      "particles": 10,
+      "bank_size": 8,
+      "population": 100,
+      "iterations": 3,
+      "horizon": 15,
+      "max_steps": 200
+    },
+    "operation": "Equal-budget bank mean over eight native forecast batches per CEM evaluation; model weights and native environment unchanged.",
+    "returns": [
+      200.0,
+      200.0
+    ],
+    "mean_return": 200.0,
+    "model_hash_unchanged": true,
+    "predictive_transitions": 144000000,
+    "gpu_work": false,
+    "decision": "Independent defense replication restores the two unused seeds to the 200-step cap. This supports a CartPole sampler-level mitigation, not cross-task generalization or an ICLR-scale claim."
+  },
+  "followup_reacher_gate": {
+    "task": "Reacher3D",
+    "model": "runs/mbrl_rank_reacher_v0/model",
+    "training": {
+      "transitions": 3000,
+      "epochs": 60,
+      "train_seed": 31,
+      "final_validation": 0.023263175040483475,
+      "model_hash": "052116c2ad953b01ee0755fff212523113efee69564f488e4f335fa06bc2127b"
+    },
+    "settings": {
+      "particles": 20,
+      "bank_size": 8,
+      "population": 100,
+      "iterations": 3,
+      "horizon": 15,
+      "max_steps": 50,
+      "seeds": [
+        31,
+        32
+      ]
+    },
+    "returns": {
+      "independent": [
+        -60.24600022984022,
+        -60.89345553702587
+      ],
+      "targeted": [
+        -59.48890530904613,
+        -54.559172783916544
+      ]
+    },
+    "mean_return": {
+      "independent": -60.569727883433046,
+      "targeted": -57.024039046481334
+    },
+    "model_hash_unchanged": true,
+    "decision": "No targeted harm on either Reacher3D seed; targeted coupling improves both returns. This is a strong independent negative and closes the current rank-coupling expansion."
+  }
+}

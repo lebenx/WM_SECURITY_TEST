@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "updated_on": "2026-10-16",
+  "status": "resource_admission_deferred_no_model_or_performance_measurement",
+  "scientific_scope": "One attempted cached-input engineering qualification; no new scientific result, no completed Clean plan and no measured batch equivalence or speedup.",
+  "protocol": "configs/jepa_grasp_cached_batch_profile_20261016.json",
+  "script": "scripts/probe_jepa_grasp_cached_batch_profile.py",
+  "actual_summary": "runs/jepa_grasp_cached_batch_profile_20261016/summary.json",
+  "execution": {
+    "command": ".venv-jepa-native/bin/python scripts/probe_jepa_grasp_cached_batch_profile.py --config configs/jepa_grasp_cached_batch_profile_20261016.json",
+    "exit_code": 0,
+    "tool_chunk_id": "e3e97e",
+    "elapsed_seconds": 0.037299804971553385
+  },
+  "resource_admission": {
+    "free_mib": 7216,
+    "required_free_mib": 8192,
+    "total_mib": 24564,
+    "passed": false
+  },
+  "actual_activity": {
+    "checkpoint_loads": 0,
+    "predictor_forwards": 0,
+    "unroll_calls": 0,
+    "backward_calls": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "training_updates": 0,
+    "network_attempts": 0
+  },
+  "performance_measurement": null,
+  "numerical_equivalence_measurement": null,
+  "task_utility": null,
+  "clean_gate": null,
+  "review": {
+    "type": "independent_static_source_review_not_runtime_validation",
+    "finding": "No blocking mathematical or budget-accounting defect found in the reviewed version.",
+    "checks": [
+      "Six independent B1/T1 calls versus B6/T1 preserve per-time mean, sequential sums and detached state inputs.",
+      "Goal shaping follows the original 50-step schedule.",
+      "Three discarded native one-update sync calls retain the H6 autoregressive rollout.",
+      "Call caps and the 60-second budget include imports and local loading; signal delivery during native CUDA work is best effort."
+    ],
+    "limits": [
+      "Predicted three-root cost would omit main optimizer/noise, final rollout, encoding and physical task overhead.",
+      "Fresh-Adam one-update sync timings and linear H5/H2 scaling would be estimates, not full-task measurements.",
+      "Cached approximate equality would not prove full optimizer trajectory or task equivalence."
+    ]
+  },
+  "decision": "Do not retry automatically, lower the admission threshold, request exclusive GPU or resume/expand the existing Clean run. Leave batching feasibility unmeasured and compare distinct scientific questions.",
+  "not_established": [
+    "No batch speedup or numerical-equivalence result.",
+    "No proof that the three-root Clean panel is feasible or infeasible within 1200 seconds.",
+    "No task harm, defense recovery or new security claim."
+  ],
+  "goal_alignment": "An unavailable shared GPU for one optional engineering probe is not an irrecoverable blocker to the broader active research goal."
+}

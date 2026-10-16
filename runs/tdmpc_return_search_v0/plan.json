@@ -1,0 +1,45 @@
+{
+  "source": "runs/tdmpc_action_search_v0",
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "calibration_seed": 11,
+  "test_seeds": [
+    14,
+    15
+  ],
+  "minimum_drop": 100.0,
+  "output": "runs/tdmpc_return_search_v0",
+  "source_plan": {
+    "checkpoint": "models/tdmpc2/mt30-48M.pt",
+    "reference": "runs/tdmpc_clean_gate_v0/walker-walk_11_mpc.pt",
+    "source_task": "walker-walk-backwards",
+    "victim_task": "walker-walk",
+    "source_seed": 21,
+    "eval_seeds": [
+      12,
+      13
+    ],
+    "actions": 300,
+    "updates": 40,
+    "population": 8,
+    "generations": 2,
+    "output": "runs/tdmpc_action_search_v0",
+    "search_algorithm": "two-generation diagonal CEM over24 legal waveform parameters; top3 elites",
+    "selection": "Maximize clean-reference-model regret of new trajectory choices; centered-value MSE breaks ties.",
+    "max_error_baseline": "Largest pre-update native consistency loss from the identical candidate bank.",
+    "permissions": "White-box model and a clean reference victim trajectory; private reference source simulator. No state/reward/task-ID edits, model overwrite, or evaluation-return access during selection.",
+    "reference_simulator_action_budget": 4800,
+    "deployed_action_budget_per_arm": 300,
+    "learning": "40 or fewer calls to original full update, fresh Adam/scale per candidate, batch32, original lr. Offline checkpoint adaptation is a researcher-defined deployment setting.",
+    "evaluation": "Original MPC,500 actual steps; seeds excluded from search selection. Same task family, not a population ASR.",
+    "learning_seed": 31,
+    "search_seed": 4401
+  },
+  "number_candidates": 16,
+  "selection": "Minimum actual500-step return on a calibration environment after40 original full updates; same fixed16-candidate bank from prior CEM proxy search.",
+  "permissions": "White-box learner plus source/target reference simulators. Evaluation resets are excluded from selection. No transition or reward edits.",
+  "gate": "Finish all16 candidates. Confirm only if the selected actual calibration return is at least100 below each of clean,benign-MPC,random controls.",
+  "source_reference_actions": 4800,
+  "additional_target_reference_actions": 9500,
+  "deployed_actions": 300,
+  "scope": "Mechanism pilot, not a novel algorithm or population estimate. Private reference victim execution is a stronger search capability than a model-only surrogate."
+}

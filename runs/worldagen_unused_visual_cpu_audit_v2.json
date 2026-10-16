@@ -1,0 +1,156 @@
+{
+  "status": "passed_cpu_static_storage_and_forward_audit",
+  "storage": {
+    "clip_visual": {
+      "scope": "native WorldAgen policy/forecast/forecast-loss only",
+      "parameter_count": 87849216,
+      "buffer_count": 0,
+      "visual_storage_bytes": 351396864,
+      "cuda_storage_bytes_before": 0,
+      "visual_dtypes": [
+        "torch.float32"
+      ],
+      "devices_before": [
+        "cpu"
+      ],
+      "devices_after": [
+        "cpu"
+      ],
+      "state_dict_keys_preserved": true,
+      "active_tensor_storage_unchanged": true,
+      "clip_text_dtype_preserved": true,
+      "visual_forward_guard": true,
+      "whole_model_move_guard": true
+    },
+    "mae_decoder": {
+      "scope": "unused vision_encoder decoder only; native MAE forward_encoder remains active",
+      "parameter_count": 26109184,
+      "unused_storage_bytes": 104436736,
+      "cuda_storage_bytes_before": 0,
+      "devices_before": [
+        "cpu"
+      ],
+      "per_component_bytes": {
+        "decoder_embed": 1574912,
+        "decoder_blocks": 100876288,
+        "decoder_norm": 4096,
+        "decoder_pred": 1575936,
+        "mask_token": 2048,
+        "decoder_pos_embed": 403456
+      },
+      "devices_after": [
+        "cpu"
+      ],
+      "state_dict_keys_preserved": true,
+      "active_tensor_storage_unchanged": true,
+      "decoder_forward_guard": true,
+      "whole_model_move_guard": true
+    },
+    "unused_storage_bytes": 455833600,
+    "cuda_storage_bytes_before": 0
+  },
+  "chunk_dir": "/home/xhj/WM_Security/runs/worldagen_prediction_contract_cpu_v2/chunk_000",
+  "threads": 4,
+  "native_outputs_before_after_offload": [
+    {
+      "output": 0,
+      "shape": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "exact": true,
+      "max_abs": 0.0
+    },
+    {
+      "output": 1,
+      "shape": [
+        1,
+        2,
+        3,
+        1
+      ],
+      "exact": true,
+      "max_abs": 0.0
+    },
+    {
+      "output": 2,
+      "shape": [
+        2,
+        2,
+        196,
+        768
+      ],
+      "exact": true,
+      "max_abs": 0.0
+    },
+    {
+      "output": 3,
+      "both_none": true,
+      "exact": true
+    },
+    {
+      "output": 4,
+      "both_none": true,
+      "exact": true
+    }
+  ],
+  "zero_lora_outputs": [
+    {
+      "output": 0,
+      "shape": [
+        1,
+        2,
+        3,
+        6
+      ],
+      "exact": true,
+      "max_abs": 0.0
+    },
+    {
+      "output": 1,
+      "shape": [
+        1,
+        2,
+        3,
+        1
+      ],
+      "exact": true,
+      "max_abs": 0.0
+    },
+    {
+      "output": 2,
+      "shape": [
+        2,
+        2,
+        196,
+        768
+      ],
+      "exact": true,
+      "max_abs": 0.0
+    },
+    {
+      "output": 3,
+      "both_none": true,
+      "exact": true
+    },
+    {
+      "output": 4,
+      "both_none": true,
+      "exact": true
+    }
+  ],
+  "visual_forward_calls": 0,
+  "text_forward_calls": 4,
+  "lora_projection_count": 168,
+  "lora_tensors_with_gradients": 336,
+  "lora_tensors_with_nonzero_gradients": 168,
+  "forecast_loss_scaled_by_point_one": 0.006341021507978439,
+  "accidental_visual_call_guard_works": true,
+  "accidental_mae_decoder_call_guard_works": true,
+  "cuda_initialized": false,
+  "optimizer_updates": 0,
+  "limits": "CPU audit confirms unused execution path, dtype/key/storage preservation and gradients; actual CUDA memory transfer and task behavior require separate integration validation.",
+  "elapsed_seconds": 13.469900874973973
+}

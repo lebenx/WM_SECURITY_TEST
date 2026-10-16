@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-10",
+  "status": "rejected_phase_cycle_no_task_harm_and_low_error_invariant_failed",
+  "candidate_claim_cn": "合法周期动作轨迹可能把原生 MPPI 的候选分布提前收缩到伪吸引子，使短程预测误差保持低位而长程闭环规划失败。",
+  "review": {
+    "source": "runs/gemini_next_mechanism_search_20261010T0000Z/assessment.json",
+    "novelty_score": 7.3,
+    "decision": "ACCEPT_SCREEN",
+    "caveat": "The review proposed a contractive basin mechanism but required a native task-harm gate; it is not evidence of novelty or harm."
+  },
+  "operation": "A legal bounded phase-locked actuator cycle in cheetah-run generated authentic simulator observations, actions and rewards; dynamics-only shared-model adaptation was compared with random legal actions and equal-RMS alternating actions.",
+  "carrier": "official TD-MPC2 mt30-48M checkpoint, native model.next and native MPPI",
+  "runs": {
+    "walker_run_seed11": {
+      "source": "runs/tdmpc_contractive_basin_gate_v0/status.json",
+      "clean_return_300": 363.00026741903275,
+      "random_return_300": 370.95993992500007,
+      "phase_return_300": 402.0813120845705,
+      "equal_rms_dither_return_300": 374.1745573300868,
+      "random_one_step_error": 0.00033054398954845965,
+      "phase_one_step_error": 0.000784347066655755,
+      "phase_one_step_error_ratio": 2.3728976821729963,
+      "random_planner_std_ratio": 0.31805419587460865,
+      "phase_planner_std_ratio": 0.29727273687531836,
+      "decision": "Phase cycle contracts MPPI slightly but improves return and violates the low-error gate."
+    },
+    "reacher_easy_seed11": {
+      "source": "runs/tdmpc_contractive_basin_gate_reacher_v0/status.json",
+      "clean_return_300": 583.0,
+      "random_return_300": 584.0,
+      "phase_return_300": 585.0,
+      "equal_rms_dither_return_300": 585.0,
+      "random_one_step_error": 0.00033054398954845965,
+      "phase_one_step_error": 0.000784347066655755,
+      "phase_planner_std_ratio": 0.21577654225308932,
+      "random_planner_std_ratio": 0.19156646074519598,
+      "decision": "No phase-specific harm and no phase-specific contraction against controls."
+    }
+  },
+  "decision": "Reject as a main security claim. The native short gate does not show task harm; the only lower MPPI variance is accompanied by a 2.37x one-step error increase and is not phase-specific on reacher-easy. Do not scale training or implement the proposed entropy-floor defense."
+}

@@ -1,0 +1,67 @@
+{
+  "model_type": "cosmos-policy",
+  "architecture": "diffusion-transformer",
+  "base_model": "nvidia/Cosmos-Predict2-2B-Video2World",
+  "num_parameters": "2B",
+
+  "input_spec": {
+    "text": {
+      "type": "string",
+      "description": "Natural language task description"
+    },
+    "images": {
+      "format": "RGB",
+      "resolution": [224, 224],
+      "views": ["agentview", "eye_in_hand"]
+    },
+    "proprioception": {
+      "dim": 9,
+      "components": ["gripper_joints", "end_effector_position", "quaternion"]
+    }
+  },
+
+  "output_spec": {
+    "actions": {
+      "dim": 7,
+      "horizon": 16,
+      "components": ["end_effector_6dof", "gripper"]
+    },
+    "future_proprioception": {
+      "dim": 9
+    },
+    "future_images": {
+      "resolution": [224, 224]
+    },
+    "value": {
+      "dim": 1
+    }
+  },
+
+  "diffusion_config": {
+    "denoising_steps": 5,
+    "sigma_min": 4.0,
+    "sigma_max": 80.0,
+    "generation_mode": "parallel"
+  },
+
+  "training": {
+    "dataset": "LIBERO-Cosmos-Policy",
+    "gradient_steps": 40000,
+    "batch_size": 1920,
+    "hardware": "64x H100",
+    "action_chunk_size": 16
+  },
+
+  "benchmark_results": {
+    "libero_spatial": 0.981,
+    "libero_object": 1.0,
+    "libero_goal": 0.982,
+    "libero_long": 0.976,
+    "average": 0.985
+  },
+
+  "inference": {
+    "precision": "bf16",
+    "vram_gb": 6.8
+  }
+}

@@ -1,0 +1,436 @@
+{
+  "source_revision": "cc1f151a9d8c7d7afd0cdc5de6a9ae220a7c90c0",
+  "files": {
+    "checkpoint": {
+      "path": "models/nanowm_pointmaze/model.safetensors",
+      "bytes": 634416296
+    },
+    "training_config": {
+      "path": "models/nanowm_pointmaze/config.yaml",
+      "bytes": 2784
+    },
+    "vae_config": {
+      "path": "models/nanowm_sd_vae/config.json",
+      "bytes": 547
+    },
+    "vae_weights": {
+      "path": "models/nanowm_sd_vae/diffusion_pytorch_model.safetensors",
+      "bytes": 334643276
+    },
+    "resource_summary": {
+      "path": "runs/nanowm_resource_gate_v2/summary.json",
+      "bytes": 5857
+    },
+    "runner": {
+      "path": "scripts/pilot_nanowm_pointmaze_clean.py",
+      "bytes": 34124
+    },
+    "protocol": {
+      "path": "reports/nanowm_clean_gate_protocol_20261015.json",
+      "bytes": 17981
+    },
+    "action_stats": {
+      "path": "runs/nanowm_resource_gate_v2/data/point_maze/wm_stats_cache/action_train_6b5d3fb557871782.pt",
+      "bytes": 1628
+    }
+  },
+  "protocol": {
+    "schema_version": 1,
+    "date": "2026-10-15",
+    "status": "pre_execution_protocol_source_feasible_resources_pending",
+    "decision": "CONDITIONAL_GO_FOR_A_BOUNDED_CLEAN_CAPABILITY_GATE_ONLY",
+    "question": "Can the released NanoWM PointMaze planner solve at least two nontrivial fixed random-state instances with its existing planning budget, including one success that passive zero control does not achieve?",
+    "scope": "A development readiness gate for a native forecast-driven planner. This is not an attack, a world-model contribution ablation, a benchmark estimate, or evidence of security harm.",
+    "execution_in_this_protocol_task": {
+      "model_loads": 0,
+      "model_forwards": 0,
+      "environment_steps": 0,
+      "package_installations": 0,
+      "api_calls": 0,
+      "vendor_modifications": 0,
+      "runner_written_by_this_protocol_task": false
+    },
+    "source": {
+      "repository": "vendor/nano-world-model",
+      "commit": "cc1f151a9d8c7d7afd0cdc5de6a9ae220a7c90c0",
+      "instructions": "vendor/nano-world-model/AGENTS.md",
+      "planning_entrypoint": "vendor/nano-world-model/src/experiments/planning_experiment.py",
+      "planner": "vendor/nano-world-model/src/planning/cem_planner.py",
+      "world_model_wrapper": "vendor/nano-world-model/src/planning/diffusion_world_model.py",
+      "objective": "vendor/nano-world-model/src/planning/objective.py",
+      "environment": "vendor/nano-world-model/src/environments/pointmaze/point_maze_wrapper.py",
+      "dynamics_and_control": "vendor/nano-world-model/src/environments/pointmaze/maze_model.py",
+      "native_default_config": "vendor/nano-world-model/src/configs/planning/base.yaml",
+      "dataset_config": "vendor/nano-world-model/src/configs/dataset/dino_wm/point_maze.yaml",
+      "native_path": "CEM samples normalized action blocks, DiffusionWorldModel predicts latent futures, the native last-frame latent-MSE objective ranks candidates, CEM refits its elite distribution and executes the mean sequence through the real PointMaze environment.",
+      "goal_boundary": "The image goal enters the objective. It is not an input to the fixed-action diffusion rollout. This gate does not assert Goal-Swap susceptibility."
+    },
+    "resource_prerequisites": {
+      "separate_audit_output_expected": "runs/nanowm_resource_gate_v1",
+      "requirements": [
+        "Pin the released PointMaze checkpoint and its own training config, with strict state-dict loading and matching latent codec/VAE assets. Checkpoint existence alone is not a health result.",
+        "Resolve the native PointMaze renderer and old Gym/MuJoCo stack without changing vendor code or claiming a different environment is equivalent. CPU reset/render/step and state-reset checks belong to the separate resource audit.",
+        "Resolve training-only action normalization statistics from the checkpoint's dataset split and preprocessing. Use a unique compatible action_train cache, not an arbitrary first cache returned by glob.",
+        "Require finite positive action standard deviations and the correct two raw action dimensions repeated five times in frame-major order. Stop if normalization is absent; do not accept the upstream warning-and-identity fallback.",
+        "Resolve the rollout model metadata from the checkpoint training config. The upstream model loader uses train_cfg but the rollout wrapper uses CLI cfg; verify architecture, temporal lengths, action packing, codec, diffusion parameters and history stabilization match before execution.",
+        "Freeze the complete runtime manifest before the first model forward: checkpoint/config/statistics identities, package and hardware versions, precision, sampling configuration, batch schedule and seeds. This protocol is not permission to acquire arbitrary additional models or tune performance."
+      ],
+      "on_failure": "Report a technical integration blocker, retain the error and run no capability panel. Do not count a dependency error, missing cache or OOM as a task failure."
+    },
+    "fixed_panel": {
+      "environment": "point_maze",
+      "maze": "native U_MAZE",
+      "goal_source": "random_state",
+      "planning_seed": 42,
+      "instance_seeds_in_order": [
+        42,
+        43,
+        44
+      ],
+      "instances": 3,
+      "sampler": "PointMazeWrapper.sample_random_init_goal_states(seed)",
+      "sampling_rule": "Use exactly the three native seeded draws. Do not screen or replace a draw based on distance, geometry, zero-control behavior, native prediction loss, runtime, success or failure.",
+      "data_boundary": "No dataset trajectory provides an evaluation initial state or goal. Training action statistics remain allowed model preprocessing. Native random-state sampling does not guarantee finite-budget reachability or establish statistical independence from training support.",
+      "freeze_before_prediction": [
+        "Save the complete four-dimensional init and goal states with sampler seed and source revision.",
+        "Record initial XY distance, initial four-dimensional state distance and initial_success=(initial XY distance < 0.5). Initial successes remain in the panel but cannot count toward nontrivial readiness successes.",
+        "Render the goal using the native seed+10000 preparation, then restore the live initial state using the instance seed. Save goal and initial observations; goal rendering must not reset a live rollout.",
+        "Preserve the sampled velocities. Do not set them to zero, alter the target velocity, or change the maze to simplify the task."
+      ],
+      "initially_trivial_stop": "If fewer than two fixed instances are initially outside the success region, stop as an uninformative panel before any model forward. Do not draw replacement goals."
+    },
+    "fixed_native_budget": {
+      "horizon_model_steps": 5,
+      "replan_every_model_steps": 5,
+      "max_episode_model_steps": 50,
+      "frame_interval": 5,
+      "raw_action_dim": 2,
+      "packed_action_dim": 10,
+      "max_real_env_step_calls_per_episode": 250,
+      "max_replans_per_episode": 10,
+      "cem": {
+        "num_samples": 100,
+        "topk": 10,
+        "opt_steps": 30,
+        "var_scale": 1.0,
+        "sigma_min": 0.001,
+        "eval_every": 5,
+        "action_low": null,
+        "action_high": null,
+        "rollout_batch_size": 16
+      },
+      "diffusion": {
+        "num_sampling_steps": 20,
+        "scheduling_mode": "full_sequence",
+        "eta": 0.0,
+        "other_parameters": "Use the matched training configuration; do not change VAE posterior sampling, history stabilization, diffusion noise schedule, temporal lengths or precision to improve success."
+      },
+      "objective": {
+        "mode": "last",
+        "visual_metric": "mse",
+        "alpha": 1.0,
+        "base": 2.0,
+        "interpretation": "Native raw latent MSE on the final predicted frame against the encoded goal. With no predicted proprioception, alpha and base do not change the last-frame visual score. Do not substitute state distance or real candidate consequences into the planner score."
+      },
+      "configuration_scope": "The upstream planning base uses 50 model steps. The separate point_maze shell example uses dataset goals and only 10 model steps; it is not the random-state protocol selected here. These are local NanoWM defaults, not a claim of full DINO-WM benchmark budget.",
+      "action_semantics": "CEM acts in normalized space. Denormalize each ten-dimensional block using the training statistics, reshape to five two-dimensional physical actions and call the unchanged environment. MazeEnv then clips each physical action to [-1,1] and uses frame_skip=5. Record both submitted and clipped actions.",
+      "execution_adapter_boundary": "Freeze the upstream-supported rollout_batch_size=16 before inference. The native base default is null (all 100 candidates), so this is a disclosed execution adapter that retains all 100 candidates, 10 elites, 30 iterations and 20 DDIM steps. It does not establish identical RNG mapping or bitwise full-batch parity. Any later cost/OOM-driven batch or precision change requires a new protocol; no automatic fallback or hidden adjustment.",
+      "upper_bound_for_all_three_clean_episodes": {
+        "real_env_steps": 750,
+        "cem_batch_rollout_evaluations": 900,
+        "candidate_sequences_evaluated": 90000
+      }
+    },
+    "normalization_and_randomness": {
+      "images": "Use native uint8 environment images, HWC-to-CHW conversion, [0,255] to [-1,1] and torchvision antialiased resize to the checkpoint image size. Use the matched latent codec including its native scaling factor. Do not add CLIP normalization or post-hoc latent standardization.",
+      "actions": "Missing or incompatible training-only mean/std is a hard preflight failure. Record the resolved raw and repeated statistics and the exact cache source.",
+      "native_seed_gap": "planning.seed controls native target sampling and environment preparation, not all global RNGs. CEM samples from global CPU Torch RNG; VAE posterior sampling, initial diffusion noise and any history-stabilization noise consume Torch RNG as well.",
+      "fixed_seed_adapter": "Seed Python random, NumPy, Torch CPU and available CUDA generators with 42 before construction, and reseed them with the instance seed immediately before that instance's first native planning call after fixed preparation. Record pre-planning RNG states. Do not reseed inside CEM iterations, per candidate or per diffusion chunk.",
+      "eta_boundary": "eta=0 does not make the complete planner deterministic. Preserve native posterior.sample and the normal diffusion initial/context noise; do not replace them by posterior.mode or zero noise.",
+      "reproducibility_boundary": "Fixed seeds and a pinned software/batch/device configuration define the attempted runs. Bitwise cross-device or full-batch/microbatch equivalence is not asserted. No repeated seed search or best-of-retries reporting."
+    },
+    "single_resource_cost_precheck": {
+      "status": "authorized_in_protocol_not_executed_by_this_report",
+      "timing": "After resources and fixed-panel triviality checks pass, but before any Clean task episode.",
+      "input": "Use the actual native initial observation of the first fixed instance, seed 42. Use one batch of 16 normalized action sequences of horizon 5 and packed dimension 10, sampled once with the same fixed initial Gaussian CEM rule (zero mean, unit standard deviation, first sequence equal to the zero mean). Use a separately recorded fixed benchmark seed 42.",
+      "operation": "Exactly one DiffusionWorldModel.rollout for the 16 candidates with the frozen codec, full_sequence scheduling, 20 DDIM steps, eta=0 and training history stabilization. No CEM optimization, real task continuation, candidate selection or score-based adjustment. No repeat warmup/benchmark search.",
+      "record": "Synchronize the device around timing; record elapsed wall time, peak allocated/reserved device memory and finite/output-shape checks. Retain startup overhead distinctions. Do not report this as a Clean episode, task success, ranking evidence or utility measurement.",
+      "budget_estimate": "Report a coarse full-budget per-root rollout estimate of measured_16_candidate_seconds * ceil(100/16) * 30 * 10, plus separately identified goal encoding, rendering and environment overhead. Padding the last 4-candidate batch as 16 makes this conservative for batch work, but it is not a certified total runtime bound.",
+      "decision": "If the estimated cost exceeds 1800 seconds per root, report the measured cost to the root agent and do not start a long task episode until its explicit cost decision. OOM, nonfinite output or a failed resource check stops the precheck without retry or batch-size reduction.",
+      "rng_boundary": "The benchmark must not perturb task seeds. Reset all required RNGs to each fixed instance seed immediately before its first Clean planning call as specified above. Preserve the benchmark record even if the task panel is not started."
+    },
+    "metrics": {
+      "primary_success": "Native PointMazeWrapper.eval_state: norm(goal_state[:2]-current_state[:2]) < 0.5, strictly less than 0.5.",
+      "native_observation_schedule": "Check success after each five model-step chunk, equal to every 25 real env.step calls, and at the final budget. Stop on the first successful native checkpoint. Initial success is recorded separately and is not counted as a nontrivial readiness success.",
+      "state_dist": "Native norm(goal_state-current_state) in all four dimensions [x,y,vx,vy]. This is not the success threshold and may stay large after position success because the sampled goal velocity is part of the diagnostic.",
+      "secondary": [
+        "Final native XY distance and four-dimensional state_dist, individually for every attempted condition and instance.",
+        "Actual real env.step count and native success checkpoint in model-step units; do not confuse the two units.",
+        "Capped real-step completion cost: successful native checkpoint step count, otherwise 250. An execution error has missing cost, not an invented failure cost.",
+        "Initial XY/state distance, initial velocity, initial_success, termination reason, finite-value checks and optional ever-within-radius diagnostics separately from the native checkpoint metric."
+      ],
+      "not_task_utility": "Do not use diffusion latent objective, predicted reward or MazeEnv.step reward as this image-goal task utility. The native environment hides its marker at OFF_TARGET when with_target=False; its internal reward target is not the sampled planning goal."
+    },
+    "passive_zero_control": {
+      "required_for_this_gate": true,
+      "purpose": "Exclude already-near-goal or passive-inertial success. Random-state initialization includes nonzero velocities, so physical zero control is not necessarily stationary.",
+      "action": "Submit physical [0.0,0.0] on every real environment step. A zero normalized model action is not physical zero when the training mean is nonzero.",
+      "matching": "Use the exact same three init states, goal states, maze, seeds, real-step budget, checkpoint timing and success stopping rule. Evaluate before model inference; save all rows even when they make the gate impossible.",
+      "maximum_real_steps": 750,
+      "claim_boundary": "Zero is a triviality control, not a strong planning baseline. Beating it does not establish that the diffusion model is needed, that NanoWM beats an alternative controller, or that a future attack is model-specific.",
+      "early_stop": "If all initially nontrivial fixed instances succeed under zero control, the required Clean-only success contrast is impossible: stop as uninformative before GPU inference. Do not alter the panel."
+    },
+    "precommitted_readiness_decision": {
+      "pass_all": [
+        "All required resource, normalization, state restoration and finite-value checks pass without silently changing the native model or task.",
+        "At least two of the three fixed instances are initially outside the success radius and complete successfully with the native Clean planner within the fixed budget.",
+        "At least one initially nontrivial fixed instance succeeds with Clean and fails with matched physical-zero control."
+      ],
+      "pass_means": "The existing native forecast-driven path has a bounded nontrivial capability signal sufficient to consider a separately justified real-utility mechanism pilot. It does not automatically authorize an attack or establish model benefit, reliability, novelty or generalization.",
+      "fail_means": "Do not proceed to intervention arms on this carrier under this protocol. Preserve attempted successes and failures. Fixed random goals may be infeasible within the budget, so a failed gate is not a universal model-incapability result.",
+      "stop_rules": [
+        "No Clean run if prerequisites fail, fewer than two fixed initial states are nontrivial, or the passive-control contrast is mathematically impossible.",
+        "Run eligible native instances in the fixed seed order. Stop once completed failures and remaining eligible instances make the two-success threshold impossible, or the Clean-only success contrast can no longer occur. Record later instances as not run, never as failures.",
+        "Stop on missing/incompatible inputs, nonfinite outputs, a state-restoration mismatch, OOM, interrupted execution or unsupported dependency. Preserve the technical error separately; no candidate, goal, seed, precision, batch, score or budget search.",
+        "Every planned condition-instance pair is attempted at most once. Any later technical repair requires a new explicit protocol version and retention of the original failed attempt, not replacement of its record."
+      ],
+      "statistics": "Report the three fixed rows and paired counts descriptively. No population success estimate, significance claim, confidence interval, benchmark comparison or cross-model generalization from this development panel. Do not pool author-reported success numbers with local results."
+    },
+    "required_outputs_if_executed": [
+      "Immutable resolved runtime/protocol manifest and identities of the code, checkpoint, codec and action-statistics resources.",
+      "All three frozen init/goal pairs and initial/goal observation artifacts, including initially trivial cases.",
+      "Per-step real state [x,y,vx,vy], submitted/clipped physical action, native reward/done for audit only, image-goal XY distance and native checkpoint success.",
+      "Per-plan normalized action sequence, model-objective history, CEM/DDIM settings and RNG-state references; no ground-truth candidate consequence is fed back into scoring.",
+      "Per-instance and aggregate zero/Clean results with completed, failed, technical-error, initially-trivial and not-run states distinguished.",
+      "The preregistered gate decision and exact stopping reason, including an explicit statement that this is Clean capability evidence only."
+    ],
+    "remaining_work": "A separate resource audit and a reviewable runner must satisfy these conditions before any Clean model or task execution. This report itself contains no experimental result."
+  },
+  "resolved_runtime_config": {
+    "model": {
+      "arch": "NanoWM-B/2",
+      "name": "NanoWM-B-2",
+      "num_frames": 4,
+      "n_context_frames": 1,
+      "scheduling_mode": "full_sequence",
+      "num_sampling_steps": 20,
+      "use_action": true,
+      "action_injection": {
+        "type": "additive"
+      },
+      "causal": true,
+      "image_size": 256,
+      "latent_size": 32,
+      "extras": 1,
+      "num_classes": 1000
+    },
+    "dataset": {
+      "loader": {
+        "n_rollout": null,
+        "data_path_train": null,
+        "data_path_val": null,
+        "split_ratio": 0.9,
+        "validation_size": 32,
+        "normalize_state": false,
+        "normalize_action": true,
+        "train_slice_mode": "exhaustive",
+        "val_slice_mode": "exhaustive",
+        "stride": 1,
+        "random_seed": 42,
+        "validation_fixed_subset_path": null,
+        "validation_fixed_subset_size": null,
+        "validation_fixed_subset_seed": 42,
+        "use_relative_actions": null,
+        "action_scale": 1.0,
+        "with_velocity": null,
+        "object_name": null,
+        "data_path": "/home/xhj/WM_Security/runs/nanowm_resource_gate_v2/data/point_maze"
+      },
+      "name": "point_maze",
+      "frame_interval": 5,
+      "spec": {
+        "action_dim": 2
+      }
+    },
+    "experiment": {
+      "name": "planning",
+      "tasks": [
+        "planning"
+      ],
+      "resume_from_checkpoint": null,
+      "pretrained": null,
+      "training": {
+        "optimizer": {
+          "lr": 0.0001,
+          "weight_decay": 0.01,
+          "lr_warmup_steps": 1000
+        },
+        "max_steps": 30000,
+        "batch_size": 8,
+        "gradient_accumulation": 1,
+        "gradient_clip_norm": 0.1,
+        "gradient_clip_start_step": 20000,
+        "log_every": 100,
+        "val_every_n_steps": 1000,
+        "checkpointing": {
+          "across_timesteps": {
+            "every_n_train_steps": 10000,
+            "save_top_k": -1,
+            "save_on_train_epoch_end": true,
+            "save_weights_only": false,
+            "filename": "{epoch}-{step}"
+          },
+          "latest": {
+            "every_n_train_steps": 1000,
+            "save_top_k": 1,
+            "save_on_train_epoch_end": false,
+            "save_weights_only": false,
+            "filename": "latest-{epoch}-{step}"
+          }
+        }
+      },
+      "evaluation": {
+        "validation_size": 32,
+        "save_videos": true,
+        "metrics": {
+          "evaluate": true,
+          "log_every_n_train_steps": 5000,
+          "buffer_size": 32,
+          "max_batchsize": 2,
+          "i3d_model_path": "pretrained_models/i3d/i3d_torchscript.pt"
+        }
+      },
+      "diffusion": {
+        "noise_schedule": "squaredcos_cap_v2",
+        "diffusion_steps": 1000,
+        "pred_name": "v",
+        "mode": "diffusion_forcing",
+        "snr_gamma": 5.0,
+        "zero_terminal_snr": true,
+        "timestep_sampling": "logit_normal",
+        "logit_normal_mean": 0.0,
+        "logit_normal_std": 1.0,
+        "history_stabilization_level": 0.02
+      },
+      "infra": {
+        "mixed_precision": true,
+        "vae_precision": "fp32",
+        "gradient_checkpointing": false,
+        "num_workers": 8,
+        "compile": true,
+        "seed": 3407
+      }
+    },
+    "dataset_dir": "/home/xhj/WM_Security/runs/nanowm_resource_gate_v2/data",
+    "csgo_data_dir": "./data/csgo",
+    "vae_model_path": "/home/xhj/WM_Security/models/nanowm_sd_vae",
+    "results_dir": "./results",
+    "logger": {
+      "name": "wandb",
+      "save_dir": "/home/xhj/WM_Security/runs/nanowm_component_profile_v1/unused_logger",
+      "logger_name": "nanowm"
+    },
+    "wandb": {
+      "enabled": false,
+      "entity": null,
+      "project": "nano-world-model-phase2",
+      "mode": "disabled"
+    },
+    "ckpt_path": "/home/xhj/WM_Security/models/nanowm_pointmaze/model.safetensors",
+    "planning": {
+      "env_name": "point_maze",
+      "n_evals": 3,
+      "seed": 42,
+      "n_plot_samples": 0,
+      "output_dir": "/home/xhj/WM_Security/runs/nanowm_component_profile_v1",
+      "goal_source": "random_state",
+      "goal_H": 5,
+      "horizon": 5,
+      "replan_every": 5,
+      "max_episode_steps": 50,
+      "num_sampling_steps": 20,
+      "eta": 0.0,
+      "cem": {
+        "num_samples": 100,
+        "topk": 10,
+        "opt_steps": 30,
+        "var_scale": 1.0,
+        "eval_every": 5,
+        "sigma_min": 0.001,
+        "action_low": null,
+        "action_high": null,
+        "rollout_batch_size": 16
+      },
+      "objective": {
+        "mode": "last",
+        "alpha": 1.0,
+        "base": 2.0,
+        "visual_metric": "mse"
+      }
+    }
+  },
+  "action_stats": {
+    "raw_mean": [
+      -0.0001961888774530962,
+      0.00022854165581520647
+    ],
+    "raw_std": [
+      0.5764825940132141,
+      0.5776174664497375
+    ],
+    "packed_mean": [
+      -0.0001961888774530962,
+      0.00022854165581520647,
+      -0.0001961888774530962,
+      0.00022854165581520647,
+      -0.0001961888774530962,
+      0.00022854165581520647,
+      -0.0001961888774530962,
+      0.00022854165581520647,
+      -0.0001961888774530962,
+      0.00022854165581520647
+    ],
+    "packed_std": [
+      0.5764825940132141,
+      0.5776174664497375,
+      0.5764825940132141,
+      0.5776174664497375,
+      0.5764825940132141,
+      0.5776174664497375,
+      0.5764825940132141,
+      0.5776174664497375,
+      0.5764825940132141,
+      0.5776174664497375
+    ]
+  },
+  "python": "3.11.13 (main, Sep 18 2025, 19:46:39) [Clang 20.1.4 ]",
+  "packages": {
+    "torch": "2.6.0",
+    "torchvision": "0.21.0",
+    "diffusers": "0.29.2",
+    "transformers": "4.51.3",
+    "huggingface-hub": "0.34.4",
+    "safetensors": "0.5.3",
+    "gym": "0.23.1",
+    "mujoco-py": "2.1.2.14",
+    "omegaconf": "2.3.1",
+    "numpy": "1.26.4"
+  },
+  "official_torch_version": "2.7.1",
+  "torch_version_deviation": true,
+  "adapters": [
+    "Native experiments package initializer bypassed to avoid unused training imports",
+    "Local checkpoint, VAE and uniquely audited training statistics; offline loading only",
+    "Global Python, NumPy, Torch CPU/CUDA seeding before construction and per fixed instance",
+    "Upstream rollout_batch_size=16; all 100 candidates retained; no full-batch RNG parity claim",
+    "Read-only evidence wrappers around native environment, planner and rollout calls",
+    "Native MPC invoked one instance at a time to enforce the registered stopping rule"
+  ],
+  "sampling_schedule": {
+    "checkpoint": "sequential",
+    "runtime": "full_sequence"
+  },
+  "precision": "Native FP32 parameters and VAE; no added autocast, compile, or precision conversion",
+  "matmul_precision": "high (native src/main.py behavior)",
+  "capability_scope": "Fixed development panel only; no security, population success, or model-necessity claim"
+}

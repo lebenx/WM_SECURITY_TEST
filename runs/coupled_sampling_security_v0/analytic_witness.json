@@ -1,0 +1,32 @@
+{
+  "status": "analytic_witness",
+  "variables": "U uniform on [0,1), X=U+delta, Y=(U+c) mod 1; choose argmax(X,Y).",
+  "delta": 0.05,
+  "rows": [
+    {
+      "shift": 0.1,
+      "better_action_mean": 0.55,
+      "worse_action_mean": 0.5,
+      "each_action_variance": 0.08333333333333333,
+      "covariance": 0.03833333333333332,
+      "difference_variance": 0.09000000000000001,
+      "worse_action_selected_probability": 0.9
+    },
+    {
+      "shift": 0.9,
+      "better_action_mean": 0.55,
+      "worse_action_mean": 0.5,
+      "each_action_variance": 0.08333333333333333,
+      "covariance": 0.03833333333333334,
+      "difference_variance": 0.08999999999999998,
+      "worse_action_selected_probability": 0.09999999999999998
+    }
+  ],
+  "derivation": "Both Y laws are Uniform[0,1), E[X]=1/2+delta, E[Y]=1/2. Cov(X,Y)=1/12-c(1-c)/2. For c>delta, Y>X exactly on U<1-c. Thus c and 1-c share both marginal laws and covariance but induce different decisions.",
+  "independent_worse_action_probability": 0.45125,
+  "interpretation": "A constructed analytic example, not an additional native task. Pairwise covariance and each forecast law do not determine decision risk; the cyclic quantile construction uses established probability tools, not a claimed new theorem.",
+  "theorem_boundary": "With bounded returns and iid particles within each action, a union bound on per-action concentration still controls action-selection error regardless of cross-action dependence. The construction gives no asymptotic impossibility claim.",
+  "native_interactions": 0,
+  "api_requests": 0,
+  "gpu_work": false
+}

@@ -1,0 +1,252 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "status": "completed_bounded_cross_question_source_screen_no_new_pilot_qualified",
+  "classification": "source_qualification_not_empirical_falsification",
+  "research_goal_status": "active_unachieved",
+  "scope": "Three materially different questions were checked against primary literature and existing local assets. These are candidate qualification screens, not three failed experiments.",
+  "decision": "No new candidate in this screen qualifies for a decisive low-cost pilot with the currently established interfaces, evidence and local resources.",
+  "activity": {
+    "candidate_source_screens": 3,
+    "empirical_experiments": 0,
+    "pretrained_model_loads": 0,
+    "model_forwards": 0,
+    "model_api_calls": 0,
+    "gpu_jobs": 0,
+    "training_updates": 0,
+    "environment_steps": 0,
+    "task_executions": 0,
+    "checkpoint_downloads": 0,
+    "dataset_downloads": 0,
+    "code_downloads": 0,
+    "exclusive_gpu_requested": false,
+    "performed": "Read existing local files and primary web sources; write this summary only.",
+    "excluded": "Any separately recorded GRASP engineering cost measurement and all historical experiments cited as resource evidence."
+  },
+  "candidates": [
+    {
+      "id": "training_experience_privacy_from_forecast_interface",
+      "scientific_question": "Does access to action-conditioned world forecasts reveal training-trajectory membership beyond information available from the public observation/action sequence or an ordinary observation encoder?",
+      "proposed_restricted_threat_model": "A remote caller can query a fixed pretrained forecast interface for supplied observation/action histories. It cannot read private training records, change weights, relabel examples or alter the victim environment. This threat was not exercised.",
+      "difference_from_archived_routes": "Training-experience confidentiality rather than private-goal leakage through online planning queries, truthful source adaptation, replay-priority manipulation or factual/imagined memory writeback.",
+      "existing_prior_art": [
+        {
+          "title": "Membership Inference Attacks Against Temporally Correlated Data in Deep Reinforcement Learning",
+          "primary_url": "https://arxiv.org/abs/2109.03975",
+          "relevance": "Direct prior work already studies trajectory membership in DRL, temporal correlation, and individual versus collective attacks. Merely applying a trajectory classifier to a world model does not identify a new mechanism."
+        },
+        {
+          "title": "Real-World Benchmarks Make Membership Inference Attacks Fail on Diffusion Models",
+          "primary_url": "https://arxiv.org/abs/2410.03640",
+          "relevance": "CopyMark demonstrates that realistic pretrained-model and unbiased-data evaluation can remove optimistic membership-inference results. Freshly collected nonmembers versus archived demonstrations would confound membership with data-collection distributions."
+        }
+      ],
+      "local_evidence": [
+        {
+          "path": "reports/research_archive/models.json",
+          "anchor": "models tdmpc2, jepa_wm, dino_wm, worldagen",
+          "finding": "Existing pretrained weights and some competent task carriers are recorded. This inventory does not establish trajectory-level membership labels for those checkpoints."
+        },
+        {
+          "path": "reports/research_archive/mechanisms.json",
+          "anchor": "wm_private_counterfactual",
+          "finding": "An older private-goal query-leakage route is separately archived; it is not evidence for training-data confidentiality."
+        },
+        {
+          "path": "vendor/jepa-wms/README.md",
+          "anchor": "lines 277-301",
+          "finding": "Official data are linked; MetaWorld is described as 42 tasks with 100 episodes each. The README description alone is not an exact training-membership manifest for a released checkpoint."
+        },
+        {
+          "path": "data/worldagen_goal_probe/provenance.json",
+          "anchor": "repository, revision, files",
+          "finding": "The local dataset provenance identifies lerobot/libero_10_image and downloaded files. It does not certify checkpoint-specific member or nonmember status."
+        },
+        {
+          "path": "reports/research_archive/assets.jsonl",
+          "anchor": "bounded inventory lookup together with data/ file listing",
+          "finding": "No qualified same-distribution member/nonmember panel tied to the relevant checkpoint was found in this bounded inspection. This is not proof that no such data exist elsewhere."
+        }
+      ],
+      "resource_leads": [
+        {
+          "primary_url": "https://huggingface.co/datasets/facebook/jepa-wms",
+          "status": "official_dataset_lead_only",
+          "limitation": "No data downloaded, exact released-checkpoint training split verified, or membership panel qualified in this screen."
+        }
+      ],
+      "qualification_failures": [
+        "The generic temporal trajectory-membership phenomenon has direct prior art; a forecast-interface-specific information increment has not been established.",
+        "Exact member labels and a matched same-distribution nonmember cohort are unqualified for the inspected local checkpoints.",
+        "Using new simulator traces as nonmembers against stored demonstrations could test collection-policy or state-distribution differences instead of membership.",
+        "A newly trained toy or heavily adapted model would not answer the intended question about the existing released pretrained model."
+      ],
+      "decision": "No-Go for a new pilot under the currently qualified resources.",
+      "result_type": "source_qualification_not_empirical_falsification",
+      "reopening_requirement": "A verified checkpoint-specific member manifest and a matched independent nonmember panel, plus a prespecified forecast-interface-specific hypothesis distinguishable from standard trajectory membership inference. Evaluation would need trajectory-level splits, model-free and encoder-only controls, standard membership baselines and low-FPR reporting.",
+      "actual_activity": {
+        "model_loads": 0,
+        "model_forwards": 0,
+        "model_api_calls": 0,
+        "gpu_jobs": 0,
+        "task_executions": 0,
+        "environment_steps": 0,
+        "artifact_downloads": 0
+      }
+    },
+    {
+      "id": "world_model_as_policy_evaluator",
+      "scientific_question": "Can a third party submit a policy that receives a better world-model evaluation score and deployment eligibility while producing worse independently measured real-environment utility?",
+      "proposed_restricted_threat_model": "The third party may submit or optimize its policy but cannot modify the evaluator, initial-state distribution, reward specification or real environment. The contemplated evaluator remains fixed. No policy submission or optimization was executed.",
+      "difference_from_archived_routes": "Evaluation and deployment qualification integrity, rather than modifying the world-model checkpoint, Goal branch, uncertainty input or factual-memory state.",
+      "existing_prior_art": [
+        {
+          "title": "Imperfect World Models are Exploitable",
+          "primary_url": "https://arxiv.org/html/2605.15960v2",
+          "relevance": "Defines model exploitation through a reversal of policy preference between a learned transition model and the real environment. Ordinary score-versus-utility ranking reversal is therefore already a directly studied phenomenon.",
+          "limits": "The paper's finite-MDP and relaxed safe-horizon results are cited as prior art; this screen did not independently verify all theorem proofs or establish their assumptions for the local neural model."
+        },
+        {
+          "title": "Theoretical Foundations and Effective Algorithms for Policy-Aware Simulator Learning",
+          "primary_url": "https://arxiv.org/html/2605.29032v3",
+          "relevance": "Studies policy-aware simulator learning and minimax simulator/policy relationships. A generic adversarial policy-versus-simulator setup is not enough to distinguish the proposed contribution."
+        },
+        {
+          "title": "False Prophets: On the Security of World Models in Agentic Systems",
+          "primary_url": "https://arxiv.org/html/2607.23147v2",
+          "relevance": "Directly studies world-model security in agentic text settings, including prompt-based exploitation. Switching to a textual evaluator does not by itself establish a new security mechanism."
+        }
+      ],
+      "local_evidence": [
+        {
+          "path": "reports/cosmos_native_interface_audit_20261014.json",
+          "anchor": "native_semantics, permission_boundary",
+          "finding": "The previous native interface audit did not establish an externally writable policy/candidate-submission boundary for native N2 selection. Adding arbitrary candidate replacement would be a separately specified system."
+        },
+        {
+          "path": "reports/cosmos_value_training_audit_20261014.json",
+          "anchor": "value_target, recommended_interpretation",
+          "finding": "The released Value target concerns discounted behavior-policy return rather than a calibrated probability of task success. A high Value score cannot be relabeled as a validated deployment safety certificate."
+        },
+        {
+          "path": "runs/cosmos_first_candidate_utility_recovery_analysis_v1/analysis.json",
+          "anchor": "validated_branches, contribution, limits",
+          "finding": "Historical analysis already includes 60 real first-candidate continuations. The native ranking showed no aggregate success advantage over the fixed-candidate comparisons in that panel; this existing result cannot be promoted into a new evaluator attack."
+        },
+        {
+          "path": "reports/research_archive/models.json",
+          "anchor": "existing local carrier inventory; bounded models/ and vendor/ name search by the screening agent",
+          "finding": "No qualified local WorldEval, dWorldEval or WorldGym asset/runtime was located in the bounded inspection. This is not proof that no public implementation or remote resource exists."
+        }
+      ],
+      "resource_leads": [
+        {
+          "name": "WorldEval",
+          "primary_url": "https://github.com/midea-ai/Worldeval",
+          "status": "public_repository_lead_only",
+          "limitation": "Repository exists, but no locally qualified matched evaluator/checkpoint/runtime and independent true-utility task panel were established here. No assets downloaded."
+        }
+      ],
+      "qualification_failures": [
+        "The generic model-score preference reversal is directly covered by prior work; no distinct causal mechanism beyond evaluator/model exploitation was identified.",
+        "The currently competent local Cosmos path lacks a demonstrated external policy-submission or candidate-replacement interface under the proposed restricted permissions.",
+        "The local Value output is not a calibrated success or safety certification score.",
+        "Existing genuine candidate replay already constrains the utility story; selecting a favorable subset or repeating ranking tests without a new mechanism would not produce independent evidence.",
+        "The alternative public evaluator leads are not qualified low-cost local carriers."
+      ],
+      "decision": "No-Go for a new pilot in this screen; the broad evaluator-security problem remains open.",
+      "result_type": "source_qualification_not_empirical_falsification",
+      "reopening_requirement": "A distinct mechanism and an explicit supported external policy-evaluation boundary, with an appropriate score contract, competent fixed evaluator and independent real consequences. Ordinary ranking reversal, a generic filter or a seed search is insufficient.",
+      "actual_activity": {
+        "model_loads": 0,
+        "model_forwards": 0,
+        "model_api_calls": 0,
+        "gpu_jobs": 0,
+        "task_executions": 0,
+        "environment_steps": 0,
+        "artifact_downloads": 0
+      }
+    },
+    {
+      "id": "missing_sensor_completion_provenance",
+      "scientific_question": "When a sensor is legitimately marked unavailable, does a world model promote generated completion into independent observed evidence and thereby make overconfident unsafe decisions?",
+      "proposed_restricted_threat_model": "An adversary can affect only one sensor's availability. It cannot edit the remaining observations, task goal, model weights or executed actions. This threat was not exercised.",
+      "difference_from_archived_routes": "Missing-observation provenance and evidential double counting, rather than arbitrary image/proprio slot replacement, goal changes, uncertainty expansion or an imagined-state cache writer.",
+      "existing_prior_art": [
+        {
+          "title": "Are Multimodal Transformers Robust to Missing Modality?",
+          "primary_url": "https://arxiv.org/abs/2204.05454",
+          "relevance": "Missing-modality sensitivity and dependence on fusion architecture were already studied at CVPR 2022. Generic degradation after deleting a modality is not by itself a new mechanism."
+        },
+        {
+          "title": "How Well Do Latent World Models Understand Partially Observable Safety Constraints?",
+          "primary_url": "https://arxiv.org/abs/2510.06492v3",
+          "version_date": "2026-10-12",
+          "relevance": "The latest version distinguishes estimation and prediction gaps and studies multimodal privileged supervision and conformal mitigation. It is close prior art for safety-relevant missing information, not evidence that the proposed provenance pathway exists in the local carrier."
+        }
+      ],
+      "local_evidence": [
+        {
+          "path": "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+          "anchor": "aggregate",
+          "finding": "Historical native N2 evaluation completed 30 episodes with 29 successes. This is existing carrier competence, not a new run or missing-sensor security result."
+        },
+        {
+          "path": "scripts/cosmos_policy_native_inference.py",
+          "anchor": "encode_observation, lines 149-167",
+          "finding": "The inspected adapter reads wrist and primary images plus proprioception in fixed slots; no sensor-availability or completion-provenance argument is present."
+        },
+        {
+          "path": "scripts/cosmos_policy_native_inference.py",
+          "anchor": "sample_conditioned, lines 171-174",
+          "finding": "Verified inference accepts fixed conditioning-prefix lengths 4, 5 or 8 for policy, forecast and value. These prefixes are not semantic sensor-missingness flags."
+        },
+        {
+          "path": "scripts/alphabrain_checkpoint_inference.py",
+          "anchor": "denoise, lines 126-137",
+          "finding": "The condition mask identifies a fixed clean prefix from gt_frames; it is not an observed-versus-imputed sensor provenance mask."
+        },
+        {
+          "path": "scripts/cosmos_policy_native_inference.py",
+          "anchor": "best_of_n, lines 236-257",
+          "finding": "The native best-of-N call freshly encodes real observations and generates action/future/value candidates. No missing-camera completion-to-factual-input writeback pathway is present in this inspected call."
+        }
+      ],
+      "resource_leads": [
+        {
+          "name": "MultiSafe",
+          "paper_url": "https://arxiv.org/abs/2510.06492v3",
+          "project_url": "https://cmu-intentlab.github.io/multisafe/",
+          "status": "resource_lead_only_code_coming_soon",
+          "observed": "The project page still labels its code link 'Code [coming soon]'. Root and this report's writer both checked the page.",
+          "limitation": "No local matched checkpoint, simulator, data or clean task reproduction qualified. Do not treat this lead as an available experiment carrier."
+        }
+      ],
+      "qualification_failures": [
+        "The qualified local Cosmos carrier has no demonstrated legal sensor-unavailable interface or completion-provenance consumer needed for this precise hypothesis.",
+        "Replacing arbitrary latent/image/proprio slots would change the threat model and revert to ordinary input tampering or already archived modality interventions.",
+        "The broader partial-observability and missing-modality safety problem has close existing work; no distinct local evidential-double-counting mechanism was established.",
+        "MultiSafe is a relevant primary literature/resource lead, but its currently linked code status does not supply a qualified low-cost local test."
+      ],
+      "decision": "No-Go for this operation on the inspected carrier; no blanket claim about all multimodal world models.",
+      "result_type": "source_qualification_not_empirical_falsification",
+      "reopening_requirement": "A concrete native missing-sensor/completion interface and competent matched carrier where generated completion is consumed as evidence, with a hypothesis distinct from ordinary missing-input robustness. Merely selecting another seed or adding a generic filter would not establish it.",
+      "actual_activity": {
+        "model_loads": 0,
+        "model_forwards": 0,
+        "model_api_calls": 0,
+        "gpu_jobs": 0,
+        "task_executions": 0,
+        "environment_steps": 0,
+        "artifact_downloads": 0
+      }
+    }
+  ],
+  "interpretation": [
+    "No-Go here means do not start the proposed pilot from the inspected resources and interface assumptions; it does not empirically falsify the broad scientific question.",
+    "Historical clean success is a carrier qualification fact, not a new experiment in this screen and not a security harm signal.",
+    "A paper/project resource lead is not evidence that matched checkpoints, data, runtime and task capability are qualified locally.",
+    "Ordinary input corruption, filtering, changing seeds or weakening controls is not a replacement novel mechanism.",
+    "No attack success rate, new task utility, causal harm result, statistical significance or novelty score was measured."
+  ]
+}

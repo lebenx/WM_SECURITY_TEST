@@ -1,0 +1,461 @@
+{
+  "status": "completed_calibrated_two_mean_terminal_truth",
+  "protocol": "configs/dino_first_query_terminal_truth_20261015.json",
+  "started_at_utc": "2026-10-15T11:08:49.746616+00:00",
+  "activity": {
+    "native_encodes": 5,
+    "calibration_encodes": 3,
+    "terminal_truth_encodes": 2,
+    "predictor_calls": 0,
+    "unroll_calls": 0,
+    "planner_calls": 0,
+    "environment_steps": 0,
+    "api_calls": 0,
+    "training_updates": 0,
+    "native_objective_calls": 2
+  },
+  "checkpoint_loads": {
+    "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth": 1,
+    "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar": 1
+  },
+  "calibration": {
+    "all_passed": true,
+    "checks": {
+      "goal_calibration": {
+        "visual": {
+          "max_absolute_error": 0.0,
+          "rms_absolute_error": 0.0,
+          "reference_rms": 2.421185041469359,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 2.421185041469359,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        },
+        "proprio": {
+          "max_absolute_error": 0.0,
+          "rms_absolute_error": 0.0,
+          "reference_rms": 0.14837153657574637,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 0.14837153657574637,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "clean_identity_copy_control15": {
+        "visual": {
+          "max_absolute_error": 0.0,
+          "rms_absolute_error": 0.0,
+          "reference_rms": 2.425360147255646,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 2.425360147255646,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        },
+        "proprio": {
+          "max_absolute_error": 0.0,
+          "rms_absolute_error": 0.0,
+          "reference_rms": 0.11573256521795343,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 0.11573256521795343,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        }
+      },
+      "canonical_request_control15": {
+        "visual": {
+          "max_absolute_error": 0.0,
+          "rms_absolute_error": 0.0,
+          "reference_rms": 2.4182457185764257,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 2.4182457185764257,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        },
+        "proprio": {
+          "max_absolute_error": 0.0,
+          "rms_absolute_error": 0.0,
+          "reference_rms": 0.11764525310409614,
+          "allclose": true,
+          "passed": true,
+          "per_timepoint": [
+            {
+              "max_absolute_error": 0.0,
+              "rms_absolute_error": 0.0,
+              "reference_rms": 0.11764525310409614,
+              "allclose": true,
+              "passed": true
+            }
+          ]
+        }
+      }
+    }
+  },
+  "terminal_forecast_errors": {
+    "clean_identity_copy": {
+      "original": {
+        "visual_mse": 1.565480552608351,
+        "proprio_mse": 0.001421214212109208,
+        "weighted_mse": 1.565622674029562
+      },
+      "canonical": {
+        "visual_mse": 0.5292003197230474,
+        "proprio_mse": 9.499337962042771e-05,
+        "weighted_mse": 0.5292098190610094
+      }
+    },
+    "canonical_request": {
+      "original": {
+        "visual_mse": 0.958512544589262,
+        "proprio_mse": 0.00016552323619609658,
+        "weighted_mse": 0.9585290969128817
+      },
+      "canonical": {
+        "visual_mse": 0.45830130008413056,
+        "proprio_mse": 2.103638370105636e-05,
+        "weighted_mse": 0.45830340372250067
+      }
+    }
+  },
+  "true_future_objective": {
+    "candidate_order": [
+      "clean_identity_copy",
+      "canonical_request"
+    ],
+    "costs": [
+      1.7012925148010254,
+      1.3794702291488647
+    ],
+    "rank_best_first": [
+      "canonical_request",
+      "clean_identity_copy"
+    ],
+    "exact_tie": false,
+    "selected_candidate": "canonical_request",
+    "control_horizon": 30,
+    "formula": "Native CPU FP32 terminal visual MSE +0.1*proprio MSE versus unchanged goal",
+    "selected_actual_utility": {
+      "controls": 30,
+      "terminal_native_reward": 3.347029447555542,
+      "cumulative_native_reward": 76.03699398040771,
+      "terminal_reach_distance": 0.18721491785066868,
+      "terminal_success": false,
+      "ever_success": false,
+      "successful_controls": 0,
+      "first_success_control": null
+    },
+    "selects_lower_actual_cumulative_reward": true,
+    "selects_lower_actual_terminal_reward": true,
+    "selected_minus_other_actual_cumulative_reward": -19.804828643798828,
+    "selected_minus_other_actual_terminal_reward": -1.9008777141571045
+  },
+  "physical_utilities": {
+    "clean_identity_copy": {
+      "controls": 30,
+      "terminal_native_reward": 5.2479071617126465,
+      "cumulative_native_reward": 95.84182262420654,
+      "terminal_reach_distance": 0.14261315432355678,
+      "terminal_success": false,
+      "ever_success": false,
+      "successful_controls": 0,
+      "first_success_control": null
+    },
+    "canonical_request": {
+      "controls": 30,
+      "terminal_native_reward": 3.347029447555542,
+      "cumulative_native_reward": 76.03699398040771,
+      "terminal_reach_distance": 0.18721491785066868,
+      "terminal_success": false,
+      "ever_success": false,
+      "successful_controls": 0,
+      "first_success_control": null
+    }
+  },
+  "limits": "One post-hoc two-mean bank at a common query1 root. This closes its30-control truth horizon only; no reconstruction of all native CEM candidates, no99-step causal mediation, no population ASR, and no proof of training-distribution membership or new security novelty.",
+  "elapsed_seconds": 8.679799505043775,
+  "dependency_checks": {
+    "completed_replay": true,
+    "exact_source_reconstruction": true,
+    "both_historical_prefixes_exact": true,
+    "mean_goal_context_unchanged": true,
+    "actual15_inputs_exact": true
+  },
+  "sources": {
+    "native": "runs/dino_native_alias_pair_20261015",
+    "forecasts": "runs/dino_native_alias_forecast_gpu_20261015",
+    "real_replay": "runs/dino_first_query_full_horizon_20261015",
+    "ranking": "reports/dino_first_query_two_mean_ranking_20261015.json"
+  },
+  "gpu_at_start": {
+    "memory.total": 24564,
+    "memory.free": 10329,
+    "memory.used": 13753,
+    "utilization.gpu": 100
+  },
+  "strict_load": {
+    "strict_loads": [
+      {
+        "class": "DinoVisionTransformer",
+        "loaded_tensors": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ViTPredictor",
+        "loaded_tensors": 75,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      }
+    ],
+    "parameters": 43360120,
+    "all_parameters_float32": true,
+    "model_action_dimension": 20,
+    "model_forward_calls": 0,
+    "normalization": {
+      "action_dim": 4,
+      "proprio_dim": 4,
+      "state_dim": 39,
+      "action_mean": [
+        0.005723577458411455,
+        0.15735651552677155,
+        -0.1396457850933075,
+        0.1998193860054016
+      ],
+      "action_std": [
+        0.7359239459037781,
+        0.73408043384552,
+        0.7182977199554443,
+        0.743205726146698
+      ],
+      "proprio_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929
+      ],
+      "proprio_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074
+      ],
+      "state_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929,
+        0.008108077570796013,
+        0.6766929626464844,
+        0.09434457868337631,
+        0.3859776258468628,
+        -0.050619181245565414,
+        0.03434790298342705,
+        0.4750967025756836,
+        0.017891764640808105,
+        0.04413251578807831,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        -0.0029707495123147964,
+        0.6529995203018188,
+        0.1545131504535675,
+        0.6445063948631287,
+        0.008061803877353668,
+        0.6762475371360779,
+        0.09425390511751175,
+        0.3860057294368744,
+        -0.050728388130664825,
+        0.03427530452609062,
+        0.4753906726837158,
+        0.017830422148108482,
+        0.04414031654596329,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        0.015675902366638184,
+        0.7268462181091309,
+        0.12401046603918076
+      ],
+      "state_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074,
+        0.1050795242190361,
+        0.10192868858575821,
+        0.0880839079618454,
+        0.4468156695365906,
+        0.18397848308086395,
+        0.14911998808383942,
+        0.47220379114151,
+        0.06688503921031952,
+        0.16022595763206482,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.10383506864309311,
+        0.11242222785949707,
+        0.07946359366178513,
+        0.2625894844532013,
+        0.10486840456724167,
+        0.10173390805721283,
+        0.08810629695653915,
+        0.4467460811138153,
+        0.18375301361083984,
+        0.14870719611644745,
+        0.4721624553203583,
+        0.0666341558098793,
+        0.16022934019565582,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.14182789623737335,
+        0.12113576382398605,
+        0.09631838649511337
+      ]
+    }
+  },
+  "cached_forecast_rankings": {
+    "original": {
+      "candidate_indices_best_first": [
+        0,
+        1
+      ],
+      "candidate_names_best_first": [
+        "clean_identity_copy",
+        "canonical_request"
+      ],
+      "exact_cost_tie": false,
+      "cost_candidate1_minus_candidate0": 0.26570266485214233,
+      "selected_candidate_index": 0,
+      "selected_candidate": "clean_identity_copy",
+      "selected_actual_prefix_utility": {
+        "actual_controls": 15,
+        "cumulative_reward_15": 31.041362047195435,
+        "terminal_reward_15": 3.0915794372558594,
+        "terminal_reach_distance_15": 0.19548642529350643,
+        "terminal_success_15": false,
+        "ever_success_15": false,
+        "first_success_within_15": null,
+        "successful_controls_within_15": 0
+      }
+    },
+    "canonical": {
+      "candidate_indices_best_first": [
+        1,
+        0
+      ],
+      "candidate_names_best_first": [
+        "canonical_request",
+        "clean_identity_copy"
+      ],
+      "exact_cost_tie": false,
+      "cost_candidate1_minus_candidate0": -0.3447378873825073,
+      "selected_candidate_index": 1,
+      "selected_candidate": "canonical_request",
+      "selected_actual_prefix_utility": {
+        "actual_controls": 15,
+        "cumulative_reward_15": 30.07258892059326,
+        "terminal_reward_15": 2.771111249923706,
+        "terminal_reach_distance_15": 0.2071925972773358,
+        "terminal_success_15": false,
+        "ever_success_15": false,
+        "first_success_within_15": null,
+        "successful_controls_within_15": 0
+      }
+    }
+  },
+  "cached_forecast_cost_matrix": {
+    "rows": [
+      "original",
+      "canonical"
+    ],
+    "columns": [
+      "clean_identity_copy",
+      "canonical_request"
+    ],
+    "values": [
+      [
+        0.8484280705451965,
+        1.1141307353973389
+      ],
+      [
+        1.5804330110549927,
+        1.2356951236724854
+      ]
+    ],
+    "lower_is_better": true,
+    "native_formula": "Native FP32 terminal visual feature MSE +0.1*terminal proprio feature MSE against the same cached original goal. Pass the unchanged original normalized candidate actions to the objective in every representation.",
+    "terminal_control_horizon": 30
+  },
+  "runtime": {
+    "interpreter": "/home/xhj/WM_Security/.venv-jepa-native/bin/python",
+    "torch": "2.6.0+cu124",
+    "device": "cuda:0",
+    "feature_dtype": "float32",
+    "objective_device": "cpu",
+    "threads": 4,
+    "allocator_cap_bytes": 2147483648,
+    "allocator_excludes_context": true,
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": true
+  },
+  "peak_cuda_allocated_bytes": 212688384,
+  "peak_cuda_reserved_bytes": 222298112,
+  "finished_at_utc": "2026-10-15T11:08:58.426387+00:00"
+}

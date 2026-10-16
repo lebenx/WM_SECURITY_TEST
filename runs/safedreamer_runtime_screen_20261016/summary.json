@@ -1,0 +1,157 @@
+{
+  "status": "completed_source_and_package_metadata_runtime_screen_no_execution",
+  "repository": "https://github.com/PKU-Alignment/SafeDreamer",
+  "revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+  "scope": "Ordinary OSRP runtime feasibility only. No weight download, installation, model/package import, model inference, environment construction/step or training.",
+  "source_fetch_manifest": "runs/safedreamer_runtime_screen_20261016/source_fetch.json",
+  "local_package_inventory": "runs/safedreamer_runtime_screen_20261016/local_package_inventory.json",
+  "existing_source_review": "reports/safedreamer_source_review_20261016.json",
+  "official_cpu_entry": {
+    "documented": true,
+    "command_template": "python SafeDreamer/train.py --configs osrp --method osrp --run.script eval_only --run.from_checkpoint /path/to/matched_checkpoint.ckpt --task safetygym_SafetyPointGoal1-v0 --jax.platform cpu --run.steps 10000",
+    "warning": "Documented command only; not executed, not a bounded single-episode protocol, and not evidence of local CPU affordability.",
+    "sources": [
+      "runs/safedreamer_runtime_screen_20261016/source/README.md:87-114",
+      "runs/safedreamer_runtime_screen_20261016/source/README.md:116-144",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/train.py:89-93"
+    ]
+  },
+  "checkpoint_and_configuration": {
+    "checkpoint_repository": "https://huggingface.co/Weidong-Huang/SafeDreamer",
+    "checkpoint_revision": "80ef19ee7a7a8a105489100c1dc6e1681df2c97b",
+    "matching_filename": "safedreamer_osrp/20240324-154820_osrp_safetygym_SafetyPointGoal1-v0_0.ckpt",
+    "size_bytes_from_official_metadata": 391867080,
+    "weights_downloaded": false,
+    "load_path": "train.main merges defaults, named osrp config and CLI flags, saves the chosen config and constructs the Agent. eval_only later loads only the agent checkpoint entry. Checkpoint.load unpacks data and delegates to agent.load; JAXAgent.load replaces variable state with device_put and sync.",
+    "config_restored_from_checkpoint": false,
+    "explicit_strict_parameter_key_and_shape_check_in_load": false,
+    "official_metadata_config_status": "HF file inventory has no YAML/JSON training configuration sidecar. The pinned safedreamer_osrp/README.md fetched in this screen contains only the heading # osrp. Exact checkpoint-internal fields remain uninspected because weights were not fetched.",
+    "architectural_candidate": "Published defaults plus osrp: image/image2, RSSM deter512 and stoch48/classes48, inherited FP16 computation, CCE H15/500 proposals/50 elites/6 iterations/mixture0, cost_limit2. This is the official candidate configuration, not a verified exact training-config reconstruction.",
+    "initialization_cost_caveat": "JAXAgent constructs variable state through a dummy batch and the transformed training initialization path before checkpoint load; invoking the official entry is not a metadata-only probe. No time or memory measured.",
+    "sources": [
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/train.py:28-43",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/train.py:89-93",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/run/eval_only.py:282-284",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/core/checkpoint.py:71-87",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/jaxagent.py:117-122",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/jaxagent.py:234-245",
+      "runs/safedreamer_source_screen_20261016/source/SafeDreamer/configs.yaml:150-178",
+      "runs/safedreamer_runtime_screen_20261016/hf_osrp_README.md"
+    ],
+    "compatibility_interpretation": "Absent automatic config recovery and explicit strict validation are pending verification obligations, not evidence that the published checkpoint is incompatible. No checkpoint tensors were inspected."
+  },
+  "environment_observation_and_seed": {
+    "task": "SafetyPointGoal1-v0",
+    "suite": "safetygym",
+    "native_adapter": "SafeDreamer/embodied/envs/safetygym.py",
+    "repeat": 5,
+    "observation": "Official OSRP selects rendered image/image2 cameras (vision and vision_back), model input64x64. Eval mode forces rendering, makes a1024x1024 environment renderer and downsamples actual camera frames to64x64; additional fixedfar frame is retained for visualization.",
+    "mode_adaptation_limit": "Changing render mode or directly rendering64x64 could change input pixels relative to the native eval path; such changes cannot silently be called exact native reproduction.",
+    "environment_version": "README clones Safety-Gymnasium without pinning a revision or version. A matching task name alone does not verify camera, dynamics or wrapper compatibility.",
+    "seed_binding": "config.seed initializes the JAXAgent NumPy RNG. train.make_env does not pass that seed to SafetyGym, and FromGymnasium.step resets with env.reset() without a seed. A separate initial_reset(seed=0) helper exists but is not called by the inspected native Driver/reset chain. Thus CLI seed alone does not establish a deterministic physical initial state.",
+    "headless_cpu_status": "Unknown. CPU mode does not set MUJOCO_GL; a working CPU-compatible rendering backend and required shared libraries were not tested.",
+    "sources": [
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/train.py:148-159",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/train.py:182-211",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/envs/safetygym.py:11-32",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/envs/safetygym.py:73-91",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/envs/from_gymnasium.py:62-79",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/core/driver.py:25-31",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/jaxagent.py:33"
+    ],
+    "minimal_seed_adapter_not_implemented": {
+      "operation": "At the actual first reset performed by FromGymnasium.step, forward the predeclared physical seed to the existing underlying env.reset(seed=seed), retaining the same Safety-Gymnasium instance class, task configuration, action repeat, cameras, render preprocessing and returned real observation. A narrow wrapper around that underlying reset call can supply the seed without changing planner/model code.",
+      "avoid_double_reset": "Do not call the standalone initial_reset helper and then let the native Driver reset again: that helper sets _done=True, so the next step can issue another unseeded reset. Bind the seed to the reset the native Driver actually consumes.",
+      "separation": "Keep config.seed/model RNG and all planner budgets unchanged; record the environment seed separately. A newly fixed root is not claimed to reproduce the authors original training/evaluation root.",
+      "paired_use": "For a future paired run, use the same explicit physical seed and verify the resulting state/observations or use a verified complete snapshot. Seed injection alone is not proof that every wrapper/random source is reproducible.",
+      "scope": "Proposed initialization/reproducibility adapter only; not implemented or executed in this screen."
+    }
+  },
+  "real_utility_recording": {
+    "physical_source": "FromGymnasium directly receives obs,reward,cost,terminated,truncated,info from safety_gymnasium.env.step(action). Reward and cost are emitted as actual environment scalars.",
+    "repeat_aggregation": "SafetyGym executes up to repeat5 underlying steps, sums returned reward/cost, and stops early on is_last/is_terminal. Episode reward/cost totals therefore have a genuine physical outcome source; they are not learned-model scores.",
+    "native_outputs": "eval_only per_episode sums ep.reward and ep.cost in float64. Logger writes metrics.jsonl and scores.jsonl including episode/score and episode/cost.",
+    "trace_boundary": "The inspected eval entry does not persist a complete step-level numeric state/action/reward/cost replay artifact. Driver callbacks retain episode arrays in memory and could support an explicitly added recorder. Driver transition rows attach the newly chosen next action to the just-received observation/reward; per-action causal alignment must account for this shift.",
+    "physical_step_count_boundary": "Logger multiplies driver steps by env.repeat, but reset rows and early termination mean this is not an exact count of executed physics steps. A bounded task probe should count actual inner steps explicitly.",
+    "native_reporting_overhead": "Every completed episode invokes agent.report_eval on the full episode and writes large videos/plots. This includes additional neural reporting inference beyond action planning. It must be counted, or transparently disabled as a reporting-only adapter before a bounded capability run.",
+    "sources": [
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/envs/from_gymnasium.py:79-112",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/envs/safetygym.py:60-71",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/run/eval_only.py:116-145",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/train.py:114-123",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/embodied/core/driver.py:44-76"
+    ]
+  },
+  "runtime_findings": {
+    "package_check_method": "Read dist-info names under14 workspace .venv roots and bounded .deps roots; no imports, device enumeration or environment variables/secrets read.",
+    "reusable_jax_candidate": {
+      "environment": ".venv-discoverphysics",
+      "python": "3.12",
+      "jax": "0.11.2",
+      "jaxlib": "0.11.2",
+      "numpy": "2.5.3"
+    },
+    "safety_gymnasium_distribution_found_in_checked_roots": false,
+    "tensorflow_probability_distribution_found_in_checked_roots": false,
+    "optax_distribution_found_in_checked_roots": false,
+    "official_tested_stack": "README: Python3.8, JAX0.3.25 and matching jaxlib0.3.25; requirements pin optax0.1.4 and ruamel.yaml0.17.21 but leave TensorFlow, TFP, NumPy and other packages unpinned.",
+    "compatibility_conclusion": "No ready reusable complete runtime identified. JAX0.11.2 is not the documented version and compatibility is unvalidated; this screen does not claim a specific modern-JAX runtime exception was observed. Missing distributions and unpinned Safety-Gymnasium are concrete setup/reproducibility gaps, not a proof the system cannot be installed.",
+    "sources": [
+      "runs/safedreamer_runtime_screen_20261016/local_package_inventory.json",
+      "runs/safedreamer_runtime_screen_20261016/source/README.md:87-114",
+      "runs/safedreamer_runtime_screen_20261016/source/requirements.txt",
+      "runs/safedreamer_runtime_screen_20261016/source/SafeDreamer/jaxagent.py:137-159"
+    ]
+  },
+  "staged_next_checks_not_executed": [
+    {
+      "stage": 1,
+      "gate": "Resolve one isolated dependency stack and an explicit Safety-Gymnasium revision; CPU-only import/API checks without loading weights or constructing a task. Modern-JAX porting is a separate compatibility change, not a native fidelity assumption."
+    },
+    {
+      "stage": 2,
+      "gate": "Bounded CPU task reset/render plus one physical step to verify exact task/camera keys, input shapes, reward/cost six-tuple, deterministic seed/snapshot support and headless renderer. No model needed. Preserve rendering/preprocessing semantics."
+    },
+    {
+      "stage": 3,
+      "gate": "Only after those gates and a separate resource decision, obtain the single matched ordinary OSRP checkpoint; validate all variable keys/shapes against the chosen official configuration before actual policy use. A filename is not strict-load proof."
+    },
+    {
+      "stage": 4,
+      "gate": "One unchanged native planning call with synchronized timing, memory recording and frozen ordinary OSRP budget, then decide whether a single complete Clean episode is affordable. Do not reduce candidates/horizon/iterations to manufacture feasibility."
+    },
+    {
+      "stage": 5,
+      "gate": "If affordable, one preregistered seeded native Clean episode with exact physical reward/cost and returned-mean trace. This would be local qualification, not evidence of a security mechanism, robust safety or general success rate."
+    }
+  ],
+  "decision": {
+    "immediate_execution": "NO_GO_on_current_installed_runtime",
+    "bounded_setup_feasibility": "CONDITIONAL_GO_for_dependency_and_environment_readiness_work_only_if_parent_selects_this_carrier",
+    "source_level_universal_blocker": "none_established_for_ordinary_OSRP",
+    "unknowns": [
+      "Exact training configuration and checkpoint tree compatibility",
+      "Matching Safety-Gymnasium revision and camera behavior",
+      "CPU rendering availability",
+      "JAX/TFP/Optax compatibility",
+      "Initialization/planning wall time and peak memory",
+      "Actual native Clean reward and safety cost"
+    ],
+    "scientific_scope": "No accepted attack operation, no measured harm, no native safety certification, and no claim that candidate costs certify the executed elite mean. Prior Vector exclusion and padding/mean caveats remain intact.",
+    "parent_scope_decision": "Runtime feasibility does not authorize automatic checkpoint download or Clean execution in this turn. A shared-versus-independent forecast sampling experiment would remain the archived wm_sampling family; source feasibility alone supplies no new causal-identification result for the safety-mode switch."
+  },
+  "activity": {
+    "new_source_or_document_fetches": 11,
+    "weight_downloads": 0,
+    "package_installs": 0,
+    "package_runtime_imports": 0,
+    "model_calls": 0,
+    "model_api_calls": 0,
+    "environment_constructions": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "gpu_initializations": 0,
+    "scientific_experiments": 0,
+    "modified_existing_runners_or_registries": false
+  }
+}

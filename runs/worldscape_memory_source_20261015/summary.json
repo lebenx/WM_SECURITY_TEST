@@ -1,0 +1,262 @@
+{
+  "status": "completed_source_screen_native_transaction_blocks_rejected_forecast_memory_path",
+  "date": "2026-10-15",
+  "repository": "https://github.com/manifoldai-research/WorldScape-Policy",
+  "commit": "2d60a5c0986df1d95d207586cc46bfd60b9a4035",
+  "question": "Does unexecuted or rejected forecast-branch content enter cross-step persistent memory and influence later real actions in the inspected native inference path?",
+  "decision": "NO_GO for the proposed rejected-forecast-memory operation. Do not proceed to weights, installation or Clean execution on this source hypothesis.",
+  "evidence": [
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/rollout/session.py",
+      "upstream_path": "src/worldscape_policy/rollout/session.py",
+      "lines": [
+        49,
+        84
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/rollout/session.py#L49-L84",
+      "finding": "predict creates one pending output; a second predict is rejected until resolution. Only commit replaces committed event/visual memory. discard drops pending output without advancing committed memory."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/rollout/runner.py",
+      "upstream_path": "src/worldscape_policy/rollout/runner.py",
+      "lines": [
+        95,
+        126
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/rollout/runner.py#L95-L126",
+      "finding": "Native generic rollout calls execute before commit and discards a pending output when execution raises. No automatic commit-on-prediction occurs here."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/wam/wan22/plugin.py",
+      "upstream_path": "src/worldscape_policy/wam/wan22/plugin.py",
+      "lines": [
+        299,
+        311
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/wam/wan22/plugin.py#L299-L311",
+      "finding": "Each sample forks the input WAM inference state before running the numerical kernel."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/types.py",
+      "upstream_path": "src/worldscape_policy/types.py",
+      "lines": [
+        216,
+        240
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/types.py#L216-L240",
+      "finding": "fork clones image-conditioning tensors, both KV caches, both cross-attention caches and condition-token tensors."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/types.py",
+      "upstream_path": "src/worldscape_policy/types.py",
+      "lines": [
+        319,
+        328
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/types.py#L319-L328",
+      "finding": "Runtime cache cloning recursively handles tensors, lists, tuples and dictionaries."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/wam/flow_matching.py",
+      "upstream_path": "src/worldscape_policy/wam/flow_matching.py",
+      "lines": [
+        512,
+        540
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/wam/flow_matching.py#L512-L540",
+      "finding": "Denoising the predicted video/action branch passes update_kv_cache=False."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/wam/flow_matching.py",
+      "upstream_path": "src/worldscape_policy/wam/flow_matching.py",
+      "lines": [
+        688,
+        692
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/wam/flow_matching.py#L688-L692",
+      "finding": "Only explicitly enabled cache updates replace the per-layer cache entries with returned tensors."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/wam/wan22/model.py",
+      "upstream_path": "src/worldscape_policy/wam/wan22/model.py",
+      "lines": [
+        1227,
+        1280
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/wam/wan22/model.py#L1227-L1280",
+      "finding": "The causal attention implementation constructs new keys/values using cat and returns a new stack. It does not append predicted tokens into the input cache tensor in place."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/wam/wan22/model.py",
+      "upstream_path": "src/worldscape_policy/wam/wan22/model.py",
+      "lines": [
+        2306,
+        2315
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/wam/wan22/model.py#L2306-L2315",
+      "finding": "Core returns updated caches; the direct write-back loop is commented out. The caller determines whether to retain those updates."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/wam/flow_matching.py",
+      "upstream_path": "src/worldscape_policy/wam/flow_matching.py",
+      "lines": [
+        592,
+        634
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/wam/flow_matching.py#L592-L634",
+      "finding": "On the next chunk, persistent visual KV prefill consumes the current real-observation latent window with action=None and update_kv_cache=True."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/memory/visual/prefill.py",
+      "upstream_path": "src/worldscape_policy/memory/visual/prefill.py",
+      "lines": [
+        54,
+        66
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/memory/visual/prefill.py#L54-L66",
+      "finding": "Recent visual latents are encoded from the supplied observation images, not the generated output video."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/conditioning/auto_conditioner.py",
+      "upstream_path": "src/worldscape_policy/conditioning/auto_conditioner.py",
+      "lines": [
+        165,
+        205
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/conditioning/auto_conditioner.py#L165-L205",
+      "finding": "Auto retrieves previous perception/planning tokens to condition the next prediction and stages current perception/planning tokens as candidate event memory."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/memory/event/memory.py",
+      "upstream_path": "src/worldscape_policy/memory/event/memory.py",
+      "lines": [
+        486,
+        496
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/memory/event/memory.py#L486-L496",
+      "finding": "Inference stages pending event history; training uses a different committed-history append path."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/memory/event/memory.py",
+      "upstream_path": "src/worldscape_policy/memory/event/memory.py",
+      "lines": [
+        532,
+        552
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/memory/event/memory.py#L532-L552",
+      "finding": "Pending event tokens are promoted through a newly constructed EventMemoryState; they are reasoning/perception history, not generated video or an executed-action suffix."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/memory/event/memory.py",
+      "upstream_path": "src/worldscape_policy/memory/event/memory.py",
+      "lines": [
+        581,
+        613
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/memory/event/memory.py#L581-L613",
+      "finding": "Inference pending append constructs a new state using detached current tokens and new concatenations, while retaining the previous committed history."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/policy.py",
+      "upstream_path": "src/worldscape_policy/policy.py",
+      "lines": [
+        203,
+        254
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/policy.py#L203-L254",
+      "finding": "Auto event memory and real visual context become WAM conditions; generated video/action output is returned with candidate memory. The output video is not supplied to event-memory staging."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "upstream_path": "experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "lines": [
+        73,
+        90
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/experiments/robotwin/wsp2_policy/deploy_policy.py#L73-L90",
+      "finding": "Native RoboTwin supports a 24-control prediction horizon and a replan prefix from 1 to 24, constrained to multiples of the 3-control observation interval."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "upstream_path": "experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "lines": [
+        255,
+        269
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/experiments/robotwin/wsp2_policy/deploy_policy.py#L255-L269",
+      "finding": "Only actions[:replan_steps] are queued for execution; the generated output remains pending."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "upstream_path": "experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "lines": [
+        304,
+        349
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/experiments/robotwin/wsp2_policy/deploy_policy.py#L304-L349",
+      "finding": "The selected prefix is executed, real observations are added to history, and terminal success/step-limit causes discard. Otherwise the pending state is committed, with periodic reset. This is not an executed-count-based trimming of generated future tensors."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "upstream_path": "experiments/robotwin/wsp2_policy/deploy_policy.py",
+      "lines": [
+        224,
+        231
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/experiments/robotwin/wsp2_policy/deploy_policy.py#L224-L231",
+      "finding": "Rolling history receives copied camera frames from actual observations."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/cli/serve.py",
+      "upstream_path": "src/worldscape_policy/cli/serve.py",
+      "lines": [
+        233,
+        260
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/cli/serve.py#L233-L260",
+      "finding": "Published server protocol exposes explicit predict/commit/discard and checks a pending prediction identifier before resolution."
+    },
+    {
+      "path": "runs/worldscape_memory_source_20261015/src/worldscape_policy/cli/serve.py",
+      "upstream_path": "src/worldscape_policy/cli/serve.py",
+      "lines": [
+        391,
+        409
+      ],
+      "source_url": "https://github.com/manifoldai-research/WorldScape-Policy/blob/2d60a5c0986df1d95d207586cc46bfd60b9a4035/src/worldscape_policy/cli/serve.py#L391-L409",
+      "finding": "The server permits one active connection. This source screen does not claim authenticated execution attestation or general multi-client session isolation."
+    }
+  ],
+  "partial_execution_boundary": {
+    "commit_accepts_executed_count": false,
+    "why_no_forecast_suffix_contamination_was_found": "The protection is structural: generated video KV updates are not retained, candidate caches are forked, and later visual prefill comes from actual observation windows. It is not a claim that commit truncates a 24-step predicted future to the executed prefix.",
+    "reasoning_history_caveat": "A successfully committed action prefix can retain the current VLM planning/perception tokens even though the complete generated action chunk was not executed. These tokens represent reasoning history. The inspected source does not establish that the unexecuted physical future is inserted as factual observation or that a subgoal-completion label is asserted.",
+    "terminal_branch": "RoboTwin discards pending output on reported success or step-limit, so that branch is not consumed by a subsequent task step."
+  },
+  "permission_boundary": {
+    "valid_query_path": "predict followed by discard does not commit either explicit memory. Calling predict again while pending is rejected.",
+    "execution_acknowledgement": "The websocket client supplies commit; the server does not physically attest execution. Deliberately sending a false commit would change the stated trusted-client protocol and is not evidence that a rejected branch leaks despite discard.",
+    "not_claimed": "No native multi-tenant attacker, restricted diagnostic writer, universal cache isolation proof or new exploitability result is inferred."
+  },
+  "comparison_to_archive": {
+    "opine_query_memory": "Unlike the previously observed OPINE hypothetical-query mutation, this runtime separates committed from pending memory and resolves it explicitly.",
+    "jowa_rejected_branch_cache": "This is another source-supported isolation result, with explicit execution commit and recursive state fork; it is not a substantively new harmful mechanism.",
+    "no_new_clean_gate": "The requested contamination premise is unsupported in the inspected path, so no resource or Clean panel was initiated."
+  },
+  "limits": [
+    "Source review only; no model weights, forecasts, simulator, task utility or CPU operator test were executed.",
+    "Unit-test source was inspected but the tests were not run.",
+    "The screen does not prove whole-system noninterference, RNG replay equality, every backend or every transport behavior.",
+    "README checkpoint and leaderboard statements were not locally validated and are not counted as Clean results."
+  ],
+  "activity": {
+    "downloaded_weight_files": 0,
+    "model_calls": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "author_contacts": 0,
+    "local_runtime_tests": 0
+  },
+  "source_manifest": "runs/worldscape_memory_source_20261015/source_files.json",
+  "tree_metadata": "runs/worldscape_memory_source_20261015/tree.json"
+}

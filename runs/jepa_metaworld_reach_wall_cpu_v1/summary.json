@@ -1,0 +1,4661 @@
+{
+  "status": "completed_cpu_validation",
+  "config": {
+    "path": "/home/xhj/WM_Security/configs/jepa_metaworld_reach_wall_cpu_v1.json",
+    "sha256": "22cb80f9adf3408b1da7ddd38a780ab5d7496c0e040be2c0940ad33aaa79ceab"
+  },
+  "runner": {
+    "path": "/home/xhj/WM_Security/scripts/pilot_jepa_metaworld_reach_wall.py",
+    "sha256": "cda094ce570a8c105f9695667e123cc0a2d66d578d3dcdb6830fd8524ca1ca64"
+  },
+  "protocol": {
+    "task": "mw-reach-wall",
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "branch_order_per_seed": [
+      "noop_repeat0",
+      "noop_repeat1",
+      "straight_servo",
+      "wall_aware_servo"
+    ],
+    "attempts_per_branch": 1,
+    "total_environment_steps": 100,
+    "warmup_zero_controls": 1,
+    "policy_control_budget": 99,
+    "query_elapsed_steps": [
+      1,
+      16,
+      31,
+      46,
+      61,
+      76,
+      91
+    ],
+    "hold_control_counts": [
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      9
+    ],
+    "physical_seed_rule": "Native rank0/local_seed1 ep0,1,2 gives seeds1,2,3; fresh environment per branch, global setup seed1",
+    "goal": "Unmodified native separate-expert final visual/proprio after100 controls; expert action sequence is archived only",
+    "noop": "Physical float32 [0,0,0,0], not normalized zero; two complete99-control repeats",
+    "servo_inputs": "Only raw float32 current and goal proprio of shape(4); xyz used, fourth element ignored",
+    "straight_servo": "Frozen reach comparator: clip(float32(5)*(goal_xyz-current_xyz),-1,1), gripper0; collision-unaware, not official wall expert",
+    "wall_aware_servo": "Same P5/gripper0 with public desired-position rule: if -.1<=x<=.3 and .60<=y<=.80 and z<.25, desired=goal_xyz+[0,0,1], else desired=goal_xyz",
+    "wall_aware_prior": "Uses public fixed wall geometry prior; uses supplied expert-goal proprio instead of hidden environment target. Not full official expert: feedback is latched at7 boundaries and goal is observed endpoint",
+    "servo_arithmetic": "float32; clip xyz to[-1,1] before environment; fixed action for15x6+9 controls",
+    "privileged_policy_inputs": false,
+    "evaluation_only_fields": [
+      "task target",
+      "TCP",
+      "full state",
+      "expert actions",
+      "reward",
+      "success"
+    ],
+    "primary_success": "Final native info.success at environment step100; TCP-target distance<=.05; done_at_succ=False",
+    "secondary": [
+      "ever_success",
+      "final_reach_distance",
+      "reward sum excluding warmup"
+    ],
+    "renderer": "CPU OSMesa",
+    "mujoco": "3.3.0 isolated target",
+    "threads": 4,
+    "cpu_model_loading": "Instantiate released checkpoint and local DINO encoder on CPU; force strict=True for every load_state_dict; no forward",
+    "model_forward_calls": 0,
+    "api_requests": 0,
+    "training_updates": 0,
+    "future_native_gpu": {
+      "checkpoint": "JEPA_WM/mw_jepa-wm.pth.tar",
+      "actual_image_size": 224,
+      "image_normalization": [
+        [
+          0.485,
+          0.456,
+          0.406
+        ],
+        [
+          0.229,
+          0.224,
+          0.225
+        ]
+      ],
+      "predictor": "AdaLN",
+      "proprio_cost_retained": true,
+      "cem": {
+        "samples": 300,
+        "iterations": 15,
+        "elites": 10,
+        "horizon": 6,
+        "num_act_stepped": 3,
+        "alpha": 0.1,
+        "context": 2
+      },
+      "precision": "FP32, native full300 candidate batch; no autocast/microbatch or retraining",
+      "macro_action": "20D = five4D controls; frameskip5/action_skip1; native last planned10 truncated to9",
+      "cem_rng": "One native GC_Agent generator seeded1 across fixed seeds1,2,3 in order",
+      "heads_cfg": {},
+      "decode_each_iteration": false,
+      "execution": "Not implemented/launched by this CPU prerequisites script; any later adapter must bind this registration and all CPU artifacts"
+    },
+    "failure_rule": "No retries, seed replacement, gain/goal/threshold tuning or longer budget. Preserve each scheduled branch and error. Prerequisite errors block GPU; all fixed CPU branches may still be collected once without selection."
+  },
+  "gate": {
+    "complete_fixed_three_seeds_required": true,
+    "all_initial_states_nontrivial": true,
+    "all_expert_final_success": true,
+    "all_exact_initial_goal_setup_across_four_branches": true,
+    "all_noop_full_trace_repeat_exact": true,
+    "strict_checkpoint_load_required": true,
+    "minimum_native_final_successes": 2,
+    "minimum_native_minus_wall_aware_final_successes": 2,
+    "minimum_native_minus_noop_final_successes": 2,
+    "straight_servo_is_descriptive_comparator": true,
+    "cpu_mathematical_stop": "If wall-aware or noop has>=2/3 final successes, native<=3/3 cannot clear the net+2 gate; stop panel GPU with native unmeasured, not failed",
+    "runtime_or_pairing_failure": "Incomplete/invalid prerequisites, never counted as native task failure",
+    "scope": "Fixed three-seed descriptive normal-capability/resource screen, not statistical confirmation, pure forecast causality, attack or defense evidence",
+    "stop_rule": "No new task/seed selection or budget changes to obtain a passing panel; all prior failed gates remain unchanged"
+  },
+  "episodes": [
+    {
+      "seed": 1,
+      "status": "completed",
+      "branches": [
+        {
+          "condition": "noop_repeat0",
+          "status": "completed",
+          "setup": {
+            "seed": 1,
+            "episode_index": 0,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.29321180476948483,
+            "warmup_reward_excluded_from_policy_return": 1.3800022602081299,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.0447400941288922,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/expert_trace.jsonl",
+              "sha256": "b6a3b061e1dbdaf66ff9024d5ae83f41d1fc0aecc1b768782399f92c83e0f820"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "5e559e2ee9f7c2bfa499278ff57f4afd31c8759e45bcf1098c1c2c45f6c8891f"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "53e3bea6a581253478598ec1203cc7bf4c27f1825320ab940df077d1d3eba731"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "1927705464667da05e271bb83eefeee33c64c201f0aab8d8826c8c2853cdfb8b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "7380a64e1dd67f221d92c1b32a517e89f62b32a9ec3b24356b797166e7d8f993"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "13a679545d0f70d2760c64861cd81c1ba8c1f4524013938cbdd561a9cca62043"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6c32ac660fa08e591e672811e2b7739c2b3816ba98f7151bb2323b1f0ef6918e"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "dd4fca8f2906eee8fd3f723e7ab5645223f5fb09134c18abdcb68a402671e3fb"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "ddd4ee1a5968761b01f2b92bd88dae5d25b81e694d84321e298c235530c267ff"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "55e2a8a9d3ab3fe2080c1750c07e9aaf72150a97ab19528659019c80040f560e"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "ae93d72476789168a4cad3b40867716d89c9f336c6aa101df83c41c27fee8599"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "d4066f9f7f64b529f6bb1f5ef5d931897cfcaad60a68b7e54d0e411447a0dc49"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/setup.npz",
+              "sha256": "fb5218dc366cb54940bcd8b2d5e8bc8edafcb0d0100626855799bfd8fcc6a7ab"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/initial.png",
+              "sha256": "951e8e648edb16ad661a6d4d8d950b80b345a3090b76feb23e3a97a4c4fd86d8"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/goal.png",
+              "sha256": "4c5c958c259f577ec17d9bb16291736d14727eb9fbbef354b234ac2155d87805"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": false,
+            "final_reach_distance": 0.29313645627259705,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 136.93526113033295,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/trace.jsonl",
+              "sha256": "a2db9f43ee96f8abdab9b3288c06e06a02d3138f951e0e05f4fc968b040f6bbf"
+            }
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "398c68c91903e7968da6fff323ff36ea6ab12ff10a6f99163ef562d566d2edfb"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "cbbdd0d72578444078191a22ea3ba04f5ed42cbaa017d01abcadde6fd8a98bd0"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "59fc16d8412a117bfbb022720946c50172da4e55bfac950b9fde5a80a2f1c87d"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2e8d0bf2a2ff9bade3c4c941310e6f26877eb1bfe6186dbe6e67f9c9d0570442"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "a3f3eedf624a193dedd265a9121ded7c528b6381dfcd762803b68d42287cf6bc"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "23e3a40b559ffb737922498f4a4f4e0e8a617283ba29c5806fc446e5c085246b"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "85157d2dec06ab3db76049c93cc9f22fd935e5c974a1a69eb16d205edf60d1a8"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "796b785d6709277ab7e4a6367fc9560e111d01967811e880eaf62f2432116a5a"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/final.npz",
+              "sha256": "9881d8a9c4c72b36e0f0ecdffee306dee68983eb7a261d35f04059dbab9eae9d"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat0/final.png",
+              "sha256": "aa07a23d5bc7f524e0bf649cd25a60b562eb0d7dc759b862f636993b2ba62edc"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "noop_repeat1",
+          "status": "completed",
+          "setup": {
+            "seed": 1,
+            "episode_index": 0,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.29321180476948483,
+            "warmup_reward_excluded_from_policy_return": 1.3800022602081299,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.0447400941288922,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat1/expert_trace.jsonl",
+              "sha256": "b6a3b061e1dbdaf66ff9024d5ae83f41d1fc0aecc1b768782399f92c83e0f820"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "5e559e2ee9f7c2bfa499278ff57f4afd31c8759e45bcf1098c1c2c45f6c8891f"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "53e3bea6a581253478598ec1203cc7bf4c27f1825320ab940df077d1d3eba731"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "1927705464667da05e271bb83eefeee33c64c201f0aab8d8826c8c2853cdfb8b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "7380a64e1dd67f221d92c1b32a517e89f62b32a9ec3b24356b797166e7d8f993"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "13a679545d0f70d2760c64861cd81c1ba8c1f4524013938cbdd561a9cca62043"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6c32ac660fa08e591e672811e2b7739c2b3816ba98f7151bb2323b1f0ef6918e"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "dd4fca8f2906eee8fd3f723e7ab5645223f5fb09134c18abdcb68a402671e3fb"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "ddd4ee1a5968761b01f2b92bd88dae5d25b81e694d84321e298c235530c267ff"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "55e2a8a9d3ab3fe2080c1750c07e9aaf72150a97ab19528659019c80040f560e"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "ae93d72476789168a4cad3b40867716d89c9f336c6aa101df83c41c27fee8599"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "d4066f9f7f64b529f6bb1f5ef5d931897cfcaad60a68b7e54d0e411447a0dc49"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat1/setup.npz",
+              "sha256": "fb5218dc366cb54940bcd8b2d5e8bc8edafcb0d0100626855799bfd8fcc6a7ab"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat1/initial.png",
+              "sha256": "951e8e648edb16ad661a6d4d8d950b80b345a3090b76feb23e3a97a4c4fd86d8"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat1/goal.png",
+              "sha256": "4c5c958c259f577ec17d9bb16291736d14727eb9fbbef354b234ac2155d87805"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": false,
+            "final_reach_distance": 0.29313645627259705,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 136.93526113033295,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat1/trace.jsonl",
+              "sha256": "a2db9f43ee96f8abdab9b3288c06e06a02d3138f951e0e05f4fc968b040f6bbf"
+            }
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "398c68c91903e7968da6fff323ff36ea6ab12ff10a6f99163ef562d566d2edfb"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "cbbdd0d72578444078191a22ea3ba04f5ed42cbaa017d01abcadde6fd8a98bd0"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "59fc16d8412a117bfbb022720946c50172da4e55bfac950b9fde5a80a2f1c87d"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2e8d0bf2a2ff9bade3c4c941310e6f26877eb1bfe6186dbe6e67f9c9d0570442"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "a3f3eedf624a193dedd265a9121ded7c528b6381dfcd762803b68d42287cf6bc"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "23e3a40b559ffb737922498f4a4f4e0e8a617283ba29c5806fc446e5c085246b"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "85157d2dec06ab3db76049c93cc9f22fd935e5c974a1a69eb16d205edf60d1a8"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "796b785d6709277ab7e4a6367fc9560e111d01967811e880eaf62f2432116a5a"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat1/final.npz",
+              "sha256": "9881d8a9c4c72b36e0f0ecdffee306dee68983eb7a261d35f04059dbab9eae9d"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_noop_repeat1/final.png",
+              "sha256": "aa07a23d5bc7f524e0bf649cd25a60b562eb0d7dc759b862f636993b2ba62edc"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "straight_servo",
+          "status": "completed",
+          "setup": {
+            "seed": 1,
+            "episode_index": 0,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.29321180476948483,
+            "warmup_reward_excluded_from_policy_return": 1.3800022602081299,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.0447400941288922,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/expert_trace.jsonl",
+              "sha256": "b6a3b061e1dbdaf66ff9024d5ae83f41d1fc0aecc1b768782399f92c83e0f820"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "5e559e2ee9f7c2bfa499278ff57f4afd31c8759e45bcf1098c1c2c45f6c8891f"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "53e3bea6a581253478598ec1203cc7bf4c27f1825320ab940df077d1d3eba731"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "1927705464667da05e271bb83eefeee33c64c201f0aab8d8826c8c2853cdfb8b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "7380a64e1dd67f221d92c1b32a517e89f62b32a9ec3b24356b797166e7d8f993"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "13a679545d0f70d2760c64861cd81c1ba8c1f4524013938cbdd561a9cca62043"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6c32ac660fa08e591e672811e2b7739c2b3816ba98f7151bb2323b1f0ef6918e"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "dd4fca8f2906eee8fd3f723e7ab5645223f5fb09134c18abdcb68a402671e3fb"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "ddd4ee1a5968761b01f2b92bd88dae5d25b81e694d84321e298c235530c267ff"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "55e2a8a9d3ab3fe2080c1750c07e9aaf72150a97ab19528659019c80040f560e"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "ae93d72476789168a4cad3b40867716d89c9f336c6aa101df83c41c27fee8599"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "d4066f9f7f64b529f6bb1f5ef5d931897cfcaad60a68b7e54d0e411447a0dc49"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/setup.npz",
+              "sha256": "fb5218dc366cb54940bcd8b2d5e8bc8edafcb0d0100626855799bfd8fcc6a7ab"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/initial.png",
+              "sha256": "951e8e648edb16ad661a6d4d8d950b80b345a3090b76feb23e3a97a4c4fd86d8"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/goal.png",
+              "sha256": "4c5c958c259f577ec17d9bb16291736d14727eb9fbbef354b234ac2155d87805"
+            }
+          },
+          "outcome": {
+            "final_success": true,
+            "ever_success": true,
+            "final_reach_distance": 0.04937672419697861,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 820.1655696630478,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/trace.jsonl",
+              "sha256": "9cb0465e8d2e119e4a7b167c04f87752e1ecabcb63842f9926342bcfd13b2c6b"
+            }
+          },
+          "decisions": {
+            "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/decisions.json",
+            "sha256": "557f76ea972234492d829fc890f325e05d1fea0fa2086be1126d4a2e1bb0f086"
+          },
+          "decision_audit": {
+            "all99_actions_from_recorded_raw_proprio": true,
+            "decision_count": 7
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "8e8bdb33e6d2de7162b6ea8c847c39ff15386b99ff4edbffe18ab815727dbb37"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "f58ef28ac9c4367851451e8b63e9ad863bc06bea151e5ca7b16e104a7b91489b"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "43a2d275a407a18450abdc8c7a0c35fb339e81d539f8ad2fc8c93048668ec1fb"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "ff0aab48f771636e8032f315d6d47937d2a20d289c2896d892806d302f2f368f"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "800cd53471993b50e7990938ae9c5a5b5b49eaac903d603efadbaf06e1d116fb"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "dc896f4bbbab47c7aa5489d5c8a8e6d86b484153cbc772b90f4aaed4a758422b"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "08549ee212e9d54bf8ce24b66ca714ddc9f1358fac0ac91217f6422bf25ca23c"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bd682d14f02edcc3d030d1438fd213ae81acacfea570e7b5be12b94a5c448b9e"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "08e63af0e8e271678daec6f4c580a6a519a5995243324190288a3867ec7a9db6"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/final.npz",
+              "sha256": "2a51d93341562de10bcbbf5c0579c476066f16072c6a064c02677ef9cdce5fa7"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_straight_servo/final.png",
+              "sha256": "a0720f6b5fe9ed716ec6bf5e463833cf1d418a68b153f40a1654eddbc4c37772"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "wall_aware_servo",
+          "status": "completed",
+          "setup": {
+            "seed": 1,
+            "episode_index": 0,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.29321180476948483,
+            "warmup_reward_excluded_from_policy_return": 1.3800022602081299,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.0447400941288922,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/expert_trace.jsonl",
+              "sha256": "b6a3b061e1dbdaf66ff9024d5ae83f41d1fc0aecc1b768782399f92c83e0f820"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "5e559e2ee9f7c2bfa499278ff57f4afd31c8759e45bcf1098c1c2c45f6c8891f"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "53e3bea6a581253478598ec1203cc7bf4c27f1825320ab940df077d1d3eba731"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "1927705464667da05e271bb83eefeee33c64c201f0aab8d8826c8c2853cdfb8b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "7380a64e1dd67f221d92c1b32a517e89f62b32a9ec3b24356b797166e7d8f993"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "13a679545d0f70d2760c64861cd81c1ba8c1f4524013938cbdd561a9cca62043"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6c32ac660fa08e591e672811e2b7739c2b3816ba98f7151bb2323b1f0ef6918e"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "dd4fca8f2906eee8fd3f723e7ab5645223f5fb09134c18abdcb68a402671e3fb"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "ddd4ee1a5968761b01f2b92bd88dae5d25b81e694d84321e298c235530c267ff"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "55e2a8a9d3ab3fe2080c1750c07e9aaf72150a97ab19528659019c80040f560e"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "ae93d72476789168a4cad3b40867716d89c9f336c6aa101df83c41c27fee8599"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "d4066f9f7f64b529f6bb1f5ef5d931897cfcaad60a68b7e54d0e411447a0dc49"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/setup.npz",
+              "sha256": "fb5218dc366cb54940bcd8b2d5e8bc8edafcb0d0100626855799bfd8fcc6a7ab"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/initial.png",
+              "sha256": "951e8e648edb16ad661a6d4d8d950b80b345a3090b76feb23e3a97a4c4fd86d8"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/goal.png",
+              "sha256": "4c5c958c259f577ec17d9bb16291736d14727eb9fbbef354b234ac2155d87805"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": true,
+            "final_reach_distance": 0.050326862775213865,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 802.0626643896103,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/trace.jsonl",
+              "sha256": "fcbbf34096b9a2751d6eb5c2f5693bf48787d73becab4bc99ceb7c7b404cc59d"
+            }
+          },
+          "decisions": {
+            "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/decisions.json",
+            "sha256": "457aa24992d207350da0d173cfc19fc010dded95718eaf368a56e28a8bd29f94"
+          },
+          "decision_audit": {
+            "all99_actions_from_recorded_raw_proprio": true,
+            "decision_count": 7
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "82e01ec4f2a84fd226aa83af13f14cadca013c25eacad08c6c8abdabcebd04ee"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "a14d4a541057904258fdc2e0e6db21c258b7f7032ac71d2ad475553e233d9c62"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "baa3cb6d2162f6d9dcb045e403fcc463e12dfd6de477531678f098076f83649b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "8e2a4aace72aa403afdbbd2e413265bf4112a420483ac3c44d543de3fc993578"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2c2bf41ece71d765e5a4a00df5b6c8194911148b1847cf4bef202e88afdbbac8"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "ba3198074a8b9d04f14c3342218defdb054434e83bb0b0ed236963b95fe2d473"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "6e969f27d34b70bef1e2e31544c4c6b4f877409966cf9e624430cd897a816f6e"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "ecac53eca8bd62a3c3e854193076c3a8685f7ffbb98dce09318765c0e3044858"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "e7cb5589e5bf103501f9f84ff4ae9d17a5376aed4e7fb5199beda05c0a41b02c"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "83153f4d549fc215b7227fd8f05817cd4e67996ea525e9b1226a5ee4ddd22387"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "d9dff8d9cedfac2162910bcedb3803aa310e0a90dda02e7bb2e532ffa53abdbd"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "098beaf5b5f7116ba7d5dc4d5edc5a38c8e6befb59fa923010b8f9367c710f42"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/final.npz",
+              "sha256": "e75b74d134f4895f21b4716045a9e2d0ccec7f7c1fe7d91149940f14dc5ff769"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed1_wall_aware_servo/final.png",
+              "sha256": "57584fe9bc2de80562c4d7e6f4a615d76f12d4690fa1599dddffc90feb51d553"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        }
+      ],
+      "prerequisites_passed": true,
+      "checks": {
+        "noop_repeat1": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "straight_servo": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "wall_aware_servo": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "noop_repeat_trace": {
+          "bytes_exact": true
+        },
+        "noop_repeat_final": {
+          "arrays_exact": true,
+          "png_exact": true
+        },
+        "task_prerequisites": {
+          "all_nontrivial": true,
+          "all_expert_final_success": true
+        }
+      }
+    },
+    {
+      "seed": 2,
+      "status": "completed",
+      "branches": [
+        {
+          "condition": "noop_repeat0",
+          "status": "completed",
+          "setup": {
+            "seed": 2,
+            "episode_index": 1,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.2841758712637061,
+            "warmup_reward_excluded_from_policy_return": 1.5458844900131226,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.03918282382226658,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/expert_trace.jsonl",
+              "sha256": "5af3f82c96abde10ab782c3b3c90a8d78cb16fae3782a9229178551e52c0b9e7"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "ad4dcaa33410cbafd56b35d073ad9d5818525e0408efeb1788dbdbb65702ec69"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "a18e531b9c45ae2a259e6506c16a3ca53ddb40369da28dbec803462733ea7476"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "cb40dee79c9bf9f575ac596e158a1d0e172d4223ec1b48724b700f1bf77cfe0b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "2f8feb44727a1ce2aaaf17c7ac892f73b0b9acca2568f068c34ad9e7c6ff984b"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "9ebd6bf00c3ab7838c9b56e5d2f86971f13b2b406c3f27cb74489aee764b407f"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "a0c1d187315653347a9e6ce2a4644b597f2caf1585c432c9d01f273fa7a48922"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "257c50bf9734e72a7b21f8e0b12742eaebbe742884bbc313b3cf21d6ae8bb53b"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "a5c8c105723b80551902e391902483642799c39da339775858ab79d843275ca7"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "62c16d2bdc702684258024df794e0fc17435a4c27a6bd848d1eb731ec5ddc7bd"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "dd6c110cebc612f33a177d2102229a300912b8747a1d71f2d76bbf7f3e1f5d41"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "910372b23243f553620aa8570ec2ffdf31b430074cd80c04b9b04028a18032b8"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/setup.npz",
+              "sha256": "da394c0be6570b4409ef4cb57600633f04f9e2478b925973be54b49e2fd87c6e"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/initial.png",
+              "sha256": "182a4ed29cf9abacaa55f4aac1aaca9060335682f034daaace1d32cb7a96e9cd"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/goal.png",
+              "sha256": "225348325d998e39c068dc68d1075e1be8b78895fc65512203657240aacc3b90"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": false,
+            "final_reach_distance": 0.2854591114688439,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 152.02126801013947,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/trace.jsonl",
+              "sha256": "3dc3bfca519661bea0391756abebcce5f2587ee35cc5955791d4c4e31c5eda2a"
+            }
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "7218e7e223d5721e777ae485429a04b194f47ac867d882552ba42086692695a6"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "c48c4c8f1ba02d1e5440312e4588c9c9fdc56dcc2a4fbe92adb5d9eeede01b6f"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "e834f0c9c56048b1a21fde82ce526f43663d093f69f86f3ad256869d2b449480"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2e8d0bf2a2ff9bade3c4c941310e6f26877eb1bfe6186dbe6e67f9c9d0570442"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "3f7e685102fffda29c4317968cdb00519ebba62a0b6925c7a2f41ccb418a5609"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "2c555a6f81f70b67d2ff1817e8de7af3bc1ef4a02710686597e3eeb138c4ef15"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "85157d2dec06ab3db76049c93cc9f22fd935e5c974a1a69eb16d205edf60d1a8"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "c2fd51a9a9dcadccf84a6278548b193d1050cca8477af1be25731d1f4a83cac3"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/final.npz",
+              "sha256": "a4eac54442768129867cd27537e0647b01993a5893ecb09ea0aa54391c06838f"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat0/final.png",
+              "sha256": "7ca4f8fef904fc5c4cf911894d8cad19113f9db337327573da4195b0df9c3054"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "noop_repeat1",
+          "status": "completed",
+          "setup": {
+            "seed": 2,
+            "episode_index": 1,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.2841758712637061,
+            "warmup_reward_excluded_from_policy_return": 1.5458844900131226,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.03918282382226658,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat1/expert_trace.jsonl",
+              "sha256": "5af3f82c96abde10ab782c3b3c90a8d78cb16fae3782a9229178551e52c0b9e7"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "ad4dcaa33410cbafd56b35d073ad9d5818525e0408efeb1788dbdbb65702ec69"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "a18e531b9c45ae2a259e6506c16a3ca53ddb40369da28dbec803462733ea7476"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "cb40dee79c9bf9f575ac596e158a1d0e172d4223ec1b48724b700f1bf77cfe0b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "2f8feb44727a1ce2aaaf17c7ac892f73b0b9acca2568f068c34ad9e7c6ff984b"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "9ebd6bf00c3ab7838c9b56e5d2f86971f13b2b406c3f27cb74489aee764b407f"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "a0c1d187315653347a9e6ce2a4644b597f2caf1585c432c9d01f273fa7a48922"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "257c50bf9734e72a7b21f8e0b12742eaebbe742884bbc313b3cf21d6ae8bb53b"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "a5c8c105723b80551902e391902483642799c39da339775858ab79d843275ca7"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "62c16d2bdc702684258024df794e0fc17435a4c27a6bd848d1eb731ec5ddc7bd"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "dd6c110cebc612f33a177d2102229a300912b8747a1d71f2d76bbf7f3e1f5d41"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "910372b23243f553620aa8570ec2ffdf31b430074cd80c04b9b04028a18032b8"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat1/setup.npz",
+              "sha256": "da394c0be6570b4409ef4cb57600633f04f9e2478b925973be54b49e2fd87c6e"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat1/initial.png",
+              "sha256": "182a4ed29cf9abacaa55f4aac1aaca9060335682f034daaace1d32cb7a96e9cd"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat1/goal.png",
+              "sha256": "225348325d998e39c068dc68d1075e1be8b78895fc65512203657240aacc3b90"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": false,
+            "final_reach_distance": 0.2854591114688439,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 152.02126801013947,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat1/trace.jsonl",
+              "sha256": "3dc3bfca519661bea0391756abebcce5f2587ee35cc5955791d4c4e31c5eda2a"
+            }
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "7218e7e223d5721e777ae485429a04b194f47ac867d882552ba42086692695a6"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "c48c4c8f1ba02d1e5440312e4588c9c9fdc56dcc2a4fbe92adb5d9eeede01b6f"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "e834f0c9c56048b1a21fde82ce526f43663d093f69f86f3ad256869d2b449480"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "2e8d0bf2a2ff9bade3c4c941310e6f26877eb1bfe6186dbe6e67f9c9d0570442"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "3f7e685102fffda29c4317968cdb00519ebba62a0b6925c7a2f41ccb418a5609"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "2c555a6f81f70b67d2ff1817e8de7af3bc1ef4a02710686597e3eeb138c4ef15"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "85157d2dec06ab3db76049c93cc9f22fd935e5c974a1a69eb16d205edf60d1a8"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "c2fd51a9a9dcadccf84a6278548b193d1050cca8477af1be25731d1f4a83cac3"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat1/final.npz",
+              "sha256": "a4eac54442768129867cd27537e0647b01993a5893ecb09ea0aa54391c06838f"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_noop_repeat1/final.png",
+              "sha256": "7ca4f8fef904fc5c4cf911894d8cad19113f9db337327573da4195b0df9c3054"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "straight_servo",
+          "status": "completed",
+          "setup": {
+            "seed": 2,
+            "episode_index": 1,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.2841758712637061,
+            "warmup_reward_excluded_from_policy_return": 1.5458844900131226,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.03918282382226658,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/expert_trace.jsonl",
+              "sha256": "5af3f82c96abde10ab782c3b3c90a8d78cb16fae3782a9229178551e52c0b9e7"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "ad4dcaa33410cbafd56b35d073ad9d5818525e0408efeb1788dbdbb65702ec69"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "a18e531b9c45ae2a259e6506c16a3ca53ddb40369da28dbec803462733ea7476"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "cb40dee79c9bf9f575ac596e158a1d0e172d4223ec1b48724b700f1bf77cfe0b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "2f8feb44727a1ce2aaaf17c7ac892f73b0b9acca2568f068c34ad9e7c6ff984b"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "9ebd6bf00c3ab7838c9b56e5d2f86971f13b2b406c3f27cb74489aee764b407f"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "a0c1d187315653347a9e6ce2a4644b597f2caf1585c432c9d01f273fa7a48922"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "257c50bf9734e72a7b21f8e0b12742eaebbe742884bbc313b3cf21d6ae8bb53b"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "a5c8c105723b80551902e391902483642799c39da339775858ab79d843275ca7"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "62c16d2bdc702684258024df794e0fc17435a4c27a6bd848d1eb731ec5ddc7bd"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "dd6c110cebc612f33a177d2102229a300912b8747a1d71f2d76bbf7f3e1f5d41"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "910372b23243f553620aa8570ec2ffdf31b430074cd80c04b9b04028a18032b8"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/setup.npz",
+              "sha256": "da394c0be6570b4409ef4cb57600633f04f9e2478b925973be54b49e2fd87c6e"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/initial.png",
+              "sha256": "182a4ed29cf9abacaa55f4aac1aaca9060335682f034daaace1d32cb7a96e9cd"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/goal.png",
+              "sha256": "225348325d998e39c068dc68d1075e1be8b78895fc65512203657240aacc3b90"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": false,
+            "final_reach_distance": 0.1720686494249629,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 371.3923969268799,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/trace.jsonl",
+              "sha256": "31beb0d48fee8c325486a6575064025c13c2492f2cbcc9cdf9ffe9a9feeb4a5f"
+            }
+          },
+          "decisions": {
+            "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/decisions.json",
+            "sha256": "099276f7bf6f37936a75ad530e4485a260970e67a3d1953d8ddae7f69437e6db"
+          },
+          "decision_audit": {
+            "all99_actions_from_recorded_raw_proprio": true,
+            "decision_count": 7
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "e35baf206f49e54c400a9a19fc46f9e5eda92cee9cefe7e7d8bffb0a03516de7"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "9ff6a751cf380063c29c873de5c6f72f7cb93b982b637a2277a8e76732c23e1d"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "910a4cc0c4ceb6befb16e5425820cea6f5fc3b9d15b438d5cde7ddb2f730a4e5"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "94e80a63e3a499a12277a1863b3ef370a38f0ebd49418f505d61892e363f9c92"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "cc3bd9fbc2fb03db39149dbce0e86446c1c0ad6e8180373dd912276c05889d40"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "4f21fad6438cbaef56765d4f9fd9f6e72a2c715fb54762fd972d9c95acd1c074"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "0287027233a5b1705e9ea45194f3a207d596187c61838f7d20cf99745cb554a8"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "e5bafde0bf6c97ebb34c452ab32b0c1ba4dd8eb1775c639109d9e2e2e409ae38"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "52d133010a9ec8ae8e722c805eab5161e972f0c4f17f88a6d754d70280dd9734"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/final.npz",
+              "sha256": "57ac7c85db0fc102a329696ff05d18b65597dc5268cafcd3642c0520f5bc89e3"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_straight_servo/final.png",
+              "sha256": "62d0f89c643c6fea62c99d2be9dca43ca1848cfca40d2a1d5d8e9dad20f88d85"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "wall_aware_servo",
+          "status": "completed",
+          "setup": {
+            "seed": 2,
+            "episode_index": 1,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.2841758712637061,
+            "warmup_reward_excluded_from_policy_return": 1.5458844900131226,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.03918282382226658,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/expert_trace.jsonl",
+              "sha256": "5af3f82c96abde10ab782c3b3c90a8d78cb16fae3782a9229178551e52c0b9e7"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "ad4dcaa33410cbafd56b35d073ad9d5818525e0408efeb1788dbdbb65702ec69"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "a18e531b9c45ae2a259e6506c16a3ca53ddb40369da28dbec803462733ea7476"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "cb40dee79c9bf9f575ac596e158a1d0e172d4223ec1b48724b700f1bf77cfe0b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "2f8feb44727a1ce2aaaf17c7ac892f73b0b9acca2568f068c34ad9e7c6ff984b"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "9ebd6bf00c3ab7838c9b56e5d2f86971f13b2b406c3f27cb74489aee764b407f"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "a0c1d187315653347a9e6ce2a4644b597f2caf1585c432c9d01f273fa7a48922"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "257c50bf9734e72a7b21f8e0b12742eaebbe742884bbc313b3cf21d6ae8bb53b"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "a5c8c105723b80551902e391902483642799c39da339775858ab79d843275ca7"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "62c16d2bdc702684258024df794e0fc17435a4c27a6bd848d1eb731ec5ddc7bd"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "dd6c110cebc612f33a177d2102229a300912b8747a1d71f2d76bbf7f3e1f5d41"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "910372b23243f553620aa8570ec2ffdf31b430074cd80c04b9b04028a18032b8"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/setup.npz",
+              "sha256": "da394c0be6570b4409ef4cb57600633f04f9e2478b925973be54b49e2fd87c6e"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/initial.png",
+              "sha256": "182a4ed29cf9abacaa55f4aac1aaca9060335682f034daaace1d32cb7a96e9cd"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/goal.png",
+              "sha256": "225348325d998e39c068dc68d1075e1be8b78895fc65512203657240aacc3b90"
+            }
+          },
+          "outcome": {
+            "final_success": true,
+            "ever_success": true,
+            "final_reach_distance": 0.041316706797544615,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 763.195162653923,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/trace.jsonl",
+              "sha256": "2bfc0479dc29f806283b39d9b8b18a3499b9c42f3dc1a6e8e93835a7632ac59c"
+            }
+          },
+          "decisions": {
+            "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/decisions.json",
+            "sha256": "7033c90f2d7111848ba8d7b6a86a156eb5414eb5e39a326b6027d10162caa182"
+          },
+          "decision_audit": {
+            "all99_actions_from_recorded_raw_proprio": true,
+            "decision_count": 7
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "6fe880bad858523c03871e5b27235a6018e942ba6634b6ed62c03b52c9755c41"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "f535c1b9a464cb131097f615031ad79543ecdd90621561d7001284bf9a23ec56"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "81fa8c2e30e47bc27057e46d042f2ce0c1951d20259799b8a7422064e3d1950b"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "d3af66711484508718c8c677c25f46ba1b3254baa41e749db1d5233450afdaa2"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "a9f8364947e85ad51a09b2174cd49b3ab057d0f965b67b01d99979f53588d0dc"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "4d354f9b49e1682cb55865e8b5a424db4cb4d59574f57291bacf0b44cd1343b2"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "ca4b83e5426ba61b3bd7b835634e3d7b6dc94fa59b6284415084c6efec908731"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "7527fb112f9a30be45f8ef700071da269a7c1d0187fd28dd2a0465a0408a9c94"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "ec29ceb2d6ac4e8767893e7d3396ae7cded407b0db65d439f58b943bd09e5f77"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "b6ad30cdc7c44292dd724e82c24f2c3bf80d20c9d1b3a71a8d11c37dddb316a6"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "91cb619ceabd36b628874bb700002df7c7273c1eeed3d5d24697c7e0d4597b63"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "26dba81ae68755028eed4451cd181c8a11efadc07e2ad8c7aad8fcf3ecd67167"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/final.npz",
+              "sha256": "206e98e1fe5bfe3caede3ad57efae2c00d3cb412e9f20e6ffa4fbe8437dd2b5c"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed2_wall_aware_servo/final.png",
+              "sha256": "efd854eea62f93ecf6aed2536bd93dc5948dbe1e5594c5eb167510150fa58a57"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        }
+      ],
+      "prerequisites_passed": true,
+      "checks": {
+        "noop_repeat1": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "straight_servo": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "wall_aware_servo": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "noop_repeat_trace": {
+          "bytes_exact": true
+        },
+        "noop_repeat_final": {
+          "arrays_exact": true,
+          "png_exact": true
+        },
+        "task_prerequisites": {
+          "all_nontrivial": true,
+          "all_expert_final_success": true
+        }
+      }
+    },
+    {
+      "seed": 3,
+      "status": "completed",
+      "branches": [
+        {
+          "condition": "noop_repeat0",
+          "status": "completed",
+          "setup": {
+            "seed": 3,
+            "episode_index": 2,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.27343034610816436,
+            "warmup_reward_excluded_from_policy_return": 1.4237844944000244,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.045275205424781154,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/expert_trace.jsonl",
+              "sha256": "e67a02beb32c4a260a497ab08e15c809c41de5fa015208570bb7da1e71ecf5ad"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "7b50c3e0af0639747a838f0604d5856f46dac977b9fb62beaf116dc71c9817f5"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "2baec2d8c8af0ea66fa3e92ed32fb05c41a6a8ffcfbc184aa5a4b3970647f5e4"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "ff8b44c8551aab3d06e6c2dbaa0e44e818b7436d4f8139d18efd911b153cc898"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "c34e80ee954e7530f14056cffe4e441d7c3465ec8ef7d8a0153399fc1c8ad7ab"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "fb5cc9ef14b853211a52f73e55fa4a0f30b6042a11539700057bb251c303f8f7"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6b1708ea65fa055592426c26be885ed8ba20825af15d18f349c2f98e94a66e06"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "2f9edc3f00cd4d0357b30af6f6e3e7f6014963bea9cd9d965e67f76de8ee370f"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "447a80d7369168fe4de1897ea8e13bbc32b63f644074aa288c342b6ea6a89d65"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "fdbbb7152336cc2cddb851a08d205c219e0db5a36188d8b8b17c4a77eac54857"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "32a4abf1fc78eb438d022478bc55d3aa8938d67f39de2d73ebe0028060f21c20"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "3dbb5b4ce64679ab1ac0c160ce7e09f55fb7fc3f1958b4696269232c19f54793"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/setup.npz",
+              "sha256": "87dd0461bcd24f0f4948f8f8953538077724ff12e9beb2f39c197d210d4ce7f3"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/initial.png",
+              "sha256": "f938bc00ff684f82a2f36052898ed41d8580af82a4572d4f76f07d46822121b2"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/goal.png",
+              "sha256": "0ff353919e9ee6686edd788c43b092784d5debe4e45c1276f6dbc781d3245f6c"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": false,
+            "final_reach_distance": 0.27345672337969035,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 141.2023205757141,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/trace.jsonl",
+              "sha256": "2aee577be5a55c5052cc9dfba5314772147e80da299c69ba10fc7172567155e8"
+            }
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "98fb5836044a8d04670707a88aa726fba380f8c732a2c2707a6af1522346d9cd"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "a4d9081cc259f93ef5d8c86dc236227a038bd2adccef5f7b3a3b1de41824e2eb"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "c7484d4ba949f805629665082d191d2ef2da8f2019f65553ab5a1403053c318e"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "6d62d47e626f96019bd375f148dec17dd1d04b6edffcda392f497f2bdbe981ac"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "2c288805402fc515765579515459e29266f5226884b82b3f5976fabd529101ab"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "ad00d965ef7b7a43878be07ec083ef242e726110f8f6cbb1dcf13f8065a98764"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "85157d2dec06ab3db76049c93cc9f22fd935e5c974a1a69eb16d205edf60d1a8"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "023a1c980d2147aa35d0fe3f82cdb820af1ae254e6fd3a5bd0025ed061eb3811"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/final.npz",
+              "sha256": "fc1ebdf59039fac8c35d96cc1bfb46b5ba37f4072e28eb9a333e06fe239a89ee"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat0/final.png",
+              "sha256": "da554b1b96f4c42705d566c1c236230662a4906998c560cedb6b58dd80c1a118"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "noop_repeat1",
+          "status": "completed",
+          "setup": {
+            "seed": 3,
+            "episode_index": 2,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.27343034610816436,
+            "warmup_reward_excluded_from_policy_return": 1.4237844944000244,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.045275205424781154,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat1/expert_trace.jsonl",
+              "sha256": "e67a02beb32c4a260a497ab08e15c809c41de5fa015208570bb7da1e71ecf5ad"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "7b50c3e0af0639747a838f0604d5856f46dac977b9fb62beaf116dc71c9817f5"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "2baec2d8c8af0ea66fa3e92ed32fb05c41a6a8ffcfbc184aa5a4b3970647f5e4"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "ff8b44c8551aab3d06e6c2dbaa0e44e818b7436d4f8139d18efd911b153cc898"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "c34e80ee954e7530f14056cffe4e441d7c3465ec8ef7d8a0153399fc1c8ad7ab"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "fb5cc9ef14b853211a52f73e55fa4a0f30b6042a11539700057bb251c303f8f7"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6b1708ea65fa055592426c26be885ed8ba20825af15d18f349c2f98e94a66e06"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "2f9edc3f00cd4d0357b30af6f6e3e7f6014963bea9cd9d965e67f76de8ee370f"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "447a80d7369168fe4de1897ea8e13bbc32b63f644074aa288c342b6ea6a89d65"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "fdbbb7152336cc2cddb851a08d205c219e0db5a36188d8b8b17c4a77eac54857"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "32a4abf1fc78eb438d022478bc55d3aa8938d67f39de2d73ebe0028060f21c20"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "3dbb5b4ce64679ab1ac0c160ce7e09f55fb7fc3f1958b4696269232c19f54793"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat1/setup.npz",
+              "sha256": "87dd0461bcd24f0f4948f8f8953538077724ff12e9beb2f39c197d210d4ce7f3"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat1/initial.png",
+              "sha256": "f938bc00ff684f82a2f36052898ed41d8580af82a4572d4f76f07d46822121b2"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat1/goal.png",
+              "sha256": "0ff353919e9ee6686edd788c43b092784d5debe4e45c1276f6dbc781d3245f6c"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": false,
+            "final_reach_distance": 0.27345672337969035,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 141.2023205757141,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat1/trace.jsonl",
+              "sha256": "2aee577be5a55c5052cc9dfba5314772147e80da299c69ba10fc7172567155e8"
+            }
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "98fb5836044a8d04670707a88aa726fba380f8c732a2c2707a6af1522346d9cd"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "a4d9081cc259f93ef5d8c86dc236227a038bd2adccef5f7b3a3b1de41824e2eb"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "c7484d4ba949f805629665082d191d2ef2da8f2019f65553ab5a1403053c318e"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "6d62d47e626f96019bd375f148dec17dd1d04b6edffcda392f497f2bdbe981ac"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "2c288805402fc515765579515459e29266f5226884b82b3f5976fabd529101ab"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "ad00d965ef7b7a43878be07ec083ef242e726110f8f6cbb1dcf13f8065a98764"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "85157d2dec06ab3db76049c93cc9f22fd935e5c974a1a69eb16d205edf60d1a8"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "023a1c980d2147aa35d0fe3f82cdb820af1ae254e6fd3a5bd0025ed061eb3811"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat1/final.npz",
+              "sha256": "fc1ebdf59039fac8c35d96cc1bfb46b5ba37f4072e28eb9a333e06fe239a89ee"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_noop_repeat1/final.png",
+              "sha256": "da554b1b96f4c42705d566c1c236230662a4906998c560cedb6b58dd80c1a118"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "straight_servo",
+          "status": "completed",
+          "setup": {
+            "seed": 3,
+            "episode_index": 2,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.27343034610816436,
+            "warmup_reward_excluded_from_policy_return": 1.4237844944000244,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.045275205424781154,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/expert_trace.jsonl",
+              "sha256": "e67a02beb32c4a260a497ab08e15c809c41de5fa015208570bb7da1e71ecf5ad"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "7b50c3e0af0639747a838f0604d5856f46dac977b9fb62beaf116dc71c9817f5"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "2baec2d8c8af0ea66fa3e92ed32fb05c41a6a8ffcfbc184aa5a4b3970647f5e4"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "ff8b44c8551aab3d06e6c2dbaa0e44e818b7436d4f8139d18efd911b153cc898"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "c34e80ee954e7530f14056cffe4e441d7c3465ec8ef7d8a0153399fc1c8ad7ab"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "fb5cc9ef14b853211a52f73e55fa4a0f30b6042a11539700057bb251c303f8f7"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6b1708ea65fa055592426c26be885ed8ba20825af15d18f349c2f98e94a66e06"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "2f9edc3f00cd4d0357b30af6f6e3e7f6014963bea9cd9d965e67f76de8ee370f"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "447a80d7369168fe4de1897ea8e13bbc32b63f644074aa288c342b6ea6a89d65"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "fdbbb7152336cc2cddb851a08d205c219e0db5a36188d8b8b17c4a77eac54857"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "32a4abf1fc78eb438d022478bc55d3aa8938d67f39de2d73ebe0028060f21c20"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "3dbb5b4ce64679ab1ac0c160ce7e09f55fb7fc3f1958b4696269232c19f54793"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/setup.npz",
+              "sha256": "87dd0461bcd24f0f4948f8f8953538077724ff12e9beb2f39c197d210d4ce7f3"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/initial.png",
+              "sha256": "f938bc00ff684f82a2f36052898ed41d8580af82a4572d4f76f07d46822121b2"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/goal.png",
+              "sha256": "0ff353919e9ee6686edd788c43b092784d5debe4e45c1276f6dbc781d3245f6c"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": true,
+            "final_reach_distance": 0.05138272580314743,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 831.2979828119278,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/trace.jsonl",
+              "sha256": "dbfd52892f36aad5a21b845d153ab1e79d4e201f61c80a6e80e7f7b6b85003ef"
+            }
+          },
+          "decisions": {
+            "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/decisions.json",
+            "sha256": "33024141db1541f5b7d9031024f015bcdfa67177b2888c144bbe19e2a565524d"
+          },
+          "decision_audit": {
+            "all99_actions_from_recorded_raw_proprio": true,
+            "decision_count": 7
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "60edb5cc8c26a8d5125be5aa8ed045f0a4f5151404ea9881398dd4e12d7a062d"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "f8e1e2d5a62965018f15edfeb546e6fd5e228c2246422379414e5f5681f9214e"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "d0b2cb559cd46581324979543711947fe7c64c337ec3bbe76443236e294658ad"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "1de0ec82b907c3a93f4ba5aed0b454c290d1c385ff5208a195eef70f8d707f7f"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "6eab08a9cc41245490310272cefb4566a3bc9146c73726e11017d6a02ae2da1b"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "1a90baf4889dbe5ef69df75764b5fc16c366e93b1f8b4ab825beb37f2160c1fc"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "5244e834371bce905dbb1fde45c063e97ef47c088b48f6cf44c253a62e83d499"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "5a974f83c53aa196352cdd915fb8389e01876e4a8ba4bacea236433578b9a588"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "43fef581c937ee0c2137b4224c9c72a39d854bada1cd1fd381145dcc1b666d0d"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/final.npz",
+              "sha256": "03192f6082f42a2784647fc250f43a4593e40894bd0b80c46c98043ef8c27cae"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_straight_servo/final.png",
+              "sha256": "0d76323c481209f51b1820e1c7d7d95cb162805f87e6d314f08fa652c747bc17"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        },
+        {
+          "condition": "wall_aware_servo",
+          "status": "completed",
+          "setup": {
+            "seed": 3,
+            "episode_index": 2,
+            "elapsed_after_warmup": 1,
+            "initial_success": false,
+            "initial_reach_distance": 0.27343034610816436,
+            "warmup_reward_excluded_from_policy_return": 1.4237844944000244,
+            "warmup_native_success": false,
+            "expert_final_success": true,
+            "expert_final_reach_distance": 0.045275205424781154,
+            "expert_steps": 100,
+            "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+            "expert_trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/expert_trace.jsonl",
+              "sha256": "e67a02beb32c4a260a497ab08e15c809c41de5fa015208570bb7da1e71ecf5ad"
+            },
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "7b50c3e0af0639747a838f0604d5856f46dac977b9fb62beaf116dc71c9817f5"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "2baec2d8c8af0ea66fa3e92ed32fb05c41a6a8ffcfbc184aa5a4b3970647f5e4"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "ff8b44c8551aab3d06e6c2dbaa0e44e818b7436d4f8139d18efd911b153cc898"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "536e16a3f3e16c43101ace5ea69efc25e2fe2a1da97482b0f1e08aeacf8d66f3"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "c34e80ee954e7530f14056cffe4e441d7c3465ec8ef7d8a0153399fc1c8ad7ab"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "initial_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "fb5cc9ef14b853211a52f73e55fa4a0f30b6042a11539700057bb251c303f8f7"
+              },
+              "initial_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+              },
+              "initial_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "6b1708ea65fa055592426c26be885ed8ba20825af15d18f349c2f98e94a66e06"
+              },
+              "goal_pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "2f9edc3f00cd4d0357b30af6f6e3e7f6014963bea9cd9d965e67f76de8ee370f"
+              },
+              "goal_proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "447a80d7369168fe4de1897ea8e13bbc32b63f644074aa288c342b6ea6a89d65"
+              },
+              "goal_state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "fdbbb7152336cc2cddb851a08d205c219e0db5a36188d8b8b17c4a77eac54857"
+              },
+              "expert_actions": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  100,
+                  4
+                ],
+                "sha256": "32a4abf1fc78eb438d022478bc55d3aa8938d67f39de2d73ebe0028060f21c20"
+              },
+              "expert_final_tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "3dbb5b4ce64679ab1ac0c160ce7e09f55fb7fc3f1958b4696269232c19f54793"
+              },
+              "expert_target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              }
+            },
+            "setup": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/setup.npz",
+              "sha256": "87dd0461bcd24f0f4948f8f8953538077724ff12e9beb2f39c197d210d4ce7f3"
+            },
+            "initial_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/initial.png",
+              "sha256": "f938bc00ff684f82a2f36052898ed41d8580af82a4572d4f76f07d46822121b2"
+            },
+            "goal_image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/goal.png",
+              "sha256": "0ff353919e9ee6686edd788c43b092784d5debe4e45c1276f6dbc781d3245f6c"
+            }
+          },
+          "outcome": {
+            "final_success": false,
+            "ever_success": true,
+            "final_reach_distance": 0.05226557565530418,
+            "total_environment_steps": 100,
+            "policy_controls_executed": 99,
+            "reward_sum": 806.6504471302032,
+            "terminal_done": true,
+            "trace": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/trace.jsonl",
+              "sha256": "7b6cb71d77f0d29fc5e833b503f054484adadcac92bce615ca1ade2a781d5b99"
+            }
+          },
+          "decisions": {
+            "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/decisions.json",
+            "sha256": "ce678c65849538a93c5931b89697a12bfdc0d927fa95bff83eb9cdab7bd91250"
+          },
+          "decision_audit": {
+            "all99_actions_from_recorded_raw_proprio": true,
+            "decision_count": 7
+          },
+          "final_observation": {
+            "arrays": {
+              "sim_qpos": {
+                "dtype": "<f8",
+                "shape": [
+                  16
+                ],
+                "sha256": "5e85044957c7041f361716b6a75624104c337e2a061f5a022cc625cedca3a51a"
+              },
+              "sim_qvel": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "3e8128c1e5babaf3ac466937e9e854ad3d8f7602103bbba29a27474d37983ee5"
+              },
+              "sim_qacc_warmstart": {
+                "dtype": "<f8",
+                "shape": [
+                  15
+                ],
+                "sha256": "83fbc6ed3e8cd636d73fcef9a847f5b361571152e988d67c21db1f156e64a595"
+              },
+              "sim_ctrl": {
+                "dtype": "<f8",
+                "shape": [
+                  2
+                ],
+                "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+              },
+              "sim_mocap_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  3
+                ],
+                "sha256": "c8fd11feebf3dcf1b38b2159be75b152aebdfa61294626a435c06355523c9ab6"
+              },
+              "sim_mocap_quat": {
+                "dtype": "<f8",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+              },
+              "sim_time": {
+                "dtype": "<f8",
+                "shape": [
+                  1
+                ],
+                "sha256": "ecb8ff70b569dd8cccbfb421d3784d8132d1432526ee7710f38bee33cb7c3f0b"
+              },
+              "target": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "31dd0bb7b398bb4cffd00c0fa7ebdbdb5977e13c5741cacd1e22c4d73c610200"
+              },
+              "rand_vec": {
+                "dtype": "<f8",
+                "shape": [
+                  6
+                ],
+                "sha256": "551951084d0f7afdbd3ff5218d93199d3524795b251e072db97cdc36d771602b"
+              },
+              "tcp": {
+                "dtype": "<f8",
+                "shape": [
+                  3
+                ],
+                "sha256": "d8c0b64f99cf9ed56a28e9a6570ee8620101d176e39e618c3b03e895cdbfa3a7"
+              },
+              "previous_observation": {
+                "dtype": "<f8",
+                "shape": [
+                  18
+                ],
+                "sha256": "5301c2f0b1f49d5a846ff9a3704e88f75842c63edf9d6b876989f8d0a5a937cf"
+              },
+              "elapsed": {
+                "dtype": "<i8",
+                "shape": [
+                  1
+                ],
+                "sha256": "aefe64ee270c997004da3ac0b71ff50d61951022a8415006cbb170c69b25a0ec"
+              },
+              "model_site_pos": {
+                "dtype": "<f8",
+                "shape": [
+                  8,
+                  3
+                ],
+                "sha256": "fe01d6d9e0b8c6282712914e4d539a2d55ca120ff06cc1ffc43e3241cfa7e2b5"
+              },
+              "pixels": {
+                "dtype": "|u1",
+                "shape": [
+                  1,
+                  3,
+                  224,
+                  224
+                ],
+                "sha256": "a95e0b7dd614930727c30dc95b7bfbae6892f7d5d5a000761a1e13c5184506be"
+              },
+              "proprio": {
+                "dtype": "<f4",
+                "shape": [
+                  1,
+                  4
+                ],
+                "sha256": "584b544316fc061f0f43265aa521aa471f3791927ac318953c2e06679c926533"
+              },
+              "state": {
+                "dtype": "<f4",
+                "shape": [
+                  39
+                ],
+                "sha256": "023afc40f3369b16564c0334da48b1097ac26fe6deb8aa47509d64129a49a662"
+              }
+            },
+            "npz": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/final.npz",
+              "sha256": "e9493086a77af51f898f8432ec9293adc6c80d10d82a800adc2bf0e246c85bac"
+            },
+            "image": {
+              "path": "/home/xhj/WM_Security/runs/jepa_metaworld_reach_wall_cpu_v1/seed3_wall_aware_servo/final.png",
+              "sha256": "61c9e0bd8fdef85fb62f95c40ab5d4c91ae2ec190bce0c0a80cbd99647a870e3"
+            },
+            "additional_environment_steps_or_renders": 0
+          }
+        }
+      ],
+      "prerequisites_passed": true,
+      "checks": {
+        "noop_repeat1": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "straight_servo": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "wall_aware_servo": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true,
+          "expert_trace_bytes_exact": true
+        },
+        "noop_repeat_trace": {
+          "bytes_exact": true
+        },
+        "noop_repeat_final": {
+          "arrays_exact": true,
+          "png_exact": true
+        },
+        "task_prerequisites": {
+          "all_nontrivial": true,
+          "all_expert_final_success": true
+        }
+      }
+    }
+  ],
+  "planned_branches": [
+    {
+      "seed": 1,
+      "condition": "noop_repeat0"
+    },
+    {
+      "seed": 1,
+      "condition": "noop_repeat1"
+    },
+    {
+      "seed": 1,
+      "condition": "straight_servo"
+    },
+    {
+      "seed": 1,
+      "condition": "wall_aware_servo"
+    },
+    {
+      "seed": 2,
+      "condition": "noop_repeat0"
+    },
+    {
+      "seed": 2,
+      "condition": "noop_repeat1"
+    },
+    {
+      "seed": 2,
+      "condition": "straight_servo"
+    },
+    {
+      "seed": 2,
+      "condition": "wall_aware_servo"
+    },
+    {
+      "seed": 3,
+      "condition": "noop_repeat0"
+    },
+    {
+      "seed": 3,
+      "condition": "noop_repeat1"
+    },
+    {
+      "seed": 3,
+      "condition": "straight_servo"
+    },
+    {
+      "seed": 3,
+      "condition": "wall_aware_servo"
+    }
+  ],
+  "strict_model_load": {
+    "strict_loads": [
+      {
+        "class": "DinoVisionTransformer",
+        "loaded_tensors": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "VisionTransformerAdaLN",
+        "loaded_tensors": 92,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      }
+    ],
+    "parameters": 39687136,
+    "all_parameters_float32": true,
+    "model_action_dimension": 20,
+    "model_forward_calls": 0,
+    "normalization": {
+      "action_dim": 4,
+      "proprio_dim": 4,
+      "state_dim": 39,
+      "action_mean": [
+        0.005723577458411455,
+        0.15735651552677155,
+        -0.1396457850933075,
+        0.1998193860054016
+      ],
+      "action_std": [
+        0.7359239459037781,
+        0.73408043384552,
+        0.7182977199554443,
+        0.743205726146698
+      ],
+      "proprio_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929
+      ],
+      "proprio_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074
+      ],
+      "state_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929,
+        0.008108077570796013,
+        0.6766929626464844,
+        0.09434457868337631,
+        0.3859776258468628,
+        -0.050619181245565414,
+        0.03434790298342705,
+        0.4750967025756836,
+        0.017891764640808105,
+        0.04413251578807831,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        -0.0029707495123147964,
+        0.6529995203018188,
+        0.1545131504535675,
+        0.6445063948631287,
+        0.008061803877353668,
+        0.6762475371360779,
+        0.09425390511751175,
+        0.3860057294368744,
+        -0.050728388130664825,
+        0.03427530452609062,
+        0.4753906726837158,
+        0.017830422148108482,
+        0.04414031654596329,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        0.015675902366638184,
+        0.7268462181091309,
+        0.12401046603918076
+      ],
+      "state_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074,
+        0.1050795242190361,
+        0.10192868858575821,
+        0.0880839079618454,
+        0.4468156695365906,
+        0.18397848308086395,
+        0.14911998808383942,
+        0.47220379114151,
+        0.06688503921031952,
+        0.16022595763206482,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.10383506864309311,
+        0.11242222785949707,
+        0.07946359366178513,
+        0.2625894844532013,
+        0.10486840456724167,
+        0.10173390805721283,
+        0.08810629695653915,
+        0.4467460811138153,
+        0.18375301361083984,
+        0.14870719611644745,
+        0.4721624553203583,
+        0.0666341558098793,
+        0.16022934019565582,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.14182789623737335,
+        0.12113576382398605,
+        0.09631838649511337
+      ]
+    }
+  },
+  "decision": {
+    "cpu_prerequisites_passed": true,
+    "complete_panel": true,
+    "final_success_counts": {
+      "noop_repeat0": 0,
+      "straight_servo": 1,
+      "wall_aware_servo": 1
+    },
+    "gpu_progression_allowed": true,
+    "decision": "eligible_for_separately_registered_native_gpu_stage",
+    "native_results_measured": false,
+    "native_success_count": null,
+    "native_gate_passed": null,
+    "scope": "Fixed three-seed descriptive normal-capability/resource screen, not statistical confirmation, pure forecast causality, attack or defense evidence"
+  },
+  "model_forward_calls": 0,
+  "cuda_initialized": false,
+  "api_requests": 0,
+  "training_updates": 0
+}

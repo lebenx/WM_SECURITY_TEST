@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "status": "completed_bounded_static_source_screen",
+  "decision": "NONE_NO_PERSISTENT_CONTENT_MEMORY_WRITE_PATH_IN_INSPECTED_NATIVE_ROUTE",
+  "repository": "https://github.com/senngadaisuki/disentangled-latent-action-world-models",
+  "commit": "adac869cc6d3a480b5e3b08694bf3f2f1013ff2d",
+  "scope": "Six Python source files, repository-page metadata and recursive tree metadata. No downloaded source was imported or executed. AST parsing only validates source syntax.",
+  "question": "Does DiLA content-memory inference allow rejected candidates or earlier planning queries to persistently mutate subsequent candidate/query content state?",
+  "native_path": [
+    {
+      "path": "DiLA_for_vp2/vp2/vp2/mpc/agent.py",
+      "lines": [
+        54,
+        75
+      ],
+      "finding": "PlanningAgent passes factual observation/state history, submitted action history and optional remaining selected-plan warm start to optimizer.plan. It stores selected plans and actions, not DiLA content state."
+    },
+    {
+      "path": "DiLA_for_vp2/vp2/vp2/mpc/cem.py",
+      "lines": [
+        62,
+        120
+      ],
+      "finding": "CEM score_trajectories tiles the same factual observation context across candidate batch rows, appends proposed action sequences, calls self.model(batch), then scores returned predictions."
+    },
+    {
+      "path": "DiLA_for_vp2/vp2/vp2/models/dila.py",
+      "lines": [
+        134,
+        201
+      ],
+      "finding": "DiLAModel processes candidate chunks of at most 200 and invokes world_model.autoregressive_forward independently for each chunk. No content-state or inference-cache argument is accepted or retained."
+    },
+    {
+      "path": "models/model.py",
+      "lines": [
+        550,
+        598
+      ],
+      "finding": "autoregressive_forward explicitly calls content_fusion(..., content_states=None) at line556. The returned content_states is a local variable; forecast steps replace this local via content_memory.step. Returned fields are embedding_gen, structure_gen and content_mem, not persistent cache state."
+    },
+    {
+      "path": "models/modules/content_memory.py",
+      "lines": [
+        66,
+        118
+      ],
+      "finding": "ContentMemory forward/step receive state as an argument and return new states. The batch and spatial positions are flattened to (b*n), preserving separate SSM state rows; no shared module-state assignment appears in these methods."
+    },
+    {
+      "path": "models/modules/mamba_ssm.py",
+      "lines": [
+        138,
+        186
+      ],
+      "finding": "MambaBlock.ssm allocates torch.zeros when state is None, then uses out-of-place local recurrence state = dA*state+dB*x. No module-held inference_params/cache is used."
+    },
+    {
+      "path": "models/modules/mamba_ssm.py",
+      "lines": [
+        253,
+        271
+      ],
+      "finding": "MambaStack(None) creates a fresh per-layer [None] list, collects newly returned states and returns them without storing in self."
+    }
+  ],
+  "reset_semantics": {
+    "explicit_native_query_reset": {
+      "path": "models/model.py",
+      "line": 556,
+      "expression": "content_states=None"
+    },
+    "helper": {
+      "path": "models/modules/content_memory.py",
+      "lines": [
+        120,
+        132
+      ],
+      "finding": "reset_states exists and returns None; the inspected caller initializes directly with None rather than invoking this helper."
+    },
+    "candidate_isolation": "Within each batch, each candidate/spatial position has its own state row. Each subsequent <=200-candidate chunk starts fresh from its own replicated context. Each CEM iteration invokes a fresh call.",
+    "agent_reset": {
+      "path": "DiLA_for_vp2/vp2/vp2/mpc/agent.py",
+      "lines": [
+        47,
+        52
+      ],
+      "finding": "Resets plan, counters, goal, log_dir and action history. No content-memory reset is required by this particular route because content state is local to each model call."
+    }
+  },
+  "distinction_from_old_hypotheses": "The content-pathway word memory does not establish factual/imagination contamination. Persistent selected-plan warm starts are ordinary native MPC state and do not reopen archived query interference or OPINE query-memory mechanisms.",
+  "qualification_limits": [
+    "Static analysis limited to the requested content-memory route; not a universal audit of all RAE/transformer/dependency state or concurrency.",
+    "The six-file source scope does not validate checkpoint availability, current checkpoint outputs, competent native Clean task utility, numerical permutation equivalence or physical harm.",
+    "Adapter initialization includes local placeholder asset paths, so this screen does not establish an executable matched checkpoint bundle.",
+    "No novel attacker-writable persistent memory edge was identified; no attack pilot, setup, checkpoint download or GPU execution is justified by this screen."
+  ],
+  "activity": {
+    "source_files_fetched": 6,
+    "source_files_ast_parsed": 6,
+    "model_or_environment_calls": 0,
+    "model_api_calls": 0,
+    "checkpoint_downloads": 0,
+    "setup_or_dependency_installations": 0,
+    "gpu_work": false
+  },
+  "files": [
+    {
+      "path": "DiLA_for_vp2/vp2/vp2/models/dila.py",
+      "bytes": 7666,
+      "sha256": "f3c5dd169994dbcf1364f90ec3c42c4817ab154906e41100914624a1cf65de4e",
+      "url": "https://github.com/senngadaisuki/disentangled-latent-action-world-models/blob/adac869cc6d3a480b5e3b08694bf3f2f1013ff2d/DiLA_for_vp2/vp2/vp2/models/dila.py"
+    },
+    {
+      "path": "models/model.py",
+      "bytes": 32380,
+      "sha256": "65e1381f8146313be05ef4aec6c7090ea650f4287a102a96a2fd055c91fc4491",
+      "url": "https://github.com/senngadaisuki/disentangled-latent-action-world-models/blob/adac869cc6d3a480b5e3b08694bf3f2f1013ff2d/models/model.py"
+    },
+    {
+      "path": "models/modules/content_memory.py",
+      "bytes": 4633,
+      "sha256": "33d1058697bf0e8c01d895d2c666288f2cd5a714340aeb7e3142de840e8fcbe8",
+      "url": "https://github.com/senngadaisuki/disentangled-latent-action-world-models/blob/adac869cc6d3a480b5e3b08694bf3f2f1013ff2d/models/modules/content_memory.py"
+    },
+    {
+      "path": "models/modules/mamba_ssm.py",
+      "bytes": 8227,
+      "sha256": "078860a1ffbb2834b15b684710e11de5a4bb486fdfb9098aa13f4f60fb5c7707",
+      "url": "https://github.com/senngadaisuki/disentangled-latent-action-world-models/blob/adac869cc6d3a480b5e3b08694bf3f2f1013ff2d/models/modules/mamba_ssm.py"
+    },
+    {
+      "path": "DiLA_for_vp2/vp2/vp2/mpc/cem.py",
+      "bytes": 6479,
+      "sha256": "3423f01de2982d0d3f17560b7337761b357283a283e9c1c7fb5fca7dd867947f",
+      "url": "https://github.com/senngadaisuki/disentangled-latent-action-world-models/blob/adac869cc6d3a480b5e3b08694bf3f2f1013ff2d/DiLA_for_vp2/vp2/vp2/mpc/cem.py"
+    },
+    {
+      "path": "DiLA_for_vp2/vp2/vp2/mpc/agent.py",
+      "bytes": 3469,
+      "sha256": "6c7e992ab4500c9116d55a9e0f9e7559797d267f0a31fb583696394de5b0614b",
+      "url": "https://github.com/senngadaisuki/disentangled-latent-action-world-models/blob/adac869cc6d3a480b5e3b08694bf3f2f1013ff2d/DiLA_for_vp2/vp2/vp2/mpc/agent.py"
+    }
+  ]
+}

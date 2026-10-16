@@ -1,0 +1,25 @@
+{
+  "id": "H_higher_order_parity_coupling",
+  "candidate_claim": "A legal sampler-service operation can preserve every candidate's marginal forecast law and every pairwise index table while changing only third-order coupling, thereby changing a nonlinear MPC choice.",
+  "operation": "For each candidate triple, draw two native forecast banks and select an even/odd four-row parity table from the realized bank scores before row sampling.",
+  "exact_invariant": "The finite-bank construction preserves each candidate marginal index multiset and all three pairwise index tables exactly, while flipping the triple product.",
+  "native_screen": {
+    "model": "MBRL-Lib GaussianMLP CartPole",
+    "conditions": ["independent", "parity_control", "parity_attack"],
+    "runs": [
+      "runs/mbrl_parity_coupling_v0",
+      "runs/mbrl_parity_coupling_v1"
+    ],
+    "result": "Attack was lower than parity control on seeds704/705, but tied the ceiling control on seeds706/707; no stable native task effect."
+  },
+  "novelty_review": {
+    "source": "runs/gemini_parity_novelty_review_20261010T0000Z/review.txt",
+    "score": 3,
+    "decision": "reject",
+    "reason": "This is an incremental higher-order version of common random numbers and cross-world correlated sampling; the vulnerability resides in the optimizer's joint sampling and argmax rather than in a world-model-specific transition mechanism."
+  },
+  "status": "rejected_as_correlated_sampling_artifact",
+  "gpu_work": false,
+  "api_requests": 1,
+  "scope": "Exact construction and short CartPole screen only; no broad world-model security claim."
+}

@@ -1,0 +1,153 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T06:16:09.170556+00:00",
+  "status": "completed_independent_cached_same_gpu_forecast_review",
+  "source_paths": [
+    "runs/dino_native_alias_forecast_gpu_20261015/summary.json",
+    "runs/dino_native_alias_forecast_gpu_20261015/paired_errors.csv",
+    "runs/dino_native_alias_forecast_gpu_20261015/launched_config.json",
+    "runs/dino_native_alias_forecast_gpu_20261015/launched_script.py",
+    "reports/dino_native_alias_decision_20261015.json",
+    "reports/dino_native_alias_forecast_decision_20261015.json",
+    "reports/dino_native_alias_recovery_decision_20261015.json"
+  ],
+  "execution_status": "completed_calibrated_same_gpu_paired_forecast_analysis",
+  "elapsed_seconds": 37.975217602041084,
+  "execution_activity": {
+    "unroll_calls": 28,
+    "own_condition_unrolls": 14,
+    "counterfactual_unrolls": 14,
+    "predictor_forwards": 148,
+    "native_encodes": 38,
+    "encoder_calibration_checks": 12,
+    "environment_steps": 0,
+    "planner_calls": 0,
+    "network_attempts": 0,
+    "training_updates": 0
+  },
+  "numerical_protocol": {
+    "device": "same native CUDA device for both representations",
+    "precision": "float32",
+    "atol": 0.0001,
+    "rtol": 0.0001,
+    "max_absolute_error": 0.001,
+    "rms_absolute_error": 0.0001,
+    "numeric_limits_identical_to_failed_cpu_protocol": true,
+    "authoritative_configuration": "runs/dino_native_alias_forecast_gpu_20261015/launched_config.json",
+    "declaration": "Separately registered GPU engineering revision after the CPU attempt failed; not a silent fallback, tolerance relaxation, or alteration of the preserved CPU record."
+  },
+  "independent_calibration_review": {
+    "all_14_own_forecasts_passed": true,
+    "all_12_endpoint_encoder_comparisons_exact": true,
+    "all_original_and_canonical_forecast_initial_frames_equal_context": true,
+    "maximum_forecast_absolute_difference": 6.794929504394531e-06,
+    "maximum_forecast_timepoint_rms_difference": 4.4413047304394144e-07,
+    "maximum_endpoint_encoder_absolute_difference": 0.0,
+    "maximum_endpoint_encoder_rms_difference": 0.0,
+    "method": "Recomputed all own-representation forecast differences against source GPU NPZ arrays and all 12 last-prefix truth encodings against the next saved context, using NumPy only; checked every modality and forecast timepoint."
+  },
+  "independent_arithmetic_review": {
+    "all_38_endpoint_mses_recomputed_from_saved_forecast_and_truth_arrays": true,
+    "all_csv_rows_match_summary_paired_rows": true,
+    "weighted_metric": "visual MSE + 0.1 * proprio MSE; float64 reduction of saved FP32 arrays",
+    "maximum_absolute_difference_from_csv_weighted_delta": 0.0,
+    "query_and_endpoint_aggregate_arithmetic_matches_summary": true,
+    "not_cross_origin_comparison": "Original and canonical requests are paired within the same query, physical action sequence and truth. No causal subtraction of different policy trajectories is used."
+  },
+  "paired_results": {
+    "clean_identity_copy": {
+      "queries": 7,
+      "endpoints": 19,
+      "mean_original_weighted_mse": 0.39581964098250016,
+      "mean_canonical_weighted_mse": 0.29705362921018574,
+      "mean_endpoint_paired_delta": -0.09876601177231442,
+      "relative_mean_error_reduction": 0.24952276629618042,
+      "endpoints_improved": 12,
+      "endpoints_worsened": 7,
+      "endpoints_equal": 0,
+      "mean_query_paired_delta": -0.08933371534455775,
+      "query_paired_deltas_in_order": [
+        -0.6080445177226161,
+        -0.018207692800279784,
+        0.006421525619003517,
+        -0.013649420745282673,
+        0.011597317917556813,
+        -0.0037263203994165606,
+        0.00027310071913053124
+      ],
+      "queries_with_lower_mean_error": 4,
+      "queries_with_higher_mean_error": 3
+    },
+    "canonical_request": {
+      "queries": 7,
+      "endpoints": 19,
+      "mean_original_weighted_mse": 0.3469772138107239,
+      "mean_canonical_weighted_mse": 0.32416302833180455,
+      "mean_endpoint_paired_delta": -0.022814185478919315,
+      "relative_mean_error_reduction": 0.06575124985401626,
+      "endpoints_improved": 10,
+      "endpoints_worsened": 9,
+      "endpoints_equal": 0,
+      "mean_query_paired_delta": -0.020402186950573477,
+      "query_paired_deltas_in_order": [
+        -0.14812700690012354,
+        0.05083510252571618,
+        -0.05681430941094893,
+        0.0062841167013295745,
+        0.0038395113402394654,
+        -0.0013445219789390654,
+        0.002511799068711962
+      ],
+      "queries_with_lower_mean_error": 3,
+      "queries_with_higher_mean_error": 4
+    }
+  },
+  "native_outcome_context": {
+    "clean_return": 786.998547077179,
+    "canonical_return": 702.1983199119568,
+    "return_drop_fraction": 0.1077514405587664,
+    "clean_first_success_policy_step": 56,
+    "canonical_first_success_policy_step": 53,
+    "clean_success_controls": 24,
+    "canonical_success_controls": 33,
+    "clean_terminal_reach_distance": 0.06366712546756458,
+    "canonical_terminal_reach_distance": 0.05399451826056728,
+    "both_final_success_flags": false
+  },
+  "recovery_context": {
+    "source_path": "reports/dino_native_alias_recovery_decision_20261015.json",
+    "status": "completed_single_native_alias_recovery",
+    "return_sum": 786.998547077179,
+    "exact_return_restoration": true,
+    "existing_saved_entire_trace_rows_exact": 99,
+    "trace_row_comparison_independently_recomputed": true,
+    "scope": "Existing 99 saved row dictionaries compare exactly; physical/pixel fields are saved digests, not newly rehashed artifacts or a fresh environment replay. Conventional input binding restores this same-root trajectory, not a novel defense or independent-root replication."
+  },
+  "interpretation": {
+    "established": "The native dense-return loss coexists with lower average paired observed-prefix feature error on both sets of fixed selected actions and improved success-related metrics. Conventional binding restores the original same-root behavior.",
+    "mixed_signs": "Error reduction is not uniform: 7/19 clean-origin endpoints and 9/19 canonical-origin endpoints worsen; query means worsen in 3/7 and 4/7 respectively. Counts are descriptive, correlated within one physical root, not independent trials.",
+    "not_prediction_damage_proof": "These measurements do not support a blanket worsening-of-prediction explanation. Average improvement does not exclude consequential local errors, unobserved candidate-ranking errors, or objective/reward mismatch.",
+    "not_terminal_objective_validation": "Truth is available at offsets 5/10/15 for queries 1-6 and offset 5 only for query 7. Native planning ends at horizons 30/25/10 controls; the last query executes 9 controls, so no 10-step truth is inferred. This does not validate the full native terminal cost.",
+    "not_mediation": "Final-mean logging forecasts do not reconstruct all CEM scored candidates, rank flips, regret, or causal mediation of the dense-return difference. No prediction-error direction is inferred for the recovery episode.",
+    "novelty_and_interface": "One native development root and a researcher-defined constrained writer; no ASR, population significance, independent generalization, deployed external writer, or new universal security mechanism established. The bounded causal experiment remains valid."
+  },
+  "cpu_record_preserved": {
+    "source_path": "reports/dino_native_alias_forecast_decision_20261015.json",
+    "status": "invalid_numerical_calibration",
+    "counterfactual_unrolls": 0,
+    "modified": false
+  },
+  "decision": {
+    "paired_prefix_error_measurement": "Go within the frozen same-query panel and observed-prefix scope.",
+    "new_prediction_damage_security_claim": "No-Go on present evidence: cumulative return damage is real but is not proof that forecasts became less accurate or task success worsened.",
+    "broader_research": "Preserve this bounded causal and restoration evidence; independent validity, a concrete native interface boundary for deployment claims, and novelty remain unproved."
+  },
+  "review_activity": {
+    "model_calls": 0,
+    "environment_steps": 0,
+    "gpu_calls": 0,
+    "network_calls": 0,
+    "new_hashes": 0,
+    "cached_only_numpy_and_json": true
+  }
+}

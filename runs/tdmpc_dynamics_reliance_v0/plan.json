@@ -1,0 +1,27 @@
+{
+  "tasks": [
+    "walker-walk",
+    "reacher-easy",
+    "cup-catch"
+  ],
+  "seeds": [
+    31
+  ],
+  "steps_per_episode": 500,
+  "conditions": [
+    "native_mpc",
+    "action_blind_dynamics",
+    "native_policy_prior"
+  ],
+  "clean_gate": "Native MPC return >=900/1000 per task; skip the other arms for a task that fails.",
+  "action_blind_dynamics": "Every native model.next(z,a,task) call instead invokes the SAME learned next(z,zeros_like(a),task), including policy proposal rollouts. Physical actions, reward/Q/prior/encoder inputs and all model weights remain unchanged.",
+  "source_sha256": "18596255cd64ab1602cf8395b791209571b48c82f972299e385a2572a2e25da5",
+  "adapter_sha256": "178c59c5d1c61360e2852854f39aa54a64fe354703b140ed6db7edbdd9abdc3b",
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "randomness": "Native episode helper resets Python/NumPy/CPU/CUDA seeds per arm. Reset warm start before each episode; same simulator seed.",
+  "scope": "One paired development seed in three native tasks. Causal necessity baseline only; no novel security claim, stealth/fidelity constraint, trained attack, or population effect estimate.",
+  "purpose": "Select competent native tasks with measured action-conditioned dynamics dependence before constructing another world-model security mechanism.",
+  "training_updates": 0,
+  "api_requests": 0,
+  "gpu_work": "Frozen short inference only."
+}

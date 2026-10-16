@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T03:44:12.421464+00:00",
+  "status": "completed_native_input_observability_gate_not_query_leakage_experiment",
+  "previous_goal_turn_classification": "progress: JOWA native branch-cache test completed and excluded the specific storage-aliasing candidate",
+  "research_goal_status": "active_unachieved",
+  "question": "Does omitting the explicit private Goal from a DINO-WM forecast request make its current-observation context goal-independent?",
+  "reason_to_check": "Unlike the earlier custom TD-MPC private-goal planner, DINO-WM has native goal-conditioned CEM and an existing small Clean gate. Its possible client/service split is a new deployment assumption; the initial service-visible data must be checked before attributing goal inference to speculative queries.",
+  "native_boundary": {
+    "current_observation": "Native visual RGB and four-dimensional proprio=environment_state[:4]; the full 39D state and its final three target coordinates are not automatically service inputs.",
+    "actual_forecast_call": "model.unroll(z_ctxt, act_suffix), with z_ctxt produced by the unchanged native model.encode(current_observation, act=True).",
+    "private_split_assumption": "Keep goal encoding, encoded goal and scoring on the client. No deployed external service was discovered or tested.",
+    "mean_query": "Native CEM calls the candidate batch and the updated mean once per iteration. The final mean includes the returned action prefix, so that prefix is not information beyond the selected actions.",
+    "source_paths": [
+      "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py",
+      "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py",
+      "vendor/jepa-wms/evals/simu_env_planning/envs/metaworld.py"
+    ]
+  },
+  "existing_clean_context": {
+    "source": "runs/dino_metaworld_mujoco330_analysis_v1/analysis.json",
+    "final_successes": 2,
+    "episodes": 3,
+    "ever_successes": 3,
+    "limits": "Existing fixed development panel on three different original goals. It does not validate capability on the two new marker goals or provide cached private-query transcripts."
+  },
+  "paired_render": {
+    "script": "scripts/probe_dino_goal_observability.py",
+    "result": "runs/dino_goal_observability_20261015/summary.json",
+    "source_state": "runs/dino_metaworld_mujoco330_clean_v1/seed1_clean/setup.npz",
+    "state_origin": {
+      "mode": "cached_physics_restored_exact_historical_pixels",
+      "historical_initial_pixels_exact": true,
+      "historical_initial_proprio_exact": true,
+      "historical_pixel_max_absolute_difference": 0,
+      "note": "If pixels differ, the render is a reconstructed cached integration state, not an asserted exact historical observation"
+    },
+    "targets": {
+      "goal_a": {
+        "goal": [
+          -0.08,
+          0.84,
+          0.12
+        ],
+        "in_native_goal_space": true,
+        "planar_distance_from_source_object": 0.24660681942811896,
+        "passed": true
+      },
+      "goal_b": {
+        "goal": [
+          0.08,
+          0.86,
+          0.24
+        ],
+        "in_native_goal_space": true,
+        "planar_distance_from_source_object": 0.21955673717394317,
+        "passed": true
+      }
+    },
+    "fixed": "Robot/object integration state, mocap, controls, warm-start acceleration, TCP, previous observation, and actual proprio remained exactly equal before and after each render.",
+    "changed": "Only the native reward-target field and its visible goal site. The complete rendered scene is intentionally not held fixed; this is an input-observability check, not a fixed-observation Goal-Swap forecast experiment.",
+    "pixel_difference": {
+      "changed_pixels": 131,
+      "total_pixels": 50176,
+      "changed_pixel_fraction": 0.002610809948979592,
+      "changed_channel_values": 393,
+      "max_absolute_channel_difference": 224,
+      "mean_absolute_channel_difference": 0.2022813031462585,
+      "changed_pixel_bbox_yx_inclusive": [
+        [
+          91,
+          52
+        ],
+        [
+          111,
+          81
+        ]
+      ],
+      "raw_pixels_depend_on_target": true
+    },
+    "restoration": {
+      "original_pixels_exact": true,
+      "all_model_sites_exact": true,
+      "target_exact": true
+    },
+    "frames": {
+      "a": "runs/dino_goal_observability_20261015/goal_a.png",
+      "b": "runs/dino_goal_observability_20261015/goal_b.png"
+    },
+    "activity": {
+      "model_loads": 0,
+      "encoder_calls": 0,
+      "world_model_calls": 0,
+      "policy_calls": 0,
+      "explicit_environment_step_calls": 0,
+      "explicit_environment_reset_calls": 0,
+      "training_updates": 0,
+      "api_requests": 0,
+      "dependency_installs": 0,
+      "constructor_reset_note": "Native goal-observable environment construction may reset/simulate internally; all paired measurements follow cached-state restoration and use render/forward only"
+    }
+  },
+  "native_encoder": {
+    "script": "scripts/probe_dino_goal_latent_observability.py",
+    "result": "runs/dino_goal_latent_observability_20261015/summary.json",
+    "weights": "Existing DINO-WM checkpoint and cached DINOv2 backbone, strictly loaded once each on CPU through the existing native loader; no new downloads.",
+    "inputs": "Four T=1 current-observation encodes: original, goal A, goal B, restored. No private goal image was encoded.",
+    "goal_a_vs_goal_b": {
+      "visual": {
+        "exactly_equal": false,
+        "changed_elements": 98304,
+        "max_absolute_difference": 9.489193439483643,
+        "mean_absolute_difference": 0.21444185323904863,
+        "rms_difference": 0.4242816152844898
+      },
+      "proprio": {
+        "exactly_equal": true,
+        "changed_elements": 0,
+        "max_absolute_difference": 0.0,
+        "mean_absolute_difference": 0.0,
+        "rms_difference": 0.0
+      }
+    },
+    "original_vs_restored": {
+      "visual": {
+        "exactly_equal": true,
+        "changed_elements": 0,
+        "max_absolute_difference": 0.0,
+        "mean_absolute_difference": 0.0,
+        "rms_difference": 0.0
+      },
+      "proprio": {
+        "exactly_equal": true,
+        "changed_elements": 0,
+        "max_absolute_difference": 0.0,
+        "mean_absolute_difference": 0.0,
+        "rms_difference": 0.0
+      }
+    },
+    "elapsed_seconds": 6.360477904992877,
+    "counts": {
+      "observation_encode": 4,
+      "visual_encoder": 4,
+      "proprio_encoder": 4,
+      "predictor": 0,
+      "unroll": 0,
+      "forward_pred": 0,
+      "rollout": 0,
+      "goal_encode": 0,
+      "environment_steps": 0,
+      "planner_calls": 0,
+      "network_attempts": 0
+    },
+    "cuda_initialized": false,
+    "saved_latents": "runs/dino_goal_latent_observability_20261015/z_init.npz",
+    "interpretation": "The changed visible marker causally changes the actual initial visual latent before adaptive planning. This is a dependence result, not a trained goal decoder, calibrated privacy leakage, forecast error or utility measurement."
+  },
+  "scientific_decision": {
+    "explicit_goal_argument_absent": "confirmed_by_source",
+    "initial_public_context_goal_independent": "no_go_for_this_native_pair_in_pixels_and_latents",
+    "attribute_later_goal_classification_to_query_leakage_without_public_context_control": "no_go",
+    "conditional_incremental_query_privacy": "unmeasured",
+    "new_task_harm_or_defense_recovery": "not_measured",
+    "general_world_model_security_claim": "evidence_incomplete",
+    "overall_goal_complete": false
+  },
+  "necessary_controls_if_reopened": [
+    "Specify precisely whether the observer sees pixels, encoded context, action queries, responses, timing, or the final selected actions. Treat visible target metadata and its representation as public side information.",
+    "Compare goal inference from public initial context alone, selected actions alone, and the additional unexecuted query transcript using grouped splits over independent goals and states.",
+    "Separate pre-execution disclosure from information beyond the selected action; a final-mean query can expose that action directly.",
+    "If hiding or replacing the marker changes observations or tasks, re-establish competent native Clean behavior. Existing 2/3 success does not automatically transfer.",
+    "Generic privacy of iterative optimization queries has direct prior art. A substantive new contribution needs validated native consequences and a privacy/utility defense, not merely a different carrier."
+  ],
+  "limits": [
+    "One physical state and two fixed legal target choices, not an independent task sample or general goal-recovery benchmark.",
+    "Neither full CEM nor any future predictor was executed in these probes.",
+    "The target is a visible scene marker in this native task. This experiment does not assert that arbitrary user preferences or all goals are public.",
+    "Latent difference does not by itself quantify recoverable information, prove an effective attacker, or establish a privacy defense."
+  ],
+  "bounded_existing_asset_recheck": {
+    "cosmos_tdmpc": "Source review identified no new eligible writable path distinct from archived GoalSwap, warm-start, task-embedding, value-routing or sampling operations; no new run.",
+    "tdmpc_order": "Adaptation samples full contiguous windows iid. A mere storage permutation preserving their multiset is an index relabeling; changing trajectory composition or the training schedule is a different operation. Prior source23 conditional losses remain, without a new selective cause.",
+    "scienceworld": "WorldEvolver rule debit reaches WMReactAgent through foresight; the existing18 repeated plus9 shared-user continuations all succeed. This is old counterevidence, not a new task result or a WorldMind global-debit result."
+  },
+  "primary_literature_scope": [
+    {
+      "url": "https://proceedings.mlr.press/v130/xu21f.html",
+      "title": "Optimal query complexity for private sequential learning against eavesdropping",
+      "read_scope": "Official proceedings abstract rechecked; no full-text proof or reproduction.",
+      "relevance": "Query-only observers and learner-private sequential querying already have a formal literature."
+    },
+    {
+      "url": "https://arxiv.org/abs/2102.11976",
+      "title": "Learner-Private Convex Optimization",
+      "read_scope": "Primary abstract rechecked; no full-text proof or reproduction.",
+      "relevance": "Iterative-query disclosure and obfuscation of the learned optimum precede this world-model application."
+    },
+    {
+      "url": "https://arxiv.org/abs/1906.07460",
+      "title": "Symmetries and isomorphisms for privacy in control over the cloud",
+      "read_scope": "Primary abstract only.",
+      "relevance": "Privacy of control objectives in outsourced control is established context, not a new principle claimed here."
+    },
+    {
+      "url": "https://arxiv.org/abs/2507.05610",
+      "title": "On the Inherent Privacy of Zeroth Order Projected Gradient Descent",
+      "read_scope": "Primary abstract only.",
+      "relevance": "Random search directions alone need not establish differential privacy in its stated optimization setting. Its oracle, adjacency and theorem assumptions are not a CEM or world-model privacy result."
+    }
+  ],
+  "round_activity": {
+    "new_cpu_render_probes": 1,
+    "new_cpu_encoder_probes": 1,
+    "checkpoint_files_loaded_once_each": 2,
+    "native_observation_encodes": 4,
+    "visual_encoder_forwards": 4,
+    "proprio_encoder_forwards": 4,
+    "future_predictor_forwards": 0,
+    "planner_calls": 0,
+    "explicit_environment_step_calls": 0,
+    "model_api_requests": 0,
+    "training_updates": 0,
+    "weight_downloads": 0,
+    "gpu_jobs": 0,
+    "full_checkpoint_rehashes": 0
+  }
+}

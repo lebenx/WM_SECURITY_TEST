@@ -1,0 +1,136 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "completed_bounded_mechanism_and_resource_screen",
+  "current_qualified_core_security_claim": null,
+  "decision": "NO_GO_FOR_A_NEW_TASK_PILOT_ON_THE_SCREENED_MECHANISMS",
+  "goal_state": "Research remains active and unachieved; this screen does not complete the requested security evidence chain or paper.",
+  "scope": "Consolidates new operator evidence, read-only analysis of existing task logs, and pinned primary source/resource inspection. These evidence levels are not interchangeable.",
+  "checks": [
+    {
+      "id": "tdmpc_embedding_query_normalization",
+      "evidence_level": "new_cpu_operator_probe_synthetic_weights",
+      "question": "Does a prior task-embedding lookup change the output of a later fixed victim lookup through max_norm's in-place write?",
+      "source_paths": [
+        "scripts/probe_tdmpc_embedding_query_isolation.py",
+        "reports/tdmpc_embedding_query_isolation_20261015.json",
+        "vendor/tdmpc2/tdmpc2/common/world_model.py"
+      ],
+      "method": "Bind the upstream task_emb method to a real nn.Embedding with fixed synthetic 30-by-64 weights. Compare victim-only, other-task-first, same-task-first and mixed prior lookups; FP32 primary and FP64 supplementary cases, sequential CPU execution without training.",
+      "metrics": {
+        "synthetic_cases": 8,
+        "prior_query_comparisons": 24,
+        "different_victim_outputs": 0,
+        "max_absolute_output_difference": 0.0,
+        "positive_control_weight_writes_observed": true
+      },
+      "finding": "The tested lookup changes only indexed over-norm rows. The victim's first lookup performs its own normalization, producing the same output with or without earlier queries.",
+      "decision": "exclude_this_query_normalization_candidate",
+      "limits": "Not pretrained checkpoint, planner, GPU/concurrency, task utility, or universal numerical evidence. The 24 comparisons are not independent task samples."
+    },
+    {
+      "id": "cosmos_terminal_horizon",
+      "evidence_level": "read_only_existing_task_logs_and_training_source",
+      "source_paths": [
+        "reports/cosmos_terminal_horizon_screen_20261015.json",
+        "runs/cosmos_policy_native_task_gate_clean_n2_matched30_v2/summary.json",
+        "reports/cosmos_value_training_audit_20261014.json"
+      ],
+      "metrics": {
+        "existing_completed_episodes": 30,
+        "partial_last_chunks": 30,
+        "success_stop_last_chunks": 29,
+        "time_limit_failure_last_chunks": 1
+      },
+      "finding": "29 short final chunks stop after actual success. The one unsuccessful episode hits its 300-step deadline, executing 12 of the last 16 proposed actions. Training future indices are capped at the episode end, so a terminal future is not necessarily the state after 16 unconditionally executed actions.",
+      "decision": "no_distinct_reachable_security_operation_established",
+      "limits": "No causal attribution of the sole failure to the horizon, no new attack or defense, and no independent attacker-writable time interface. The missing-time interpretation overlaps the archived timeout hypothesis.",
+      "related_prior": "https://proceedings.mlr.press/v80/pardo18a.html",
+      "registry_correction": "Cosmos value training includes both successful and failed environment replays with gamma=0.99 discounted terminal rewards; it is not a constant successful-demonstration target or a calibrated success probability."
+    },
+    {
+      "id": "ma_wam_native_resource_and_candidate_isolation",
+      "evidence_level": "pinned_source_and_published_manifest_no_model_execution",
+      "source_paths": [
+        "runs/ma_wam_source_feasibility_v1/summary.json",
+        "runs/ma_wam_source_feasibility_v1/world_model_manifest.json",
+        "runs/ma_wam_source_feasibility_v1/world_model/moe_dynamics.py",
+        "runs/ma_wam_source_feasibility_v1/world_model/moe_reward.py",
+        "runs/ma_wam_source_feasibility_v1/run_scripts/plan_eval_paired.py"
+      ],
+      "primary_sources": [
+        "https://arxiv.org/html/2609.31281v1",
+        "https://github.com/ma-wam/MA-WAM/tree/c620525bf180ef3d9e0b9f2f8a964a3c233dab65",
+        "https://huggingface.co/ma-wam/MA-WAM",
+        "https://huggingface.co/coflow-project/CoFlow-checkpoints"
+      ],
+      "resource_finding": "Published manifest lists 30 world-model checkpoints totaling 131031434 uncompressed bytes. Matching CoFlow policy resources also exist. No weights were downloaded and no local Clean performance was measured.",
+      "native_path": "Frozen CoFlow proposes joint action sequences; recurrent world dynamics and rewards score candidates; the centralized evaluator executes the selected first joint action and replans.",
+      "mechanism_finding": "Dynamics attention mixes agents within each batch example, not candidates across examples. Reward experts are computed per token without shared-capacity token dropping. The inspected native path has no independent low-privilege peer-metadata interface.",
+      "decision": "retain_resource_lead_do_not_launch_this_attack_pilot",
+      "limits": "A distant agent's physical non-contact does not imply unchanged observations, future interaction or team utility. Arbitrary peer-observation modification would not establish a distinct mechanism. Author-reported results are not local reproductions.",
+      "bounded_native_flow_review": {
+        "batch_mapping": "Candidate/environment flattening uses b=m*E+e and restores (M,E); agent pooling remains within b.",
+        "reward_ownership": "The current real step reward is accumulated before marking done; completed slots do not execute or accrue later rewards.",
+        "first_action_consistency": "Continuous scoring and execution use the same unnormalized first action. Discrete first actions share the same current legal mask and resulting index/one-hot representation.",
+        "remaining_planning_limits": [
+          "Future discrete actions use argmax without predicting future legality.",
+          "World-model scores sum H rewards without a terminal model or remaining-episode clipping."
+        ],
+        "interpretation": "These source-level approximations are not measured ranking errors or security harm, and overlap archived action-representation/timeout/terminal hypotheses.",
+        "limits": "Does not validate downstream environment-adapter transforms, actual checkpoint outputs or real task utility."
+      }
+    },
+    {
+      "id": "latent_safety_filter_resource_screen",
+      "evidence_level": "local_resource_and_primary_prior_inspection",
+      "source_paths": [
+        "vendor/latent-cbf",
+        "vendor/latent-safety"
+      ],
+      "primary_sources": [
+        "https://arxiv.org/abs/2511.18606v2",
+        "https://cmu-intentlab.github.io/multisafe/",
+        "https://github.com/CMU-IntentLab/AnySafeReachability"
+      ],
+      "finding": "Relevant native world-model safety filtering code exists, but no locally matched pretrained policy, world-model and barrier checkpoints were established. Nominal/safety data mismatch and safety observability are already addressed by direct prior work.",
+      "decision": "no_qualified_mechanism_or_ready_matched_checkpoint_bundle",
+      "limits": "Not a claim that all remote weights are unavailable. No training, installation, inference or safety task result."
+    },
+    {
+      "id": "tdmpc_existing_task_loss_identifiability",
+      "evidence_level": "read_only_existing_training_and_diagnostic_code",
+      "source_paths": [
+        "scripts/pilot_tdmpc_adaptation.py",
+        "scripts/pilot_tdmpc_planner_ranking.py",
+        "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+        "runs/tdmpc_planner_ranking_v3/plan.json",
+        "runs/tdmpc_planner_ranking_v3/status.json",
+        "reports/tdmpc_mechanism_reassessment_20261015.json"
+      ],
+      "finding": "The reconstructed dynamics-only update resets the seed, builds a fresh Adam optimizer and consumes actual source obs/action/task with fixed encoder targets. No independent contributor-label channel is consumed. Existing source23 task losses remain valid, but no independently switchable variable distinguishes the proposed mechanism from ordinary negative transfer.",
+      "diagnostic_scope_correction": "The old H=3 ranking diagnostic compares native discounted rewards plus terminal Q against undiscounted three-step environment rewards without a continuation. It does not validate or refute full native-value ranking. The current curated evidence did not claim such validation; this note prevents future overinterpretation.",
+      "decision": "no_qualified_single_decisive_followup_identified",
+      "limits": "A tail-value continuation could clarify decision propagation, but would not by itself isolate a new security mechanism. No task rerun or change to prior loss measurements."
+    }
+  ],
+  "activity": {
+    "new_synthetic_cpu_operator_cases": 8,
+    "new_pretrained_model_inferences": 0,
+    "new_environment_steps": 0,
+    "training_updates": 0,
+    "gpu_work": false,
+    "model_api_requests": 0,
+    "pretrained_weights_downloaded": false,
+    "checkpoint_hashes_recomputed": 0,
+    "primary_sources_inspected": true
+  },
+  "supported_conclusion": "A query-time tensor write alone did not produce cross-task interference in the tested operator; terminal chunk shortening mostly reflects legitimate success stopping; MA-WAM adds a real native planning resource but no qualified new security mechanism yet.",
+  "not_proven": [
+    "General pretrained world-model security harm.",
+    "A new causal explanation of archived conditional TD-MPC2 losses.",
+    "Effective selective defense with acceptable Clean cost.",
+    "Independent task/model generalization or an ICLR-ready novelty claim."
+  ],
+  "next_action": "Require material new evidence of a reachable and distinct mechanism before another task pilot; reuse the archived actual-utility baselines and exclude unchanged negative hypotheses."
+}

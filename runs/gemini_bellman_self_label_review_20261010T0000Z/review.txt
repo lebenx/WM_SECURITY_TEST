@@ -1,0 +1,73 @@
+# Research Evaluation Memo
+
+## 1. Closest Prior Art & Rebranding Verdict
+* **Closest Prior Art:**
+  1. *Policy-poisoning via Bellman bootstrap/target shifting:* Ma et al. (2019) (*Policy Poisoning in Batch RL*); Zhang et al. (2020) (*Task-Agnostic Exploration/Target Network Poisoning*).
+  2. *Self-reinforcing/Confirmation bias in RL & Offline-to-Online:* Kumar et al. (2020) (*Conservative Q-Learning* distribution shift dynamics); bootstrapping loops in self-play/world models (e.g., SWAAP, Wu et al., 2024; TRAP, 2024).
+  3. *Cross-task negative transfer/Interference:* Standard RL multi-task capacity-sharing failure modes (Schaul et al., 2019; Parisotto et al., 2021).
+* **Verdict:** **Rebranding with high risk of confounding.** The candidate describes a known pathology in approximate dynamic programming: bootstrapping off a biased value estimator amplifies overestimation or underestimation when exploration is constrained by the policy (here, MPC via MPPI/CEM). Labeling it a "security vulnerability" under lawful multi-task updates dresses standard out-of-distribution value degradation and positive feedback loops in threat-actor terminology.
+
+---
+
+## 2. Precise Sufficient Distinction
+To qualify as an attack rather than generic multi-task interference or sub-optimal exploration, the candidate must satisfy **three simultaneous conditions**:
+1. **Dynamics Invariance:** The one-step latent rollout error on victim tasks $\mathcal{T}_{\text{vic}}$ remains statistically indistinguishable ($\Delta \text{MSE}_{dyn} \le \epsilon$) from a model trained on disjoint clean tasks.
+2. **Asymmetric Value Propagation:** The source updates intentionally degrade target value rank ordering specifically along victim-task high-return trajectories ($\tau^*$), without altering mean value calibration on generic off-policy buffers.
+3. **Bootstrapping Causality:** Freezing the target critic network $Q_{\bar{\theta}}$ during the initial $K$ victim updates must entirely break the failure cascade, whereas freezing the latent dynamics $T_\theta$ does not.
+
+---
+
+## 3. Novelty Score: 4 / 10
+* **Justification:** While applying self-amplifying value-bootstrap failure to multi-task MBRL (TD-MPC2) using native CEM/MPPI is practically relevant to foundation world-model safety, the underlying causal mechanism is simply the classic **positive feedback loop of value-iteration overestimation under model-based planning**. Without an adversary crafting targeted out-of-distribution transitions, attributing this to a "Trojan/poisoning attack" rather than standard gradient interference during multi-task pretraining is scientifically unconvincing.
+
+---
+
+## 4. Minimal Native Falsification Gate
+To be executed in the official TD-MPC2 `mt30-48M` codebase:
+
+### Conditions (Run across 5 seeds on 2 victim tasks):
+1. **Clean Baseline ($M_0$):** Train TD-MPC2 on task set $\mathcal{S}_{\text{clean}}$. Transition directly to victim online update.
+2. **Candidate Source ($M_{\text{adv}}$):** Train on lawful source task $\mathcal{S}_{\text{src}}$ (inducing the claimed off-policy value bias) + $\mathcal{S}_{\text{clean}}$. Transition to victim online update.
+3. **Random Intervention ($M_{\text{rand}}$):** Train on standard multitask baseline, inject random Gaussian noise to critic output matching the Frobenius magnitude of $M_{\text{adv}} - M_0$.
+4. **Dynamics Cascade Control ($M_{\text{dyn}}$):** Train on source task where dynamics $T_\theta$ are purposefully disturbed, but critic $Q_\theta$ is held fixed/isolated.
+
+### Two-Phase Protocol:
+* **Phase 1 (Handoff Check):** Measure single-step $T_\theta$ error, $Q$-ranking correlation (Spearman $\rho$ against ground-truth Monte Carlo rollouts) on victim tasks.
+* **Phase 2 (Victive Online Adaptation, $N = 25\text{k}$ steps):**
+  * Sub-condition A: Native TD-MPC2 update (Critic targets update via EMA: $\bar{\theta} \leftarrow \tau \theta + (1-\tau) \bar{\theta}$).
+  * Sub-condition B: Critic target frozen ($\bar{\theta} = \bar{\theta}_0$) for $5\text{k}$ steps.
+  * Sub-condition C: MPC rollout uses an oracle transition model $T^*$, isolating the target-value-to-planner path.
+
+---
+
+## 5. Expected Measurement Patterns Supporting the Mechanism
+To survive the falsification gate, the metrics must satisfy:
+
+| Metric | Condition $M_{\text{adv}}$ (Native) | Condition $M_{\text{adv}}$ (Frozen $\bar{\theta}$) | Condition $M_0$ (Clean) | Condition $M_{\text{dyn}}$ |
+| :--- | :--- | :--- | :--- | :--- |
+| **Latent 1-step Dyn Loss $\mathcal{L}_{dyn}$** | $< \epsilon$ (Nominal) | $< \epsilon$ (Nominal) | Nominal | Elevated |
+| **Initial $Q$-Rank Error ($\text{Top-}k$)** | Weak/Moderate | Weak/Moderate | Low | Low |
+| **Online $Q$-Error Trend ($\partial_t \|Q - Q^*\|$)** | **Positive (Diverging)** | **Negative (Correcting)** | Negative | Flat/Variable |
+| **CEM Sampling Entropy** | Collapses prematurely | Remains nominal | Nominal | Nominal |
+| **Victim Online Return ($\Delta R$)** | $\le -40\%$ vs $M_0$ | Recovers to $\ge 90\%$ of $M_0$ | Baseline (High) | Poor throughout |
+
+*Core diagnostic:* The bias **diverges** under Sub-condition A but **heals** under Sub-condition B and does not trigger under $M_{\text{dyn}}$.
+
+---
+
+## 6. Stop Conditions
+Immediately terminate and mark the hypothesis **INVALID** if:
+1. **Dynamics Leakage:** Victim one-step prediction error on the latent space increases by $>15\%$ after source training compared to $M_0$ (violates the "dynamics remain accurate" premise).
+2. **Interference Confound:** The frozen-target critic control ($M_{\text{adv}}$ + Frozen $\bar{\theta}$) fails to recover performance (proves harm is driven by upstream optimizer state or parameter degradation, not bootstrap self-labeling).
+3. **Non-Amplification:** The Bellman temporal difference error $\delta_t = |Q(z_t, a_t) - (r + \gamma Q_{\bar{\theta}}(z_{t+1}, \pi(z_{t+1})))|$ on victim trajectories shrinks rather than expands during the initial $10\text{k}$ online victim steps.
+
+---
+
+## Verdict & Alternative Proposal
+**VERDICT: REJECT.**
+The novelty score (4/10) falls below the threshold of 7. The setup as proposed cannot disentangle inherent target-network lag and poor off-policy exploration from a targeted exploit.
+
+### Recommended Executable Alternative:
+**Title:** *Asymmetric Latent Geometry Cloaking in TD-MPC2 Foundation Encoders.*
+* **Mechanism:** Craft lawful source-task trajectories designed so the latent encoder $E_\phi$ projects victim high-value and low-value task spaces into an orthogonal manifold where the cosine similarity collapses ($z_{\text{optimal}} \approx z_{\text{suboptimal}}$), while reconstruction and single-step latent predictability remain intact (via a high-capacity dynamic predictor $T_\theta$ absorbing the delta).
+* **Why it passes:** It shifts the claim from *heuristic self-amplification during Bellman updates* to an **identifiable, provable geometric vulnerability in state representations (representation collapse without reconstruction failure)**, directly falsifiable by measuring latent singular value spectra and linear separability of values via probing classifiers.

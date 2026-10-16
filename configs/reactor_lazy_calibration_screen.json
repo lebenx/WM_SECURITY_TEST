@@ -1,0 +1,155 @@
+{
+  "status": "completed_lower_action_cost_without_equal_reliability_or_novelty",
+  "runs": [
+    "runs/reactor_lazy_calibration_v0",
+    "runs/reactor_lazy_calibration_repeat_v0"
+  ],
+  "script": "scripts/pilot_reactor_lazy_calibration.py",
+  "completed_at_utc": "2026-10-08T17:57:20.247261+00:00",
+  "method": "Ordinary task-feedback-triggered invocation of the existing supplied calibration procedure.",
+  "scope": "Two fresh native runs on the same four development worlds; 24 episodes, four unique worlds. Fresh unseeded native instrument noise per episode; no paired-noise or cross-domain claim.",
+  "cases": [
+    [
+      "Normal",
+      23
+    ],
+    [
+      "Normal",
+      24
+    ],
+    [
+      "Challenge",
+      23
+    ],
+    [
+      "Challenge",
+      24
+    ]
+  ],
+  "rounds": [
+    {
+      "run": "runs/reactor_lazy_calibration_v0",
+      "by_arm": {
+        "raw": {
+          "successes": 2,
+          "episodes": 4,
+          "actions": 358,
+          "calibration_invocations": 0
+        },
+        "fixed_calibration": {
+          "successes": 4,
+          "episodes": 4,
+          "actions": 1014,
+          "calibration_invocations": 4
+        },
+        "lazy_calibration": {
+          "successes": 4,
+          "episodes": 4,
+          "actions": 722,
+          "calibration_invocations": 2
+        }
+      },
+      "elapsed_s": 70.36754073761404
+    },
+    {
+      "run": "runs/reactor_lazy_calibration_repeat_v0",
+      "by_arm": {
+        "raw": {
+          "successes": 2,
+          "episodes": 4,
+          "actions": 358,
+          "calibration_invocations": 0
+        },
+        "fixed_calibration": {
+          "successes": 4,
+          "episodes": 4,
+          "actions": 1014,
+          "calibration_invocations": 4
+        },
+        "lazy_calibration": {
+          "successes": 3,
+          "episodes": 4,
+          "actions": 706,
+          "calibration_invocations": 2
+        }
+      },
+      "elapsed_s": 69.66932035284117
+    }
+  ],
+  "by_arm": {
+    "raw": {
+      "successes": 4,
+      "episodes": 8,
+      "actions": 716,
+      "calibration_invocations": 0
+    },
+    "fixed_calibration": {
+      "successes": 8,
+      "episodes": 8,
+      "actions": 2028,
+      "calibration_invocations": 8
+    },
+    "lazy_calibration": {
+      "successes": 7,
+      "episodes": 8,
+      "actions": 1428,
+      "calibration_invocations": 4
+    }
+  },
+  "episodes": 24,
+  "unique_worlds": 4,
+  "native_actions": 4172,
+  "elapsed_s": 140.0368610904552,
+  "api_requests": 0,
+  "gpu_work": false,
+  "researcher_supplied": "Same source-informed isolation site finder, radiation instrument, minimum of 32 measurements, navigation, parser, and finite expression grammar as previous baselines. Only invocation time depends on task feedback.",
+  "lower_actions_fraction": 0.29585798816568043,
+  "equal_success_efficiency_gain_established": false,
+  "failure_witness": {
+    "source": "runs/reactor_lazy_calibration_repeat_v0/challenge_seed_24_lazy_calibration/result.json",
+    "case": [
+      "Challenge",
+      24
+    ],
+    "reference_two_min_first_run": 10.08,
+    "reference_two_min_repeat": 10.09,
+    "selected_after_calibration": {
+      "sensor": "spectrum_3",
+      "family": "quadratic",
+      "terms": [
+        "1",
+        "x",
+        "x^2"
+      ],
+      "coefficients": [
+        2010.4,
+        -71.184,
+        17.326
+      ],
+      "encoded_coefficients": [
+        "2010.4",
+        "-71.184",
+        "17.326"
+      ],
+      "description_characters": 25,
+      "reference_max_error_hz": 0.0029886000002079527,
+      "target_predictions_hz": []
+    },
+    "first_failed_setpoint_hz": 2921,
+    "reselected_setpoint_hz": 2921,
+    "observation": "Calibration refitting returned exactly the already-falsified target prediction. This baseline uses failure to trigger calibration but does not retain it as a model-selection constraint. It is not evidence that feedback-consistent model elimination would also fail."
+  },
+  "review": {
+    "run": "runs/operator_constructive_review_20261008T173958Z",
+    "model": "glm-5.2",
+    "requests": 1,
+    "status": "success",
+    "primary_called": false,
+    "proposal": "Fork-Test-Merge",
+    "accepted_as_novel_method": false,
+    "assessment": "The response does not specify distinct branch construction or operational parameter-to-mechanism assignment. Identical copies trained on identical data by identical deterministic updates do not create competing hypotheses. No native implementation or benefit is established by this proposal."
+  },
+  "headline_cn": "新增24条原生任务轨迹中，固定校准为8/8，按需校准为7/8；后者动作更少，但未保持相同可靠性。",
+  "report_note_cn": "在Normal/Challenge、种子23/24的四个新世界中，首轮固定校准与实际失败后再校准均完成4/4任务，动作分别为1014和722。独立噪声复跑后，固定校准仍为4/4，按需校准降为3/4。两轮累计固定校准8/8、2028动作；按需校准7/8、1428动作；原始读数拟合4/8、716动作。不能把减少约29.6%的动作数解释为相同成功率下的效率提升。失败轨迹中，一个参考最小读数从另一次运行的10.08变为10.09，重拟合选回了已经实际失败的2921Hz预测。该结果支持加入保留任务反证的普通模型消除基线，尚不支持新学习机制或扩大实验。",
+  "decision": "Keep the two calibration policies as executable comparators, not a novel contribution. Do not scale the finite template family or advertise a reliability-preserving speedup. Any new method must also be compared with ordinary feedback-consistent hypothesis elimination, and must introduce and test a distinct operation across core tasks."
+}

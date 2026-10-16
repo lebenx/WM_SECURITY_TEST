@@ -1,0 +1,297 @@
+{
+  "schema_version": 1,
+  "audit_date": "2026-10-14",
+  "created_at_utc": "2026-10-14T11:43:16.610352+00:00",
+  "status": "completed_source_audit",
+  "scope": "Official checkpoint provenance, published training recipe and value labels; no training-data download, model execution, GPU, environment or frozen-source modification.",
+  "checkpoint": {
+    "repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+    "revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+    "filename": "Cosmos-Policy-LIBERO-Predict2-2B.pt",
+    "bytes": 3913017345,
+    "sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+    "verified": true,
+    "download_method": "Pinned public HTTPS URL; exact byte ranges and full SHA256",
+    "elapsed_seconds_resume": 229.41803126598825,
+    "local_path": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt"
+  },
+  "source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+  "local_source_hashes": [
+    {
+      "path": "models/CosmosPolicy/provenance.json",
+      "sha256": "c50f44d028f7e35fc164ff0aaa62f6f499133c743f74f2d2c8c519c9afc5e177"
+    },
+    {
+      "path": "models/CosmosPolicy/README.md",
+      "sha256": "3bd882474403177ab22e65598d8ab1c1b299804b5bff0019f30c4a01aa405506"
+    },
+    {
+      "path": "models/CosmosPolicy/config.json",
+      "sha256": "6c246e6588762546fd91c4fac62af570583da1156aa9b2800f2268e6a2c31f43"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/source_manifest.json",
+      "sha256": "d2bd3d06d97630782cff4e5709e843642b90f6978fc66366aeab9bd7f7f648eb"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/config/experiment/cosmos_policy_experiment_configs.py",
+      "sha256": "16b8c0d1e2112ebf09cc5393f3f38f07cbc82b9ee2844ad79f35fd6532a566fb"
+    },
+    {
+      "path": "runs/alphabrain_official_forecast_contract_audit_v1/sources/cosmos_policy/datasets/libero_dataset.py",
+      "sha256": "cbebd356916de3f7fc6bc084a6f719b6a8a58a9ef496f7f104ae5980f5f177e8"
+    }
+  ],
+  "remote_source_hashes": [
+    {
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/datasets/dataset_common.py",
+      "sha256": "217b01576f015fb2da57a9233767c8377d3ca5b36aa1068f2f81f7db17f761a1",
+      "bytes": 15094,
+      "immutable_revision": "18a2accadf4e7a3531e56754102af5a24d2316da"
+    },
+    {
+      "url": "https://huggingface.co/nvidia/Cosmos-Policy-ALOHA-Planning-Model-Predict2-2B/raw/main/config.json",
+      "sha256": "269fc51e43f01b2d66ba125aafd9076b1c6cd20987425fe579377c0a917aaa44",
+      "bytes": 1787,
+      "immutable_revision": null
+    },
+    {
+      "url": "https://huggingface.co/api/models?author=nvidia&search=Cosmos-Policy&limit=100",
+      "sha256": "8d80d2e189b07b7a81f2ec2a07506e4dabac6f4840b8a0610c3af872e90800e5",
+      "bytes": 2530,
+      "immutable_revision": null
+    }
+  ],
+  "published_training": {
+    "gradient_steps": 40000,
+    "policy_world_value_sample_proportions": [
+      0.5,
+      0.25,
+      0.25
+    ],
+    "policy_data": "success_only demonstrations",
+    "world_and_value_data": "all_episodes: environment replays of demonstrations, including successes and failures; not newly collected model-policy rollouts",
+    "success_rollout_sampling_prob": 0.5,
+    "gamma": 0.99,
+    "source_lines": {
+      "config/experiment/cosmos_policy_experiment_configs.py": [
+        41,
+        60
+      ],
+      "datasets/libero_dataset.py": [
+        544,
+        556
+      ],
+      "models/CosmosPolicy/README.md": [
+        149,
+        179
+      ]
+    }
+  },
+  "value_target": {
+    "terminal_reward_success": 1.0,
+    "terminal_reward_failure": 0.0,
+    "unscaled_return": "gamma**(T-1-t) * terminal_reward (zero-based step t)",
+    "encoded_return": "2 * unscaled_return - 1 for LIBERO binary terminal reward",
+    "target_step": "min(relative_step_idx + 16, episode_num_steps - 1)",
+    "source_lines": {
+      "datasets/libero_dataset.py": [
+        [
+          297,
+          305
+        ],
+        [
+          562,
+          565
+        ],
+        [
+          691,
+          697
+        ]
+      ],
+      "datasets/dataset_common.py": [
+        25,
+        55
+      ]
+    },
+    "interpretation": "Discounted empirical future return under the data-generating behavior, not an undiscounted calibrated success probability. Successful trajectories also have nonconstant labels.",
+    "conditioning": "Base value prediction uses the entire current-state/action/future-state prefix; it is not the later planning-model V(s_future)-only masked formulation."
+  },
+  "official_planning_release": {
+    "checked_official_model_ids": [
+      "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+      "nvidia/Cosmos3-Nano-Policy-DROID",
+      "nvidia/Cosmos3-Edge-Policy-DROID",
+      "nvidia/Cosmos-Policy-ALOHA-Predict2-2B",
+      "nvidia/Cosmos-Policy-ALOHA-Planning-Model-Predict2-2B",
+      "nvidia/Cosmos-Policy-RoboCasa-Predict2-2B"
+    ],
+    "found_compatible_libero_policy_rollout_finetuned_planning_checkpoint": false,
+    "negative_search_scope": "Official NVIDIA Cosmos-Policy model-name API listing, published collection, pinned training configurations and original paper; absence is scoped to these checked resources.",
+    "planning_checkpoint": "nvidia/Cosmos-Policy-ALOHA-Planning-Model-Predict2-2B",
+    "planning_model_config": {
+      "model_type": "cosmos-policy-planning",
+      "architecture": "diffusion-transformer",
+      "base_model": "nvidia/Cosmos-Policy-ALOHA-Predict2-2B",
+      "num_parameters": "2B",
+      "input_spec": {
+        "text": {
+          "type": "string",
+          "description": "Natural language task description"
+        },
+        "images": {
+          "format": "RGB",
+          "resolution": [
+            224,
+            224
+          ],
+          "views": [
+            "top_down",
+            "left_wrist",
+            "right_wrist"
+          ]
+        },
+        "proprioception": {
+          "dim": 14,
+          "components": [
+            "left_arm_joints",
+            "right_arm_joints"
+          ],
+          "joints_per_arm": 7
+        },
+        "actions": {
+          "dim": 14,
+          "horizon": 50,
+          "description": "Candidate action sequence to evaluate"
+        }
+      },
+      "output_spec": {
+        "future_proprioception": {
+          "dim": 14
+        },
+        "future_images": {
+          "resolution": [
+            224,
+            224
+          ],
+          "views": 3
+        },
+        "value": {
+          "dim": 1,
+          "description": "Expected cumulative reward for action sequence"
+        }
+      },
+      "diffusion_config": {
+        "denoising_steps": 10,
+        "sigma_min": 4.0,
+        "sigma_max": 80.0
+      },
+      "planning_config": {
+        "ensemble_world_model_queries": 3,
+        "ensemble_value_queries": 5,
+        "total_predictions_per_action": 15,
+        "best_of_n_search": 8
+      },
+      "training": {
+        "dataset": "ALOHA policy rollouts",
+        "num_episodes": 648,
+        "hardware": "8x H100",
+        "batch_split": {
+          "policy": 0.1,
+          "world_model": 0.45,
+          "value_function": 0.45
+        }
+      },
+      "benchmark_results": {
+        "put_candies_in_bowl": 0.6,
+        "put_candy_in_ziploc_bag": 0.84,
+        "average": 0.72,
+        "improvement_over_base": 0.125
+      },
+      "inference": {
+        "precision": "bf16",
+        "latency_seconds": 4.9,
+        "recommended_gpus": 8
+      },
+      "robot_platform": "ALOHA 2 (ViperX 300 S dual arms)",
+      "control_frequency_hz": 25
+    },
+    "rollout_training": {
+      "episodes": 648,
+      "policy_world_value_sample_proportions": [
+        0.1,
+        0.45,
+        0.45
+      ],
+      "data_release": "Pinned training config states this policy-rollout dataset is not released."
+    },
+    "evaluated_planning_tasks": [
+      "put candies in bowl",
+      "put candy in ziploc bag"
+    ],
+    "libero_compatibility": "Not a drop-in LIBERO checkpoint: ALOHA uses 14-dimensional actions over 50 steps, 14-dimensional proprioception and 3 camera views; local LIBERO uses 7x16, 9-dimensional proprioception and 2 views."
+  },
+  "primary_sources": [
+    {
+      "url": "https://huggingface.co/nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+      "supports": [
+        "40K training steps",
+        "50/25/25 objectives",
+        "failed demonstrations included for world/value"
+      ]
+    },
+    {
+      "url": "https://arxiv.org/html/2601.16163v1",
+      "sections": [
+        "3",
+        "4.2",
+        "4.3",
+        "5.3"
+      ],
+      "supports": [
+        "discounted empirical return targets",
+        "initial demonstration replays versus policy-rollout refinement",
+        "initial value full-prefix conditioning",
+        "planning experiments focus on two ALOHA tasks"
+      ]
+    },
+    {
+      "url": "https://huggingface.co/nvidia/Cosmos-Policy-ALOHA-Planning-Model-Predict2-2B",
+      "supports": [
+        "648 policy rollouts",
+        "10/45/45 objectives",
+        "ALOHA planning release and interface"
+      ]
+    },
+    {
+      "url": "https://huggingface.co/collections/nvidia/cosmos-policy",
+      "supports": [
+        "published model inventory; collection is archived"
+      ]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/NVlabs/cosmos-policy/18a2accadf4e7a3531e56754102af5a24d2316da/cosmos_policy/datasets/dataset_common.py",
+      "supports": [
+        "exact sparse MC return computation and normalization"
+      ]
+    }
+  ],
+  "established": [
+    "Verified local official weight identity by existing download provenance; source/config/model-card evidence is consistent with world/value training including failure outcomes.",
+    "The claim that value labels were necessarily constant successes is contradicted by the released recipe and target computation.",
+    "The published dedicated planning model checked here is ALOHA-specific."
+  ],
+  "unproven": [
+    "Exact realized success/failure counts and label histogram in the 40K training job were not independently enumerated.",
+    "No complete original training logs were audited; source configuration is not a reconstruction of every realized minibatch.",
+    "Strong N2 Clean task success alone does not establish a planning benefit over N1.",
+    "Even N2 improvement over N1 would not by itself isolate future-observation information as the cause, because base value prediction also receives current observation and candidate action.",
+    "No compatible public LIBERO policy-rollout-refined planning checkpoint was found in the checked official resources; this is not a universal nonexistence claim."
+  ],
+  "recommended_interpretation": "Complete the fixed paired N1/N2 task panel to measure search-level utility. Keep a separate causal attribution gate for forecast contribution; do not label the 40K base checkpoint an ALOHA-style rollout-refined planning model.",
+  "gpu_work": false,
+  "model_execution": false,
+  "training_updates": 0,
+  "environment_steps": 0,
+  "modified_frozen_sources": []
+}

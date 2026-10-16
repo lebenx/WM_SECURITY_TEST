@@ -1,0 +1,135 @@
+{
+  "status": "completed_recurrent_context_carryover_gate",
+  "candidate": "H_recurrent_belief_carryover_at_episode_boundary",
+  "operation": "Legal source prefix initializes a recurrent belief that is retained across a target episode boundary; no observation, reward, label, weight, or planner edit.",
+  "carrier": "GRU dynamics model trained on real MBRL-Lib CartPole transitions with velocity hidden from the model; native CartPole closed loop with CEM.",
+  "settings": {
+    "output": "runs/recurrent_context_carryover_gate_v3",
+    "train_seed": 41,
+    "train_episodes": 140,
+    "train_steps": 50,
+    "epochs": 60,
+    "hidden": 64,
+    "eval_seeds": [
+      501,
+      502
+    ],
+    "eval_episodes": 1,
+    "eval_steps": 60,
+    "source_steps": 20,
+    "cem_horizon": 15,
+    "cem_population": 128,
+    "cem_iterations": 3,
+    "cem_elite": 16
+  },
+  "training": {
+    "sequences": 140,
+    "final_loss": 2.0522029948162007e-05,
+    "initial_loss": 0.00902215481219173,
+    "epochs": 60,
+    "model_sha256": "684c50363f207cb1f7f39aa735d2dbc3eb63fa8d2f65c909e6af2719f5de61b0"
+  },
+  "results": [
+    {
+      "condition": "clean",
+      "seed": 501,
+      "episodes": 1,
+      "mean_return": 15.0,
+      "returns": [
+        15.0
+      ],
+      "mean_length": 15.0,
+      "lengths": [
+        15
+      ],
+      "target_one_step_rmse": 0.006720862351357937
+    },
+    {
+      "condition": "clean",
+      "seed": 502,
+      "episodes": 1,
+      "mean_return": 14.0,
+      "returns": [
+        14.0
+      ],
+      "mean_length": 14.0,
+      "lengths": [
+        14
+      ],
+      "target_one_step_rmse": 0.005395015402297888
+    },
+    {
+      "condition": "carryover",
+      "seed": 501,
+      "episodes": 1,
+      "mean_return": 12.0,
+      "returns": [
+        12.0
+      ],
+      "mean_length": 12.0,
+      "lengths": [
+        12
+      ],
+      "target_one_step_rmse": 0.010741494906445345
+    },
+    {
+      "condition": "carryover",
+      "seed": 502,
+      "episodes": 1,
+      "mean_return": 19.0,
+      "returns": [
+        19.0
+      ],
+      "mean_length": 19.0,
+      "lengths": [
+        19
+      ],
+      "target_one_step_rmse": 0.006730970485430015
+    },
+    {
+      "condition": "reset_defense",
+      "seed": 501,
+      "episodes": 1,
+      "mean_return": 15.0,
+      "returns": [
+        15.0
+      ],
+      "mean_length": 15.0,
+      "lengths": [
+        15
+      ],
+      "target_one_step_rmse": 0.006720862351357937
+    },
+    {
+      "condition": "reset_defense",
+      "seed": 502,
+      "episodes": 1,
+      "mean_return": 14.0,
+      "returns": [
+        14.0
+      ],
+      "mean_length": 14.0,
+      "lengths": [
+        14
+      ],
+      "target_one_step_rmse": 0.005395015402297888
+    }
+  ],
+  "mean_returns": {
+    "clean": 14.5,
+    "carryover": 15.5,
+    "reset_defense": 14.5
+  },
+  "relative_carryover_drop_vs_clean": -0.06896551724137931,
+  "relative_reset_defense_recovery": -0.06896551724137931,
+  "native_environment_steps": 89,
+  "api_requests": 0,
+  "gpu_work": false,
+  "claims_excluded": [
+    "cross-task generality",
+    "novelty",
+    "attack success beyond this carrier",
+    "ICLR-scale evidence"
+  ],
+  "elapsed_seconds": 133.2830153158866
+}

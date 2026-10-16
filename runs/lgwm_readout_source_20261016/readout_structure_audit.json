@@ -1,0 +1,57 @@
+{
+  "status": "source_and_manifest_structure_audit_only",
+  "source_commit": "4e760ed5f44f645e1bf81cdb171b01056dc30f3a",
+  "manifest": "runs/lgwm_resource_qualification_20261016/source/benchmark/rswt_bench_test.jsonl",
+  "manifest_sha256": "5f22f4848b5221970142babb7abc572b68cb1119f770266f787a786817dcb707",
+  "records": 966,
+  "unique_edges": 961,
+  "contexts": 739,
+  "outcomes": 738,
+  "vertices": 1477,
+  "connected_components": 516,
+  "cycle_rank": 0,
+  "complete_2x2_submatrices": 0,
+  "conflicting_binary_labels_on_duplicate_edges": 0,
+  "official_comparison_support": [
+    {
+      "positive": "1_hijack",
+      "negative": "3_legit_cred",
+      "shared_base_transition_ids": 0,
+      "shared_observed_transition_ids": 222
+    },
+    {
+      "positive": "1_hijack",
+      "negative": "5_benign_misplace",
+      "shared_base_transition_ids": 0,
+      "shared_observed_transition_ids": 0
+    },
+    {
+      "positive": "1_hijack",
+      "negative": "2_paired_safe",
+      "shared_base_transition_ids": 222,
+      "shared_observed_transition_ids": 0
+    }
+  ],
+  "source_formula": "x_ij=concat(unit(mean observed_j)-unit(mean predicted_i), mean valid action tokens_i); fixed StandardScaler then logistic regression. Logit L_ij=u_i+v_j. No residual normalization or absolute value.",
+  "deductions": [
+    "Every 2x2 mixed contrast on logits is zero up to floating-point effects; probability mixed contrast need not be zero.",
+    "Outcome ordering cannot reverse with context under this harm head.",
+    "The observed ID graph is a forest, so arbitrary edge scores admit unconstrained additive context/outcome lookup potentials; this is an identifiability statement, not an evaluated generalization baseline.",
+    "Integrity=1-dot(p_i,o_j) has context-outcome interactions and is outside this limitation."
+  ],
+  "qualification": "No model pilot justified merely to demonstrate known additive-head algebra. Need independently grounded complete relational labels and a supported consumer consequence.",
+  "limitations": [
+    "Transition identity is not pixel identity; different IDs may encode duplicate screens. Screenshot deduplication was not performed.",
+    "No model prediction, learned weight value, head performance, full-verifier bypass, environment consequence or benchmark-author intent is inferred.",
+    "No new labels assigned to missing edges. No fitting on test IDs."
+  ],
+  "resource_use": {
+    "model_calls": 0,
+    "api_calls": 0,
+    "gpu_jobs": 0,
+    "environment_steps": 0,
+    "weight_download_bytes": 0,
+    "source_files_downloaded": 9,
+    "source_download_bytes": 40455
+  }
+}

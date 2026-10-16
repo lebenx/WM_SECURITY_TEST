@@ -1,0 +1,22 @@
+MEMO
+
+TO: Research Team / Systems Evaluation
+SUBJECT: World-Model Security Mechanism Viability Under Target Constraints
+DATE: May 19, 2024
+
+CONCLUSION:
+None. 
+
+ANALYSIS & SKEPTICAL EVALUATION:
+Under the specified operational constraints, no valid mechanism can reliably survive without violating either the boundary conditions or the core definition of the test. Specifically:
+
+1. The Contradiction Between Rollout Compounding and Planning Degradation:
+Model-based reinforcement learning planners (CEM in TD-MPC2, MPPI/CEM in PETS, or heuristic search in WAV MiniGrid) compute trajectory values by recursively unrolling the forward model $\hat{s}_{t+1} = f(\hat{s}_t, a_t)$. If single-step transitions and on-policy distributions remain strictly matched to ground truth, any divergence in the planning objective must manifest off-policy. Causing planner failure strictly off-policy without relying on multi-step error accumulation violates the explicit exclusion of "rollout compounding."
+
+2. The Closure of Planner Vulnerability Surfaces:
+Excluding "uncertainty collapse" eliminates PETS-specific ensemble epistemic manipulation (e.g., TS- $\infty$ variance suppression). Excluding "SimNorm/latent rotations," "non-normal transients," and "frequency/semigroup defects" eliminates state-representation geometric distortions in TD-MPC2's continuous latent space. Excluding "action aliasing" and "policy symmetry" eliminates discrete action-space search entrapment in MiniGrid.
+
+3. The Constraint of Truthful Data Queries:
+Without provenance substitution, temporal correlation manipulation, or replay poisoning, the model cannot be induced to represent an out-of-distribution artifact solely via truthful inference/data queries without simultaneously failing the one-step consistency criterion on the supported evaluation manifold.
+
+Because any proposed attack or failure trigger under these constraints reduces directly to one of the excluded failure modes (primarily latent space distortion, off-manifold compounding divergence, or epistemic estimation failure), no genuinely distinct mechanism clears the bar.

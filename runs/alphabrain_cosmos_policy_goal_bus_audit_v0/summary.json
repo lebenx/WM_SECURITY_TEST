@@ -1,0 +1,53 @@
+{
+  "status": "completed_source_level_goal_bus_audit",
+  "carrier": "AlphaBrain CosmosPolicy LIBERO-Goal",
+  "source_files": {
+    "policy": "vendor/AlphaBrain/AlphaBrain/model/framework/CosmosPolicy.py",
+    "dit": "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v1_lvg_dit.py",
+    "config": "vendor/AlphaBrain/configs/models/cosmos_policy.yaml"
+  },
+  "latent_slots": {
+    "blank": 0,
+    "current_proprio": 1,
+    "current_wrist": 2,
+    "current_primary": 3,
+    "action": 4,
+    "future_proprio": 5,
+    "future_wrist": 6,
+    "future_primary": 7,
+    "value": 8
+  },
+  "condition_frame_indices": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "prediction_frame_indices": [
+    4,
+    5,
+    6,
+    7,
+    8
+  ],
+  "future_observation_prediction_slots": [
+    "future_wrist",
+    "future_primary"
+  ],
+  "instruction_to_context": {
+    "policy_line": 516,
+    "denoise_line": 274,
+    "dit_forward_line": 53,
+    "meaning": "T5 instruction embeddings are supplied as cross-attention context to the same DiT denoising call that emits every latent slot."
+  },
+  "shared_denoiser": {
+    "prediction_slots_share_dit": true,
+    "direct_context_to_future_observation_rows": true,
+    "evidence": "MinimalV1LVGDiT forwards one crossattn_emb tensor to MiniTrainDIT; no row-wise world-output mask is exposed in CosmosPolicy."
+  },
+  "repair_surface": {
+    "stock_edge_cut_available": false,
+    "required_change": "introduce a per-latent-row cross-attention mask or separate dynamics head before claiming a repair"
+  },
+  "scope": "independent carrier source/config evidence only; no checkpoint forward or task-level result"
+}

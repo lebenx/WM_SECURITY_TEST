@@ -1,0 +1,140 @@
+{
+  "status": "completed_prediction_interference_observed_no_native_task_harm",
+  "claim_status": "unproven",
+  "candidate": "Learning hidden state through module globals can make hypothetical transition queries change predictions for the same factual observation.",
+  "source_repository": "https://github.com/david-courtis/opine-world",
+  "upstream_commit": "cf957ffa660f72f19beeec0355bc350c774188d5",
+  "scope": "Unmodified author-released learned programs and recorded in-sample observations. No simulator rollout, new synthesis, or attack was executed. Two versions of one game are not independent task instances.",
+  "observation_alias_screen": {
+    "run": "runs/opine_observation_aliases_v0",
+    "games": 25,
+    "model_versions": 792,
+    "usable_transitions": 12340,
+    "conflicting_groups": 52,
+    "witnesses_covered_by_both_masks": 50,
+    "witnesses_not_covered_by_both_masks": 1,
+    "witnesses_with_unavailable_mask": 1,
+    "elapsed_s": 7.722420504782349,
+    "scene_witness": {
+      "game": "dc22",
+      "level_zero_based": 5,
+      "steps": [
+        762,
+        766
+      ],
+      "action": "click(51,26)",
+      "same_complete_input_frame": true,
+      "different_scene_pixels": 12
+    },
+    "interpretation": "Exact observation-action aliases show a frame-only deterministic model cannot fit both recorded successors. Most observed conflicts are ignored HUD ticks; one pair differs outside the native masks."
+  },
+  "native_learned_code_screen": {
+    "run": "runs/opine_query_memory_v0",
+    "elapsed_s": 18.721790097188205,
+    "results": [
+      {
+        "round": 63,
+        "code_sha256": "e943f3cb2c2be92093e675d7168835dd1c297f9298c15a4cf874a0e1e344140e",
+        "author_reported_accuracy_percent": 100.0,
+        "observed_prefix_end": 770,
+        "transitions": 112,
+        "clean_correct": 112,
+        "repeated_correct": 111,
+        "cold_correct": 109,
+        "query_order_sensitive": 1,
+        "clean_correct_to_repeat_wrong": 1,
+        "noop_control_changes": 0,
+        "all_input_and_restoration_checks_passed": true,
+        "mutable_global_names": [
+          "_L6_TOK1_PAINT_MEM"
+        ]
+      },
+      {
+        "round": 86,
+        "code_sha256": "1dc3e690598f6184731207c6f39e726c93fb7726a1bbff01d1882b09932cbf6f",
+        "author_reported_accuracy_percent": 100.0,
+        "observed_prefix_end": 1483,
+        "transitions": 825,
+        "clean_correct": 825,
+        "repeated_correct": 816,
+        "cold_correct": 813,
+        "query_order_sensitive": 9,
+        "clean_correct_to_repeat_wrong": 9,
+        "noop_control_changes": 0,
+        "all_input_and_restoration_checks_passed": true,
+        "mutable_global_names": [
+          "_L6_CHAMBER_BG",
+          "_L6_CYCLE_PAINT",
+          "_L6_TOK1_FRESH",
+          "_L6_TOK1_PAINT_MEM"
+        ]
+      }
+    ],
+    "initialization": "Begin at the publicly recorded level-six entry and call the unchanged transition function on each successive actual before-frame and action. Cache only that already-observed entry frame.",
+    "probe": "At each recorded input, compare one prediction with a second identical call, without committing a real action. Undo all diagnostic calls before continuing factual replay.",
+    "controls": "Out-of-panel click produces no forecast change. Restoring pre-query learned globals exactly restores every baseline prediction. Resetting memory for each call loses three/twelve correct predictions in rounds 63/86, respectively.",
+    "source_inference": "The code explicitly stores occluded portal paint and a destination cycle in globals. The transition function both predicts and advances them. Their learned presence is observed; broader claims about why synthesis chose them remain hypotheses.",
+    "native_planner_check": {
+      "calls": 12,
+      "budget": "Depth 4, timeout 3 seconds; not a full native task run.",
+      "initializations": [
+        "factual prefix",
+        "fresh module"
+      ],
+      "queries_changing_checked_memory": 0,
+      "queries_changing_following_forecast": 0,
+      "plans_found": 0,
+      "limit": "The generated planner has no level-six action case and omits the observed magenta click. The generic BFS helper is not called by the current plan_from_model entry point. Do not claim this planner executed the interfering queries."
+    }
+  },
+  "source_locations": [
+    {
+      "path": "vendor/opine-world/src/opine_world/synth_loop/adapters/arcengine_adapter.py",
+      "lines": [
+        1790,
+        1822
+      ],
+      "finding": "Frame replay imports one generated module and invokes transition_function once per chronological record."
+    },
+    {
+      "path": "vendor/opine-world/src/opine_world/synth_loop/planner.py",
+      "lines": [
+        371,
+        554
+      ],
+      "finding": "Simulation copies explicit input frames; the entry point calls the generated planner then validates its returned plan on the same module."
+    },
+    {
+      "path": "runs/opine_query_memory_v0/round_086/game_engine.py",
+      "lines": [
+        2176,
+        2186,
+        2279,
+        3195,
+        3253
+      ],
+      "finding": "Learned paint/cycle memory changes during predictions; generated planner action selection omits the level-six portal action."
+    },
+    {
+      "path": "vendor/opine-world/src/opine_world/synth_loop/prompts/synthesizer/frames/main.md",
+      "lines": [
+        295,
+        304,
+        307
+      ],
+      "finding": "The upstream synthesis prompt already permits hidden accumulation and explicitly requires continuity gating for hypothetical branches; current commit only, historical prompts not reconstructed."
+    }
+  ],
+  "api_requests": 0,
+  "gpu_work": false,
+  "decision": "Retire as the main novel research candidate: upstream already identifies hidden-state continuity across planning branches as a required protection, and native planner probes did not trigger the effect. Preserve the reproducible diagnostic; no further expansion without a substantively distinct mechanism.",
+  "report_note_cn": "公开 OPINE 轨迹及学习代码中出现了具体的查询副作用：25个游戏、792个代码版本、12340条有效转移中有52组完整帧和动作相同但后继不同的记录；50组差异仅涉及已忽略的计数条，1组差异在场景内，另1组缺少当时的掩码。对 dc22 的两个原样学习程序按真实第六关历史初始化后，分别正确回放112/112和825/825条转移；同一输入多查询一次，使其中1条和9条从正确变错，恢复查询前的模块记忆后均恢复。每次清空记忆则只能预测对109/112和813/825条，说明简单禁用记忆也会丢失已有能力。无效点击对照没有影响。12次有深度限制的原生规划检查均未触发记忆或预测改变：该规划器遗漏了关键传送动作，也没有找到计划。全部为一个游戏的样本内代码诊断，约18.7秒CPU，无API/GPU；不能计作攻击、原生任务损失或新方法优势。 后续源码核对发现，上游提示词已明确允许累积隐藏状态并要求规划分支的连续性保护；当前复现是已有防护未落实的局部现象，因此停止把它作为新概念扩展。此提示词核对针对固定仓库版本，不声称已还原每个历史轮次的提示。",
+  "previous_goal_turn_classification": "progress: completed unchanged native-code replay, duplicate-query interventions and native planner checks; report updated. No live experiment remained.",
+  "novelty_gate": {
+    "checked_at_utc": "2026-10-08T15:52:02.890244+00:00",
+    "status": "retired_as_novel_candidate",
+    "source": "vendor/opine-world/src/opine_world/synth_loop/prompts/synthesizer/frames/main.md:295",
+    "finding": "The pinned upstream prompt explicitly permits accumulating hidden state and already requires continuity gating because hypothetical planning branches need not follow the last output. The released dc22 programs lack the required protection. Standard branch-local recurrent state also addresses this class of side effect.",
+    "scope": "The prompt is current at the pinned repository commit; no claim about the exact prompt used for each archived historical synthesis round."
+  }
+}

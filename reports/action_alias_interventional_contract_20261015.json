@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "status": "completed_local_source_and_interventional_scope_check",
+  "question": "Does partial observability invalidate an action-alias invariance test, and is canonicalization known to move DINO requests into training support?",
+  "physical_contract": {
+    "statement": "Complete state observability is sufficient but not necessary. For a fixed history H and fixed belief b(S|H), complete future action sequences supplied as exogenous interventions have identical physical outcome distributions if they induce the same executed controls at every reachable augmented state and have no other physical effect.",
+    "identity": "P_b(Y in B | H, do(A)) = integral K_H(B | s, E_s(A)) b(ds|H) = P_b(Y in B | H, do(A')) when E_s(A)=E_s(A') throughout the reachable support.",
+    "required_conditions": [
+      "The belief, environment, task, controller parameters, action ordering, durations and noise law are fixed.",
+      "The action intervention commits the entire evaluated horizon; a subsequently goal-dependent feedback policy is not held fixed merely by fixing its first action.",
+      "The executor-equivalence condition holds for all states needed by this argument, not just for an action pair at one sampled initial state.",
+      "The output is a physical consequence. A reward depending on the raw request, energy accounting for that request, or request-logging output needs its own invariance check."
+    ],
+    "sample_vs_distribution": "With the same initial hidden state and exogenous noise realization, equality can be pathwise. With only the same noise distribution, the conclusion is distributional; identical independently sampled outputs are not required.",
+    "training_conditional_boundary": "P_train(Y|H,A) can depend on representation through P_train(S,U|H,A): behavior actions can reveal hidden state or select future disturbances. It is not automatically the fixed-belief do(A) kernel. A released observational predictor is not proved to implement the interventional contract by the executor proof.",
+    "goal_boundary": "Arbitrary Goal text may convey hidden facts or alter task semantics. Preference-only query metadata with fixed belief and no physical/control path has a corresponding invariance argument; arbitrary text replacement does not establish those conditions.",
+    "novelty": "This is a scope clarification using ordinary conditional/interventional reasoning, not a new theorem or proposed paper contribution."
+  },
+  "dino_physical_evidence": {
+    "source_paths": [
+      ".venv-a2world/lib/python3.11/site-packages/metaworld/sawyer_xyz_env.py",
+      ".venv-a2world/lib/python3.11/site-packages/metaworld/envs/sawyer_reach_v3.py",
+      "reports/dino_action_saturation_decision_20261015.json",
+      "scripts/pilot_dino_native_alias_pair.py"
+    ],
+    "executor": "XYZ requests are clipped to[-1,1] before mocap displacement; gripper is separately preserved. Equal clipped XYZ at any given state yields the same displacement and subsequent mocap bounds. Reach reward v2 uses TCP-target distance, not raw XYZ amplitude.",
+    "measured_scope": "Earlier450-step finite-bank replays establish exact equivalence only for their one root and fixed branches. Native request checks establish actual-FP32 control equivalence for the requests used in those experiments. These are existing results, not new replays in this source check.",
+    "conclusion": "Partial observability alone does not refute the controlled physical-alias comparison. The source-based interventional contract must still be distinguished from training support, forecast accuracy and closed-loop decision harm. Different selected executed actions in the two native conditions may legitimately produce different futures."
+  },
+  "training_support_check": {
+    "source_paths": [
+      "vendor/jepa-wms/app/plan_common/datasets/metaworld_hf_dset.py",
+      "vendor/jepa-wms/app/plan_common/datasets/traj_dset.py",
+      "vendor/jepa-wms/app/vjepa_wm/train.py",
+      "vendor/jepa-wms/app/vjepa_wm/video_wm.py",
+      ".venv-a2world/lib/python3.11/site-packages/metaworld/policies/policy.py",
+      "reports/jepa_metaworld_reach_wall_resource_audit_20261015.json"
+    ],
+    "confirmed": "The inspected dataset loader reads row['actions'], converts to FP32 and applies affine mean/std normalization. Subsequent temporal grouping and model action encoding do not apply executor XYZ clipping. Thus the model consumes the action representation stored in the training data file.",
+    "unresolved": "The inspected sources and available local assets do not establish whether the original data collector stored requested or already-clipped controls. No corresponding training sample or collector/conversion implementation was qualified in this check.",
+    "invalid_shortcuts": [
+      "An environment's declared action bounds do not prove the stored demonstrations obey them. The local expert move helper can return requests outside[-1,1], leaving clipping to the executor.",
+      "Published action means and standard deviations do not identify min/max values, tail frequency or joint state/action support.",
+      "Canonicalizing XYZ does not establish support of the unchanged gripper, visual state, action sequence or their joint distribution."
+    ],
+    "decision": "Ordinary representation extrapolation remains an unexcluded explanation. Do not claim canonicalization is known to restore training support, or claim the current effect has been separated from OOD/model-exploitation explanations."
+  },
+  "experiment_priority": "Preserve the existing fixed-bank ranking evidence and complete the separately frozen30-control real replay needed to align its forecast/utility horizons. This contract check does not itself authorize a novelty claim, additional seed search or a long GPU panel.",
+  "activity": {
+    "model_forwards": 0,
+    "environment_steps": 0,
+    "api_calls": 0,
+    "training_updates": 0,
+    "data_downloads": 0,
+    "checkpoint_hashes": 0
+  }
+}

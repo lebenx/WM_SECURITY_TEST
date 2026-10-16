@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-09",
+  "status": "composed_clean_controller_gate_failed",
+  "candidate": "Changing only a rejected forecast can steer other choices through batch-adaptive cost weights.",
+  "source": "runs/rejected_future_influence_v1/summary.json",
+  "script": "scripts/pilot_rejected_future_influence.py",
+  "report_note_cn": "检验“只改最终被淘汰的预测也能改变选择”的候选前，先将发布的 MiniGrid 前向模型、逆模型和批内自适应权重组成一个单步选择器。128 个固定且可达的目标中，正常选择成功 62/128（48.4%），仅目标距离基线 56/128（43.8%），均低于预设 80% 门槛。128 个目标与数据集真实后继逐项一致；模型权重未变。CPU 约 0.40 秒，无训练、GPU 或 API 调用，未执行预测替换或攻击搜索。该组合不是原生 WAV 或 ACID 的完整复现；不能据此宣称它们的攻击防御失效。归一化导致劣势选项影响其他选择已有直接先例，不将这一通用效应作为新主张。",
+  "evidence": {
+    "clean": {
+      "successes": 62,
+      "instances": 128,
+      "success_rate": 0.484375,
+      "mean_actual_goal_cost": 3.2734375
+    },
+    "goal_only": {
+      "successes": 56,
+      "instances": 128,
+      "success_rate": 0.4375,
+      "mean_actual_goal_cost": 4.0546875
+    },
+    "pareto_scale": {
+      "successes": 39,
+      "instances": 128,
+      "success_rate": 0.3046875,
+      "mean_actual_goal_cost": 6.6875
+    },
+    "recorded_goal_agreement": {
+      "matches": 128,
+      "total": 128
+    },
+    "elapsed_s": 0.3991696829907596,
+    "models_unchanged": true,
+    "native_world_model_forward_calls": 1,
+    "native_inverse_evaluated_pairs": 1792,
+    "environment_oracle_calls": 1024,
+    "attack_search_performed": false
+  },
+  "scope": "Researcher-composed exhaustive one-step selector with released learned MiniGrid components; not native WAV acquisition, ACID reproduction, full task episodes, or a novelty claim.",
+  "prior_art_boundary": "ACID Eq.5 recomputes std(goal)/std(action) within candidate pools. Soltani et al.2012 explicitly study dominated decoys changing other choices through normalization. These establish the carrier and a novelty constraint, not an attack result.",
+  "next_requirement": "Retire this fixed composed selector after its clean competence failure; do not run its donor attack or tune the gate. Seek a substantively distinct world-model security operation in an already competent end-to-end native decision system. Normalization-mediated decoy effects, generic inverse-cycle blind spots, and ordinary output poisoning alone do not establish novelty. Require causal task evidence and strong baselines before expanding across core tasks or starting long GPU training.",
+  "training_updates": 0,
+  "api_requests": 0,
+  "gpu_use": false
+}

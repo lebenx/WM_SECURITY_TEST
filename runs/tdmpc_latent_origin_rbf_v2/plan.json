@@ -1,0 +1,22 @@
+{
+  "training": "seed12 only",
+  "development_seeds": [
+    13,
+    17
+  ],
+  "prior_test_now_development": true,
+  "latent_dim": 768,
+  "method": "StandardScaler + RBF SVC(C=1,gamma=scale), no tuning",
+  "threshold": "99.5th percentile pooled dev-real scores, higher order statistic",
+  "gate": "Both development episodes real FPR<=1% and imagined TPR>=80% at depths1,2",
+  "if_passes": "Evaluate frozen detector on new untouched native walker-walk seeds18,19, requiring clean returns>=900.",
+  "source_sha256": "855ec88d9791b59900c78a164a8384f4ebb234236805ac05c269f897f0de65cc",
+  "latent_hashes": {
+    "train": "38a2e7552db0ecf6ceb3fa1f1c3e39c2df2f5ca8a054da73c33cb50729ee1732",
+    "dev": "79ce05677d38f9a0a8abbb608a8f69f96e11f149d00db039289cf13bfa8c8092",
+    "test": "b750d689376f69b74519f5b6f74ce462480216c317c5477cf65193e816e80b3a"
+  },
+  "no_new_world_model_calls": true,
+  "no_native_steps": true,
+  "api_requests": 0
+}

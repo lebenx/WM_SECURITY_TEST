@@ -1,0 +1,79 @@
+{
+  "id": "cosmos_action_representation_probe_v1",
+  "registration_scope": "Recorded after CPU codec audit, before deployment-device equality gate or representation-intervention model inference",
+  "hypothesis": "Native planning may depend on components of its generated action representation that the actuator decoder discards. Exact executable-control equivalence, calibrated forecast error and actual utility are separate evidence requirements.",
+  "status": "prospective_mechanism_probe_not_established_security_claim",
+  "model": {
+    "checkpoint": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+    "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+    "runtime": "Existing audited torch adapter; complete upstream Transformer Engine numerical equivalence unproven",
+    "training_updates": 0
+  },
+  "fixed_development_panel": {
+    "source": "runs/cosmos_counterfactual_ranking_v1",
+    "physical_snapshots": "runs/cosmos_counterfactual_snapshots_v1",
+    "existing_independent_real_targets_and_utilities": "runs/cosmos_counterfactual_evaluation_v1",
+    "task_id": 0,
+    "init_id": 0,
+    "prefix_steps": [0, 16, 80],
+    "candidate_indices": [0, 1],
+    "candidate_seeds": [31, 32],
+    "policy_future_and_value_goal": "open the middle drawer of the cabinet",
+    "known_utility_limitation": "All six candidates already succeeded with the registered shared N1 continuation. This panel cannot establish primary-success harm. It is reused for codec/mechanism calibration, not independent validation or mode selection by task outcome."
+  },
+  "representation": {
+    "native_latent_shape": [1, 16, 9, 28, 28],
+    "modified_slot": 4,
+    "copies": 112,
+    "physical_action_shape": [16, 7],
+    "raw_baseline": "Committed native generated latent, without re-encoding the decoded actions",
+    "registered_operations": ["reverse_copies", "canonical_tile"],
+    "operation_choice": "Two fixed, outcome-independent operations; no gradient optimization, reward search or target-conditioned perturbation",
+    "numerical_projection": "Modify only the last copy after the fixed operation, at most 32 delta corrections and 512 symmetric ULP-neighbor steps; require exact same-device official decoder output",
+    "other_slots": "Bitwise unchanged",
+    "failure_rule": "Retain failed candidate/operation and its diagnostics; do not relax equality, change controls or silently replace candidates. No model call for a failed arm."
+  },
+  "deployment_device_gate": [
+    "Original latent decoded on CUDA exactly equals saved native normalized actions",
+    "Official inverse normalization yields exactly the previously committed physical controls",
+    "Transformed latent on CUDA decodes to those same normalized actions and physical controls",
+    "All non-action slots are bitwise unchanged",
+    "CPU-only equality cannot pass the deployment-device gate"
+  ],
+  "factorial_value_controls": {
+    "clean": "original action slot plus original forecast slots",
+    "native_intervention": "transformed action slot plus transformed-input forecast slots",
+    "forecast_only": "original action slot plus transformed-input forecast slots",
+    "value_direct_only": "transformed action slot plus original forecast slots",
+    "scope": "Native intervention is the unmodified information route. The two isolated routes are added causal ablations, not claims about a separate native planner.",
+    "fixed": "Current slots, original Goal, candidate controls, forecast/value denoising protocol and corresponding seeds"
+  },
+  "metrics": [
+    "Exact normalized and physical-action equality; representation delta and projection size",
+    "Decoded two-view RGB MSE against independently replayed t+16 observations",
+    "Native predicted value and ranking, reported separately from actual utility",
+    "Actual selected-candidate success and steps under the previously frozen shared N1 continuation",
+    "Forecast-only versus direct-Value path contribution"
+  ],
+  "data_integrity": [
+    "Commit and hash representation inputs, seeds and source candidate artifacts before model predictions",
+    "Commit all predictions and score routes before joining known real target/utility artifacts",
+    "Reuse targets only after exact snapshot, candidate-control, source and codec identity checks",
+    "All six candidates and both operations reported, including failed numerical gates"
+  ],
+  "next_gate": {
+    "positive_mechanism": "At least one execution-equivalent intervention changes a native ranking; determine whether this occurs through forecast or direct Value and measure actual target error",
+    "insufficient": "Representation sensitivity or a ranking flip alone is not harmful task manipulation",
+    "full_task_requirement": "Any proposed attack/defense must subsequently run complete native tasks with strong clean performance, actual success/step metrics, preserved control-decoding equality at every intervention, clean defense cost and independent tasks",
+    "negative_result": "If fixed operations show no useful mechanism or repair benefit, retain the result and revise the operation rather than relabel benign divergence as damage"
+  },
+  "interpretation_limits": [
+    "Internal action-latent write access is an experimental assumption; no externally reachable deployment attack surface has been demonstrated.",
+    "A joint generative latent can index a sampled plan; equal control decoding does not alone require every fixed-noise forecast sample to be identical.",
+    "Check that the policy and forecast possess the same physical observation/history before arguing that residual action representation carries no additional environmental evidence.",
+    "The native training-versus-inference action representation difference is a mechanism hypothesis, not proof of a security boundary violation.",
+    "The three windows belong to one successful source episode and are not independent population samples.",
+    "Canonicalization is a candidate defense only; it must preserve useful clean decisions and improve actual attacked task outcomes."
+  ],
+  "api_requests": 0
+}

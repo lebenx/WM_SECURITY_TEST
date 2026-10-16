@@ -1,0 +1,36 @@
+{
+  "status": "coordinate_cost_equivalence_confirmed_not_promoted",
+  "candidate_question_cn": "预测等价的潜空间坐标变换能否形成独立的规划安全攻击？",
+  "accepted_claim": null,
+  "source": "runs/latent_gauge_equivalence_v0/summary.json",
+  "review_source": "runs/gemini_geometry_review_20261009T034453Z/assessment.json",
+  "report_note_cn": "CPU代数短测调用LeWM原生代价函数：坐标变换确实能翻转两个构造候选的排序，但效果完全等价于改变目标距离；同步还原目标距离后排序恢复。协方差白化消除了线性变换，却没有消除构造的非线性旋转。该非线性变换在总体上保持标准高斯边缘分布，但一个非零预测残差的MSE从0.0001增至0.3365，不能宣称原生潜变量预测损失不变。现有ATLAS、AnisoWM及目标距离修复研究覆盖关键几何问题，目前没有独立的新安全操作；不下载权重、不启动训练。此次仅为构造状态和精确加法动力学的代数对照，没有原生任务攻击或任务损失证据。",
+  "threat_scope": "Hypothetical supplier-side encoder and dynamics wrappers. Not action-only, not data poisoning, not a demonstrated native parameter-only attack. Semantic readout conjugacy requires readouts; LeWM JEPA has no supplied physical decoder.",
+  "invariance_boundary": "All fully transported decision-facing heads retain their decisions. Euclidean latent prediction loss is not generally invariant under nonlinear conjugacy. Gaussian marginal preservation does not imply relational preservation.",
+  "next_requirement": "Find a substantive world-model security operation with a competent native controller and causal task effects. Coordinate reparameterization alone, ordinary constrained poisoning, source discrimination, and repeated forcing do not establish that contribution. Do not tune the retired constructions or start long GPU training. Use the official Gemini endpoint for API experiments and report failures promptly.",
+  "native_task_attack_run": false,
+  "novelty_gate_passed": false,
+  "usage": {
+    "native_criterion_calls": 5,
+    "pretrained_model_loads": 0,
+    "native_environment_steps": 0,
+    "training_updates": 0,
+    "gpu_use": false,
+    "probe_elapsed_s": 0.058961561881005764,
+    "api_generation_requests": 1,
+    "api_generation_successes": 1,
+    "api_review_latency_s": 7.323782690800726
+  },
+  "upstream": {
+    "repository": "https://github.com/lucas-maes/le-wm",
+    "commit": "8edfeb336732b5f3ce7b8b210d0ba370a09e2cac",
+    "native_path": "vendor/le-wm/jepa.py: criterion and get_cost",
+    "inspection": "Goal is encoded on every cost call. The supplied evaluation freezes model parameters. No evidence here of stale goal caching under online encoder updates."
+  },
+  "closest_primary_sources": [
+    "https://arxiv.org/html/2608.12959v1",
+    "https://arxiv.org/html/2609.36333v1",
+    "https://arxiv.org/html/2609.37441v1"
+  ],
+  "updated_at_utc": "2026-10-09T03:48:16.765845+00:00"
+}

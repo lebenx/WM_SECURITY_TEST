@@ -1,0 +1,57 @@
+{
+  "status": "verified",
+  "checks": {
+    "complete30_CEM_iterations": true,
+    "exact30_controls_one_plan": true,
+    "all_recorded_actions_equal_plan": true,
+    "trace_actions_equal_trajectory": true,
+    "normalized_plan_shape6x10": true,
+    "all_actual_controls_match_environment_clipping": true,
+    "physical_states_continuous": true,
+    "actual150_physics_steps": true,
+    "native_done_only_at30": true,
+    "nontrivial_initial_state": true,
+    "actual_success_consistent_with_distance": true,
+    "actual_rewards_match_return": true,
+    "all_upstream_sources_unchanged": true,
+    "all_adapter_sources_unchanged": true,
+    "checkpoint_unchanged": true,
+    "DINO_checkpoint_unchanged": true,
+    "model_keys_all_match": true,
+    "original_environment_metadata_seed3": true,
+    "runtime_flags_consistent": true
+  },
+  "source_artifact_sha256": {
+    "trace.jsonl": "fd072f12249158eaf68ca6b0f23434a6353635ba360e371f8e089aff9f7c7aad",
+    "first_candidates25_batch_diagnostic.pt": "1089a7997f69a6f606531c168fb7379f679818645d9a5d24329e238736f1dc12",
+    "iterations.json": "930aa58745d5f4f297ab1a831ea3d58eaad4186989e3f06f8749be92ee265bc6",
+    "initial.png": "f5fac5cc326b13c0bab0b50fd0e7d57ab408ced8dd3d0b59df57627b26777c81",
+    "first_candidates25_batch_diagnostic.json": "2a34610cb71b4973611ce256da3264742198f5390d428c5e011e2c966ab59175",
+    "initial_goal.npz": "2635c9a46385e10c9c4b6cf2ff6a65fa2fc0b3395e0febe297d2209959422eec",
+    "final.png": "ae72f11d65a2cce1c6d4790fc626afbd72db2ccad33e2e1bfad2e85b36fc6335",
+    "summary.json": "46bb543b0b54d7abbb166674663074b44b92263d5fc264784ca734e43c0ccc17",
+    "protocol.json": "a219d8697cabfd2e6c3f93f699290be97f4a0af6804b958795fc501e2179e8c9",
+    "goal.png": "54c839d1b41e488470b86a5cde4824a2ac38013c95242951b56c1499c401613e",
+    "plan_01.pt": "53d085421bc7563af696225ca63e6c887f1a8a6489a0a61ecb83d5d4531e2202",
+    "trajectory.npz": "e6da87dbf21334273d8b277c97eed4979fe518088977f3ea89c614781bf00990"
+  },
+  "observed_result": {
+    "success": false,
+    "environment_steps": 30,
+    "physical_substeps": 150,
+    "initial_xy_distance": 2.487798092516555,
+    "final_xy_distance": 0.564968922776538,
+    "native_success_threshold": 0.5,
+    "native_return": 0.0,
+    "native_return_caveat": "Environment reward target is offscreen (10,10), not sampled task goal. Actual task success uses independent environment XY consequence.",
+    "elapsed_seconds": 248.8921978889848
+  },
+  "scope_limits": [
+    "Single metadata-selected nontrivial task failed. Native environment/model/CEM are connected, but this does not establish strong clean task capability or WM causal necessity.",
+    "Uses native first ep2 physical goal/init formula, but fresh CEM local generator seed1. Not a replay of the third episode in a sequential 96episode evaluation whose CEM RNG advances across earlier episodes.",
+    "CUDA microbatch25 is an explicit execution adapter. CPU full300 vs50 and CUDA first25 vs13+12 yielded small nonzero score differences and unchanged observed elite order. FullGPU300/end-to-end numerical equivalence not proven.",
+    "Native H6/nas6 plans once then executes30 controls; no feedback replanning.",
+    "Goal enters native objective only; forecast unroll accepts state/context and candidate action, not Goal. No native GoalBus injection interface demonstrated.",
+    "No extension to other seeds/horizons or attack after this negative clean gate."
+  ]
+}

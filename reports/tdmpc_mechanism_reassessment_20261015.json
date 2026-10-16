@@ -1,0 +1,1256 @@
+{
+  "schema_version": 1,
+  "status": "completed_bounded_reassessment_no_qualified_new_mechanism",
+  "created_at_utc": "2026-10-14T17:00:35.979431+00:00",
+  "local_report_date": "2026-10-15",
+  "timezone": "Asia/Shanghai",
+  "decision": "NO_GO_NEW_MECHANISM_EXPERIMENT",
+  "purpose": "Reassess the existing truthful-source TD-MPC2 cascade phenomenon using saved results and actual source code; not a new experiment or a repeal of existing task-loss measurements.",
+  "accepted_new_candidates": [],
+  "permission_boundary": {
+    "existing_operation": "Execute legal source-task action sequences; use real simulator observations and unedited source transition targets for a researcher-defined continuation of an offline multitask checkpoint.",
+    "frozen_components": "In dynamics scope, only _dynamics parameters are trainable; encoder, reward/value heads, actor and task embeddings are frozen.",
+    "implementation_scope": "Native model.next and native deployment MPC; dynamics-only Adam continuation is a transparent researcher-defined consistency-loss intervention, not an unmodified native online shared service.",
+    "not_claimed": "No deployed low-privilege service was audited; no universal action-order exploit, non-normal causal mechanism, validated defense or cross-task generalization is established."
+  },
+  "source23_original_effect": {
+    "sources": {
+      "plan": "runs/tdmpc_cascade_heldout_matched_v1/plan.json",
+      "status": "runs/tdmpc_cascade_heldout_matched_v1/status.json",
+      "results": "runs/tdmpc_cascade_heldout_matched_v1/results.json",
+      "provenance": "runs/tdmpc_cascade_heldout_matched_v1/provenance.json"
+    },
+    "plan": {
+      "source_task": "cheetah-run",
+      "source_seed": 23,
+      "updates": 300,
+      "learning_seed": 31,
+      "source_steps": 300,
+      "evaluation_steps": 500,
+      "tasks": [
+        "walker-run",
+        "cup-catch"
+      ],
+      "evaluation_seeds": [
+        31,
+        32
+      ],
+      "conditions": [
+        "clean",
+        "random",
+        "cascade",
+        "shuffled_cascade"
+      ],
+      "permutation_seed": 933,
+      "scope": "Exploratory follow-up fixed before execution. New source and evaluation seeds; full native 500-step episodes, eval_mode=False as in original experiments.",
+      "comparison": "Shuffled cascade preserves the complete multiset of action vectors, not state coverage. Execute each sequence in a fresh real simulator; never reorder stored transitions.",
+      "gate": "Cascade must lose >=15% return against BOTH random and shuffled controls at both held-out seeds; fixed random validation error <=1.05x random. Independent cup family must pass separately.",
+      "mechanism": "No non-normal causality inferred from return or horizon sensitivity alone.",
+      "api_requests": 0
+    },
+    "planner": {
+      "horizon": 3,
+      "num_samples": 512,
+      "iterations": 6,
+      "num_elites": 64,
+      "num_pi_trajs": 24,
+      "eval_mode": false,
+      "compile": false
+    },
+    "evaluation_steps": 500,
+    "full_episode": true,
+    "comparisons_recomputed_from_saved_results": [
+      {
+        "task": "walker-run",
+        "seed": 31,
+        "clean_return": 657.6172727290541,
+        "cascade_return": 495.2163214981556,
+        "random_return": 612.082555025816,
+        "shuffled_return": 613.7643893808126,
+        "loss_vs_random": 0.19093214235248257,
+        "loss_vs_shuffled": 0.19314914637236047,
+        "one_step_error_ratio_vs_random": 0.9224965100188367,
+        "recorded_gate_passed": true
+      },
+      {
+        "task": "walker-run",
+        "seed": 32,
+        "clean_return": 660.9466804563999,
+        "cascade_return": 547.5335729122162,
+        "random_return": 678.7750849425793,
+        "shuffled_return": 669.4525584578514,
+        "loss_vs_random": 0.19335051468700482,
+        "loss_vs_shuffled": 0.18211743910052025,
+        "one_step_error_ratio_vs_random": 0.9224965100188367,
+        "recorded_gate_passed": true
+      },
+      {
+        "task": "cup-catch",
+        "seed": 31,
+        "clean_return": 994.0,
+        "cascade_return": 995.0,
+        "random_return": 994.0,
+        "shuffled_return": 994.0,
+        "loss_vs_random": -0.001006036217303885,
+        "loss_vs_shuffled": -0.001006036217303885,
+        "one_step_error_ratio_vs_random": 0.9560527965343808,
+        "recorded_gate_passed": false
+      },
+      {
+        "task": "cup-catch",
+        "seed": 32,
+        "clean_return": 922.0,
+        "cascade_return": 926.0,
+        "random_return": 921.0,
+        "shuffled_return": 841.0,
+        "loss_vs_random": -0.005428881650380024,
+        "loss_vs_shuffled": -0.10107015457788338,
+        "one_step_error_ratio_vs_random": 0.9560527965343808,
+        "recorded_gate_passed": false
+      }
+    ],
+    "scientific_rows": [
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 657.6172727290541,
+        "full_episode": true,
+        "condition": "clean",
+        "one_step_error": 0.000805785006377846,
+        "planner_horizon": 3
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 660.9466804563999,
+        "full_episode": true,
+        "condition": "clean",
+        "one_step_error": 0.000805785006377846,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 994.0,
+        "full_episode": true,
+        "condition": "clean",
+        "one_step_error": 0.00035911399754695594,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 922.0,
+        "full_episode": true,
+        "condition": "clean",
+        "one_step_error": 0.00035911399754695594,
+        "planner_horizon": 3
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 612.082555025816,
+        "full_episode": true,
+        "condition": "random",
+        "one_step_error": 0.0009548442903906107,
+        "planner_horizon": 3
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 678.7750849425793,
+        "full_episode": true,
+        "condition": "random",
+        "one_step_error": 0.0009548442903906107,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 994.0,
+        "full_episode": true,
+        "condition": "random",
+        "one_step_error": 0.00043871832895092666,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 921.0,
+        "full_episode": true,
+        "condition": "random",
+        "one_step_error": 0.00043871832895092666,
+        "planner_horizon": 3
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 495.2163214981556,
+        "full_episode": true,
+        "condition": "cascade",
+        "one_step_error": 0.0008808405254967511,
+        "planner_horizon": 3
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 547.5335729122162,
+        "full_episode": true,
+        "condition": "cascade",
+        "one_step_error": 0.0008808405254967511,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 995.0,
+        "full_episode": true,
+        "condition": "cascade",
+        "one_step_error": 0.00041943788528442383,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 926.0,
+        "full_episode": true,
+        "condition": "cascade",
+        "one_step_error": 0.00041943788528442383,
+        "planner_horizon": 3
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 613.7643893808126,
+        "full_episode": true,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0009577227756381035,
+        "planner_horizon": 3
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 669.4525584578514,
+        "full_episode": true,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0009577227756381035,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 994.0,
+        "full_episode": true,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0004810710088349879,
+        "planner_horizon": 3
+      },
+      {
+        "task": "cup-catch",
+        "task_id": 12,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 841.0,
+        "full_episode": true,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0004810710088349879,
+        "planner_horizon": 3
+      }
+    ],
+    "retained_conclusion": "At source seed23, the two recorded walker-run full episodes lose about19% against both random and shuffled source controls with lower random-validation one-step latent MSE. Cup-catch fails the harm gate. This real conditional effect is retained."
+  },
+  "source22_followup": {
+    "sources": {
+      "plan": "runs/tdmpc_order_controls_cheetah_seed22_v0/plan.json",
+      "status": "runs/tdmpc_order_controls_cheetah_seed22_v0/status.json",
+      "results": "runs/tdmpc_order_controls_cheetah_seed22_v0/results.json",
+      "provenance": "runs/tdmpc_order_controls_cheetah_seed22_v0/provenance.json"
+    },
+    "plan": {
+      "checkpoint": "models/tdmpc2/mt30-48M.pt",
+      "cascade_source": "runs/tdmpc_non_normal_gate_walker_run_seed22_dose300_v0/cascade_source.pt",
+      "source_task": "cheetah-run",
+      "target_task": "walker-run",
+      "source_seed": 22,
+      "validation_seed": 33,
+      "eval_seeds": [
+        31,
+        32
+      ],
+      "source_steps": 300,
+      "eval_steps": 300,
+      "updates": 300,
+      "learning_seed": 31,
+      "permutation_seed": 933,
+      "output": "runs/tdmpc_order_controls_cheetah_seed22_v0",
+      "operation": "Replay the same legal source action vectors under temporal permutations; dynamics-only native TD-MPC2 adaptation; held-out native MPC and actor evaluation.",
+      "conditions": [
+        "random",
+        "cascade",
+        "reverse_cascade",
+        "shuffled_cascade"
+      ],
+      "gate": "A directional order mechanism requires cascade harm against random and shuffled controls, low one-step error, and materially smaller actor loss than MPC loss.",
+      "api_requests": 0,
+      "gpu_work": "bounded native CUDA only"
+    },
+    "planner": {
+      "horizon": 3,
+      "num_samples": 512,
+      "iterations": 6,
+      "num_elites": 64,
+      "num_pi_trajs": 24,
+      "eval_mode": false,
+      "compile": false
+    },
+    "evaluation_steps": 300,
+    "full_episode": false,
+    "comparisons_recomputed_from_saved_results": [
+      {
+        "seed": 31,
+        "cascade_return": 347.58008517324924,
+        "random_return": 314.10901272296906,
+        "loss_vs_random": -0.10655877766805832,
+        "one_step_error_ratio_vs_random": 0.9625506108054105,
+        "actor_returns_by_condition": {
+          "clean": 98.50094397366047,
+          "random": 98.50094397366047,
+          "cascade": 98.50094397366047,
+          "reverse_cascade": 98.50094397366047,
+          "shuffled_cascade": 98.50094397366047
+        }
+      },
+      {
+        "seed": 32,
+        "cascade_return": 378.608247846365,
+        "random_return": 346.2225153744221,
+        "loss_vs_random": -0.09354022639723292,
+        "one_step_error_ratio_vs_random": 0.9625506108054105,
+        "actor_returns_by_condition": {
+          "clean": 284.4452378153801,
+          "random": 284.4452378153801,
+          "cascade": 284.4452378153801,
+          "reverse_cascade": 284.4452378153801,
+          "shuffled_cascade": 284.4452378153801
+        }
+      }
+    ],
+    "scientific_rows": [
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 387.740782732144,
+        "full_episode": false,
+        "condition": "clean",
+        "one_step_error": 0.000805785006377846,
+        "planner_horizon": 3,
+        "source_steps": 0
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "prior",
+        "steps": 300,
+        "return": 98.50094397366047,
+        "full_episode": false,
+        "condition": "clean",
+        "one_step_error": 0.000805785006377846,
+        "planner_horizon": 3,
+        "source_steps": 0
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 373.6576583683491,
+        "full_episode": false,
+        "condition": "clean",
+        "one_step_error": 0.000805785006377846,
+        "planner_horizon": 3,
+        "source_steps": 0
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "prior",
+        "steps": 300,
+        "return": 284.4452378153801,
+        "full_episode": false,
+        "condition": "clean",
+        "one_step_error": 0.000805785006377846,
+        "planner_horizon": 3,
+        "source_steps": 0
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 314.10901272296906,
+        "full_episode": false,
+        "condition": "random",
+        "one_step_error": 0.0009210747084580362,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "prior",
+        "steps": 300,
+        "return": 98.50094397366047,
+        "full_episode": false,
+        "condition": "random",
+        "one_step_error": 0.0009210747084580362,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 346.2225153744221,
+        "full_episode": false,
+        "condition": "random",
+        "one_step_error": 0.0009210747084580362,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "prior",
+        "steps": 300,
+        "return": 284.4452378153801,
+        "full_episode": false,
+        "condition": "random",
+        "one_step_error": 0.0009210747084580362,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 347.58008517324924,
+        "full_episode": false,
+        "condition": "cascade",
+        "one_step_error": 0.0008865810232236981,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "prior",
+        "steps": 300,
+        "return": 98.50094397366047,
+        "full_episode": false,
+        "condition": "cascade",
+        "one_step_error": 0.0008865810232236981,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 378.608247846365,
+        "full_episode": false,
+        "condition": "cascade",
+        "one_step_error": 0.0008865810232236981,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "prior",
+        "steps": 300,
+        "return": 284.4452378153801,
+        "full_episode": false,
+        "condition": "cascade",
+        "one_step_error": 0.0008865810232236981,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 362.5009972155094,
+        "full_episode": false,
+        "condition": "reverse_cascade",
+        "one_step_error": 0.0008918901439756155,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "prior",
+        "steps": 300,
+        "return": 98.50094397366047,
+        "full_episode": false,
+        "condition": "reverse_cascade",
+        "one_step_error": 0.0008918901439756155,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 343.70840844511986,
+        "full_episode": false,
+        "condition": "reverse_cascade",
+        "one_step_error": 0.0008918901439756155,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "prior",
+        "steps": 300,
+        "return": 284.4452378153801,
+        "full_episode": false,
+        "condition": "reverse_cascade",
+        "one_step_error": 0.0008918901439756155,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 381.0636228667572,
+        "full_episode": false,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0009541016770526767,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "prior",
+        "steps": 300,
+        "return": 98.50094397366047,
+        "full_episode": false,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0009541016770526767,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 393.6477428674698,
+        "full_episode": false,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0009541016770526767,
+        "planner_horizon": 3,
+        "source_steps": 300
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "prior",
+        "steps": 300,
+        "return": 284.4452378153801,
+        "full_episode": false,
+        "condition": "shuffled_cascade",
+        "one_step_error": 0.0009541016770526767,
+        "planner_horizon": 3,
+        "source_steps": 300
+      }
+    ],
+    "interpretation": "Cascade improves over random in both recorded300-step follow-ups. This is negative evidence for source-independent directionality at that budget, not a matched500-step replication or proof that the original500-step effect disappears."
+  },
+  "one_step_training_window_followup": {
+    "sources": {
+      "status": "runs/tdmpc_window_composition_h1_v0/status.json",
+      "results": "runs/tdmpc_window_composition_h1_v0/results.json",
+      "provenance": "runs/tdmpc_window_composition_h1_v0/provenance.json"
+    },
+    "plan_json": {
+      "path": "runs/tdmpc_window_composition_h1_v0/plan.json",
+      "exists": false,
+      "note": "No plan.json was present. Do not invent a frozen preregistration or infer all actual CLI arguments from script defaults."
+    },
+    "verified_parameters": {
+      "training_horizon": 1,
+      "deployment_horizon": 3,
+      "updates": 80,
+      "evaluation_steps": 300,
+      "full_episode": false,
+      "batch_size_in_inspected_adapt_code": 32,
+      "evaluation_seeds": [
+        31,
+        32
+      ]
+    },
+    "parameter_evidence": {
+      "training_horizon_updates_steps": "All8 stored status/results rows plus four80-record adaptation histories.",
+      "deployment_horizon": "provenance.json planner.horizon=3; inspected script lines45–48 restores old_horizon before episode evaluation.",
+      "seed_limit": "Evaluation seeds are logged in results; learning/validation seeds are script defaults but no per-run argument manifest exists in this directory, so they are not independently asserted here."
+    },
+    "history_checks": [
+      {
+        "condition": "random",
+        "path": "runs/tdmpc_window_composition_h1_v0/random_adaptation.json",
+        "history_length": 80,
+        "first_update": 1,
+        "last_update": 80,
+        "train_horizon": 1
+      },
+      {
+        "condition": "cascade",
+        "path": "runs/tdmpc_window_composition_h1_v0/cascade_adaptation.json",
+        "history_length": 80,
+        "first_update": 1,
+        "last_update": 80,
+        "train_horizon": 1
+      },
+      {
+        "condition": "reverse_cascade",
+        "path": "runs/tdmpc_window_composition_h1_v0/reverse_cascade_adaptation.json",
+        "history_length": 80,
+        "first_update": 1,
+        "last_update": 80,
+        "train_horizon": 1
+      },
+      {
+        "condition": "shuffled_cascade",
+        "path": "runs/tdmpc_window_composition_h1_v0/shuffled_cascade_adaptation.json",
+        "history_length": 80,
+        "first_update": 1,
+        "last_update": 80,
+        "train_horizon": 1
+      }
+    ],
+    "comparisons_recomputed_from_saved_results": [
+      {
+        "seed": 31,
+        "cascade_return": 310.98828910291195,
+        "random_return": 355.1775542348623,
+        "loss_vs_random": 0.12441457689280133,
+        "one_step_error_ratio_vs_random": 1.0109910196509735
+      },
+      {
+        "seed": 32,
+        "cascade_return": 332.5615738630295,
+        "random_return": 395.8113143444061,
+        "loss_vs_random": 0.15979770711238772,
+        "one_step_error_ratio_vs_random": 1.0109910196509735
+      }
+    ],
+    "scientific_rows": [
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 355.1775542348623,
+        "full_episode": false,
+        "condition": "random",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008464218699373305,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/random_source.pt"
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 395.8113143444061,
+        "full_episode": false,
+        "condition": "random",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008464218699373305,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/random_source.pt"
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 310.98828910291195,
+        "full_episode": false,
+        "condition": "cascade",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008557249093428254,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/cascade_source.pt"
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 332.5615738630295,
+        "full_episode": false,
+        "condition": "cascade",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008557249093428254,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/cascade_source.pt"
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 330.8446281403303,
+        "full_episode": false,
+        "condition": "reverse_cascade",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008440408273600042,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/reverse_cascade_source.pt"
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 381.4882608652115,
+        "full_episode": false,
+        "condition": "reverse_cascade",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008440408273600042,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/reverse_cascade_source.pt"
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 355.5915943495929,
+        "full_episode": false,
+        "condition": "shuffled_cascade",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008705159416422248,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/shuffled_cascade_source.pt"
+      },
+      {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 32,
+        "policy": "mpc",
+        "steps": 300,
+        "return": 399.97115337848663,
+        "full_episode": false,
+        "condition": "shuffled_cascade",
+        "train_horizon": 1,
+        "updates": 80,
+        "one_step_error": 0.0008705159416422248,
+        "actor_unchanged": true,
+        "source_path": "runs/tdmpc_order_controls_v0/shuffled_cascade_source.pt"
+      }
+    ],
+    "actor_unchanged_limit": "The saved row flag is hardcoded by the runner. The inspected adaptation implementation freezes non-dynamics parameters and optimizes only dynamics, but this audit did not compare before/after actor tensor hashes for this H1 run.",
+    "interpretation": "Damage remains with one-step training in this80-update300-step pilot. It contradicts the strong necessary-condition claim that multistep training windows are required for any observed loss in this setting. It does not isolate the mediator of the separate300-update500-step original effect."
+  },
+  "action_order_and_transition_distribution": {
+    "code_locations": [
+      {
+        "path": "scripts/pilot_tdmpc_order_controls.py",
+        "start_line": 26,
+        "end_line": 43,
+        "fact": "replay_actions executes each permuted action in a fresh simulator and stores the resulting new observations/rewards."
+      },
+      {
+        "path": "scripts/pilot_tdmpc_order_controls.py",
+        "start_line": 65,
+        "end_line": 84,
+        "fact": "Reverse/shuffle permutes action vectors then regenerates trajectories before dynamics adaptation."
+      }
+    ],
+    "saved_tensor_checks": [
+      {
+        "directory": "runs/tdmpc_order_controls_v0",
+        "comparison": [
+          "cascade",
+          "reverse_cascade"
+        ],
+        "source_seed": 23,
+        "source_task_id": 3,
+        "transitions_per_arm": [
+          300,
+          300
+        ],
+        "action_multiset_identical": true,
+        "transition_multiset_identical": false,
+        "exact_shared_transition_count": 0,
+        "cascade_transition_multiset_sha256": "ac66bdd5f51c0134115634e1c29ecf5cb9512a2ec429a62c1f9998f3ebc47cbb",
+        "comparison_transition_multiset_sha256": "0693c9aa7b4daee972c3bf2e336730881053dcdbc0c7f7e3459bf973217d2584",
+        "cascade_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5",
+        "comparison_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5"
+      },
+      {
+        "directory": "runs/tdmpc_order_controls_v0",
+        "comparison": [
+          "cascade",
+          "shuffled_cascade"
+        ],
+        "source_seed": 23,
+        "source_task_id": 3,
+        "transitions_per_arm": [
+          300,
+          300
+        ],
+        "action_multiset_identical": true,
+        "transition_multiset_identical": false,
+        "exact_shared_transition_count": 0,
+        "cascade_transition_multiset_sha256": "ac66bdd5f51c0134115634e1c29ecf5cb9512a2ec429a62c1f9998f3ebc47cbb",
+        "comparison_transition_multiset_sha256": "38709fae02bcd2445df4fe7ff0af1714ea30623a6fcff363cdb1c2909aead18a",
+        "cascade_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5",
+        "comparison_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5"
+      },
+      {
+        "directory": "runs/tdmpc_order_controls_cheetah_seed22_v0",
+        "comparison": [
+          "cascade",
+          "reverse_cascade"
+        ],
+        "source_seed": 22,
+        "source_task_id": 3,
+        "transitions_per_arm": [
+          300,
+          300
+        ],
+        "action_multiset_identical": true,
+        "transition_multiset_identical": false,
+        "exact_shared_transition_count": 0,
+        "cascade_transition_multiset_sha256": "fb9d7ce9b2947d0467f8b3b67d19d521235e624bd1e9cd22db4fab5d96a701fb",
+        "comparison_transition_multiset_sha256": "6b473d0a16b28619896a952ec99cfd9aa74f5e0377ec9644ce5b244595b9ac94",
+        "cascade_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5",
+        "comparison_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5"
+      },
+      {
+        "directory": "runs/tdmpc_order_controls_cheetah_seed22_v0",
+        "comparison": [
+          "cascade",
+          "shuffled_cascade"
+        ],
+        "source_seed": 22,
+        "source_task_id": 3,
+        "transitions_per_arm": [
+          300,
+          300
+        ],
+        "action_multiset_identical": true,
+        "transition_multiset_identical": false,
+        "exact_shared_transition_count": 0,
+        "cascade_transition_multiset_sha256": "fb9d7ce9b2947d0467f8b3b67d19d521235e624bd1e9cd22db4fab5d96a701fb",
+        "comparison_transition_multiset_sha256": "b1fc57ec3435c8293e2064334ef3e1f0afcdc9334c7de066e43a12a6941c8aae",
+        "cascade_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5",
+        "comparison_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5"
+      },
+      {
+        "directory": "runs/tdmpc_cascade_heldout_matched_v1",
+        "comparison": [
+          "cascade",
+          "shuffled_cascade"
+        ],
+        "source_seed": 23,
+        "source_task_id": 3,
+        "transitions_per_arm": [
+          300,
+          300
+        ],
+        "action_multiset_identical": true,
+        "transition_multiset_identical": false,
+        "exact_shared_transition_count": 0,
+        "cascade_transition_multiset_sha256": "ac66bdd5f51c0134115634e1c29ecf5cb9512a2ec429a62c1f9998f3ebc47cbb",
+        "comparison_transition_multiset_sha256": "38709fae02bcd2445df4fe7ff0af1714ea30623a6fcff363cdb1c2909aead18a",
+        "cascade_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5",
+        "comparison_action_multiset_sha256": "32eee7ad01f4bfc646c23676e9cd82bb8f0e5ac1498b5eecefb98b69bea4b2e5"
+      }
+    ],
+    "comparison_definition": "Exact order-independent multisets of complete padded action vectors and (obs_t,action_t,obs_t+1) tuples. Tensor dtype, shape and bytes are included; SHA256 and duplicate multiplicities are retained. No approximate matching.",
+    "causal_implication": "The action multiset is held fixed, but the training transition multiset is not. These arms identify effects of different legal action-generated experience distributions; they do not isolate training-data order while preserving transition coverage."
+  },
+  "loss_path_audit": {
+    "path": "scripts/pilot_tdmpc_adaptation.py",
+    "start_line": 58,
+    "end_line": 83,
+    "finding": "Dynamics-only scope freezes other parameters, computes encoder targets under no_grad, and optimizes rho-weighted latent MSE. It does not call the native joint _update or propagate reward/Q losses through frozen heads.",
+    "native_full_distinction": {
+      "path": "scripts/pilot_tdmpc_adaptation.py",
+      "start_line": 38,
+      "end_line": 57,
+      "fact": "The separate native_full scope invokes agent._update and must not be substituted for dynamics-only evidence."
+    },
+    "one_step_metric": {
+      "path": "scripts/screen_tdmpc_non_normal.py",
+      "start_line": 84,
+      "end_line": 93,
+      "definition": "Mean squared error of one-step latent predictions against fixed-encoder real next observations, measured on the recorded random-validation protocol; not preservation of all conditional transitions, task-weighted errors or counterfactual outcomes."
+    }
+  },
+  "existing_mechanism_counterevidence": {
+    "source": "configs/world_model_non_normal_screen.json",
+    "temporal_order_followup": {
+      "source": "runs/tdmpc_order_controls_v0/status.json",
+      "status": "order_specific_walker_run_effect_reproduced_actor_controlled_mechanism_unisolated",
+      "walker_run": {
+        "cascade": [
+          495.2163214981556,
+          547.5335729122162
+        ],
+        "random": [
+          612.082555025816,
+          678.7750849425793
+        ],
+        "reverse": [
+          608.4253105074167,
+          621.9523382484913
+        ],
+        "shuffled": [
+          613.7643893808126,
+          669.4525584578514
+        ],
+        "cascade_error_ratio_vs_random": 0.9224965100188367
+      },
+      "matrix_source": "runs/tdmpc_cascade_matrix_v0/status.json",
+      "mechanism_diagnostics": {
+        "horizon_geometry": "runs/tdmpc_horizon_geometry_v0/status.json",
+        "planner_ranking": "runs/tdmpc_planner_ranking_v3/status.json",
+        "update_noncommutativity": "runs/tdmpc_update_noncommutativity_v0/status.json",
+        "decision": "Latent drift and update commutator are not selective; preserve conditional phenomenon only."
+      },
+      "strict_review": {
+        "source": "runs/gemini_claim_review_round13_20261010T0000Z/review.json",
+        "novelty_score": 5.5,
+        "decision": "below target; no final claim"
+      }
+    },
+    "simnorm_temperature": {
+      "source": "runs/tdmpc_simnorm_temperature_v1/status.json",
+      "intervention": "After native dynamics-only adaptation, replace only the dynamics final SimNorm softmax(x) with softmax(x/2). Native MPC horizon=3 and real episodes retained.",
+      "walker_run_seed31": {
+        "temperature1_clean": 657.6172727290541,
+        "temperature1_random": 612.082555025816,
+        "temperature1_cascade": 495.2163214981556,
+        "temperature2_clean": 96.1014988636598,
+        "temperature2_random": 66.26374025270343,
+        "temperature2_cascade": 119.9140367154032,
+        "temperature2_one_step_error": {
+          "clean": 0.008327082730829716,
+          "random": 0.00839924719184637,
+          "cascade": 0.008395245298743248
+        }
+      },
+      "decision": "Rejected as a useful defense or causal isolation: temperature 2 damages clean and random controls and violates the low-error invariant by about 10x."
+    },
+    "operator_audit": {
+      "source": "configs/world_model_intervention_operator_screen.json",
+      "diagnostic": {
+        "source": "runs/tdmpc_intervention_operator_v1/summary.json",
+        "task": "walker-run",
+        "paired_roots": 64,
+        "updates": 300,
+        "root_capture_mse": {
+          "clean": 18.40225601196289,
+          "random": 18.40225601196289,
+          "cascade": 18.40225601196289
+        },
+        "intervention_cosine_mean": {
+          "clean": 0.7857975959777832,
+          "random": 0.7603336572647095,
+          "cascade": 0.7770836353302002
+        },
+        "intervention_contrast_mse": {
+          "clean": 9.761116027832031,
+          "random": 10.850404739379883,
+          "cascade": 10.209426879882812
+        },
+        "intervention_norm_ratio_mean": {
+          "clean": 0.9597389101982117,
+          "random": 0.9806490540504456,
+          "cascade": 0.9309519529342651
+        }
+      },
+      "decision": "状态捕获因 dynamics-only 更新而保持不变，但 cascade 没有比 random 显示更大的干预算子偏差；相反 random 的余弦更低、对比误差更高。该诊断不能解释 walker-run 的回报损失，不升级、不扩展 GPU。"
+    },
+    "coverage_note": "These are explicitly attributed existing recorded diagnostics. This report recomputes the listed return/error ratios and tensor multiset checks, not the original model Jacobians or intervention outputs."
+  },
+  "decisive_gap": {
+    "statement": "No identified legal-experience operation has been causally distinguished from altered source state/transition coverage and ordinary shared-dynamics negative transfer.",
+    "why_more_runs_alone_do_not_solve_it": "Additional tasks or seeds cannot by themselves turn an action-multiset control into a transition-matched order intervention or make a nonselective latent diagnostic causal.",
+    "what_is_not_revived": [
+      "DINO terminal-budget effects",
+      "action aliases",
+      "goal-score substitution",
+      "sampling coupling",
+      "retired non-normal or temporal-commutator claims",
+      "platform-restricted adaptive WorldAgen metadata work"
+    ]
+  },
+  "provenance_and_execution_boundary": {
+    "model_upstream_commit_recorded": "e9f59321933cbc8e11a002b842adc7d4ffae8ff1",
+    "checkpoint_path_recorded": "models/tdmpc2/mt30-48M.pt",
+    "checkpoint_sha256_recorded_not_rehashed_this_audit": "bacb9ae1891a9b03dc3942a287080beb573220ea9d0263c5efd7a94a5c2ec419",
+    "packages_recorded_from_original_run": {
+      "torch": "2.13.0",
+      "tensordict": "0.14.1",
+      "dm-control": "1.0.48",
+      "mujoco": "3.15.0",
+      "gymnasium": "1.3.0"
+    },
+    "audit_python": "/home/xhj/WM_Security/.venv-worldagen/bin/python",
+    "audit_torch_version": "2.2.0+cu121",
+    "torch_use": "CPU-only weights_only=True deserialization of existing transition tensors; no model imports/loads, no forward calls, no environment creation.",
+    "new_model_forwards": 0,
+    "new_environment_steps": 0,
+    "new_training_updates": 0,
+    "model_api_calls": 0,
+    "gpu_calls": 0,
+    "web_requests": 0,
+    "files_created": [
+      "reports/tdmpc_mechanism_reassessment_20261015.json"
+    ],
+    "existing_files_modified": [],
+    "source_hash_scope": "Hashes bind the exact files inspected now. They do not independently establish that current source code is byte-identical to every historical execution beyond the recorded provenance."
+  },
+  "source_files": {
+    "configs/research_roadmap.json": {
+      "sha256": "e886ac9a42b2e40a3d7a3b05709352236810693d323d42e537533fc05c38662a",
+      "bytes": 158964
+    },
+    "configs/world_model_intervention_operator_screen.json": {
+      "sha256": "e850c224debe3d201c87cd3a4bd06ae5ed61e27ca369e68adf3430b3dc55e5e8",
+      "bytes": 2152
+    },
+    "configs/world_model_non_normal_screen.json": {
+      "sha256": "7ccd6c8cc433685dfc59de9365db666a16d596b9ef6fc5013b817d6ab112b641",
+      "bytes": 21040
+    },
+    "runs/tdmpc_cascade_heldout_matched_v1/cascade_source.pt": {
+      "sha256": "c7d578fe61c26b827aed3c4c4d1140f1ebf0aa4e7d6f1724e0da22c4e00914f5",
+      "bytes": 39392
+    },
+    "runs/tdmpc_cascade_heldout_matched_v1/plan.json": {
+      "sha256": "1afa6c6ed69e7aa94bea39dea4380498bbdf4bd4fd416d0b2ace417cec15b2b4",
+      "bytes": 1031
+    },
+    "runs/tdmpc_cascade_heldout_matched_v1/provenance.json": {
+      "sha256": "a13d48670579e2d696f2f9f9a859c8f5e594b088cff02025c83fc7e54a63e0ac",
+      "bytes": 2162
+    },
+    "runs/tdmpc_cascade_heldout_matched_v1/results.json": {
+      "sha256": "22aa513176902d22d0290b57be7c46aeb4df33af889e7b7fc3ca8cfece7f4fe7",
+      "bytes": 4807
+    },
+    "runs/tdmpc_cascade_heldout_matched_v1/shuffled_cascade_source.pt": {
+      "sha256": "031356eeff34b4c57510baf80b360c72b773051503e9211cc5a26b4dd643c317",
+      "bytes": 39601
+    },
+    "runs/tdmpc_cascade_heldout_matched_v1/status.json": {
+      "sha256": "7174022502b36ad7cfc00bc65cffa9d974e98dba01d7d345de48a22c8ff512c5",
+      "bytes": 6202
+    },
+    "runs/tdmpc_order_controls_cheetah_seed22_v0/cascade_source.pt": {
+      "sha256": "86b472cd2ba759abfb4ce13286590de7d26a67a16e645fd612321e356784e80f",
+      "bytes": 39392
+    },
+    "runs/tdmpc_order_controls_cheetah_seed22_v0/plan.json": {
+      "sha256": "7d94ff3363a10e3f57af7847bd984c2449039f5559f8d30d85607e5293917b04",
+      "bytes": 970
+    },
+    "runs/tdmpc_order_controls_cheetah_seed22_v0/provenance.json": {
+      "sha256": "a13d48670579e2d696f2f9f9a859c8f5e594b088cff02025c83fc7e54a63e0ac",
+      "bytes": 2162
+    },
+    "runs/tdmpc_order_controls_cheetah_seed22_v0/results.json": {
+      "sha256": "63fedbe3ad85dd2243845a4b81ee0b2f0bc65529bb814b2c21123046a7fc7cc7",
+      "bytes": 6679
+    },
+    "runs/tdmpc_order_controls_cheetah_seed22_v0/reverse_cascade_source.pt": {
+      "sha256": "f37ee5123563fbfb199bba53c73578b8664ece65bba21e71bae47ee077d6320b",
+      "bytes": 39528
+    },
+    "runs/tdmpc_order_controls_cheetah_seed22_v0/shuffled_cascade_source.pt": {
+      "sha256": "caf90a255919fce3e1db83d77eded098a741067a2605fb6b29d58efd428851e5",
+      "bytes": 39601
+    },
+    "runs/tdmpc_order_controls_cheetah_seed22_v0/status.json": {
+      "sha256": "430791b8d51da0b7e5783c6ab1fd62151345226e4d579521ac25a1a7e64effc0",
+      "bytes": 9746
+    },
+    "runs/tdmpc_order_controls_v0/cascade_source.pt": {
+      "sha256": "c7d578fe61c26b827aed3c4c4d1140f1ebf0aa4e7d6f1724e0da22c4e00914f5",
+      "bytes": 39392
+    },
+    "runs/tdmpc_order_controls_v0/plan.json": {
+      "sha256": "7f2066c6899c3c782026459db4c01e67a7399ad933414f1042ac6ae60476bd54",
+      "bytes": 937
+    },
+    "runs/tdmpc_order_controls_v0/random_source.pt": {
+      "sha256": "b504bf9c4db88e672a4bc078eba8f23004c7c408bc467216b0c24e0e584419c5",
+      "bytes": 39383
+    },
+    "runs/tdmpc_order_controls_v0/reverse_cascade_source.pt": {
+      "sha256": "2d04a8380c25b9cfb225b0d0f5666c4538104d64892d3d13cd35e858fe2dc02e",
+      "bytes": 39528
+    },
+    "runs/tdmpc_order_controls_v0/shuffled_cascade_source.pt": {
+      "sha256": "031356eeff34b4c57510baf80b360c72b773051503e9211cc5a26b4dd643c317",
+      "bytes": 39601
+    },
+    "runs/tdmpc_window_composition_h1_v0/cascade_adaptation.json": {
+      "sha256": "008242124999d3d17b9d4c62647ff1be8f7fb1ee2c751f360ee1ad52ee320ec5",
+      "bytes": 10589
+    },
+    "runs/tdmpc_window_composition_h1_v0/provenance.json": {
+      "sha256": "a13d48670579e2d696f2f9f9a859c8f5e594b088cff02025c83fc7e54a63e0ac",
+      "bytes": 2162
+    },
+    "runs/tdmpc_window_composition_h1_v0/random_adaptation.json": {
+      "sha256": "d5e11553229d307c4f64f910f17929b61addcaf89f284d149d0fe4f069b4cb8f",
+      "bytes": 10441
+    },
+    "runs/tdmpc_window_composition_h1_v0/results.json": {
+      "sha256": "e86c085d71c1bd0f4e544ee8724efe47826b4e7b9e840ce894a93c12de943280",
+      "bytes": 3437
+    },
+    "runs/tdmpc_window_composition_h1_v0/reverse_cascade_adaptation.json": {
+      "sha256": "87bcbf6521ede787488888ff444a9f0d26fa761e1f09e6c841a7e61230516590",
+      "bytes": 10550
+    },
+    "runs/tdmpc_window_composition_h1_v0/shuffled_cascade_adaptation.json": {
+      "sha256": "1334a9d7bce8e94cbdb16a6bdca422295d1c1314aa607d03b8adcdbf2eddc1c8",
+      "bytes": 10479
+    },
+    "runs/tdmpc_window_composition_h1_v0/status.json": {
+      "sha256": "43bfa665c80d5524a383c73df04dc1b8d0d53f529ed430c424116ddb3030848b",
+      "bytes": 5453
+    },
+    "scripts/pilot_tdmpc_adaptation.py": {
+      "sha256": "71eada841c6075dc01fcb81a5c5c06245271c9d343d168fe1e63cc62240a2641",
+      "bytes": 8250
+    },
+    "scripts/pilot_tdmpc_order_controls.py": {
+      "sha256": "c2b48589ffa8766c7b81dde4b172667f6684de425049d6a3e4014eda4bca59c3",
+      "bytes": 6839
+    },
+    "scripts/pilot_tdmpc_window_composition.py": {
+      "sha256": "9e3b3d42766041d3c72f4045fe24b69e7412f792811016d3019aedf6b0c9030a",
+      "bytes": 4880
+    },
+    "scripts/screen_tdmpc_non_normal.py": {
+      "sha256": "f0ac3cc8d62f6aaaff7b41faacb00c070afc2f7d9c78d715a06ff262cf02a547",
+      "bytes": 7808
+    },
+    "src/wm_security/tdmpc_native.py": {
+      "sha256": "178c59c5d1c61360e2852854f39aa54a64fe354703b140ed6db7edbdd9abdc3b",
+      "bytes": 9480
+    },
+    "vendor/tdmpc2/tdmpc2/common/world_model.py": {
+      "sha256": "55b85a9481d131b6b42265e15ece17bcc05f4ddf83dfd12c5be74e3a04f0d737",
+      "bytes": 7070
+    },
+    "vendor/tdmpc2/tdmpc2/tdmpc2.py": {
+      "sha256": "de4531ce18fc1dd459f91a664c011a2db14324d34d1fc7b52e058db050c07ab8",
+      "bytes": 13078
+    }
+  }
+}

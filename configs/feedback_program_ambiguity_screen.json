@@ -1,0 +1,134 @@
+{
+  "status": "native_feedback_binding_induction_completed_no_advantage_over_complete_state_baseline",
+  "claim_status": "unproven",
+  "run": "runs/feedback_program_ambiguity_v0",
+  "script": "scripts/pilot_feedback_program_ambiguity.py",
+  "result": {
+    "status": "completed",
+    "source_viable_bindings": [
+      [
+        1,
+        1,
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    ],
+    "source_representative": [
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    "target_summary": [
+      {
+        "world": "yukawa",
+        "selected": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "pass_counts": {
+          "source_frozen": 3,
+          "source_set_calibrated": 3,
+          "fixed_full_state_and_clock": 3
+        }
+      },
+      {
+        "world": "coulomb_easy",
+        "selected": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "pass_counts": {
+          "source_frozen": 3,
+          "source_set_calibrated": 3,
+          "fixed_full_state_and_clock": 3
+        }
+      },
+      {
+        "world": "extra_dimensions",
+        "selected": [
+          1,
+          1,
+          1,
+          1,
+          0
+        ],
+        "pass_counts": {
+          "source_frozen": 3,
+          "source_set_calibrated": 3,
+          "fixed_full_state_and_clock": 3
+        }
+      },
+      {
+        "world": "oscillator",
+        "selected": [
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        "pass_counts": {
+          "source_frozen": 0,
+          "source_set_calibrated": 3,
+          "fixed_full_state_and_clock": 3
+        }
+      }
+    ],
+    "native_experiments": 126,
+    "native_calls_by_phase": {
+      "source_reference": 2,
+      "source_binding_search": 64,
+      "target_calibration_reference": 4,
+      "target_binding_calibration": 8,
+      "validation_reference": 12,
+      "validation_source_frozen": 12,
+      "validation_source_set_calibrated": 12,
+      "validation_fixed_full_state_and_clock": 12
+    },
+    "api_requests": 0,
+    "gpu_seconds": 0,
+    "training_type": "Finite source-program consistency induction and target version-space filtering; no neural training.",
+    "elapsed_s": 22.19234391488135,
+    "accepted_novel_method": false,
+    "interpretation": "Tests transfer and calibration of source-consistent feedback bindings. Compare with the fixed full-state-and-clock baseline before drawing any method-advantage conclusion.",
+    "limitations": "A researcher-supplied classical flow-continuation template and finite grammar, deterministic noise-free fixtures, one source law, four selected target laws, three parameter cases each. No recovered law, official discovery score, reward task or independent benchmark success rate.",
+    "finished_at_utc": "2026-10-08T22:41:50.135183+00:00"
+  },
+  "assessment": "runs/feedback_program_ambiguity_v0/assessment.json",
+  "headline_cn": "原生反馈程序学习与迁移已跑通，但完整状态与时钟的固定基线同样全部通过，且省去学习成本；尚无新方法优势。",
+  "report_note_cn": "完成一个原生 DiscoverPhysics 反馈程序原型：在预先给定的续接模板与 32 种字段绑定中，用 gravity 的 66 次实际调用保留 2 个源数据无法区分的程序；二者都传递中间位置和速度，区别是是否推进绝对时钟。迁移到 yukawa、coulomb_easy、extra_dimensions、oscillator，每个目标用 1 个校准条件、3 次调用选择变体，再检查 3 个预先固定的后续条件。冻结的省略时钟变体在前三类各通过 3/3，在 oscillator 为 0/3；保留歧义后校准的程序四类均通过 3/3。然而完整传递状态和时钟的固定基线也四类全部通过，并且不需要源学习或目标校准，因此不能声称新的方法收益。全部 126 次原生调用在 CPU 上耗时约 22.2 秒，无模型 API 或 GPU。这里测量的是续接一致性，不是规律发现成功率；模板和字段语法由研究者提供。原生 oscillator 已提供 start_time，不能把遗漏时钟后的差异说成隐藏状态或耗散机制。",
+  "next_requirement": "Require an implemented learning operation whose resulting experimental program structure and core-task utility improve over same-data model-based experiment generation and applicable fixed controls. Binding selection in the supplied continuation template is exhausted by the fixed complete-state-and-clock baseline. Do not scale this family or infer discovery success from identity checks. Compare computational and environment-interaction costs separately; an exact planning oracle is an upper-bound comparator, not a baseline that must be beaten in its own expected-utility objective.",
+  "researcher_supplied": [
+    "Restart/continuation template and comparison objective",
+    "Binary field-binding grammar including optional start_time",
+    "Source/target worlds and cases",
+    "Fixed full-state-and-clock propagation baseline"
+  ],
+  "closest_priors": [
+    {
+      "url": "https://www.microsoft.com/en-us/research/project/prose-framework/usage/",
+      "finding": "Maintaining and refining sets of programs consistent with examples is established program version-space learning."
+    },
+    {
+      "url": "https://arxiv.org/abs/1809.02283",
+      "finding": "Relational program synthesis already synthesizes programs to satisfy relational specifications using relational version-space learning."
+    }
+  ],
+  "updated_at_utc": "2026-10-08T22:44:14.672376+00:00"
+}

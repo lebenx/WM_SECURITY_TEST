@@ -1,0 +1,22 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "actor_model": "glm-5.3",
+  "require_clean_success": true,
+  "ground_wait_commands": true,
+  "conditions": [
+    "clean",
+    "benign",
+    "post_attack_only"
+  ],
+  "source": "runs/conductivity_glm_v0",
+  "data": "runs/native_core_records_v0/test-conductivity-of-unknown-substances.json",
+  "task_name": "test-conductivity-of-unknown-substances",
+  "prefix_count": 12,
+  "prefix_extra_actions": [
+    "activate switch"
+  ],
+  "skip_setup_look": true,
+  "checkpoint_map": "configs/conductivity_checkpoints.json",
+  "steps": 5,
+  "output": "runs/conductivity_read_decision_hybrid_v0"
+}

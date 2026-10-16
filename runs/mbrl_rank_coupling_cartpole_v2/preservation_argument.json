@@ -1,0 +1,14 @@
+{
+  "status": "analytic_preservation_argument_with_finite_permutation_check",
+  "object": "A complete N-particle native forecast batch T for one fixed candidate action sequence; the native planner sees its scalar aggregate g(T).",
+  "construction": "Generate K fresh native batches T[a,j] for each candidate a. Rank them by g(T). Choose a bank-dependent cyclic permutation pi_a. After all permutations are frozen, draw R uniformly from 0,...,K-1 and return T[a,pi_a(R)].",
+  "conditional_identity": "P(T_out[a]=T[a,j] | entire bank)=1/K for every a,j, because pi_a is a permutation and R is fresh uniform.",
+  "unconditional_identity": "P(T_out[a] in A | input history, candidate set)=E[(1/K) sum_j 1{T[a,j] in A}]=P_native(T[a] in A). This holds for the full forecast batch, not only its score or first two moments.",
+  "bank_dependency": "Permutations may depend on all realized forecasts and inferred means. They must not depend on the fresh returned index R. Both conditions hold in rank_coupling.py.",
+  "code_scope": "Native ModelEnv materializes trajectories internally and exposes only aggregate scores. The implementation returns the aggregate belonging to the selected complete batch; it does not expose or store every latent trajectory.",
+  "costs": "K=8 native evaluations are executed per victim candidate evaluation in both attacked and independent-bank control conditions. The victim receives one N=10-particle estimate; it does not receive all 80 particles.",
+  "numerical_check": "For an explicit 4x4 bank, exhaustive enumeration of all fresh row indices after optimized shifts reproduces each original column multiset exactly.",
+  "limits": "This proves preservation of the learned model sampling law, not correctness/calibration of that model against the physical environment. It does not preserve the cross-candidate joint law, and does not establish native task harm or novelty by itself.",
+  "api_requests": 0,
+  "gpu_work": false
+}

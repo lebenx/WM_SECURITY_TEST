@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_any_new_full_horizon_replay",
+  "date": "2026-10-15",
+  "runner": "scripts/replay_dino_first_query_full_horizon.py",
+  "out_dir": "runs/dino_first_query_full_horizon_20261015",
+  "report": "reports/dino_first_query_full_horizon_20261015.json",
+  "question": "Does the already measured two-mean ranking flip select a lower real terminal reward at the forecast's actual30-control horizon?",
+  "known_before_execution": {
+    "ranking_report": "reports/dino_first_query_two_mean_ranking_20261015.json",
+    "candidate_order": ["clean_identity_copy", "canonical_request"],
+    "original_selected_index": 0,
+    "canonical_selected_index": 1,
+    "cost_matrix_original_then_canonical": [[0.8484280705451965, 1.1141307353973389], [1.5804330110549927, 1.2356951236724854]],
+    "terminal_reward15": [3.0915794372558594, 2.771111249923706],
+    "cumulative_reward15": [31.041362047195435, 30.07258892059326],
+    "closed_loop_return99": [786.998547077179, 702.1983199119568],
+    "unknown": "Controls16..30 of each full query1 mean were not executed open loop in the source native pair; query2 replanned after15 controls. Their30-control open-loop terminal rewards and states are unknown before this replay."
+  },
+  "root": {
+    "physical_seed": 4,
+    "source_run": "runs/dino_native_alias_pair_20261015",
+    "setup": "runs/dino_native_alias_pair_20261015/setup/setup.npz",
+    "snapshot": "runs/dino_native_alias_pair_20261015/snapshot.npz",
+    "elapsed_steps": 1,
+    "reconstruction": "Use existing CPU bootstrap/reconstruct_and_snapshot helper, original cfg_for/make_env, cached mechanical state/target/history and saved mjSTATE_INTEGRATION. Constructor-internal initialization is disclosed separately; no explicit reset, expert rollout or extra warmup.",
+    "forbidden_loading": ["expert_actions", "model checkpoints", "encoder checkpoints"],
+    "initial_gate": "Exact cached initial render/proprio, complete integration state, site positions and saved physical snapshot; no tolerance relaxation."
+  },
+  "candidates": {
+    "count": 2,
+    "order": ["clean_identity_copy", "canonical_request"],
+    "cache_pattern": "runs/dino_native_alias_pair_20261015/{arm}/query1_forecast_cache.npz",
+    "key": "mean_original",
+    "shape": [6, 1, 20],
+    "decode": "Reshape original full mean to30x4 and call native Preprocessor.denormalize_actions in CPU float32 using source summary.strict_load.normalization. Execute these unchanged physical actions, including the original raw saturation; no new alias branch.",
+    "policy": "Open loop for30 controls; no CEM, encoder, predictor, rescoring, replanning, new candidate or seed.",
+    "prefix_gate": "For each candidate, controls1..15 must exactly reproduce its source trace action/reward/state/physical/pixels/success/distance/termination/counters. On the first mismatch stop the entire replay, preserve partial output, and do not continue controls16..30 or the next candidate."
+  },
+  "metrics": {
+    "primary": "Actual native terminal reward after30 controls; canonical-selected candidate1 minus original-selected candidate0.",
+    "secondary": ["sum30 native rewards", "terminal distance", "terminal and ever success", "successful-control count", "first success", "source15-control prefix parity and utility"],
+    "comparison": "Keep the already observed score matrix and selected indices fixed. Report negative, zero and positive real utility differences without retuning or selecting candidates. No oracle-optimality gate."
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "device": "cpu",
+    "mujoco": "3.3.0 existing overlay",
+    "renderer": "osmesa",
+    "threads": 4,
+    "wall_limit_seconds": 300,
+    "maximum_explicit_environment_steps": 60,
+    "model_calls": 0,
+    "encodes": 0,
+    "checkpoint_loads": 0,
+    "planner_calls": 0,
+    "api_calls": 0,
+    "gpu_calls": 0,
+    "training_updates": 0,
+    "network": "disabled",
+    "stop": "Technical failure, timeout, any prefix/root mismatch or simulator exception: preserve partial evidence and stop. Partial is not task failure; no automatic retry or seed replacement."
+  },
+  "outputs": ["summary.json", "launched_config.json", "launched_script.py", "physical_actions.npz", "{candidate}/trace.jsonl", "{candidate}/endpoint15.npz", "{candidate}/endpoint30.npz", "{candidate}/endpoint30.png"],
+  "endpoint_schema": "Separate endpoint15.npz and endpoint30.npz: pixels uint8[1,3,224,224], proprio float32[1,4], state, tcp, target, control_offset. Add one leading time axis for a later native encode; this run does not encode either endpoint.",
+  "interpretation": "A post hoc two-candidate diagnostic on one already known development root. Aligns true consequence horizon with the frozen score horizon; not a full CEM-population ranking audit, closed-loop mediation, new attack success rate, GoalSwap result, independent generalization or defense. No predicted score substitutes for measured utility."
+}

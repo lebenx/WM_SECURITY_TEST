@@ -1,0 +1,255 @@
+{
+  "updated_at_utc": "2026-10-09T02:12:56.177162+00:00",
+  "status": "origin_signal_observed_fixed_probe_confirmation_gate_failed",
+  "candidate_question_cn": "世界模型能否从输入潜状态分辨现实观测与自身想象，从而在不添加外部观测触发器的情况下只对想象改变行为？",
+  "accepted_claim": null,
+  "attack_run": false,
+  "native_task_harm": false,
+  "world_model_edit": null,
+  "decision": "Do not expand this fixed detector or tune its threshold on confirmation episodes. Retain origin separation as a necessary-condition observation; it is neither an attack nor an accepted novelty claim. A substantive security operation beyond generic OOD routing is required before further attack experiments.",
+  "model": {
+    "checkpoint": "models/tdmpc2/mt30-48M.pt",
+    "latent_dim": 768,
+    "model_digest": "ed703fcb518e49a48c1a7379c1f9a3b9b6d1edeee82e6cea679e528b324ca4fe",
+    "model_hash_unchanged": true
+  },
+  "design": {
+    "training_seed": 12,
+    "development_seeds": [
+      13,
+      17
+    ],
+    "untouched_confirmation_seeds": [
+      18,
+      19
+    ],
+    "split_caveat": "Seed17 was the first linear/PCA screen test, then explicitly development for RBF selection. Only seeds18/19 are independent confirmation of the fixed RBF probe.",
+    "matching": "Compare E(o_t+j) with j-step predicted latents under the exact recorded real action prefix, 498 matched starts per depth and episode. These temporally overlapping samples are not independent episodes.",
+    "frozen_probe": "StandardScaler + RBF SVC(C=1,gamma=scale), threshold pooled development-real99.5th percentile (higher).",
+    "threshold": 0.07537771295660489,
+    "preset_gate": "Both clean returns >=900; each new episode real FPR<=1% and imagined TPR>=80% at depths1 and2.",
+    "planner_sampling": "Read-only reward-head input hook: every tenth decision, first and last optimizer iteration,16 evenly spaced candidate IDs.1600 samples per depth per seed; not the whole planner distribution."
+  },
+  "first_screen": {
+    "source": "runs/tdmpc_latent_origin_v0/summary.json",
+    "logistic_gate_passed": false,
+    "pca64_gate_passed": false,
+    "metadata_correction": "Frozen plan prose says512 features, but its code uses actual768-dimensional checkpoint latents. No computational reshape error in this first screen; source and plan remain preserved."
+  },
+  "invalid_attempt": {
+    "source": "runs/tdmpc_latent_origin_rbf_v1/summary.json",
+    "classification_metrics_excluded": true,
+    "reason": "Hardcoded512 reshape mixed rows from actual768-dimensional latents. All classification results excluded; CPU cost retained. Corrected dynamic-dimension v2 verifies shapes.",
+    "cpu_seconds": 17.07534847315401
+  },
+  "development": {
+    "source": "runs/tdmpc_latent_origin_rbf_v2/summary.json",
+    "gate_passed": true
+  },
+  "confirmation": {
+    "source": "runs/tdmpc_latent_origin_confirmation_v0/summary.json",
+    "gate_passed": false,
+    "rows": [
+      {
+        "seed": 18,
+        "native_result": {
+          "task": "walker-walk",
+          "task_id": 1,
+          "seed": 18,
+          "policy": "mpc",
+          "steps": 500,
+          "return": 994.1161140203476,
+          "full_episode": true,
+          "wall_seconds": 19.73074297606945
+        },
+        "matched_origin": [
+          {
+            "depth": 1,
+            "real_fpr": 0.008032128514056224,
+            "imagined_tpr": 0.9738955823293173,
+            "pairs": 498,
+            "auc": 0.9968145675069756
+          },
+          {
+            "depth": 2,
+            "real_fpr": 0.008032128514056224,
+            "imagined_tpr": 0.9819277108433735,
+            "pairs": 498,
+            "auc": 0.9970040805793454
+          },
+          {
+            "depth": 3,
+            "real_fpr": 0.008032128514056224,
+            "imagined_tpr": 0.9819277108433735,
+            "pairs": 498,
+            "auc": 0.9969234367187625
+          }
+        ],
+        "planner_origin_flag_rates": {
+          "0": 0.0,
+          "1": 0.84125,
+          "2": 0.74625
+        },
+        "planner_samples_per_depth": {
+          "0": 1600,
+          "1": 1600,
+          "2": 1600
+        },
+        "clean_gate_passed": true,
+        "origin_gate_passed": true,
+        "encoder_ln_certificate": {
+          "real": {
+            "min": 0.901308021581379,
+            "max": 0.9906937011406831,
+            "fraction_outside": 0.0
+          },
+          "matched_imagined": {
+            "min": 0.7841504537857032,
+            "max": 0.9755624202423561,
+            "fraction_outside": 0.0
+          },
+          "planner": {
+            "0": {
+              "max": 0.9869296256095533,
+              "fraction_outside": 0.0
+            },
+            "1": {
+              "max": 0.9687055899034961,
+              "fraction_outside": 0.0
+            },
+            "2": {
+              "max": 0.974753683839941,
+              "fraction_outside": 0.0
+            }
+          }
+        },
+        "reward_head_calls": 9000
+      },
+      {
+        "seed": 19,
+        "native_result": {
+          "task": "walker-walk",
+          "task_id": 1,
+          "seed": 19,
+          "policy": "mpc",
+          "steps": 500,
+          "return": 974.0882448237389,
+          "full_episode": true,
+          "wall_seconds": 19.366500535979867
+        },
+        "matched_origin": [
+          {
+            "depth": 1,
+            "real_fpr": 0.01606425702811245,
+            "imagined_tpr": 0.9257028112449799,
+            "pairs": 498,
+            "auc": 0.9832180126126998
+          },
+          {
+            "depth": 2,
+            "real_fpr": 0.01606425702811245,
+            "imagined_tpr": 0.9357429718875502,
+            "pairs": 498,
+            "auc": 0.9861655457170045
+          },
+          {
+            "depth": 3,
+            "real_fpr": 0.01606425702811245,
+            "imagined_tpr": 0.9377510040160643,
+            "pairs": 498,
+            "auc": 0.9877542297704875
+          }
+        ],
+        "planner_origin_flag_rates": {
+          "0": 0.0,
+          "1": 0.799375,
+          "2": 0.706875
+        },
+        "planner_samples_per_depth": {
+          "0": 1600,
+          "1": 1600,
+          "2": 1600
+        },
+        "clean_gate_passed": true,
+        "origin_gate_passed": false,
+        "encoder_ln_certificate": {
+          "real": {
+            "min": 0.8788825066133051,
+            "max": 0.9954438212714304,
+            "fraction_outside": 0.0
+          },
+          "matched_imagined": {
+            "min": 0.7278016719038676,
+            "max": 0.9621082743437341,
+            "fraction_outside": 0.0
+          },
+          "planner": {
+            "0": {
+              "max": 0.9859384309400826,
+              "fraction_outside": 0.0
+            },
+            "1": {
+              "max": 0.9643419846811243,
+              "fraction_outside": 0.0
+            },
+            "2": {
+              "max": 0.9721049333058566,
+              "fraction_outside": 0.0
+            }
+          }
+        },
+        "reward_head_calls": 9000
+      }
+    ],
+    "failure": "Seed19 real FPR8/498=1.6064% exceeds1%; no threshold change or replacement seed."
+  },
+  "structural_certificate": {
+    "operation": "Minimum squared norm of zero-mean pre-affine LayerNorm output compatible with a group-softmax latent, divided by768. Native encoded observations satisfy the necessary bound<=1 in exact arithmetic.",
+    "threshold": 1.00001,
+    "result": "No true or imagined latent exceeded the bound in this sample. The fixed certificate provides no origin separation; no guarantee that real-state outputs could be preserved by a nontrivial attack was established.",
+    "negative_boundary": "A lower learned score threshold would lose the all-real-state necessary-condition guarantee; do not relabel it as an exact certificate."
+  },
+  "probe_export_parity": {
+    "checked": "Reconstructed numeric RBF probe versus saved development FPR/TPR for seeds13/17 at all3depths.",
+    "all_six_fpr_and_tpr_pairs_equal": true,
+    "floating_point_limit": "The reconstruction standardizes in float64 whereas sklearn originally transforms float32 inputs in place. Classification rates matched; bitwise score equality is not asserted."
+  },
+  "novelty_boundaries": [
+    {
+      "title": "Fooling LIME and SHAP: Adversarial Attacks on Post hoc Explanation Methods",
+      "url": "https://arxiv.org/abs/1911.02508",
+      "finding": "Primary abstract, paper and official implementation inspected. An OOD detector distinguishes real examples from explainer perturbations and routes behavior. Merely recognizing query origin and conditionally changing outputs is not a new security operation. No reproduction."
+    },
+    {
+      "title": "TRAP: Tail-aware Ranking Attack for World-Model Planning",
+      "url": "https://arxiv.org/abs/2605.01950",
+      "finding": "Primary abstract and introduction inspected. An inference-time visual patch attacks relative high-tail trajectory rankings for world-model planning, including DreamerV3 and TD-MPC2, without modifying model parameters. Generic corruption of imagined-trajectory ranking already has a security prior. No reproduction."
+    },
+    {
+      "title": "A Control Theory of Predictability in Latent World Models",
+      "url": "https://arxiv.org/abs/2607.10362",
+      "finding": "Primary abstract and section structure inspected; full theorem assumptions not verified. Discusses planner trajectories leaving data support and the distinction between prediction error on observed data and control performance. Ordinary off-manifold rollout error is not itself a novel attack. No reproduction."
+    },
+    {
+      "title": "When the World Lies: Backdoor Attacks on Latent World Models for Downstream Control",
+      "url": "https://arxiv.org/abs/2609.15781",
+      "finding": "Primary abstract inspected. Poisoned checkpoints route externally triggered observations into altered latent dynamics that affect downstream control. Imagination-origin routing would need a substantive mechanistic distinction and native causal task harm, not merely another trigger label."
+    }
+  ],
+  "usage": {
+    "new_native_environment_steps": 1000,
+    "completed_native_episodes": 2,
+    "predicted_transitions": 9223470,
+    "additional_encoded_observations": 2505,
+    "world_model_training_updates": 0,
+    "research_api_requests": 0,
+    "gpu_training": false,
+    "gpu_work": "Short frozen-model inference only.",
+    "initial_screen_elapsed_seconds": 10.423559225630015,
+    "initial_probe_cpu_seconds": 0.7653954080305994,
+    "invalid_rbf_cpu_seconds": 17.07534847315401,
+    "corrected_rbf_cpu_seconds": 9.251858947332948,
+    "native_confirmation_elapsed_seconds": 42.78725745109841,
+    "timing_limit": "Confirmation elapsed includes CPU probes and file writes; these are not GPU utilization measurements. Export parity verification CPU time was not measured."
+  }
+}

@@ -1,0 +1,16 @@
+```json
+{
+  "novelty_score": 6.5,
+  "distinct_and_broad": {
+    "is_distinct": true,
+    "is_broad": false,
+    "rationale": "It is mechanically distinct from SGD backdoor/catastrophic forgetting because state pollution occurs via an irreversible syntactic synthesis constraint (monotonic CEGIS inductive bias) rather than parameter drift. However, it is fundamentally narrow: it requires a fragile and suboptimal design choice (explicit monotonic/additive-only synthesis prompts without revision backtracking or validation regression suites)."
+  },
+  "pilot_experiment": {
+    "setup": "Build a 2D gridworld transition engine synthesized via an LLM/CEGIS loop with the explicit prompt rule: 'You may only add rules or generalize predicate disjunctions; do not delete prior logic.' Introduce an ambiguous trigger transition: Agent interacts with Object A under latent state Z=1 (hidden) vs Z=0. Step 1: Trigger transition produces rule: 'All objects of type A cause teleportation' (over-generalization). Step 2: Feed 50 contradictory transitions showing Object A does not teleport under Z=0. Measure whether the synthesizer creates local exceptions while retaining the broader predicate, causing downstream A* planners to fail on novel Object A coordinates.",
+    "falsifier": "The attack is falsified if an unconstrained synthesizer, or a synthesizer given minimal prompt relaxation (e.g., standard Occam/length penalty or simple regression assertions on the replay buffer), naturally refactors and eliminates the spurious generalization rule within ≤3 revision steps."
+  },
+  "verdict": "Reject",
+  "rejection_reason": "The vulnerability is an artifact of an artificial, self-imposed constraint ('monotonic additive-only revision') rather than an intrinsic security failure of programmatic world models. If standard program synthesis practices (regression testing over past replay buffers, Pareto code-length penalties, or AST refactoring) are enabled, the hysteresis collapses. It studies a flaw in a deliberately crippled inductive bias rather than a robust attack vector."
+}
+```

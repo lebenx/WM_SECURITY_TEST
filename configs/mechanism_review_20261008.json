@@ -1,0 +1,151 @@
+{
+  "status": "completed_no_accepted_candidate",
+  "claim_status": "unproven",
+  "optimizer_state_candidate": {
+    "decision": "Rejected at novelty gate; no GPU experiment.",
+    "direct_prior": "https://arxiv.org/html/2608.20442v1",
+    "finding": "The primary paper already isolates first-moment carryover that leaves present parameters and outputs unchanged but changes later source-free learning. This covers the proposed carrier and causal intervention. Restricting a future attack to genuine environment experience would need an additional conceptual contribution.",
+    "scope_limit": "The cited work is a preprint and was not independently reproduced. It does not establish the proposed action-only attack; identical parameters are obtained by diagnostic transplantation."
+  },
+  "independent_model_review": {
+    "purpose": "Idea generation only; generated claims and repository suggestions are not evidence.",
+    "model_alias": "qwen3.8-max",
+    "backend_identity_verified": false,
+    "primary_run": "runs/mechanism_external_review_v0/status.json",
+    "primary_result": "Two HTTP200 replies without visible content. First exhausted4096 output tokens in reported reasoning;8192-token retry also returned no visible content and finish_reason=stop. User notified of both failures.",
+    "backup_run": "runs/mechanism_external_review_backup_v0/status.json",
+    "backup_result": "Separate same-alias call through the updated backup succeeded in107.28seconds. This verifies one text-generation call only.",
+    "answer": "runs/mechanism_external_review_backup_v0/answer.json",
+    "api_requests_including_failures": 3,
+    "candidates": [
+      {
+        "idea": "Decision-order integrity under model updates",
+        "decision": "Not accepted as a new mechanism.",
+        "reason": "Optimizing action rankings without large average prediction error overlaps the existing TD-MPC2 action-search experiment, which already measured candidate ranking changes without held-out task loss. Ranking regression gates also require a distinct algorithmic contribution beyond a protected replay test."
+      },
+      {
+        "idea": "Temporal-correlation poisoning of imagined branches",
+        "decision": "Underspecified; no training launched.",
+        "mathematical_gate": "For a fully observed Markov system, holding initial law, policy and all relevant conditional transition kernels fixed fixes the path law: p(s0,a0,...,sH)=p(s0) product_t pi(at|ht) P(st+1|st,at). With the same reward functional, the return law is also fixed. Thus changing trajectory risk while preserving all full one-step conditionals is not available under these assumptions.",
+        "qualification": "Equal marginal errors or means do not imply equal conditional kernels. Partial observation, differing histories, reward dependence or incompletely matched distributions can admit correlation effects; this argument does not rule them out. The generated proposal has not supplied a distinct exploitable mechanism in those cases.",
+        "code_limit": "CausalGame and WorldEvolver are not native Dreamer or TD-MPC2 training backends. The proposed combination would need an explicit research implementation and cannot be called an existing native pipeline."
+      }
+    ]
+  },
+  "api_requests": 3,
+  "gpu_work": false,
+  "decision": "No accepted broad mechanism or new task-harm evidence. Avoid another optimizer-state transplant reproduction or an ill-specified marginal-matching experiment.",
+  "report_note_cn": "机制与正向方法仍未建立足够新颖性。功能保持的学习几何调制、纠错停止核、经验晋升为共享技能，均找到对应已有操作。前轮在原样 OPINE 学习代码中复现了查询改变隐藏记忆；本轮确认上游提示已要求规划分支的连续性保护，且原生规划短测未触发该现象，因此停止把它作为新概念扩展。新核对的原始论文还明确覆盖未来可纠正性、学习获取证据的能力，以及机制记忆的选择性更新；这些泛化表述不能直接计为我们的贡献。后续独立方法评议的主、备用请求均超时，无回复。本轮没有新增环境实验或GPU工作，尚无新方法优势可支持扩大实验。",
+  "positive_method_followup": {
+    "status": "no_distinct_executable_method_accepted",
+    "previous_goal_turn": "progress: completed the fixed DMO necessary-condition screen; no forward-preserving candidate; no refit run",
+    "decisions": [
+      {
+        "candidate": "Preserve current function while changing future trainability",
+        "decision": "Do not claim this generic operation as new.",
+        "source": "https://arxiv.org/abs/2607.22929",
+        "reason": "HarmAlign already uses function-preserving, distribution-selective spectral deformation to change subsequent trainability."
+      },
+      {
+        "candidate": "Model equivalence after real feedback correction",
+        "decision": "The proposed operator is an existing option/SMDP model, not a distinct method.",
+        "source": "https://arxiv.org/html/2406.15850v1",
+        "operator": "T_r V(q) = E[sum_{t<tau} gamma^t c_t + gamma^tau V(q_tau)]",
+        "reason": "q must include the environment and all future-relevant agent state. Cost, duration and terminal-state law for a fixed correction protocol are standard option-model quantities. Policy changes require a protocol family; equal observed states alone do not certify confluence."
+      },
+      {
+        "candidate": "Shared experience changes reusable skill instructions",
+        "decision": "Keep SkillClaw as a possible future experimental carrier, not an original mechanism.",
+        "source": "https://arxiv.org/abs/2608.05563",
+        "reason": "PoisonedEvolution already studies evidence promotion and attribution into persistent skills in SkillClaw and Trace2Skill."
+      }
+    ],
+    "gradient_clipping_construction": {
+      "status": "mathematical_construction_only_not_an_accepted_novel_mechanism",
+      "definition": "P_r(u)=(1-r^2)/(1-2r*cos(2*pi*u)+r^2); h_r(u)=(1+b)/pi*atan(r*sin(2*pi*u)/(1-r*cos(2*pi*u))); f_hat(a)=a+epsilon*h_r(a/epsilon)",
+      "identities": "h_prime=(1+b)*(P_r-1); f_hat_prime=-b+(1+b)*P_r; sup forward error <= epsilon*(1+b)/2; the derivative mean across a full phase period is 1.",
+      "finite_batch_limit": "For independent uniform phases and any fixed finite batch B, E[clip_C(mean_i f_hat_prime_i)] tends to -min(b,C) as r tends to 1. Follows from almost-sure convergence and bounded convergence after clipping.",
+      "native_source": "vendor/DMO_code/algorithms/dmo_shac.py:1593,1867,1873 and examples/cfg/dmo_shac/hopper.yaml",
+      "native_parameters": {
+        "actors": 256,
+        "horizon": 16,
+        "clip_norm": 1.0,
+        "adam_betas": [
+          0.7,
+          0.95
+        ],
+        "clip_order": "aggregate actor loss, backward, then global parameter-gradient clipping"
+      },
+      "scope": "Does not prove implementation in the native finite network, persistence after real-data refit, Adam update reversal or task harm. The 4096 actor-time terms are not independent scalar phases.",
+      "prior": "https://arxiv.org/abs/2006.15429",
+      "decision": "No GPU run. The reversal mechanism instantiates established asymmetric-gradient clipping bias; no novel optimizer-aware model-learning algorithm supplied."
+    },
+    "external_review": {
+      "source": "runs/learning_operator_rethink_20261008T155054Z/status.json",
+      "status": "failed_no_suggestion",
+      "model": "glm-5.2",
+      "api_requests": 2,
+      "primary_failure": "45 second read timeout",
+      "backup_failure": "45 second read timeout",
+      "user_notified_of_both": true,
+      "scope": "No response received; no generated method can be used as evidence."
+    },
+    "api_requests": 6,
+    "gpu_work": false,
+    "next_requirement": "A concrete learning operation distinct from the identified algorithms, with a falsifiable native-task prediction, before further experiments.",
+    "repair_transport_screen": {
+      "source": "configs/repair_transport_screen.json",
+      "status": "completed_no_method_advantage_established",
+      "consensus_setpoints": 0,
+      "unseen_crystals": 6,
+      "simple_program_baseline_tasks_completed": 3,
+      "api_requests": 0,
+      "gpu_work": false
+    },
+    "external_review_history": [
+      {
+        "source": "runs/positive_method_design_20261008T134100Z/status.json",
+        "status": "failed_no_suggestion",
+        "api_requests": 2,
+        "primary_failure": "read timeout",
+        "backup_failure": "proxy connection closed before HTTP response",
+        "user_notified_of_both": true
+      },
+      {
+        "source": "runs/method_operator_design_20261008T150142Z/status.json",
+        "status": "completed_via_backup_suggestion_not_accepted",
+        "model": "glm-5.2",
+        "api_requests": 2,
+        "primary_failure": "45 second read timeout",
+        "backup_result": "HTTP 200",
+        "user_notified": true,
+        "suggestion": "Successor-Fingerprint Pooling",
+        "assessment": "Grouping states by short-action probe outcomes and pooling transitions is not yet distinguished from behavioral abstraction and related predictive-state methods. The suggested benchmark/backbone combination is not an implemented compatible pipeline. No scale-up authorized by this suggestion."
+      }
+    ],
+    "learned_query_memory_screen": {
+      "source": "configs/opine_query_memory_screen.json",
+      "status": "completed_prediction_interference_observed_no_native_task_harm",
+      "api_requests": 0,
+      "gpu_work": false,
+      "novelty_status": "retired_as_novel_candidate"
+    },
+    "novelty_constraints_followup": {
+      "status": "three_direct_priors_identified_no_new_operator_established",
+      "sources": [
+        "https://arxiv.org/html/2606.28347v1",
+        "https://arxiv.org/html/2608.29608v1",
+        "https://arxiv.org/html/2609.30650v1"
+      ],
+      "findings": [
+        "Future corrective leverage and structural incorrigibility are already explicit research objects.",
+        "Learning to realize informative experiments under fixed primitives is already formalized as effective epistemic reach.",
+        "Retaining action/context/target/value/delay mechanisms and selectively retesting shifted entries has an existing evidence-gated update algorithm."
+      ],
+      "decision": "Do not rebrand these general concepts. A future candidate needs a distinct concrete operation and an experiment against the relevant strong baseline.",
+      "native_experiments_this_followup": 0,
+      "gpu_work": false
+    }
+  },
+  "total_review_api_requests": 5
+}

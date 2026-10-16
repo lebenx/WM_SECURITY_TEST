@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "frozen_before_execution",
+  "question": "Does correlation in physically ignored action-log coordinates cause additional real decision loss after a fixed dynamics-only continuation, beyond an equal-multiset permutation control?",
+  "scope": "Researcher-defined restricted offline data contribution and dynamics-only continuation of an offline pretrained model; not native online deployment, native full training, Goal-Swap or an exposed external attack interface.",
+  "runtime": ".venv-native-local/bin/python",
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source": {
+    "path": "runs/tdmpc_adaptation_screen_v0/random_data.pt",
+    "task": "reacher-easy",
+    "task_id": 4,
+    "seed": 21,
+    "controls": 300,
+    "active_action_dims": 2,
+    "shared_action_dims": 6,
+    "protected": ["obs", "reward", "task", "seed", "action[:, :2]", "transition order"],
+    "writer": "May change only the four executor-ignored action-log coordinates within [-1,1]. Encoding uses only the already chosen active action, never successor observations, rewards or victim evaluation outcomes.",
+    "correlated_tail": "[a0,a1,a0,a1]",
+    "control_tail": "Permute complete four-dimensional correlated-tail rows with a private CPU torch.Generator seed17; preserve their joint multiset exactly.",
+    "permutation_seed": 17
+  },
+  "conditions": ["clean", "zero", "correlated", "permuted"],
+  "adaptation": {
+    "updates": 40,
+    "seed": 31,
+    "batch_size": 32,
+    "horizon": 3,
+    "rho": 0.5,
+    "consistency_coef": 20.0,
+    "lr": 0.0003,
+    "grad_clip_norm": 20.0,
+    "optimizer": "Fresh Adam with upstream learning rate and default betas/epsilon; one identical precomputed CUDA minibatch-index bank for every arm.",
+    "trainable": "Only model._dynamics; fixed encoder targets, model.eval(), all non-dynamics state exact unchanged.",
+    "loss": "Reuse the old native three-step consistency arithmetic: (20/3)*sum_t rho^t MSE(predicted_z[t+1], fixed_encoded_obs[t+1]). This isolates a path and is NOT native full joint training.",
+    "dose_choice": "Reuse the old padding pilot's fixed40 updates. No dose, source, encoding, seed or task search after seeing results."
+  },
+  "physical_equivalence": {
+    "method": "Replay all300 cached active actions twice from source seed21 through upstream MultitaskWrapper, once with zero tails and once with correlated tails. Require exact equality of observations/rewards/done and agreement with the cached float32 observations/rewards.",
+    "maximum_explicit_controls": 600,
+    "permuted_extension": "Every executed prefix is identical; the upstream step slice also makes the permuted tails physically irrelevant. A third redundant replay is not required."
+  },
+  "evaluation": {
+    "task": "reacher-easy",
+    "seed": 11,
+    "steps": 500,
+    "policy": "unchanged native MPC, eval_mode=False, original horizon3/samples512/iterations6/elites64/pi24",
+    "primary": "Actual sum of environment rewards over one full500-control episode per condition, paired initial state and RNG seed. This is closed-loop decision utility, not a fixed-candidate ranking test.",
+    "maximum_explicit_controls": 2000,
+    "historical_clean_return": 983.0,
+    "historical_zero_return": 984.0,
+    "historical_learning_log": "runs/tdmpc_adaptation_screen_v0/random_adaptation.json",
+    "historical_trace": "runs/tdmpc_adaptation_screen_v0/random_reacher-easy_evaluation.pt",
+    "minimum_clean_and_zero_return": 900.0,
+    "maximum_baseline_relative_return_change": 0.01,
+    "history_rtol": 0.0001,
+    "history_atol": 0.000001,
+    "baseline_gate": "Rebuild Clean and zero-tail updates before evaluating edited tails; stop if either competence or historical reproduction fails."
+  },
+  "decision": {
+    "harm_gate": "Correlated return must be at least10% lower than BOTH zero and equal-multiset permuted controls; both baseline qualification gates must pass.",
+    "prediction_metrics": "One-step latent MSE on the fixed historical zero-tail clean reacher trace, reported only as a diagnostic and never substituted for real utility.",
+    "mask_control": "Applying the native task mask to either edited training action tensor must recover the zero-tail tensor exactly. This is an input identity, not a newly executed defense episode; do not run redundant identical training.",
+    "next_if_positive": "Only a conditional dynamics-path signal. Separately qualify native full joint continuation and an independent fixed seed before claiming broader harm. Novelty and real deployment permissions remain unproven.",
+    "next_if_negative": "Stop this fixed candidate; no seed, encoding, dose or task scan to obtain a signal.",
+    "statistics": "One fixed development seed: descriptive paired differences only, no p-value, confidence interval, ASR or population claim."
+  },
+  "resources": {
+    "gpu_index": 0,
+    "minimum_free_memory_mib": 4096,
+    "allocator_cap_gib": 4.0,
+    "deadline_seconds": 600,
+    "exclusive_gpu": false
+  },
+  "output": "runs/tdmpc_nullspace_action_logs_20261015",
+  "model_api_requests": 0,
+  "new_source_collection": false
+}

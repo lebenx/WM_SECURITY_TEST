@@ -1,0 +1,20 @@
+{
+  "source_task": "cheetah-run",
+  "source_seed": 23,
+  "eval_task": "walker-run",
+  "eval_seed": 31,
+  "validation_seed": 33,
+  "updates": 300,
+  "temperatures": [
+    1.0,
+    2.0
+  ],
+  "conditions": [
+    "clean",
+    "random",
+    "cascade"
+  ],
+  "intervention": "After each condition adapts with native dynamics-only objective under SimNorm temperature 1, replace only dynamics final SimNorm with softmax(x/temperature) before native MPC evaluation.",
+  "gate": "Exploratory causal screen: temperature 2 should recover cascade return while preserving clean/random return and low one-step error; no broad claim from this pilot.",
+  "api_requests": 0
+}

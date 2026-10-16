@@ -1,0 +1,18 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "reacher-easy",
+  "victim_task": "walker-walk",
+  "source_arms": [
+    "mpc",
+    "random"
+  ],
+  "source_updates": 20,
+  "victim_updates": 20,
+  "attacker_operation": "Native task-labeled source data updates shared model and Adam/pi optimizer state, then exits; no labels, observations, rewards, or weights are edited.",
+  "causal_control": "For each source arm, victim updates start from the exact same source-contaminated model weights. One branch retains optimizer state; another resets all optimizer and running-scale state. A fresh victim-only branch is also evaluated.",
+  "scope": "Short CUDA screen of optimizer-state persistence; no population claim, no long training, no API requests.",
+  "clean_gate": "Walker native MPC return >= 900 for every completed branch.",
+  "effect_gate": "Retain only if state-retaining victim return is at least 100 below same-model reset and clean controls.",
+  "api_requests": 0,
+  "gpu_training": true
+}

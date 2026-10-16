@@ -1,0 +1,146 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "closed_native_restricted_writer_not_identified",
+  "question": "Does the inspected native JEPA-WMs DINO reach path already expose a writer that may change only an executor-equivalent forecast-action representation while being unable to directly modify original candidate controls, task Goal or scoring?",
+  "conclusion": {
+    "native_forecast_to_decision_boundary_exists": true,
+    "existing_restricted_representation_writer_identified": false,
+    "deployed_external_attack_reachability_established": false,
+    "bounded_experiment_invalidated_by_missing_deployed_interface": false,
+    "finding": "The native path has a local callable boundary, not an identified least-privilege writer or separate forecast service. The examined code passes the original candidate tensor directly into the local model. The isolated request copy, constrained writer, and trusted rebinding are added by our research runners.",
+    "stop_inference": "Do not infer that an unprivileged native user, transport peer, plugin or remote model client can perform this operation. No such permission boundary was found in this scoped path inspection; do not invent a wrapper to claim one. This is not a repository-wide assertion that no external integration could exist.",
+    "supported_scope": "A valid, explicitly instrumented native-CEM experiment shows that a constrained, execution-equivalent forecast representation transformation can change one fixed root's cumulative dense return, and conventional integrity restoration recovers its behavior. This establishes a local representation/decision sensitivity under the stated experimental operation, not a discovered externally exploitable native interface."
+  },
+  "reuse_and_scope": {
+    "prior_source_map": "reports/dino_action_saturation_feasibility_20261015.json",
+    "prior_report_note": "Reuse its source-chain and alias contract, not its historical awaiting-experiment status or its obsolete strict oracle-selection gate. Subsequent reports below contain completed results.",
+    "completed_native_pair": "reports/dino_native_alias_decision_20261015.json",
+    "completed_recovery": "reports/dino_native_alias_recovery_decision_20261015.json",
+    "completed_paired_accuracy_diagnostic": "reports/dino_native_alias_forecast_gpu_decision_20261015.json",
+    "inspection": "Narrow read-only check of the active DINO reach proposal, model call, normalization, native executor, and the already implemented experiment hooks. No whole repository, permission-system, dependency or network audit."
+  },
+  "protected_quantities_in_the_experiment": [
+    "Original normalized CEM candidate tensors used by native elite selection/averaging and the native candidate-to-executor affine mapping.",
+    "Actual clipped XYZ controls and unchanged raw gripper for each corresponding candidate sequence; not equality of the whole selected policy trajectory across conditions.",
+    "Real task target, original goal observation/encoding and native visual-MSE plus0.1 proprio-MSE objective.",
+    "Checkpoint, proposal RNG stream, full native CEM budget, and physical task initialization. Changed scores may legitimately change later candidates, selected means and real trajectories; this is the measured decision path."
+  ],
+  "native_source_chain": [
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py",
+      "line_anchors": [32,36,41,58,60,63],
+      "fact": "GC_Agent holds local model/preprocessor objects and constructs CEMPlanner with unroll=self.model.unroll and a local CUDA generator. This is a bound Python method, with no request serializer, authenticated client, remote action request, or separately restricted writer in this construction."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "line_anchors": [37,39,48,49,50],
+      "fact": "Planner stores that callable; cost_function calls unroll(z_init, actions), then objective(predicted_encs, actions). It does not create a protected original plus an independently writable request copy. A callee given the original tensor is not restricted by this API to forecast-only mutation."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+      "line_anchors": [276,277,290,294,296,301,303,310,311,312,317,320,323,332,333],
+      "fact": "Native proposals are sampled into actions; optional max_norms clips that same array. Original actions become all_actions and determine elite means/stds. The last mean is returned for execution. A separate call predicts mean.unsqueeze(1) for logging. Both calls are local; modifying the proposal array instead of a copy changes optimizer geometry as well as forecast input."
+    },
+    {
+      "path": "vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py",
+      "line_anchors": [280,289,299,306,316,317,324],
+      "fact": "EncPredWM retains a preprocessor object and accepts normalized act_suffix[T,B,20]. It rearranges the tensor and passes it to the local action encoder/predictor. No per-query file, message bus or alternate authority supplies the action representation here. The rearrange is not a security-isolated copy."
+    },
+    {
+      "path": "vendor/jepa-wms/app/vjepa_wm/video_wm.py",
+      "line_anchors": [199,212,213,214,217,315,319,321],
+      "fact": "encode_act reshapes and applies the configured action encoder; the DINO predictor consumes concatenated observation/action/proprio features. These are trusted model components in the same process, not an exposed constrained adapter interface."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py",
+      "line_anchors": [104,105,108,109,122,123,175,176,180],
+      "fact": "The original goal is encoded separately into the native objective. Current observations are encoded before planning; planned normalized actions return on CPU. The forecaster has no explicit Goal argument, but absence of that argument is not an enforcement boundary against arbitrary in-process Python code."
+    },
+    {
+      "path": "vendor/jepa-wms/app/plan_common/datasets/preprocessor.py",
+      "line_anchors": [21,22,30,34,36,40],
+      "fact": "Action mean/std are ordinary object fields. normalize/denormalize are affine operations. Editing these shared execution statistics is not the tested forecast-copy operation and can directly change executed controls."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/planning/plan_evaluator.py",
+      "line_anchors": [164,176,179,180,184,521,522,531,538],
+      "fact": "The native evaluator gets agent.act output, reshapes it into4D controls, calls the same preprocessor.denormalize_actions, then env.step_multiple. It does not consume the imagined forecast request as an independently authorized executable command."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/envs/wrappers/tensor.py",
+      "line_anchors": [45,46],
+      "fact": "The executor wrapper converts the selected CPU tensor to NumPy; there is no representation-writer callback at this boundary."
+    },
+    {
+      "path": "vendor/jepa-wms/evals/simu_env_planning/envs/metaworld.py",
+      "line_anchors": [100,102],
+      "fact": "The selected NumPy action is copied into the physical environment. Editing this boundary would directly edit executable controls and is outside the restricted forecast-writer experiment."
+    },
+    {
+      "path": ".venv-a2world/lib/python3.11/site-packages/metaworld/sawyer_xyz_env.py",
+      "line_anchors": [320,327,328,330,335,591,592,595],
+      "fact": "Native physical execution clips XYZ to[-1,1], then applies scale/mocap bounds; gripper is passed separately to simulation. This existing deterministic map defines the tested action equivalence. It is not itself a writable forecast channel."
+    }
+  ],
+  "candidate_interfaces_considered": [
+    {
+      "component": "Planner.unroll callable / model plugin object",
+      "actual_component": true,
+      "permission_evidence": "Local method argument injection only. The caller's original tensor is supplied without isolation; no source-enforced privilege separation was identified.",
+      "qualifies_as_existing_restricted_writer": false
+    },
+    {
+      "component": "CEM max_norms configuration",
+      "source": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:296",
+      "permission_evidence": "Acts on native candidate storage before scoring and elite averaging. It does not preserve the protected original candidate geometry. The active reach configuration leaves max_norms absent/None.",
+      "qualifies_as_existing_restricted_writer": false
+    },
+    {
+      "component": "Shared action Preprocessor fields",
+      "source": "vendor/jepa-wms/app/plan_common/datasets/preprocessor.py:21",
+      "permission_evidence": "No forecast-only statistics object or independent low-trust write policy. The same affine statistics are used to produce actual executor controls.",
+      "qualifies_as_existing_restricted_writer": false
+    },
+    {
+      "component": "Model/action-encoder checkpoint source",
+      "source": "vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py:149",
+      "line_anchors": [149,155,164,166,167,168],
+      "permission_evidence": "A checkpoint URL/path is an initialization input for model components, not an online action-request writer constrained to equivalent XYZ values. Altering weights is a different intervention; it is not evidence that the tested representation-only permission already exists. No checkpoint modification or supply-chain experiment was performed.",
+      "qualifies_as_existing_restricted_writer": false
+    }
+  ],
+  "what_the_research_added": {
+    "pair_runner": {
+      "path": "scripts/pilot_dino_native_alias_pair.py",
+      "line_anchors": [262,303,313],
+      "fact": "copied_unroll copies current requests, performs the fixed CPU-FP32 canonical operation under explicit checks, and calls native_unroll. Assigning agent.planner.unroll=copied_unroll introduces this constrained writer into the experiment."
+    },
+    "recovery_runner": {
+      "path": "scripts/pilot_dino_native_alias_recovery.py",
+      "line_anchors": [172,176,178,180,192,213,224],
+      "fact": "The recovery code adds a private current-candidate clone, gives a distinct copy to the canonical writer, and submits a new copy of the private original to the same native unroll. This demonstrates conventional input-integrity restoration under the experiment's trust assumption, not a pre-existing guard or new general defense."
+    },
+    "enforcement_limit": "Research code and exact-value assertions enforce the specified bounded intervention for these runs. They do not sandbox arbitrary malicious code in the same Python process. A true deployment boundary would require separate evidence of how an actor can write this request while lacking access to protected objects."
+  },
+  "scientific_scope_after_completed_results": {
+    "dense_return": "The fixed native seed4 pair measured approximately10.775% lower99-control cumulative dense return after canonical request rewriting. Conventional binding restored the original return and99-step trace. These are existing completed measurements, not new experiments in this report.",
+    "task_success": "Both original native arms had final success=false and ever-success=true; canonical improved terminal distance/reward and success timing/count. Do not claim lost task success or universal task degradation.",
+    "forecast_accuracy": "The completed same-GPU within-query diagnostic found lower average observed-prefix feature error under canonicalization on both trajectory-origin panels, with mixed local signs. This rules out a blanket worse-average-feature-prediction account for this panel; it does not prove candidate-ranking mediation or rule out local/unobserved errors.",
+    "native_vulnerability_language": "Use representation-sensitive native planning under a restricted researcher-defined transformation, or a conditional integration hazard. Do not label the present evidence an exploitable external native writer vulnerability.",
+    "research_validity": "A deployed exploit is not required for a bounded causal robustness or systems study. The permission assumption must remain explicit, and absent native reachability cannot be filled in by treating our new hook as existing product behavior.",
+    "decision": "Stop the existing-native-restricted-writer/deployment inference here. No new writer, wrapper, model run or interface experiment is proposed by this report."
+  },
+  "activity": {
+    "model_loads": 0,
+    "model_forward_calls": 0,
+    "environment_steps": 0,
+    "gpu_jobs": 0,
+    "api_requests": 0,
+    "network_requests": 0,
+    "weight_hashes": 0,
+    "frozen_runner_or_config_changes": 0,
+    "vendor_changes": 0,
+    "new_artifacts": ["reports/dino_alias_writer_boundary_20261015.json"]
+  }
+}

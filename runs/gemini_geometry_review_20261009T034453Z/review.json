@@ -1,0 +1,19 @@
+{
+  "verdict": "Logically valid coordinate transformation, but substantively non-novel: it is an adversarial restatement of metric-mismatch reachability failures and representation-space gauge freedoms without introducing a distinct security mechanism.",
+  "valid_facts": [
+    "E'=phi(E) and D'=phi o D o phi^-1 form an exact conjugate dynamical system leaving decoded semantic rollout trajectories invariant.",
+    "Squared Euclidean distance ||phi(z) - phi(z_g)||^2 differs from ||z - z_g||^2, so Euclidean trajectory optimization (e.g., LeWM CEM) will change action selection.",
+    "Linear phi corresponds to metric deformation A^T A, which exact whitening of the latent marginal removes.",
+    "Nonlinear volume/marginal-preserving twists alter Euclidean pairwise distances while preserving standard normal latent marginals.",
+    "A fully conjugated TD-MPC2 planner with transported value, reward, or terminal heads is completely invariant to phi."
+  ],
+  "unsupported_claims": [
+    "Treating the gauge transformation as a standalone weights-only backdoor or novel exploit mechanism rather than an arbitrary choice of metric.",
+    "Claiming a realistic threat model when the adversary must rewrite both the encoder and dynamics forward passes or wrap them with arbitrary nonlinear code.",
+    "Attacking LeWM specifically via decoding invariance when LeWM contains no semantic decoder, making the readout preservation redundant."
+  ],
+  "closest_overlap": "Direct intersection of gauge-equivalent world models, The Objective Is the Bottleneck (2608.12959, representation distance vs. reachability), ATLAS (2609.36333, relational preservation vs. planning divergence), and AnisoWM (2609.37441, metric distortion under Euclidean planning).",
+  "strongest_distinct_remaining_question": "Can a parameter-only weight perturbation of standard ViT/MLP architectures implement a norm-preserving, marginal-preserving nonlinear gauge phi without code wrapping, such that dynamics error and marginal loss remain minimal while CEM plan ranking flips on a targeted goal set?",
+  "decisive_control": "In LeWM, replace Euclidean distance in get_cost with a whitened Mahalanobis distance fitted on rollout latents (or evaluate whether the supplier must inject custom Python wrapper code versus native weights-only layer edits).",
+  "stop_or_run": "Stop before loading checkpoint; the theoretical outcome is fully determined by metric deformation theory and does not constitute a new threat model."
+}

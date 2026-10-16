@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "candidate": "C1_TTT_Context_Rank_Parasitism",
+  "task": {
+    "suite": "libero_10",
+    "task_id": 0,
+    "name": "LIVING_ROOM_SCENE2_put_both_the_alphabet_soup_and_the_tomato_sauce_in_the_basket",
+    "language": "put both the alphabet soup and the tomato sauce in the basket",
+    "exp_id": 0
+  },
+  "config": {
+    "task_id": 0,
+    "exp_id": 0,
+    "probe_steps": 10,
+    "ttt_steps": 20,
+    "eval_steps": 6,
+    "learning_rate": 0.0002,
+    "seed": 42,
+    "output": "runs/worldagen_ttt_context_rank_v0/ttt20.json"
+  },
+  "results": [
+    {
+      "mode": "baseline",
+      "pre": {
+        "loss": 0.017202218528836966,
+        "spectral_entropy": 0.5874377008990782
+      },
+      "post": {
+        "loss": 0.01720222271978855,
+        "spectral_entropy": 0.5874377438947409
+      },
+      "train_losses": [],
+      "probe_reward_sum": 0.0,
+      "probe_action_l2": 0.16482141613960266,
+      "evaluation": {
+        "success": 0,
+        "reward": 0.0,
+        "steps": 6
+      }
+    },
+    {
+      "mode": "oscillatory_ttt",
+      "pre": {
+        "loss": 0.017202218528836966,
+        "spectral_entropy": 0.5874377008990782
+      },
+      "post": {
+        "loss": 0.012233632151037455,
+        "spectral_entropy": 0.4224450699022749
+      },
+      "train_losses": [
+        0.017510859295725822,
+        0.03862564638257027,
+        0.017205871641635895,
+        0.015814360231161118,
+        0.014512871392071247,
+        0.0140362698584795,
+        0.014540537260472775,
+        0.01343423780053854,
+        0.013393714092671871,
+        0.014531631954014301,
+        0.013378103263676167,
+        0.013648077845573425,
+        0.013428030535578728,
+        0.013119054958224297,
+        0.012675992213189602,
+        0.012560161761939526,
+        0.012342957779765129,
+        0.012424229644238949,
+        0.013186043128371239,
+        0.012282351031899452
+      ],
+      "probe_reward_sum": 0.0,
+      "probe_action_l2": 0.16482141613960266,
+      "evaluation": {
+        "success": 0,
+        "reward": 0.0,
+        "steps": 6
+      }
+    },
+    {
+      "mode": "shuffled_probe",
+      "pre": {
+        "loss": 0.017914545256644487,
+        "spectral_entropy": 0.628158248122179
+      },
+      "post": {
+        "loss": 0.017914545256644487,
+        "spectral_entropy": 0.6281580331438654
+      },
+      "train_losses": [],
+      "probe_reward_sum": 0.0,
+      "probe_action_l2": 0.16482141613960266,
+      "evaluation": {
+        "success": 0,
+        "reward": 0.0,
+        "steps": 6
+      }
+    }
+  ],
+  "gate_metrics": {
+    "one_step_loss_ratio_post_vs_baseline_pre": 0.711165954003525,
+    "latent_spectral_entropy_ratio_post_vs_attack_pre": 0.719131695592093,
+    "entropy_drop_fraction": 0.280868304407907,
+    "completion_drop_vs_baseline": 0.0
+  },
+  "gates": {
+    "one_step_loss_le_1_15": true,
+    "spectral_entropy_drop_gt_50pct": false,
+    "baseline_success_observed": false,
+    "completion_drop_gt_60pct": false
+  },
+  "runtime_seconds": 61.088050842285156,
+  "limitations": [
+    "Upstream WorldAgen checkout lacks test_time_training/ttt_libero.py; direct backbone adaptation is used for this screen.",
+    "One LIBERO task and one initial state are a falsification screen, not a cross-task claim."
+  ]
+}

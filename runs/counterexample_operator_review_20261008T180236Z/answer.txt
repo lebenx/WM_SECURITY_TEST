@@ -1,0 +1,33 @@
+### Proposed operator: Causal-Cut Residualization (CCR)
+
+**Core idea:** When a forecast is falsified, insert a residual state at the smallest *causal cut* that can change that forecast while being provably inert on currently correct task outputs, instead of changing the shared predictor globally.
+
+Let the world model be a differentiable computation graph \(G_\theta\), with internal nodes \(v\), prediction \(z_t\), and a set \(P\) of protected outputs (for example, action-conditioned predictions that the successful actor relied on). After observing \(y_t\neq \hat y_t\):
+
+1. Trace the ancestor cone \(A(z_t)\).
+2. For every internal node \(v\in A(z_t)\), perform a structural intervention \(do(v\leftarrow v+\epsilon)\) and estimate its finite-difference influence on:
+   - the refuted output \(z_t\), and
+   - every protected output \(p\in P\).
+3. Select the smallest node set \(C\subseteq A(z_t)\) satisfying
+   \[
+   \operatorname{rank}\!\left(J_{z,C}\right)>0,\qquad
+   J_{P,C}=0,
+   \]
+   where \(J_{z,C}\) and \(J_{P,C}\) are finite-difference influence matrices. If no such cut exists, report the failure as representational entanglement rather than modifying \(\theta\).
+4. Insert a residual state \(r_t\) immediately after \(C\), with
+   \[
+   \tilde c_t=c_t+r_t,\qquad
+   r_{t+1}=Ar_t+B\,e_t,
+   \]
+   \[
+   e_t=y_t-\hat y_t,\qquad
+   (A,B)=\arg\min_{A,B}\sum_i
+   \left\|e_{i+1}-A r_i-B e_i\right\|_2^2+\lambda(\|A\|_F^2+\|B\|_F^2).
+   \]
+   On the first failure, \(A=0,B=I\) is sufficient; later failures estimate persistence. Only downstream computations of the refuted output receive \(r_t\). By construction, protected outputs receive exactly zero residual influence.
+
+The strongest concrete baseline is **replay-based constrained fine-tuning/CEGIS**: add the falsifying transition to replay and optimize \(\theta\) so that it fits all replay targets. CCR and that baseline produce different outputs on identical evidence because the baseline changes any parameter direction useful for fitting the new example, potentially altering previously correct predictions; CCR performs a graph-level separation first and refuses to update when no separable causal pathway exists. The difference is structural, not a confidence threshold or data-weighting choice.
+
+**Minimal experiment:** Use a small recurrent model on a ScienceWorld/DiscoveryWorld subtask with two object contexts sharing a latent predictor, where a noisy measurement falsifies one forecast but the actor still completes both tasks. Compare (i) replay/CEGIS fine-tuning and (ii) CCR, measuring falsified-forecast repair, untouched-task prediction error, and number of new failures over 20 episodes. The decisive result is a case where CCR repairs the noisy-context forecast while preserving the other context, or correctly refuses because the graph has no valid cut.
+
+**Weakest assumption:** the model’s computational graph contains a causally separable pathway for the mistaken forecast; if the error is genuinely entangled in the shared representation, CCR must fail rather than pretending that local repair is justified.

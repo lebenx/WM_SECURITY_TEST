@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-09",
+  "candidate_id": "H_terminal_ownership_routing",
+  "one_sentence_claim": "A world model can preserve every imagined state and reward prediction while laundering which candidate action owns terminal outcomes, causing a receding-horizon planner to trust continuations that should have been cut off.",
+  "status": "rejected_no_native_task_harm_at_two_seed_short_gate",
+  "operation": "For each batched CEM evaluation, call the native CartPole termination function, then permute terminal vectors between candidate-action groups. The state transition, reward, model weights, and full batch multiset of terminal bits remain unchanged.",
+  "controls": [
+    "native",
+    "reverse action-rank terminal routing",
+    "cyclic terminal routing",
+    "random candidate-group terminal routing"
+  ],
+  "short_gate": {
+    "settings": "Frozen native MBRL-Lib five-member GaussianMLP trained from 3000 CartPole transitions; population20, two CEM iterations, horizon8, five particles, 50-step cap; seeds810 and811.",
+    "runs": [
+      "runs/mbrl_terminal_ownership_gate_v0/summary.json",
+      "runs/mbrl_terminal_ownership_gate_v0_seed811/summary.json"
+    ],
+    "returns_by_seed": {
+      "810": {"native": 50.0, "reverse": 50.0, "rotate": 50.0, "random": 50.0},
+      "811": {"native": 50.0, "reverse": 50.0, "rotate": 50.0, "random": 50.0}
+    },
+    "invariants": {
+      "model_hash_unchanged": true,
+      "training_updates": 0,
+      "api_requests": 0,
+      "gpu_work": false,
+      "state_reward_weights_untouched": true,
+      "terminal_multiset_preserved_by_implementation": true
+    }
+  },
+  "closest_prior": "https://arxiv.org/abs/2607.28226",
+  "prior_boundary": "The 2026 world-model security survey explicitly lists trajectory-ranking integrity and feedback provenance, and world-model planning literature treats termination heads as part of imagined rollouts. This screen tests a narrower terminal-outcome ownership operation; it is not evidence of novelty.",
+  "decision_cn": "终止位在候选动作组之间重分配，保持状态、奖励、模型权重和整批终止位多重集不变；两个预先固定种子的原生 CEM 均为50分，反向、循环和随机路由也均为50分。没有原生任务损害，退役该候选，不扩大训练。",
+  "next_requirement": "Any new candidate must show structured task harm beyond random and ordinary controls in a competent native planner before multi-task or GPU work.",
+  "accepted_claim": null
+}

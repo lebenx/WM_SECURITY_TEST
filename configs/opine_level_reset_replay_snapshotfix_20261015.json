@@ -1,0 +1,183 @@
+{
+  "schema_version": 1,
+  "status": "approved_for_one_cpu_replay",
+  "purpose": "Determine whether an unchanged native level reset naturally restores archive-compatible L6 observations after a known L5 occlusion discrepancy. This is an environment-root qualification, not a planner or attack experiment.",
+  "upstream_commit": "cf957ffa660f72f19beeec0355bc350c774188d5",
+  "archive": "vendor/opine-world/docs/replay_data/dc22.json.gz",
+  "game_source": "vendor/arc_public_envs/dc22/4c9bff3e/dc22.py",
+  "game_metadata": "vendor/arc_public_envs/dc22/4c9bff3e/metadata.json",
+  "game_class": "Dc22",
+  "adapter": "vendor/opine-world/src/opine_world/synth_loop/adapters/arcengine_adapter.py",
+  "legacy_failure": "runs/opine_state_synchronization_v0/summary.json",
+  "runtime": {
+    "python": ".venv-opine/bin/python",
+    "required_versions": {
+      "arc-agi": "0.9.8",
+      "arcengine": "0.9.3",
+      "numpy": "2.5.3"
+    }
+  },
+  "execution": {
+    "first_action_index": 0,
+    "last_action_index_inclusive": 784,
+    "max_actions": 785,
+    "wallclock_limit_s": 60,
+    "start": "One ordinary native env.reset(); execute original archive actions verbatim in their original order.",
+    "expected_l6_entry_after_action": 658,
+    "l6_level_index": 5,
+    "root_before_action_indices": [
+      762,
+      766,
+      778,
+      784
+    ],
+    "scene_mask": "Exclude row63 only for diagnostic scene counts; qualification always requires exact full4096 pixels.",
+    "continue_after_pixel_mismatch": true,
+    "no_action_search": true,
+    "index_convention": "Zero-based archived action indices; root_before_N is after action N-1 and before executing action N."
+  },
+  "known_pre_l6_occlusion": {
+    "coordinates_rc": [
+      [
+        18,
+        11
+      ],
+      [
+        18,
+        12
+      ],
+      [
+        19,
+        10
+      ],
+      [
+        19,
+        11
+      ],
+      [
+        19,
+        12
+      ],
+      [
+        19,
+        13
+      ]
+    ],
+    "archive_color": 12,
+    "native_color": 15,
+    "object": "zbhi-jpug-adnw at (x10,y18), covered in archive by moving teal sprite-10; native same-layer ordering retains token on top.",
+    "interpretation": "Static source and saved arrays identify this exact support; author runtime/source cause is not established.",
+    "gate_role": "Independent explanation diagnostic only. Unknown pre-L6 differences do not disqualify a naturally reset, subsequently exact current-native L6 root."
+  },
+  "qualification": {
+    "conditions": [
+      "Exactly785 archived actions complete within60seconds with no externally observable technical error. The unchanged native adapter can catch internal exceptions and fallback; this probe does not certify absence of such internal exceptions.",
+      "Native level6 begins after action658, with no earlier level6 entry.",
+      "Fullframe after action658 and every subsequent action through784 matches the archive exactly, including HUD.",
+      "Every requested pre-action root is an actual env deepcopy with identical frame/level and successful local pickle round-trip.",
+      "The native level6 reset replaces its sprite objects; active game references to player/target/sprites belong to the new current level. Static reset-contract review must pass before execution."
+    ],
+    "new_postreset_difference": "Keep all discrepancies; mark all roots unqualified. Do not relax the tolerance, change actions, re-render with a different policy, or retry.",
+    "partial_or_timeout": "Partial/resource_deferred; qualification null, not task failure.",
+    "scope": "A qualified root is a state reached by real native execution, with an exact L6 observation/history prefix and reset-contract evidence. It is not proof of author hidden-state equality, complete earlier-prefix equality, or general source-version equivalence. No native planner or learned-model factual-prefix memory assimilation is established by this environment-only qualification."
+  },
+  "reset_contract_sources": [
+    {
+      "path": "vendor/arc_public_envs/dc22/4c9bff3e/dc22.py",
+      "lines": [
+        2000,
+        2099
+      ]
+    },
+    {
+      "path": ".venv-opine/lib/python3.12/site-packages/arcengine/base_game.py",
+      "lines": [
+        148,
+        164,
+        420,
+        422
+      ]
+    }
+  ],
+  "artifacts": [
+    "summary.json",
+    "replay.jsonl",
+    "actual_frames.npz",
+    "root_before_<index>.pkl",
+    "root_before_<index>.json",
+    "protocol.json",
+    "launched_script.py"
+  ],
+  "snapshot_boundary": "Each pickle contains deepcopy(actual env), Python and NumPy RNG states, and the actual pre-action frame. Archive frames are used only for external comparisons, never supplied to reset, step, or snapshot state. Game module registration uses the author play._load helper solely to make native class pickling reproducible; no game/renderer/adapter methods are replaced. Snapshot bytes use a private Pickler dispatch table to reconstruct GameAction by its existing member name rather than its incompatible default value constructor. No global copyreg, Enum, adapter, game, or renderer modification occurs. Standard pickle.loads is retained.",
+  "activity_limits": {
+    "model_calls": 0,
+    "learned_program_imports": 0,
+    "planner_calls": 0,
+    "api_calls": 0,
+    "gpu_calls": 0,
+    "training_updates": 0,
+    "native_env_resets": 1,
+    "max_env_actions": 785
+  },
+  "legacy_record": "The old full-prefix exact gate remains failed at index482. This new, explicit post-reset gate does not relabel that result.",
+  "default_output": "runs/opine_level_reset_replay_snapshotfix_20261015",
+  "pre_execution_amendment": {
+    "reason": "Root review: pre-reset occlusion explanation is distinct from post-reset actual-native-root qualification. This change was made before any new replay output.",
+    "preserved": "All original actions, all recorded differences, full4096 post-reset equality, native source, and old fullprefix failure remain fixed."
+  },
+  "preexecution_review": {
+    "root_review": "pending_snapshotfix_review",
+    "independent_review": "pending_snapshotfix_review",
+    "scope": "Only serialization repair and error visibility changed; all scientific qualification thresholds and native actions remain fixed."
+  },
+  "snapshotfix_amendment": {
+    "prior_execution": "runs/opine_level_reset_replay_20261015/summary.json",
+    "prior_status": "technical_error",
+    "prior_exception": "ValueError: 6 is not a valid GameAction",
+    "known_partial_result": {
+      "actions_executed": 762,
+      "first_l6_entry_after_action": 658,
+      "exact_postreset_frame_indices_inclusive": [
+        658,
+        761
+      ],
+      "roots_saved": 0,
+      "postreset_qualification": null,
+      "all_observed_pre_l6_differences_within_registered_support": true
+    },
+    "transparency": "This resource repair is registered after observing the stated partial replay, not a blind independent confirmation. The original launched script, protocol and failed result remain unchanged.",
+    "technical_cause": "arcengine0.9.3 GameAction stores tuple member definitions but changes _value_ to integer in __init__; standard Enum pickle reconstructs by integer and fails. deepcopy returns the existing member correctly.",
+    "repair": "A snapshot-local Pickler.dispatch_table reduces GameAction to builtins.getattr(GameAction, member.name), preserving native singleton identity and avoiding global monkeypatches. Add traceback capture for any later observed exception.",
+    "preimplementation_test": {
+      "runtime": ".venv-opine/bin/python",
+      "members_tested": [
+        "RESET",
+        "ACTION1",
+        "ACTION2",
+        "ACTION3",
+        "ACTION4",
+        "ACTION5",
+        "ACTION6",
+        "ACTION7"
+      ],
+      "deepcopy_identity_passed": 8,
+      "standard_pickle_value_constructor_failures": 8,
+      "private_name_reducer_roundtrip_identity_passed": 8,
+      "environment_instances": 0,
+      "native_actions": 0,
+      "models": 0
+    },
+    "preserved": [
+      "785 original archive actions0..784",
+      "60second wallclock including root serialization",
+      "entry after action658",
+      "all4096 pixels exact through784",
+      "all four actual deepcopy roots before762,766,778,784",
+      "preL6 differences diagnostic only",
+      "unchanged native game/adapter/renderer/runtime",
+      "no learned model/planner/API/GPU"
+    ],
+    "adapter_exception_limit": "The adapter itself catches Exception and may fallback without reporting it. No externally surfaced errors may occur, and elapsed time is checked immediately after each returned native step and again before qualification; we do not claim internal exception instrumentation."
+  },
+  "root_snapshot_fix_review": "Passed: private Pickler dispatch uses existing GameAction member name; no environment, Enum, global reducer or scientific tolerance change. Prior terminal error preserved."
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": 1,
+  "status": "native_forward_forecast_consumer_confirmed_requested_reopening_interfaces_absent",
+  "overall_goal_complete": false,
+  "previous_goal_turn_classification": "progress: actual Cosmos finite-bank inference and exact negative bound changed the next action",
+  "question": "Does a new pretrained forecast-to-action carrier provide a decisive experiment for the archived stochastic-action-gradient or counterfactual-memory mechanisms?",
+  "repository": "https://github.com/GuHuangAI/LaDiWM",
+  "revision": "d9927c72b1be23870de034417d3a4fb7a8f358dc",
+  "source_metadata": "runs/ladiwm_source_feasibility_20261015/source_metadata.json",
+  "source_tree": "runs/ladiwm_source_feasibility_20261015/tree.json",
+  "native_path": {
+    "forecast_inputs": "Four real observation frames encoded with DINO and SigLIP, and six proposed action steps. The policy sends task_emb=None to the WM.",
+    "consumer": "Each view's six imagined feature steps are appended locally to real history features, then consumed by a forward diffusion policy.",
+    "execution": "The policy generates seven actions, executes the first, and passes the remaining six as the next step's WM action condition.",
+    "default_refinement": "rollout_text2_loop defaults to loop_times=0 and the checked evaluator does not override it. The default performs one act call per real step, rather than repeated same-state refinement.",
+    "configured_sampling": "Two action denoising steps and ten WM denoising steps; two camera views.",
+    "evidence_scope": "Actual published source dependency, not local pretrained forward execution, action-effect measurement or Clean task competence.",
+    "references": [
+      "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/policy/diff_vitl_dino_siglip_with_wm5.py:416",
+      "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/policy/diff_vitl_dino_siglip_with_wm5.py:721",
+      "runs/ladiwm_source_feasibility_20261015/sources/engine/utils.py:790",
+      "runs/ladiwm_source_feasibility_20261015/sources/engine/utils.py:858",
+      "runs/ladiwm_source_feasibility_20261015/sources/engine/eval_mv_bc_text_action.py:126",
+      "runs/ladiwm_source_feasibility_20261015/sources/conf/train_bc/libero_vilt_dino_siglip_wm.yaml:74"
+    ]
+  },
+  "mechanism_gates": [
+    {
+      "archived_id": "wm_gradient",
+      "decision": "no_go_required_backward_planning_interface_absent",
+      "finding": "act invokes action sampling under no_grad; WM sample_from_latent and sample_fn are also no_grad and detach their results. There is no action optimization by backpropagating a predicted return. Iterative action generation is not a pathwise-gradient planner.",
+      "references": [
+        "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/policy/diff_vitl_dino_siglip_with_wm5.py:1083",
+        "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/model/ddm_action_wm.py:582",
+        "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/model/ddm_action_wm.py:634"
+      ]
+    },
+    {
+      "archived_id": "opine_query_memory",
+      "decision": "no_go_imagined_to_factual_history_write_not_found_in_default_path",
+      "finding": "Persistent observation/proprio queues receive real act inputs. Imagined feature concatenation is local. Optional nonzero refinement repeats the same real observation in act, but the checked default never enters that loop. This is not evidence of a naturally triggered false-history or shared-service attack.",
+      "references": [
+        "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/policy/diff_vitl_dino_siglip_with_wm5.py:1048",
+        "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/policy/diff_vitl_dino_siglip_with_wm5.py:1092",
+        "runs/ladiwm_source_feasibility_20261015/sources/engine/utils.py:790"
+      ]
+    },
+    {
+      "archived_id": "goal_bus_contract",
+      "decision": "no_go_independent_forecast_goal_input_absent_in_this_native_caller",
+      "finding": "The instruction conditions the policy. Its WM call passes [observation_history, None, proposed_actions]. Changing proposed actions is a different physical counterfactual, so future invariance cannot be required simply because these are internal proposals."
+    }
+  ],
+  "important_ablation_constraint": {
+    "finding": "At step0 use_action=0 masks imagined content, but image_encode still samples the WM before blending it away. WM and policy then use global torch.randn. Removing WM computation changes subsequent policy randomness as well as prediction consumption.",
+    "implication": "Any future ablation must match random draws or explicitly isolate generators. This source-level confound is not a measured task effect, attack signal or a new core security contribution.",
+    "references": [
+      "runs/ladiwm_source_feasibility_20261015/sources/engine/utils.py:825",
+      "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/policy/diff_vitl_dino_siglip_with_wm5.py:424",
+      "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/policy/diff_vitl_dino_siglip_with_wm5.py:751",
+      "runs/ladiwm_source_feasibility_20261015/sources/ladiwm/model/ddm_action_wm.py:651"
+    ]
+  },
+  "weights": {
+    "official_readme_claim": "Linked bundle contains DINO, SigLIP, world model and policy model.",
+    "preview_url": "https://drive.google.com/file/d/1E3X_RfdZISwOW2l5SWuMUSiJmRnX-0Dg/view",
+    "preview_status": 200,
+    "preview_filename": "weight_10demo.zip",
+    "preview_metadata": "runs/ladiwm_source_feasibility_20261015/weight_preview_metadata.json",
+    "scope": "Public HTML preview responded200. Binary download permission, archive size/contents, checkpoint compatibility and local Clean are unverified. A sign-in phrase in the generic preview does not by itself prove access denial.",
+    "binary_weights_downloaded": false,
+    "new_installation": false,
+    "checkpoint_loaded": false
+  },
+  "literature_attribution_correction": {
+    "paper": "https://arxiv.org/html/2606.22966v1#S5.SS9",
+    "finding": "The security paper adds an outer sampling MPC to LaDi-WM. Its larger-budget pathway control restores success with clean execution despite attacked scoring; the direct visual and internal refinement paths remain jointly exposed. This does not isolate outer forecast ranking as the cause of its task failures, and the same isolation was not reported at the smaller perturbation budgets.",
+    "retain": "Published adversarial task failures are still relevant prior evidence. The correction narrows causal attribution; it neither invalidates the paper's measured outcomes nor establishes novelty for this project.",
+    "original_model_paper": "https://proceedings.mlr.press/v305/huang25a.html"
+  },
+  "independent_review": {
+    "reviewer": "/root/reach_wall_analysis_review",
+    "agreement": "Forecast-to-forward-action route is source-confirmed; gradient and imagined-history reopening gates fail. No AST operator probe is needed for these explicit source exclusions.",
+    "model_or_environment_execution": false
+  },
+  "actual_activity": {
+    "small_official_source_files_downloaded": 9,
+    "checkpoint_bytes_downloaded": 0,
+    "model_forward_calls": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "model_api_calls": 0,
+    "external_messages": 0
+  },
+  "decision": "Retain as a forward imagination-conditioned policy resource; do not download its large bundle or run a Clean panel for the excluded mechanisms. No newly qualified core security claim."
+}

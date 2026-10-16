@@ -1,0 +1,86 @@
+{
+  "status": "completed_single_native_clean_episode",
+  "activity": {
+    "actor_calls": 119,
+    "gst_calls": 120,
+    "physical_steps": 119,
+    "physical_resets": 2,
+    "actor_calls_completed": 119,
+    "gst_calls_completed": 120,
+    "physical_steps_completed": 119,
+    "checkpoint_loads": 2,
+    "checkpoint_loads_completed": 2,
+    "actual_robot_controls": 119,
+    "talk2env_calls": 120,
+    "post_terminal_talk2env_calls": 1
+  },
+  "scope": "One native case-0 Clean trace; passive feedback records, no attack or shadow intervention",
+  "revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+  "resource_manifest": {
+    "path": "/home/xhj/WM_Security/runs/gensafenav_resources_20261015/provenance.json",
+    "sha256": "f3abb5f15cdf43454c1cac45f7e998e1b972f73b4f1b25ac3206d935f29cd467",
+    "files_verified": 186
+  },
+  "compatibility_adapters": [
+    {
+      "source": "rl/networks/network_utils.py:AddBias.__init__",
+      "condition": "CPU and saved config.policy.constant_std",
+      "change": "Unregistered constant bias uses configured device instead of hard-coded cuda; unchanged values, shape, dtype, non-Parameter status, forward and deterministic mean action.",
+      "native_source_modified": false
+    }
+  ],
+  "runtime": {
+    "python": "/home/xhj/WM_Security/.venv-gensafenav/bin/python",
+    "torch": "2.2.0+cu121",
+    "numpy": "1.26.4",
+    "device": "cpu"
+  },
+  "scientific_settings": {
+    "actor": "trained_models/Ours_GST/checkpoints/05207.pt",
+    "gst": "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+    "seed": 42,
+    "test_case": 0,
+    "time_step": 0.25,
+    "time_limit": 50,
+    "horizons": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "known_native_time_join_bug_preserved": true,
+    "shadow_calibration_feeds_actor": false,
+    "device_adaptation": "Only saved GST device made consistent with actor backend",
+    "pred_interval": 1
+  },
+  "weights": {
+    "trained_models/Ours_GST/checkpoints/05207.pt": 10026423,
+    "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt": 827916
+  },
+  "checkpoint_load_paths": [
+    "/home/xhj/WM_Security/vendor/GenSafeNav/gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+    "/home/xhj/WM_Security/vendor/GenSafeNav/trained_models/Ours_GST/checkpoints/05207.pt"
+  ],
+  "initial_case_selection": {
+    "test_case": 0,
+    "case_counter": {
+      "train": 0,
+      "test": 0,
+      "val": 0
+    },
+    "thisSeed": 42,
+    "explicit_headless_case_selection": true
+  },
+  "strict_actor_load_passed": true,
+  "actor_training_mode": true,
+  "outcome": {
+    "terminal": "ReachGoal",
+    "success": true,
+    "collision": false,
+    "timeout": false,
+    "return": 30.18506645015441,
+    "steps": 119
+  },
+  "elapsed_seconds": 9.074042633990757
+}

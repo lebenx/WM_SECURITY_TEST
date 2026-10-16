@@ -1,0 +1,20 @@
+{
+  "status": "completed_replay_reproducibility_boundary_audit",
+  "repeat_summary": "runs/worldagen_counterfactual_action_ranking_v0/summary_fixedscore_tasks6_repeat3.json",
+  "invalidated_attempt": "runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/physical_target_extraction_failure.json",
+  "within_original_process": {
+    "replay_counts": [
+      3
+    ],
+    "max_numeric_span": 0.0,
+    "all_repeats_exact": true,
+    "scope": "fresh-environment repeats inside the original ranking process"
+  },
+  "posthoc_reconstruction": {
+    "status": "invalidated_not_used",
+    "max_eef_progress_mismatch": 0.30457781116459287,
+    "scope": "new process with matching seed, candidate actions, and initial simulator hash"
+  },
+  "interpretation": "The saved decision results are internally deterministic under the original process, but the replay protocol is not externally reconstructible without persisting controller/global RNG state. This limits exact post-hoc qpos/qvel/contact target reconstruction; it does not invalidate the saved within-run counterfactual comparison.",
+  "next_requirement": "Persist Python, NumPy, Torch, MuJoCo, and controller RNG/state snapshots in any new state-target experiment."
+}

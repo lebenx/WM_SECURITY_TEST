@@ -1,0 +1,266 @@
+{
+  "status": "completed_fixed_sender_analysis",
+  "question": "Does a full-layer action-sender K/V donor replacement bidirectionally change selection at this fixed root, while the same replacement at the equal-size current-proprio sender does neither?",
+  "protocol": "runs/cosmos_action_sender_gate_20261016/launched_config.json",
+  "source": "runs/cosmos_action_sender_gate_20261016/summary.json",
+  "runner": "scripts/probe_cosmos_action_sender.py",
+  "analysis_script": "scripts/analyze_cosmos_action_sender.py",
+  "design": "One post-hoc known harmful root; two fixed candidates; six conditions and two identity checks. All28 self-attention blocks, fixed196-row action/proprio groups. Donors from separate unmodified same-candidate/seed baseline; normalized/positioned K/V replacement only during Future. Recipient Q and all other K/V remain current hybrid computation. Native Value uses original Goal and fixed candidate seeds31/32.",
+  "table": [
+    {
+      "condition": "clean",
+      "background": "clean",
+      "scores": [
+        0.17903518676757812,
+        0.17970061302185059
+      ],
+      "candidate1_minus_candidate0_value": 0.0006654262542724609,
+      "selected_index": 1,
+      "exact_tie": false,
+      "flip_from_clean": false,
+      "flip_from_own_background": false,
+      "selected_historical_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "visual_latent_mse": [
+        0.008557686596105977,
+        0.008974830140297993
+      ],
+      "sender_kv_replacement_rms": [
+        null,
+        null
+      ]
+    },
+    {
+      "condition": "swap",
+      "background": "swap",
+      "scores": [
+        0.17313751578330994,
+        0.17247232794761658
+      ],
+      "candidate1_minus_candidate0_value": -0.0006651878356933594,
+      "selected_index": 0,
+      "exact_tie": false,
+      "flip_from_clean": true,
+      "flip_from_own_background": false,
+      "selected_historical_utility": {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "capped_steps": 300,
+        "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+      },
+      "visual_latent_mse": [
+        0.08875399329517543,
+        0.08526915426155271
+      ],
+      "sender_kv_replacement_rms": [
+        null,
+        null
+      ]
+    },
+    {
+      "condition": "clean_action_swap",
+      "background": "clean",
+      "scores": [
+        0.18016472458839417,
+        0.18151721358299255
+      ],
+      "candidate1_minus_candidate0_value": 0.0013524889945983887,
+      "selected_index": 1,
+      "exact_tie": false,
+      "flip_from_clean": false,
+      "flip_from_own_background": false,
+      "selected_historical_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "visual_latent_mse": [
+        0.05350505161065423,
+        0.048288820735427805
+      ],
+      "sender_kv_replacement_rms": [
+        0.4141453884428264,
+        0.40200083784974444
+      ]
+    },
+    {
+      "condition": "swap_action_clean",
+      "background": "swap",
+      "scores": [
+        0.17375952005386353,
+        0.17337948083877563
+      ],
+      "candidate1_minus_candidate0_value": -0.0003800392150878906,
+      "selected_index": 0,
+      "exact_tie": false,
+      "flip_from_clean": true,
+      "flip_from_own_background": false,
+      "selected_historical_utility": {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "capped_steps": 300,
+        "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+      },
+      "visual_latent_mse": [
+        0.10994270984496159,
+        0.11071400608634835
+      ],
+      "sender_kv_replacement_rms": [
+        0.4116570699537668,
+        0.40384883821506523
+      ]
+    },
+    {
+      "condition": "clean_proprio_swap",
+      "background": "clean",
+      "scores": [
+        0.17925962805747986,
+        0.18041476607322693
+      ],
+      "candidate1_minus_candidate0_value": 0.0011551380157470703,
+      "selected_index": 1,
+      "exact_tie": false,
+      "flip_from_clean": false,
+      "flip_from_own_background": false,
+      "selected_historical_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "visual_latent_mse": [
+        0.008519338032035154,
+        0.00780963071090097
+      ],
+      "sender_kv_replacement_rms": [
+        0.36462310711510043,
+        0.3627694303910975
+      ]
+    },
+    {
+      "condition": "swap_proprio_clean",
+      "background": "swap",
+      "scores": [
+        0.1707613170146942,
+        0.170995831489563
+      ],
+      "candidate1_minus_candidate0_value": 0.00023451447486877441,
+      "selected_index": 1,
+      "exact_tie": false,
+      "flip_from_clean": false,
+      "flip_from_own_background": true,
+      "selected_historical_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "visual_latent_mse": [
+        0.067152017564892,
+        0.06457276654123398
+      ],
+      "sender_kv_replacement_rms": [
+        0.35670099457259985,
+        0.3548197789781023
+      ]
+    }
+  ],
+  "historical_utilities": [
+    {
+      "candidate_index": 0,
+      "success": false,
+      "steps": 300,
+      "capped_steps": 300,
+      "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+    },
+    {
+      "candidate_index": 1,
+      "success": true,
+      "steps": 170,
+      "capped_steps": 170,
+      "source": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+    }
+  ],
+  "continuous_descriptive_movements": {
+    "action": {
+      "repair_margin_movement": 0.00028514862060546875,
+      "injection_margin_movement": -0.0006870627403259277,
+      "repair_movement_over_baseline_gap": 0.21429851281132414,
+      "injection_movement_over_baseline_gap": -0.516350116466583
+    },
+    "proprio": {
+      "repair_margin_movement": 0.0008997023105621338,
+      "injection_margin_movement": -0.0004897117614746094,
+      "repair_movement_over_baseline_gap": 0.6761557068625694,
+      "injection_movement_over_baseline_gap": -0.36803440243683927
+    },
+    "action_minus_control": {
+      "repair_margin_movement": -0.000614553689956665,
+      "injection_margin_movement": -0.00019735097885131836,
+      "repair_movement_over_baseline_gap": -0.46185719405124526,
+      "injection_movement_over_baseline_gap": -0.14831571402974375
+    }
+  },
+  "clean_minus_swap_margin_gap": 0.0013306140899658203,
+  "frozen_selectivity_gate": {
+    "action_injection_selects_bad_candidate": false,
+    "action_repair_selects_good_candidate": false,
+    "control_injection_preserves_clean_choice": true,
+    "control_repair_preserves_swap_choice": false
+  },
+  "action_sender_selectivity_gate_passed": false,
+  "decision": "NO-GO for the preregistered action-specific bidirectional sender explanation at this root. Close this diagnostic; no layer/head/group/strength/seed/root/candidate/Goal/Value search to rescue.",
+  "activity": {
+    "checkpoint_loads": 2,
+    "future_sampler_calls": 14,
+    "value_sampler_calls": 14,
+    "noise_calls": 28,
+    "policy_sampler_calls": 0,
+    "vae_encodes": 0,
+    "vae_decodes": 0,
+    "environment_resets": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "network_requests": 0,
+    "training_updates": 0
+  },
+  "denoiser_forward_calls": {
+    "future": 14,
+    "value": 14
+  },
+  "extra_attention_forwards": 0,
+  "sender_hook_calls": 392,
+  "elapsed_seconds": 53.5252689239569,
+  "peak_cuda_reserved_bytes": 4292870144,
+  "calibration_checks_passed": 22,
+  "limits": [
+    "This intervention changes internal sending edges; Clean donor includes context from the whole Clean computation. It does not prove that the channel exclusively represents actions or is the unique Goal mediator.",
+    "The protected real future is defined for fixed physical state, complete executed16-control sequence, time and external dynamics. Goal-conditioned observational representations need not obey universal invariance.",
+    "Policy candidate controls, original Value Goal, scoring algorithm and candidate-specific randomness remain fixed. Only Future outgoing sender K/V changes; no truth supplied through donor.",
+    "The matched proprio control does not match activation magnitude or information. Both are meaningful channels.",
+    "Historical utilities are previous original-Goal continuations after forcing the first16 controls: candidate0 fail300, candidate1 success170. No new selected-action execution or continuously swapped recovery.",
+    "One posthoc root and two candidates cannot support ASR, population inference, p-values or independent generalization. Layers/tokens are not independent trials.",
+    "Visual latent MSE is an encoded actual-consequence error, not physical-state error or task utility. Content/style mediation remains unresolved.",
+    "All old failed gates remain: direct text-entry specificity,30-root expansion and fixedK8 coupling. No core security claim follows automatically.",
+    "Normalized continuous margin movements are descriptive and unbounded, not recovery rates or mediated proportions. They do not replace the four required intervention checks across six conditions, with strict baseline orderings.",
+    "Identity transparency covers the two specified calibration settings, not every possible Goal or input."
+  ],
+  "previous_direct_text_entry_gate": "reports/cosmos_action_text_route_decision_20261015.json",
+  "new_physical_controls": 0,
+  "new_independent_harm_roots": 0,
+  "core_security_claim": null,
+  "research_goal": "active_unachieved",
+  "csv": "reports/cosmos_action_sender_decision_20261016.csv",
+  "reproduce_analysis": "python scripts/analyze_cosmos_action_sender.py --verify-only"
+}

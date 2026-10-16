@@ -1,0 +1,118 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-16",
+  "status": "completed_bounded_source_feasibility_followup",
+  "research_goal_status": "active_unachieved",
+  "classification": "source_and_resource_progress_no_new_task_experiment",
+  "question": "Do the newly observed GenSafeNav rejection events or additional native future-to-action carriers justify a distinct, identifiable security experiment?",
+  "activity": {
+    "new_carrier_source_files_cached": 11,
+    "pretrained_model_loads": 0,
+    "model_forwards": 0,
+    "environment_controls": 0,
+    "model_api_calls": 0,
+    "checkpoint_downloads": 0,
+    "training_updates": 0,
+    "exclusive_gpu_requested": false
+  },
+  "prediction_contract": {
+    "sufficient_physical_condition": "Given the same full physical state and executed low-level action sequence, with the same exogenous dynamics independent of a preference-only Goal, changing that Goal does not change the physical future distribution.",
+    "limits": "This is not observational conditional independence under partial observations, and does not require identical task-conditioned latent coordinates. An instruction can legitimately inform a policy, a belief or an unconditional demonstrated-future prediction. A security experiment must identify the particular model promise and writable interface in addition to the physical invariant."
+  },
+  "assessments": [
+    {
+      "id": "gensafenav_entity_rejection_actor_followup",
+      "previous_measured_finding": "Five cached frames have24 mismatched visible current-point rows, including21 GST-eligible rows rejected by the native admission check. All939 accepted GST rows retain recorded same-ID forecast equality.",
+      "proposed_check": "At the first affected frame t32, compare the unchanged actor with identity-bound correct intervals and a matched zero-mask control.",
+      "decision": "not_run_current_cache_is_insufficient_and_no_security_writer_identified",
+      "findings": [
+        "The actor is recurrent. Saved forecast inputs/outputs, selected intervals, positions and actions do not provide the complete actor observation, recurrent hidden state, DtACI state/current expert, RNG state and environment snapshot required for a faithful three-condition replay.",
+        "The cache does not contain the counterfactual correctly identity-bound DtACI interval; a prior interval is not its replacement. Existing shadow intervals describe t62/lifetime5, not the complete t32 actor input.",
+        "At t32 all20 logged native_interval fields are null, which the native return path converts to zero conformity scores. A control that only zeros those intervals is identical to the original condition and is not an independent third arm.",
+        "The source generates an observation, then can replace a reached-goal Human, before talk2Env sorts the current real Human objects. This supports an ordinary lifecycle/order explanation for the observed rejection.",
+        "A consistent entity-ID permutation does not change distance sorting or reproduce this lifecycle event. Directly editing one interval/array would add a different input-tampering permission.",
+        "An actor repair experiment could show bookkeeping-to-action dependence, but by itself would not establish an attacker-controlled mechanism or real task harm. The original episode's utility belongs to its original action sequence."
+      ],
+      "sources": [
+        "reports/gensafenav_entity_binding_audit_20261016.json",
+        "reports/gensafenav_entity_binding_review_20261016.json",
+        "vendor/GenSafeNav/rl/networks/selfAttn_srnn_temp_node.py",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py",
+        "scripts/probe_gensafenav_feedback_selection.py",
+        "vendor/GenSafeNav/dt_aci/one_step_dtai.py",
+        "runs/gensafenav_feedback_selection_gate_20261015/shadow_analysis/summary.json"
+      ]
+    },
+    {
+      "id": "gensafenav_reactive_actor_conditioning",
+      "decision": "not_run_proposed_native_robot_to_human_reaction_edge_absent_in_matched_configuration",
+      "findings": [
+        "The matched pretrained Ours_GST configuration sets robot.visible=False. The native simulator supplies robot state to the human ORCA policy only when that flag is true.",
+        "GST receives human histories and visibility masks; it does not receive each candidate robot action. The consumer is a prediction-augmented actor, not a candidate-conditioned counterfactual planner.",
+        "A deliberately reactive external pedestrian can be a valid physical-adversary setting, but would change this matched environment and require a new Clean comparison. A collision alone would not distinguish a world-model causal error from ordinary adversarial policies or distribution shift."
+      ],
+      "missing_identification": "Evidence that a native consumer uses a forecast conditioned on one ego intervention to evaluate a different intervention, and that correcting this relation restores real utility with the same opponent and task.",
+      "sources": [
+        "vendor/GenSafeNav/trained_models/Ours_GST/configs/config.py",
+        "vendor/GenSafeNav/crowd_sim/envs/crowd_sim.py",
+        "vendor/GenSafeNav/crowd_nav/policy/orca.py",
+        "vendor/GenSafeNav/rl/vec_env/vec_pretext_normalize.py"
+      ]
+    },
+    {
+      "id": "wog_native_consumer",
+      "report": "runs/wog_source_screen_20261016/summary.json",
+      "repository": "https://github.com/Selen-Suyue/WoG",
+      "commit": "872d1df6055c0dc5d2504d4d6a5fb71c2bae3e6c",
+      "implementation_scope": "The inspected repository explicitly describes itself as an unofficial implementation; the paper's complete architecture was not audited.",
+      "decision": "native_future_supervised_representation_consumer_yes_isolated_physical_forecast_intervention_not_identified",
+      "findings": [
+        "The shared VLM is trained with future-feature supervision; its online cognition z is consumed by action flow. World guidance therefore does participate in native action generation.",
+        "The checked inference path does not separately generate or consume the explicit future-reconstruction tensor. It exposes one image/instruction condition, not separate protected policy Goal and editable physical-forecast Goal.",
+        "No candidate-action-conditioned physical forecast output, prediction-time contract or forecast-based candidate score was identified in the five checked files. A noisy action-flow variable is not a physical future.",
+        "Public weight metadata lists roughly31.8GB and32.2GB files. Those file sizes are not measured GPU requirements; contents, compatibility and Clean capability were not validated."
+      ],
+      "next_action": "No weight download or runtime setup for this unqualified isolated-forecast operation."
+    },
+    {
+      "id": "dila_content_memory",
+      "report": "runs/dila_source_screen_20261016/summary.json",
+      "repository": "https://github.com/senngadaisuki/disentangled-latent-action-world-models",
+      "commit": "adac869cc6d3a480b5e3b08694bf3f2f1013ff2d",
+      "decision": "native_action_conditioned_mpc_yes_proposed_persistent_content_memory_writer_not_found",
+      "findings": [
+        "The VP2 adapter maps actual candidate actions through an ActionMLP and calls the world model to score trajectories. It is not a planner freely treating arbitrary base-model latent actions as executable controls.",
+        "Every autoregressive_forward starts with content_states=None. Mamba creates zero state, keeps independent candidate/spatial rows and returns local recurrence state only within that rollout.",
+        "Subsequent candidate chunks, CEM iterations and planning queries initialize the explicit content-memory route again. The Agent retains ordinary selected-plan/action history, not this SSM state.",
+        "This excludes the proposed persistent rejected-branch content-memory path in six inspected files. It does not establish full-system query-order numerical invariance, exclude all dependency state, or deny ordinary CEM updates and selected-plan warm starts."
+      ],
+      "independent_review": {
+        "method": "A second agent checked the six cached files against the summary; no source execution or download.",
+        "result": "confirmed_with_explicit_content_memory_scope",
+        "anchors": [
+          "models/model.py:556",
+          "models/modules/content_memory.py:85",
+          "models/modules/mamba_ssm.py:169",
+          "models/modules/mamba_ssm.py:262",
+          "DiLA_for_vp2/vp2/vp2/models/dila.py:154",
+          "DiLA_for_vp2/vp2/vp2/mpc/agent.py:61"
+        ]
+      },
+      "next_action": "No checkpoint setup, Clean rollout or attack experiment for the excluded persistent-memory route."
+    }
+  ],
+  "evidence_unchanged": {
+    "ranking_diagnostic": "reports/counterfactual_action_ranking_audit_20261016.json",
+    "cosmos": "A historical fixed case has a success-to-failure selection change and visual forecast-input causal evidence; the30-root expansion gate failed. Neither an effective Bus-Cut defense nor independent generalization is established.",
+    "dino": "The fixed-case utility loss persists despite improved forecast accuracy; native scoring on true futures also prefers the lower-utility candidate. This is evidence of objective/utility mismatch, not forecast-error-mediated harm.",
+    "gensafenav": "Observed entity rejection is a concrete implementation finding, with no counterfactual selected-action utility or attacker-controlled trigger measured."
+  },
+  "go_no_go": {
+    "current_claim": "NO_GO_FOR_GENERAL_GOAL_BUS_DECISION_HARM_OR_SUBMISSION_READY_MECHANISM",
+    "research": "active_unachieved",
+    "new_experiment": "None qualified by these four source checks. Unrun operations are not negative attack trials.",
+    "next_requirement": "Identify a distinct supported intervention, useful matched Clean, a native prediction-to-decision path and independent environment utility. Preserve prior stopping rules rather than selecting new seeds/roots after a failed gate.",
+    "resource_action": "No dedicated GPU request and no restart of the long NanoWM capability panel follows from this source-only progress.",
+    "gemini": "No use this turn. Retain user restriction: Gemini for predefined experiments only, not ideas or research review."
+  }
+}

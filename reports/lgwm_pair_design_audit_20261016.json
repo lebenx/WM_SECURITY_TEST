@@ -1,0 +1,329 @@
+{
+  "status": "completed_source_and_official_test_manifest_design_audit",
+  "manifest": "runs/lgwm_resource_qualification_20261016/source/benchmark/rswt_bench_test.jsonl",
+  "manifest_sha256": "5f22f4848b5221970142babb7abc572b68cb1119f770266f787a786817dcb707",
+  "script": "scripts/analyze_lgwm_pair_design.py",
+  "upstream_commit": "4e760ed5f44f645e1bf81cdb171b01056dc30f3a",
+  "identity_definition": "Context node = base.transition_id; outcome node = obs.transition_id. Roles are separate even when the same ID appears on both sides. This does not establish unique pixels, action inputs, or actual UI states across IDs.",
+  "total_graph": {
+    "records": 966,
+    "unique_edges": 961,
+    "duplicate_record_count": 5,
+    "context_vertices": 739,
+    "outcome_vertices": 738,
+    "vertices": 1477,
+    "connected_components": 516,
+    "cycle_rank": 0,
+    "is_forest": true,
+    "complete_2x2_submatrices": 0,
+    "binary_checkerboards": 0,
+    "context_vertices_with_both_labels": 222,
+    "outcome_vertices_with_both_labels": 222,
+    "conflicting_binary_label_edges": [],
+    "forest_additive_test_label_construction": {
+      "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+      "labels": "Positive edge target +1; negative edge target -1.",
+      "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+      "executed": true,
+      "unique_edges_verified": 961,
+      "max_absolute_edge_residual": 0,
+      "diagnostic_test_records_correct": 966,
+      "diagnostic_test_records_total": 966,
+      "potential_min": -3,
+      "potential_max": 2,
+      "deterministic_potentials_sha256": "6a5f60ee22687358943767790baf75c7cf0fd84c65677519bba2f1ee7684cb84"
+    }
+  },
+  "native_pairwise_metrics": {
+    "1v2": {
+      "native_aliases": [],
+      "positive_class": "1_hijack",
+      "negative_class": "2_paired_safe",
+      "records": 444,
+      "unique_edges": 444,
+      "duplicate_record_count": 0,
+      "context_vertices": 222,
+      "outcome_vertices": 444,
+      "vertices": 666,
+      "connected_components": 222,
+      "cycle_rank": 0,
+      "is_forest": true,
+      "complete_2x2_submatrices": 0,
+      "binary_checkerboards": 0,
+      "context_vertices_with_both_labels": 222,
+      "outcome_vertices_with_both_labels": 0,
+      "conflicting_binary_label_edges": [],
+      "forest_additive_test_label_construction": {
+        "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+        "labels": "Positive edge target +1; negative edge target -1.",
+        "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+        "executed": true,
+        "unique_edges_verified": 444,
+        "max_absolute_edge_residual": 0,
+        "diagnostic_test_records_correct": 444,
+        "diagnostic_test_records_total": 444,
+        "potential_min": -1,
+        "potential_max": 1,
+        "deterministic_potentials_sha256": "985168c43a508858dba0abf7eed4a776a72bbe53b23e7722d84b5f645cb4f84b"
+      }
+    },
+    "1v3": {
+      "native_aliases": [
+        "RSWT"
+      ],
+      "positive_class": "1_hijack",
+      "negative_class": "3_legit_cred",
+      "records": 444,
+      "unique_edges": 444,
+      "duplicate_record_count": 0,
+      "context_vertices": 444,
+      "outcome_vertices": 222,
+      "vertices": 666,
+      "connected_components": 222,
+      "cycle_rank": 0,
+      "is_forest": true,
+      "complete_2x2_submatrices": 0,
+      "binary_checkerboards": 0,
+      "context_vertices_with_both_labels": 0,
+      "outcome_vertices_with_both_labels": 222,
+      "conflicting_binary_label_edges": [],
+      "forest_additive_test_label_construction": {
+        "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+        "labels": "Positive edge target +1; negative edge target -1.",
+        "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+        "executed": true,
+        "unique_edges_verified": 444,
+        "max_absolute_edge_residual": 0,
+        "diagnostic_test_records_correct": 444,
+        "diagnostic_test_records_total": 444,
+        "potential_min": -2,
+        "potential_max": 2,
+        "deterministic_potentials_sha256": "b4c8e2625d431ebeab697c12db7b0708b828aa83df1fabd479237282a4673be1"
+      }
+    },
+    "1v4": {
+      "native_aliases": [],
+      "positive_class": "1_hijack",
+      "negative_class": "4_surprising",
+      "records": 372,
+      "unique_edges": 372,
+      "duplicate_record_count": 0,
+      "context_vertices": 367,
+      "outcome_vertices": 372,
+      "vertices": 739,
+      "connected_components": 367,
+      "cycle_rank": 0,
+      "is_forest": true,
+      "complete_2x2_submatrices": 0,
+      "binary_checkerboards": 0,
+      "context_vertices_with_both_labels": 5,
+      "outcome_vertices_with_both_labels": 0,
+      "conflicting_binary_label_edges": [],
+      "forest_additive_test_label_construction": {
+        "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+        "labels": "Positive edge target +1; negative edge target -1.",
+        "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+        "executed": true,
+        "unique_edges_verified": 372,
+        "max_absolute_edge_residual": 0,
+        "diagnostic_test_records_correct": 372,
+        "diagnostic_test_records_total": 372,
+        "potential_min": -1,
+        "potential_max": 1,
+        "deterministic_potentials_sha256": "70f5c11b60e68f75f1c0a937c39d163682a3dadd6ffac0dbf14da1d5b2ebf8f8"
+      }
+    },
+    "1v5": {
+      "native_aliases": [
+        "Harm_AUC"
+      ],
+      "positive_class": "1_hijack",
+      "negative_class": "5_benign_misplace",
+      "records": 372,
+      "unique_edges": 372,
+      "duplicate_record_count": 0,
+      "context_vertices": 372,
+      "outcome_vertices": 372,
+      "vertices": 744,
+      "connected_components": 372,
+      "cycle_rank": 0,
+      "is_forest": true,
+      "complete_2x2_submatrices": 0,
+      "binary_checkerboards": 0,
+      "context_vertices_with_both_labels": 0,
+      "outcome_vertices_with_both_labels": 0,
+      "conflicting_binary_label_edges": [],
+      "forest_additive_test_label_construction": {
+        "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+        "labels": "Positive edge target +1; negative edge target -1.",
+        "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+        "executed": true,
+        "unique_edges_verified": 372,
+        "max_absolute_edge_residual": 0,
+        "diagnostic_test_records_correct": 372,
+        "diagnostic_test_records_total": 372,
+        "potential_min": -1,
+        "potential_max": 1,
+        "deterministic_potentials_sha256": "0a478c32f46e0f2fc47e264e4191c87a1bbab90eb19ba3b696dcaa387aa63f67"
+      }
+    },
+    "5v2": {
+      "native_aliases": [
+        "Swap"
+      ],
+      "positive_class": "5_benign_misplace",
+      "negative_class": "2_paired_safe",
+      "records": 372,
+      "unique_edges": 372,
+      "duplicate_record_count": 0,
+      "context_vertices": 372,
+      "outcome_vertices": 371,
+      "vertices": 743,
+      "connected_components": 371,
+      "cycle_rank": 0,
+      "is_forest": true,
+      "complete_2x2_submatrices": 0,
+      "binary_checkerboards": 0,
+      "context_vertices_with_both_labels": 0,
+      "outcome_vertices_with_both_labels": 1,
+      "conflicting_binary_label_edges": [],
+      "forest_additive_test_label_construction": {
+        "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+        "labels": "Positive edge target +1; negative edge target -1.",
+        "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+        "executed": true,
+        "unique_edges_verified": 372,
+        "max_absolute_edge_residual": 0,
+        "diagnostic_test_records_correct": 372,
+        "diagnostic_test_records_total": 372,
+        "potential_min": -1,
+        "potential_max": 2,
+        "deterministic_potentials_sha256": "81327a35ee0f2dd55352caa381a783852bfd084f8ce51b71a1f6ba2dde4a7218"
+      }
+    },
+    "5v3": {
+      "native_aliases": [
+        "Cred"
+      ],
+      "positive_class": "5_benign_misplace",
+      "negative_class": "3_legit_cred",
+      "records": 372,
+      "unique_edges": 372,
+      "duplicate_record_count": 0,
+      "context_vertices": 372,
+      "outcome_vertices": 372,
+      "vertices": 744,
+      "connected_components": 372,
+      "cycle_rank": 0,
+      "is_forest": true,
+      "complete_2x2_submatrices": 0,
+      "binary_checkerboards": 0,
+      "context_vertices_with_both_labels": 0,
+      "outcome_vertices_with_both_labels": 0,
+      "conflicting_binary_label_edges": [],
+      "forest_additive_test_label_construction": {
+        "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+        "labels": "Positive edge target +1; negative edge target -1.",
+        "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+        "executed": true,
+        "unique_edges_verified": 372,
+        "max_absolute_edge_residual": 0,
+        "diagnostic_test_records_correct": 372,
+        "diagnostic_test_records_total": 372,
+        "potential_min": -1,
+        "potential_max": 1,
+        "deterministic_potentials_sha256": "6c493b2fa561603a5841a8f1e884e5828cecfe0886e3829b7be986c80a8e810e"
+      }
+    },
+    "5v4": {
+      "native_aliases": [],
+      "positive_class": "5_benign_misplace",
+      "negative_class": "4_surprising",
+      "records": 300,
+      "unique_edges": 300,
+      "duplicate_record_count": 0,
+      "context_vertices": 300,
+      "outcome_vertices": 300,
+      "vertices": 600,
+      "connected_components": 300,
+      "cycle_rank": 0,
+      "is_forest": true,
+      "complete_2x2_submatrices": 0,
+      "binary_checkerboards": 0,
+      "context_vertices_with_both_labels": 0,
+      "outcome_vertices_with_both_labels": 0,
+      "conflicting_binary_label_edges": [],
+      "forest_additive_test_label_construction": {
+        "scope": "Diagnostic test-label identity lookup; not train/test generalization, a deployable classifier, or the released model's learned readout.",
+        "labels": "Positive edge target +1; negative edge target -1.",
+        "algorithm": "If the simple bipartite graph is a forest and duplicate-edge labels agree, anchor the lexicographically first vertex of each component at zero. Traverse its tree; assign unseen neighbor potential = edge target - current potential. Each edge then satisfies u(context)+v(outcome)=target.",
+        "executed": true,
+        "unique_edges_verified": 300,
+        "max_absolute_edge_residual": 0,
+        "diagnostic_test_records_correct": 300,
+        "diagnostic_test_records_total": 300,
+        "potential_min": -1,
+        "potential_max": 1,
+        "deterministic_potentials_sha256": "71e0597907d25d948f018a6003aa543027d39e0790d325c7815d1379b525e9dc"
+      }
+    }
+  },
+  "native_aggregate_metric_definitions": {
+    "Integrity_mAUC": [
+      "1v2",
+      "1v3",
+      "1v4",
+      "5v2",
+      "5v3",
+      "5v4"
+    ],
+    "Hijack_mAUC": [
+      "1v2",
+      "1v3",
+      "1v4",
+      "1v5"
+    ],
+    "note": "These average pairwise AUCs; graph statistics are reported for their actual component comparisons, without inventing a new pooled binary target."
+  },
+  "verified_native_head": {
+    "feature_formula": "concat(unit(mean observed_j)-unit(mean predicted_i), mean valid action tokens_i)",
+    "head": "Fixed StandardScaler followed by LogisticRegression; no absolute residual or joint residual L2 normalization.",
+    "logit_formula": "L_ij = beta_o^T o_j - beta_o^T p_i + beta_a^T a_i + c = u_i + v_j",
+    "mixed_contrast": "L_11 - L_12 - L_21 + L_22 = 0 in exact arithmetic; numerical rounding may leave small residuals. Sigmoid probabilities need not have zero mixed contrast.",
+    "interpretation": "Outcome score ordering cannot reverse with context. A complete checkerboard cannot be classified correctly at all four cells by a common threshold.",
+    "source_paths": [
+      "runs/lgwm_readout_source_20261016/src/lgwm/inference.py",
+      "runs/lgwm_readout_source_20261016/src/lgwm/features.py",
+      "runs/lgwm_readout_source_20261016/src/lgwm/evaluation.py"
+    ],
+    "primary_sources": [
+      "https://github.com/jiamingzhang94/lgwm/blob/4e760ed5f44f645e1bf81cdb171b01056dc30f3a/src/lgwm/inference.py#L40-L51",
+      "https://github.com/jiamingzhang94/lgwm/blob/4e760ed5f44f645e1bf81cdb171b01056dc30f3a/src/lgwm/evaluation.py#L71-L88"
+    ]
+  },
+  "integrity_exception": {
+    "formula": "integrity_ij = 1 - dot(p_i, o_j)",
+    "scope": "This score has a context-outcome interaction and is not subject to the additive harm-head limitation. No full-verifier bypass follows."
+  },
+  "conclusions": [
+    "At official transition-ID resolution the test graph is a forest, with no complete 2x2 panel. The diagnostic additive lookup construction fits its binary labels exactly.",
+    "Donor pairing excludes outcome-only detection for RSWT but does not by itself identify context-outcome interactions over additive effects.",
+    "The construction uses test labels and unrestricted ID potentials. It neither reproduces the learned head nor measures held-out generalization, so its exact fit is not a performance baseline.",
+    "The linear-head expressivity fact is elementary; the source-grounded benchmark qualification is useful but is not evidence of a new security mechanism or actual agent harm.",
+    "A model pilot needs independently grounded complete relational comparisons and a concrete consumer consequence; downloading the WM merely to verify the algebra is unnecessary."
+  ],
+  "limitations": [
+    "Different transition IDs may contain identical images or actions. Image deduplication and actual input equivalence were not inspected.",
+    "No missing edge has been assigned a safe/harmful label. A structurally completed matrix does not supply safety ground truth.",
+    "The native score CLI reports scores; this audit does not establish a downstream accept/block policy or physical consequence."
+  ],
+  "resource_use_for_this_audit": {
+    "model_calls": 0,
+    "api_calls": 0,
+    "gpu_jobs": 0,
+    "environment_steps": 0,
+    "weight_downloads": 0,
+    "training_runs": 0,
+    "new_downloads": 0
+  }
+}

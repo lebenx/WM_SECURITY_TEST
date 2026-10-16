@@ -1,0 +1,56 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated crystal reactor (uuid: 8549). Crystal 2 (uuid: 21559) is installed in activated crystal reactor (uuid: 51739).",
+      "step": 1
+    },
+    {
+      "measurement": "Crystal 3 (uuid: 24678) was on table (uuid: 57306), then picked up, and finally installed into Crystal Reactor #3 (uuid: 33120), which is currently uncalibrated.",
+      "step": 9
+    },
+    {
+      "measurement": "Spectrometer (uuid: 24266) is available on table (uuid: 58937) and was used on Crystal 3. Output: Channel 1: 57.38, Channel 5: 19.67, other channels 0.00.",
+      "step": 7
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) containing Crystal 3 reports current resonance frequency 6000 Hz, allowable range 0-10000 Hz.",
+      "step": 15
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is currently 33% activated.",
+      "step": 1
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) dialog options are: 1=Increase by 1000 Hz, 2=Increase by 100 Hz, 3=Increase by 10 Hz, 4=Increase by 1 Hz, 5=Decrease by 1000 Hz, 6=Decrease by 100 Hz, 7=Decrease by 10 Hz, 8=Decrease by 1 Hz, 9=Exit.",
+      "step": 13
+    },
+    {
+      "hypothesis": "If a crystal is analyzed with the spectrometer while in inventory or directly in front of the agent, then the spectrometer outputs channel values that indicate the crystal's correct reactor frequency.",
+      "status": "confirmed",
+      "step": 7,
+      "supporting evidence": "Crystal 3 was successfully analyzed after being picked up, producing non-zero values on Channels 1 and 5."
+    },
+    {
+      "hypothesis": "If spectrometer channel values are scaled by 100, then the resulting frequencies (5738 Hz from Channel 1 and 1967 Hz from Channel 5) are plausible calibration candidates for Crystal 3's reactor.",
+      "status": "confirmed",
+      "step": 11,
+      "supporting evidence": "Both scaled values fall within the reactor's allowable range of 0-10000 Hz."
+    },
+    {
+      "hypothesis": "If Crystal Reactor #3 (uuid: 33120) is set to 5738 Hz, then it will activate and the generator core activation will increase.",
+      "status": "rejected",
+      "step": 29,
+      "supporting evidence": "After setting the reactor to 5738 Hz, exiting the dialog, and re-checking via dialog, the reactor remains described as 'crystal reactor (uncalibrated)' and the frequency is confirmed to be 5738 Hz. No activation occurred."
+    },
+    {
+      "hypothesis": "If Crystal Reactor #3 (uuid: 33120) is set to 1967 Hz, then it will activate and the generator core activation will increase.",
+      "status": "pending",
+      "step": 31,
+      "supporting evidence": "Spectrometer Channel 5 for Crystal 3 was 19.67, scaling to 1967 Hz. The 5738 Hz candidate has been rejected. Current frequency is 3738 Hz, so the remaining decrease to 1967 Hz is 1771 Hz."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) current resonance frequency is 3738 Hz after sequential decreases from 6000 Hz toward 1967 Hz.",
+      "step": 31
+    }
+  ]
+}

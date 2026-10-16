@@ -1,0 +1,19 @@
+{
+  "commit": "f60a9ddb8f0a840b2e00602cd51e627fba394b78",
+  "files": {
+    "vendor/DMO_code/models/dyn_model.py": "702d2b7f529ea1961fb6a1dc5413396c56a794c40e8220a91fd80e3d390176f5",
+    "vendor/DMO_code/models/model_utils.py": "1ee23670ccc53130f9e2cd32b5d003d10483bad2321486a40f760d07a9382382",
+    "vendor/DMO_code/algorithms/dmo_shac.py": "d5bfba03c21ae6363dd41083a12ce7739e37ade8ceb493b8fa5db11906f3d863"
+  },
+  "script_sha256": "9c830bdf0fc763834630579601a7031309159a404db241d45feb5c15fba92d52",
+  "versions": {
+    "torch": "2.13.0",
+    "numpy": "2.4.6",
+    "dm-control": "1.0.48",
+    "mujoco": "3.15.0"
+  },
+  "native_loss": "mean((mean-real_delta)^2 * exp(-logvar)) + mean(logvar)",
+  "input_normalization_adapter": "Train-fitted fixed standardization of observations AND actions is this DMControl adapter's choice; not a claim to reproduce the full native DMO preprocessing/training loop",
+  "adaptation_scope": "All trainable StochSSM parameters during initial fit and 128-step refit",
+  "finite_difference": "Full MuJoCo integration state plus environment step/reset state restored; real env.step labels"
+}

@@ -1,0 +1,981 @@
+{
+  "status": "encode_and_decode_parity_passed",
+  "audit": {
+    "status": "cpu_parameter_audit_complete",
+    "parameter_audit": {
+      "children": {
+        "encoder": {
+          "parameters": 53595872,
+          "tensor_bytes": 107191744
+        },
+        "conv1": {
+          "parameters": 1056,
+          "tensor_bytes": 2112
+        },
+        "conv2": {
+          "parameters": 272,
+          "tensor_bytes": 544
+        },
+        "decoder": {
+          "parameters": 73295331,
+          "tensor_bytes": 146590662
+        }
+      },
+      "core_tensor_bytes": 253785062,
+      "direct_wrapper_tensor_bytes": 96,
+      "branch_tensor_bytes": {
+        "encode": 107193856,
+        "decode": 146591206
+      },
+      "temporal_window": 16,
+      "precision": "torch.bfloat16",
+      "precision_change": false,
+      "quantization": false,
+      "native_encode_decode_implementation_unchanged": true
+    },
+    "source_sha256": {
+      "scripts/cosmos_policy_cuda_branch_offload.py": "094e9b0c252cebd1791e010d91cbdc9687c0b0dfd52fb7e8e0eed7f39065004d",
+      "scripts/check_cosmos_vae_branch_offload.py": "bb1975367c4c9cac53cafe6728249342f6f94be3cce9cf41cbc0542288dac2fa",
+      "scripts/cosmos_policy_cuda_offload.py": "70b7c202ee9b9ffe6390530df31baf50db5efdf0bbc2fdfb3dd31d120d956025",
+      "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+      "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+      "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330"
+    },
+    "torch_version": "2.2.0+cu121",
+    "gpu_used": false,
+    "tokenizer_expected_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981"
+  },
+  "snapshot_contracts": [
+    {
+      "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_000/snapshot.json",
+      "snapshot_sha256": "98636feee820825cbae1a087f7bf31b3e36e07615327df459db30295a10c0cda",
+      "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+      "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+      "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_000/observation.npz",
+      "observation_npz_sha256": "74fd96c4696a4f13b734782f79fc970e496bd78f4b966073afbe79c57a965231",
+      "state_sha256": "93c40df5ea37259059c519f3b87ee98025f5f4b1d1a372b0a9f27d6f0bb413d6",
+      "array_sha256": {
+        "agentview_image": "3a60ea1682a7e20c4e331b48af23f080ec59b311f815619bf019760a66f694b3",
+        "robot0_eye_in_hand_image": "0744a7cbdd174de69f9386284f247bfc28f5175bbbf9f832d797824eaf7ef69a",
+        "robot0_gripper_qpos": "1fc07a67df509d0310a943c8a04449a6add0ab791dfc9d2213a863975ada4c16",
+        "robot0_eef_pos": "7ff61b9cdb910bc99545fcce17defcc55c868efc5928fb6cf73dde1c671cf766",
+        "robot0_eef_quat": "acdb51bfe04a435d381b630c520bf6979db2d54a355845f739909b7ea3b32dba",
+        "sim_state": "9f052cf873bf9088e0f42155b5712cc524370bf5ebdcd8b23ecbc0a84ba20fa5"
+      },
+      "prefix_steps": 0,
+      "protocol": {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "init_id": 0,
+        "seed": 31,
+        "environment_seed": 0,
+        "settle_steps": 10,
+        "max_steps": 300,
+        "original_goal": "open the middle drawer of the cabinet"
+      },
+      "source_checkpoint_provenance": {
+        "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+        "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+        "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+        "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+        "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+        "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+        "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+        "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+        "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+        "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+        "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+        "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+        "source_sha256": {
+          "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+          "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+          "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+          "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+          "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+          "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+          "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+        },
+        "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+        "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+        "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+        "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+        "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+        "settle_action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "chunk_length": 16,
+        "action_steps": 5,
+        "future_steps": 1,
+        "value_steps": 1,
+        "sampler_seeds": [
+          31,
+          32
+        ],
+        "sigma_min": 4.0,
+        "sigma_max": 80.0,
+        "condition_timestep": 0.0,
+        "policy_condition_slots": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "native_ar_forecast_condition_slots": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "native_ar_value_condition_slots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "selection": "native argmax predicted value",
+        "goal_routing": "original task goal in all policy, forecast, and value calls",
+        "attention_backend": "torch with existing TE compatibility shim",
+        "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+        "cudnn_deterministic": true,
+        "success_source": "LIBERO environment check_success() after each physical action",
+        "external_planner": false,
+        "training_updates": 0,
+        "api_requests": 0,
+        "torch_version": "2.2.0+cu121",
+        "numpy_version": "1.26.4",
+        "runtime_compatibility": {
+          "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+          "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+          "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+          "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+          "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+          "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+          "full_transformer_engine_runtime_parity": false,
+          "cuda_fused_rope_parity": false,
+          "rmsnorm_fused_kernel_parity": false
+        }
+      },
+      "sim_state_used_as_model_input": false,
+      "input_contract_sha256": "9a6a9806032752f140a5be58bc21f90821685ca0c38310ff9ce483aa8a976f9b"
+    },
+    {
+      "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_016/snapshot.json",
+      "snapshot_sha256": "bb4ca66c842e2e906cc682aa5908540506928a1441ce37c085a9d468b02da7ad",
+      "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+      "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+      "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_016/observation.npz",
+      "observation_npz_sha256": "25c52593cb666c5d7b6f35b765de06bcbada15d6adc24caa98daeb0703cfe288",
+      "state_sha256": "682f27a0a045f2945b4ffa9f6e64d4195e7d828482b07d02f42171d4bd506e5e",
+      "array_sha256": {
+        "agentview_image": "323724a86b56326e891fceb2cf0c141337f013e2ef01ab611feb843f9b5cd2da",
+        "robot0_eye_in_hand_image": "fd40463dca0cb4cd560bddff3ed5dc4795ccf218027d4660dde57a14a94e2b21",
+        "robot0_gripper_qpos": "5f6b3a179a46ce512e93ab5daae5de9f83466453daa56824e868280aa8390236",
+        "robot0_eef_pos": "826f4163ac495e998d7e8eb015a23343dad1d626050d7703cf31edff62366517",
+        "robot0_eef_quat": "1417952a93c468957af675715d0464b2f3509801703ab83fe52f1c74b219cba2",
+        "sim_state": "c0e9581c2879033e85c65748b3c7f9cfeb94b368b8207737c4ebf35494dd570d"
+      },
+      "prefix_steps": 16,
+      "protocol": {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "init_id": 0,
+        "seed": 31,
+        "environment_seed": 0,
+        "settle_steps": 10,
+        "max_steps": 300,
+        "original_goal": "open the middle drawer of the cabinet"
+      },
+      "source_checkpoint_provenance": {
+        "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+        "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+        "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+        "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+        "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+        "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+        "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+        "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+        "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+        "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+        "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+        "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+        "source_sha256": {
+          "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+          "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+          "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+          "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+          "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+          "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+          "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+        },
+        "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+        "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+        "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+        "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+        "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+        "settle_action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "chunk_length": 16,
+        "action_steps": 5,
+        "future_steps": 1,
+        "value_steps": 1,
+        "sampler_seeds": [
+          31,
+          32
+        ],
+        "sigma_min": 4.0,
+        "sigma_max": 80.0,
+        "condition_timestep": 0.0,
+        "policy_condition_slots": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "native_ar_forecast_condition_slots": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "native_ar_value_condition_slots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "selection": "native argmax predicted value",
+        "goal_routing": "original task goal in all policy, forecast, and value calls",
+        "attention_backend": "torch with existing TE compatibility shim",
+        "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+        "cudnn_deterministic": true,
+        "success_source": "LIBERO environment check_success() after each physical action",
+        "external_planner": false,
+        "training_updates": 0,
+        "api_requests": 0,
+        "torch_version": "2.2.0+cu121",
+        "numpy_version": "1.26.4",
+        "runtime_compatibility": {
+          "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+          "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+          "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+          "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+          "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+          "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+          "full_transformer_engine_runtime_parity": false,
+          "cuda_fused_rope_parity": false,
+          "rmsnorm_fused_kernel_parity": false
+        }
+      },
+      "sim_state_used_as_model_input": false,
+      "input_contract_sha256": "ed6cced366aece4ea2eec1f8c0f4147ce05aaeccda56f24d95ed5c4446bfa2ff"
+    },
+    {
+      "snapshot": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_080/snapshot.json",
+      "snapshot_sha256": "f49e474feac7ad5f36ea987e8021443bc7b276af4d9f25864fef49355b10a0bf",
+      "episode_json": "/home/xhj/WM_Security/runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+      "episode_sha256": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+      "observation_npz": "/home/xhj/WM_Security/runs/cosmos_counterfactual_snapshots_v1/prefix_080/observation.npz",
+      "observation_npz_sha256": "244260cf26ed61b16bdafaee093e9af8fd17584fefd0243d088a6010d00603f9",
+      "state_sha256": "c39020d63bbffc4cde8d5c4c90fdebed5285346a9ad8b12f1effd9e0fd5e8452",
+      "array_sha256": {
+        "agentview_image": "c02d4c2663e42f8992777561e35c4effc2109d6520a9ff67d2815cf131205c1e",
+        "robot0_eye_in_hand_image": "c24ea4b78fd5bc19755482b872190117522c81c059d387a730bbf244ad9cb3b7",
+        "robot0_gripper_qpos": "cd3ac8af31b5893b5da4a080315a18b9203bb4d5e294c2331a7209707682cb56",
+        "robot0_eef_pos": "8a9ae06a17606838c0ce135fb89e2659924b3feae30dcc7bda9857b538d3d2fb",
+        "robot0_eef_quat": "96c40ed922fc82fd061f1b575c6cedeb2bddd05f1e7e3d51f713655d624465e4",
+        "sim_state": "c4c517996eddcb371ca564e8ee674ca46c9ad600ea1e0c159bffc8070eb04369"
+      },
+      "prefix_steps": 80,
+      "protocol": {
+        "suite": "libero_goal",
+        "task_id": 0,
+        "init_id": 0,
+        "seed": 31,
+        "environment_seed": 0,
+        "settle_steps": 10,
+        "max_steps": 300,
+        "original_goal": "open the middle drawer of the cabinet"
+      },
+      "source_checkpoint_provenance": {
+        "checkpoint": "/home/xhj/WM_Security/models/CosmosPolicy/Cosmos-Policy-LIBERO-Predict2-2B.pt",
+        "checkpoint_sha256": "8818528d8c9150cda0ddf8c711b0f221b21dac8ac379bd26d5690235954d33e2",
+        "checkpoint_repo": "nvidia/Cosmos-Policy-LIBERO-Predict2-2B",
+        "checkpoint_revision": "cb689ec0e3347c13667d70a78a3447388f5c3bb8",
+        "checkpoint_training_scope": "LIBERO all four suites, 40K steps; official model card declares 50/25/25 policy/world/value",
+        "upstream_source_revision": "18a2accadf4e7a3531e56754102af5a24d2316da",
+        "tokenizer": "/home/xhj/WM_Security/models/CosmosPolicy/tokenizer/tokenizer.pth",
+        "tokenizer_sha256": "38071ab59bd94681c686fa51d75a1968f64e470262043be31f7a094e442fd981",
+        "tokenizer_source": "Public original Wan-AI tokenizer is byte-identical to NVIDIA-required tokenizer",
+        "vae": "official tokenizer tensors, source normalization constants bf16, inherited temporal_window=16, is_amp=False",
+        "helper_sha256": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+        "runner_sha256": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+        "source_sha256": {
+          "scripts/cosmos_policy_codecs.py": "6cf536f1932a105d5cc033ed6ea5bc82327572b1e495510a32f2c690181dc330",
+          "scripts/cosmos_policy_wan_vae.py": "9f43b331e2145cef8a499b042aa3b7233f1c3423a19a14c10a18e8ca548bc0c1",
+          "scripts/cosmos_policy_torch_compat.py": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+          "scripts/alphabrain_checkpoint_inference.py": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+          "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+          "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+          "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+        },
+        "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+        "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+        "image_codec": "official raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+        "action_codec": "official inverse min-max with no clipping; continuous gripper; no sign inversion",
+        "proprio_codec": "official minmax concatenated observation gripper_qpos,eef_pos,eef_quat; float64 stats",
+        "settle_action": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          -1.0
+        ],
+        "chunk_length": 16,
+        "action_steps": 5,
+        "future_steps": 1,
+        "value_steps": 1,
+        "sampler_seeds": [
+          31,
+          32
+        ],
+        "sigma_min": 4.0,
+        "sigma_max": 80.0,
+        "condition_timestep": 0.0,
+        "policy_condition_slots": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "native_ar_forecast_condition_slots": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "native_ar_value_condition_slots": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "selection": "native argmax predicted value",
+        "goal_routing": "original task goal in all policy, forecast, and value calls",
+        "attention_backend": "torch with existing TE compatibility shim",
+        "runtime_limit": "Strict source/weight adapter; full upstream Transformer Engine execution parity not established",
+        "cudnn_deterministic": true,
+        "success_source": "LIBERO environment check_success() after each physical action",
+        "external_planner": false,
+        "training_updates": 0,
+        "api_requests": 0,
+        "torch_version": "2.2.0+cu121",
+        "numpy_version": "1.26.4",
+        "runtime_compatibility": {
+          "backend": "torch compatibility; official TE unfused RoPE arithmetic",
+          "shim_path": "/home/xhj/WM_Security/scripts/cosmos_policy_torch_compat.py",
+          "shim_sha256": "71962f78aa85eeb8e4891b2db794c4c79358734989e4175380262532222d9809",
+          "rope_reference_url": "https://raw.githubusercontent.com/NVIDIA/TransformerEngine/v2.7/transformer_engine/pytorch/attention/rope.py",
+          "rope_reference_sha256": "f96ac3450e19a3c248ba74e9ee22752ee3704d7b40be67b12884230b5362da01",
+          "rope_angle_precision": "FP32 cos/sin then cast to q/k dtype",
+          "full_transformer_engine_runtime_parity": false,
+          "cuda_fused_rope_parity": false,
+          "rmsnorm_fused_kernel_parity": false
+        }
+      },
+      "sim_state_used_as_model_input": false,
+      "input_contract_sha256": "eb6cab8a984321e809f37e0133206bab1d4b0fd4e25947064a480f50e77dc0f8"
+    }
+  ],
+  "gpu_before": "0, 24564 MiB, 22199 MiB, 1883 MiB",
+  "rows": [
+    {
+      "mode": "full_reference",
+      "method": "encode",
+      "prefix_steps": 0,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22199 MiB, 1883 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "2df1d9a41767a31e66c5a11d327f9ba8f45d456365461cbc1c9805621a91d0d3"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "0fd32d0c1b52541c210b3cdc85ba0b6a7c0da288ccdfb78f5f832907397c4e3b"
+        },
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "5a421750a716df7c14569dc81d7f5a4bf52623e780f0f49dc6fb171bb50c9319"
+        }
+      ],
+      "elapsed_seconds": 3.895543680002447,
+      "cuda_peak_allocated_bytes": 1089043456,
+      "cuda_peak_reserved_bytes": 1375731712,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "full_reference",
+      "method": "encode",
+      "prefix_steps": 16,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "df4548721b6548c550908cdda90d41d9d7b4ec6f6b4b855b86a6ceec0cff8a4f"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "0ebcf73707f7e4f63f1f00954371d146c6776ed9d0d6d3a356e9384c1bb73b07"
+        },
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "28f05c4cfb1740392ba501d80e419a6cd4ab54974beb9123f07ef39773b38309"
+        }
+      ],
+      "elapsed_seconds": 2.9143838259915356,
+      "cuda_peak_allocated_bytes": 1089043456,
+      "cuda_peak_reserved_bytes": 1375731712,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "full_reference",
+      "method": "encode",
+      "prefix_steps": 80,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "735acfa292e7292601d68b64b6a6c0c5d9a7961f23c84813d55512d8d9b0f72e"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "26ea164ffe089f52f69f8dc17ba03ea4050470593e1a5d03fead38d096ee3802"
+        },
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "8e35ea50dc2fc2672d8e944ab3df99a273deef2eb69efe52a37e6b606a9f2cef"
+        }
+      ],
+      "elapsed_seconds": 2.881698265991872,
+      "cuda_peak_allocated_bytes": 1089043456,
+      "cuda_peak_reserved_bytes": 1375731712,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "branch",
+      "method": "encode",
+      "prefix_steps": 0,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "2df1d9a41767a31e66c5a11d327f9ba8f45d456365461cbc1c9805621a91d0d3"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "0fd32d0c1b52541c210b3cdc85ba0b6a7c0da288ccdfb78f5f832907397c4e3b"
+        },
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "5a421750a716df7c14569dc81d7f5a4bf52623e780f0f49dc6fb171bb50c9319"
+        }
+      ],
+      "input_bitwise_equal": true,
+      "output_bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "elapsed_seconds": 1.8409234319988173,
+      "cuda_peak_allocated_bytes": 940002304,
+      "cuda_peak_reserved_bytes": 1379926016,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "branch",
+      "method": "encode",
+      "prefix_steps": 16,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "df4548721b6548c550908cdda90d41d9d7b4ec6f6b4b855b86a6ceec0cff8a4f"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "0ebcf73707f7e4f63f1f00954371d146c6776ed9d0d6d3a356e9384c1bb73b07"
+        },
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "28f05c4cfb1740392ba501d80e419a6cd4ab54974beb9123f07ef39773b38309"
+        }
+      ],
+      "input_bitwise_equal": true,
+      "output_bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "elapsed_seconds": 1.8561104200198315,
+      "cuda_peak_allocated_bytes": 940002304,
+      "cuda_peak_reserved_bytes": 1379926016,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "branch",
+      "method": "encode",
+      "prefix_steps": 80,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "735acfa292e7292601d68b64b6a6c0c5d9a7961f23c84813d55512d8d9b0f72e"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "26ea164ffe089f52f69f8dc17ba03ea4050470593e1a5d03fead38d096ee3802"
+        },
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "8e35ea50dc2fc2672d8e944ab3df99a273deef2eb69efe52a37e6b606a9f2cef"
+        }
+      ],
+      "input_bitwise_equal": true,
+      "output_bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "elapsed_seconds": 1.8515534170146566,
+      "cuda_peak_allocated_bytes": 940002304,
+      "cuda_peak_reserved_bytes": 1379926016,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "full_reference",
+      "method": "decode",
+      "prefix_steps": 0,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "5a421750a716df7c14569dc81d7f5a4bf52623e780f0f49dc6fb171bb50c9319"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "ad42c2a2c687f5d93c399657c50f33e6800437f7b8ec5f9dbf9453eb2dff7062"
+        }
+      ],
+      "elapsed_seconds": 3.5775044490001164,
+      "cuda_peak_allocated_bytes": 798758400,
+      "cuda_peak_reserved_bytes": 1115684864,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "full_reference",
+      "method": "decode",
+      "prefix_steps": 16,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "28f05c4cfb1740392ba501d80e419a6cd4ab54974beb9123f07ef39773b38309"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "3a5db193dd654f471b565b64b8bc8106633e8577d3f6f1c05f09cdbe35d28271"
+        }
+      ],
+      "elapsed_seconds": 3.5216703430050984,
+      "cuda_peak_allocated_bytes": 798758400,
+      "cuda_peak_reserved_bytes": 1115684864,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "full_reference",
+      "method": "decode",
+      "prefix_steps": 80,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "8e35ea50dc2fc2672d8e944ab3df99a273deef2eb69efe52a37e6b606a9f2cef"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "4c74f9d4ceabecbdd4342926000645743cfe19a07c09b6826d7f09687a0a21bb"
+        }
+      ],
+      "elapsed_seconds": 3.508866724994732,
+      "cuda_peak_allocated_bytes": 798758400,
+      "cuda_peak_reserved_bytes": 1115684864,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "branch",
+      "method": "decode",
+      "prefix_steps": 0,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "5a421750a716df7c14569dc81d7f5a4bf52623e780f0f49dc6fb171bb50c9319"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "ad42c2a2c687f5d93c399657c50f33e6800437f7b8ec5f9dbf9453eb2dff7062"
+        }
+      ],
+      "input_bitwise_equal": true,
+      "output_bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "elapsed_seconds": 2.7678210550220683,
+      "cuda_peak_allocated_bytes": 692038144,
+      "cuda_peak_reserved_bytes": 983564288,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "branch",
+      "method": "decode",
+      "prefix_steps": 16,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "28f05c4cfb1740392ba501d80e419a6cd4ab54974beb9123f07ef39773b38309"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "3a5db193dd654f471b565b64b8bc8106633e8577d3f6f1c05f09cdbe35d28271"
+        }
+      ],
+      "input_bitwise_equal": true,
+      "output_bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "elapsed_seconds": 2.7467851160035934,
+      "cuda_peak_allocated_bytes": 692038144,
+      "cuda_peak_reserved_bytes": 983564288,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    },
+    {
+      "mode": "branch",
+      "method": "decode",
+      "prefix_steps": 80,
+      "status": "completed",
+      "gpu_before": "0, 24564 MiB, 22674 MiB, 1408 MiB",
+      "cuda_baseline_allocated_bytes": 1536,
+      "inputs": [
+        {
+          "shape": [
+            1,
+            16,
+            9,
+            28,
+            28
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "8e35ea50dc2fc2672d8e944ab3df99a273deef2eb69efe52a37e6b606a9f2cef"
+        }
+      ],
+      "outputs": [
+        {
+          "shape": [
+            1,
+            3,
+            33,
+            224,
+            224
+          ],
+          "dtype": "torch.bfloat16",
+          "sha256": "4c74f9d4ceabecbdd4342926000645743cfe19a07c09b6826d7f09687a0a21bb"
+        }
+      ],
+      "input_bitwise_equal": true,
+      "output_bitwise_equal": true,
+      "max_abs_difference": 0.0,
+      "elapsed_seconds": 2.732494930998655,
+      "cuda_peak_allocated_bytes": 692038144,
+      "cuda_peak_reserved_bytes": 983564288,
+      "all_core_parameters_cpu_after_call": true,
+      "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+    }
+  ],
+  "scope": "VAE-only exact same-input CUDA parity; no full DiT/task guarantee",
+  "cudnn_deterministic": true,
+  "cudnn_benchmark": false,
+  "tf32": false,
+  "encode_all_three_bitwise_equal": true,
+  "decode_all_three_bitwise_equal": true,
+  "gpu_after": "0, 24564 MiB, 22674 MiB, 1408 MiB"
+}

@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-09",
+  "status": "rejected_no_selective_padded_action_effect_or_native_task_harm",
+  "hypothesis": "Because official multitask TD-MPC2 pads lower-dimensional legal actions into a shared action vector, a legitimate low-dimensional contributor might alter a victim task's unvisited action directions while preserving its on-trajectory one-step predictions.",
+  "operation": "Native task-labeled dynamics-only adaptation on 300 real reacher-easy transitions, with the four unused action coordinates exactly zero; 40 upstream three-step consistency updates per source arm.",
+  "controls": [
+    "clean",
+    "native_mpc_source",
+    "native_random_source"
+  ],
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "reacher-easy",
+  "victim_task": "walker-walk",
+  "source_action_dims": 2,
+  "shared_action_dim": 6,
+  "padded_action_dims": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_padding_audit": {
+    "mpc_tail_max_abs": 0.0,
+    "random_tail_max_abs": 0.0
+  },
+  "results": {
+    "clean": {
+      "victim_one_step_latent_mse": 0.00015098336734808981,
+      "active_dims_sensitivity": 0.8458490371704102,
+      "padded_dims_sensitivity": 1.2239458560943604
+    },
+    "native_mpc_source": {
+      "victim_one_step_latent_mse": 0.00015486098709516227,
+      "victim_mse_ratio": 1.0256824298939675,
+      "active_relative_change": 0.004380243467123401,
+      "padded_relative_change": 0.0034044328727533824,
+      "existing_walker_return": 972.2975431717932
+    },
+    "native_random_source": {
+      "victim_one_step_latent_mse": 0.00017224991461262107,
+      "victim_mse_ratio": 1.1408535763777314,
+      "active_relative_change": 0.01523191613384034,
+      "padded_relative_change": 0.01848439331377727,
+      "existing_walker_return": 973.7530029825866
+    },
+    "clean_walker_return": 972.4091031141579
+  },
+  "invariants": [
+    "unused source action coordinates exactly zero",
+    "non-dynamics parameter digest unchanged",
+    "native three-step consistency update",
+    "existing native MPC evaluation on walker-walk"
+  ],
+  "api_requests": 0,
+  "gpu_work": "Short CUDA dynamics-only adaptation: 120 updates total, about 22 seconds; no long training.",
+  "novelty_status": "No accepted claim. Both action groups changed slightly in the same direction, and native walker return stayed near 972; this does not isolate a padded-dimension security effect from ordinary shared-dynamics adaptation.",
+  "decision_cn": "低维 reacher 的合法补零经验没有选择性压低 walker 的未访问动作方向：MPC 源使高维动作敏感度变化 0.34%，低维动作变化 0.44%；随机源分别变化 1.85% 与 1.52%。walker 一步潜空间误差比值为 1.026 和 1.141，已有原生回报为 972.30 和 973.75（洁净 972.41）。因此该候选没有通过选择性不变量和任务损害门槛，退役，不扩大 GPU。",
+  "source": "runs/tdmpc_padded_action_shadowing_v0/summary.json",
+  "historical_return_correction_20261015": {
+    "report": "reports/tdmpc_nullspace_action_logs_decision_20261015.json",
+    "source": "runs/tdmpc_adaptation_screen_v0/results.json",
+    "current_cache_walker_returns": {
+      "clean": 972.4091031141579,
+      "mpc": 975.0122293122113,
+      "random": 974.9158658720553
+    },
+    "note": "Original hard-coded values retained as historical record; they disagree with the currently cited source cache. The old no-harm conclusion is unchanged. Do not use those hard-coded numbers as exact reconstruction targets."
+  }
+}

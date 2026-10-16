@@ -1,0 +1,29 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "cascade_source": "runs/tdmpc_cascade_heldout_matched_v1/cascade_source.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "source_steps": 300,
+  "updates": 300,
+  "learning_seed": 31,
+  "eval_seeds": [
+    31,
+    32
+  ],
+  "population": 512,
+  "horizon": 3,
+  "bank_seed": 2026,
+  "permutation_seed": 933,
+  "output": "runs/tdmpc_planner_ranking_v3",
+  "operation": "Fixed candidate action bank at identical walker-run roots; compare native model finite-horizon value ranking with true simulator ranking after temporal-order source adaptation.",
+  "conditions": [
+    "clean",
+    "random",
+    "cascade",
+    "reverse_cascade",
+    "shuffled_cascade"
+  ],
+  "interpretation": "A ranking-specific diagnostic. It is evidence for planner amplification only if cascade rank fidelity drops while reverse/shuffle controls do not; it is not by itself an ICLR claim.",
+  "api_requests": 0
+}

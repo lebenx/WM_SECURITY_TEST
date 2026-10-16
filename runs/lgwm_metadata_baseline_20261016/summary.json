@@ -1,0 +1,93 @@
+{
+  "status": "completed",
+  "protocol": "configs/lgwm_metadata_baseline_20261016.json",
+  "scope": "Train-only low-dimensional metadata baseline on a published fixed benchmark; no WM, attack or task-outcome experiment.",
+  "protocol_timing": "Frozen before training-manifest download/fitting; test manifest source and structure had already been inspected. This is a development screening analysis.",
+  "train_records": 6786,
+  "test_records": 966,
+  "training_class_counts": {
+    "1_hijack": 2500,
+    "2_paired_safe": 2500,
+    "3_legit_cred": 532,
+    "4_surprising": 354,
+    "5_benign_misplace": 900
+  },
+  "test_class_counts": {
+    "1_hijack": 222,
+    "2_paired_safe": 222,
+    "3_legit_cred": 222,
+    "4_surprising": 150,
+    "5_benign_misplace": 150
+  },
+  "overlap": {
+    "base": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    },
+    "obs": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    },
+    "clean": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    },
+    "across_all_roles": {
+      "transition_ids": 0,
+      "episode_prefixes": 0
+    }
+  },
+  "results": [
+    {
+      "features": [
+        "base_action"
+      ],
+      "trained_cells": 5,
+      "unseen_test_cells_rows": 0,
+      "RSWT_1v3": 0.35690081973865756,
+      "Harm_1v5": 0.4765915915915916,
+      "donor_pair_order_accuracy": 0.35585585585585583,
+      "followup_gate": false
+    },
+    {
+      "features": [
+        "base_app",
+        "base_action"
+      ],
+      "trained_cells": 689,
+      "unseen_test_cells_rows": 355,
+      "RSWT_1v3": 0.8281795308822336,
+      "Harm_1v5": 0.49066066066066066,
+      "donor_pair_order_accuracy": 0.8220720720720721,
+      "followup_gate": false
+    },
+    {
+      "features": [
+        "base_action",
+        "step_decile"
+      ],
+      "trained_cells": 41,
+      "unseen_test_cells_rows": 0,
+      "RSWT_1v3": 0.6286320103887671,
+      "Harm_1v5": 0.5148048048048048,
+      "donor_pair_order_accuracy": 0.6509009009009009,
+      "followup_gate": false
+    }
+  ],
+  "any_followup_gate": false,
+  "limits": [
+    "base_app and step_frac are dataset metadata, not demonstrated deployment inputs or a deployable safety verifier.",
+    "No world-model inference, environment consequence, attack, or safety improvement is measured.",
+    "ID overlap checks do not establish pixel deduplication or independence of episodes.",
+    "A low result does not rule out richer learned context-only shortcuts."
+  ],
+  "elapsed_seconds": 0.12776225700508803,
+  "activity": {
+    "model_api_calls": 0,
+    "pretrained_model_loads": 0,
+    "world_model_forwards": 0,
+    "environment_steps": 0,
+    "gpu_jobs": 0,
+    "categorical_estimators_fitted": 3
+  }
+}

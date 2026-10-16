@@ -1,0 +1,16 @@
+{
+  "verdict": "REJECT",
+  "novelty_score": 3,
+  "one_sentence_claim": "On-manifold context trajectories induce persistent test-time routing to a truthful yet counter-task dynamic model without degrading individual expert validation loss.",
+  "mechanism": "Mixture-of-experts/prototype assignment manipulation where clean transitions alter the temporal belief state or routing weights of an ensemble/modular dynamics prior, causing misallocation to a valid out-of-context transition operator during planning.",
+  "prior_overlap": "High overlap with contextual bandit/RL meta-learning state estimation attacks (e.g., belief-state poisoning in POMDPs), mixture-of-experts router hijacking, and retrieval-augmented context poisoning. It re-packages router shift/context misattribution under world-model terminology.",
+  "exact_released_carrier": "mbrl.models.BasicEnsemble or mbrl.models.GaussianMLP within mbrllib (cannot run out-of-the-box as a modular mixture-of-world-models router without non-native wrapper classes; neither TD-MPC2 nor official MBRL-Lib provides a native prototype-routed mixture of forward models).",
+  "minimal_gate": "Not feasible natively without inventing an external prototype router wrapper. Simulating it requires wrapping mbrl.models.BasicEnsemble into a gated context selector on CartPole/InvertedPendulum, which violates the constraint against inventing unreleased APIs.",
+  "strong_controls": [
+    "Uniform ensemble aggregation baseline (MBRL-Lib native PETS aggregator)",
+    "Random routing control preserving prototype distance statistics",
+    "Permutation-matched trajectory history control with identical marginal density"
+  ],
+  "why_not_generic": "Fails the specificity filter: the failure is entirely located in the parametric gating function (router/classification head) rather than the dynamic world model itself. The forward dynamics models are completely untouched and valid; the vulnerability is standard router/context steering, identical to MoE routing poisoning in NLP and context confusion in meta-RL.",
+  "decision": "Reject. The proposal reduces to gating/router steering on top of dynamics models rather than an intrinsic world-model vulnerability, and it requires implementing non-native MoE architecture layers not currently released in TD-MPC2 or MBRL-Lib."
+}

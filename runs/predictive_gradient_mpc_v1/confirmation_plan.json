@@ -1,0 +1,33 @@
+{
+  "baseline_gate": {
+    "seed": 901,
+    "condition": "native",
+    "required_full_episode_return": 900,
+    "native_steps": 1000
+  },
+  "if_gate_passes": {
+    "seeds": [
+      902,
+      903
+    ],
+    "conditions": [
+      "native",
+      "shifted",
+      "repair"
+    ],
+    "same_planner": true,
+    "same_frozen_model": true,
+    "strength": 1
+  },
+  "no_hyperparameter_reselection_from_confirmation": true,
+  "requirements": [
+    "Native DMControl full 1000-step episode, exact reward parity.",
+    "Native sampler is the controller competence gate; no attack interpretation if it fails.",
+    "Repair sampler has identical forward values to shifted for the same input and fresh uniforms; only differentiation through the unnecessary phase is stopped.",
+    "Two confirmation seeds are a mechanism screen, not ICLR scale or established novelty."
+  ],
+  "api_requests": 0,
+  "training_updates": 0,
+  "gpu_work": false,
+  "timing_note": "Written while baseline was running, after its 400-step partial score had been observed; no attacked or confirmation run took place. The 900/1000 baseline gate itself was already in the runner plan before execution."
+}

@@ -1,0 +1,135 @@
+{
+  "status": "error",
+  "model": "AlphaBrain CosmosPolicy LIBERO-Goal 10K",
+  "condition": "clean",
+  "provenance": {
+    "checkpoint": "/home/xhj/WM_Security/models/AlphaBrain/cosmos_policy_libero/model.safetensors",
+    "checkpoint_sha256": "eb42e370072464037744075c8b72ebbb7b0a8b0533575589942c0f598268eb0b",
+    "checkpoint_repo": "AlphaBrainGroup/cosmos-policy-libero-all4suite",
+    "checkpoint_revision": "4923a0dd198f275273738de05c9e30b7997bf32c",
+    "vae": "checkpoint embedded native WanVAE parameters and all 3 normalization buffers",
+    "helper_sha256": "233ed1a834a39177e117e9abb14efd6b2baa61e48654df605441e60bcd527a0e",
+    "runner_sha256": "cc428f48af93699ead6314ce19506a64602ca9821f377945f571267090829143",
+    "source_sha256": {
+      "scripts/pilot_alphabrain_cosmos_libero_short_control.py": "c298c5c63abeee16f236f5c02ce7fa208ff27c00f66f740994243ab125607cc2",
+      "scripts/pilot_alphabrain_cosmos_policy_goal_swap.py": "cb9ee4bd76e20454eb83fda3fd6f1cda07fc506b8b3aed502e30f49da940e44f",
+      "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/wan_vae_arch.py": "e7b59a878f53b3307eb4b55856ae6ab3f1de63e579e7dbff23279e96295958e2",
+      "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/cosmos_sampler.py": "9b28568ad7811b85fff12a083ad84b448508e3778f93a4e9785ddb337722a244",
+      "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py": "d23b17ba612c70e6a9617d312f562070fea63287f923f3eecb755e91b43936ae"
+    },
+    "stats_sha256": "5b119a98ad7824507ddff3c6c7507ca244261ee416dcfa623876702160c580d3",
+    "text_embeddings_sha256": "8a03499676c6c196127c577144b9fd09bb02c30f9caf058adbcef09bb99ad8f5",
+    "image_codec": "raw256 -> vertical flip -> JPEG95 -> resize224 -> 90% center-crop -> resize224",
+    "action_codec": "clip normalized to [-1,1], inverse min-max; continuous gripper; no sign inversion",
+    "proprio_codec": "minmax([gripper2,eef_xyz3,eef_quat_xyzw4])",
+    "settle_action": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "chunk_length": 16,
+    "sampler_steps": 5,
+    "sampler_seed": 1,
+    "sigma_min": 4.0,
+    "sigma_max": 80.0,
+    "condition_slots": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "joint_prediction_slots": [
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "condition_timestep": 0.0,
+    "attention_backend": "torch with existing TE compatibility shim",
+    "success_source": "LIBERO environment check_success() after each physical action",
+    "external_planner": false,
+    "training_updates": 0,
+    "api_requests": 0,
+    "torch_version": "2.2.0+cu121",
+    "numpy_version": "1.26.4",
+    "checkpoint_training_scope": "LIBERO-Goal per pinned model card; repository name alone is not evidence of all-suite training."
+  },
+  "protocol": {
+    "suite": "libero_goal",
+    "task_ids": [
+      0,
+      1,
+      2
+    ],
+    "init_ids": [
+      0,
+      1,
+      2
+    ],
+    "max_steps": 300,
+    "settle_steps": 10,
+    "seed": 31,
+    "env_seed": 0,
+    "video_stride": 2,
+    "cuda_memory_fraction": 0.0,
+    "preflight": false,
+    "out_dir": "/home/xhj/WM_Security/runs/alphabrain_native_task_gate_corrected_3x3_v1"
+  },
+  "planned_episodes": [
+    {
+      "task_id": 0,
+      "init_id": 0,
+      "goal": "open the middle drawer of the cabinet"
+    },
+    {
+      "task_id": 0,
+      "init_id": 1,
+      "goal": "open the middle drawer of the cabinet"
+    },
+    {
+      "task_id": 0,
+      "init_id": 2,
+      "goal": "open the middle drawer of the cabinet"
+    },
+    {
+      "task_id": 1,
+      "init_id": 0,
+      "goal": "put the bowl on the stove"
+    },
+    {
+      "task_id": 1,
+      "init_id": 1,
+      "goal": "put the bowl on the stove"
+    },
+    {
+      "task_id": 1,
+      "init_id": 2,
+      "goal": "put the bowl on the stove"
+    },
+    {
+      "task_id": 2,
+      "init_id": 0,
+      "goal": "put the wine bottle on top of the cabinet"
+    },
+    {
+      "task_id": 2,
+      "init_id": 1,
+      "goal": "put the wine bottle on top of the cabinet"
+    },
+    {
+      "task_id": 2,
+      "init_id": 2,
+      "goal": "put the wine bottle on top of the cabinet"
+    }
+  ],
+  "results": [],
+  "exception_type": "RuntimeError",
+  "exception": "CUDA error: out of memory\nCUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.\nFor debugging consider passing CUDA_LAUNCH_BLOCKING=1.\nCompile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.\n",
+  "elapsed_seconds": 2.844733987993095,
+  "metadata_correction": "Training scope corrected from ambiguous all4suite repository name to pinned model-card LIBERO-Goal; task measurements unchanged."
+}

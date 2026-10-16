@@ -1,0 +1,31 @@
+{
+  "status": "completed_source_audit_rejected_both",
+  "proposal_source": "runs/gemini_round75_post_gate_search_20261010_v1/review.json",
+  "audits": [
+    {
+      "candidate": "cross_task_slot_assignment_hijacking",
+      "carrier": "vendor/ActSWM",
+      "verdict": "REJECT",
+      "facts": [
+        "rg over vendor/ActSWM finds no SlotAttention, slot_attention, or slot assignment module.",
+        "vendor/ActSWM/model/module.py implements standard causal Attention, CrossAttention, ConditionalBlock/AdaLN and transformer blocks; the proposed object-slot permutation path is absent.",
+        "A bounded input perturbation that changes attention is an ordinary adversarial observation/attention perturbation on this carrier, not the proposed slot identity mechanism."
+      ],
+      "novelty_score": 1.0,
+      "reason": "Exact carrier mechanism is absent; no GPU experiment justified."
+    },
+    {
+      "candidate": "multitask_task_embedding_manifold_stitching_vulnerability",
+      "carrier": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+      "verdict": "REJECT",
+      "facts": [
+        "WorldModel.__init__ creates nn.Embedding(len(cfg.tasks), cfg.task_dim, max_norm=1).",
+        "task_emb(x, task) calls task.long() and performs an integer table lookup; native encode/next/reward/pi/Q receive task IDs, not continuous task vectors.",
+        "A floating interpolation requires editing the internal embedding output or replacing the task ID path. An external task-ID change is task spoofing/OOD; an internal vector edit is a model/latent tampering operation outside the stated legal observation/data capability."
+      ],
+      "novelty_score": 2.0,
+      "reason": "The proposed manifold perturbation is not executable through the native interface and reduces to task-ID/OOD or internal parameter/latent intervention."
+    }
+  ],
+  "decision": "Do not run either proposal. Require a carrier-native path and a legal external attacker operation before GPU work."
+}

@@ -1,0 +1,68 @@
+{
+  "status": "completed_fixed_complete_feedback_matches_with_less_acquisition",
+  "source_consistent_bindings": [
+    [
+      1,
+      1,
+      1,
+      1,
+      0
+    ],
+    [
+      1,
+      1,
+      1,
+      1,
+      1
+    ]
+  ],
+  "source_min_rejected_error": 0.01851861864760751,
+  "source_max_retained_error": 0.0,
+  "arms": {
+    "source_frozen": {
+      "checks": 12,
+      "passed": 9,
+      "max_absolute_position_velocity_error": 0.08297770295658585,
+      "passes_by_world": {
+        "yukawa": 3,
+        "coulomb_easy": 3,
+        "extra_dimensions": 3,
+        "oscillator": 0
+      }
+    },
+    "source_set_calibrated": {
+      "checks": 12,
+      "passed": 12,
+      "max_absolute_position_velocity_error": 6.106226635438361e-16,
+      "passes_by_world": {
+        "yukawa": 3,
+        "coulomb_easy": 3,
+        "extra_dimensions": 3,
+        "oscillator": 3
+      }
+    },
+    "fixed_full_state_and_clock": {
+      "checks": 12,
+      "passed": 12,
+      "max_absolute_position_velocity_error": 6.106226635438361e-16,
+      "passes_by_world": {
+        "yukawa": 3,
+        "coulomb_easy": 3,
+        "extra_dimensions": 3,
+        "oscillator": 3
+      }
+    }
+  },
+  "acquisition_cost": {
+    "source_program_induction_calls": 66,
+    "target_calibration_calls": 12,
+    "fixed_complete_feedback_acquisition_calls": 0,
+    "evaluation_reference_calls_shared_across_arms": 12,
+    "evaluation_restart_calls_per_arm": 12
+  },
+  "exact_operation": "Keep all binary bindings consistent with source continuation observations; intersect with consistency under one target calibration case. This is finite program version-space filtering within a supplied continuation template.",
+  "native_interface_correction": "NBodyOscillatorExecutor accepts optional start_time and passes it to NBodySampler.initial_time. Complete continuation propagates both observed position/velocity and absolute time. A reset-clock mismatch is not evidence of unavailable hidden state or dissipation.",
+  "decision": "Retain the executable learner and native traces, but do not scale this fixed template or claim a novel method. A fixed full-state-and-clock continuation program matches every calibrated result without source acquisition or target calibration.",
+  "scope": "12 deterministic continuation checks across 4 selected laws, not 12 independent scientific-discovery tasks. No laws recovered and no official benchmark task scored.",
+  "updated_at_utc": "2026-10-08T22:44:14.672376+00:00"
+}

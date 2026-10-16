@@ -1,0 +1,18 @@
+{
+  "verdict": "REJECT_ALL",
+  "novelty_score_0_to_10": 3.5,
+  "one_sentence_claim": "Rejecting all variants because manipulating counterfactual transition evaluation via legal rollouts while preserving on-policy one-step error is mathematically equivalent to standard distribution shift and catastrophic forgetting disguised through uncalibrated ensemble epistemic variance.",
+  "carrier": "None",
+  "exact_legal_operation": "None",
+  "mechanism_observable": "None",
+  "short_gate": "None",
+  "defense": "None",
+  "core_tasks": [],
+  "overlap_risks": [
+    "Catastrophic forgetting under multi-task sequential training",
+    "Covariate shift in off-policy dynamics modeling",
+    "Spurious correlation in dynamics Jacobians with respect to actions",
+    "Epistemic uncertainty miscalibration under out-of-distribution CEM candidates"
+  ],
+  "rationale": "Every proposed direction relies on the premise that an attacker can feed legal trajectories during model fitting or memory ingestion such that on-policy states retain low RMSE while off-policy/counterfactual action evaluations are distorted without triggering ensemble disagreement. In continuous MBRL (e.g., MBRL-Lib PETS/CEM), any legal data update that alters the model's derivative with respect to action space inevitably degrades rollout fidelity or collapses calibration unless constrained by the true dynamics manifold; empirical results provided already show this (RMSE increases from 0.716 to 1.213 and ensemble disagreement rises concurrently). In structured/LLM carriers (LIBERO, ScienceWorld), 'evidence-provenance' distortion reduces cleanly to context contamination, retrieval recency bias, or standard goal/belief overwrite. The requirement that this does not constitute ordinary negative transfer, distribution shift, or capacity saturation cannot be satisfied by standard neural networks trained on legal data points. Without an artificial backdoor trigger or non-standard objective, this behavior is the textbook definition of training-induced gradient interference. No proposal achieves the required novelty threshold of 7.0+ for ICLR."
+}

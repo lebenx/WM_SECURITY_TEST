@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "review_id": "safedreamer_mode_mediator_gate_review_20261016",
+  "status": "static_pass_scientific_unexecuted",
+  "scope": "Independent static review of the first native policy-query runner and its frozen protocol; no model, environment, API, installation, checkpoint import, or hash checks performed by this review.",
+  "source_paths": [
+    "configs/safedreamer_mode_mediator_gate_20261016.json",
+    "scripts/probe_safedreamer_mode_gate.py",
+    "vendor/SafeDreamer/SafeDreamer/agent.py",
+    "vendor/SafeDreamer/SafeDreamer/behaviors.py",
+    "vendor/SafeDreamer/SafeDreamer/nets.py",
+    "vendor/SafeDreamer/SafeDreamer/ninjax.py",
+    "vendor/SafeDreamer/SafeDreamer/jaxagent.py",
+    "vendor/SafeDreamer/SafeDreamer/jaxutils.py",
+    "vendor/SafeDreamer/embodied/envs/from_gymnasium.py"
+  ],
+  "static_verdict": {
+    "passed": true,
+    "remaining_launch_blockers_found": [],
+    "reviewed_final_changes": [
+      "Validate each leaf of nested checkpoint optimizer PyTrees while preserving the complete variables tree; do not coerce each top-level optimizer value into a single ndarray.",
+      "Use the loaded checkpoint with Ninjax create=False, record consumed inference keys, and check explicit expected inference-parameter shapes.",
+      "JIT native policy_initial to respect the configured transfer guard without dummy training initialization.",
+      "Seed the actual first underlying environment reset, rather than seed a discarded reset followed by an unseeded reset.",
+      "Preserve the native constructor and first-policy NumPy RNG draw sequence; preserve both native task and exploration behavior calls.",
+      "Preserve the native six CEM rounds, 500 candidates, horizon 15, 50 elites, FP16, original cost threshold, mean update, and native returned action.",
+      "Record actual prior-sampling RNG keys without additional random draws; append the uint32 key after the native prior cast so scan output preserves its dtype.",
+      "Determine padded elite selection by the selected output position in the fixed-size filtered array being at or beyond safe_count, not by candidate index zero alone.",
+      "Record interrupted JIT inner-round and imagined-transition counts as unknown/null, rather than assume zero.",
+      "Use an isolated native_query_attempt1 output and retain the re-exec helper for the installed CUDA library and PTX paths."
+    ],
+    "resource_controls": {
+      "first_query_alarm_seconds": 180,
+      "gpu_free_memory_gate_mib": 8192,
+      "configured_allocator_cap_gib": 5,
+      "process_gpu_watchdog_mib": 6144,
+      "external_hard_timeout_seconds_advised": 200,
+      "external_timeout_reason": "A Python signal alone may not interrupt a long XLA/CUDA operation immediately.",
+      "external_timeout_was_not_executed_for_a_scientific_query": true
+    }
+  },
+  "execution_status": {
+    "basis": "Resource-owner and root terminal report; this review did not execute or re-import the runner.",
+    "setup_outcome": "Package installation for the pinned official Safety-Gymnasium environment exceeded the 900-second setup deadline and was terminated before model or environment scientific execution.",
+    "model_inference_calls": 0,
+    "native_policy_queries": 0,
+    "environment_resets": 0,
+    "environment_action_steps": 0,
+    "independent_final_round_replays": 0,
+    "shared_sampler_replays": 0,
+    "scientific_result": "unmeasured",
+    "clean_result": null,
+    "mode_switch_result": null,
+    "task_utility_result": null,
+    "is_scientific_negative_result": false
+  },
+  "interpretation_limits": [
+    "Static approval is not evidence that checkpoint loading, numerical calibration, native planning, or the environment has executed successfully.",
+    "The fixed seed-zero root is a preregistered development feasibility instance; held-out membership and independent generalization are not established.",
+    "The planned independent final-round exact calibration remains a prerequisite for interpreting any subsequent shared-sampler intervention.",
+    "The separate replay implementation remains compile-only and unexecuted; its full implementation was not reviewed in this artifact.",
+    "A setup resource stop supplies neither Clean failure nor a scientific null for the proposed mode-mediated effect."
+  ],
+  "review_activity": {
+    "new_model_calls": 0,
+    "new_environment_calls": 0,
+    "api_calls": 0,
+    "checkpoint_loads": 0,
+    "new_installs": 0,
+    "new_hash_audits": 0,
+    "persistence_note": "This artifact persists the already-completed review; no additional experiment or broad audit was performed."
+  }
+}

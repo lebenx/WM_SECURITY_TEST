@@ -1,0 +1,114 @@
+{
+  "status": "resource_or_runtime_error",
+  "episodes": [],
+  "api_requests": 0,
+  "training_updates": 0,
+  "device": "cpu",
+  "renderer": "mujoco-py LinuxCPUExtensionBuilder / OSMesa",
+  "gpu_used": false,
+  "script_sha256": "690d2084aa9bfc48f69e791d6bdf893d32033ec7cb1d5f026d26cd06fc1d2a9f",
+  "model_loaded": true,
+  "model_parameter_count": 39683136,
+  "checkpoint_load_checks": [
+    {
+      "class": "DinoVisionTransformer",
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "class": "VisionTransformerAdaLN",
+      "missing": [],
+      "unexpected": []
+    },
+    {
+      "class": "ProprioceptiveEmbedding",
+      "missing": [],
+      "unexpected": []
+    }
+  ],
+  "normalization_stats": {
+    "action_dim": 2,
+    "proprio_dim": 4,
+    "state_dim": 4,
+    "action_mean": [
+      7.821338658686727e-05,
+      0.0006003659800626338
+    ],
+    "action_std": [
+      0.5769129991531372,
+      0.577587902545929
+    ],
+    "proprio_mean": [
+      1.8130563497543335,
+      1.9377127885818481,
+      -0.0039275349117815495,
+      -0.019777977839112282
+    ],
+    "proprio_std": [
+      1.0055010318756104,
+      0.9630089402198792,
+      1.6802769899368286,
+      1.9319307804107666
+    ],
+    "state_mean": [
+      1.8130563497543335,
+      1.9377127885818481,
+      -0.0039275349117815495,
+      -0.019777977839112282
+    ],
+    "state_std": [
+      1.0055010318756104,
+      0.9630089402198792,
+      1.6802769899368286,
+      1.9319307804107666
+    ]
+  },
+  "model_action_dimension": 10,
+  "episode_seed": 1,
+  "sampled_initial": [
+    0.5002973745250967,
+    1.2860646888427834,
+    -3.6922878662705054,
+    -4.261085240922318
+  ],
+  "sampled_goal": [
+    0.9842765495819443,
+    1.3984578903119242,
+    -1.0790390905152005,
+    0.40573233139081566
+  ],
+  "initial_simulator_state": {
+    "time": 0.0,
+    "qpos": [
+      0.5002973745250967,
+      1.2860646888427834
+    ],
+    "qvel": [
+      -3.6922878662705054,
+      -4.261085240922318
+    ],
+    "qacc_warmstart": [
+      0.8814687978527668,
+      1.0172591685430599
+    ],
+    "ctrl": [
+      0.0,
+      0.0
+    ]
+  },
+  "success_at_start": true,
+  "offline_env_sha256": "e5c82d394ec71d569654ecfec110672dc82ef084c0ee09e646b7ce3f1333c834",
+  "planning_calls": 0,
+  "environment_steps": 0,
+  "native_reward_target": [
+    10,
+    10
+  ],
+  "reward_scope": "Native sparse reward target can be OFF_TARGET=(10,10) because wrapper uses with_target=False; task success uses sampled goal XY, never this reward as success proxy.",
+  "error_type": "KeyboardInterrupt",
+  "error": "",
+  "traceback": "Traceback (most recent call last):\n  File \"/home/xhj/WM_Security/scripts/pilot_jepa_native_task_gate.py\", line 332, in main\n    normalized = agent.act(td, steps_left=steps_left)\n                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py\", line 176, in act\n    a = self.plan(\n        ^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py\", line 140, in plan\n    planning_result = self.planner.plan(\n                      ^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/utils/_contextlib.py\", line 116, in decorate_context\n    return func(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py\", line 303, in plan\n    cost = self.cost_function(actions, z_init).unsqueeze(1)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/scripts/pilot_jepa_native_task_gate.py\", line 310, in measured_cost\n    cost = original_cost(actions, z_init)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py\", line 49, in cost_function\n    predicted_encs = self.unroll(z_init, actions)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py\", line 324, in unroll\n    pred_video_features, _, pred_proprio_features = self.model.forward_pred(\n                                                    ^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/app/vjepa_wm/video_wm.py\", line 347, in forward_pred\n    pred_video_features, pred_action_features, pred_proprio_features = self.predictor(\n                                                                       ^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1739, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1750, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/app/plan_common/models/AdaLN_vit.py\", line 364, in forward\n    x = blk(\n        ^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1739, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1750, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/app/plan_common/models/AdaLN_vit.py\", line 116, in forward\n    x = x + self.drop_path(gate_mlp * self.mlp(modulate(self.norm2(x), shift_mlp, scale_mlp)))\n                                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1739, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1750, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/vendor/jepa-wms/src/models/utils/modules.py\", line 104, in forward\n    x = self.fc1(x)\n        ^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1739, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/module.py\", line 1750, in _call_impl\n    return forward_call(*args, **kwargs)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/home/xhj/WM_Security/.venv-a2world/lib/python3.11/site-packages/torch/nn/modules/linear.py\", line 125, in forward\n    return F.linear(input, self.weight, self.bias)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nKeyboardInterrupt\n",
+  "task_failure_inferred": false,
+  "elapsed_seconds": 294.7505199229927,
+  "peak_process_rss_kib": 6781208
+}

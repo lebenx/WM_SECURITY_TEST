@@ -1,0 +1,22 @@
+{
+  "model": "Qwen/Qwen3-8B",
+  "actor_model": "glm-5.2",
+  "require_clean_success": true,
+  "ground_wait_commands": true,
+  "conditions": [
+    "clean",
+    "benign",
+    "post_attack_only"
+  ],
+  "source": "runs/thermal_curriculum_local_v2",
+  "data": "runs/native_measurement_tasks_v0/measure-melting-point-unknown-substance.json",
+  "task_name": "measure-melting-point-unknown-substance",
+  "prefix_count": 29,
+  "prefix_extra_actions": [
+    "examine metal pot"
+  ],
+  "skip_setup_look": true,
+  "checkpoint_map": "runs/thermal_curriculum_local_v2/checkpoint_map.json",
+  "steps": 5,
+  "output": "runs/thermal_actor_hybrid_glm52_v0"
+}

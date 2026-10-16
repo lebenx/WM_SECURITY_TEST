@@ -1,0 +1,55 @@
+{
+  "status": "completed_diagnostic",
+  "task": "walker-run",
+  "settings": {
+    "checkpoint": "models/tdmpc2/mt30-48M.pt",
+    "source_dir": "runs/tdmpc_cascade_heldout_matched_v1",
+    "task": "walker-run",
+    "eval_seed": 31,
+    "seed": 1,
+    "action_seed": 20261010,
+    "update_seed": 31,
+    "roots": 200,
+    "paired": 64,
+    "updates": 300,
+    "output": "runs/tdmpc_intervention_operator_v1"
+  },
+  "rows": [
+    {
+      "condition": "clean",
+      "root_capture_mse": 18.40225601196289,
+      "matched_next_state_mse": 24.42035675048828,
+      "intervention_contrast_mse": 9.761116027832031,
+      "intervention_cosine_mean": 0.7857975959777832,
+      "intervention_cosine_median": 0.8729652166366577,
+      "intervention_norm_ratio_mean": 0.9597389101982117,
+      "paired_roots": 64,
+      "updates": 0
+    },
+    {
+      "condition": "random",
+      "root_capture_mse": 18.40225601196289,
+      "matched_next_state_mse": 28.58831787109375,
+      "intervention_contrast_mse": 10.850404739379883,
+      "intervention_cosine_mean": 0.7603336572647095,
+      "intervention_cosine_median": 0.8624062538146973,
+      "intervention_norm_ratio_mean": 0.9806490540504456,
+      "paired_roots": 64,
+      "updates": 300
+    },
+    {
+      "condition": "cascade",
+      "root_capture_mse": 18.40225601196289,
+      "matched_next_state_mse": 25.15650749206543,
+      "intervention_contrast_mse": 10.209426879882812,
+      "intervention_cosine_mean": 0.7770836353302002,
+      "intervention_cosine_median": 0.8625022768974304,
+      "intervention_norm_ratio_mean": 0.9309519529342651,
+      "paired_roots": 64,
+      "updates": 300
+    }
+  ],
+  "interpretation": "Diagnostic only. A candidate would require lower root-capture/one-step change than intervention-contrast change, matched controls, task return harm, and a causal operator repair before promotion.",
+  "api_requests": 0,
+  "gpu_work": true
+}

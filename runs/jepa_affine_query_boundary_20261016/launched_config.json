@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_model_inference",
+  "purpose": "Numerical qualification of real-encoder and native joint-predictor affine constraints; not a GRASP run, Clean task test, attack or defense experiment.",
+  "prior_inspection_disclosure": "Before this protocol, the root agent performed one read-only checkpoint deserialization to inspect keys and shapes. No model inference from that inspection is claimed. This protocol is frozen before this probe's inference outputs.",
+  "output": "runs/jepa_affine_query_boundary_20261016",
+  "device": "cpu",
+  "threads": 4,
+  "hard_wall_seconds": 180,
+  "global_seed": 1,
+  "roots": [1, 2, 3],
+  "source_pattern": "runs/jepa_metaworld_reach_wall_cpu_v1/seed{seed}_noop_repeat0/setup.npz",
+  "source_fields": ["initial_pixels", "initial_proprio", "goal_pixels", "goal_proprio"],
+  "model_loading": {
+    "helper": "scripts/pilot_dino_metaworld_clean_gate.py",
+    "configuration_helper": "scripts/pilot_jepa_metaworld_reach_wall.py:cfg_for",
+    "model": "models/JEPA_WM/mw_jepa-wm.pth.tar",
+    "encoder": "Existing helper.DINO_WEIGHTS and helper.DINO_SOURCE local paths",
+    "method": "Patch helper.MODEL to wall.MODEL and call helper.load_model(wall.cfg_for(helper, output, 'cpu'), 'cpu'); strict state_dict loads; no optional decoders.",
+    "precision": "Native FP32 model and tensors; FP64 affine-constraint construction and residual arithmetic.",
+    "expected_checkpoint_loads": 2,
+    "weight_hashing": false,
+    "network": "Forbidden; missing local assets fail closed.",
+    "rendering": "Do not call helper.bootstrap, import environment/rendering entrypoints, construct/reset an environment, or render images."
+  },
+  "encode": {
+    "calls_per_root": 1,
+    "batch_order": ["initial", "goal"],
+    "batch_size": 2,
+    "context_frames": 1,
+    "image_shape": [1, 3, 224, 224],
+    "image_dtype": "uint8",
+    "proprio_shape": [1, 4],
+    "proprio_dtype": "float32"
+  },
+  "unroll": {
+    "calls_per_root": 1,
+    "horizon": 3,
+    "batch_size": 2,
+    "action_dim": 20,
+    "candidate_values": [0.0, 0.2],
+    "action_dtype": "float32",
+    "action_semantics": "Fixed normalized model-action coordinates; no claim of physical execution or replay.",
+    "context": "Only the encoded initial observation, expanded by the native wrapper to two candidates.",
+    "proprio_mode": "predict_proprio"
+  },
+  "affine_constraints": {
+    "visual_dim": 384,
+    "proprio_dim": 16,
+    "joint_dim": 400,
+    "normalize_reps": false,
+    "encoder": "Left null vector of diag(gamma_encoder) @ (I - 11^T/384); offset beta_encoder. Extend its normal with 16 zero proprio coordinates.",
+    "predictor": "Left null vector of blockdiag(W_visual, I16) @ diag(gamma_predictor) @ (I - 11^T/400); offset concat(W_visual @ beta_visual + bias_visual, beta_proprio).",
+    "normal_construction": "FP64 full SVD, last left singular vector, normalize to Euclidean norm one, deterministic sign by largest-magnitude coordinate.",
+    "null_relative_residual_max": 1e-10,
+    "residual": "For every individual patch: r_encoder=n_encoder dot (visual-beta_encoder); r_predictor=n_predictor dot (concat(visual,proprio)-predictor_offset).",
+    "union_distance": "min(abs(r_encoder), abs(r_predictor)) per patch, without temporal or patch averaging.",
+    "tolerance": 1e-5,
+    "normalization_warning": "Learned LayerNorm scales/biases and predictor projection are included. If normalize_reps is true, reject this derivation rather than silently apply it after an additional normalization.",
+    "scope_warning": "The union covers real encoded joint frames and complete native joint forecast frames. It does not assert a visual-only predictor hyperplane or preserve a hybrid combining predicted visual features with unrelated/current true proprio."
+  },
+  "virtual_control": {
+    "source": "Initial encoded visual features only",
+    "sigma": 0.01,
+    "seed": 20261016,
+    "generator": "One independent torch CPU generator advanced in root order 1,2,3",
+    "operation": "Add independent FP32 Gaussian noise to each visual coordinate; leave proprio unchanged.",
+    "additional_model_calls": 0,
+    "interpretation": "Synthetic residual-only separation control, not an actual GRASP query or attack."
+  },
+  "native_style_hybrid_control": {
+    "label": "native_style_hybrid_not_actual_GRASP_execution",
+    "source": "All three successor visual frames of both native rollout candidates, excluding the initial prefix",
+    "operation": "Keep each native successor visual unchanged and replace its paired predicted proprio by the encoded initial proprio expanded across time and candidate batch, preserving patch order.",
+    "noise": 0,
+    "additional_model_calls": 0,
+    "interpretation": "Synthetic reconstruction of the current-proprio pairing found in the published adapter, not an executed GRASP query. It distinguishes Gaussian displacement from a mismatch introduced by combining otherwise native components."
+  },
+  "qualification_gate": {
+    "complete_fixed_panel": true,
+    "real_union_max_strictly_less_than": 1e-5,
+    "rollout_union_max_strictly_less_than": 1e-5,
+    "synthetic_consumer_signal": "At least one patch in either the Gaussian virtual control or the native-style hybrid control has union distance strictly greater than 1e-5 across the fixed panel. Report both controls separately, including every root and the fraction above tolerance; do not claim Gaussian noise is the sole source of departure.",
+    "interpretation": "Passing only establishes sampled numerical coverage of complete paired joint encoder/rollout outputs and sensitivity to at least one synthetic consumer construction. It does not prove coverage for every possible input or caller, native planner competence, harm, or novelty.",
+    "failure_rule": "Preserve failed/partial outputs; no retry, threshold increase, root replacement, noise tuning, or new model calls in this registration."
+  },
+  "max_activity": {
+    "checkpoint_loads": 2,
+    "encode_calls": 3,
+    "visual_encoder_forwards": 3,
+    "proprio_encoder_forwards": 3,
+    "unroll_calls": 3,
+    "predictor_forwards": 9,
+    "environment_steps": 0,
+    "environment_resets": 0,
+    "planner_calls": 0,
+    "gradient_steps": 0,
+    "training_updates": 0,
+    "model_api_calls": 0,
+    "network_attempts": 0
+  },
+  "artifacts": ["summary.json", "constraints.npz", "residuals.npz", "launched_config.json", "launched_script.py"]
+}

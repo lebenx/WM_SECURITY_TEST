@@ -1,0 +1,132 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T03:12:17.501021+00:00",
+  "status": "completed_saved_data_reanalysis_historical_native_privacy_claim_not_established",
+  "research_goal_status": "active_unachieved",
+  "question": "Does the archived0% goal classifier validly support the old no-leakage interpretation, and can these caches identify leakage beyond selected actions?",
+  "script": "scripts/reanalyze_private_query_grouped_cv.py",
+  "results": "runs/private_query_grouped_cv_audit_20261015/summary.json",
+  "table": "runs/private_query_grouped_cv_audit_20261015/result_table.csv",
+  "table_rows": [
+    {
+      "dataset": "private_counterfactual_query_v0",
+      "paired_seed_groups": 12,
+      "rows": 24,
+      "old_query_row_loo": 0.9583333333333334,
+      "query_group_cv": 0.9583333333333334,
+      "selected_action_group_cv": 0.7916666666666666,
+      "concatenated_group_cv": 0.875,
+      "query_exactly_equal_pairs": 0,
+      "query_max_abs_difference": 0.3225440979003906
+    },
+    {
+      "dataset": "private_counterfactual_query_v1",
+      "paired_seed_groups": 12,
+      "rows": 24,
+      "old_query_row_loo": 0.0,
+      "query_group_cv": 0.5,
+      "selected_action_group_cv": 0.5,
+      "concatenated_group_cv": 0.5,
+      "query_exactly_equal_pairs": 12,
+      "query_max_abs_difference": 0.0
+    },
+    {
+      "dataset": "private_query_geometry_search_v0/walker-walk",
+      "paired_seed_groups": 12,
+      "rows": 24,
+      "old_query_row_loo": 0.0,
+      "query_group_cv": 0.5,
+      "selected_action_group_cv": 0.5,
+      "concatenated_group_cv": 0.5,
+      "query_exactly_equal_pairs": 12,
+      "query_max_abs_difference": 0.0
+    },
+    {
+      "dataset": "private_query_geometry_search_v0/cup-catch",
+      "paired_seed_groups": 12,
+      "rows": 24,
+      "old_query_row_loo": 0.0,
+      "query_group_cv": 0.5,
+      "selected_action_group_cv": 0.5,
+      "concatenated_group_cv": 0.5,
+      "query_exactly_equal_pairs": 11,
+      "query_max_abs_difference": 5.960464477539063e-08
+    },
+    {
+      "dataset": "private_query_geometry_search_v0/reacher-easy",
+      "paired_seed_groups": 12,
+      "rows": 24,
+      "old_query_row_loo": 0.0,
+      "query_group_cv": 0.5,
+      "selected_action_group_cv": 0.5,
+      "concatenated_group_cv": 0.5,
+      "query_exactly_equal_pairs": 12,
+      "query_max_abs_difference": 0.0
+    },
+    {
+      "dataset": "private_query_geometry_search_v1/walker-walk",
+      "paired_seed_groups": 16,
+      "rows": 32,
+      "old_query_row_loo": 0.0,
+      "query_group_cv": 0.5,
+      "selected_action_group_cv": 0.5,
+      "concatenated_group_cv": 0.5,
+      "query_exactly_equal_pairs": 16,
+      "query_max_abs_difference": 0.0
+    }
+  ],
+  "verified_error": {
+    "operation": "Original leave-one-row-out retains the same-rep opposite-label mate in training. Reanalysis holds out both labels for the same planner RNG seed.",
+    "analytic_explanation": "When both labels have identical x_i for each of n repetition pairs and m is their mean, row-LOO yields own-class center (n*m-x_i)/(n-1) and opposite-class center m. For x_i != m, distance to the own-class center is n/(n-1) times larger. All such held-out rows are mechanically assigned the wrong label; this is neither a reverse privacy signal nor a valid no-information accuracy estimate.",
+    "executable_witness": "The reanalysis script includes two identical-feature pairs with row-LOO0% and paired-CV50% under the fixed lowest-label tie rule. No model or environment is involved."
+  },
+  "verified_reanalysis": {
+    "datasets": 6,
+    "same_rep_training_leakage_in_grouped_cv": 0,
+    "old_accuracies_reproduced": true,
+    "v0_grouped_query_correct": 23,
+    "v0_grouped_action_correct": 19,
+    "v0_grouped_concatenated_correct": 21,
+    "v0_rows": 24,
+    "other_five_groups_all_three_feature_sets_accuracy": 0.5,
+    "scaling": "Original raw-scale nearest centroids; no tuning, feature rescaling or representation selection.",
+    "precision_limit": "Some geometry pairs differ at floating-point scale. Report exact equality counts individually; chance accuracy does not prove all cached features or unsaved full transcripts identical.",
+    "inference_limit": "Classifier accuracy differences are descriptive, not conditional mutual information or a conditional-independence test. No p-values or significance claims."
+  },
+  "native_system_correction": {
+    "v0": "The checkpoint dynamics are native; the planner and random latent-goal objective are researcher-added. No selected action was executed in the environment.",
+    "v1_and_geometry": "The planner averages reward-head logits instead of native two-hot decoding; its public/base_returns accumulator is outside the CEM iteration loop, adding scores across unrelated candidate populations. No native terminal-Q estimate is used. Thus the saved queries cannot stand in for a corrected native controller.",
+    "historical_code": "All original run files and generation scripts remain unchanged. This reanalysis fixes statistical interpretation; it does not regenerate or repair their model computations."
+  },
+  "privacy_criterion_calibration": {
+    "exact_action_equality": "A sufficient matched privacy contrast, not necessary for every privacy claim. Incremental leakage conditional on observables or pre-action leakage may be legitimate separate estimands.",
+    "available_cache_limit": "Only query moment/quantile summaries and selected first actions are saved. Full1920-query transcripts and timestamps are unavailable. Each dataset contains one fixed environment root and one development-selected goal pair, with12 or16 planner seed groups.",
+    "decision": "Do not infer either verified native private-task leakage or universal absence of query leakage. A new study would need a competent native private-goal interface, predeclared observable information/timing, held-out goals/states, and matched controls. The statistics correction alone does not reopen a GPU panel."
+  },
+  "independent_review": "A second agent read the new grouping code and recorded results: every group excludes both seed mates; all six datasets reproduce the old query metric; source scoring defects and cache limits are accurately stated. No duplicate model/statistical execution was requested.",
+  "api_review": {
+    "summary": "runs/gemini_decisive_mechanism_screen_20261015/summary.json",
+    "raw_review": "runs/gemini_decisive_mechanism_screen_20261015/review.json",
+    "primary_provider": "Google Gemini",
+    "requested_model": "gemini-3.8-flash",
+    "http_status": 200,
+    "requests": 1,
+    "returned_decision": "none",
+    "root_adjudication": "Advisory screening only, not proof that no future candidate exists. General statements about all carriers or non-native hooks are not adopted as universal exclusions. Explicit assumed supply-chain interfaces remain legitimate when precisely scoped. The statistical correction above is independently established from saved data and code, not derived from the API opinion."
+  },
+  "activity": {
+    "model_api_requests": 1,
+    "pretrained_model_loads": 0,
+    "world_model_forwards": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "checkpoint_hashes_recomputed": 0,
+    "new_statistical_reanalyses": 1
+  },
+  "go_no_go": {
+    "historical0percent_as_valid_holdout_metric": "no_go_superseded",
+    "cached_summary_grouped_cv_correction": "go_completed",
+    "native_incremental_privacy_or_task_harm_claim": "no_go_evidence_insufficient",
+    "overall_ICLR_research_goal": "unachieved"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Quantum crystal 1 (uuid: 13162) is inside activated crystal reactor (uuid: 8549); quantum crystal 2 (uuid: 21559) is inside activated crystal reactor (uuid: 51739); quantum crystal 3 (uuid: 24678) remains on a table (uuid: 57306), not yet installed. An empty crystal reactor (uuid: 33120) is available nearby."
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is 66% activated."
+    },
+    {
+      "measurement": "Activated crystal reactor (uuid: 8549) reports resonance frequency 2680.26 Hz; activated crystal reactor (uuid: 51739) reports 2600.4 Hz."
+    },
+    {
+      "measurement": "Using 'Increase frequency by 1 Hz' on reactor (uuid: 8549) changed its displayed frequency from 2680.26 Hz to 2681 Hz. Using 'Decrease frequency by 1 Hz' on reactor (uuid: 51739) changed its displayed frequency from 2600.4 Hz to 2599 Hz."
+    },
+    {
+      "measurement": "The spectrometer (uuid: 24266) is in the agent's inventory, available for use."
+    },
+    {
+      "hypothesis": "if (object:quantum crystal) is placed in a crystal reactor and the reactor is tuned to the correct frequency for that crystal then the reactor will become activated and contribute to generator core activation.",
+      "status": "pending",
+      "supporting evidence": "Quantum crystals 1 and 2 are already inside activated reactors, and the generator core is 66% activated; quantum crystal 3 has not yet been placed in a reactor."
+    },
+    {
+      "hypothesis": "if (object:crystal reactor) is activated and contains (object:quantum crystal), then the reactor's current resonance frequency is the correct resonance frequency for that crystal.",
+      "status": "confirmed",
+      "supporting evidence": "Reactor 8549 with crystal 1 reports 2680.26 Hz and reactor 51739 with crystal 2 reports 2600.4 Hz; each activated reactor displays a single resonance frequency matching its installed crystal's required frequency."
+    },
+    {
+      "hypothesis": "if (object:quantum crystal 3) is measured with (object:spectrometer), then the data will reveal the correct resonance frequency needed for its crystal reactor.",
+      "status": "pending",
+      "supporting evidence": "The correct frequency for crystal 3 is unknown, and a spectrometer is now available in the agent's inventory."
+    },
+    {
+      "hypothesis": "if (object:crystal reactor) is adjusted with the 'Increase frequency by 1 Hz' option then its displayed resonance frequency will increase by approximately 1 Hz; if adjusted with the 'Decrease frequency by 1 Hz' option then its displayed resonance frequency will decrease by approximately 1 Hz.",
+      "status": "pending",
+      "supporting evidence": "Reactor 8549 changed from 2680.26 Hz to 2681 Hz after increasing; reactor 51739 changed from 2600.4 Hz to 2599 Hz after decreasing."
+    },
+    {
+      "hypothesis": "if (object:spectrometer uuid:24266) is used on (object:quantum crystal 1 uuid:13162) then the spectrometer will report a resonance frequency matching the activated reactor's displayed frequency (2680.26 Hz), confirming the spectrometer's ability to read quantum crystal frequencies.",
+      "status": "pending",
+      "supporting evidence": "Agent is adjacent to quantum crystal 1 inside activated reactor 8549, and the spectrometer is in inventory; reactor 8549 reports 2680.26 Hz.",
+      "step": 12
+    },
+    {
+      "measurement": "The spectrometer (uuid: 24266) was used on quantum crystal 1 (uuid: 13162), which is inside activated crystal reactor (uuid: 8549), and returned Channel 1: 40.61, Channel 2: 0.00, Channel 3: 0.00, Channel 4: 0.00, Channel 5: 63.61.",
+      "step": 13
+    },
+    {
+      "hypothesis": "if (object:quantum crystal) is measured with (object:spectrometer), then it will produce five channel readings (Channel 1-5) that encode the crystal's required resonance frequency; the exact encoding is not yet established.",
+      "status": "pending",
+      "step": 13,
+      "supporting evidence": "The spectrometer reading for quantum crystal 1 yielded non-zero values in channels 1 and 5 (40.61 and 63.61) and zeros elsewhere, rather than directly displaying a frequency in Hz."
+    },
+    {
+      "hypothesis": "if (object:spectrometer uuid:24266) is used on (object:quantum crystal 1 uuid:13162), then the spectrometer will directly report the resonance frequency of the reactor (2680.26 Hz).",
+      "status": "rejected",
+      "step": 13,
+      "supporting evidence": "Using the spectrometer on quantum crystal 1 returned channel values (40.61, 0, 0, 0, 63.61), not the expected frequency 2680.26 Hz."
+    },
+    {
+      "measurement": "Talked to activated crystal reactor (uuid: 8549); it reports its current resonance frequency as 2681 Hertz, and the allowable range is 0 to 10,000 Hz.",
+      "step": 14
+    },
+    {
+      "hypothesis": "if (object:quantum crystal 1) is measured with (object:spectrometer) and its matching activated reactor (uuid: 8549) displays frequency 2681 Hz, then the spectrometer channel readings [40.61, 0.00, 0.00, 0.00, 63.61] encode the frequency 2681 Hz via some transformation that is not yet known.",
+      "status": "pending",
+      "step": 14,
+      "supporting evidence": "Quantum crystal 1 produced spectrometer readings Channel 1: 40.61, Channel 5: 63.61, with zeros elsewhere, while its activated reactor currently reports 2681 Hz. More data from quantum crystal 2 and quantum crystal 3 will be needed to infer the encoding."
+    },
+    {
+      "measurement": "The agent teleported to quantum crystal 2 (uuid: 21559), which is installed in activated crystal reactor (uuid: 51739).",
+      "step": 16
+    },
+    {
+      "hypothesis": "if (object:quantum crystal 2 uuid:21559) is measured with (object:spectrometer uuid:24266), then the resulting channel readings can be compared with the known resonance frequency of its activated reactor (uuid:51739) to help infer how spectrometer channels encode crystal resonance frequency.",
+      "status": "pending",
+      "step": 16,
+      "supporting evidence": "Quantum crystal 2 is accessible at its activated reactor, the spectrometer is in inventory, and reactor 51739 has a known resonance frequency of approximately 2600.4 Hz."
+    }
+  ]
+}

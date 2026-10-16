@@ -1,0 +1,82 @@
+{
+  "script_sha256": "c86e4ed60b6ebf1ca9fff3b02a401574742e0a9c85748828cbc31e25eddb7ccc",
+  "upstream_commit": "1b66dabda8264576f737afa25daae3d42db2cbfb",
+  "model_provenance": {
+    "repository": "MLL-Lab/worldagen",
+    "revision": "5abb7e613149927208e17f34fc4bba894dfab073",
+    "path": "libero/libero_traj7_len_1img_3act/38.pth",
+    "size": 1490125586,
+    "expected_sha256": "028a32f4b91809fc84c3133031d07300ce04876c716ef8932c019e1bfcb8e770",
+    "purpose": "Frozen-model conditional instruction invariance probe; no training.",
+    "downloaded_bytes": 1490125586,
+    "sha256": "028a32f4b91809fc84c3133031d07300ce04876c716ef8932c019e1bfcb8e770",
+    "elapsed_s": 195.46628681197762,
+    "status": "verified"
+  },
+  "data_provenance": {
+    "repository": "lerobot/libero_10_image",
+    "revision": "7e324b526699f444044952c82ce3f438e8d300d0",
+    "files": [
+      {
+        "path": "meta/info.json",
+        "size": 2832,
+        "sha256": "353428a00f21652aa4dd541024c511f4edc7429bb8be0374f812158893848fe4"
+      },
+      {
+        "path": "meta/tasks.parquet",
+        "size": 2638,
+        "sha256": "10bb12686977333e729ef5c444cb9eb06377fff5b08a6f87f422dc6bf232205e"
+      },
+      {
+        "path": "data/chunk-000/file-000.parquet",
+        "size": 100742237,
+        "sha256": "76a1ff332cbb0c3ae2aa4d930a4308a9c5aaf1330c8ea7c6a1e5093a32062108"
+      }
+    ]
+  },
+  "selection": "First three episodes in downloaded shard; frame 30 in each; fixed before inference.",
+  "input_offsets": {
+    "images_states": [
+      0,
+      3
+    ],
+    "actions": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "goal_variants": [
+    "recorded task",
+    "next task cyclically among first three tasks",
+    "empty string"
+  ],
+  "controls": [
+    "identical prompt with identical RNG",
+    "only goal-to-input-action edges cut"
+  ],
+  "preprocessing": {
+    "images": "Rotate both cameras 180 degrees to raw LIBERO convention, then native CLIP transform.",
+    "state": "EEF xyz; rotvec to Euler xyz; previous recorded gripper command (first action at episode start).",
+    "action": "Recorded 7D action, no optimized or synthetic action.",
+    "gripper_mode": "Native gripper_width=False; internally one-hot encodes recorded binary command.",
+    "compatibility_limit": "Released eval shell sets gripper_width=True but its wrapper supplies 7D actions; native encoder requires 2 gripper dimensions in that mode. This experiment explicitly uses the implemented binary mode. It is not a released LIBERO evaluation reproduction.",
+    "data_limit": "LeRobot conversion and state conventions are not byte-identical to author training data. Fixed across goal comparisons; no forecast-accuracy benchmark claim."
+  },
+  "device": "cpu",
+  "dtype": "float32",
+  "seed_per_forward": 20261009,
+  "training_updates": 0,
+  "environment_steps": 0,
+  "api_requests": 0,
+  "not_claimed": [
+    "task harm",
+    "attack success",
+    "generality",
+    "novelty",
+    "beneficial repair accuracy"
+  ]
+}

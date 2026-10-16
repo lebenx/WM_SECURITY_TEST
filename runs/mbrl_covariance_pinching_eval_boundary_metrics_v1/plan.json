@@ -1,0 +1,40 @@
+{
+  "arguments": {
+    "stage": "evaluate",
+    "task": "cartpole",
+    "output": "runs/mbrl_covariance_pinching_eval_boundary_metrics_v1",
+    "model": "runs/mbrl_covariance_pinching_boundary_v0",
+    "transitions": 3000,
+    "collection_mode": "random",
+    "train_seed": 18,
+    "epochs": 60,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "particles": 10,
+    "bank_size": 8,
+    "population": 100,
+    "iterations": 3,
+    "horizon": 15,
+    "elite_ratio": 0.1,
+    "alpha": 0.1,
+    "max_steps": 200,
+    "return_mean_elites": false,
+    "condition": "native",
+    "seeds": [
+      812,
+      813
+    ]
+  },
+  "hashes": {
+    "scripts/pilot_mbrl_rank_general.py": "a6c6a5e2a35d20d72f6495bfb81fe6a660eef9dd6c0fccb8974aa018262e5131",
+    "src/wm_security/rank_coupling.py": "6915f24539df333140fd4343bb42dea2fc554412781013f8f264d4880ee049d0",
+    "scripts/pilot_mbrl_coupling.py": "94efc7153a724f3f853cfb1630c02ef2432a10b6343ee9a1f7d8fc582b640f97"
+  },
+  "mbrl_pin": "3f93cccfc8d635f74e335a2f07aab6e9a48fc021",
+  "operation": "Unchanged v2 fresh-bank cyclic rank sampler; no attack retuning.",
+  "scope": "Native environment, learned model, ModelEnv and CEM. Configurable short pilot, not full PETS training reproduction.",
+  "baseline": "bank_mean averages all K native particle batches at the same generation budget per request; native uses one batch.",
+  "timing": "CPU only; attacker phase search adds work beyond matched model-generation compute.",
+  "api_requests": 0,
+  "gpu_work": false
+}

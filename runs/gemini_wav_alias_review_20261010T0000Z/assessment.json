@@ -1,0 +1,21 @@
+{
+  "decision": "reject",
+  "novelty_score_0_10": 2,
+  "confidence": 0.95,
+  "mechanism": null,
+  "experiment": null,
+  "falsification_gate": null,
+  "alternatives": [
+    {
+      "name": "Recurrent Belief Hijacking via Legal Action Prefixes",
+      "mechanism": "An adversary executes a short sequence of legal simulator actions to steer the world model's recurrent state into a degenerate latent basin where imagined rollouts decouple from real physical reachability, inducing planner paralysis or catastrophic misplanning.",
+      "falsification_gate": "Across 200 MiniGrid trials, a 5-step adversarial action prefix reduces downstream task success of a native MPC/CEM controller by ≥40% compared to matched 5-step random and 5-step optimal prefixes, despite reaching an identical physical state."
+    },
+    {
+      "name": "Phantom Attractor Injection in Rollout Horizon",
+      "mechanism": "The adversary steers the physical trajectory into valid states where the world model's multi-step latent rollouts hallucinate a high-reward dead-end (phantom attractor) that consumes the planner's sampling budget and diverts the native controller from feasible physical paths.",
+      "falsification_gate": "Across 150 episodes, native planner regret increases by ≥35% when the planning horizon exceeds H=10 versus H≤4, with exactly 0% regret increase under an oracle-model planner under identical history trajectories."
+    }
+  ],
+  "reason": "The alias diagnostic simply tests whether a world model violates exact quotient symmetry under OOD state transitions, observing a ~94-96% split rate across base models and heuristic defenses alike. This is standard epistemic generalization failure and continuous latent representation drift, not a novel security attack. It directly overlaps with known action-semantic execution gap literature (arXiv:2610.06582) and classical bisimulation/quotient MDP theory; framing raw OOD split rates as an exploitable security vulnerability will be rejected by ICLR reviewers (novelty probability < 10%)."
+}

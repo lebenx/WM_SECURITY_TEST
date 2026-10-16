@@ -1,0 +1,967 @@
+{
+  "title": "From Forecast Sensitivity to Decision Evidence: A Working Audit of Pretrained World-Model Agents",
+  "status": "current_incomplete_evidence_working_report_with_explicitly_historical_legacy_metrics",
+  "claim": "Corrected WorldAgen supports a bounded instruction-isolation/error audit without native forecast-ranked policy harm. Cosmos has one development success-to-failure case supported by first-action-block real continuation. DINO has same-root conditional return loss and restoration, while matched full-horizon forecasts improve and the true-future native scorer prefers a lower-utility candidate. A general novel security mechanism, effective novel defense and independent generalization are not established.",
+  "novelty_self_assessment": null,
+  "scope": "The current report is an evidence-aligned working document, not a completed ICLR submission. Historical protocol metrics remain below only for provenance and must not be pooled with corrected results.",
+  "premise_revision": {
+    "date": "2026-10-14",
+    "authoritative_specification": "../configs/goal_bus_physical_invariance_spec.json",
+    "current_report": "research_progress.html",
+    "previous_manifest": "goal_bus_submission_manifest_before_premise_correction_20261014.json",
+    "previous_manifest_sha256": "81baf2a7a0913e792f44e3ed8943f647a067c0c778d28ec81e4cc0a4387c6330",
+    "previous_draft": "goal_bus_paper_draft_en_before_premise_correction_20261014.md",
+    "previous_draft_sha256": "3dda0af4f2d522eafc688679c3a2a930553a4affa9003f4610d1ff22b9bdbe67",
+    "withdrawn_assessment": "The earlier numerical novelty self-assessment of 7.0 is unsupported and is not a current score.",
+    "historical_evidence_status": "All inherited metric blocks and carrier labels below are historical; target codecs, inference assumptions and Clean baselines were subsequently audited. Their recorded numbers are preserved, not promoted to current validated evidence."
+  },
+  "premise_first_gate": {
+    "estimand": "Y_physical(s, do(A=a), do(G_query=g1), u) = Y_physical(s, do(A=a), do(G_query=g2), u), only for preference-only query Goal, full augmented state, full executed low-level action horizon and paired exogenous noise.",
+    "environment_control": "Historical runs/worldagen_same_scene_goal_v1/analysis.json records 120/120 matching initial/future replays. Corpus membership of its ten texts is not proof of same-scene Goal compatibility. The corrected same-scene comparison is runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json, one episode and six correlated transitions.",
+    "model_boundary": "Physical intervention invariance does not imply observational P_train(Y|H,A,G_query) invariance. Goal may convey hidden state via explicit or implicit correlations, and observed feedback actions are not do(A). WorldAgen has an explicit isolation contract; AlphaBrain/Cosmos do not inherit it. Divergence and enforced invariance do not establish error, attacker capability or decision harm."
+  },
+  "primary_carriers": [
+    "WorldAgen released LIBERO-38 checkpoint",
+    "AlphaBrain CosmosPolicy LIBERO checkpoint"
+  ],
+  "primary_evidence": {
+    "worldagen": {
+      "source": "../runs/worldagen_goal_bus_replicate_v2/summary.json",
+      "windows": 30,
+      "episodes": 10,
+      "native_world_relative_l2": 0.2999131125612509,
+      "edge_cut_world_relative_l2": 0.0,
+      "edge_cut_policy_relative_l2": 0.17595844904041993,
+      "empty_goal_world_relative_l2": 0.27038687800860556
+    },
+    "alphabrain_seed1_matrix": {
+      "source": "../runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v0/aggregate.json",
+      "windows": 21,
+      "episodes": 7,
+      "native_world_delta_mean": 0.05317268627030509,
+      "native_world_cluster_bootstrap_ci95": [
+        0.04511929906549909,
+        0.06179988171373094
+      ],
+      "cut_world_exact_zero_all": true,
+      "repair_mse_delta_mean": 0.04899482216153826,
+      "repair_mse_delta_cluster_bootstrap_ci95": [
+        0.03320588476601101,
+        0.06798216810538654
+      ]
+    },
+    "alphabrain_noise_controls": [
+      {
+        "source": "../runs/alphabrain_cosmos_policy_real_input_sampler_noise2_v0/summary.json",
+        "sampler_seed": 2,
+        "windows": 3,
+        "native_world_delta_mean": 0.06269635011752446,
+        "cut_world_exact_zero_all": true,
+        "repair_mse_delta_mean": -0.0007915894190470377
+      },
+      {
+        "source": "../runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_seed3_v0/aggregate.json",
+        "sampler_seed": 3,
+        "windows": 3,
+        "native_world_delta_mean": 0.12544094771146774,
+        "cut_world_exact_zero_all": true,
+        "repair_mse_delta_mean": -0.03820428252220154
+      }
+    ],
+    "action_control": {
+      "source": "../runs/alphabrain_cosmos_policy_real_input_sampler_action_control_v0/summary.json",
+      "windows": 3,
+      "repaired_action_world_delta_mean": 0.08714936471854647,
+      "all_nonzero": true
+    },
+    "alphabrain_task_stratified": {
+      "source": "../runs/alphabrain_cosmos_policy_real_input_sampler_forecast_by_task_v0/aggregate.json",
+      "unique_task_a": 5,
+      "windows_seed1_seed3": 24,
+      "native_task_group_nonzero_all": true,
+      "cut_task_group_exact_zero_all": true,
+      "native_task_group_means": [
+        0.0487816259264946,
+        0.04118068143725395,
+        0.04450413817539811,
+        0.12808502838015556,
+        0.06944807867209117
+      ]
+    },
+    "worldagen_offset_matrix": {
+      "source": "../runs/worldagen_goal_bus_offset_sweep_v1/summary_stats.json",
+      "paired_rows": 270,
+      "physical_windows": 30,
+      "legal_offsets": 9,
+      "native_world_relative_l2_mean": 0.3246719682747652,
+      "native_world_cluster_bootstrap_ci95": [
+        0.28603607262170794,
+        0.36125445228822206
+      ],
+      "native_nonzero_fraction": 1.0,
+      "cut_world_exact_zero_fraction": 1.0,
+      "cut_policy_relative_l2_mean": 0.20002983899728732,
+      "cut_policy_cluster_bootstrap_ci95": [
+        0.16317817703662202,
+        0.2401074474355666
+      ],
+      "swapped_minus_recorded_mse_mean": 0.07790650129318237,
+      "swapped_minus_recorded_mse_cluster_bootstrap_ci95": [
+        0.06262642389094387,
+        0.09400544565033028
+      ]
+    },
+    "worldagen_offset_stability": {
+      "source": "../runs/worldagen_goal_bus_offset_stability_v0/summary.json",
+      "paired_rows": 270,
+      "legal_offsets": 9,
+      "native_offset_mean_min": 0.2785374471205627,
+      "native_offset_mean_max": 0.3872518487828675,
+      "leave_one_offset_out_native_mean_range": [
+        0.31684948321125245,
+        0.33043878341904054
+      ],
+      "cut_world_exact_zero_all": true,
+      "cut_policy_sensitive_all": true
+    },
+    "alphabrain_learned_goal_free_context": {
+      "source": "../runs/alphabrain_goal_free_context_v1/summary.json",
+      "train_episodes": [
+        3,
+        4,
+        5
+      ],
+      "eval_episodes": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "train_windows": 3,
+      "eval_windows": 4,
+      "steps": 8,
+      "learning_rate": 0.001,
+      "zero_context_eval_mse": 0.585190162062645,
+      "learned_context_eval_mse": 0.46214917302131653,
+      "interpretation": "bounded trainable shared-context comparator; not a full goal-free dynamics head",
+      "sources": [
+        "../runs/alphabrain_goal_free_context_v1/summary.json",
+        "../runs/alphabrain_goal_free_context_v2/summary.json"
+      ],
+      "seeds": [
+        17,
+        23
+      ],
+      "learned_context_eval_mse_replicates": [
+        0.46214917302131653,
+        0.4621938094496727
+      ],
+      "learned_context_eval_mse_mean": 0.4621714912354946,
+      "multi_timepoint_check": {
+        "source": "../runs/alphabrain_goal_free_context_v3/summary.json",
+        "train_windows": 9,
+        "eval_windows": 12,
+        "frames": [
+          30,
+          60,
+          90
+        ],
+        "seed": 29,
+        "zero_context_eval_mse": 0.6019700939456621,
+        "learned_context_eval_mse": 0.47851500908533734,
+        "episode_cluster_delta_ci95": [
+          -0.18414124,
+          -0.01298855
+        ],
+        "interpretation": "bounded temporal-coverage check; not a full goal-free dynamics head"
+      }
+    },
+    "worldagen_activation_mediation": {
+      "source": "../runs/worldagen_goal_bus_activation_patch_v1/summary.json",
+      "windows": 21,
+      "episodes": 7,
+      "layers": [
+        0,
+        4,
+        8,
+        12,
+        16,
+        20,
+        23
+      ],
+      "world_residual_fraction_mean_layer4": 0.2062089907992777,
+      "world_residual_fraction_mean_layer8": 0.19979582192466186,
+      "policy_residual_fraction_mean_layer4": 0.955522728350052,
+      "policy_residual_fraction_mean_layer8": 0.9642912978128823,
+      "middle_layer_world_moves_toward_recorded_all": true,
+      "interpretation": "Internal mediation diagnostic; not an attacker operation or task-harm result.",
+      "world_residual_fraction_cluster_bootstrap_ci95_layer4": [
+        0.1677956501814463,
+        0.24818147027891618
+      ],
+      "world_residual_fraction_cluster_bootstrap_ci95_layer8": [
+        0.17963719131380765,
+        0.22023966386787364
+      ],
+      "base_frames": [
+        30,
+        60,
+        90
+      ]
+    },
+    "alphabrain_goal_vs_action_effect_size": {
+      "source": "../runs/alphabrain_goal_vs_action_effect_v0/summary.json",
+      "episodes": [
+        3,
+        6,
+        8
+      ],
+      "goal_world_effect_mean": 0.07137396559119225,
+      "alternate_action_world_effect_mean": 0.08714936471854647,
+      "goal_to_action_scale_ratio": 0.8189843474097406,
+      "interpretation": "Descriptive paired scale comparison, not a significance test."
+    },
+    "worldagen_action_control": {
+      "source": "../runs/worldagen_goal_bus_action_control_v1/summary.json",
+      "windows": 30,
+      "episodes": 10,
+      "base_frames": [
+        30,
+        60,
+        90
+      ],
+      "native_action_world_relative_l2_mean": 0.16234932444272118,
+      "native_action_world_cluster_bootstrap_ci95": [
+        0.14255706,
+        0.18392871
+      ],
+      "cut_action_world_relative_l2_mean": 0.16551350805800996,
+      "cut_action_world_cluster_bootstrap_ci95": [
+        0.14688622,
+        0.18552859
+      ],
+      "cut_action_world_nonzero_all": true,
+      "interpretation": "Same fixed image/state/instruction with a real same-episode alternate action chunk; confirms the repair preserves physical action sensitivity."
+    },
+    "worldagen_task_stratified": {
+      "source": "../runs/worldagen_goal_bus_task_groups_v0/summary.json",
+      "windows": 30,
+      "unique_recorded_tasks": 6,
+      "native_nonzero_all_groups": true,
+      "cut_exact_zero_all_groups": true,
+      "native_group_means": [
+        0.25569813063263547,
+        0.09717202442695522,
+        0.26027061849682326,
+        0.2706068251920581,
+        0.5791925996425915,
+        0.16008654656210233
+      ],
+      "interpretation": "Descriptive semantic grouping of the existing physical windows; repeated frames remain within episodes."
+    },
+    "worldagen_matched_edge_cut_control": {
+      "source": "../runs/worldagen_goal_bus_edge_cut_controls_v0/summary.json",
+      "windows": 30,
+      "episodes": 10,
+      "native_world_relative_l2_mean": 0.2999131125612509,
+      "bus_cut_world_relative_l2_max": 0.0,
+      "policy_only_cut_world_relative_l2_mean": 0.2999131125612509,
+      "policy_only_cut_world_nonzero_all": true,
+      "interpretation": "Matched nine-edge policy-only deletion leaves world sensitivity unchanged; specificity supports the input-action carrier mechanism."
+    },
+    "worldagen_counterfactual_action_ranking": {
+      "source": "../runs/worldagen_counterfactual_action_ranking_v0/summary_fixedscore_v2_tasks6.json",
+      "tasks": 6,
+      "candidates_per_task": 8,
+      "goal_swap_ranking_flip_mean": 0.4464285714285714,
+      "goal_swap_eef_delta_vs_clean_mean_m": -0.054725709518799175,
+      "bus_cut_eef_delta_vs_clean_mean_m": 0.01539848921436765,
+      "control_cut_score_max_abs_diff": 0.0,
+      "sparse_success_all_conditions": false,
+      "native_policy_uses_world_forecast": false,
+      "interpretation": "Independent forecast-driven planner only; not native action-selection evidence; Bus-Cut is not a guaranteed clean-decision repair.",
+      "forecast_error_protocol": "v2_primary_view_first_chunk_step3_only",
+      "bus_cut_selected_action_recovery": "1/6"
+    },
+    "alphabrain_forecast_planner_feasibility": {
+      "source": "../runs/alphabrain_forecast_planner_v0/summary.json",
+      "script": "../scripts/pilot_alphabrain_forecast_planner.py",
+      "task": 0,
+      "seed": 17,
+      "candidates": 8,
+      "replay_horizon": 30,
+      "utility": "real LIBERO EEF progress; no model score",
+      "selected": {
+        "clean_native": 4,
+        "goal_swap_native": 6,
+        "clean_cut": 6,
+        "goal_swap_cut": 6
+      },
+      "regret_m": {
+        "clean_native": 0.06206969493876807,
+        "goal_swap_native": 0.4228008422071995,
+        "clean_cut": 0.4228008422071995,
+        "goal_swap_cut": 0.4228008422071995
+      },
+      "interpretation": "Single-task cross-carrier feasibility gate. Forecast ranking enters an independent planner, but fixed-action Bus-Cut does not recover the Clean decision; no cross-carrier task-harm or universal repair claim."
+    },
+    "worldagen_counterfactual_seed_replicates": {
+      "source": "../runs/worldagen_counterfactual_action_ranking_v0/fixedscore_seed_replicate_statistics.json",
+      "replicates": 2,
+      "task_seed_pairs": 12,
+      "goal_swap_ranking_flip_mean": 0.44345238095238093,
+      "goal_swap_ranking_flip_sd": 0.10924170802874006,
+      "goal_swap_eef_delta_vs_clean_mean_m": -0.07007779507899294,
+      "goal_swap_eef_delta_vs_clean_sd_m": 0.14928058177501388,
+      "goal_swap_eef_task_cluster_bootstrap_ci95_m": [
+        -0.16798971180662461,
+        0.05200613065681542
+      ],
+      "bus_cut_eef_delta_vs_clean_mean_m": 0.02156545249984564,
+      "interpretation": "Descriptive two-seed replication; no significance claim."
+    },
+    "worldagen_activation_patch_action_ranking": {
+      "source": "../runs/worldagen_counterfactual_action_ranking_v0/summary_activation_patch_tasks6_v2.json",
+      "tasks": 6,
+      "layers": [
+        4,
+        8
+      ],
+      "forecast_residual_to_clean_mean": {
+        "native": 0.5294998411215633,
+        "bus_cut": 0.4750389982622239,
+        "layer4": 0.1349326958095049,
+        "layer8": 0.132339151827813
+      },
+      "ranking_flip_mean": {
+        "layer4": 0.3333333333333333,
+        "layer8": 0.36904761904761907
+      },
+      "clean_selected_action_recovery": {
+        "layer4": "2/6",
+        "layer8": "2/6"
+      },
+      "eef_delta_vs_clean_mean_m": {
+        "layer4": 0.08771758347695624,
+        "layer8": 0.037238100779944425
+      },
+      "interpretation": "Forecast residual reduction does not guarantee clean decision recovery."
+    },
+    "worldagen_aligned_planner_calibration": {
+      "source": "../runs/worldagen_aligned_planner_v1/statistics.json",
+      "tasks": 6,
+      "candidate_count": 8,
+      "forecast_chunk": "first primary-view chunk, step 3",
+      "replay_horizon": 3,
+      "reference_scalar_clean_regret_m": 0.008058772643636997,
+      "reference_scalar_random_expected_regret_m": 0.013108021917744824,
+      "reference_scalar_swap1_regret_m": 0.008296814735845629,
+      "reference_scalar_swap5_regret_m": 0.013782598732257437,
+      "reference_scalar_swap1_selected_change": "6/6",
+      "global_minmax_clean_regret_m": 0.01999923132534666,
+      "interpretation": "Planner calibration gate; global-minmax is not used as a universal value function."
+    },
+    "worldagen_aligned_planner_replicates": {
+      "source": "../runs/worldagen_aligned_planner_replicates_v1/statistics.json",
+      "seeds": [
+        17,
+        31,
+        37
+      ],
+      "tasks": 6,
+      "task_seed_pairs": 18,
+      "reference_scalar_clean_regret_mean_m": 0.008653731284953375,
+      "random_regret_mean_m": 0.013091200252513686,
+      "offset1_regret_mean_m": 0.009348085652592545,
+      "offset1_eef_delta_mean_m": -0.0006943543676391695,
+      "offset1_eef_task_cluster_bootstrap_ci95_m": [
+        -0.005631388073847991,
+        0.0039716089656751255
+      ],
+      "offset5_regret_mean_m": 0.013755268910821919,
+      "offset5_eef_delta_mean_m": -0.005101537625868544,
+      "offset5_eef_task_cluster_bootstrap_ci95_m": [
+        -0.01388952643109739,
+        0.0025971759343842867
+      ],
+      "control_cut_max_abs_score_diff": 0.0,
+      "interpretation": "Descriptive aligned planner replication; native policy does not consume World Forecast."
+    },
+    "worldagen_cross_task_value_probe": {
+      "sources": [
+        "../runs/worldagen_cross_task_value_probe_v1/test_tasks679.json",
+        "../runs/worldagen_cross_task_value_probe_v1/test_tasks024.json"
+      ],
+      "train_test_splits": [
+        "train 0,2,4 / test 6,7,9",
+        "train 6,7,9 / test 0,2,4"
+      ],
+      "fit": "fixed-alpha ridge on Clean forecast features and real EEF outcomes from train tasks",
+      "interpretation": "Forecast-mediated held-out selection changes are present, but Clean calibration and utility direction do not generalize across task splits; negative boundary check."
+    },
+    "worldagen_aligned_planner_h30_replicates": {
+      "source": "../runs/worldagen_aligned_planner_h30_replicates_v1/statistics.json",
+      "seeds": [
+        17,
+        31,
+        37
+      ],
+      "tasks": 6,
+      "task_seed_pairs": 18,
+      "forecast_horizon": 3,
+      "replay_horizon": 30,
+      "reference_scalar_clean_regret_mean_m": 0.0758001960038935,
+      "random_regret_mean_m": 0.1344819425431752,
+      "offset1_regret_mean_m": 0.10439530929201943,
+      "offset1_eef_delta_mean_m": -0.028595113288125935,
+      "offset5_regret_mean_m": 0.14810442833810594,
+      "offset5_eef_delta_mean_m": -0.07230423233421246,
+      "offset5_eef_task_cluster_bootstrap_ci95_m": [
+        -0.19557622736156907,
+        0.02260376631131246
+      ],
+      "bus_cut_regret_mean_m": 0.03732203927699761,
+      "bus_cut_eef_delta_mean_m": 0.03847815672689589,
+      "bus_cut_clean_action_recovery": "0/18",
+      "control_cut_max_abs_score_diff": 0.0,
+      "interpretation": "Long-horizon real simulator consequence under an independently calibrated forecast-driven planner; descriptive and not native policy evidence."
+    },
+    "worldagen_aligned_goal_sweep": {
+      "source": "../runs/worldagen_aligned_goal_sweep_h30_v1/statistics_sweep.json",
+      "tasks": [
+        0,
+        2
+      ],
+      "offsets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "counterfactuals": 18,
+      "forecast_horizon": 3,
+      "replay_horizon": 30,
+      "scorer": "reference_scalar",
+      "offset3_eef_delta_mean_m": -0.0528,
+      "offset4_eef_delta_mean_m": -0.1126,
+      "offset5_eef_delta_mean_m": -0.0748,
+      "offset4_regret_mean_m": 0.2712,
+      "bus_cut_best_candidate_rate": 1.0,
+      "interpretation": "Descriptive legal-goal dose response; task-dependent direction and two-task limit are explicit.",
+      "replicate_source": "../runs/worldagen_aligned_goal_sweep_h30_replicates_v1/statistics.json",
+      "replicate_seeds": [
+        17,
+        31,
+        37
+      ],
+      "replicate_task_seed_pairs": 18,
+      "replicate_offset4_eef_delta_mean_m": -0.1489519089528691,
+      "replicate_offset5_eef_delta_mean_m": -0.13041134000192708,
+      "replicate_offset4_regret_mean_m": 0.27655376378569235,
+      "replicate_offset5_regret_mean_m": 0.2580131948347503,
+      "replicate_offset1_eef_delta_mean_m": 0.024237817852996116,
+      "replicate_offset2_eef_delta_mean_m": 0.04824126261832271,
+      "replicate_bus_cut_best_candidate_rate": 1.0,
+      "replicate_bus_cut_clean_action_recovery_rate": 0.0,
+      "replicate_interpretation": "Three-seed descriptive legal-goal dose response; direction is task-dependent and not a monotonic dose law.",
+      "forecast_error_clean_mean": 2.0052812273303666,
+      "forecast_error_offset4_mean": 1.9413812508185704,
+      "forecast_error_offset5_mean": 1.9416963532567024,
+      "forecast_error_interpretation": "Primary-view forecast MSE is not monotonic across legal Goal offsets and is not treated as decision harm.",
+      "replicate_offset1_ranking_flip_rate": 0.2916666666666667,
+      "replicate_offset5_ranking_flip_rate": 0.5892857142857143,
+      "ranking_flip_definition": "fraction of non-tied candidate pairs whose score order changes relative to Clean",
+      "main_replicate_source": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/statistics.json",
+      "main_tasks": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9
+      ],
+      "main_replicate_task_seed_pairs": 18,
+      "main_counterfactuals": 162,
+      "main_offset1_eef_delta_mean_m": -0.02859511328812593,
+      "main_offset5_eef_delta_mean_m": -0.07230423233421246,
+      "main_offset5_regret_mean_m": 0.14810442833810594,
+      "main_offset1_ranking_flip_rate": 0.48412698412698413,
+      "main_offset5_ranking_flip_rate": 0.4662698412698413,
+      "main_ranking_flip_rate_range": [
+        0.4484126984126984,
+        0.5555555555555556
+      ],
+      "main_bus_cut_best_candidate_rate": 0.6666666666666666,
+      "main_bus_cut_clean_action_recovery_rate": 0.0,
+      "main_forecast_error_clean_mean": 1.9069892432954576,
+      "main_forecast_error_offset5_mean": 1.8621305310063891,
+      "main_interpretation": "Six-task three-seed aggregate supports cross-task planner-mediated perturbation, with partial but non-clean Bus-Cut repair; task success and native-policy damage remain unclaimed."
+    },
+    "worldagen_aligned_goal_sweep_all6": {
+      "source": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/statistics.json",
+      "tasks": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9
+      ],
+      "seeds": [
+        17,
+        31,
+        37
+      ],
+      "task_seed_pairs": 18,
+      "counterfactuals": 162,
+      "offsets": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "forecast_horizon": 3,
+      "replay_horizon": 30,
+      "scorer": "reference_scalar",
+      "eef_delta_range_m": [
+        -0.13302775915571918,
+        -0.019272983324943527
+      ],
+      "offset5_eef_delta_mean_m": -0.07230423233421246,
+      "offset5_regret_mean_m": 0.14810442833810594,
+      "ranking_flip_rate_range": [
+        0.4484126984126984,
+        0.5555555555555556
+      ],
+      "bus_cut_best_candidate_rate": 0.6666666666666666,
+      "bus_cut_clean_action_recovery_rate": 0.0,
+      "forecast_error_clean_mean": 1.9069892432954576,
+      "forecast_error_offset5_mean": 1.8621305310063891,
+      "interpretation": "Cross-task three-seed descriptive aggregate; planner-mediated ranking/consequence perturbation is supported, but native policy and task-success harm remain unclaimed.",
+      "forecast_error_mediation": {
+        "source": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/mediation_statistics.json",
+        "pooled_spearman_error_delta_vs_ranking_flip": 0.09918531828610652,
+        "pooled_spearman_error_delta_vs_eef_delta": -0.08043844914914328,
+        "pooled_spearman_error_delta_vs_regret": -0.08013246209152597,
+        "interpretation": "Forecast Error is not a sufficient decision-harm proxy; offset-stratified signs vary."
+      },
+      "decision_repair_path": {
+        "source": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/decision_repair_path.json",
+        "weights": [
+          0.0,
+          0.25,
+          0.5,
+          0.75,
+          1.0
+        ],
+        "weight025_regret_m": 0.02911099815381604,
+        "weight025_clean_action_recovery": 0.05555555555555555,
+        "weight075_regret_m": 0.048305822983010144,
+        "weight075_clean_action_recovery": 0.7777777777777778,
+        "interpretation": "Fixed rank interpolation exposes an explicit utility/recovery Pareto; it is planner-level and requires a Clean reference branch."
+      },
+      "candidate_cardinality_sensitivity": {
+        "source": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/candidate_cardinality.json",
+        "all8_offset5_regret_m": 0.14810442833810594,
+        "linspace4_offset5_regret_m": 0.15504220100519128,
+        "linspace4_ranking_flip_range": [
+          0.4074074074074074,
+          0.5833333333333334
+        ],
+        "control_cut_max_abs_score_diff": 0.0,
+        "interpretation": "Fixed-subset sensitivity only; not a newly sampled four-candidate protocol."
+      },
+      "forecast_only_attacker": {
+        "source": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/forecast_only_attacker.json",
+        "selector": "max_pairwise_flip",
+        "eef_delta_mean_m": -0.09952797090741933,
+        "regret_mean_m": 0.17532816691131284,
+        "regret_delta_vs_uniform_mean_m": 0.027779958904730322,
+        "regret_delta_task_cluster_ci95_m": [
+          -0.02301300330146459,
+          0.07857292111092523
+        ],
+        "interpretation": "Forecast-only max-flip selection is mildly worse than uniform descriptively, but its CI crosses zero; alternative divergence selectors improve, so divergence is not a reliable attack objective."
+      },
+      "latent_divergence_attacker": {
+        "source": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/latent_divergence_attacker.json",
+        "mean_mse_selector_regret_m": 0.17105136778282687,
+        "mean_mse_selector_regret_delta_vs_uniform_m": 0.023503159776244342,
+        "mean_mse_selector_regret_delta_ci95_m": [
+          -0.05577028311827049,
+          0.11112073634770438
+        ],
+        "max_mse_selector_regret_delta_vs_uniform_m": 0.02617048036410202,
+        "interpretation": "Latent divergence selection is directionally compatible with worse consequences but CI crosses zero; model-space divergence is not attack success."
+      }
+    },
+    "alphabrain_forecast_planner_multitask": {
+      "source": "../runs/alphabrain_forecast_planner_multitask_v1/summary.json",
+      "tasks": [
+        0,
+        2,
+        4
+      ],
+      "seed": 17,
+      "candidates_per_task": 8,
+      "forecast_horizon_scored": 16,
+      "replay_horizon": 30,
+      "selected_action_change_rate": 0.6666666666666666,
+      "clean_regret_mean_m": 0.1836288938410826,
+      "goal_swap_regret_mean_m": 0.22512132721244224,
+      "bus_cut_regret_mean_m": 0.27961932426095504,
+      "bus_cut_clean_action_recovery_rate": 0.3333333333333333,
+      "control_score_identity": true,
+      "interpretation": "Cross-carrier independent-planner reachability is reproducible on three task-seed rows, but utility direction is task-dependent and Bus-Cut is not a universal clean-decision repair."
+    },
+    "alphabrain_forecast_planner_six_task": {
+      "source": "../runs/alphabrain_forecast_planner_six_task_v1/summary.json",
+      "tasks": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9
+      ],
+      "seed": 17,
+      "candidates_per_task": 8,
+      "forecast_horizon_scored": 16,
+      "replay_horizon": 30,
+      "selected_action_change_rate": 0.8333333333333334,
+      "clean_regret_mean_m": 0.1645971296574375,
+      "goal_swap_regret_mean_m": 0.1910950844328142,
+      "bus_cut_regret_mean_m": 0.24333321685608714,
+      "bus_cut_clean_action_recovery_rate": 0.3333333333333333,
+      "control_score_identity": true,
+      "interpretation": "Six-task cross-carrier independent-planner pilot supports forecast reachability and ranking perturbation, but utility directions are mixed and Bus-Cut is not a universal clean-decision repair."
+    },
+    "alphabrain_forecast_planner_replicates": {
+      "source": "../runs/alphabrain_forecast_planner_replicates_v1/statistics.json",
+      "tasks": [
+        0,
+        2,
+        4,
+        6,
+        7,
+        9
+      ],
+      "init_indices": [
+        0,
+        1,
+        2
+      ],
+      "task_state_rows": 18,
+      "selected_action_change_rate": 0.8333333333333334,
+      "clean_action_recovery_rate": 0.16666666666666666,
+      "clean_regret_mean_m": 0.15114943385117796,
+      "swap_regret_mean_m": 0.18851116914784688,
+      "bus_cut_regret_mean_m": 0.2607000688832794,
+      "swap_minus_clean_regret_mean_m": 0.03736173529666894,
+      "swap_minus_clean_state_cluster_ci95_m": [
+        0.009750256373063185,
+        0.07583699474156692
+      ],
+      "swap_minus_clean_task_cluster_ci95_m": [
+        -0.10859526521888516,
+        0.19312963090335844
+      ],
+      "bus_cut_minus_clean_regret_mean_m": 0.10955063503210144,
+      "control_score_identity": true,
+      "interpretation": "Explicit initial-state replication supports descriptive cross-state planner reachability; task-cluster uncertainty crosses zero, and Bus-Cut changes the planner baseline rather than universally restoring Clean decisions."
+    },
+    "worldagen_same_scene_empty_goal": {
+      "source": "../runs/worldagen_same_scene_empty_goal_all50_v1/summary.json",
+      "pilot_source": "../runs/worldagen_same_scene_empty_goal_v1/summary.json",
+      "states": 50,
+      "actions": 4,
+      "empty_minus_clean_target_mse_mean": 0.07442112505435944,
+      "empty_minus_clean_target_mse_state_cluster_ci95": [
+        0.06646878169476986,
+        0.08240974462032319
+      ],
+      "positive_state_fraction": 1.0,
+      "initial_replay_exact_count": 200,
+      "clean_empty_forecast_mse_mean": 0.21388009630143642,
+      "interpretation": "Prompt-independent empty-Goal diagnostic across all 50 initial states; Clean carries a stable task prior, but this is not a trained goal-free dynamics baseline."
+    }
+  },
+  "baseline_ladder": [
+    "native mask",
+    "WorldAgen empty-goal comparator",
+    "AlphaBrain world-text-only cut",
+    "corrected fixed-action world cut",
+    "same-episode alternate-action control",
+    "independent sampler seeds 2 and 3",
+    "disjoint-episode learned goal-free context comparator",
+    "WorldAgen action-token activation mediation patch"
+  ],
+  "core_task_boundary": {
+    "worldagen_600_step": "0/3 native and 0/3 edge-cut successes",
+    "alphabrain_32_step": "0/3 native and 0/3 corrected-cut successes",
+    "alphabrain_608_step": "0/1 native and 0/1 corrected-cut successes",
+    "interpretation": "Negative control only; clean task-capable baseline is not established.",
+    "alphabrain_corrected_official_preprocess_608_step": "0/1 native and 0/1 corrected-cut successes; JPEG/center-crop, proprio normalization, five-step sampler",
+    "alphabrain_matching_goal_304_step": "0/3 native and 0/3 corrected-cut successes across Goal-suite tasks 0-2; config dataset_mix=libero_goal; official preprocessing and five-step sampler"
+  },
+  "artifacts": {
+    "chinese_draft": "goal_bus_paper_draft_cn.md",
+    "english_draft": "goal_bus_paper_draft_en.md",
+    "english_pdf": "goal_bus_paper_draft_en.pdf (historical, superseded protocols; now carries an explicit notice)",
+    "full_report": "goal_bus_iclr_research_report_cn.md",
+    "reproduction_manifest": "goal_bus_reproduction_manifest_cn.md",
+    "main_results": "../runs/goal_bus_main_results_v0/summary.json",
+    "progress_html": "research_progress.html",
+    "security_config": "../configs/world_model_goal_bus_security.json",
+    "roadmap_config": "../configs/research_roadmap.json",
+    "task_stratified_matrix": "../runs/alphabrain_cosmos_policy_real_input_sampler_forecast_by_task_v0/aggregate.json",
+    "worldagen_offset_matrix": "../runs/worldagen_goal_bus_offset_sweep_v1/summary_stats.json",
+    "worldagen_offset_stability": "../runs/worldagen_goal_bus_offset_stability_v0/summary.json",
+    "related_work_memo": "related_work_goal_bus.md",
+    "unified_evidence_figure_svg": "figures/goal_bus_evidence_summary.svg",
+    "unified_evidence_figure_pdf": "figures/goal_bus_evidence_summary.pdf",
+    "unified_evidence_plot_script": "../scripts/plot_goal_bus_evidence_summary.py",
+    "completion_audit": "goal_bus_completion_audit_cn.md",
+    "submission_readme": "README_goal_bus_submission.md",
+    "learned_goal_free_context": "../runs/alphabrain_goal_free_context_v1/summary.json",
+    "learned_goal_free_context_script": "../scripts/train_alphabrain_goal_free_context.py",
+    "learned_goal_free_context_seed23": "../runs/alphabrain_goal_free_context_v2/summary.json",
+    "alphabrain_corrected_official_preprocess_pilot": "../runs/alphabrain_cosmos_libero_full_control_v2/spatial_600.json",
+    "alphabrain_training_resource_audit": "../runs/alphabrain_training_resource_audit_v0/summary.json",
+    "alphabrain_training_resource_audit_script": "../scripts/audit_alphabrain_training_resources.py",
+    "alphabrain_learned_goal_free_context_multitimepoint": "../runs/alphabrain_goal_free_context_v3/summary.json",
+    "bounded_goal_free_context_figure_svg": "figures/goal_free_context_baseline.svg",
+    "bounded_goal_free_context_figure_pdf": "figures/goal_free_context_baseline.pdf",
+    "alphabrain_matching_goal_task_pilot": "../runs/alphabrain_cosmos_libero_goal_control_v0/aggregate_summary.json",
+    "worldagen_activation_mediation": "../runs/worldagen_goal_bus_activation_patch_v1/summary.json",
+    "worldagen_activation_mediation_script": "../scripts/pilot_worldagen_goal_bus_activation_patch.py",
+    "worldagen_activation_mediation_figure_svg": "figures/worldagen_activation_mediation.svg",
+    "worldagen_activation_mediation_figure_pdf": "figures/worldagen_activation_mediation.pdf",
+    "alphabrain_goal_vs_action_effect": "../runs/alphabrain_goal_vs_action_effect_v0/summary.json",
+    "alphabrain_goal_vs_action_effect_script": "../scripts/analyze_alphabrain_goal_vs_action_effect.py",
+    "worldagen_action_control": "../runs/worldagen_goal_bus_action_control_v1/summary.json",
+    "worldagen_action_control_script": "../scripts/pilot_worldagen_goal_bus_action_control.py",
+    "worldagen_task_stratified": "../runs/worldagen_goal_bus_task_groups_v0/summary.json",
+    "worldagen_task_stratified_script": "../scripts/analyze_worldagen_goal_bus_task_groups.py",
+    "worldagen_action_control_figure_svg": "figures/worldagen_action_control.svg",
+    "worldagen_action_control_figure_pdf": "figures/worldagen_action_control.pdf",
+    "worldagen_task_group_script": "../scripts/analyze_worldagen_goal_bus_task_groups.py",
+    "worldagen_matched_edge_cut_control": "../runs/worldagen_goal_bus_edge_cut_controls_v0/summary.json",
+    "worldagen_matched_edge_cut_control_script": "../scripts/pilot_worldagen_goal_bus_edge_cut_controls.py",
+    "counterfactual_action_ranking_report": "goal_bus_iclr_research_report_cn.md",
+    "counterfactual_action_ranking_script": "../scripts/pilot_worldagen_counterfactual_action_ranking.py",
+    "counterfactual_action_ranking_seed_replicates": "../runs/worldagen_counterfactual_action_ranking_v0/fixedscore_seed_replicate_statistics.json",
+    "counterfactual_replicate_script": "../scripts/compare_worldagen_counterfactual_replicates.py",
+    "activation_patch_action_ranking": "../runs/worldagen_counterfactual_action_ranking_v0/summary_activation_patch_tasks6_v2.json",
+    "activation_patch_action_ranking_statistics": "../runs/worldagen_counterfactual_action_ranking_v0/summary_activation_patch_tasks6_v2_statistics.json",
+    "activation_patch_action_ranking_script": "../scripts/pilot_worldagen_activation_patch_action_ranking.py",
+    "decision_evidence_figure_svg": "figures/goal_bus_decision_evidence.svg",
+    "decision_evidence_figure_pdf": "figures/goal_bus_decision_evidence.pdf",
+    "decision_evidence_plot_script": "../scripts/plot_goal_bus_decision_evidence.py",
+    "aligned_planner_summary": "../runs/worldagen_aligned_planner_v1/summary.json",
+    "aligned_planner_statistics": "../runs/worldagen_aligned_planner_v1/statistics.json",
+    "aligned_planner_script": "../scripts/pilot_worldagen_aligned_planner.py",
+    "forecast_layout_module": "../scripts/worldagen_forecast_layout.py",
+    "forecast_layout_regression": "../scripts/check_worldagen_forecast_layout.py",
+    "counterfactual_action_ranking": "../runs/worldagen_counterfactual_action_ranking_v0/summary_fixedscore_v2_tasks6.json",
+    "aligned_planner_replicates_statistics": "../runs/worldagen_aligned_planner_replicates_v1/statistics.json",
+    "aligned_planner_replicates_script": "../scripts/aggregate_worldagen_aligned_replicates.py",
+    "cross_task_value_probe_split_679": "../runs/worldagen_cross_task_value_probe_v1/test_tasks679.json",
+    "cross_task_value_probe_split_024": "../runs/worldagen_cross_task_value_probe_v1/test_tasks024.json",
+    "cross_task_value_probe_script": "../scripts/pilot_worldagen_cross_task_value_probe.py",
+    "aligned_planner_replicates_figure_svg": "figures/worldagen_aligned_planner_replicates.svg",
+    "aligned_planner_replicates_figure_pdf": "figures/worldagen_aligned_planner_replicates.pdf",
+    "aligned_planner_replicates_plot_script": "../scripts/plot_worldagen_aligned_replicates.py",
+    "native_action_selection_audit": "../runs/goal_bus_action_selection_audit_v0/summary.json",
+    "aligned_planner_h30_replicates_statistics": "../runs/worldagen_aligned_planner_h30_replicates_v1/statistics.json",
+    "aligned_planner_h30_replicates_figure_svg": "figures/worldagen_aligned_h30_replicates.svg",
+    "aligned_planner_h30_replicates_figure_pdf": "figures/worldagen_aligned_h30_replicates.pdf",
+    "aligned_goal_sweep_statistics": "../runs/worldagen_aligned_goal_sweep_h30_v1/statistics_sweep.json",
+    "aligned_goal_sweep_figure_svg": "figures/worldagen_aligned_goal_sweep.svg",
+    "aligned_goal_sweep_figure_pdf": "figures/worldagen_aligned_goal_sweep.pdf",
+    "aligned_goal_sweep_analysis_script": "../scripts/analyze_worldagen_aligned_goal_sweep.py",
+    "aligned_goal_sweep_plot_script": "../scripts/plot_worldagen_aligned_goal_sweep.py",
+    "aligned_goal_sweep_replicates_statistics": "../runs/worldagen_aligned_goal_sweep_h30_replicates_v1/statistics.json",
+    "aligned_goal_sweep_replicates_script": "../scripts/aggregate_worldagen_aligned_goal_sweep.py",
+    "aligned_goal_sweep_replicates_figure_svg": "figures/worldagen_aligned_goal_sweep_replicates.svg",
+    "aligned_goal_sweep_replicates_figure_pdf": "figures/worldagen_aligned_goal_sweep_replicates.pdf",
+    "aligned_goal_sweep_all6_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/statistics.json",
+    "aligned_goal_sweep_all6_figure_svg": "figures/worldagen_aligned_goal_sweep_all6_replicates.svg",
+    "aligned_goal_sweep_all6_figure_pdf": "figures/worldagen_aligned_goal_sweep_all6_replicates.pdf",
+    "aligned_goal_sweep_all6_seed17": "../runs/worldagen_aligned_goal_sweep_h30_all6_seed17/summary.json",
+    "aligned_goal_sweep_all6_seed31": "../runs/worldagen_aligned_goal_sweep_h30_all6_seed31/summary.json",
+    "aligned_goal_sweep_all6_seed37": "../runs/worldagen_aligned_goal_sweep_h30_all6_seed37/summary.json",
+    "aligned_goal_sweep_all6_mediation_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/mediation_statistics.json",
+    "decision_repair_path_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/decision_repair_path.json",
+    "decision_repair_path_script": "../scripts/analyze_worldagen_decision_repair_path.py",
+    "decision_repair_path_plot_script": "../scripts/plot_worldagen_decision_repair_path.py",
+    "decision_repair_path_figure_svg": "figures/worldagen_decision_repair_path.svg",
+    "decision_repair_path_figure_pdf": "figures/worldagen_decision_repair_path.pdf",
+    "candidate_cardinality_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/candidate_cardinality.json",
+    "candidate_cardinality_script": "../scripts/analyze_worldagen_candidate_cardinality.py",
+    "forecast_only_attacker_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/forecast_only_attacker.json",
+    "forecast_only_attacker_script": "../scripts/analyze_forecast_only_goal_attacker.py",
+    "latent_divergence_attacker_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/latent_divergence_attacker.json",
+    "latent_divergence_attacker_script": "../scripts/analyze_latent_divergence_goal_attacker.py",
+    "oos_forecast_only_attacker_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/oos_attacker.json",
+    "oos_forecast_only_attacker_script": "../scripts/analyze_worldagen_oos_goal_attacker.py",
+    "goal_invariance_physical_audit_statistics": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/goal_invariance_physical_audit.json",
+    "goal_invariance_physical_audit_script": "../scripts/analyze_worldagen_goal_invariance_physical.py",
+    "goal_invariance_physical_spec": "../configs/goal_bus_physical_invariance_spec.json",
+    "goal_invariance_physical_figure_svg": "figures/worldagen_goal_invariance_physical.svg",
+    "goal_invariance_physical_figure_pdf": "figures/worldagen_goal_invariance_physical.pdf",
+    "goal_invariance_physical_figure_script": "../scripts/plot_worldagen_goal_invariance_physical.py",
+    "semantic_surface_goal_control": "../runs/worldagen_semantic_goal_invariance_v0/summary.json",
+    "semantic_surface_goal_control_script": "../scripts/pilot_worldagen_semantic_goal_invariance.py",
+    "invalidated_physical_state_target_attempt": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/physical_target_extraction_failure.json",
+    "replay_reproducibility_boundary_audit": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/replay_reproducibility_boundary.json",
+    "replay_reproducibility_boundary_script": "../scripts/audit_worldagen_replay_reproducibility_boundary.py",
+    "reproducible_state_target_pilot": "../runs/worldagen_reproducible_state_target_v1/summary.json",
+    "reproducible_state_target_pilot_arrays": "../runs/worldagen_reproducible_state_target_v1/summary.npz",
+    "reproducible_state_target_pilot_script": "../scripts/pilot_worldagen_reproducible_state_target.py",
+    "reproducible_state_target_all6_statistics": "../runs/worldagen_reproducible_state_target_all6_replicates_v1/statistics.json",
+    "reproducible_state_target_all6_seed17": "../runs/worldagen_reproducible_state_target_all6_seed17/summary.json",
+    "reproducible_state_target_all6_seed31": "../runs/worldagen_reproducible_state_target_all6_seed31/summary.json",
+    "reproducible_state_target_all6_seed37": "../runs/worldagen_reproducible_state_target_all6_seed37/summary.json",
+    "reproducible_state_target_all6_aggregate_script": "../scripts/aggregate_worldagen_reproducible_state_target.py",
+    "alphabrain_physical_slot_audit": "../runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/physical_slot_audit.json",
+    "alphabrain_physical_slot_matrix": "../runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/summary.json",
+    "alphabrain_physical_slot_audit_script": "../scripts/aggregate_alphabrain_physical_slot_audit.py",
+    "alphabrain_physical_slot_matrix_script": "../scripts/pilot_alphabrain_cosmos_policy_real_input_sampler_forecast_matrix.py",
+    "alphabrain_physical_slot_figure_svg": "figures/alphabrain_physical_slot_audit.svg",
+    "alphabrain_physical_slot_figure_pdf": "figures/alphabrain_physical_slot_audit.pdf",
+    "alphabrain_physical_slot_figure_script": "../scripts/plot_alphabrain_physical_slot_audit.py",
+    "worldagen_physical_region_decomposition": "../runs/worldagen_aligned_goal_sweep_h30_all6_replicates_v1/physical_region_decomposition.json",
+    "worldagen_physical_region_decomposition_script": "../scripts/analyze_worldagen_goal_physical_region_decomposition.py",
+    "alphabrain_physical_slot_offsets": "../runs/alphabrain_cosmos_policy_real_input_sampler_forecast_matrix_v1/physical_slot_offsets.json",
+    "alphabrain_physical_slot_offsets_script": "../scripts/aggregate_alphabrain_physical_slot_offsets.py",
+    "alphabrain_physical_slot_offsets_figure_svg": "figures/alphabrain_physical_slot_offsets.svg",
+    "alphabrain_physical_slot_offsets_figure_pdf": "figures/alphabrain_physical_slot_offsets.pdf",
+    "alphabrain_physical_slot_offsets_figure_script": "../scripts/plot_alphabrain_physical_slot_offsets.py",
+    "alphabrain_forecast_planner_feasibility": "../runs/alphabrain_forecast_planner_v0/summary.json",
+    "alphabrain_forecast_planner_feasibility_script": "../scripts/pilot_alphabrain_forecast_planner.py",
+    "worldagen_same_scene_goal_crossing": "../runs/worldagen_same_scene_goal_v1/summary.json",
+    "worldagen_same_scene_goal_crossing_analysis": "../runs/worldagen_same_scene_goal_v1/analysis.json",
+    "worldagen_same_scene_goal_crossing_script": "../scripts/pilot_worldagen_same_scene_goal.py",
+    "worldagen_same_scene_goal_crossing_analysis_script": "../scripts/analyze_worldagen_same_scene_goal.py",
+    "worldagen_same_scene_goal_target_figure_svg": "figures/worldagen_same_scene_goal_target_delta.svg",
+    "worldagen_same_scene_goal_target_figure_pdf": "figures/worldagen_same_scene_goal_target_delta.pdf",
+    "worldagen_same_scene_goal_target_figure_script": "../scripts/plot_worldagen_same_scene_goal.py",
+    "worldagen_same_scene_empty_goal": "../runs/worldagen_same_scene_empty_goal_all50_v1/summary.json",
+    "worldagen_same_scene_empty_goal_three_state_pilot": "../runs/worldagen_same_scene_empty_goal_v1/summary.json",
+    "worldagen_same_scene_empty_goal_figure_svg": "figures/worldagen_empty_goal_comparator.svg",
+    "worldagen_same_scene_empty_goal_figure_pdf": "figures/worldagen_empty_goal_comparator.pdf",
+    "worldagen_same_scene_empty_goal_figure_script": "../scripts/plot_worldagen_empty_goal_comparator.py",
+    "worldagen_same_scene_empty_goal_script": "../scripts/pilot_worldagen_same_scene_empty_goal.py",
+    "alphabrain_forecast_planner_multitask": "../runs/alphabrain_forecast_planner_multitask_v1/summary.json",
+    "alphabrain_forecast_planner_multitask_script": "../scripts/pilot_alphabrain_forecast_planner.py",
+    "alphabrain_forecast_planner_six_task": "../runs/alphabrain_forecast_planner_six_task_v1/summary.json",
+    "alphabrain_forecast_planner_six_task_script": "../scripts/pilot_alphabrain_forecast_planner.py",
+    "alphabrain_forecast_planner_replicates": "../runs/alphabrain_forecast_planner_replicates_v1/statistics.json",
+    "alphabrain_forecast_planner_replicates_script": "../scripts/aggregate_alphabrain_forecast_planner_replicates.py",
+    "worldagen_semantic_paraphrase_control": "../runs/worldagen_semantic_paraphrase_v0/summary.json",
+    "worldagen_semantic_paraphrase_control_script": "../scripts/pilot_worldagen_semantic_paraphrase_control.py",
+    "current_working_tex": "world_model_decision_audit_working.tex",
+    "current_working_pdf": "world_model_decision_audit_working.pdf",
+    "current_truth_countercheck_figure": "figures/dino_terminal_truth_countercheck_20261015.pdf",
+    "original_package_snapshot": "historical_goal_bus_package_20261015/snapshot.json",
+    "current_revision_record": "current_manuscript_revision_20261015.json"
+  },
+  "validation": {
+    "tests": "PYTHONPATH=src pytest -q tests -> 23 passed",
+    "python_compile": "matrix and analysis scripts compile successfully",
+    "pdf": "tectonic compiled goal_bus_paper_draft_en.tex to an 11-page PDF (layout warnings only)",
+    "external_api": false,
+    "task_stratification": "WorldAgen six recorded-task groups and AlphaBrain five legal task-A groups; native nonzero and corrected cut exact-zero in every group",
+    "figure": "matplotlib SVG and PDF generated from WorldAgen action-preservation/task-group aggregates plus existing offset/task aggregates",
+    "completion_audit": "Explicitly separates forecast-level requirements already met from task-level requirements still open",
+    "learned_goal_free_context": "frozen DiT, 3 train / 4 held-out episodes, two seeds (17/23), one-step MSE 0.58519 -> 0.46215/0.46219",
+    "task_gate": "Official-preprocess 608-step AlphaBrain spatial and matching 304-step LIBERO-Goal tasks 0-2 pilots remain 0/3 native and 0/3 cut; no closed-loop claim.",
+    "training_resource_audit": "Base inference artifacts and official trainer/loader present; compatible success_only/all_episodes training dataset absent locally; full matched fine-tune not claimed.",
+    "learned_goal_free_context_multitimepoint": "frozen DiT, 9 train / 12 held-out windows at frames 30/60/90, seed 29; one-step MSE 0.60197 -> 0.47852; bounded comparator only.",
+    "goal_free_context_figure": "matplotlib SVG and PDF from v1/v2 single-timepoint and v3 multi-timepoint held-out MSE results",
+    "activation_mediation": "21 fixed real windows (7 episodes x frames 30/60/90); layer-4/8 world residual 0.2062/0.1998 with cluster CIs [0.1678,0.2482]/[0.1796,0.2202], policy residual 0.9555/0.9643; all 21 move toward recorded goal",
+    "worldagen_action_control": "30 fixed image/state/instruction windows; native action-world mean 0.1623, cut mean 0.1655, cluster CIs [0.1426,0.1839] and [0.1469,0.1855], 30/30 cut nonzero",
+    "matched_edge_cut_control": "WorldAgen 30-window same-cardinality control: policy-only goal-edge deletion leaves world relative L2 0.2999 in 30/30 windows, while carrier cut is exact zero.",
+    "aligned_planner_replicates": "three seeds (17/31/37), six physical tasks, 18 task-seed pairs; task-cluster descriptive bootstrap and exact Control-Cut score identity",
+    "cross_task_value_probe": "two complementary held-out task splits; fixed-alpha Clean-only ridge probe; utility direction does not generalize",
+    "decision_figures": "decision_evidence and three-seed aligned planner SVG/PDF regenerated",
+    "native_action_selection_audit": "WorldAgen and AlphaBrain checkpoints/source audited; both native systems select/decode actions without consuming World Forecast.",
+    "oos_forecast_only_attacker": "leave-one-seed-out selection across seeds 17/31/37; all selectors have task-cluster regret-difference CIs crossing zero and do not outperform the uniform expectation as an attack law",
+    "goal_invariance_physical_audit": "18 task-seed pairs and 162 counterfactuals; matched decoded primary-view targets after three actions; stored MSE recomputation exact; Goal-Swap physical-target error is mixed-sign and divergence Spearman rho 0.117 (p=0.139)",
+    "goal_invariance_spec": "machine-readable conditional-independence specification with explicit allowed goal-sensitive outputs and open partial-observability checks",
+    "premise_first_gate": "Environment-side Goal-invariance is tested before planner harm: fixed-state/fixed-action replay exactness passes 120/120; physical-target error remains separate from forecast divergence.",
+    "same_scene_goal_crossing": "LIBERO-Goal ten legal Goals x three shared initial states x four fixed actions; 120/120 initial and future replay exact; native non-Clean Goal effect mean MSE 0.4913; uniformly sampled non-Clean target-MSE delta +0.0965 with state-cluster CI [+0.0615,+0.1260] and positive in all 3 states; Bus-Cut cross-Goal variance max 6.2e-15, action sensitivity retained, and +0.0884 mean target-MSE baseline shift",
+    "same_scene_empty_goal": "Prompt-independent empty-Goal diagnostic on all 50 shared states and four fixed actions; 200/200 exact replays; empty minus Clean target-MSE +0.0744 overall, positive in 50/50 states with CI [+0.0665,+0.0824]; not a trained goal-free dynamics head",
+    "goal_invariance_physical_figure": "matplotlib SVG/PDF: per-offset target-error bootstrap intervals and 162-case divergence/error scatter",
+    "semantic_surface_goal_control": "three real windows; double-space/lowercase exact invariance; trailing-period native world relative L2 mean 0.00259 and Bus-Cut exact invariance in 3/3",
+    "physical_state_target_reconstruction": "post-hoc qpos/qvel/contact extraction invalidated: matching initial simulator hash did not reproduce stored EEF replay due unpersisted controller/global RNG; no reconstructed state target is used",
+    "replay_reproducibility_boundary": "original repeat-3 process spans are exactly zero; post-hoc state reconstruction invalidated at 0.3046 m mismatch, so no qpos/contact result is used",
+    "reproducible_state_target_pilot": "six tasks (0/2/4/6/7/9), three seeds (17/31/37), 144 candidates and 288 fresh replay episodes with restored Python/NumPy/Torch/CUDA RNG; initial hashes and qpos/qvel/contact/image/EEF/progress exact for 144/144; validation only, no Goal effect estimate",
+    "alphabrain_physical_slot_audit": "21 fixed image/state/recorded-action windows across 7 episodes; native Goal changes future proprio in 21/21 (mean absolute latent delta 0.0607, episode CI [0.0376, 0.0970]); fixed-action cut is exact zero; target-MSE direction is mixed for proprio and primary, positive for wrist; cut fidelity costs are +0.0918 wrist and +0.0416 primary",
+    "worldagen_physical_region_decomposition": "post-hoc motion-support proxy decomposition; dynamic-support Goal-Swap error mean +0.0044 (CI crosses zero), static-support mean -0.0126; exploratory and not a new attack estimate",
+    "alphabrain_physical_slot_offset_extension": "three legal offsets (1/5/9), 63 fixed-action windows; future-proprio Goal effects remain nonzero in 21/21 windows at each offset (means 0.0512/0.0607/0.0728); fixed-action cut exact-zero across all slots",
+    "alphabrain_forecast_planner_multitask": "three LIBERO tasks (0/2/4), seed 17; 2/3 selected-action changes; Clean/Swap/Bus-Cut regret means 0.1836/0.2251/0.2796 m; 1/3 Clean-action recovery; task-dependent utility direction",
+    "alphabrain_forecast_planner_six_task": "six LIBERO tasks (0/2/4/6/7/9), seed 17; 5/6 selected-action changes; Clean/Swap/Bus-Cut regret means 0.1646/0.1911/0.2433 m; 2/6 Clean-action recovery; mixed task-level utility direction",
+    "alphabrain_forecast_planner_replicates": "six LIBERO tasks x three explicit initial states; 18 rows; 15/18 selected-action changes; Clean/Swap/Bus-Cut regret means 0.1511/0.1885/0.2607 m; state-cluster Swap-Clean CI [+0.0098,+0.0758] m; task-cluster CI [-0.1086,+0.1931] m; 3/18 Clean-action recovery",
+    "semantic_paraphrase_control": "three real windows and two meaning-preserving paraphrases per task; native world relative L2 nonzero in 6/6 (mean 0.00844, max 0.01131), Bus-Cut exact zero in 6/6, policy remains text-sensitive"
+  },
+  "novelty_positioning": "Focused check covers WorldVLA, LingBot-VA, AffordanceWAM, and FFDC-WAM; the current distinction is a fixed-state/fixed-action legal-instruction intervention plus frozen edge repair through an intermediate action carrier.",
+  "historical_title": "Shared Action-Token Causal Buses in Instruction-Conditioned World Models",
+  "historical_non_authoritative_sections": [
+    "premise_first_gate",
+    "primary_carriers",
+    "primary_evidence",
+    "baseline_ladder",
+    "core_task_boundary",
+    "validation",
+    "novelty_positioning"
+  ],
+  "current_evidence": {
+    "contract": "../configs/goal_bus_physical_invariance_spec.json",
+    "worldagen": "goal_bus_prediction_contract_audit.json",
+    "cosmos_first_selection": "cosmos_first_selection_mediation_20261015.json",
+    "cosmos_bounds": "cosmos_first_choice_identifiability_bounds_20261015.json",
+    "dino_native_and_recovery": "dino_native_alias_synthesis_20261015.json",
+    "dino_full_horizon": "dino_first_query_terminal_truth_decision_20261015.json",
+    "qualified_claim_gate": "research_archive/next_experiment_gate.json",
+    "cosmos_first_query_truth": "cosmos_first_query_truth_decision_20261015.json",
+    "cosmos_first_query_truth_review": "cosmos_first_query_truth_review_20261015.json"
+  },
+  "artifact_status_rule": "Legacy artifacts remain historical unless explicitly listed as current working report, current evidence, progress, entry README or new countercheck figure. File presence or successful compilation is not scientific completion.",
+  "current_document_validation": {
+    "status": "compiled_and_reviewed_current_working_document",
+    "compiler": "Tectonic 0.15.0, cached resources only",
+    "command": "cd reports\ntectonic --only-cached --keep-logs world_model_decision_audit_working.tex",
+    "exit_code": 0,
+    "pages": 10,
+    "pdf_bytes": 98058,
+    "compiler_warnings_observed": false,
+    "pdf_text_has_unresolved_references": false,
+    "pdf_numeric_strings_checked": 9,
+    "independent_source_reviews": [
+      "WorldAgen/Cosmos/AlphaBrain numeric and causal-scope review passed",
+      "DINO numeric, utility and inference-unit review passed; figure caption clarified to distinguish archived physical replays from current plotting"
+    ],
+    "visual_review_pages": [
+      1,
+      8
+    ],
+    "historical_pdf_notice_verified": true,
+    "historical_pdf_pages": 11,
+    "scientific_experiments_rerun": false,
+    "submission_ready": false
+  },
+  "updated_at_utc": "2026-10-15T12:13:23.576878+00:00",
+  "working_pdf_evidence_cutoff": "world_model_decision_audit_working.pdf predates the Cosmos actual-future countercheck; newest measured result is in the linked JSON/CSV and research_progress.html. PDF was not recompiled for this addition."
+}

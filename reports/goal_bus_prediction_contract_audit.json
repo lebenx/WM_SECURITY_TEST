@@ -1,0 +1,54 @@
+{
+  "status": "source_and_existing_artifact_audit_only",
+  "new_environment_steps": 0,
+  "new_model_forward_calls": 0,
+  "api_requests": 0,
+  "physical_replay_source": "runs/worldagen_same_scene_goal_v1/summary.json",
+  "source_sha256": "fa3e6b598c02dd82ef48b41365b37f10ecfb60ec45768f0a013428569a613078",
+  "existing_replays": 120,
+  "existing_initial_matches": 120,
+  "existing_future_matches": 120,
+  "recorded_physical_fields": [
+    "sim_state_hash",
+    "qpos_hash",
+    "qvel_hash",
+    "contact_count_only",
+    "primary_image_hash",
+    "wrist_image_hash",
+    "eef_position"
+  ],
+  "go": [
+    "Audit WorldAgen task-agnostic architecture contract",
+    "Retain recorded environment invariance and network input-dependence as separate observations"
+  ],
+  "no_go": [
+    "Universal goal-invariance requirement for partial-observation conditional predictions",
+    "Native AlphaBrain joint forecast divergence as attack success",
+    "Legacy WorldAgen target-MSE as calibrated native forecast error",
+    "Native decision harm or beneficial defense claim"
+  ],
+  "required_corrections": [
+    "WorldAgen target patch normalization",
+    "WorldAgen native-image orientation",
+    "WorldAgen binary gripper and offline action timing validation",
+    "AlphaBrain checkpoint VAE, condition-noise and normalization",
+    "Distinguish AlphaBrain joint native sampler from added fixed-action conditioning"
+  ],
+  "source_hashes": {
+    "scripts/pilot_worldagen_same_scene_goal.py": "8a40e221b02b75295ef7c1c6a4b01dbea5a4769cf9a326071a6c4392a2b15f9a",
+    "scripts/pilot_worldagen_counterfactual_action_ranking.py": "a3505ffd998f484f86b66fc8349b673d310952a85208bb0391c4854ee95604a8",
+    "scripts/pilot_worldagen_goal_bus_replicate.py": "e89559fdeea198919fcaef97789a68c22df6c6db2972ef0799d4406eb23be45f",
+    "vendor/WorldAgen/utils/train_utils.py": "3120545f3400e4aebdd03fbbc0d158caf976dfc2744311fbe7c9884538b6b08e",
+    "vendor/WorldAgen/utils/eval_utils_libero.py": "adc740ce44ae496504339c8c6618b62e7ca20f129bcfb435906f0c29ad89485b",
+    "vendor/WorldAgen/models/model.py": "ffe3b775a29a9c86999a278c77939c942665781e58dc55ec701f0ce780a8c0f3",
+    "vendor/AlphaBrain/AlphaBrain/model/framework/CosmosPolicy.py": "49b8755e51c6c2cbd45f4b370f37cf7967885b551b239c5dd9b6f693a38c9044"
+  },
+  "official_design_source": "https://worldagen.github.io/#method",
+  "scope": "No experiment rerun and no previously generated metric overwritten. Old source code retained for provenance. Page now marks disputed evidence as historical.",
+  "subsequent_review": {
+    "date": "2026-10-14",
+    "authoritative_specification": "configs/goal_bus_physical_invariance_spec.json",
+    "corrected_forecast_evidence": "runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json",
+    "supersession_scope": "Earlier codec/open-check list is a historical audit. Corrected LIBERO forecast path and one-episode target replay are now available; observation sufficiency and native harm remain unproved."
+  }
+}

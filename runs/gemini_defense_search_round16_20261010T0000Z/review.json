@@ -1,0 +1,98 @@
+{
+  "decision": "PROCEED",
+  "review_verdict": "Weak accept / conditional on fast falsification. Most classical CL and replay defenses trivially collapse into action shuffling. However, one defense specifically targets the planner-model interaction asymmetry (where low single-step loss conceals directional gradient skew in the planning landscape), and one defense targets path-integral Jacobian alignment across continuous shooting steps. The proposals below avoid generic regularization or buffer shuffling by intervening directly on the test-time model rollout landscape or the sequence-gradient outer product during multi-step unrolling.",
+  "proposals": [
+    {
+      "id": "DEF-01-PLAN-SPECTRUM-CLIP",
+      "one_sentence_claim": "Curriculum-induced planning collapse in low one-step error regimes is caused by directional ill-conditioning of the learned transition Jacobian along the CEM sampling manifold, which can be mitigated online by an action-Jacobian singular value regularizer during model updates without altering the data replay sequence.",
+      "exact_intervention": "During the world model update on any ordered curriculum, compute the spectral norm of the action Jacobian J_a = d(z_{t+1})/d(a_t) via 1-step power iteration on the latent dynamics model: add loss term L_spectral = beta * max(0, sigma_max(J_a) / (sigma_min(J_a) + eps) - kappa), where kappa=5.0 and beta=0.01. Alternatively, at test time in the TD-MPC2 planner, project sampled action perturbations delta_a onto the top-k singular vectors of J_a to prevent CEM from collapsing into the over-amplified subspace.",
+      "why_not_generic_replay_or_regularization": "Data order in the replay buffer is preserved 100% untouched (remains strictly sequential/curriculum). It does not penalize parameter drift (like EWC/L2), latent drift, or one-step prediction error; it penalizes the directional anisotropy of the shooting landscape that CEM exploits.",
+      "primary_carrier": "official TD-MPC2 (mt30-48M checkpoint / walker-run task)",
+      "two_minute_gate": {
+        "command_sketch": "python evaluate.py task=walker-run checkpoint=mt30-48M-ordered-cheetah defense=spectral_cem_proj steps=1000",
+        "runtime_budget_seconds": 110,
+        "pass_fail_numeric_thresholds": {
+          "clean_walker_return_retention": ">= 97.0% of baseline clean return",
+          "attack_return_recovery": ">= 92.0% of shuffled-buffer baseline (recovers at least 80% of the 19.3% loss)",
+          "one_step_latent_mse_ratio": "<= 0.95x relative to unmitigated attack"
+        }
+      },
+      "controls": [
+        "Identity-Jacobian control (isotropic projection)",
+        "Random orthogonal projection control",
+        "Reversed curriculum without defense"
+      ],
+      "expected_metrics_table": {
+        "clean_baseline": {
+          "walker_return": "100.0%",
+          "one_step_mse": "1.000x",
+          "sigma_ratio": "3.12"
+        },
+        "ordered_curriculum_unmitigated": {
+          "walker_return": "80.7%",
+          "one_step_mse": "0.922x",
+          "sigma_ratio": "18.44"
+        },
+        "ordered_curriculum_with_defense": {
+          "walker_return": "97.4%",
+          "one_step_mse": "0.928x",
+          "sigma_ratio": "4.85"
+        },
+        "shuffled_multiset_control": {
+          "walker_return": "99.1%",
+          "one_step_mse": "0.931x",
+          "sigma_ratio": "3.80"
+        }
+      },
+      "prior_art_risk": "Moderate. Spectral normalization in GANs (Miyato et al.) and Lipschitz-bounded dynamics models exist, but using spectral-ratio bounds specifically to immunize shooting planners against order-induced trajectory poisoning is unstudied.",
+      "novelty_score": 7.2,
+      "executable_confidence": 0.91
+    },
+    {
+      "id": "DEF-02-SHOOTING-COMMUTATOR-PENALTY",
+      "one_sentence_claim": "Ordered poisoning exploits non-commutativity in sequential temporal rollouts; penalizing the Lie-bracket commutator between the current update gradient and the planning horizon rollout operator preserves sequence learning while neutralizing path-dependent planner failure.",
+      "exact_intervention": "During dynamics unrolling, calculate the commutator [T_{a1}, T_{a2}](z) = T_{a2}(T_{a1}(z)) - T_{a1}(T_{a2}(z)) for consecutive temporal action pairs in the batch. Add L_comm = gamma * ||[T_{a_t}, T_{a_{t+1}}](z_t)||^2 with gamma=0.05 directly to the TD-MPC2 dynamics loss. This enforces local path-independence in the latent space specifically across consecutive transitions.",
+      "why_not_generic_replay_or_regularization": "Replay sequence is completely unaltered. Does not enforce weight proximity to past tasks (not continual learning) or trajectory consistency against true rollouts; it enforces algebraic commutativity of latent vector fields over local action steps.",
+      "primary_carrier": "official TD-MPC2 (mt30-48M checkpoint / walker-run task)",
+      "two_minute_gate": {
+        "command_sketch": "python train.py task=walker-run model=tdmpc2 loss.commutator_weight=0.05 steps=200 eval_episodes=5",
+        "runtime_budget_seconds": 115,
+        "pass_fail_numeric_thresholds": {
+          "clean_walker_return_retention": ">= 98.0%",
+          "attack_return_recovery": ">= 90.0% recovery against ordered attack",
+          "commutator_norm_reduction": ">= 60.0% reduction in ||[T1, T2]||"
+        }
+      },
+      "controls": [
+        "Commutator computed on random time-uncorrelated action pairs (a_t, a_{t+k})",
+        "Static weight-decay baseline scaled to match gradient norm",
+        "Forward-backward time reversal baseline"
+      ],
+      "expected_metrics_table": {
+        "clean_baseline": {
+          "walker_return": "100.0%",
+          "one_step_mse": "1.000x",
+          "commutator_norm": "0.14"
+        },
+        "ordered_curriculum_unmitigated": {
+          "walker_return": "80.7%",
+          "one_step_mse": "0.922x",
+          "commutator_norm": "0.89"
+        },
+        "ordered_curriculum_with_defense": {
+          "walker_return": "96.8%",
+          "one_step_mse": "0.925x",
+          "commutator_norm": "0.22"
+        },
+        "shuffled_multiset_control": {
+          "walker_return": "99.1%",
+          "one_step_mse": "0.931x",
+          "commutator_norm": "0.19"
+        }
+      },
+      "prior_art_risk": "Low. Commutativity penalties have been used in self-supervised representation learning for symmetries/group actions (e.g., SO(2) equivariance), but never as a defense against sequence-order curriculum poisoning in model-based RL.",
+      "novelty_score": 7.4,
+      "executable_confidence": 0.84
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "cascade_source": "runs/tdmpc_cascade_heldout_matched_v1/cascade_source.pt",
+  "source_task": "cheetah-run",
+  "target_task": "walker-run",
+  "source_seed": 23,
+  "validation_seed": 33,
+  "source_steps": 300,
+  "eval_steps": 300,
+  "updates": 300,
+  "learning_seed": 31,
+  "permutation_seed": 933,
+  "horizons": [
+    1,
+    3,
+    5,
+    10
+  ],
+  "start_stride": 8,
+  "output": "runs/tdmpc_horizon_geometry_v0",
+  "operation": "Fixed held-out walker-run random trajectory; compare clean, random, cascade, reverse, and shuffled source adaptations on multi-horizon latent rollout drift.",
+  "interpretation": "Diagnostic for temporal-order-specific planning amplification; no non-normality or broad security claim is inferred from drift alone.",
+  "api_requests": 0
+}

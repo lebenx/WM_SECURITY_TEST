@@ -1,0 +1,50 @@
+Yes. As specified, the secant candidate is standard local inverse dynamics/system identification plus trajectory metric learning; do not rename it.
+
+Let \(z=\phi(\tau)\) encode observed object trajectories and contact events. A pair of experiments provides
+
+\[
+\Delta a=a'-a,\qquad \Delta z=\phi(\tau')-\phi(\tau).
+\]
+
+An event-conditioned secant operator typically fits
+
+\[
+S_e=\arg\min_S\sum_{i:e_i=e}
+w_i\|\Delta z_i-S\Delta a_i\|^2+\lambda\|S\|^2.
+\]
+
+Rebasing applies \(z_{\text{new}}\approx z_0+S_e(a-a_0)\); composition multiplies or chains such local maps. Solving for an action that produces a desired trajectory effect is inverse modeling. Choosing which pairs belong together is metric learning or mixture-of-local-models. If terminal success is then used to select among generated actions, the method becomes model-based optimization/BO around that inverse model.
+
+The fact that the secants are computed from whole trajectories, include contact events, or are composed across scenes does not by itself change this equivalence. A finite-difference Jacobian is still a local dynamics model. Event-conditioned routing is a learned similarity/kernel or mixture-of-experts gate. Rebase-and-compose is ordinary chaining of local linearizations, analogous to linearized model-predictive control. A sufficiently expressive inverse-dynamics or local-regression baseline can perform the same operation, and a BO baseline can use its predicted terminal objective to select the next continuous action. Without a supplied target effect or goal state, the operator also does not specify why one generated action should be tried rather than another; that decision is an exploration policy.
+
+There are substantial technical risks:
+
+- Contact topology is discontinuous, so a secant estimated across different contact regimes may have no predictive meaning.
+- Operators learned in one scene need a state representation that identifies which geometric relations are invariant. If that representation is added, it is simply state-conditioned dynamics.
+- Composition is path-dependent and can accumulate error; agreement of intermediate trajectory embeddings does not imply terminal success.
+- With few worlds, the operator may interpolate among previously observed action directions rather than transfer a mechanism.
+- “Previously untried continuous parameters” is not evidence of improvement: continuous interpolation can be novel while behaviorally equivalent to replay.
+
+I do not see a defensible substantive algorithmic change that is distinct from the required comparators without adding a new assumption or hidden information. In particular, calling the operator “causal” would be unjustified: paired observational interventions in action space estimate local response, not causal structure, and failed trials do not make the estimator causally novel.
+
+### Smallest native experiment
+
+Use the already defined HExA-style split: the fixed pool of source trajectories and eight held-out worlds. Freeze the split and action bounds. On each held-out world, allow exactly three real action queries, including all failed and successful trials in the history. No target outcome, certified solution, future trajectory, or hidden geometry may be exposed. Any internal simulation is either disallowed or charged as one of the same three queries.
+
+At each query, compare:
+
+1. the secant estimator exactly as specified;
+2. ordinary local multivariate ridge regression from \(\Delta a\) to \(\Delta z\), using the same trajectory representation and pair budget;
+3. ordinary inverse-dynamics regression from desired observed effect to action, using the best observed successful trajectory or the same fixed exploratory target when no success exists;
+4. a same-data kernel predictor/BO policy using terminal success and the same query budget;
+5. fixed replay, as a lower baseline.
+
+All methods receive identical observations, action history, terminal-success labels, and computation limits. The secant method may construct arbitrary continuous actions, but so may the regression and BO baselines. Count a query by execution, not by whether it was successful.
+
+Primary outcomes should be native terminal success after three queries and success versus number of queries. Secondary outcomes should report whether the selected action is outside the previously tried action set, its normalized distance from that set, and whether that novelty improves success rather than merely producing different failures. Report per-world results, not only a pooled mean; eight worlds are enough for a diagnostic replication, not a broad claim.
+
+### Causal ablation
+
+A direct ablation is to retain the same pairs, trajectory features, regularization, number of operators, and action-selection procedure, but randomly permute the event/contact labels used for routing before fitting. Thus the numerical trajectories and action differences remain available, while event-conditioned correspondence is destroyed. Compare against the unpermuted estimator under the same three-query budgets.
+
+A reliable improvement only when event labels are correct—and disappearance when they are permuted—would establish that event routing matters for this implementation. It would not establish a new learning principle; it would show that an ordinary local inverse model benefits from the chosen event representation. If the result merely ties local regression, kernel BO, and replay, the secant construction should be retired as a distinct mechanism.

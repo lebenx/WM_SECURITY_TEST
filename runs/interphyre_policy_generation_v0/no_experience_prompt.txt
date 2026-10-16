@@ -1,0 +1,32 @@
+Write a pure Python experimental policy for the given native 2D physics task.
+The goal is to place one red ball so the green and blue balls stay in contact for three seconds.
+Gravity points downward. The observed scene contains positions, velocities, object type,
+dynamic flags and sizes. Scene coordinates are [-5,5] in x and y. Legal radius is [0.1,1.5].
+A placement must be fully inside the box and not overlap existing objects. The simulator
+validates placements. There are 25 attempts per unseen scene; invalid placements also count.
+Each query is a fresh independent copy of the initial scene, not a continuation.
+
+Return ONLY Python code defining choose_action(scene, history, rng), returning [x,y,radius].
+scene is the initial public scene dict: {"objects": {name: {"type":str,"color":str,
+"x":float,"y":float,"vx":float,"vy":float,"angle":float,"angular_velocity":float,
+"dynamic":bool,"size":{radius OR length,thickness OR bottom_width,top_width,height}}}, ...}.
+history is a list of previous trial dicts with action, normalized, invalid, success, score,
+physics_steps, min_gap, max_contact_duration, first_action_contact and (if valid) closest_error.
+closest_error is green-minus-blue XY at minimum surface distance; min_gap is nonnegative.
+score is 1-min_gap/initial_gap+maximum_contact_duration/3, native success is 2, invalid is -1.
+rng is numpy.random.Generator. You may import only numpy and math. No other imports,
+file/network/process access, simulator access, data loading, eval/exec or global mutable state.
+All policy state must be reconstructed from history. Keep the code below 180 lines and one
+call under 0.2 seconds. Generate continuous placements; do not merely rank a fixed list.
+You can define helper functions and implement adaptive loops/branches or fit small models.
+Inspect geometry and experiment outcomes to reason about mechanisms rather than just retrying
+the same failed placement. The supplied evidence, if any, is from source scenes only; new
+scene geometries and outcomes are unknown. Infer useful general structure, not seed IDs.
+The two task families involve a lever launching a green ball toward a distant basket and a
+ramp/top-basket interaction dropping a green ball toward a lower basket. Do not assume every
+scene requires one specific strategy: blue objects and baskets can move too.
+Ordinary random object-centered sampling, CMA-ES and GP Bayesian optimization are comparators.
+Linear event secants alone are just local regression; no new-method claim is requested from
+you. Produce your strongest concrete executable strategy under the stated interface.
+
+No source experiment observations are supplied.

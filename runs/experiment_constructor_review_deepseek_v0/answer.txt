@@ -1,0 +1,36 @@
+**Operation: transfer a typed excitation certificate, not a source law.**
+
+Researchers supply correspondences between primitive operations and observations: particle identities; controls \((p_1,p_2)\), initial position and velocity; a time readout; and the target quantity “finite-time acceleration.” They also supply admissible ranges and a noise tolerance. No correspondence between physical laws is supplied.
+
+The source learner constructs an artifact called an **excitation certificate**. For each candidate mechanism slot it stores:
+
+1. the output channel to read;
+2. controls to hold fixed;
+3. one control to perturb;
+4. a paired-intervention design, including randomized order;
+5. a stopping test saying that the resulting contrast is measurably nonzero and linearly independent of previous contrasts;
+6. a repair rule for failure: increase the perturbation ratio or switch to the next supplied control.
+
+The certificate is learned from source trajectories by searching over typed intervention pairs. For a pair \(u^-,u^+\), it records the finite-difference response
+\[
+d=(y(u^+)-y(u^-))/\|u^+-u^-\|.
+\]
+It retains a small decision tree whose response vectors have adequate norm and rank. It stores no fitted exponent, coefficient, or source prediction.
+
+**Target execution.** Instantiate the corresponding primitives in the target. Run the certificate’s paired interventions, compute the prescribed contrasts, and stop when the rank/threshold condition is met. The output is an observable response coordinate (for example, “changing \(p_2\) changes acceleration while \(p_1\), state, and time are held fixed”). A later learner may fit the target law, but that is not part of transfer.
+
+**Numerical example.** In the source, hold \(p_1\), position, velocity, and readout time fixed. Try \(p_2=1,2,4\), with paired contrasts \((1,2)\) and \((2,4)\). Suppose measured accelerations are
+\[
+a=(12,6,3).
+\]
+Both contrasts are nonzero, so the certificate stores: “use geometrically spaced \(p_2\), hold the other primitives fixed, randomize pair order, and accept when \(|\Delta a|>0.1\).”
+
+The target obeys the opposite scaling \(a=0.5p_2\), giving
+\[
+a=(0.5,1,2).
+\]
+The transferred certificate still produces contrasts \(0.5\) and \(1\), hence makes the mechanism observable. A copied source cancellation such as \(a-12/p_2\) produces \((-11.5,-5,-1)\) and is invalid. Re-estimating the target exponent is deliberately excluded.
+
+For 26-particle worlds, the same artifact can specify five probe locations/velocities/masses and retain a contrast matrix whose smallest singular value exceeds the threshold.
+
+The nearest standard method is **sequential E-optimal experimental design** (or, with a probabilistic model, Bayesian optimal design), run target-only over the same candidate interventions and observations. It can select the same pairs with equal information and computation; no superiority is claimed. The proposed operation is specifically a transferable, typed certificate for constructing isolating contrasts. If the certificate degenerates into merely replaying a fixed experiment script, it should be rejected as ordinary experiment-script transfer rather than treated as a new method.

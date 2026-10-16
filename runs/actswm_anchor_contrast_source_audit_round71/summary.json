@@ -1,0 +1,36 @@
+{
+  "round": 71,
+  "candidate": "single-anchor action-effect blind spot in action-sensitive latent world models",
+  "repository": "https://github.com/KeithBlackmore/ActSWM-",
+  "source_files": [
+    {
+      "path": "vendor/ActSWM/train/train.py",
+      "sha256": "f1b34f1a4b7747eb0abc45598b67efdc9f917915706eaac9d3565f442ae56911"
+    },
+    {
+      "path": "vendor/ActSWM/model/jepa.py",
+      "sha256": "41bad7fd21e0f14aea4c9c3d39a9c87037e787746d953ab62cdc0677e938ce96"
+    },
+    {
+      "path": "vendor/ActSWM/model/build.py",
+      "sha256": "8b7b9c2c2f627f7f3dd97ad924a0617aeb490f8d7bc01b8c3adf8e962dc22921"
+    },
+    {
+      "path": "vendor/ActSWM/train/config/train.yaml",
+      "sha256": "efbdc63f3c3f69d550518a0361b525f49369d77822c1afcf2915c295a7b74fc0"
+    }
+  ],
+  "facts": [
+    "ActSWM rollout loss predicts future embeddings under recorded future actions.",
+    "Default action_effect loss compares the real-action rollout only against an all-zero future-action rollout using an L2 or cosine hinge; default train.yaml uses cosine margin 0.3 and weight 0.5.",
+    "When contrastive_weight > 0, code additionally samples wrong actions from other batch elements, but default config does not enable that contrastive loss.",
+    "IDM loss predicts actions from latent transitions; default deterministic IDM is stop_grad true for the readout, with world-model gradients retained.",
+    "Inference CEM scores candidate action sequences by terminal latent goal cost, so action alternatives are compared downstream.",
+    "Candidate attack hypothesis: legal nonzero alternative action sequences can collapse into an indistinguishable latent equivalence class while remaining separated from the single zero anchor and preserving recorded-action prediction loss; planner then cannot rank real alternatives although action-effect metrics pass."
+  ],
+  "distinction_requirements": [
+    "Must not be ordinary insufficient negative sampling or contrastive-learning shortcut.",
+    "Must show a native security-relevant threat path, broad carrier generality, and task harm with zero-anchor metrics apparently normal.",
+    "Must distinguish previous action-null/conditional-MI/Jacobian screens and ActSWM’s own context-collapse diagnosis."
+  ]
+}

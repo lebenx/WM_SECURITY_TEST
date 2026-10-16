@@ -1,0 +1,28 @@
+{
+  "novelty": 7.0,
+  "mechanism_specificity": 6.5,
+  "breadth": 6.0,
+  "actionability": 7.5,
+  "prior_art_overlap": 6.8,
+  "verdict": "ACCEPT_AS_EVALUATION",
+  "reason": "主张敏锐地指出了基于模型规划（MBRL/World Models）中的一个隐蔽攻击面：即在保持 on-policy 真实执行轨迹（factual branch）拟合优度与奖励误差极小的前提下，选择性扭曲未探索/次优动作树（counterfactual branches）的相对价值或局部曲率，诱导 CEM/MPPI 等短视采样算法发生不可达或次优塌缩。这一机制在概念上能够与 Trajectory Backdoor（依赖显式触发器）、Exposure Bias/Rollout Compounding（无对抗性的分布漂移）以及 ActSWM Context Collapse（全局表征退化）清晰解耦。然而，作为顶会主线论文，当前主张过宽且面临严峻的伪证风险：作者给出的现有证据显示该现象在 reacher-easy 等任务上为负，且在 cheetah->walker 间缺乏因果干预隔离，极易被 reviewer 归咎为特定优化器超参数或模型容量受限导致的局部过拟合（即单纯的 value landscape distortion）。若要将其作为主线成立，必须严格缩减其适用边界至‘基于采样的潜在空间局部规划器’，并用因果中介分析排除掉单纯的多步累积误差。",
+  "precise_claim_revision": "在基于采样的隐空间世界模型规划中，存在一种隐蔽的‘反事实拓扑投毒’威胁：攻击者在严格约束 on-policy 观测与单步转移预测误差（保持策略表面行为无损）的前提下，通过针对性数据注入改变未执行分支的局部 Jacobian 条件数与价值曲率，特异性诱发规划器（如 MPPI/CEM）反事实排序反转与任务失败；该失效无法由单步验证集残差检测，但可由分支曲率支持审计捕获并经由对抗性李雅普诺夫/可达性正则化修复。",
+  "minimum_evidence_matrix": [
+    {
+      "dimension": "与 Exposure Bias 及 Compounding Error 的因果解耦",
+      "required_experiment": "在固定环境转移模型（如使用 Oracle 转移但注入被攻击的隐空间动力学）下运行，通过 Counterfactual Do-Calculus 干预验证：仅扭曲反事实分支而单步 factual loss < epsilon 时，规划失败率与 rollout 长度无关（证明非步数累加发散导致，而是拓扑排序瞬时反转）。"
+    },
+    {
+      "dimension": "与已知 Action Insensitivity / Context Collapse 的正交性",
+      "required_experiment": "测量隐状态对未执行动作的互信息 I(s_{t+1}; a_t | s_t) 以及隐空间秩（Rank）。证明被攻击模型未出现表征折叠（Rank未降）且对动作敏感，但动作梯度的方向场与真实环境产生拓扑错位（Topological Inversion）。"
+    },
+    {
+      "dimension": "多载体与跨算法泛化（跨越特定任务/种子负样本）",
+      "required_experiment": "在包含接触不连续性（Contact-rich）和光滑动力学至少两个大类（如 DMC Humanoid/Dog, RoboMimic 接触装配，以及基于 Transformer 的 DayDreamer / 基于 CNN-RNN 的 DreamerV3 / 基于隐空间优化的 TD-MPC2）上同时复现出该现象，给出为何在 reacher-easy 失败的充要理论条件边界（如动作空间维度 vs 局部曲率稀疏性）。"
+    },
+    {
+      "dimension": "防御的非平凡有效性（Non-trivial Repair）",
+      "required_experiment": "对比 Baseline 防御（Spectral Norm, Data Augmentation, Lipschitz Regularization, Robust MPC）。证明所提出的 Branch Support Audit 不仅能以 AUC > 0.9 检测异常分支，且修复模块在恢复受损任务成功率的同时，不能牺牲干净环境下的渐近性能（Drop < 3%）。"
+    }
+  ]
+}

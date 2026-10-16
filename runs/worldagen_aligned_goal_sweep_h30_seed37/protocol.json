@@ -1,0 +1,35 @@
+{
+  "protocol": "aligned_primary_step3_v1",
+  "task_ids": [
+    0,
+    2
+  ],
+  "seed": 37,
+  "forecast_horizon": 3,
+  "replay_horizon": 30,
+  "candidate_count": 8,
+  "candidate_sampling": "eight linspace start indices of recorded 30-step chunks; execute first three actions",
+  "candidate_data_root": "/tmp/worldagen_actions_merged3",
+  "candidate_map": "0:5:8,2:3:6",
+  "goal_offsets": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9
+  ],
+  "scorers": [
+    "global_minmax",
+    "reference_scalar"
+  ],
+  "scoring_goal": "original environment task, fixed for all conditions",
+  "primary_utility": "real simulator EEF distance-to-first-goal-entity progress, intermediate only",
+  "native_policy_uses_forecast": false,
+  "all_scores_computed_before_replay": true,
+  "note": "reference_scalar uses scalar patch stats over channels as in training; differs from legacy reference_patch heuristic",
+  "script_sha256": "25fa218532cf771b903a09cfbdf396488655e632787e8bb9b6962f937eba5854"
+}

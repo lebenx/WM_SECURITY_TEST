@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-14T04:12:33.201951+00:00",
+  "scope": "Read-only audit of locally available public WorldAgen TTT code. Missing LIBERO trainer prevents statements about all original LIBERO TTT internals.",
+  "source_sha256": {
+    "vendor/WorldAgen/test_time_training/ttt.py": "a03c6b29dad11f16c8d6126533018e273f4ef410fe4856ebd08dbb8ce49f053c",
+    "vendor/WorldAgen/utils/arguments_utils.py": "c655144007205ae217214cc8e609cacf78a72aba4012a8d81195c3c467025512",
+    "vendor/WorldAgen/utils/eval_utils_calvin.py": "332f15858dd0ead1fd4ec72f8a02dba3504a5b96961609d34dbb1a26911b126a",
+    "vendor/WorldAgen/utils/eval_utils_libero.py": "adc740ce44ae496504339c8c6618b62e7ca20f129bcfb435906f0c29ad89485b",
+    "vendor/WorldAgen/scripts/libero/eval_ttt.sh": "a0f2a6afb729c83fa42379f6a223ac7b59316f1cfd1b8224b894ba7bb9680d70"
+  },
+  "calvin_online_collection": {
+    "policy_text": "task annotation at ttt.py:63-68 and passed to step_agent at :96-103; modifying it changes behavior policy and generated data, violating fixed-action/fixed-policy-goal isolation",
+    "adaptation_text": "literal no lang tokenized at :69-70, repeated unconditionally at :139, saved as trajectory_data[text] at :150",
+    "conclusion": "Changing only a legal task goal in the supported online sampler does not change adaptation text; fixed-data Goal-Swap is not an existing exposed adaptation-goal operation."
+  },
+  "cached_data_loader": {
+    "input": "ttt_data_dir/test_*_data_*.npy",
+    "reader": "ttt.py:221 np.load(... allow_pickle=True).item(); :227 directly converts stored text to tensor",
+    "trainer": "ttt.py:340/351/361 passes cached input_texts into model as text_token without canonicalizing to no lang",
+    "skip_online_collection": "ttt.py:288 if not args.use_sampled_data; --use_sampled_data therefore permits cache-only training",
+    "all_data": "ttt_use_all_data loads all matching cached files instead of current test subset",
+    "conclusion": "Writing pretokenized cache text can reach the native CALVIN trainer; this requires authority over adaptation-data files and is a distinct data-poisoning threat model. This audit does not establish attacker access to that cache or decision harm."
+  },
+  "libero_path": {
+    "entrypoint": "utils/eval_utils_libero.py:460 imports test_time_training.ttt_libero.LiberoTestTimeTrainer; instantiates at :578",
+    "missing_implementation": true,
+    "ttt_use_test_text_instruction": "Declared at arguments_utils.py:265 and passed by scripts/libero/eval_ttt.sh:73; no consumer in available Python implementation",
+    "conclusion": "Cannot infer original LIBERO adaptation text semantics from the CALVIN sampler or a shell flag whose implementation is missing."
+  },
+  "local_reconstruction_classification": {
+    "CleanTTT_taskGoal": "New adaptation metadata interface, not faithful native no-lang baseline",
+    "SwapTTT_taskGoal": "Diagnostic intervention through that new interface, not native online-sampler Goal-Swap",
+    "EmptyTTT_empty_string": "Useful canonicalization baseline but tokenwise different from native literal no lang",
+    "faithful_text_baseline": "literal no lang",
+    "native_threat_boundary_verdict": "No-Go for claiming native online TTT Goal-Swap decision attack based on the current reconstructed taskGoal adaptation interface. Cache-text poisoning is a separate candidate requiring explicit writable-data threat assumption and matched native no-lang controls."
+  },
+  "camera128_attempt": "runs/worldagen_native_task_gate_camera128_matched30_v1/execution_status.json",
+  "files_modified_during_audit": false,
+  "inference_performed_during_audit": false
+}

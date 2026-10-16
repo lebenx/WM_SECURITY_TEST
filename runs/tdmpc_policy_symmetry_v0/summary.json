@@ -1,0 +1,59 @@
+{
+  "status": "stopped_after_failed_numerical_preservation",
+  "reason": "The native squashed policy has a large finite-precision endpoint mass. The inverse-tanh reflection no longer preserves its action law or its state-only rollout law. The completed degraded episode cannot support the proposed preservation mechanism.",
+  "results": [
+    {
+      "task": "walker-walk",
+      "task_id": 1,
+      "seed": 31,
+      "policy": "mpc",
+      "steps": 500,
+      "return": 38.42984617035836,
+      "full_episode": true,
+      "wall_seconds": 24.737489457707852,
+      "condition": "prior_reflection",
+      "dynamics_calls": 10000,
+      "dynamics_transitions": 4632000,
+      "model_weights_unchanged": true
+    }
+  ],
+  "preservation": {
+    "walker-walk": {
+      "real_action_labelled_transitions": 500,
+      "latent_prediction_mse": {
+        "clean": 0.000152946007913306,
+        "prior_reflection": 0.004186945632728121,
+        "sign_flip": 0.008520465530209057
+      },
+      "double_reflection_prediction_max_abs": 0.9046778082847595,
+      "antithetic_anchors": 32,
+      "prior_actions_per_anchor": 256,
+      "numerical_prior_endpoint_fraction": 0.66778564453125,
+      "reflected_vs_paired_action_max_abs": 2.0,
+      "reflected_vs_paired_prediction_max_abs": 0.9129188656806946,
+      "reflected_vs_paired_prediction_rmse": 0.11191138817111358,
+      "sign_flip_vs_paired_prediction_rmse": 0.12068985177432115,
+      "deterministic_wrapper_preserves_cuda_rng": true
+    }
+  },
+  "completed_episodes": 1,
+  "recorded_complete_environment_steps": 500,
+  "interrupted_episode": {
+    "task": "walker-walk",
+    "condition": "sign_flip",
+    "last_logged_step": 100,
+    "last_logged_return": 13.820452775806189,
+    "exact_executed_steps": null,
+    "partial_trace_saved": false
+  },
+  "total_environment_steps_lower_bound": 600,
+  "interruption": "SIGINT, process exit130; no process left running. Subsequent planned arms were not executed.",
+  "model_weights_unchanged_at_completed_episode": true,
+  "interrupted_episode_final_model_digest_verified": false,
+  "source_archive": "source.py",
+  "source_archive_sha256": "37753bf81894bd050797dd79e4e98c9e11fe172b2ee3137910c65a612b41798f",
+  "training_updates": 0,
+  "api_requests": 0,
+  "accepted_security_claim": null,
+  "scope": "One completed development intervention and one interrupted comparator. No successful distribution preservation, no restored-control result, no cross-task attack result or novel claim."
+}

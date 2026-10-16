@@ -1,0 +1,35 @@
+{
+  "cases": [
+    [
+      "Normal",
+      23
+    ],
+    [
+      "Normal",
+      24
+    ],
+    [
+      "Challenge",
+      23
+    ],
+    [
+      "Challenge",
+      24
+    ]
+  ],
+  "arms": [
+    "raw",
+    "fixed_calibration",
+    "lazy_calibration"
+  ],
+  "scope": "Native task-feedback baseline: calibrate only after a failed prediction.\n\nThis is an ordinary lazy repair baseline, not a proposed novel algorithm.\nIt has the same source-informed isolation/minimum operation as the fixed\ncalibration comparator. Task feedback selects WHEN to use that supplied\noperation; it does not discover an instrument, measurement program, or law.\nOnly public observations and actual actions enter decisions. Native instrument\nRNGs are unseeded upstream, so matching world seeds does not pair sensor noise.\n",
+  "action_budget": 700,
+  "calibration": "Supplied source-informed isolation plus minimum of 32 readings per crystal; unchanged from the fixed comparator",
+  "selection": "Unchanged reference-only finite grammar and coefficient-description ranking",
+  "trigger": "Actual public reactor activation failure, or predicted setpoint outside public actuator range",
+  "stopping": "At most one full calibration invocation; no candidate search or extra retries after calibrated predictions",
+  "counting": "All collection, failed tuning, calibration, navigation, and final tuning actions counted",
+  "script_sha256": "de7f3a99c780924b9c14c5496a77f4bc9167c30e58826c1edc8aa7ba56026f24",
+  "api_requests": 0,
+  "gpu_work": false
+}

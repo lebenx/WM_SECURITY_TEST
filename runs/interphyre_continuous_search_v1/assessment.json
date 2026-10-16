@@ -1,0 +1,61 @@
+{
+  "status": "completed_continuous_baselines_and_linear_operator_equivalence",
+  "native_results": {
+    "object_prior": {
+      "successes": 0,
+      "tasks": 8,
+      "queries": 200
+    },
+    "cma_es": {
+      "successes": 2,
+      "tasks": 8,
+      "queries": 186
+    },
+    "rbf_bo": {
+      "successes": 2,
+      "tasks": 8,
+      "queries": 179
+    }
+  },
+  "native_run": "runs/interphyre_continuous_search_v1",
+  "native_step_parity": "runs/interphyre_continuous_search_v1/native_step_parity.json",
+  "linear_operator_analysis": {
+    "status": "completed",
+    "source": "runs/interphyre_continuous_search_v1",
+    "clusters": 49,
+    "max_coefficient_error": 7.815970093361102e-14,
+    "max_proposal_error": 1.7601198276651076e-13,
+    "pairwise_regularization": 0.01,
+    "centered_regularization": "pairwise_regularization / cluster_size",
+    "native_queries": 0,
+    "api_requests": 0,
+    "gpu_work": false,
+    "scope": "Exact equivalence for complete unweighted pairwise linear secants with matched event groups, features and regularization. Does not cover arbitrary pair weights, learned nonlinear edit grammars, or establish a general impossibility of transferable experimentation.",
+    "finished_at_utc": "2026-10-08T23:24:27.937475+00:00"
+  },
+  "accepted_novel_method": false,
+  "interpretation": "Independent fresh-environment attempts confirm ordinary continuous optimizers can solve tasks beyond literal candidate replay. CMA-ES solves catapult seed303 and parcel seed303; RBF BO solves catapult seeds300 and303. Both are 2/8, object-prior random search is 0/8. This is a small development comparison with one optimizer seed per task, not superiority evidence for a new method or a reproduction of HExA/Causal-PIK.",
+  "operator_boundary": "For complete unweighted within-event pairs, linear secant least squares is exactly centered multivariate ridge regression at lambda/n. Independent code checks on 49 groups yield coefficient differences below 8e-14 and inverse proposals below 1.8e-13. Routing and representation are matched, not ablated. The claim does not cover other non-linear program construction mechanisms.",
+  "reset_correction": "v0 reused native reset_attempt, which preserves Box2D warm-start state. Its four successes reproduce in fresh environments, but some trajectories differ. v1 creates a fresh environment per query and supersedes v0 for standalone attempt comparisons. v1 parity matches success and step count on all six selected replay checks.",
+  "source_and_target": "No offline source training used in these continuous comparators. Each task gets the same five initial target proposals, charged to its 25-query budget. Cross-task transfer and new-method gain remain untested.",
+  "interaction_accounting": {
+    "authoritative_screen_placement_queries": 565,
+    "authoritative_screen_valid_rollouts": 432,
+    "superseded_v0_queries": 565,
+    "superseded_v0_valid_rollouts": 433,
+    "complete_verification_queries": 12,
+    "earlier_unpersisted_verification_query_range": [
+      2,
+      7
+    ],
+    "total_query_range": [
+      1144,
+      1149
+    ],
+    "note": "An assertion-stopped check executed 1–6 queries before losing in-memory records; one failed-serialization follow-up executed one. Their exact count is not asserted. Verification replays are not additional independent tasks."
+  },
+  "research_model_requests": 3,
+  "gpu_work": false,
+  "decision": "Retire the specified linear event-secant candidate as a novel learning rule; it has an exact ordinary-regression implementation. Do not expand task counts or run long GPU work for it. Retain the continuous native comparator harness for a substantively different learning operation.",
+  "verified_at_utc": "2026-10-08T23:26:05.974731+00:00"
+}

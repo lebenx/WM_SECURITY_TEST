@@ -1,0 +1,205 @@
+{
+  "date": "2026-10-15",
+  "status": "completed_fixed_real_utility_qualification",
+  "question": "Does correlation in physically ignored action-log coordinates cause additional real decision loss after a fixed dynamics-only continuation, beyond an equal-multiset permutation control?",
+  "protocol": "configs/tdmpc_nullspace_action_logs_20261015.json",
+  "run": "runs/tdmpc_nullspace_action_logs_20261015",
+  "scope": "Researcher-defined restricted offline data contribution and dynamics-only continuation of an offline pretrained model; not native online deployment, native full training, Goal-Swap or an exposed external attack interface.",
+  "source_facts": {
+    "executor": "MultitaskWrapper.step slices the action to the current task's physical dimensions.",
+    "learner": "Buffer retains the full action; WorldModel.next concatenates all6 coordinates. Native pi/MPC mask generated tails, but the learner's action input is not masked.",
+    "native_random_exception": "MultitaskWrapper.rand_act samples the full Box. The native multitask trainer is offline; this does not prove the released checkpoint saw nonzero tails or expose an online attacker.",
+    "paths": [
+      "vendor/tdmpc2/tdmpc2/envs/wrappers/multitask.py",
+      "vendor/tdmpc2/tdmpc2/common/buffer.py",
+      "vendor/tdmpc2/tdmpc2/common/world_model.py",
+      "vendor/tdmpc2/tdmpc2/train.py"
+    ]
+  },
+  "source_and_permission": {
+    "path": "runs/tdmpc_adaptation_screen_v0/random_data.pt",
+    "task": "reacher-easy",
+    "task_id": 4,
+    "seed": 21,
+    "controls": 300,
+    "active_action_dims": 2,
+    "shared_action_dims": 6,
+    "protected": [
+      "obs",
+      "reward",
+      "task",
+      "seed",
+      "action[:, :2]",
+      "transition order"
+    ],
+    "writer": "May change only the four executor-ignored action-log coordinates within [-1,1]. Encoding uses only the already chosen active action, never successor observations, rewards or victim evaluation outcomes.",
+    "correlated_tail": "[a0,a1,a0,a1]",
+    "control_tail": "Permute complete four-dimensional correlated-tail rows with a private CPU torch.Generator seed17; preserve their joint multiset exactly.",
+    "permutation_seed": 17
+  },
+  "data_control": {
+    "joint_tail_multiset_exact": true,
+    "active_actions_exact": true,
+    "mask_recovers_zero_exact": true,
+    "mask_recovery_episode_executed": false,
+    "protected_data": "All arms reference the identical source obs/reward/task/seed tensors; only action tail is substituted.",
+    "tail_range": [
+      -0.9967650175094604,
+      0.9959105253219604
+    ]
+  },
+  "physical_equivalence": {
+    "passed": true,
+    "controls_per_replay": 300,
+    "cached_float32_obs_and_rewards_exact": true,
+    "paired_native_rewards_and_done_exact": true,
+    "compatibility": "Expose max_episode_steps metadata through TensorWrapper; upstream reset/step unchanged. Rewards already pass through native float32 TensorWrapper.",
+    "scope": "Two actual upstream-wrapper replays; no new source states selected."
+  },
+  "result_table": [
+    {
+      "condition": "clean",
+      "real_return": 983.0,
+      "real_controls": 500,
+      "one_step_latent_mse": 2.2584999896935187e-05,
+      "training_updates": 0,
+      "task": "reacher-easy",
+      "seed": 11
+    },
+    {
+      "condition": "zero",
+      "real_return": 984.0,
+      "real_controls": 500,
+      "one_step_latent_mse": 5.119266643305309e-05,
+      "training_updates": 40,
+      "task": "reacher-easy",
+      "seed": 11
+    },
+    {
+      "condition": "correlated",
+      "real_return": 985.0,
+      "real_controls": 500,
+      "one_step_latent_mse": 5.81581007281784e-05,
+      "training_updates": 40,
+      "task": "reacher-easy",
+      "seed": 11
+    },
+    {
+      "condition": "permuted",
+      "real_return": 984.0,
+      "real_controls": 500,
+      "one_step_latent_mse": 6.571016274392605e-05,
+      "training_updates": 40,
+      "task": "reacher-easy",
+      "seed": 11
+    }
+  ],
+  "decision": {
+    "conditional_harm_gate_passed": false,
+    "returns": {
+      "clean": 983.0,
+      "zero": 984.0,
+      "correlated": 985.0,
+      "permuted": 984.0
+    },
+    "relative_loss_correlated": {
+      "zero": -0.00101626016260159,
+      "permuted": -0.00101626016260159
+    },
+    "permuted_minus_correlated_return": -1.0,
+    "conclusion": "No-Go for this fixed correlation-specific decision-harm candidate; no expansion or retuning",
+    "statistics": "One fixed seed; descriptive paired differences only",
+    "defense_episode_executed": false
+  },
+  "baseline_gates": {
+    "clean": {
+      "passed": true,
+      "reference_return": 983.0
+    },
+    "zero": {
+      "passed": true,
+      "reference_return": 984.0
+    }
+  },
+  "historical_learning_reconstruction": {
+    "passed": true,
+    "maximum_absolute_errors": {
+      "weighted_consistency_loss": 0.0,
+      "grad_norm": 0.0
+    }
+  },
+  "activity": {
+    "checkpoint_loads": 1,
+    "training_updates": 120,
+    "source_replay_controls": 600,
+    "evaluation_controls": 2000,
+    "explicit_environment_resets": 6,
+    "evaluation_episodes_completed": 4,
+    "model_api_requests": 0
+  },
+  "execution": {
+    "session_id": 30866,
+    "exit_code": 0,
+    "terminal_chunk_id": "a3e756",
+    "elapsed_seconds": 140.82270506897476,
+    "peak_cuda_reserved_bytes": 620756992,
+    "shared_gpu": true,
+    "exclusive_gpu_requested": false
+  },
+  "interpretation": {
+    "established": [
+      "The source manipulation leaves the entire300-control physical trace unchanged, including actual observations and native rewards.",
+      "Clean and unedited continuation reproduce the competent historical real-task baseline.",
+      "The fixed conditional decision-harm gate is evaluated against BOTH an unedited and a joint-tail-multiset-matched control."
+    ],
+    "not_established": [
+      "A Goal-Swap or native full-training attack.",
+      "An externally writable deployed interface, population attack success rate, or generalization.",
+      "A new defense: task masking recovers the unedited training inputs exactly, but no separate defense episode was executed.",
+      "Novelty6.5–7 or an ICLR-ready core security mechanism."
+    ],
+    "physical_vs_prediction": "The execution-equivalence contract concerns physical outcomes. Nonzero tails are outside this cache's original training representation; a learned conditional model need not already be invariant, and a latent error increase alone is not security harm.",
+    "statistics": "One fixed development seed: descriptive paired differences only, no p-value, confidence interval, ASR or population claim.",
+    "closed_loop_boundary": "Candidates and later physical states may diverge across arms as part of the closed-loop effect. This experiment does not measure fixed-candidate ranking flips.",
+    "existing_evidence_unchanged": "Preserve prior Cosmos local harm and failed expansion/route controls, DINO objective mismatch, and other bounded results. This new candidate does not erase or generalize them."
+  },
+  "prior_work": [
+    {
+      "title": "Causal confusion and spurious features in offline reinforcement learning",
+      "url": "https://proceedings.mlr.press/v213/gupta23a.html",
+      "use": "Conceptual precedent; executor-null coordinates alone do not establish a novel mechanism."
+    },
+    {
+      "title": "Label-Consistent Backdoor Attacks",
+      "url": "https://arxiv.org/abs/1912.02771",
+      "use": "Input-feature poisoning can preserve correct labels; labels remaining truthful is not sufficient novelty."
+    },
+    {
+      "title": "Shortcut Learning in Deep Neural Networks",
+      "url": "https://arxiv.org/abs/2004.07780",
+      "use": "Shortcut reliance and its failure to transfer are established concepts."
+    }
+  ],
+  "historical_record_correction": {
+    "location": "configs/world_model_padded_action_screen.json and runs/tdmpc_padded_action_shadowing_v0/summary.json",
+    "issue": "Hard-coded historical walker MPC/random update returns972.297543/973.753003 disagree with the cited source cache's actual975.012229/974.915866. Both are benign relative to972.409103 Clean, so the old No-Go disposition is unchanged.",
+    "new_gate": "This experiment uses same-task reacher Clean983/random-update984, verified directly from the corresponding cached traces and rebuilt before edits. Old walker numbers are not evidence for this gate."
+  },
+  "next_action": "Stop this fixed candidate; no seed, encoding, dose or task scan to obtain a signal.",
+  "scientific_goal_status": "active_unachieved_no_qualified_core_claim",
+  "reproduction": [
+    ".venv-native-local/bin/python scripts/pilot_tdmpc_nullspace_action_logs.py",
+    "python scripts/analyze_tdmpc_nullspace_action_logs.py",
+    ".venv-native-local/bin/python scripts/review_tdmpc_nullspace_action_logs.py"
+  ],
+  "reproduction_note": "Runner requires a new output directory to protect the archived run; copy the protocol with a new output path and bind the runner before any intentional rerun. The negative candidate does not justify rerunning automatically.",
+  "review": "reports/tdmpc_nullspace_action_logs_review_20261015.json",
+  "runner_maintenance_after_execution": {
+    "preserved_execution_source": "runs/tdmpc_nullspace_action_logs_20261015/launched_script.py",
+    "changes": [
+      "Zero-return relative-loss denominator is now recorded as null and fails the dual-control harm gate.",
+      "An additional deadline check precedes the final completed marker."
+    ],
+    "effect_on_saved_result": "Neither boundary was reached: both denominators984 and total140.823s below600s. No model or environment rerun."
+  }
+}

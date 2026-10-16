@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T06:00:31.568923+00:00",
+  "status": "closed_invalid_numerical_calibration_no_paired_forecast_result",
+  "actual_run_status": "invalid_numerical_calibration",
+  "run_started_at_utc": "2026-10-15T05:57:31.910447+00:00",
+  "run_finished_at_utc": "2026-10-15T05:57:39.040154+00:00",
+  "elapsed_seconds": 7.129732263012556,
+  "question": "On each fixed native query state and executed action sequence, does the canonical request change prediction error relative to the original request?",
+  "frozen_calibration_limits": {
+    "atol": 0.0001,
+    "rtol": 0.0001,
+    "max_absolute_error": 0.001,
+    "rms_absolute_error": 0.0001
+  },
+  "tolerance_provenance": "Existing DINO exact-replay evidence is CPU-to-CPU. No validated CPU-to-GPU numerical tolerance was found; these conservative limits are chosen before this analysis, not fitted to new outputs.",
+  "actual_stop": {
+    "origin": "clean_identity_copy",
+    "query": 1,
+    "horizon": 6,
+    "forecast_reproduction": {
+      "visual": {
+        "max_absolute_error": 5.900859832763672e-05,
+        "rms_absolute_error": 1.0881975924714754e-06,
+        "reference_rms": 2.3964572566355935,
+        "allclose": true,
+        "passed": true
+      },
+      "proprio": {
+        "max_absolute_error": 3.5762786865234375e-07,
+        "rms_absolute_error": 2.3863090233832725e-08,
+        "reference_rms": 0.1308642895286571,
+        "allclose": true,
+        "passed": true
+      }
+    },
+    "failed_check": "New CPU visual encoding of actual control-offset15 vs the next native query cached GPU context.",
+    "endpoint_encoder_calibration": {
+      "visual": {
+        "max_absolute_error": 0.0003657341003417969,
+        "rms_absolute_error": 1.070301017734883e-05,
+        "reference_rms": 2.425360147255646,
+        "allclose": false,
+        "passed": false
+      },
+      "proprio": {
+        "max_absolute_error": 3.725290298461914e-09,
+        "rms_absolute_error": 8.33000234328132e-10,
+        "reference_rms": 0.11573256521795343,
+        "allclose": true,
+        "passed": true
+      }
+    },
+    "visual_max_error_within_limit": true,
+    "visual_rms_error_within_limit": true,
+    "visual_elementwise_allclose": false,
+    "explanation": "The frozen gate required allclose AND the maximum-error bound AND the RMS-error bound. The visual encoder passed both aggregate bounds but failed elementwise allclose; therefore this diagnostic stopped as invalid. Proprio encoding passed.",
+    "source_error": "Endpoint encoder mismatch at clean_identity_copy query1"
+  },
+  "activity": {
+    "unroll_calls": 1,
+    "own_condition_unrolls": 1,
+    "counterfactual_unrolls": 0,
+    "predictor_forwards": 6,
+    "native_encodes": 3,
+    "encoder_calibration_checks": 1,
+    "environment_steps": 0,
+    "planner_calls": 0,
+    "network_attempts": 0,
+    "training_updates": 0,
+    "checkpoint_files_loaded_once_each": 2,
+    "cuda_initialized": false,
+    "api_calls": 0
+  },
+  "remaining_unmeasured": {
+    "other_own_condition_queries": 13,
+    "counterfactual_queries": 14,
+    "remaining_endpoint_encodes": 35,
+    "paired_error_rows": 0
+  },
+  "paired_summary": null,
+  "canonical_minus_original_prediction_error_direction": null,
+  "interpretation": {
+    "established": "The first original-request forecast reproduced its cached GPU forecast within the predeclared limits. The first endpoint visual-encoder check did not satisfy the complete numerical gate.",
+    "not_established": "No original-versus-canonical paired prediction-error result was computed; this run cannot establish either direction, zero effect, or prediction-error mediation of the native dense-return difference.",
+    "not_global_cpu_invalidation": "This is failure of this frozen cross-device acceptance rule, not evidence that CPU inference is generally inaccurate or that native DINO planning failed.",
+    "native_outcome_unchanged": "The observed decline is cumulative dense return only. Canonical had earlier first success53vs56, more successful controls33vs24, and a better terminal distance; both final success flags were false. Do not reframe the diagnostic as explaining lost task success or worse terminal utility.",
+    "prior_scope_retained": "Final-mean forecasts alone would not reconstruct CEM candidate ranking or establish native return-loss mediation. Objective/reward proxy misalignment remains unresolved."
+  },
+  "artifact_retention": {
+    "saved_query_npz_members": [
+      "original_visual.npy",
+      "original_proprio.npy"
+    ],
+    "full_failed_encoder_outputs_saved": false,
+    "additional_residual_distribution_computed": false,
+    "reason": "The retained NPZ contains only the own-condition forecast; the failed encoder comparison is retained as aggregate/per-timepoint diagnostics in summary.json. No new encoding was attempted to reconstruct residuals."
+  },
+  "decision": {
+    "paired_forecast_attribution": "No-Go from this diagnostic: numerical calibration invalid and paired effects unmeasured.",
+    "retry": false,
+    "tolerance_relaxation": false,
+    "device_fallback": false,
+    "source_protocol_and_runner_modified": false,
+    "scope": "Close this diagnostic only; do not overwrite the separately completed native policy outcomes or decisions from independent experiments."
+  },
+  "source_paths": [
+    "runs/dino_native_alias_forecast_20261015/summary.json",
+    "runs/dino_native_alias_forecast_20261015/launched_config.json",
+    "runs/dino_native_alias_forecast_20261015/launched_script.py",
+    "runs/dino_native_alias_forecast_20261015/clean_identity_copy_query1.npz",
+    "configs/dino_native_alias_forecast_20261015.json",
+    "scripts/analyze_dino_native_alias_forecast.py",
+    "runs/dino_native_alias_pair_20261015/summary.json"
+  ]
+}

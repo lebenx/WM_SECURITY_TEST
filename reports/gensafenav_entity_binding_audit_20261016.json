@@ -1,0 +1,956 @@
+{
+  "status": "completed_two_log_offline_entity_binding_audit",
+  "sources": [
+    "runs/gensafenav_feedback_selection_gate_20261015/issues.jsonl",
+    "runs/gensafenav_feedback_selection_gate_20261015/physical_steps.jsonl"
+  ],
+  "execution": {
+    "model_calls": 0,
+    "environment_steps": 0,
+    "api_calls": 0,
+    "new_random_draws": 0,
+    "new_trajectories": 0,
+    "input_policy": "Only the two listed JSONL files are read; source-code interpretations below are explicit annotations."
+  },
+  "method": {
+    "population": "All recorded pre-action frames; no root, seed, or error-based selection.",
+    "binding": "Join by reset_index/physical_index, then lifetime_id, checking human_id and visibility.",
+    "ownership": "Exact FP32 relative-current-point plus FP64 real robot position; unique visible-owner match only, no tolerance or nearest-neighbor identity assignment.",
+    "admission": "Recompute the native current-point Euclidean distance < .1 gate for each assigned human.",
+    "invisible_rows": "Identical (15,15) placeholders cannot identify the hidden-row permutation; no such identity is claimed.",
+    "minimum_distinct_center_order_gap": 0.00010593499969679954,
+    "gst_scope": "gst_out_mask and gst_delivered_relative_exact are previously recorded checks, not freshly recomputed forecasts. A row whose current-point owner has GST out_mask=True is GST-eligible; this script does not reopen raw predictor NPZ files."
+  },
+  "counts": {
+    "accepted_entity_interval_vectors": 967,
+    "accepted_entity_rows": 967,
+    "accepted_gst_full_future_exact_same_id": 939,
+    "accepted_gst_full_future_not_exact_same_id": 0,
+    "accepted_non_gst_dummy_rows": 28,
+    "accepted_visible_row_entity_mismatches": 0,
+    "all_entity_center_order_matches": 119,
+    "assigned_entity_gst_mask_true_accepted": 939,
+    "assigned_entity_gst_mask_true_rejected": 21,
+    "assigned_entity_gst_mask_true_rows": 960,
+    "delivered_current_point_exact_invisible_dummy": 1389,
+    "delivered_current_point_unique_exact_visible_owner": 991,
+    "delivered_current_point_unresolved": 0,
+    "delivered_rows_with_gst_eligible_visible_owner": 960,
+    "frames_with_visible_row_entity_mismatches": 5,
+    "invisible_entity_rows": 1389,
+    "issue_frames": 119,
+    "mismatch_frames_coincident_with_new_lifetime": 5,
+    "mismatched_visible_row_has_nonzero_interval": 0,
+    "native_admission_rule_matches": 2380,
+    "new_lifetimes_after_initial_frame": 8,
+    "physical_steps": 119,
+    "rejected_entity_rows": 1413,
+    "rejected_rows_with_gst_eligible_visible_owner": 21,
+    "unique_human_lifetimes": 28,
+    "visibility_fields_match": 2380,
+    "visible_entity_rows": 991,
+    "visible_prefix_contains_all_visible_entities_frames": 119,
+    "visible_prefix_exact_expected_center_order_frames": 119,
+    "visible_prefix_vs_all_entity_order_mismatch_frames": 5,
+    "visible_row_entity_mismatches": 24
+  },
+  "ordering_events": [
+    {
+      "physical_index": 32,
+      "time": 8.0,
+      "new_lifetimes_first_seen_at_this_frame": [
+        20
+      ],
+      "all_entity_center_order": [
+        20,
+        9,
+        0,
+        15,
+        3,
+        4,
+        14,
+        6,
+        1,
+        5,
+        18,
+        2,
+        16,
+        8,
+        17,
+        19,
+        11,
+        7,
+        13,
+        12
+      ],
+      "visible_center_order": [
+        9,
+        0,
+        15,
+        3,
+        4
+      ],
+      "delivered_current_point_owners": [
+        9,
+        0,
+        15,
+        3,
+        4,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "visible_prefix_expected_exact": true,
+      "row_mismatches": [
+        {
+          "sorted_row": 0,
+          "assigned_lifetime_id": 20,
+          "delivered_current_point_owner": 9,
+          "assigned_visible": false,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 4.502299010622234,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 1,
+          "assigned_lifetime_id": 9,
+          "delivered_current_point_owner": 0,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 2.7568591616057785,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 2,
+          "assigned_lifetime_id": 0,
+          "delivered_current_point_owner": 15,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 2.144483175848573,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 3,
+          "assigned_lifetime_id": 15,
+          "delivered_current_point_owner": 3,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 2.9638773599809847,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 4,
+          "assigned_lifetime_id": 3,
+          "delivered_current_point_owner": 4,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 1.9933141608535099,
+          "native_interval_of_assigned_entity": null
+        }
+      ]
+    },
+    {
+      "physical_index": 55,
+      "time": 13.75,
+      "new_lifetimes_first_seen_at_this_frame": [
+        22
+      ],
+      "all_entity_center_order": [
+        22,
+        20,
+        9,
+        14,
+        0,
+        19,
+        11,
+        15,
+        1,
+        5,
+        17,
+        6,
+        16,
+        3,
+        8,
+        4,
+        12,
+        2,
+        7,
+        21
+      ],
+      "visible_center_order": [
+        20,
+        9,
+        14,
+        0
+      ],
+      "delivered_current_point_owners": [
+        20,
+        9,
+        14,
+        0,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "visible_prefix_expected_exact": true,
+      "row_mismatches": [
+        {
+          "sorted_row": 0,
+          "assigned_lifetime_id": 22,
+          "delivered_current_point_owner": 20,
+          "assigned_visible": false,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 5.645112099853,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 1,
+          "assigned_lifetime_id": 20,
+          "delivered_current_point_owner": 9,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 2.1360770472403345,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 2,
+          "assigned_lifetime_id": 9,
+          "delivered_current_point_owner": 14,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 2.8407843393637244,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 3,
+          "assigned_lifetime_id": 14,
+          "delivered_current_point_owner": 0,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 4.295095942801186,
+          "native_interval_of_assigned_entity": null
+        }
+      ]
+    },
+    {
+      "physical_index": 65,
+      "time": 16.25,
+      "new_lifetimes_first_seen_at_this_frame": [
+        24
+      ],
+      "all_entity_center_order": [
+        22,
+        11,
+        20,
+        19,
+        14,
+        0,
+        24,
+        5,
+        17,
+        1,
+        9,
+        16,
+        15,
+        6,
+        23,
+        8,
+        4,
+        3,
+        7,
+        21
+      ],
+      "visible_center_order": [
+        22,
+        11,
+        20,
+        19,
+        14,
+        0,
+        5,
+        17,
+        1,
+        9
+      ],
+      "delivered_current_point_owners": [
+        22,
+        11,
+        20,
+        19,
+        14,
+        0,
+        5,
+        17,
+        1,
+        9,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "visible_prefix_expected_exact": true,
+      "row_mismatches": [
+        {
+          "sorted_row": 6,
+          "assigned_lifetime_id": 24,
+          "delivered_current_point_owner": 5,
+          "assigned_visible": false,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 8.617999267211246,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 7,
+          "assigned_lifetime_id": 5,
+          "delivered_current_point_owner": 17,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 2.0766638807100444,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 8,
+          "assigned_lifetime_id": 17,
+          "delivered_current_point_owner": 1,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": false,
+          "native_issue_valid": false,
+          "admission_distance": 3.537535851460807,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 9,
+          "assigned_lifetime_id": 1,
+          "delivered_current_point_owner": 9,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 1.2577499153419747,
+          "native_interval_of_assigned_entity": null
+        }
+      ]
+    },
+    {
+      "physical_index": 84,
+      "time": 21.0,
+      "new_lifetimes_first_seen_at_this_frame": [
+        25
+      ],
+      "all_entity_center_order": [
+        11,
+        5,
+        17,
+        20,
+        25,
+        22,
+        16,
+        1,
+        23,
+        0,
+        14,
+        24,
+        8,
+        19,
+        3,
+        21,
+        15,
+        6,
+        9,
+        7
+      ],
+      "visible_center_order": [
+        11,
+        5,
+        17,
+        20,
+        22,
+        16,
+        1,
+        23,
+        0,
+        14,
+        24
+      ],
+      "delivered_current_point_owners": [
+        11,
+        5,
+        17,
+        20,
+        22,
+        16,
+        1,
+        23,
+        0,
+        14,
+        24,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "visible_prefix_expected_exact": true,
+      "row_mismatches": [
+        {
+          "sorted_row": 4,
+          "assigned_lifetime_id": 25,
+          "delivered_current_point_owner": 22,
+          "assigned_visible": false,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 5.587377268100598,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 5,
+          "assigned_lifetime_id": 22,
+          "delivered_current_point_owner": 16,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 5.970724197627873,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 6,
+          "assigned_lifetime_id": 16,
+          "delivered_current_point_owner": 1,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 4.992214357459008,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 7,
+          "assigned_lifetime_id": 1,
+          "delivered_current_point_owner": 23,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 4.830044362133332,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 8,
+          "assigned_lifetime_id": 23,
+          "delivered_current_point_owner": 0,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 6.348610894062531,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 9,
+          "assigned_lifetime_id": 0,
+          "delivered_current_point_owner": 14,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 3.8524939331208907,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 10,
+          "assigned_lifetime_id": 14,
+          "delivered_current_point_owner": 24,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 6.508770127920584,
+          "native_interval_of_assigned_entity": null
+        }
+      ]
+    },
+    {
+      "physical_index": 98,
+      "time": 24.5,
+      "new_lifetimes_first_seen_at_this_frame": [
+        27
+      ],
+      "all_entity_center_order": [
+        20,
+        11,
+        25,
+        1,
+        17,
+        22,
+        24,
+        5,
+        23,
+        0,
+        27,
+        8,
+        16,
+        14,
+        21,
+        7,
+        19,
+        3,
+        9,
+        26
+      ],
+      "visible_center_order": [
+        20,
+        11,
+        25,
+        1,
+        17,
+        22,
+        24,
+        5,
+        23,
+        0,
+        8,
+        16,
+        14,
+        21
+      ],
+      "delivered_current_point_owners": [
+        20,
+        11,
+        25,
+        1,
+        17,
+        22,
+        24,
+        5,
+        23,
+        0,
+        8,
+        16,
+        14,
+        21,
+        null,
+        null,
+        null,
+        null,
+        null,
+        null
+      ],
+      "visible_prefix_expected_exact": true,
+      "row_mismatches": [
+        {
+          "sorted_row": 10,
+          "assigned_lifetime_id": 27,
+          "delivered_current_point_owner": 8,
+          "assigned_visible": false,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 9.643136926223033,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 11,
+          "assigned_lifetime_id": 8,
+          "delivered_current_point_owner": 16,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": true,
+          "native_issue_valid": false,
+          "admission_distance": 8.840613916276329,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 12,
+          "assigned_lifetime_id": 16,
+          "delivered_current_point_owner": 14,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": false,
+          "native_issue_valid": false,
+          "admission_distance": 3.6387441873627755,
+          "native_interval_of_assigned_entity": null
+        },
+        {
+          "sorted_row": 13,
+          "assigned_lifetime_id": 14,
+          "delivered_current_point_owner": 21,
+          "assigned_visible": true,
+          "delivered_owner_gst_mask": false,
+          "native_issue_valid": false,
+          "admission_distance": 1.1948960074092918,
+          "native_interval_of_assigned_entity": null
+        }
+      ]
+    }
+  ],
+  "gst_eligible_rejection_events": [
+    {
+      "physical_index": 32,
+      "time": 8.0,
+      "rows": [
+        {
+          "sorted_row": 0,
+          "assigned_lifetime_id": 20,
+          "visible_owner": 9,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 4.502299010622234
+        },
+        {
+          "sorted_row": 1,
+          "assigned_lifetime_id": 9,
+          "visible_owner": 0,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 2.7568591616057785
+        },
+        {
+          "sorted_row": 2,
+          "assigned_lifetime_id": 0,
+          "visible_owner": 15,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 2.144483175848573
+        },
+        {
+          "sorted_row": 3,
+          "assigned_lifetime_id": 15,
+          "visible_owner": 3,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 2.9638773599809847
+        },
+        {
+          "sorted_row": 4,
+          "assigned_lifetime_id": 3,
+          "visible_owner": 4,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 1.9933141608535099
+        }
+      ]
+    },
+    {
+      "physical_index": 55,
+      "time": 13.75,
+      "rows": [
+        {
+          "sorted_row": 0,
+          "assigned_lifetime_id": 22,
+          "visible_owner": 20,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 5.645112099853
+        },
+        {
+          "sorted_row": 1,
+          "assigned_lifetime_id": 20,
+          "visible_owner": 9,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 2.1360770472403345
+        },
+        {
+          "sorted_row": 2,
+          "assigned_lifetime_id": 9,
+          "visible_owner": 14,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 2.8407843393637244
+        },
+        {
+          "sorted_row": 3,
+          "assigned_lifetime_id": 14,
+          "visible_owner": 0,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 4.295095942801186
+        }
+      ]
+    },
+    {
+      "physical_index": 65,
+      "time": 16.25,
+      "rows": [
+        {
+          "sorted_row": 6,
+          "assigned_lifetime_id": 24,
+          "visible_owner": 5,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 8.617999267211246
+        },
+        {
+          "sorted_row": 7,
+          "assigned_lifetime_id": 5,
+          "visible_owner": 17,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 2.0766638807100444
+        },
+        {
+          "sorted_row": 9,
+          "assigned_lifetime_id": 1,
+          "visible_owner": 9,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 1.2577499153419747
+        }
+      ]
+    },
+    {
+      "physical_index": 84,
+      "time": 21.0,
+      "rows": [
+        {
+          "sorted_row": 4,
+          "assigned_lifetime_id": 25,
+          "visible_owner": 22,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 5.587377268100598
+        },
+        {
+          "sorted_row": 5,
+          "assigned_lifetime_id": 22,
+          "visible_owner": 16,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 5.970724197627873
+        },
+        {
+          "sorted_row": 6,
+          "assigned_lifetime_id": 16,
+          "visible_owner": 1,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 4.992214357459008
+        },
+        {
+          "sorted_row": 7,
+          "assigned_lifetime_id": 1,
+          "visible_owner": 23,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 4.830044362133332
+        },
+        {
+          "sorted_row": 8,
+          "assigned_lifetime_id": 23,
+          "visible_owner": 0,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 6.348610894062531
+        },
+        {
+          "sorted_row": 9,
+          "assigned_lifetime_id": 0,
+          "visible_owner": 14,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 3.8524939331208907
+        },
+        {
+          "sorted_row": 10,
+          "assigned_lifetime_id": 14,
+          "visible_owner": 24,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 6.508770127920584
+        }
+      ]
+    },
+    {
+      "physical_index": 98,
+      "time": 24.5,
+      "rows": [
+        {
+          "sorted_row": 10,
+          "assigned_lifetime_id": 27,
+          "visible_owner": 8,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 9.643136926223033
+        },
+        {
+          "sorted_row": 11,
+          "assigned_lifetime_id": 8,
+          "visible_owner": 16,
+          "owner_gst_mask": true,
+          "same_identity": false,
+          "admission_distance": 8.840613916276329
+        }
+      ]
+    }
+  ],
+  "entity_replacement_boundary": {
+    "new_lifetimes": [
+      {
+        "lifetime_id": 20,
+        "first_physical_index": 32
+      },
+      {
+        "lifetime_id": 21,
+        "first_physical_index": 40
+      },
+      {
+        "lifetime_id": 22,
+        "first_physical_index": 55
+      },
+      {
+        "lifetime_id": 23,
+        "first_physical_index": 56
+      },
+      {
+        "lifetime_id": 24,
+        "first_physical_index": 65
+      },
+      {
+        "lifetime_id": 25,
+        "first_physical_index": 84
+      },
+      {
+        "lifetime_id": 26,
+        "first_physical_index": 93
+      },
+      {
+        "lifetime_id": 27,
+        "first_physical_index": 98
+      }
+    ],
+    "observation": "Every observed mismatch frame coincides with a newly replaced Human lifetime; the leading intervening invisible assigned entity is that new object. Not every replacement causes a mismatch.",
+    "source_sequence": "CrowdSimPred.step generates the observation before its end_goal_changing branch replaces reached-goal Human objects; talk2Env then sorts the current objects by their new actual positions. See crowd_sim_pred.py:205, :213-218. The existing observation can therefore retain the previous object's visibility/order context at that frame.",
+    "causal_limit": "This coincidence plus the native sequence supports an observation/replacement/sort boundary diagnosis. It does not establish that heterogeneous physical radii caused these five events. No alternative-order replay or actor counterfactual was run."
+  },
+  "radius_and_actor_binding": {
+    "physical_human_radius_identifiable": false,
+    "physical_robot_radius_identifiable": false,
+    "reason": "Neither JSONL records physical radii. ACI interval is an uncertainty radius, not the human body's radius.",
+    "saved_config_source_facts": {
+      "config": "vendor/GenSafeNav/trained_models/Ours_GST/configs/config.py",
+      "env_randomize_attributes": true,
+      "humans_random_radii": false,
+      "robot_radius": 0.3,
+      "human_radius_closed_envelope": [
+        0.3,
+        0.5
+      ],
+      "interpretation": "random_radii=False is the documented switch for changing radius on goal arrival, not initial randomization. generate_circle_crossing_human calls sample_random_attributes under randomize_attributes, whose radius draw is uniform(.3,.5). Human replacement in CrowdSimPred.step calls this same generator, so the same bounds apply to new lifetimes. Actual draws cannot be recovered from these logs.",
+      "robot_initialization": "Agent.__init__ sets radius=config.robot.radius=.3; Robot inherits it. Active holonomic generate_robot_humans calls robot.set without a radius override; Agent.set changes radius only when supplied. No robot sample_random_attributes call occurs on this initialization path. This is source-supported, not a logged radius measurement."
+    },
+    "native_interval_binding": "The recorder saves each distance-sorted Human object's post-talk interval. Native talk constructs its returned conformity-score row at this same index. Exact actor input conformity_scores is not separately cached in the two logs, so its return/assignment is source-supported rather than an independent tensor equality check.",
+    "invalid_interval": "native_interval=None corresponds in native source to a zero returned conformity row; that returned tensor is not independently logged.",
+    "mismatch_implication": "All observed mismatched visible current-point rows were rejected and have native_interval=None. By native construction these actor-row locations receive zero conformity scores, rather than another entity's nonzero interval. The spatial future row remains present. Whether the resulting actor action changes is unmeasured.",
+    "unused_actor_fields": "Ours_GST actor reads spatial_edges plus conformity_scores and detected_human_num. It does not read visible_masks/aggressiveness_factor. The latter is a robot-level scalar, not per-human metadata."
+  },
+  "sampled_physical_clearance_bound": {
+    "unique_time_entity_position_pairs": 2400,
+    "minimum_sampled_center_distance": 1.0492767517487371,
+    "minimum_center_distance_at": {
+      "reset_index": 1,
+      "physical_index": 104,
+      "lifetime_id": 11
+    },
+    "fixed_point3_both_radii_proxy": 0.4492767517487371,
+    "true_minimum_sampled_surface_clearance_closed_bound": [
+      0.2492767517487371,
+      0.4492767517487371
+    ],
+    "derivation": "At each recorded position, c=d-r_robot-r_human, r_robot=.3 by the active native initialization and .3<=r_human<=.5 by the generator. Taking the minimum preserves [min(d)-.8,min(d)-.6]. This is a conservative bound, not the unknown actual radius assignment.",
+    "scope": "All distinct before/after sampled physical positions; no interpolation or swept-volume collision certificate. No human radii were inferred from behavior, RNG, or images."
+  },
+  "historical_clearance_correction": {
+    "previous_reported_value": 0.44927675174873716,
+    "previous_label": "minimum_sampled_surface_clearance",
+    "correct_label": "fixed_point3_both_radii_proxy; an upper bound, not the actual clearance",
+    "reason": "The old statement that both radii are fixed .3 incorrectly treats random_radii=False as disabling initial randomize_attributes=True.",
+    "locations_for_parent_to_correct": [
+      {
+        "path": "reports/gensafenav_feedback_selection_decision_20261015.json",
+        "json_path": "native_clean.minimum_sampled_surface_clearance / native_clean.clearance_scope",
+        "observed_lines": [
+          98,
+          99
+        ]
+      },
+      {
+        "path": "reports/gensafenav_feedback_selection_review_20261015.json",
+        "json_path": "physical_episode.minimum_sampled_surface_clearance / physical_episode.clearance_scope",
+        "observed_lines": [
+          71,
+          72
+        ]
+      }
+    ],
+    "historical_reports_are_inputs": false,
+    "changes_made_to_historical_reports": false
+  },
+  "recorded_episode_context": {
+    "steps": 119,
+    "terminal_done": true,
+    "terminal_info_type": "ReachGoal",
+    "scope": "Original realized trajectory only; no modified ordering, repair, or counterfactual action was executed. Case0/seed42 provenance comes from the fixed run, not a seed field in these two logs."
+  },
+  "decision": {
+    "observed_current_point_entity_order_mismatch": true,
+    "qualification": "Concrete ordering mismatch observed in the fixed trajectory; this does not establish changed decisions or harm.",
+    "actual_safety_harm_established": false,
+    "limitations": [
+      "No actor counterfactual, action-change attribution, collision consequence, or repair effect was tested.",
+      "Physical radii and the full actor input tensor are absent, so physical-radius binding/clearance cannot be independently established.",
+      "Stable identity renaming with all associated state consistently permuted is distinct from changing the order of only one feature array.",
+      "The row mismatch, if present, is a native data-binding observation; it is not evidence of an external attacker interface or a novel general security mechanism."
+    ]
+  },
+  "source_code_anchors": [
+    "scripts/probe_gensafenav_feedback_selection.py:80 (saved config), :159 (physical recorder), :252 (talk recorder)",
+    "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_var_num.py:143 (initial attributes), :275 (visible-only rows)",
+    "vendor/GenSafeNav/crowd_sim/envs/utils/agent.py:44 (initial random physical radius)",
+    "vendor/GenSafeNav/crowd_sim/envs/utils/agent.py:19, :52 (robot radius initialization/optional override)",
+    "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_var_num.py:119 (active robot reset without radius override)",
+    "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred.py:217 (new Human object uses the same generator)",
+    "vendor/GenSafeNav/trained_models/Ours_GST/configs/config.py:48, :120, :135",
+    "vendor/GenSafeNav/crowd_sim/envs/crowd_sim_pred_real_gst.py:52 (FP32 spatial observation), :82 (all-human ordering), :93 (admission), :105 (conformity rows)",
+    "vendor/GenSafeNav/rl/vec_env/dummy_vec_env.py:25, :73 (FP32 observation buffer)",
+    "vendor/GenSafeNav/rl/vec_env/vec_pretext_normalize.py:191 (whole-row distance sorting)",
+    "vendor/GenSafeNav/rl/networks/selfAttn_srnn_temp_node.py:359, :387 (actual actor consumers)"
+  ],
+  "reproduction_command": "python scripts/analyze_gensafenav_entity_binding.py --verify-only"
+}

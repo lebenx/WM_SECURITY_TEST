@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-10",
+  "candidate_id": "H_cem_covariance_pinching_via_extremal_covariance_injection",
+  "candidate_claim_cn": "合法边界动作数据使 CEM 在真实模型上更快收缩到错误的极端动作分布，从而造成 planner-specific 损害。",
+  "carrier": "MBRL-Lib CartPole, GaussianMLP ensemble, native CEM; truthful legal actions and untouched rewards/transitions",
+  "protocol": {
+    "training_transitions": 3000,
+    "training_seed": 18,
+    "collection_modes": ["random", "boundary", "interior"],
+    "evaluation_seeds": [810, 811, 812, 813],
+    "cem_population": 100,
+    "cem_iterations": 3,
+    "cem_horizon": 15,
+    "particles": 10,
+    "planner": "native CEM with observational callback; no optimizer/model mutation"
+  },
+  "runs": {
+    "random_model": "runs/mbrl_covariance_pinching_random_v0",
+    "boundary_model": "runs/mbrl_covariance_pinching_boundary_v0",
+    "interior_model": "runs/mbrl_covariance_pinching_interior_v0",
+    "random_eval": ["runs/mbrl_covariance_pinching_eval_random_metrics_v0", "runs/mbrl_covariance_pinching_eval_random_metrics_v1"],
+    "boundary_eval": ["runs/mbrl_covariance_pinching_eval_boundary_metrics_v0", "runs/mbrl_covariance_pinching_eval_boundary_metrics_v1"],
+    "interior_eval": ["runs/mbrl_covariance_pinching_eval_interior_metrics_v0", "runs/mbrl_covariance_pinching_eval_interior_metrics_v1"]
+  },
+  "results": {
+    "mean_return": {"random": 196.25, "boundary": 136.5, "interior": 183.5},
+    "per_iteration_population_cov_trace": {
+      "random": [0.78517, 0.59994, 0.45457],
+      "boundary": [0.83356, 0.62661, 0.47519],
+      "interior": [0.79219, 0.60531, 0.45597]
+    },
+    "iteration2_over_iteration0_cov_ratio": {"random": 0.57894, "boundary": 0.57007, "interior": 0.57559},
+    "per_plan_cov_ratio": {"random": 0.58331, "boundary": 0.57569, "interior": 0.58024}
+  },
+  "decision": "rejected_no_specific_covariance_pinching_mechanism",
+  "interpretation": "Boundary collection reduced native CEM returns, but covariance contraction differed from the interior sham by only 0.0055 absolute ratio and from random by 0.0089. Boundary also started with higher covariance and lower model performance. The return harm is therefore not separated from coverage/model-error effects, and the candidate is not promoted or scaled.",
+  "api_requests": 0,
+  "gpu_work": false
+}

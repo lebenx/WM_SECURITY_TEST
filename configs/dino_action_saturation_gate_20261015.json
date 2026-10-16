@@ -1,0 +1,102 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_execution_approved_for_single_bounded_cpu_attempt",
+  "review": "Root and independent reviewer approved source/cache, restoration, per-step full integration equality, FP32 aliases, forecast alignment and strict Clean early-stop before execution. Startup or historical mismatch is retained without automatic retry.",
+  "date": "2026-10-15",
+  "source_feasibility": "reports/dino_action_saturation_feasibility_20261015.json",
+  "runner": "scripts/probe_dino_action_saturation_gate.py",
+  "out_dir": "runs/dino_action_saturation_gate_20261015",
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "mujoco_overlay": ".deps/dino_mujoco330",
+    "mujoco_version": "3.3.0",
+    "renderer": "osmesa",
+    "device": "cpu",
+    "torch_threads": 4,
+    "global_seed": 1,
+    "wall_limit_seconds": 900,
+    "outer_timeout_seconds": 915,
+    "network_allowed": false,
+    "gpu_allowed": false,
+    "training_allowed": false,
+    "dependency_installation_allowed": false,
+    "checkpoint_hashing_allowed": false
+  },
+  "root": {
+    "directory": "runs/dino_metaworld_mujoco330_clean_v1/seed1_clean",
+    "setup": "setup.npz",
+    "meaning": "Original seed1 task after exactly one existing warmup control; do not execute another warmup or fabricate a second observation.",
+    "goal": "Original cached native expert endpoint visual/proprio; unchanged for every candidate and representation.",
+    "input_context_frames": 1,
+    "predictor_context_window": 2,
+    "restoration": "Reconstruct from cached integrator/model/target fields, restore counters and observation queues, then take one complete in-process MuJoCo integration-state and relevant wrapper/Python/RNG snapshot. Restore this same snapshot before all15 branches. Do not call prepare/reset between branches.",
+    "historical_gate": "Initial PNG/proprio must equal cached inputs. First30 controls of candidate0 must match saved source1 reward, full state, success, TCP, physical-field and rendered-pixel records at every step. Any mismatch stops before model loading; retain the error and results. Historical cache reconstruction is not claimed complete before this gate."
+  },
+  "candidate_bank": {
+    "count": 5,
+    "physical_controls_per_candidate": 30,
+    "model_horizon": 6,
+    "physical_controls_per_macro": 5,
+    "order": ["native_seed1_prefix", "native_seed2_prefix", "native_seed3_prefix", "zero_request_roundtrip", "seed1_xyz_sign_reversal_roundtrip"],
+    "native_sources": [
+      "runs/dino_metaworld_mujoco330_clean_v1/seed1_clean",
+      "runs/dino_metaworld_mujoco330_clean_v1/seed2_clean",
+      "runs/dino_metaworld_mujoco330_clean_v1/seed3_clean"
+    ],
+    "native_construction": "Concatenate the first two queries' cached normalized_macro_actions, six20D rows. Native float32 denormalization must equal the first30 actually executed trace controls exactly. Execute all candidates at root1, not their source roots.",
+    "constructed_controls": "For desired zero and desired XYZ-sign-reversed source1 controls, normalize once with the native float32 preprocessor, then freeze the actual executable vector as its native denormalization. Preserve the original source1 normalized gripper for sign reversal. Record deviations from desired ideal raw vectors, with no claim of exact zero/sign reflection when roundoff differs.",
+    "boundary": "This is a new fixed open-loop bank formed from historical closed-loop prefixes, not recovered native CEM candidates. No candidate replacement, goal search or utility-guided selection."
+  },
+  "representations": {
+    "order": ["original", "inflated_saturated_xyz", "canonical_saturated_xyz"],
+    "saturated_mask": "abs(frozen_actual_raw_xyz)>1, fixed separately per candidate before environment/model outputs; gripper is never in this mask.",
+    "original": "Use the frozen normalized bank verbatim.",
+    "inflated_saturated_xyz": "Copy original normalized inputs. At each saturated XYZ only, request sign(raw)*(abs(raw)+2) in float32 and apply the native affine normalizer to that coordinate. The +2 magnitude is fixed, with no search or adaptation.",
+    "canonical_saturated_xyz": "Copy original normalized inputs. For each XYZ axis and saturation sign, start at float32 native normalize(+/-1), use nextafter toward the saturation side until denormalization clips to that sign, then move toward the nonsaturated side until the adjacent float would fail. Maximum16 nextafter steps in each phase; otherwise stop. This defines the closest representable normalized boundary on the valid saturation side, not an arbitrary1.001 threshold.",
+    "invariants": [
+      "Every unsaturated normalized coordinate and every normalized gripper value is bitwise unchanged.",
+      "Native denormalize then XYZ clip equals the original frozen executable effective controls exactly for all30 steps, and denormalized gripper is exactly equal.",
+      "Aliases are only copied forecast requests; original candidate tensors, candidate identity and execution mapping remain fixed.",
+      "Pass original candidate actions to the native objective even though it currently ignores actions. Do not alter CEM elite averaging or sampling; no CEM is run."
+    ]
+  },
+  "real_replays": {
+    "branches": 15,
+    "physical_steps": 450,
+    "order": "Candidate0 original first for historical gate, then its two aliases; repeat original/inflated/canonical for candidates1..4.",
+    "paired_equivalence": "Restore the same complete in-process snapshot before each branch. Compare every step's full state, raw simulator integration fields, TCP, reward, success/done/truncation and rendered pixels exactly to that candidate's original branch. Preserve alias requested controls in the trace. Any mismatch stops before forecasts.",
+    "ground_truth": "Save original-branch raw observations/proprio at controls5,10,15,20,25,30 plus per-step true rewards/state. Alias branches must match these consequences; no predicted quantity supplies utility. Also report15-control terminal reward/distance/success and cumulative reward from the same replay, matching the native three-macro execution prefix without extra episodes.",
+    "task_metric_scope": "Fixed original reach task only; no extrapolation to other tasks with raw-action penalties or different clipping."
+  },
+  "forecasts": {
+    "loader": "Unmodified cfg_for/load_model from scripts/pilot_dino_metaworld_clean_gate.py, CPU, eval, FP32, each existing checkpoint read once, no repeated large-file hash.",
+    "initial_encode": "Native model.encode on original cached visual/proprio at B1,T1, act=True.",
+    "goal_encode": "Native model.encode on original cached goal visual/proprio at B1,T1, act=False; goal is identical for every branch.",
+    "calls": "After all physical equivalence replays and truth encoding, run Original unroll first with H6,B5,A20 and evaluate the frozen Clean competence gate immediately. If it fails, stop without Inflated/Canonical model calls and leave their metrics null/unmeasured. Only if it passes, run Inflated and one Canonical unroll. Native unroll returns initial prefix plus six forecasts; compare forecast indices1..6 with true observations after5..30 controls. No synthetic second initial frame.",
+    "native_objective": "ReprTargetDistMPCObjective with original cfg: final visual MSE +0.1*proprio MSE, sum_all_diffs=False. Evaluate original candidate tensors for all three forecast conditions.",
+    "forecast_error": "Per-horizon/per-candidate visual and proprio latent MSE against native encodings of actual replay observations, plus the native weighted sum. Report final and mean-over-six error; feature divergence is separately descriptive.",
+    "ranking": "Ascending native objective, stable candidate-index tie break. Report full costs/order, rank changes, selected candidate and its independent true replay utility.",
+    "unchanged_negative_control": "The zero-roundtrip candidate has no saturated XYZ edits. Its normalized request and forecast must be identical across the three equal-shaped batches; otherwise fail the deterministic/isolation check.",
+    "repair_control": "Construct canonicalization from both original and inflated requests and require identical resulting tensors under the same rule. Evaluate the identical canonical batch once, explicitly shared by Clean+canonical and Inflated+canonical; report Clean utility cost and recovered true utility. Tensor equality alone is a constructive control, not defense success."
+  },
+  "frozen_decision_gate": {
+    "primary_utility": "Final native environment reach reward after30 physical controls.",
+    "secondary_metrics": ["Sum of30 actual native rewards", "Final TCP-to-original-target distance", "Final native success", "Ever native success within30 controls"],
+    "reward_tolerance": 0.000001,
+    "tolerance_interpretation": "Numerical comparison tolerance only, not a threshold of practically meaningful harm. Report unrounded reward, distance and success differences.",
+    "clean_competence": "Original forecast-selected candidate attains the maximum terminal native reward across all5 candidates within1e-6 and exceeds both constructed zero-roundtrip and sign-reversal-roundtrip controls by more than1e-6. Report tie multiplicity. No post-result relaxation.",
+    "interpretation_if_clean_fails": "Bank competence gate failed; do not interpret alias selection differences as a demonstrated attack against a competent selector and do not expand or tune the bank.",
+    "harm_signal_if_clean_passes": "Inflated forecast-only representation selects a different candidate and lowers true terminal native reward by more than1e-6. Other metrics are reported without rescuing a failed primary criterion.",
+    "canonical_recovery": "If a harm signal exists, canonical selected utility must recover to within1e-6 of original Clean selected utility; report full recovered gap and any Clean cost. Canonicalization sensitivity without true utility recovery is not defense success.",
+    "claim_scope": "One root, five prespecified candidates; no independent generalization or statistical significance. This test commits H6=30 controls whereas native CEM returns nas3=15 before replanning. It is an added fixed-bank diagnostic using native forecast/objective, not complete native adaptive CEM and not evidence that forecasting beats a constant candidate policy."
+  },
+  "stop_conditions": [
+    "Missing sources, float32 action mismatch, alias invariants fail or full-state restoration/historical replay mismatch",
+    "Dependency/startup error, nonfinite model output, unexpected checkpoint load or any network/CUDA attempt",
+    "Wall-clock limit reached; preserve partial data and null unmeasured metrics",
+    "Original forecast fails frozen Clean competence: retain all physical equivalence results and Original errors/ranking, stop additional representation forecasts",
+    "No retries, overwrites, installations, new candidates, alias magnitude changes, target changes or reranking-rule changes"
+  ],
+  "artifacts": ["frozen_bank.npz", "snapshot_metadata.json", "branch traces and original ground-truth milestone observations", "forecasts_and_encodings.npz", "summary.json", "launched_config.json", "launched_script.py"],
+  "prior_art_boundary": "Action clipping equivalence is established prior art, including CAPG (Fujita and Maeda,2018). Natural native saturation establishes reachability, not novelty, training-distribution membership or an adversarial deployment permission."
+}

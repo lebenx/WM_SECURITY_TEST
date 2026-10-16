@@ -1,0 +1,164 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-15",
+  "status": "completed_bounded_read_only_source_screen",
+  "purpose": "Determine whether three previously unexecuted proposals now have a concrete native interface and a decisive experiment using existing checkpoints and code.",
+  "conclusion": "No new model experiment is recommended for these three proposals under the inspected native configurations. This is a bounded interface/mechanism exclusion, not an empirical falsification of the general hypotheses.",
+  "scope": {
+    "candidate_ids": [
+      "wm_boundary_stiffness",
+      "wm_replay_priority",
+      "wm_timeout_laundering"
+    ],
+    "primary_carriers_inspected": [
+      "TD-MPC2 local mt30-48M native configuration and learner source",
+      "JOWA native real-data and imagined-replay sampling source"
+    ],
+    "archive_context": [
+      "reports/research_archive/mechanisms.json",
+      "reports/research_archive/models.json",
+      "reports/research_archive/evidence.json"
+    ],
+    "not_done": "No new trajectory, parameter update, checkpoint load, model forward, environment call, API consultation, resource download, runtime probe or file hashing. Existing related experimental outcomes are archive summaries, not independently rerun results."
+  },
+  "entries": [
+    {
+      "id": "wm_boundary_stiffness",
+      "scientific_results_status": "untested_not_falsified",
+      "readiness_status": "no_distinct_executable_operation_defined",
+      "source_config": "configs/world_model_boundary_stiffness_screen.json",
+      "hypothesis": "Authentic boundary-crossing experience changes local learned dynamics sensitivity while preserving one-step fit, causing native planning harm.",
+      "proposed_permission": "Contributor-controlled legal source trajectories followed by a researcher-specified model update schedule. No distinct bounded operation beyond the source-data change is defined in the archived proposal.",
+      "source_anchors": [
+        {
+          "path": "configs/world_model_boundary_stiffness_screen.json",
+          "json_pointer": "/candidate_claim_cn",
+          "finding": "The proposed operation concentrates legal oscillatory actions near hard boundaries."
+        },
+        {
+          "path": "configs/world_model_boundary_stiffness_screen.json",
+          "json_pointer": "/proposed_gate_not_run",
+          "finding": "Jacobian, one-step-error and return thresholds were proposed but were not executed. These thresholds alone do not distinguish the claimed security mechanism from support shift and rollout error amplification."
+        },
+        {
+          "path": "reports/research_archive/mechanisms.json",
+          "entry_id": "wm_action_jacobian_desensitization",
+          "related_evidence": "runs/tdmpc_action_jacobian_desensitization_v0/status.json",
+          "finding": "The archive records no harm in a related, different TD-MPC2 action-sensitivity construction: two reacher return ratios 1.0, Jacobian ratio 0.991 and unchanged rank 6. This is not a direct test of boundary stiffness."
+        },
+        {
+          "path": "reports/research_archive/mechanisms.json",
+          "entry_id": "dmo_jacobian",
+          "related_evidence": "runs/dmo_jacobian_gate_v0/result.json",
+          "finding": "The archive records four fixed derivative-perturbation constructions that failed their prediction-preservation gate. They do not falsify all derivative mechanisms or the unexecuted boundary proposal."
+        }
+      ],
+      "why_no_next_run": "A stronger boundary dose or another contact task could demonstrate model misspecification or error compounding, but would not resolve the missing causal distinction. The current proposal lacks an additional preserved invariant and a restricted operation whose effect can be separated from ordinary source support changes.",
+      "new_fact_needed": "A concrete native operation with a stated permission boundary and a matched control that preserves the relevant source information and update budget while isolating a boundary-specific mechanism. A larger Jacobian or small average one-step MSE alone is insufficient.",
+      "decision": "Do not expand this unchanged proposal; retain its untested status."
+    },
+    {
+      "id": "wm_replay_priority",
+      "scientific_results_status": "untested_not_falsified",
+      "readiness_status": "proposed_priority_interface_absent_in_inspected_native_learners",
+      "source_config": "configs/world_model_replay_priority_screen.json",
+      "hypothesis": "Authentic high-surprise contributor samples monopolize prioritized replay and suppress corrective world-model updates.",
+      "proposed_permission": "Choose legal contributed trajectories, without modifying their physical labels, learner code, priorities or victim reward.",
+      "source_anchors": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/buffer.py",
+          "line": 17,
+          "symbol": "Buffer.__init__",
+          "finding": "Native replay uses SliceSampler with episode trajectory boundaries. This inspected path contains no prediction-error priority computation or priority-update operation."
+        },
+        {
+          "path": "vendor/JOWA/src/replay_buffer.py",
+          "line": 71,
+          "symbol": "ReplayBuffer.sample",
+          "finding": "Imagined replay indices are selected with np.random.randint, rather than surprise-based priorities."
+        },
+        {
+          "path": "vendor/JOWA/src/train.py",
+          "line": 172,
+          "symbol": "Trainer initialization of train_sampler and imagine_sampler",
+          "finding": "Real-data and imagination-start sampling use DistributedSampler, with fixed configured seeds, rather than a model-error-driven priority feedback loop."
+        },
+        {
+          "path": "vendor/JOWA/src/fine_tune.py",
+          "line": 28,
+          "symbol": "Tuner initialization of train_sampler",
+          "finding": "The inspected fine-tuning path likewise uses DistributedSampler."
+        }
+      ],
+      "why_no_next_run": "The proposed surprise-to-priority feedback is absent from the inspected native paths. Adding prioritized replay would create a different learner; merely increasing a contributor's data share would test generic sampling/composition effects rather than this mechanism.",
+      "new_fact_needed": "An existing native online learner must expose a contributor-to-surprise-priority-to-world-model-update path. A decisive follow-up would then hold the truthful sample multiset, labels and total update budget fixed while isolating that priority feedback from ordinary data volume and forgetting. No qualifying local path was established here.",
+      "decision": "Do not add a PER interface solely to instantiate this archived hypothesis. The bounded interface absence is not an empirical no-harm result."
+    },
+    {
+      "id": "wm_timeout_laundering",
+      "scientific_results_status": "untested_not_falsified",
+      "readiness_status": "proposed_timeout_to_terminal_learning_path_absent_in_current_tdmpc2_configuration",
+      "source_config": "configs/world_model_timeout_laundering_screen.json",
+      "hypothesis": "Legal delaying actions induce time-limit truncations that are learned as physical termination and then shorten imagined values.",
+      "proposed_permission": "Choose legal delaying actions; retain the native episode manager, termination labels, model code and victim task.",
+      "source_anchors": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/envs/wrappers/timeout.py",
+          "line": 22,
+          "symbol": "Timeout.step",
+          "finding": "The wrapper changes episode-level done when the time limit is reached, without changing info['terminated']."
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/envs/dmcontrol.py",
+          "line": 54,
+          "symbol": "DMControl step adapter",
+          "finding": "The inspected control adapter returns done=False and default-zero info; time-limit episode completion is handled separately by the outer wrapper."
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/trainer/online_trainer.py",
+          "line": 112,
+          "symbol": "OnlineTrainer experience collection",
+          "finding": "Training transitions store info['terminated'], not the timeout wrapper's done. The same trainer rejects true terminations when episodic mode is disabled."
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "line": 257,
+          "symbol": "TDMPC2._td_target",
+          "finding": "Bootstrapping is masked by terminated, so merely reaching the wrapper time limit does not induce the proposed terminal label."
+        },
+        {
+          "path": "src/wm_security/tdmpc_native.py",
+          "line": 111,
+          "symbol": "load_agent",
+          "finding": "The existing local official multitask checkpoint adapter explicitly fixes episodic=False."
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "line": 133,
+          "symbol": "TDMPC2._estimate_value",
+          "finding": "Learned termination affects imagined trajectory value only when episodic mode is enabled; termination loss is likewise conditional in _update."
+        }
+      ],
+      "why_no_next_run": "Legal delay does not reach the claimed learned-terminal sink in the current configuration. Rewriting terminated flags or enabling and training a new termination component changes the operation or system and would initially test the ordinary timeout/termination bootstrapping error already described by the proposal.",
+      "new_fact_needed": "A distinct native interface must cause an externally controlled stopping event to contaminate imagined physical continuation despite correct termination semantics, under explicit constrained permissions. No such path was identified in the inspected configuration.",
+      "decision": "Do not run the unchanged timeout proposal on this checkpoint. Do not generalize the bounded source exclusion to all episodic world models."
+    }
+  ],
+  "interpretation_boundaries": [
+    "The earlier configurations contain advisory novelty scores and rejection wording. Those scores are not scientific measurements and are not used as evidence of falsification here.",
+    "A researcher-defined constrained interface can support a valid causal pilot; absence of a deployed interface is not an automatic security-research veto. The exclusions here are more specific: the proposed feedback path is absent or the operation has not been distinguished from the ordinary mechanism it invokes.",
+    "This report does not revise the completed DINO native alias and recovery findings. Old fixed-bank objective mismatch cannot by itself explain away the independently observed native cumulative-return effect or assign all of its causality.",
+    "No recommendation is made to resume blocked WorldAgen/GammaWorld work, change seeds or magnitudes of failed operations, or introduce a new learner merely to manufacture an attack interface."
+  ],
+  "activity": {
+    "checkpoint_loads": 0,
+    "model_forward_calls": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "external_api_calls": 0,
+    "downloads": 0,
+    "new_runtime_probes": 0,
+    "file_hashes_recomputed": 0
+  },
+  "artifact_scope": "Persisted from the completed read-only review. This write added only this report; no further source query, runtime check or modification of prior runs/configs/archive was performed."
+}

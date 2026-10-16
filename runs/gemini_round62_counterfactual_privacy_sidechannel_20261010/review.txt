@@ -1,0 +1,18 @@
+```json
+{
+  "verdict": "Reject",
+  "novelty_score": 5,
+  "distinctness": "The candidate attempts to distinguish itself by framing the exploit as an 'intervention-induced side channel unique to counterfactual simulators'. However, fundamentally, querying an interactive/conditional transition operator T(z, a) with differential inputs to infer hidden state h is standard active system identification / observable state reconstruction dressed up in world-model terminology. If z encodes h and T depends on h, then T(z, a1) - T(z, a2) depending on h is the definition of functional dependence, not a novel side-channel mechanism. It collapses into standard black-box query-based state estimation or active feature attribution.",
+  "fatal_flaws": [
+    "Conceptual conflation: The 'side channel' is simply the forward dynamics function operating as designed. If an unobserved variable h affects future dynamics (e.g., mass, friction, hidden obstacle, agent intent), any accurate world model *must* reflect h in its transition predictions T(z, a). Calling the intended predictive utility of a dynamical model a 'privacy side channel' is an artificial threat framing unless non-interfering variables are leaked.",
+    "Triviality vs. Utility Tradeoff: If h is relevant to future rollouts, masking it directly destroys the planning fidelity of the world model for actions that depend on h. If h is irrelevant to transitions (a pure nuisance or off-task secret), modern self-supervised WAMs (e.g., DINO-WM) already discard non-predictive information via latent bottlenecking, making the leakage either non-existent or a trivial failure of representation disentanglement."
+  ],
+  "decisive_pilot": "Instantiate MiniGrid with a hidden locked door/key color h unobserved in current observation o_0, but predictive of dynamics if reaching the door. Train a standard action-conditioned latent WAM (e.g., discrete VQ/DINO-WM). Attacker queries two contrasting action trajectories {a_left, a_right} without executing them and measures mutual information I(T(z, a_left) - T(z, a_right); h). Compare against a passive predictor baseline that only receives o_0 and null action sequences.",
+  "controls": [
+    "Nuisance feature control: Test with completely orthogonal visual distractors h_distractor that have zero transition dynamics impact; verify whether T(z,a) leaks h_distractor (true information leakage) vs h_dynamics (intended predictive state).",
+    "Planning utility control: Evaluate downstream MPC/MCTS success rate on the primary task under the proposed DP/randomization defenses to measure Pareto frontier degradation."
+  ],
+  "repair_assessment": "The proposed repairs (output perturbation, DP on action-effect signatures, limiting adaptivity) fundamentally degrade planning utility. In robotics/control, high-precision counterfactual differences (delta z between candidate actions) are precisely what action-selection algorithms (e.g., MPPI, CEM) optimize over. Perturbing these signatures directly injects variance into action ranking, severely collapsing policy performance in bottleneck scenarios.",
+  "publishability": "Not publishable at ICLR in its current formulation. The premise repackages active query probing / system identification under a security moniker without demonstrating an unintended structural vulnerability unique to world-model architectures."
+}
+```

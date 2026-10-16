@@ -1,0 +1,26 @@
+{
+  "arguments": {
+    "output": "runs/mbrl_temporal_risk_persistent_v0",
+    "model": "runs/mbrl_coupling_cartpole_v0/model",
+    "condition": "persistent",
+    "objective": "cvar",
+    "alpha": 0.2,
+    "particles": 20,
+    "seeds": [
+      810,
+      811
+    ]
+  },
+  "hashes": {
+    "scripts/pilot_mbrl_temporal_risk.py": "bf4ac6a91f230c949df50cad68c813f7252209cf7c00255d28abc22a7d26d541",
+    "src/wm_security/temporal_coupling.py": "fe89af5050d5aabf2483212e8f0cf17d65353d7eebc0ea217d00fbb36f3ed0d6",
+    "scripts/pilot_mbrl_coupling.py": "94efc7153a724f3f853cfb1630c02ef2432a10b6343ee9a1f7d8fc582b640f97"
+  },
+  "model": "Frozen native five-member MBRL-Lib GaussianMLP from mbrl_coupling_cartpole_v0.",
+  "objective": "Mean or lower-tail particle return; temporal coupling preserves unconditional residual marginals, not conditional transition laws.",
+  "promotion_gate": "For this two-seed screen, both native returns >=180 and both paired attacked returns <=80% of native. Passing justifies independent confirmation, not acceptance of a claim.",
+  "scope": "Bounded two or more seed gate; no publication-scale claim.",
+  "training_updates": 0,
+  "api_requests": 0,
+  "gpu_work": false
+}

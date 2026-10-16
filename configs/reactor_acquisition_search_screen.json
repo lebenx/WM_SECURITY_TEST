@@ -1,0 +1,446 @@
+{
+  "status": "completed_executable_selector_without_novelty_or_efficiency_advantage",
+  "runs": {
+    "initial": "runs/reactor_acquisition_search_v0",
+    "validated": "runs/reactor_acquisition_search_validated_v1",
+    "original_baseline_initial": "runs/reactor_program_grammar_fresh_v0",
+    "original_baseline_validated": "runs/reactor_program_grammar_fresh_v1"
+  },
+  "method": "Reference-only finite measurement-template selection with optional independent reference remeasurement filtering.",
+  "initial": {
+    "cases": [
+      [
+        "Normal",
+        8
+      ],
+      [
+        "Normal",
+        9
+      ],
+      [
+        "Challenge",
+        8
+      ],
+      [
+        "Challenge",
+        9
+      ]
+    ],
+    "by_arm": {
+      "target_only": {
+        "successes": 2,
+        "episodes": 4,
+        "actions": 377
+      },
+      "fixed_calibration": {
+        "successes": 3,
+        "episodes": 4,
+        "actions": 1038
+      },
+      "search": {
+        "successes": 2,
+        "episodes": 4,
+        "actions": 4250
+      }
+    },
+    "elapsed_s": 195.94143846770748
+  },
+  "validated": {
+    "cases": [
+      [
+        "Normal",
+        13
+      ],
+      [
+        "Normal",
+        14
+      ],
+      [
+        "Challenge",
+        13
+      ],
+      [
+        "Challenge",
+        14
+      ]
+    ],
+    "by_arm": {
+      "target_only": {
+        "successes": 2,
+        "episodes": 4,
+        "actions": 355
+      },
+      "fixed_calibration": {
+        "successes": 4,
+        "episodes": 4,
+        "actions": 1030
+      },
+      "search": {
+        "successes": 4,
+        "episodes": 4,
+        "actions": 7586
+      }
+    },
+    "elapsed_s": 320.84420811058953,
+    "validation_reads_per_reference": 32,
+    "validation_tolerance_hz": 1.0,
+    "action_ratio_to_fixed_calibration": 7.36504854368932,
+    "selection_traces": [
+      {
+        "case": "challenge_seed_13_search",
+        "candidate_count": 91,
+        "selected": {
+          "program": {
+            "site": {
+              "kind": "native"
+            },
+            "count": 1,
+            "reducer": "first",
+            "instrument": null,
+            "estimated_actions_per_target": 0
+          },
+          "model": {
+            "sensor": "spectrum_5",
+            "family": "quadratic",
+            "terms": [
+              "1",
+              "x",
+              "x^2"
+            ],
+            "coefficients": [
+              646.0,
+              29.0,
+              18.0
+            ],
+            "encoded_coefficients": [
+              "646",
+              "29",
+              "18"
+            ],
+            "description_characters": 13,
+            "reference_max_error_hz": 0.004999999999881766,
+            "target_predictions_hz": []
+          }
+        },
+        "unvalidated_selection": {
+          "program": {
+            "site": {
+              "kind": "native"
+            },
+            "count": 1,
+            "reducer": "first",
+            "instrument": null,
+            "estimated_actions_per_target": 0
+          },
+          "model": {
+            "sensor": "spectrum_5",
+            "family": "quadratic",
+            "terms": [
+              "1",
+              "x",
+              "x^2"
+            ],
+            "coefficients": [
+              646.0,
+              29.0,
+              18.0
+            ],
+            "encoded_coefficients": [
+              "646",
+              "29",
+              "18"
+            ],
+            "description_characters": 13,
+            "reference_max_error_hz": 0.004999999999881766,
+            "target_predictions_hz": []
+          }
+        },
+        "selection_changed": false,
+        "search_actions": 2121,
+        "source": "runs/reactor_acquisition_search_validated_v1/challenge_seed_13_search/selection.json"
+      },
+      {
+        "case": "challenge_seed_14_search",
+        "candidate_count": 91,
+        "selected": {
+          "program": {
+            "instrument": "radiation meter",
+            "site": {
+              "kind": "object",
+              "uuid": 11014,
+              "public_name": "grass"
+            },
+            "count": 32,
+            "reducer": "min",
+            "estimated_actions_per_target": 37
+          },
+          "model": {
+            "sensor": "radiation",
+            "family": "quadratic",
+            "terms": [
+              "1",
+              "x",
+              "x^2"
+            ],
+            "coefficients": [
+              299.0,
+              22.0,
+              16.0
+            ],
+            "encoded_coefficients": [
+              "299",
+              "22",
+              "16"
+            ],
+            "description_characters": 13,
+            "reference_max_error_hz": 0.004400000000032378,
+            "target_predictions_hz": []
+          },
+          "validation_max_error_hz": 0.004400000000032378,
+          "validation_predictions": 3,
+          "validation_passed": true
+        },
+        "unvalidated_selection": {
+          "program": {
+            "instrument": "radiation meter",
+            "site": {
+              "kind": "object",
+              "uuid": 11014,
+              "public_name": "grass"
+            },
+            "count": 8,
+            "reducer": "min",
+            "estimated_actions_per_target": 13
+          },
+          "model": {
+            "sensor": "radiation",
+            "family": "quadratic",
+            "terms": [
+              "1",
+              "x",
+              "x^2"
+            ],
+            "coefficients": [
+              299.0,
+              22.0,
+              16.0
+            ],
+            "encoded_coefficients": [
+              "299",
+              "22",
+              "16"
+            ],
+            "description_characters": 13,
+            "reference_max_error_hz": 0.004400000000032378,
+            "target_predictions_hz": []
+          },
+          "validation_max_error_hz": 4.627599999999802,
+          "validation_predictions": 12,
+          "validation_passed": false
+        },
+        "selection_changed": true,
+        "search_actions": 2121,
+        "source": "runs/reactor_acquisition_search_validated_v1/challenge_seed_14_search/selection.json"
+      },
+      {
+        "case": "normal_seed_13_search",
+        "candidate_count": 91,
+        "selected": {
+          "program": {
+            "instrument": "radiation meter",
+            "site": {
+              "kind": "object",
+              "uuid": 11014,
+              "public_name": "grass"
+            },
+            "count": 32,
+            "reducer": "min",
+            "estimated_actions_per_target": 37
+          },
+          "model": {
+            "sensor": "radiation",
+            "family": "affine",
+            "terms": [
+              "1",
+              "x"
+            ],
+            "coefficients": [
+              99.0,
+              106.0
+            ],
+            "encoded_coefficients": [
+              "99",
+              "106"
+            ],
+            "description_characters": 8,
+            "reference_max_error_hz": 4.547473508864641e-13,
+            "target_predictions_hz": []
+          },
+          "validation_max_error_hz": 4.547473508864641e-13,
+          "validation_predictions": 2,
+          "validation_passed": true
+        },
+        "unvalidated_selection": {
+          "program": {
+            "instrument": "radiation meter",
+            "site": {
+              "kind": "object",
+              "uuid": 2693,
+              "public_name": "grass"
+            },
+            "count": 8,
+            "reducer": "min",
+            "estimated_actions_per_target": 13
+          },
+          "model": {
+            "sensor": "radiation",
+            "family": "affine",
+            "terms": [
+              "1",
+              "x"
+            ],
+            "coefficients": [
+              99.0,
+              106.0
+            ],
+            "encoded_coefficients": [
+              "99",
+              "106"
+            ],
+            "description_characters": 8,
+            "reference_max_error_hz": 4.547473508864641e-13,
+            "target_predictions_hz": []
+          },
+          "validation_max_error_hz": 2.119999999999891,
+          "validation_predictions": 8,
+          "validation_passed": false
+        },
+        "selection_changed": true,
+        "search_actions": 1414,
+        "source": "runs/reactor_acquisition_search_validated_v1/normal_seed_13_search/selection.json"
+      },
+      {
+        "case": "normal_seed_14_search",
+        "candidate_count": 91,
+        "selected": {
+          "program": {
+            "site": {
+              "kind": "native"
+            },
+            "count": 1,
+            "reducer": "first",
+            "instrument": null,
+            "estimated_actions_per_target": 0
+          },
+          "model": {
+            "sensor": "spectrum_5",
+            "family": "affine",
+            "terms": [
+              "1",
+              "x"
+            ],
+            "coefficients": [
+              92.0,
+              103.0
+            ],
+            "encoded_coefficients": [
+              "92",
+              "103"
+            ],
+            "description_characters": 8,
+            "reference_max_error_hz": 0.0,
+            "target_predictions_hz": []
+          }
+        },
+        "unvalidated_selection": {
+          "program": {
+            "site": {
+              "kind": "native"
+            },
+            "count": 1,
+            "reducer": "first",
+            "instrument": null,
+            "estimated_actions_per_target": 0
+          },
+          "model": {
+            "sensor": "spectrum_5",
+            "family": "affine",
+            "terms": [
+              "1",
+              "x"
+            ],
+            "coefficients": [
+              92.0,
+              103.0
+            ],
+            "encoded_coefficients": [
+              "92",
+              "103"
+            ],
+            "description_characters": 8,
+            "reference_max_error_hz": 0.0,
+            "target_predictions_hz": []
+          }
+        },
+        "selection_changed": false,
+        "search_actions": 1414,
+        "source": "runs/reactor_acquisition_search_validated_v1/normal_seed_14_search/selection.json"
+      }
+    ]
+  },
+  "original_strong_baseline": {
+    "original_baseline_initial": {
+      "tasks_completed": 2,
+      "instances": 4,
+      "actions": 388
+    },
+    "original_baseline_validated": {
+      "tasks_completed": 2,
+      "instances": 4,
+      "actions": 355
+    }
+  },
+  "native_episodes": 32,
+  "unique_worlds": 8,
+  "native_actions": 15379,
+  "elapsed_s_sum": 544.3621381437406,
+  "model_api_requests": 0,
+  "gpu_work": false,
+  "learning_boundary": "All instruments get four repeat probes on references. Varying channels trigger enumeration of the native site, three public landmarks and six public grass IDs, with 1/8/32 reads and first/min/mean/median/max reduction. There is no supplied isolation predicate. Reference laws rank candidates; target outcomes are unseen. Initial raw target readings are collected but do not enter the selector.",
+  "template_boundary": "The carry/move/read/return action skeleton, reducers, site enumeration, parsers and symbolic-law grammar are supplied after prior source-informed development. The program binds parameters inside these templates; it does not synthesize an unrestricted new action structure.",
+  "validation_boundary": "Fresh reference readings are separate from coefficient fitting but are used for program selection; they are a validation set, not a statistical reliability certificate. The unchanged model remains an explicitly unvalidated fallback.",
+  "interpretation": "The validated selector completes all four fresh development tasks, matching supplied calibration. It consumes about 7.37 times the native actions of that stronger comparator. The initial selector had no benefit over target-only fitting. The revised run uses different world seeds, so the two headline success rates are not a matched causal ablation.",
+  "limitations": [
+    "Same scenario generator and two equation families; no second core task or broad cross-domain transfer.",
+    "Source-informed finite grammar, scripted navigation, limited coefficient encodings, and a short-coefficient prior well matched to the generator.",
+    "Unseeded native measurement randomness; no paired noise draws or population reliability estimate.",
+    "Original target-covariate range-filtering baseline was independently run on both seed groups and also scored 2/4 each; headline improvement is not from withholding that range filter.",
+    "No new concept or novelty score is established by finite search and cross-validation."
+  ],
+  "decision": "Keep this executable selector and source-informed calibration as strong baselines. Do not scale this finite-template/CV variant as the proposed paper contribution. Further work needs a distinct learning operation, not more template variants or a renamed learning-to-experiment claim.",
+  "priors": [
+    {
+      "title": "Causal Curiosity: RL Agents Discovering Self-supervised Experiments for Causal Representation Learning",
+      "url": "https://proceedings.mlr.press/v139/sontakke21a.html",
+      "role": "Direct prior for learning experimental action sequences",
+      "finding": "Learns experimental action sequences that reveal causal factors and supports downstream transfer. Generic learning-to-measure is not a new concept; our finite template selector is not a reproduction of this method."
+    },
+    {
+      "title": "GalilAI: Out-of-Task Distribution Detection using Causal Active Experimentation for Safe Transfer RL",
+      "url": "https://proceedings.mlr.press/v151/sontakke22a/sontakke22a.pdf",
+      "role": "Explicit MDL-based experimental-action-selection prior",
+      "finding": "Section 2.3, equation 7 describes selecting actions by model and conditional-observation description length to isolate a causal factor. Law simplicity as an experimental selection criterion needs a distinct operation beyond this existing principle."
+    }
+  ],
+  "independent_review": {
+    "run": "runs/acquisition_operator_review_20261008T170301Z",
+    "model": "qwen3.8-max",
+    "routing": "direct configured backup",
+    "status": "failed_no_response",
+    "requests": 1,
+    "reason": "90-second read timeout; call ceiling prevented any second attempt.",
+    "primary_called": false,
+    "user_notified": true
+  },
+  "report_note_cn": "已实现只依据参考样本选择测量流程的有限搜索器。第一组新种子8/9中，自动搜索2/4、原始拟合2/4、人工校准3/4；自动搜索没有任务收益。加入32次独立参考复测、以1 Hz误差筛选后，另一组新种子13/14中，自动搜索4/4、原始拟合2/4、人工校准4/4。自动搜索在两个辐射相关实例中选中了搬移后32次取最小值，在另外两个实例中保留原始读数，但总动作7586，对比人工校准1030，约7.37倍；没有效率优势。两个版本使用不同种子，不能把2/4到4/4当成配对消融。已有Causal Curiosity/GalilAI覆盖学习实验动作及描述长度原则；本版还只是在研究者提供的动作模板内选参数，尚非新概念。保留为可运行的强基线，停止围绕此有限模板扩大实验。"
+}

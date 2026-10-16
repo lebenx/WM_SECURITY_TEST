@@ -1,0 +1,29 @@
+{
+  "arguments": {
+    "model": "runs/mbrl_provenance_pusher_model_v0",
+    "output": "runs/mbrl_provenance_shadow_pusher_gate_v0",
+    "seeds": [
+      31,
+      32
+    ],
+    "prefixes": 5,
+    "prefix_steps": 8,
+    "probe_actions": 64,
+    "rollout_sequences": 8,
+    "rollout_horizon": 15,
+    "particles": 10,
+    "population": 50,
+    "iterations": 2,
+    "horizon": 15,
+    "max_steps": 25
+  },
+  "hashes": {
+    "scripts/pilot_mbrl_provenance_shadow.py": "d1a5f01c0c61d21583c28c1ed832cfe7fec4a71115b154291aa149599bc7409a",
+    "scripts/pilot_mbrl_rank_general.py": "304fdab8fd41798a5c5ba10857f60e00d80ae4ea2630ffe17b6bc3e5bd760962"
+  },
+  "operation": "Legal boundary-state prefixes before native Pusher CEM; measure low ensemble variance versus truthful rollout error and return.",
+  "controls": "clean reset, random legal prefix, interior legal prefix; no model/planner/observation/reward modification.",
+  "promotion_gate": "Reject if boundary prefixes do not show low-variance/high-error decoupling or do not reduce native return relative to clean/interior controls.",
+  "api_requests": 0,
+  "gpu_work": false
+}

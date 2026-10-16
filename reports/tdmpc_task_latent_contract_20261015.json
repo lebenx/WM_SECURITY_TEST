@@ -1,0 +1,244 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-10-15T06:27:55.426979+00:00",
+  "status": "completed_source_only_contract_review",
+  "question": "Does mechanical equivalence of walker-stand/walk/run justify changing only the task argument of TD-MPC2 latent dynamics while keeping the encoder, policy, reward and Q task fixed to the victim?",
+  "decision": {
+    "physical_forecast_invariance_claim": "No-Go under the proposed raw-latent comparison: the source does not establish a task-invariant latent coordinate or physical-readout contract.",
+    "execution_recommended": false,
+    "scope": "This excludes the proposed interpretation and unqualified test, not the possibility of a correctly specified task-routing integrity study or a future independently validated physical-readout/alignment diagnostic.",
+    "not_established": "Source inspection does not prove the checkpoint actually uses different coordinates or measure any task-swap harm. It proves that cross-task identity of its latent predictions is not imposed by these interfaces or losses."
+  },
+  "code_facts": [
+    {
+      "fact": "Multitask state encoding appends the task embedding to the observation before the encoder; the encoder input dimension explicitly includes task_dim. Thus E_t(o) may depend on t even at the same physical observation.",
+      "sources": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            88,
+            112
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/layers.py",
+          "lines": [
+            153,
+            164
+          ]
+        }
+      ]
+    },
+    {
+      "fact": "The latent dynamics appends the task embedding to z and concatenates the action before predicting another latent. Its output is not an explicit physical state.",
+      "sources": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            114,
+            121
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            25,
+            30
+          ]
+        }
+      ]
+    },
+    {
+      "fact": "Training computes next_z=encode(obs[1:], task), starts its rollout with encode(obs[0], task), and fits next(z,a,task) to these same-task encoded successors. No equality between encodings or forecasts for two different tasks appears in this consistency objective.",
+      "sources": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "lines": [
+            259,
+            276
+          ]
+        }
+      ]
+    },
+    {
+      "fact": "Reward and Q targets are also task dependent. TD targets use the same-task next latent, policy, task discount, target Q and observed reward. Predicted reward/Q losses use the same task on the imagined latents.",
+      "sources": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "lines": [
+            241,
+            290
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            123,
+            130
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            144,
+            151
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            186,
+            216
+          ]
+        }
+      ]
+    },
+    {
+      "fact": "Native planning encodes observations with the victim task and passes one task consistently through policy-prior rollout, dynamics, reward, discount and terminal policy/Q. Changing only next(task) breaks this consistent task context.",
+      "sources": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "lines": [
+            123,
+            136
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "lines": [
+            152,
+            184
+          ]
+        }
+      ]
+    },
+    {
+      "fact": "A global override of model.next also changes the policy-prior trajectory generator before value scoring. Therefore keeping the policy network weights and task argument fixed does not guarantee the prior candidate actions remain unchanged.",
+      "sources": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "lines": [
+            153,
+            170
+          ]
+        }
+      ]
+    },
+    {
+      "fact": "The inspected native architecture exposes encoder, dynamics, reward, optional termination, policy and Q modules; it contains no latent-to-physical-state/observation decoder. The inspected training loss consists of consistency, reward, optional termination and value terms, without a physical reconstruction term.",
+      "sources": [
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            25,
+            30
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+          "lines": [
+            55,
+            63
+          ]
+        },
+        {
+          "path": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+          "lines": [
+            285,
+            304
+          ]
+        }
+      ],
+      "search_scope": "Bounded source search of vendor/tdmpc2/tdmpc2 and src/wm_security/tdmpc_native.py for decoder/decode/reconstruct; not a claim that no external diagnostic readout exists anywhere."
+    }
+  ],
+  "mechanical_equivalence_scope": {
+    "source_basis": "The locally installed dm_control source creates stand/walk/run from the same walker.xml, Physics class, control timestep and PlanarWalker class. The move_speed differs and is consumed by the reward. Observation construction is shared.",
+    "sources": [
+      {
+        "path": ".venv-native-local/lib/python3.14/site-packages/dm_control/suite/walker.py",
+        "lines": [
+          43,
+          78
+        ]
+      },
+      {
+        "path": ".venv-native-local/lib/python3.14/site-packages/dm_control/suite/walker.py",
+        "lines": [
+          104,
+          154
+        ]
+      },
+      {
+        "path": "vendor/tdmpc2/tdmpc2/envs/dmcontrol.py",
+        "lines": [
+          47,
+          60
+        ]
+      },
+      {
+        "path": "vendor/tdmpc2/tdmpc2/envs/dmcontrol.py",
+        "lines": [
+          97,
+          110
+        ]
+      }
+    ],
+    "conditional_physical_contract": "Given identical complete simulator state and parameters, wrapper/control timing, physical action sequence and relevant randomness, changing only the walker reward preference should not alter the physical trajectory. Task reward itself may legitimately change.",
+    "not_verified": "No environment was constructed, replayed or reset; the installed source was read without importing it. No runtime equivalence or checkpoint availability of every listed task ID was tested here.",
+    "does_not_imply": "This physical statement does not entail E_v(o)=E_d(o), F_v(E_v(o),a)=F_d(E_d(o),a), or F_d(E_v(o),a)=F_v(E_v(o),a) as raw tensors."
+  },
+  "representation_contract": {
+    "notation": {
+      "E_t": "Task-conditioned observation encoder",
+      "F_t": "Task-conditioned latent dynamics",
+      "v": "Fixed victim task",
+      "d": "Donor task"
+    },
+    "trained_relation": "F_t(E_t(o), a) approximately matches E_t(o_next), with the same t on both sides.",
+    "proposed_mixed_relation": "F_d(E_v(o), a) has no demonstrated contract to output E_v(o_next). Feeding it into victim-task reward, policy or Q heads adds a potential representation-compatibility confound.",
+    "why_shared_weights_are_insufficient": "Shared weights, latent dimensions and SimNorm output constraints do not enforce task-independent semantic coordinates or interchangeable readouts.",
+    "why_fixing_head_task_is_insufficient": "The scalar task label at a downstream victim head can remain fixed while the meaning or distribution of its latent input changes. A lower return would not by itself establish corruption of a task-independent physical prediction.",
+    "not_a_measured_ood_claim": "The source permits this mismatch; whether the particular trained checkpoint aligns or ignores task embeddings is unmeasured. Do not assert empirical OOD magnitude or inevitable failure."
+  },
+  "valid_possible_test_criterion": {
+    "common_requirements": [
+      "Fix the complete physical root, victim objective and utility, physical candidate action sequences, control timing and relevant RNG; obtain independent real successor states/observations.",
+      "Define the output being compared in common physical units or in a separately validated common latent coordinate system before inspecting task-swap outcomes.",
+      "Keep prediction fidelity, native scalar reward/Q scoring and true selected-action utility separate. Equal tensor shapes and raw latent L2 changes are not physical prediction errors.",
+      "If a fixed-candidate ranking test is intended, avoid inadvertently changing the native policy-prior candidate generator through a global next override; any added scoring adapter or frozen candidate bank must be identified explicitly."
+    ],
+    "physical_readout_option": {
+      "criterion": "Use a validated readout R_t from each task-consistent latent to the same physical quantity y, and compare R_v(F_v(E_v(o),a)) and R_d(F_d(E_d(o),a)) against the independently measured same physical y_next. Readout accuracy and uncertainty must be established on held-out physical states before interpreting forecast differences.",
+      "availability": "No such native readout was found in the inspected architecture. No decoder, mapping, weights or validation scores are invented or supplied by this review.",
+      "limit": "A newly trained diagnostic readout is an added component, may omit relevant state dimensions, and does not automatically create a drop-in native victim reward/Q interface."
+    },
+    "aligned_coordinate_option": {
+      "criterion": "If a mapping A_d_to_v exists, independently establish A_d_to_v(E_d(o)) approximately equals E_v(o) on held-out states and assess A_d_to_v(F_d(E_d(o),a)) against E_v(o_next) on held-out real transitions and relevant rollout lengths. Only then compare predictions in victim coordinates or feed the converted latent to victim heads.",
+      "availability": "No validated A_d_to_v is known from the inspected source. Do not assume an identity, linear, orthogonal or invertible map.",
+      "limit": "An aligned donor rollout must start with donor-consistent encoding and maintain donor coordinates internally; mapping only its output does not repair the original unvalidated mixed input F_d(E_v(o),a). Any added conversion changes the tested system and must be disclosed."
+    },
+    "minimum_action_now": "Record the source-level contract failure and do not execute the proposed next-only task swap as a physical-invariance or Goal-Swap attack test. A valid readout/alignment is a prerequisite to that interpretation, not a fabricated result or an instruction to train one now."
+  },
+  "claim_limits": [
+    "No attack success, forecast error, action change or utility result was measured.",
+    "No claim of a new security mechanism or numeric novelty score.",
+    "This conclusion concerns the proposed physical-prediction interpretation; a transparently defined mixed-task interface fault could be studied for a different question, without calling raw latent divergence a physics violation.",
+    "No blocked WorldAgen/GammaWorld branch was read or revived."
+  ],
+  "activity": {
+    "source_read_only": true,
+    "model_loads": 0,
+    "model_inference_calls": 0,
+    "environment_steps": 0,
+    "environment_constructions": 0,
+    "api_calls": 0,
+    "network_calls": 0,
+    "downloads": 0,
+    "training_updates": 0,
+    "new_hashes": 0,
+    "files_written": [
+      "reports/tdmpc_task_latent_contract_20261015.json"
+    ]
+  }
+}

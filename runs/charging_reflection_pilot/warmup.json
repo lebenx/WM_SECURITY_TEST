@@ -1,0 +1,746 @@
+{
+  "registry": {
+    "global_step": 6,
+    "entries": {
+      "lesson.0": {
+        "key": "lesson.0",
+        "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+        "evidence": 1.0,
+        "last_updated_step": 1,
+        "source_examples": []
+      },
+      "lesson.1": {
+        "key": "lesson.1",
+        "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+        "evidence": 1.0,
+        "last_updated_step": 2,
+        "source_examples": []
+      },
+      "lesson.2": {
+        "key": "lesson.2",
+        "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+        "evidence": 1.0,
+        "last_updated_step": 3,
+        "source_examples": []
+      },
+      "lesson.3": {
+        "key": "lesson.3",
+        "text": "Experience: My prediction that the energy would be 1 after moving left was wrong because the robot's energy depleted completely during the previous actions. Lesson: Ensure sufficient energy before performing consecutive actions that might deplete it.",
+        "evidence": 1.0,
+        "last_updated_step": 4,
+        "source_examples": []
+      },
+      "lesson.4": {
+        "key": "lesson.4",
+        "text": "Experience: My prediction that the robot's position would change to 1 after moving right was wrong because it remained at position 0. Lesson: Ensure that actions do not affect the state if they cannot be performed due to current conditions.",
+        "evidence": 1.0,
+        "last_updated_step": 5,
+        "source_examples": []
+      },
+      "lesson.5": {
+        "key": "lesson.5",
+        "text": "Experience: My prediction that the energy level would be 1 after charging was wrong because it increased to 8. Lesson: Ensure accurate understanding of the effects of actions on state variables.",
+        "evidence": 1.0,
+        "last_updated_step": 6,
+        "source_examples": []
+      }
+    }
+  },
+  "episodic": [
+    {
+      "task": "",
+      "action": "load",
+      "state_obs_raw": "{\"energy\": 8, \"external_power\": false, \"position\": 0, \"cargo\": false, \"delivered\": false}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 8, \"external_power\": false, \"position\": 0, \"cargo\": true, \"delivered\": false}",
+      "next_state_triples": []
+    },
+    {
+      "task": "",
+      "action": "move_right",
+      "state_obs_raw": "{\"energy\": 8, \"external_power\": false, \"position\": 0, \"cargo\": true, \"delivered\": false}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 6, \"external_power\": false, \"position\": 1, \"cargo\": true, \"delivered\": false}",
+      "next_state_triples": []
+    },
+    {
+      "task": "",
+      "action": "move_right",
+      "state_obs_raw": "{\"energy\": 6, \"external_power\": false, \"position\": 1, \"cargo\": true, \"delivered\": false}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 4, \"external_power\": false, \"position\": 2, \"cargo\": true, \"delivered\": false}",
+      "next_state_triples": []
+    },
+    {
+      "task": "",
+      "action": "deliver",
+      "state_obs_raw": "{\"energy\": 4, \"external_power\": false, \"position\": 2, \"cargo\": true, \"delivered\": false}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 4, \"external_power\": false, \"position\": 2, \"cargo\": false, \"delivered\": true}",
+      "next_state_triples": []
+    },
+    {
+      "task": "",
+      "action": "move_left",
+      "state_obs_raw": "{\"energy\": 4, \"external_power\": false, \"position\": 2, \"cargo\": false, \"delivered\": true}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 2, \"external_power\": false, \"position\": 1, \"cargo\": false, \"delivered\": true}",
+      "next_state_triples": []
+    },
+    {
+      "task": "",
+      "action": "move_left",
+      "state_obs_raw": "{\"energy\": 2, \"external_power\": false, \"position\": 1, \"cargo\": false, \"delivered\": true}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 0, \"external_power\": false, \"position\": 0, \"cargo\": false, \"delivered\": true}",
+      "next_state_triples": []
+    },
+    {
+      "task": "",
+      "action": "move_right",
+      "state_obs_raw": "{\"energy\": 0, \"external_power\": false, \"position\": 0, \"cargo\": false, \"delivered\": true}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 0, \"external_power\": false, \"position\": 0, \"cargo\": false, \"delivered\": true}",
+      "next_state_triples": []
+    },
+    {
+      "task": "",
+      "action": "charge",
+      "state_obs_raw": "{\"energy\": 0, \"external_power\": false, \"position\": 0, \"cargo\": false, \"delivered\": true}",
+      "state_triples": [],
+      "next_observation_raw": "{\"energy\": 8, \"external_power\": false, \"position\": 0, \"cargo\": false, \"delivered\": true}",
+      "next_state_triples": []
+    }
+  ],
+  "transitions": [
+    {
+      "before": {
+        "energy": 8,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": false
+      },
+      "action": "load",
+      "after": {
+        "energy": 8,
+        "external_power": false,
+        "position": 0,
+        "cargo": true,
+        "delivered": false
+      },
+      "predicted": {
+        "energy": 8,
+        "external_power": false,
+        "position": 0,
+        "cargo": true,
+        "delivered": false
+      },
+      "mismatch": false,
+      "displayed": [],
+      "new_rules": [],
+      "registry_before": {
+        "global_step": 0,
+        "entries": {}
+      },
+      "registry_after": {
+        "global_step": 0,
+        "entries": {}
+      }
+    },
+    {
+      "before": {
+        "energy": 8,
+        "external_power": false,
+        "position": 0,
+        "cargo": true,
+        "delivered": false
+      },
+      "action": "move_right",
+      "after": {
+        "energy": 6,
+        "external_power": false,
+        "position": 1,
+        "cargo": true,
+        "delivered": false
+      },
+      "predicted": {
+        "energy": 8,
+        "external_power": false,
+        "position": 1,
+        "cargo": true,
+        "delivered": false
+      },
+      "mismatch": true,
+      "displayed": [],
+      "new_rules": [
+        {
+          "key": "lesson.0",
+          "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+          "evidence": 1.0,
+          "last_updated_step": 1,
+          "source_examples": []
+        }
+      ],
+      "registry_before": {
+        "global_step": 0,
+        "entries": {}
+      },
+      "registry_after": {
+        "global_step": 1,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          }
+        }
+      }
+    },
+    {
+      "before": {
+        "energy": 6,
+        "external_power": false,
+        "position": 1,
+        "cargo": true,
+        "delivered": false
+      },
+      "action": "move_right",
+      "after": {
+        "energy": 4,
+        "external_power": false,
+        "position": 2,
+        "cargo": true,
+        "delivered": false
+      },
+      "predicted": {
+        "energy": 4,
+        "external_power": false,
+        "position": 2,
+        "cargo": true,
+        "delivered": false
+      },
+      "mismatch": false,
+      "displayed": [
+        "lesson.0"
+      ],
+      "new_rules": [],
+      "registry_before": {
+        "global_step": 1,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          }
+        }
+      },
+      "registry_after": {
+        "global_step": 1,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          }
+        }
+      }
+    },
+    {
+      "before": {
+        "energy": 4,
+        "external_power": false,
+        "position": 2,
+        "cargo": true,
+        "delivered": false
+      },
+      "action": "deliver",
+      "after": {
+        "energy": 4,
+        "external_power": false,
+        "position": 2,
+        "cargo": false,
+        "delivered": true
+      },
+      "predicted": {
+        "energy": 3,
+        "external_power": false,
+        "position": 2,
+        "cargo": false,
+        "delivered": true
+      },
+      "mismatch": true,
+      "displayed": [
+        "lesson.0"
+      ],
+      "new_rules": [
+        {
+          "key": "lesson.1",
+          "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+          "evidence": 1.0,
+          "last_updated_step": 2,
+          "source_examples": []
+        }
+      ],
+      "registry_before": {
+        "global_step": 1,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          }
+        }
+      },
+      "registry_after": {
+        "global_step": 2,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          }
+        }
+      }
+    },
+    {
+      "before": {
+        "energy": 4,
+        "external_power": false,
+        "position": 2,
+        "cargo": false,
+        "delivered": true
+      },
+      "action": "move_left",
+      "after": {
+        "energy": 2,
+        "external_power": false,
+        "position": 1,
+        "cargo": false,
+        "delivered": true
+      },
+      "predicted": {
+        "energy": 3,
+        "external_power": false,
+        "position": 1,
+        "cargo": false,
+        "delivered": true
+      },
+      "mismatch": true,
+      "displayed": [
+        "lesson.0",
+        "lesson.1"
+      ],
+      "new_rules": [
+        {
+          "key": "lesson.2",
+          "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+          "evidence": 1.0,
+          "last_updated_step": 3,
+          "source_examples": []
+        }
+      ],
+      "registry_before": {
+        "global_step": 2,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          }
+        }
+      },
+      "registry_after": {
+        "global_step": 3,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          },
+          "lesson.2": {
+            "key": "lesson.2",
+            "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 3,
+            "source_examples": []
+          }
+        }
+      }
+    },
+    {
+      "before": {
+        "energy": 2,
+        "external_power": false,
+        "position": 1,
+        "cargo": false,
+        "delivered": true
+      },
+      "action": "move_left",
+      "after": {
+        "energy": 0,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": true
+      },
+      "predicted": {
+        "energy": 1,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": true
+      },
+      "mismatch": true,
+      "displayed": [
+        "lesson.0",
+        "lesson.1",
+        "lesson.2"
+      ],
+      "new_rules": [
+        {
+          "key": "lesson.3",
+          "text": "Experience: My prediction that the energy would be 1 after moving left was wrong because the robot's energy depleted completely during the previous actions. Lesson: Ensure sufficient energy before performing consecutive actions that might deplete it.",
+          "evidence": 1.0,
+          "last_updated_step": 4,
+          "source_examples": []
+        }
+      ],
+      "registry_before": {
+        "global_step": 3,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          },
+          "lesson.2": {
+            "key": "lesson.2",
+            "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 3,
+            "source_examples": []
+          }
+        }
+      },
+      "registry_after": {
+        "global_step": 4,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          },
+          "lesson.2": {
+            "key": "lesson.2",
+            "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 3,
+            "source_examples": []
+          },
+          "lesson.3": {
+            "key": "lesson.3",
+            "text": "Experience: My prediction that the energy would be 1 after moving left was wrong because the robot's energy depleted completely during the previous actions. Lesson: Ensure sufficient energy before performing consecutive actions that might deplete it.",
+            "evidence": 1.0,
+            "last_updated_step": 4,
+            "source_examples": []
+          }
+        }
+      }
+    },
+    {
+      "before": {
+        "energy": 0,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": true
+      },
+      "action": "move_right",
+      "after": {
+        "energy": 0,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": true
+      },
+      "predicted": {
+        "energy": 0,
+        "external_power": false,
+        "position": 1,
+        "cargo": false,
+        "delivered": true
+      },
+      "mismatch": true,
+      "displayed": [
+        "lesson.0",
+        "lesson.1",
+        "lesson.2",
+        "lesson.3"
+      ],
+      "new_rules": [
+        {
+          "key": "lesson.4",
+          "text": "Experience: My prediction that the robot's position would change to 1 after moving right was wrong because it remained at position 0. Lesson: Ensure that actions do not affect the state if they cannot be performed due to current conditions.",
+          "evidence": 1.0,
+          "last_updated_step": 5,
+          "source_examples": []
+        }
+      ],
+      "registry_before": {
+        "global_step": 4,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          },
+          "lesson.2": {
+            "key": "lesson.2",
+            "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 3,
+            "source_examples": []
+          },
+          "lesson.3": {
+            "key": "lesson.3",
+            "text": "Experience: My prediction that the energy would be 1 after moving left was wrong because the robot's energy depleted completely during the previous actions. Lesson: Ensure sufficient energy before performing consecutive actions that might deplete it.",
+            "evidence": 1.0,
+            "last_updated_step": 4,
+            "source_examples": []
+          }
+        }
+      },
+      "registry_after": {
+        "global_step": 5,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          },
+          "lesson.2": {
+            "key": "lesson.2",
+            "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 3,
+            "source_examples": []
+          },
+          "lesson.3": {
+            "key": "lesson.3",
+            "text": "Experience: My prediction that the energy would be 1 after moving left was wrong because the robot's energy depleted completely during the previous actions. Lesson: Ensure sufficient energy before performing consecutive actions that might deplete it.",
+            "evidence": 1.0,
+            "last_updated_step": 4,
+            "source_examples": []
+          },
+          "lesson.4": {
+            "key": "lesson.4",
+            "text": "Experience: My prediction that the robot's position would change to 1 after moving right was wrong because it remained at position 0. Lesson: Ensure that actions do not affect the state if they cannot be performed due to current conditions.",
+            "evidence": 1.0,
+            "last_updated_step": 5,
+            "source_examples": []
+          }
+        }
+      }
+    },
+    {
+      "before": {
+        "energy": 0,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": true
+      },
+      "action": "charge",
+      "after": {
+        "energy": 8,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": true
+      },
+      "predicted": {
+        "energy": 1,
+        "external_power": false,
+        "position": 0,
+        "cargo": false,
+        "delivered": true
+      },
+      "mismatch": true,
+      "displayed": [
+        "lesson.0",
+        "lesson.1",
+        "lesson.2",
+        "lesson.3",
+        "lesson.4"
+      ],
+      "new_rules": [
+        {
+          "key": "lesson.5",
+          "text": "Experience: My prediction that the energy level would be 1 after charging was wrong because it increased to 8. Lesson: Ensure accurate understanding of the effects of actions on state variables.",
+          "evidence": 1.0,
+          "last_updated_step": 6,
+          "source_examples": []
+        }
+      ],
+      "registry_before": {
+        "global_step": 5,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          },
+          "lesson.2": {
+            "key": "lesson.2",
+            "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 3,
+            "source_examples": []
+          },
+          "lesson.3": {
+            "key": "lesson.3",
+            "text": "Experience: My prediction that the energy would be 1 after moving left was wrong because the robot's energy depleted completely during the previous actions. Lesson: Ensure sufficient energy before performing consecutive actions that might deplete it.",
+            "evidence": 1.0,
+            "last_updated_step": 4,
+            "source_examples": []
+          },
+          "lesson.4": {
+            "key": "lesson.4",
+            "text": "Experience: My prediction that the robot's position would change to 1 after moving right was wrong because it remained at position 0. Lesson: Ensure that actions do not affect the state if they cannot be performed due to current conditions.",
+            "evidence": 1.0,
+            "last_updated_step": 5,
+            "source_examples": []
+          }
+        }
+      },
+      "registry_after": {
+        "global_step": 6,
+        "entries": {
+          "lesson.0": {
+            "key": "lesson.0",
+            "text": "Experience: My prediction that the energy level would remain at 8 after moving right was wrong because it decreased to 6. Lesson: The warehouse_robot consumes energy when moving.",
+            "evidence": 1.0,
+            "last_updated_step": 1,
+            "source_examples": []
+          },
+          "lesson.1": {
+            "key": "lesson.1",
+            "text": "Experience: My prediction that the energy level would be 3 after delivering was wrong because the robot has enough energy (4) to complete the delivery without depleting its battery further. Lesson: Ensure that the robot has sufficient energy for all actions it needs to perform.",
+            "evidence": 1.0,
+            "last_updated_step": 2,
+            "source_examples": []
+          },
+          "lesson.2": {
+            "key": "lesson.2",
+            "text": "Experience: My prediction that the energy level would be 3 after moving left was wrong because it decreased by only 1 unit instead of 2 units. Lesson: Ensure that actions correctly update all relevant state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 3,
+            "source_examples": []
+          },
+          "lesson.3": {
+            "key": "lesson.3",
+            "text": "Experience: My prediction that the energy would be 1 after moving left was wrong because the robot's energy depleted completely during the previous actions. Lesson: Ensure sufficient energy before performing consecutive actions that might deplete it.",
+            "evidence": 1.0,
+            "last_updated_step": 4,
+            "source_examples": []
+          },
+          "lesson.4": {
+            "key": "lesson.4",
+            "text": "Experience: My prediction that the robot's position would change to 1 after moving right was wrong because it remained at position 0. Lesson: Ensure that actions do not affect the state if they cannot be performed due to current conditions.",
+            "evidence": 1.0,
+            "last_updated_step": 5,
+            "source_examples": []
+          },
+          "lesson.5": {
+            "key": "lesson.5",
+            "text": "Experience: My prediction that the energy level would be 1 after charging was wrong because it increased to 8. Lesson: Ensure accurate understanding of the effects of actions on state variables.",
+            "evidence": 1.0,
+            "last_updated_step": 6,
+            "source_examples": []
+          }
+        }
+      }
+    }
+  ]
+}

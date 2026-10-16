@@ -1,0 +1,85 @@
+{
+  "date": "2026-10-09",
+  "status": "native_baseline_and_matched_replays_completed_no_new_method",
+  "candidate": "Transfer the ability to construct identifying experiments across changed worlds.",
+  "claim_status": "Unproven; general experimental preparation is already an existing planning capability.",
+  "upstream": "https://github.com/google-deepmind/dm_alchemy",
+  "commit": "68a26254b5c0f15e84fa0c15d66bf0c626ede8e0",
+  "native_planner_sha256": "6746aaceae9c6fdc5dce045ad187e6c68b4591c70a29e7cdb47a0af1f332cc39",
+  "environment": "Native SymbolicAlchemy; one stone and four consumable potions per trial; four trials per episode.",
+  "researcher_supplied": "Known identity perceptual maps; native random-bottleneck graph prior. No source-trained constructor or hidden true graph supplied to policies.",
+  "baseline_run": "runs/alchemy_preparation_baselines_v1",
+  "replay_run": "runs/alchemy_preparation_replay_v0",
+  "baselines": [
+    "One-step expected remaining-world-count minimization",
+    "Upstream within-trial exhaustive ideal explorer with native belief updates"
+  ],
+  "baseline_episodes": 16,
+  "baseline_native_actions": 194,
+  "preparation_decisions": 6,
+  "matched_replay_checkpoints": [
+    {
+      "seed": 0,
+      "initial_worlds": 12,
+      "myopic_final_worlds": 12,
+      "native_final_worlds": 6
+    },
+    {
+      "seed": 1,
+      "initial_worlds": 12,
+      "myopic_final_worlds": 12,
+      "native_final_worlds": 8
+    },
+    {
+      "seed": 4,
+      "initial_worlds": 8,
+      "myopic_final_worlds": 8,
+      "native_final_worlds": 1
+    }
+  ],
+  "replay_native_actions": 70,
+  "native_replay_prefix_actions": 52,
+  "native_continuation_actions": 18,
+  "total_new_native_actions": 264,
+  "cpu_run_seconds": 16.30017574923113,
+  "api_requests": 0,
+  "gpu_seconds": 0,
+  "training_updates": 0,
+  "source_transfer_evaluated": false,
+  "accepted_novel_method": false,
+  "decision": "Retain the native exact within-trial planner as a required baseline. Retire generic preparation as the claimed novelty. Do not scale this fixed known-map, one-stone, four-potion family absent a distinct source-dependent operation and a measured benefit.",
+  "next_requirement": "Specify a concrete learned transformation of source experience that changes recipient experiment construction, then compare with equal-information target-only planning, ordinary policy/skill transfer and learned/amortized experimental design. DEL-style prerequisite learning and renamed macro-actions do not suffice. The present runs do not falsify all cross-world experimental transfer.",
+  "limitations": [
+    "Selected diagnostic checkpoints, not independent held-out tasks.",
+    "Known perceptual mappings simplify the full Alchemy benchmark.",
+    "The native explorer optimizes expected remaining world count within the current trial, not total multi-trial reward.",
+    "Planning timings isolate upstream search, so they are not end-to-end inference costs or a fair cost comparison to a learned method.",
+    "No novel constructor or source-transfer arm was evaluated."
+  ],
+  "setup": {
+    "venv": ".venv-alchemy",
+    "versions": {
+      "dm-alchemy": "1.0.0",
+      "dm-env-rpc": "1.1.6",
+      "numpy": "1.23.5",
+      "scipy": "1.12.0",
+      "protobuf": "4.25.9"
+    },
+    "compatibility": "dm-env-rpc pinned to 1.1.6 and numpy to 1.23.5; upstream planner and transitions unchanged. Initial wrapper v0 failed before the first native step; v1 corrected its optional argument forwarding."
+  },
+  "closest_priors": [
+    {
+      "title": "Alchemy ideal observer",
+      "url": "https://github.com/google-deepmind/dm_alchemy/blob/68a26254b5c0f15e84fa0c15d66bf0c626ede8e0/dm_alchemy/ideal_observer/ideal_observer.py",
+      "finding": "Native search explicitly recurses through deterministic state-changing actions before later information gains and offers an objective minimizing remaining world states."
+    },
+    {
+      "title": "Learning Game Strategies by Experimentation",
+      "url": "https://www.qrg.northwestern.edu/papers/Files/QRG_Dist_Files/QRG_2009/Hinrichs_Forbus_Learning_Game_Strategies.pdf",
+      "finding": "DEL learns prerequisites and contextual conditions for experiments, postpones ambiguous tests, and lifts traces into reusable strategic plans. This is a direct prior against generic experiment-preparation novelty."
+    }
+  ],
+  "headline_cn": "Alchemy原生规划器已能构造零即时信息的准备动作；三个相同历史对照中，候选规律数由12／12／8降至6／8／1，单步策略均停留原处。该能力尚不能作为新贡献。",
+  "report_note_cn": "完成Alchemy原生符号环境的8种子、每种子两种策略、每次4试次对照，共194个原生动作。已知感知映射，未知瓶颈图，使用原生图先验与信念更新。原生ideal explorer对当前试次完整搜索，跨试次只保留后验，不是整个四试次episode的全局最优规划。记录到6次零即时信息收益的准备动作，其中3次的全部可选动作均无单步信息收益。对这3个探索后选出的状态重放相同历史：单步策略保留12／12／8个候选，原生规划分别降至6／8／1；重放及分支另用70个动作，其中52个重放、18个继续执行。它们不是3个独立留出任务。已有搜索在每个四试次episode累计约3.6–24.6毫秒，未包含预计算加载与诊断开销。当前没有训练或评估迁移方法，也没有证明源经验优势。停止把一般实验准备或未测量的计算节省作为新意；不扩大该小型对照。",
+  "updated_at_utc": "2026-10-08T21:31:02.625559+00:00"
+}

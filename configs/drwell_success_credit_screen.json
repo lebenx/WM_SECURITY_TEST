@@ -1,0 +1,50 @@
+{
+  "status": "completed; fixed assisted-wait family retired as a novel mechanism",
+  "run": "runs/drwell_success_credit_v0",
+  "upstream": "https://github.com/HappyEureka/dr-well",
+  "upstream_commit": "aece9ea3d71ef5a7b8214c90def12ead28f2cfea",
+  "candidate": "Successful assistance can make a non-contributing plan appear transferable in a shared world model.",
+  "source_episodes": 12,
+  "deployment_executions": 12,
+  "unique_worlds": 4,
+  "joint_steps": 656,
+  "primitive_agent_actions": 1312,
+  "elapsed_s": 2.0606115739792585,
+  "api_requests": 0,
+  "gpu_seconds": 0,
+  "waiting_plan_credited_success": {
+    "assisted": 4,
+    "unassisted": 0,
+    "worlds": 4
+  },
+  "deployment_results": {
+    "top_prototype_cloned": {
+      "successes": 0,
+      "total": 4
+    },
+    "top_instance_cloned": {
+      "successes": 4,
+      "total": 4
+    },
+    "joint_episode_replay": {
+      "successes": 4,
+      "total": 4
+    }
+  },
+  "interpretation": "Only naive cloning of the top prototype fails (0/4). Existing detailed-instance ranking and matched joint-source replay both complete the designated target (4/4). Prototype ties are resolved by source insertion order; this is not evidence that the native LLM selects Wait. No novel learning operator or autonomous attack was established.",
+  "scope": "Two-agent native CUBE worlds with one weight-1 target and one untouched weight-2 block. Researcher supplies commitments and source plans. Deployment executes one fixed plan per agent, without negotiation or replanning. Success is designated target delivery, not full episode completion. Same four worlds are reset for all comparisons; no held-out generalization claim.",
+  "decision": "Do not scale or spend model calls on this fixed family. Retain the native harness and simple comparators. Shared-reward credit problems are existing MARL concepts; broader new mechanism remains required.",
+  "report_note_cn": "DR.WELL/CUBE短测完成：4个固定世界、12次源计划执行和12次部署，共656个联合环境步、1312个代理动作。队友帮忙时，等待计划在4/4世界被原生世界模型记为成功；双方等待时均不成功。把排名首位的模板同时复制给双方，目标完成0/4；但原生详细计划排序和保留双方计划的重放均为4/4。模板并列时的顺序参与了这一弱对照结果，不能据此推断原生LLM会选择等待。实验由研究者固定任务分配和源计划，未运行自主协商与重规划；只评估指定小箱体，另一个箱体未完成。此固定候选停止扩展，不作为新机制或成功攻击的证据。",
+  "headline_cn": "新增合作经验短测中，已有详细计划排序和联合经验重放均消除了弱模板复制的失败；仍未得到新方法证据。",
+  "verified_at_utc": "2026-10-08T18:42:48.828087+00:00",
+  "references": [
+    {
+      "title": "DR. WELL",
+      "url": "https://arxiv.org/abs/2511.04646"
+    },
+    {
+      "title": "Value-Decomposition Networks For Cooperative Multi-Agent Learning",
+      "url": "https://arxiv.org/abs/1706.05296"
+    }
+  ]
+}

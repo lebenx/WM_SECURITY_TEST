@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "registered_at_utc": "2026-10-15T11:03:38Z",
+  "status": "frozen_before_reading_new_30_control_replay_outcomes",
+  "runner": "scripts/analyze_dino_first_query_terminal_truth.py",
+  "out_dir": "runs/dino_first_query_terminal_truth_20261015",
+  "report": "reports/dino_first_query_terminal_truth_20261015.json",
+  "native_source_run": "runs/dino_native_alias_pair_20261015",
+  "forecast_source_run": "runs/dino_native_alias_forecast_gpu_20261015",
+  "replay_source_run": "runs/dino_first_query_full_horizon_20261015",
+  "known_before_registration": "The two query1 means, previous15-control and99-control outcomes, four cached forecasts and post-hoc two-mean ranking are known. The new30-control real replay outcomes have not been read before this protocol. This is a targeted diagnostic, not an independent confirmation or a new attack.",
+  "selection": {
+    "query": 1,
+    "candidate_order": ["clean_identity_copy", "canonical_request"],
+    "representations": ["original", "canonical"],
+    "horizon_macros": 6,
+    "controls_per_macro": 5,
+    "terminal_control_offset": 30,
+    "definition": "Exactly the same two original returned H6 means, goal and four complete cached forecasts used in the registered two-mean ranking. No new candidate, magnitude, seed, weight, objective or endpoint selection."
+  },
+  "dependency_gate": "Do not start until the new replay summary is terminal-completed, both original means were replayed for30 controls from the qualified same root, and both first15-control prefixes exactly reproduce the existing native traces/observations. Require explicit schema/qualification checks; absent or failed evidence invalidates the diagnostic, with no new truth encoding.",
+  "replay_interface": {
+    "completed_status": "completed_two_frozen_mean_full_horizon_replays",
+    "candidate_status": "completed30",
+    "prefix_checks": "historical_prefix_exact_steps=15, last_prefix_mismatches=[], controls=30",
+    "reconstruction_checks": ["source_integration_exact", "source_physical_exact", "source_site_positions_exact"],
+    "endpoint_paths": "{candidate}/endpoint15.npz and{candidate}/endpoint30.npz",
+    "endpoint_schema": "pixels:uint8[1,3,224,224];proprio:float32[1,4];control_offset:scalar15or30. Add one leading axis for native batch1/T1 encode.",
+    "provenance": "Interface confirmed by replay implementer before any new30-control result was read."
+  },
+  "execution_order": [
+    "Read the completed qualified replay and existing caches; verify original means, same goal/context, actual offsets15/30 and observed15 pixels/proprio against the older cache. No model or environment is needed for these checks.",
+    "Query actual GPU0 free memory. If below3072MiB, stop resource_deferred without loading weights or waiting. Set this process's Torch allocator cap to2GiB, not a total-process reservation.",
+    "Load each of the two existing checkpoint files once with the established native loader, strict state checks and identical GPU FP32 backend. No downloads, training or predictor calls.",
+    "Calibration only: encode the original cached goal once, then each candidate's actual control15 endpoint once. Compare goal to saved native goal features and control15 to the previously calibrated same-GPU truth features. All visual/proprio and per-timepoint gates must pass before any control30 truth encoding. Stop immediately on failure, retaining diagnostics.",
+    "Only after all3 observation calibrations pass, encode each candidate's actual control30 endpoint once. Total at most5 native encodes, batch1/T1 throughout. No additional encodes or counterfactual model forecasts.",
+    "Compute the four fixed terminal forecast errors from cached original/canonical index6 versus the corresponding actual control30 feature. Compute the two actual-future feature costs with the unchanged native objective on CPU FP32. Look up physical utilities from actual replay; never replace them with feature scores."
+  ],
+  "calibration": {
+    "source": "configs/dino_native_alias_forecast_gpu_20261015.json",
+    "atol": 0.0001,
+    "rtol": 0.0001,
+    "max_absolute_error": 0.001,
+    "rms_absolute_error": 0.0001,
+    "rule": "Reuse numerical_comparison unchanged: allclose AND maximum bound AND RMS bound, for visual/proprio and every timepoint. Do not relax the failed earlier CPU diagnostic or silently use a backend fallback.",
+    "failure": "invalid_numerical_calibration; zero30-control truth encodes and null terminal-error/ranking conclusion. Preserve the failed attempt."
+  },
+  "metrics": {
+    "forecast_error": "For each of2 candidates and2 representations: terminal visual MSE, proprio MSE and visual+0.1*proprio MSE. Use float64 arithmetic over frozen FP32 arrays, matching the previous diagnostic.",
+    "true_future_objective": "Call native ReprTargetDistMPCObjective on each actual control30 encoded observation and the unchanged original goal; CPU FP32, alpha0.1, sum_all_diffs=false, original candidate actions passed unchanged. Minimize; exact ties choose clean_identity_copy. These are true-future feature costs, not physical utility.",
+    "physical_utility": "Report actual30-control cumulative reward, terminal native reward/reach distance, final and ever success, first success or null and successful-control count from replay. Preserve disagreement between dense reward, terminal state and success metrics. Do not invent a single composite utility or new pass threshold.",
+    "relation": "Report whether the true-future feature objective selects the lower actual30-step cumulative-return candidate and separately the lower actual terminal-reward candidate; ties and success metrics remain separate. Compare with both already measured cached-forecast rankings without regenerating them.",
+    "limits": "One post-hoc two-mean bank at a common query1 root. This closes its30-control truth horizon only; no reconstruction of all native CEM candidates, no99-step causal mediation, no population ASR, and no proof of training-distribution membership or new security novelty."
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "device": "cuda:0",
+    "dtype": "float32",
+    "threads": 4,
+    "seed": 1,
+    "minimum_free_mib": 3072,
+    "allocator_cap_gib": 2.0,
+    "allocator": "expandable_segments:True",
+    "matmul_allow_tf32": false,
+    "cudnn_allow_tf32": true,
+    "cudnn_benchmark": true,
+    "wall_limit_seconds": 180,
+    "outer_timeout_seconds": 195,
+    "native_encode_calls_max": 5,
+    "checkpoint_files_max": 2,
+    "predictor_calls": 0,
+    "unroll_calls": 0,
+    "planner_calls": 0,
+    "environment_steps": 0,
+    "api_calls": 0,
+    "training_updates": 0,
+    "retry": false,
+    "resource_failure": "Preserve resource_deferred on startup shortage, OOM or wall limit; no waiting, model change, threshold relaxation or other-job modification."
+  },
+  "preservation": "New run directory and report only; refuse existing outputs. Save launched protocol/script and encoded arrays. Do not modify prior protocols/results, registry or HTML."
+}

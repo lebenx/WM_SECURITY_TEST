@@ -1,0 +1,494 @@
+              From Forecast Sensitivity to Decision Evidence:
+            A Working Audit of Pretrained World-Model Agents
+
+                                  Goal-Bus research working notes
+
+                                            15 October 2026
+
+
+    Status: research working draft; not submission-ready. This document reconciles
+    current evidence and counterevidence. No qualiﬁed general core security claim, novel defense,
+    or numerical novelty rating is established. It is not a submission package or a statement that
+    the research goal has been achieved. Historical results with retired codecs or protocols are
+    excluded from the current result tables.
+
+                                                 Abstract
+
+          A changed world-model forecast need not be an incorrect physical prediction, and an in-
+      correct prediction need not cause a worse decision. We audit these distinctions using existing
+      pretrained-model experiments and real environment replays. We separate ﬁxed-belief interven-
+      tional prediction from observational conditioning, identify the forecast consumer in each system,
+      and retain actual utility separately from model scores. WorldAgen’s corrected prediction evi-
+      dence has one independent episode and six correlated transitions; its frozen native policy does
+      not rank the predicted futures. On a ﬁxed Cosmos Policy development panel, forecast-branch
+      Goal replacement changes success from 29/30 to 28/30. Existing ﬁrst-candidate continuations
+      identify one harmful ﬁrst selection, without establishing complete mediation. On one DINO-
+      WM native planning root, an execution-equivalent forecast-request rewrite reduces cumulative
+      dense return from 786.9985 to 702.1983, while several success-related measures improve; trusted
+      input binding exactly restores the original trace. A subsequent two-mean, 30-control diagnos-
+      tic ﬁnds better predictions under the rewrite, but the native objective applied to actual future
+      features also selects the lower-reward action. These bounded eﬀects support a careful decision
+      audit, not a general prediction-corruption attack, population attack-success rate, or established
+      new security mechanism.
+
+
+1     Introduction
+
+The research question is whether a restricted change to the inputs used for world prediction can
+alter action selection and reduce utility in the real environment. Answering it requires more than
+forecast divergence. We need a valid prediction contract, a decision path that consumes the forecast,
+and an outcome measured independently of the model’s own score. A proposed repair must also
+be evaluated against the same task and its eﬀects on normal behavior.
+This working draft organizes existing evidence around those requirements. It does not introduce a
+new attack, rerun an experiment, or reinterpret retired metrics as current evidence. The present
+records contain both local decision eﬀects and substantial counterevidence to a broad Goal-Bus
+interpretation. We report both. In particular, a lower real return can coexist with better forecast
+
+                                                     1
+accuracy and better success timing when the planner’s objective is not aligned with the measured
+physical utility.
+We distinguish three primary decision paths: WorldAgen’s separate prediction and frozen-policy
+calls, Cosmos Policy’s candidate–future–value selector, and DINO-WM’s forecast-driven CEM plan-
+ner. The separately released AlphaBrain checkpoint is a related resource, not an interchangeable
+name for the NVIDIA Cosmos Policy checkpoint. The evidence ledger in Section 7 identiﬁes the
+current records supporting every result below.
+
+
+2     Related context and claim boundary
+
+WorldAgen describes a task-agnostic prediction head alongside a task-conditioned policy and an
+online adaptation pathway [1]. Its stated isolation contract motivates a system-speciﬁc audit; it
+does not establish that every instruction-conditioned predictor must ignore instructions. DINO-
+WM uses pretrained visual patch features for action-sequence planning toward goal observations [2].
+Cosmos Policy generates actions, future states, and values within a video-model-based system [3].
+These are architectural references, not independent replications of the local results below.
+The separation between prediction accuracy and decision quality already has direct precedent.
+Singh’s LeWorldModel/TwoRoom study changes the planning objective on frozen representations
+and reports that the objective can limit planning even when prediction remains informative [4]. Our
+local two-candidate diagnostic is consistent with that concern, but does not reproduce that study
+or establish a new general phenomenon. TRAP’s published abstract already frames attacks around
+candidate ranking in world-model planning [5]; we have not reproduced its backdoor experiments.
+Neither ranking ﬂips nor proxy mismatch alone supplies a novelty claim for this work.
+
+
+3     Prediction and intervention contracts
+
+3.1   Physical invariance under a ﬁxed belief
+
+Let H contain the complete model-visible history: observations, supplied proprioception, previous
+actions, time indices, and relevant model cache state. Let S denote the augmented physical state,
+including hidden simulator and controller state. A ﬁxed belief b(ds | H) need not be concentrated on
+one state. Let A be a committed open-loop action sequence covering the entire evaluated horizon,
+and let Es (A) denote its eﬀective executor controls.
+If A and A′ have identical executor eﬀects for every possible and reachable augmented state, the
+physical transition mechanism has no additional dependence on their raw representation, and the
+conditional exogenous-noise law is the same, then their physical transition kernels agree. Conse-
+quently, for a physical-outcome event B,
+                                                ∫
+                      Pb (Y ∈ B | H, do(A)) =       KH (B | s, Es (A)) b(ds | H)
+                                                                                                 (1)
+                                             = Pb (Y ∈ B | H, do(A′ )).
+With paired exogenous noise, the corresponding trajectories can be compared sample by sample;
+without it, equality concerns distributions. Partial observability does not invalidate Equation 1
+when its ﬁxed-belief and executor assumptions hold. This is a standard conditioning and interven-
+tion argument, not a proposed new theorem.
+
+                                                    2
+The contract includes the full duration and action sequence. Holding only a ﬁrst action, a high-
+level instruction, or an observed feedback-generated sequence ﬁxed is insuﬃcient. State-dependent
+executor logic must be included in Es or in the augmented state. A reward that penalizes raw
+commands is also outside an equivalence claim based only on clipped controls.
+
+
+3.2   Observational conditioning is a diﬀerent target
+
+A predictor trained on behavior data can instead approximate
+                                          ∫
+                 Ptrain (Y | H, A, G) =       Ptrain (Y | s, H, A, G)Ptrain (ds | H, A, G).       (2)
+
+Behavioral actions and instructions can reveal hidden state; a recorded feedback sequence can also
+select future disturbances. Thus the conditional state/noise distribution may change when A or G
+changes. Equality of physical transitions does not automatically impose an invariance obligation
+on this observational conditional predictor. A ﬁxed evaluation belief and an external do(A) query
+deﬁne a diﬀerent target; training support and the model’s intended prediction contract remain
+separate questions.
+For Goal replacement, we distinguish the original task Goal Gtask from a forecast-query ﬁeld Gquery .
+The former determines the protected task, policy/value objective, and success metric. Physical
+invariance under changes to the latter requires preference-only metadata: no change to reset, scene,
+controller semantics, committed actions, physical target, or belief. Arbitrary alternative text need
+not satisfy this condition. A legal instruction can convey hidden physical information. Randomly
+crossing Goal texts in an evaluation does not establish their joint training support.
+WorldAgen additionally has an explicit task-agnostic/world-head isolation claim that can be au-
+dited as an implementation contract. AlphaBrain and Cosmos Policy do not inherit that promise
+merely because they also predict future observations. Goal dependence by itself is therefore neither
+a universal contract violation nor a successful attack. The current prediction-contract audit explic-
+itly supersedes its earlier codec checklist with the corrected WorldAgen evidence and preserves this
+observational boundary (E1).
+
+
+4     Systems and methods
+
+4.1   Native forecast consumers
+
+WorldAgen: prediction is not native frozen-policy ranking.
+The native policy call emits actions, while a separate world-model call uses action history to predict
+images. The frozen policy does not consume these predicted futures through an action-ranking loop.
+Test-time training through shared parameters is a diﬀerent pathway and must not be inferred from
+a ﬁxed-forward prediction eﬀect. Historical CLIP-based selectors were added planners with retired
+protocols; they are not used as current native decision evidence (E1, E5).
+
+Cosmos Policy: generated candidate, conditioned future, predicted value.
+The evaluated native-style best-of-N path generates an action candidate, predicts its future, evalu-
+ates that future, and selects by predicted value. The intervention changes the Future branch’s text
+while retaining the original Policy and Value text. Candidate seeds and controls are bound in the
+saved records. The Torch compatibility adapter does not establish complete parity with the original
+
+                                                      3
+TransformerEngine execution. N = 1 still generates futures and values; it is not a world-model-free
+baseline (E2, E5).
+
+DINO-WM: predicted latent distance drives native CEM.
+The locally evaluated checkpoint is the JEPA-WMs project’s released reproduction of the DINO-
+WM baseline, not an unchanged installation of the original DINO-WM project. Its latent forecasts
+are scored against the original encoded Goal. The recorded native planner uses 300 candidates,
+15 iterations, 10 elites, horizon six macro-actions, and FP32. Each macro contains ﬁve physical
+controls; three macros are normally executed before replanning. Goal enters the objective, not an
+isolated Goal-conditioned forecast input. The tested operation is an action-representation rewrite,
+not Goal-Swap (E3, E5).
+
+AlphaBrain’s separate released checkpoint jointly denoises action and future slots. This establishes
+shared computation, not an independently validated future-score-to-action selector. Its corrected
+codec produced one successful LIBERO-Goal task0/init0 episode within a 300-control budget. A
+subsequent nine-instance attempt stopped with CUDA OOM before any result; it is not 0/9 success.
+These records do not substitute for the Cosmos panel (E5).
+
+
+4.2   Interventions and protected quantities
+
+For Cosmos, the ﬁxed development panel comprises ten tasks and three initial states per task. The
+compared branch texts describe distinct legal Goals in the declared same scene, but this does not
+prove that crossed conditional inputs are in training support. Existing candidate continuations
+compute the original ﬁrst query, force one candidate index once, and use original-Goal planning
+thereafter. An oﬄine join relates these measured branches to the ﬁrst selections in the Clean and
+continuous-Swap episodes (E2).
+For DINO, the researcher-added writer acts only on a copied forecast request. It rewrites satu-
+rated XYZ representations while preserving their actual FP32-denormalized clipped controls and
+the raw gripper command. Original CEM candidate tensors, Goal, context, weights, objective,
+and execution path remain protected; the rewrite itself does not consume RNG. The physical
+equivalence concerns two representations of each ﬁxed candidate. Diﬀerent planner conditions can
+subsequently select diﬀerent candidates and therefore execute diﬀerent physical controls. There is
+no contradiction between per-candidate equivalence and diﬀerent closed-loop trajectories (E3–E5).
+The restoration condition uses trusted-current-candidate binding: a private original request is
+supplied to the native predictor despite the writer’s modiﬁed copy. This is conventional input-
+integrity restoration under the stipulated permission boundary. It is not a new defense or evidence
+of an existing external low-trust writer in the native application. A researcher- deﬁned boundary
+remains valid for a bounded causal experiment; its existence does not establish deployment exposure
+(E3, E5).
+
+
+4.3   Outcomes, pairing, and inference units
+
+We keep forecast error, predicted cost, selected action, and actual physical utility separate. Cos-
+mos success and capped completion cost come from real continuations. DINO reports cumulative
+dense reward, terminal reward/distance, ﬁrst observed success, success occupancy, and ﬁnal success
+separately. Predicted feature cost is never substituted for actual utility.
+
+
+                                                 4
+Forecast comparisons pair the same history, original action sequence, Goal, and real consequence
+within a query. Comparing average errors along two diﬀerent visited trajectories is not a causal
+pairing. DINO’s 14 selected-mean queries and 38 observed-preﬁx endpoints are correlated mea-
+surements from one root pair, not independent task samples. Its earlier CPU diagnostic failed a
+frozen numerical calibration gate and remains invalid; a separately registered same-GPU diagnos-
+tic passed calibration before the paired comparisons. No tolerance relaxation is used to erase that
+failed attempt (E3).
+
+
+5     Veriﬁed results
+
+5.1   WorldAgen: corrected prediction evidence has limited scope
+
+The current archive records a 128-pixel native Clean conﬁguration with 21/30 successes. This
+conﬁguration is distinct from earlier camera settings. The corrected physical-prediction evidence
+contains one independent source episode and six correlated transitions. Mean native RGB-patch
+MSE is 0.0554368 for Clean, 0.0678744 for same-scene Goal-Swap, 0.0551375 for Goal-Swap plus
+Bus-Cut, 0.0678744 for the matched Control-Cut, and 0.0772741 for persistence. These descriptive
+means are not independent episode estimates or decision utilities. They support a narrowly scoped
+instruction- isolation and prediction audit, not an independent multi-episode result or native de-
+cision harm. The archive’s task0 cached adaptation comparison records Frozen 1/3, no-language
+adaptation 3/3, and swapped adaptation 3/3; it does not show a success loss from swapping. Nei-
+ther this comparison nor the corrected forecasts supply the missing native forecast-ranking pathway
+(E1, E5).
+Old image-orientation, target-normalization, action-codec, and added-planner results are not in-
+cluded in the current tables. In particular, an old target-MSE or latent-divergence value cannot be
+promoted to calibrated physical forecast error merely because it was retained in a historical report.
+
+
+5.2   Cosmos: one real failure and a bounded ﬁrst-selection link
+
+The ﬁxed continuous Future-Goal intervention changes observed success from 29/30 to 28/30. This
+is one lost Clean success, not a population attack-success estimate. The registered extension gate
+remains failed. The existing-cache join ﬁnds three ﬁrst-selection changes; selecting the correspond-
+ing measured original-Goal continuation for each root also yields 28/30 successes and an aggregate
+capped-step increase of 130, or 4.3333 per root (E2).
+The identiﬁed harmful root is task3/init2. Clean selects candidate1 and succeeds in 170 controls.
+Candidate0, selected by Swap, fails within the 300-control cap even when subsequent planning uses
+the original Goal. Saved candidate controls and the ﬁrst 16 physical controls bind these records.
+Thus this ﬁrst choice is suﬃcient for the recorded failure under the measured continuation. This
+is not proof that later Swap calls are irrelevant or that the ﬁrst choice fully mediates continuous
+Swap. The join executes no new one-shot-Swap episode and no new recovery experiment (E2).
+The 60 candidate continuations retain their provenance as 50 original branches plus ten recovery
+branches. Native ﬁrst selection, ﬁxed candidate0, ﬁxed candidate1, and uniform selection in expec-
+tation each achieve 29/30 on that panel; a candidate oracle achieves 30/30. Lack of a panel-wide
+native selection advantage does not erase the local harmful selection, but it constrains broad claims
+about the selector’s beneﬁt. No Bus-Cut, matched Control-Cut, or useful decision-recovery defense
+
+
+                                                 5
+                                                   Return       Terminal      First     Success
+               Condition                         99 controls     reward      success    controls
+               Clean                                786.9985       9.8066          56          24
+               Canonical request                    702.1983       9.9832          53          33
+               Canonical + trusted binding          786.9985       9.8066          56          24
+               No operation                         139.4640       1.4059          —            0
+
+Table 1: Actual DINO environment outcomes on one root (E3). All conditions have ﬁnal success
+false. “No operation” denotes the recorded noop baseline. The rows are related conditions, not
+independent episodes for signiﬁcance testing. Exact restoration is conventional binding under the
+experimental permission boundary, not a general defense guarantee.
+
+
+is established by this join (E2, E5).
+
+
+5.3   DINO: native return loss and exact restoration, with mixed utility
+
+The small Clean capability panel uses MuJoCo 3.3.0 and has ﬁnal success in 2/3 roots, versus 0/3
+for no operation. A direct servo comparator has 0/3 ﬁnal success but reaches success at some point
+in 3/3 and has higher cumulative return on all three roots. This establishes some usable Clean
+capability, not dominance over the stronger comparator or robust task competence (E5).
+Table 1 reports one native development root. Canonicalization reduces cumulative return by
+84.800227, or 10.7751%, over the same 99 executed controls. Trusted binding restores return
+exactly and all 99 saved trace rows match Clean. However, canonicalization reaches success earlier,
+spends more controls in success, and ends closer to the target with higher terminal reward. Both
+original arms have ﬁnal success false and ever-success true. These data do not establish a loss of
+task success or uniform deterioration of utility (E3).
+The paired preﬁx diagnostic ﬁnds lower average feature error under canonicalization within each
+trajectory-origin panel, with mixed signs across queries and endpoints. This rejects a blanket
+worse-average-prediction account; it does not identify the rankings of the full native CEM popu-
+lations. The earlier ﬁxed-magnitude +2 operation remains a separate no-harm result and is not
+retrospectively relabeled as the successful native intervention (E3).
+
+
+5.4   Matched 30-control truth: the objective itself prefers lower utility
+
+A post-hoc bank contains the two complete means returned at the ﬁrst native query: a0 from Clean
+and a1 from canonical planning. They start from the same root and share the original context and
+Goal. Within each candidate, only forecast-request representation changes. They are not the native
+CEM population or two independent test cases.
+Both full means were replayed for 30 physical controls. Their ﬁrst 15 controls exactly reproduce
+the saved native preﬁxes; controls 16–30 are the committed open-loop suﬃx, whereas the native
+agent would normally replan after 15. Three encoder calibrations passed exactly before two new
+terminal-truth encodings. The diagnostic makes no new predictor or planner calls. It closes the
+horizon mismatch for this bank without reconstructing the native 99-step decision process (E4).
+The unchanged native terminal objective is
+
+                    C(z, zg ) = MSE(z visual , zgvisual ) + 0.1 MSE(z proprio , zgproprio ).        (3)
+
+                                                       6
+             Features supplied to native objective    Cost of a0    Cost of a1   Selected
+             Original-request predictions               0.848428      1.114131      a0
+             Canonical-request predictions              1.580433      1.235695      a1
+             Actual 30-control future encodings         1.701293      1.379470      a1
+
+Table 2: Fixed two-mean bank, original Goal and unchanged native objective (E4). Actual-future
+feature cost remains a proxy, not environment utility.
+
+                                    Original       Canonical                   Real terminal
+           Candidate             forecast MSE    forecast MSE    Real return      reward
+           a0 (Clean mean)            1.565623        0.529210     95.841823       5.247907
+           a1 (canonical mean)        0.958529        0.458303     76.036994       3.347029
+
+Table 3: Matched 30-control truth (E4). Forecast MSE is visual feature MSE plus 0.1 times
+proprioceptive feature MSE against the corresponding real endpoint. Returns and rewards come
+from the simulator, not model scores. Within each row, canonical predictions are more accurate.
+
+
+It scores learned features against an achieved expert-example observation, not physical TCP-to-
+target distance. Lower cost is preferred. Table 2 shows a reversal between request representations.
+Crucially, scoring the actual future encodings also prefers a1 , which has lower real cumulative and
+terminal reward (Table 3). Both candidates have zero successful controls and no terminal or ever-
+success event in this 30-control replay (E4).
+For a descriptive decomposition, let ∆ = C(a1 ) − C(a0 ). The true-future proxy gap is −0.321822.
+The original forecast gap is +0.265703, with error +0.587525 relative to that proxy gap. The
+canonical gap is −0.344738, with error −0.022916. Original prediction error happens to reverse
+the true-feature preference toward the higher-reward candidate. Canonical predictions recover that
+proxy preference more closely and select the lower-reward candidate.
+This establishes objective/utility mismatch on this bank. It does not prove that prediction error has
+no causal role: error direction can still change a ranking. Nor does it show what a fully accurate
+world model would do throughout CEM, since diﬀerent forecasts would change subsequent proposals
+and the candidate bank itself. It speciﬁcally rejects attribution to worsened terminal prediction
+MSE for these two means. The physical-utility loss is real; calling it a distinct prediction-corruption
+mechanism is unsupported (E4).
+
+
+6    Limitations and current research decision
+
+Inference units and selection. WorldAgen’s corrected prediction panel has one independent
+episode; DINO’s native pair has one root, and its two-mean bank was chosen after the native
+runs. Cosmos uses a ﬁxed development panel with one lost success. We report counts and paired
+descriptive contrasts, not population ASR, generalization, independent replication, or statistical
+signiﬁcance. Correlated steps, queries, branch replays, and repeated conditions do not increase the
+number of independent physical roots.
+Contract and support. Executor equivalence is not a proof of observational conditional invari-
+ance, joint training support, or calibrated prediction. The Goal-Bus and action-alias interventions
+have diﬀerent permissions and cannot be combined into one universal Goal vulnerability. Training-
+
+                                                  7
+Terminal feature MSE (lower is better)          (a) Both terminal forecasts improve                                                                        (b) The same score prefers lower utility
+                                                                                                                                                     120
+
+
+
+
+                                                                                                                   Selected real 30-control return
+                                                                                          Original                                                             95.84
+                                         1.75
+                                                   1.566                                  Canonical                                                  100      selects A
+                                         1.50                                                                                                                                 76.04           76.04
+                                                                                                                                                                             selects B       selects B
+                                         1.25                                                                                                         80
+
+                                                                                 0.959
+                                         1.00                                                                                                         60
+                                         0.75
+                                                           0.529                                                                                      40
+                                                                                            0.458
+                                         0.50
+                                                                                                                                                      20
+                                         0.25
+
+                                         0.00                                                                                                          0
+                                                   A: Clean mean              B: Canonical mean                                                              Original       Canonical      True future
+                                                                                                                                                             forecast        forecast       features
+                                                                One shared query; two post hoc selected means; fixed 30-control open-loop outcomes.
+                                                            True-future scoring is restricted to this bank, not a full oracle planner. No population inference.
+
+
+
+
+Figure 1: Visualization of the archived two-mean countercheck (E4); this ﬁgure requires no addi-
+tional execution. The underlying diagnostic includes real 30-control replays and calibrated endpoint
+encodings. Left: canonical-request predictions reduce terminal feature MSE for both ﬁxed candi-
+dates. Right: the original-prediction selector chooses the candidate with real 30-control return
+95.8418; canonical predictions and actual future encodings both select the candidate with return
+76.0370. The true-future scorer evaluates this ﬁxed post-hoc bank using the unchanged native
+objective; it is not a full oracle planner or a rerun of CEM with perfect forecasts. The physical
+replays are open-loop for 30 controls, whereas native execution normally replans after 15.
+
+
+support uncertainty remains even when the environment-side invariance is exact.
+Causality and utility. The Cosmos ﬁrst-selection join establishes a measured continuation con-
+sequence, not full mediation or a Bus-Cut defense. The DINO truth diagnostic establishes a local
+proxy mismatch, not complete CEM or closed-loop mediation. Better average MSE does not
+guarantee better real decisions, and worse dense return does not automatically imply lost goal
+attainment. The separate utility measures must remain visible.
+Implementation and deployment. Checkpoint availability and a successful forward are not task
+competence. Adapters, codecs, numerical backends, and renderer versions are part of each recorded
+system. Technical errors and resource-deferred attempts are not task failures. The experimental
+writer is a stated research permission, not an observed deployed adversary capability; ordinary
+binding is not a novel defense.
+Go/No-Go. Go for retaining the bounded causal eﬀects and their counterchecks: one Cosmos ﬁrst-
+selection consequence, one DINO native dense-return loss with exact restoration, and calibrated
+ﬁxed-action prediction/score diagnostics. No-Go for a qualiﬁed general core security mechanism,
+useful general Bus-Cut defense, numerical novelty claim, or submission-ready paper. The present
+evidence does not justify expanding the same aliases, adding seeds merely to seek a stronger eﬀect,
+or presenting objective mismatch as a new security mechanism. A new experiment needs a distinct,
+explicit operation and a control that can separate it from the existing explanations.
+
+
+
+
+                                                                                                            8
+7    Evidence ledger and reproducibility
+
+All paths below are relative to the repository root. The JSON reports are the current evidence
+sources; this document is a prose synthesis. The top-level historical ﬁelds of E1 are qualiﬁed by
+its subsequent-review section, which points to the corrected evidence. Where an older sentence in
+E3 records an earlier decision trigger, its completed follow-up sections and E4 govern the current
+interpretation. This draft does not overwrite prior records.
+
+E1: prediction contract and correction history
+reports/goal_bus_prediction_contract_audit.json. Its subsequent review links the au-
+thoritative physical-invariance speciﬁcation and corrected WorldAgen prediction analysis at
+runs/worldagen_prediction_contract_cpu_v2/analysis_same_scene.json. Historical codec-
+dependent forecast statistics are not imported into this draft.
+E2: Cosmos ﬁrst-selection join
+reports/cosmos_first_selection_mediation_20261015.json, with its paired CSV. The report
+binds Clean/Swap selections to already audited real candidate continuations, documents the 16-
+control match, and preserves execution versions and limitations.
+E3: DINO native pair, recovery, and paired diagnostics
+reports/dino_native_alias_synthesis_20261015.json. This contains native outcomes, exact
+recovery, calibration history, correlated query counts, and references to frozen protocols and under-
+lying results.
+E4: DINO matched full-horizon truth decision
+reports/dino_first_query_terminal_truth_decision_20261015.json. Its source reports bind
+the two ﬁxed means, exact native preﬁxes, real 30-control replays, terminal encodings, native
+objective, and score-gap decomposition. No future truth was supplied to the original planner.
+E5: model identity and native-path qualiﬁcations
+reports/research_archive/models.json. Entries for WorldAgen, AlphaBrain, Cosmos Policy,
+and DINO-WM distinguish released checkpoints, adapters, Clean evidence, added planners, and
+unmeasured or failed resource attempts.
+
+Existing numeric checks can be inspected and reproduced without launching a new model or envi-
+ronment experiment. The source reports identify these veriﬁcation-only commands, executed from
+the repository root:
+
+     python scripts/analyze_cosmos_first_selection_mediation.py –verify-only
+
+     .venv-jepa-native/bin/python
+       scripts/analyze_dino_first_query_objective_decomposition.py –verify-only
+
+The second display is one command, split visually for readability. These checks do not create
+new independent evidence. Reproducing actual model or environment runs requires their recorded
+runtime, ﬁxed protocols, resource limits, and a new output directory; it is not implied by compiling
+this document. Earlier invalid calibration and interrupted attempts must remain identiﬁable.
+For the document alone, the available local Tectonic 0.15.0 installation can compile this standalone
+article using cached resources, without downloading an external conference template or bibliogra-
+phy. Run from the reports directory:
+
+                                                 9
+     cd reports
+     tectonic –only-cached –keep-logs world_model_decision_audit_working.tex
+
+The display contains two sequential shell commands. Tectonic resolves the table, ﬁgure, and section
+references through its normal compilation passes. The local pdflatex command lacks its format
+ﬁle and is not the veriﬁed build route. Compilability and document consistency do not establish
+scientiﬁc novelty, completion of the research goal, or submission readiness.
+
+
+References
+
+[1] Chi Wan, Kangrui Wang, Yuan Si, Pingyue Zhang, and Manling Li. WorldAgen: Uniﬁed State-
+    Action Prediction with Test-Time World Model Training. Oﬃcial project method description,
+    2026. https://worldagen.github.io/.
+
+[2] Gaoyue Zhou, Hengkai Pan, Yann LeCun, and Lerrel Pinto. DINO-WM: World Models on
+    Pre-trained Visual Features enable Zero-shot Planning. arXiv:2411.04983, 2024, revised 2025.
+    https://arxiv.org/abs/2411.04983.
+
+[3] Moo Jin Kim et al. Cosmos Policy: Fine-Tuning Video Models for Visuomotor Control and
+    Planning. arXiv:2601.16163, 2026. https://arxiv.org/abs/2601.16163.
+
+[4] Joyjeet Singh. The Objective Is the Bottleneck: Latent World Models Encode What Their Plan-
+    ners Cannot Use. arXiv:2608.12959, 2026. https://arxiv.org/abs/2608.12959.
+
+[5] Siyuan Duan, Ke Zhang, and Xizhao Luo. TRAP: Tail-aware Ranking Attack for World-Model
+    Planning. arXiv:2605.01950, 2026. Abstract-level context; not locally reproduced. https://
+    arxiv.org/abs/2605.01950.
+
+
+
+
+                                                10
+

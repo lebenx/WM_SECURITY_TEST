@@ -1,0 +1,897 @@
+{
+  "schema_version": 1,
+  "status": "completed_cache_analysis",
+  "question": "In the fixed known harmful Cosmos first decision, does the Value ordering depend on future visual slots, future proprio slot, or their interaction?",
+  "scope": "One post-hoc root and fixed historical candidates; exhaustive output-slot conditional-dependence diagnostic, not new attack discovery, ASR, defense, closed-loop recovery or independent generalization.",
+  "sources": {
+    "protocol": "configs/cosmos_future_modality_factorial_20261016.json",
+    "launched_protocol": "runs/cosmos_future_modality_factorial_20261016_resume1/launched_config.json",
+    "summary": "runs/cosmos_future_modality_factorial_20261016_resume1/summary.json",
+    "source_summary": "runs/cosmos_first_query_truth_inference_20261015/summary.json",
+    "historical_utility_report": "reports/cosmos_first_query_truth_decision_20261015.json",
+    "historical_episodes": [
+      "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json",
+      "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+    ],
+    "analysis_script": "scripts/analyze_cosmos_future_modality_factorial.py"
+  },
+  "checks": {
+    "frozen_protocol_exact": true,
+    "nine_cells_two_candidates_complete": true,
+    "historical_utilities_match_episode_files": true,
+    "calibration_checks": 34,
+    "protected_input_checks": 196,
+    "all_checks_passed": true,
+    "diagonal_calibration_before_mixed": true,
+    "source_diagonal_values_exact": true,
+    "native_argmax_and_exact_ties_recomputed": true,
+    "factor_error_consistency": true,
+    "call_count_and_execution_order_match_protocol": true
+  },
+  "historical_utilities": [
+    {
+      "candidate_index": 0,
+      "success": false,
+      "steps": 300,
+      "capped_steps": 300,
+      "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+    },
+    {
+      "candidate_index": 1,
+      "success": true,
+      "steps": 170,
+      "capped_steps": 170,
+      "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+    }
+  ],
+  "cells": {
+    "p_clean_v_clean": {
+      "name": "p_clean_v_clean",
+      "P": "clean",
+      "V": "clean",
+      "values": [
+        0.17903518676757812,
+        0.17970061302185059
+      ],
+      "candidate1_minus_candidate0_value": 0.0006654262542724609,
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 9.414926060941641e-05,
+          "visual_latent_mse": 0.008557686596105977,
+          "future_wrist_slot_mse": 0.015153834703416498,
+          "future_primary_slot_mse": 0.001961538488795455,
+          "all_future_slots_mse": 0.00573650748427379
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 9.749714744469098e-05,
+          "visual_latent_mse": 0.008974830140297993,
+          "future_wrist_slot_mse": 0.0160301944437785,
+          "future_primary_slot_mse": 0.001919465836817481,
+          "all_future_slots_mse": 0.0060157191426802245
+        }
+      ]
+    },
+    "p_clean_v_swap": {
+      "name": "p_clean_v_swap",
+      "P": "clean",
+      "V": "swap",
+      "values": [
+        0.17447814345359802,
+        0.1733797788619995
+      ],
+      "candidate1_minus_candidate0_value": -0.0010983645915985107,
+      "rank": [
+        0,
+        1
+      ],
+      "selected_index": 0,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "capped_steps": 300,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 9.414926060941641e-05,
+          "visual_latent_mse": 0.08875399329517543,
+          "future_wrist_slot_mse": 0.15088265654062302,
+          "future_primary_slot_mse": 0.026625330049727856,
+          "all_future_slots_mse": 0.059200711950320103
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 9.749714744469098e-05,
+          "visual_latent_mse": 0.08526915426155271,
+          "future_wrist_slot_mse": 0.14533761760429775,
+          "future_primary_slot_mse": 0.025200690918807667,
+          "all_future_slots_mse": 0.05687860189018338
+        }
+      ]
+    },
+    "p_clean_v_truth": {
+      "name": "p_clean_v_truth",
+      "P": "clean",
+      "V": "truth",
+      "values": [
+        0.1760895848274231,
+        0.17745184898376465
+      ],
+      "candidate1_minus_candidate0_value": 0.0013622641563415527,
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 9.414926060941641e-05,
+          "visual_latent_mse": 0.0,
+          "future_wrist_slot_mse": 0.0,
+          "future_primary_slot_mse": 0.0,
+          "all_future_slots_mse": 3.138308686980547e-05
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 9.749714744469098e-05,
+          "visual_latent_mse": 0.0,
+          "future_wrist_slot_mse": 0.0,
+          "future_primary_slot_mse": 0.0,
+          "all_future_slots_mse": 3.249904914823033e-05
+        }
+      ]
+    },
+    "p_swap_v_clean": {
+      "name": "p_swap_v_clean",
+      "P": "swap",
+      "V": "clean",
+      "values": [
+        0.17789679765701294,
+        0.1789628267288208
+      ],
+      "candidate1_minus_candidate0_value": 0.0010660290718078613,
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 0.00026029151331326137,
+          "visual_latent_mse": 0.008557686596105977,
+          "future_wrist_slot_mse": 0.015153834703416498,
+          "future_primary_slot_mse": 0.001961538488795455,
+          "all_future_slots_mse": 0.0057918882351750715
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 0.0002586381102865687,
+          "visual_latent_mse": 0.008974830140297993,
+          "future_wrist_slot_mse": 0.0160301944437785,
+          "future_primary_slot_mse": 0.001919465836817481,
+          "all_future_slots_mse": 0.006069432796960851
+        }
+      ]
+    },
+    "p_swap_v_swap": {
+      "name": "p_swap_v_swap",
+      "P": "swap",
+      "V": "swap",
+      "values": [
+        0.17313751578330994,
+        0.17247232794761658
+      ],
+      "candidate1_minus_candidate0_value": -0.0006651878356933594,
+      "rank": [
+        0,
+        1
+      ],
+      "selected_index": 0,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "capped_steps": 300,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 0.00026029151331326137,
+          "visual_latent_mse": 0.08875399329517543,
+          "future_wrist_slot_mse": 0.15088265654062302,
+          "future_primary_slot_mse": 0.026625330049727856,
+          "all_future_slots_mse": 0.05925609270122138
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 0.0002586381102865687,
+          "visual_latent_mse": 0.08526915426155271,
+          "future_wrist_slot_mse": 0.14533761760429775,
+          "future_primary_slot_mse": 0.025200690918807667,
+          "all_future_slots_mse": 0.05693231554446399
+        }
+      ]
+    },
+    "p_swap_v_truth": {
+      "name": "p_swap_v_truth",
+      "P": "swap",
+      "V": "truth",
+      "values": [
+        0.1749078631401062,
+        0.17671585083007812
+      ],
+      "candidate1_minus_candidate0_value": 0.0018079876899719238,
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 0.00026029151331326137,
+          "visual_latent_mse": 0.0,
+          "future_wrist_slot_mse": 0.0,
+          "future_primary_slot_mse": 0.0,
+          "all_future_slots_mse": 8.67638377710871e-05
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 0.0002586381102865687,
+          "visual_latent_mse": 0.0,
+          "future_wrist_slot_mse": 0.0,
+          "future_primary_slot_mse": 0.0,
+          "all_future_slots_mse": 8.621270342885624e-05
+        }
+      ]
+    },
+    "p_truth_v_clean": {
+      "name": "p_truth_v_clean",
+      "P": "truth",
+      "V": "clean",
+      "values": [
+        0.17879045009613037,
+        0.1794358789920807
+      ],
+      "candidate1_minus_candidate0_value": 0.0006454288959503174,
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 0.0,
+          "visual_latent_mse": 0.008557686596105977,
+          "future_wrist_slot_mse": 0.015153834703416498,
+          "future_primary_slot_mse": 0.001961538488795455,
+          "all_future_slots_mse": 0.0057051243974039845
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 0.0,
+          "visual_latent_mse": 0.008974830140297993,
+          "future_wrist_slot_mse": 0.0160301944437785,
+          "future_primary_slot_mse": 0.001919465836817481,
+          "all_future_slots_mse": 0.005983220093531995
+        }
+      ]
+    },
+    "p_truth_v_swap": {
+      "name": "p_truth_v_swap",
+      "P": "truth",
+      "V": "swap",
+      "values": [
+        0.1736719310283661,
+        0.1727498173713684
+      ],
+      "candidate1_minus_candidate0_value": -0.0009221136569976807,
+      "rank": [
+        0,
+        1
+      ],
+      "selected_index": 0,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 0,
+        "success": false,
+        "steps": 300,
+        "capped_steps": 300,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate0/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 0.0,
+          "visual_latent_mse": 0.08875399329517543,
+          "future_wrist_slot_mse": 0.15088265654062302,
+          "future_primary_slot_mse": 0.026625330049727856,
+          "all_future_slots_mse": 0.05916932886345029
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 0.0,
+          "visual_latent_mse": 0.08526915426155271,
+          "future_wrist_slot_mse": 0.14533761760429775,
+          "future_primary_slot_mse": 0.025200690918807667,
+          "all_future_slots_mse": 0.056846102841035154
+        }
+      ]
+    },
+    "p_truth_v_truth": {
+      "name": "p_truth_v_truth",
+      "P": "truth",
+      "V": "truth",
+      "values": [
+        0.17573776841163635,
+        0.17722132802009583
+      ],
+      "candidate1_minus_candidate0_value": 0.0014835596084594727,
+      "rank": [
+        1,
+        0
+      ],
+      "selected_index": 1,
+      "exact_tie": false,
+      "selection_basis": "strict_value_order",
+      "historical_selected_utility": {
+        "candidate_index": 1,
+        "success": true,
+        "steps": 170,
+        "capped_steps": 170,
+        "episode_path": "runs/cosmos_first_candidate_utility_matched30_v1/task03_init02/candidate1/libero_goal_task03_init02_clean.json"
+      },
+      "candidate_forecast_errors": [
+        {
+          "candidate_index": 0,
+          "future_proprio_slot_mse": 0.0,
+          "visual_latent_mse": 0.0,
+          "future_wrist_slot_mse": 0.0,
+          "future_primary_slot_mse": 0.0,
+          "all_future_slots_mse": 0.0
+        },
+        {
+          "candidate_index": 1,
+          "future_proprio_slot_mse": 0.0,
+          "visual_latent_mse": 0.0,
+          "future_wrist_slot_mse": 0.0,
+          "future_primary_slot_mse": 0.0,
+          "all_future_slots_mse": 0.0
+        }
+      ]
+    }
+  },
+  "fixed_P_visual_contrasts": [
+    {
+      "fixed_P": "clean",
+      "from": "p_clean_v_clean",
+      "to": "p_clean_v_swap",
+      "candidate_value_differences": [
+        -0.0045570433139801025,
+        -0.006320834159851074
+      ],
+      "margin_difference": -0.0017637908458709717,
+      "selection_changed": true,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 0,
+      "selected_historical_success_difference": -1,
+      "selected_historical_capped_steps_difference": 130
+    },
+    {
+      "fixed_P": "clean",
+      "from": "p_clean_v_clean",
+      "to": "p_clean_v_truth",
+      "candidate_value_differences": [
+        -0.0029456019401550293,
+        -0.0022487640380859375
+      ],
+      "margin_difference": 0.0006968379020690918,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_P": "clean",
+      "from": "p_clean_v_swap",
+      "to": "p_clean_v_truth",
+      "candidate_value_differences": [
+        0.0016114413738250732,
+        0.004072070121765137
+      ],
+      "margin_difference": 0.0024606287479400635,
+      "selection_changed": true,
+      "both_orders_strict": true,
+      "from_selected_index": 0,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 1,
+      "selected_historical_capped_steps_difference": -130
+    },
+    {
+      "fixed_P": "swap",
+      "from": "p_swap_v_clean",
+      "to": "p_swap_v_swap",
+      "candidate_value_differences": [
+        -0.004759281873703003,
+        -0.006490498781204224
+      ],
+      "margin_difference": -0.0017312169075012207,
+      "selection_changed": true,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 0,
+      "selected_historical_success_difference": -1,
+      "selected_historical_capped_steps_difference": 130
+    },
+    {
+      "fixed_P": "swap",
+      "from": "p_swap_v_clean",
+      "to": "p_swap_v_truth",
+      "candidate_value_differences": [
+        -0.0029889345169067383,
+        -0.0022469758987426758
+      ],
+      "margin_difference": 0.0007419586181640625,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_P": "swap",
+      "from": "p_swap_v_swap",
+      "to": "p_swap_v_truth",
+      "candidate_value_differences": [
+        0.0017703473567962646,
+        0.004243522882461548
+      ],
+      "margin_difference": 0.002473175525665283,
+      "selection_changed": true,
+      "both_orders_strict": true,
+      "from_selected_index": 0,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 1,
+      "selected_historical_capped_steps_difference": -130
+    },
+    {
+      "fixed_P": "truth",
+      "from": "p_truth_v_clean",
+      "to": "p_truth_v_swap",
+      "candidate_value_differences": [
+        -0.005118519067764282,
+        -0.00668606162071228
+      ],
+      "margin_difference": -0.001567542552947998,
+      "selection_changed": true,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 0,
+      "selected_historical_success_difference": -1,
+      "selected_historical_capped_steps_difference": 130
+    },
+    {
+      "fixed_P": "truth",
+      "from": "p_truth_v_clean",
+      "to": "p_truth_v_truth",
+      "candidate_value_differences": [
+        -0.0030526816844940186,
+        -0.0022145509719848633
+      ],
+      "margin_difference": 0.0008381307125091553,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_P": "truth",
+      "from": "p_truth_v_swap",
+      "to": "p_truth_v_truth",
+      "candidate_value_differences": [
+        0.0020658373832702637,
+        0.004471510648727417
+      ],
+      "margin_difference": 0.0024056732654571533,
+      "selection_changed": true,
+      "both_orders_strict": true,
+      "from_selected_index": 0,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 1,
+      "selected_historical_capped_steps_difference": -130
+    }
+  ],
+  "fixed_V_proprio_contrasts": [
+    {
+      "fixed_V": "clean",
+      "from": "p_clean_v_clean",
+      "to": "p_swap_v_clean",
+      "candidate_value_differences": [
+        -0.0011383891105651855,
+        -0.0007377862930297852
+      ],
+      "margin_difference": 0.0004006028175354004,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "clean",
+      "from": "p_clean_v_clean",
+      "to": "p_truth_v_clean",
+      "candidate_value_differences": [
+        -0.0002447366714477539,
+        -0.00026473402976989746
+      ],
+      "margin_difference": -1.9997358322143555e-05,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "clean",
+      "from": "p_swap_v_clean",
+      "to": "p_truth_v_clean",
+      "candidate_value_differences": [
+        0.0008936524391174316,
+        0.0004730522632598877
+      ],
+      "margin_difference": -0.00042060017585754395,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "swap",
+      "from": "p_clean_v_swap",
+      "to": "p_swap_v_swap",
+      "candidate_value_differences": [
+        -0.001340627670288086,
+        -0.0009074509143829346
+      ],
+      "margin_difference": 0.00043317675590515137,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 0,
+      "to_selected_index": 0,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "swap",
+      "from": "p_clean_v_swap",
+      "to": "p_truth_v_swap",
+      "candidate_value_differences": [
+        -0.0008062124252319336,
+        -0.0006299614906311035
+      ],
+      "margin_difference": 0.00017625093460083008,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 0,
+      "to_selected_index": 0,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "swap",
+      "from": "p_swap_v_swap",
+      "to": "p_truth_v_swap",
+      "candidate_value_differences": [
+        0.0005344152450561523,
+        0.00027748942375183105
+      ],
+      "margin_difference": -0.0002569258213043213,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 0,
+      "to_selected_index": 0,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "truth",
+      "from": "p_clean_v_truth",
+      "to": "p_swap_v_truth",
+      "candidate_value_differences": [
+        -0.0011817216873168945,
+        -0.0007359981536865234
+      ],
+      "margin_difference": 0.0004457235336303711,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "truth",
+      "from": "p_clean_v_truth",
+      "to": "p_truth_v_truth",
+      "candidate_value_differences": [
+        -0.00035181641578674316,
+        -0.00023052096366882324
+      ],
+      "margin_difference": 0.00012129545211791992,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    },
+    {
+      "fixed_V": "truth",
+      "from": "p_swap_v_truth",
+      "to": "p_truth_v_truth",
+      "candidate_value_differences": [
+        0.0008299052715301514,
+        0.0005054771900177002
+      ],
+      "margin_difference": -0.00032442808151245117,
+      "selection_changed": false,
+      "both_orders_strict": true,
+      "from_selected_index": 1,
+      "to_selected_index": 1,
+      "selected_historical_success_difference": 0,
+      "selected_historical_capped_steps_difference": 0
+    }
+  ],
+  "clean_swap_interaction": {
+    "formula": "m(S,S)-m(S,C)-m(C,S)+m(C,C), m=Value1-Value0",
+    "margin_interaction": 3.2573938369750977e-05,
+    "candidate_value_interactions": [
+      -0.0002022385597229004,
+      -0.00016966462135314941
+    ],
+    "interpretation": "Numerical conditional dependence of fixed-seed Value outputs; not a mediation percentage or population estimate."
+  },
+  "truth_counterchecks": {
+    "visual_swap_with_truth_proprio": {
+      "condition": "p_truth_v_swap",
+      "selected_index": 0,
+      "exact_tie": false,
+      "strictly_selects_historically_failed_candidate": true,
+      "differs_strictly_from_all_truth_selection": true,
+      "clean_to_swap_other_block_truth": {
+        "from": "p_truth_v_clean",
+        "to": "p_truth_v_swap",
+        "candidate_value_differences": [
+          -0.005118519067764282,
+          -0.00668606162071228
+        ],
+        "margin_difference": -0.001567542552947998,
+        "selection_changed": true,
+        "both_orders_strict": true,
+        "from_selected_index": 1,
+        "to_selected_index": 0,
+        "selected_historical_success_difference": -1,
+        "selected_historical_capped_steps_difference": 130
+      },
+      "all_truth_to_swap_other_block_truth": {
+        "from": "p_truth_v_truth",
+        "to": "p_truth_v_swap",
+        "candidate_value_differences": [
+          -0.0020658373832702637,
+          -0.004471510648727417
+        ],
+        "margin_difference": -0.0024056732654571533,
+        "selection_changed": true,
+        "both_orders_strict": true,
+        "from_selected_index": 1,
+        "to_selected_index": 0,
+        "selected_historical_success_difference": -1,
+        "selected_historical_capped_steps_difference": 130
+      }
+    },
+    "proprio_swap_with_truth_visual": {
+      "condition": "p_swap_v_truth",
+      "selected_index": 1,
+      "exact_tie": false,
+      "strictly_selects_historically_failed_candidate": false,
+      "differs_strictly_from_all_truth_selection": false,
+      "clean_to_swap_other_block_truth": {
+        "from": "p_clean_v_truth",
+        "to": "p_swap_v_truth",
+        "candidate_value_differences": [
+          -0.0011817216873168945,
+          -0.0007359981536865234
+        ],
+        "margin_difference": 0.0004457235336303711,
+        "selection_changed": false,
+        "both_orders_strict": true,
+        "from_selected_index": 1,
+        "to_selected_index": 1,
+        "selected_historical_success_difference": 0,
+        "selected_historical_capped_steps_difference": 0
+      },
+      "all_truth_to_swap_other_block_truth": {
+        "from": "p_truth_v_truth",
+        "to": "p_swap_v_truth",
+        "candidate_value_differences": [
+          -0.0008299052715301514,
+          -0.0005054771900177002
+        ],
+        "margin_difference": 0.00032442808151245117,
+        "selection_changed": false,
+        "both_orders_strict": true,
+        "from_selected_index": 1,
+        "to_selected_index": 1,
+        "selected_historical_success_difference": 0,
+        "selected_historical_capped_steps_difference": 0
+      }
+    }
+  },
+  "findings": {
+    "visual_bidirectional_clean_swap": true,
+    "proprio_bidirectional_clean_swap": false,
+    "crossed_cells_exact_tie": false,
+    "both_crossed_cells_strictly_select_failure": false,
+    "both_crossed_cells_strictly_select_success": false,
+    "exact_tie_cells": [],
+    "new_physical_episodes": 0,
+    "decision": "Frozen local diagnostic complete; report every cell and close without searching new slots, cameras, strengths, seeds or roots.",
+    "crossed_cell_pattern": "The two crossed Clean/Swap cells follow the visual source in both strict ordering directions, conditional on these fixed input slots."
+  },
+  "execution": {
+    "elapsed_seconds": 13.511497772997245,
+    "activity": {
+      "value_sampler_calls": 18,
+      "denoiser_forward_calls": 18,
+      "noise_calls": 18,
+      "checkpoint_loads": 2,
+      "policy_sampler_calls": 0,
+      "future_sampler_calls": 0,
+      "vae_encodes": 0,
+      "vae_decodes": 0,
+      "environment_steps": 0,
+      "model_api_calls": 0,
+      "training_updates": 0
+    },
+    "preserved_technical_attempts": [
+      {
+        "summary": "runs/cosmos_future_modality_factorial_20261016/summary.json",
+        "status": "error",
+        "session_id": 45357,
+        "exit_code": 1,
+        "elapsed_seconds": 3.8961563679622486,
+        "raw_activity": {
+          "value_sampler_calls": 0,
+          "denoiser_forward_calls": 0,
+          "noise_calls": 0,
+          "checkpoint_loads": 1,
+          "policy_sampler_calls": 0,
+          "future_sampler_calls": 0,
+          "vae_encodes": 0,
+          "vae_decodes": 0,
+          "environment_steps": 0,
+          "model_api_calls": 0,
+          "training_updates": 0
+        },
+        "checkpoint_load_attempts": 1,
+        "successful_checkpoint_loads": 0,
+        "error": {
+          "type": "ValueError",
+          "message": "f must be a string filename in order to use mmap argument"
+        },
+        "interpretation": "Startup compatibility failure before any inference or scientific outcome; preserved, not treated as a negative result."
+      }
+    ],
+    "all_attempt_activity": {
+      "value_sampler_calls": 18,
+      "denoiser_forward_calls": 18,
+      "noise_calls": 18,
+      "checkpoint_loads": 3,
+      "policy_sampler_calls": 0,
+      "future_sampler_calls": 0,
+      "vae_encodes": 0,
+      "vae_decodes": 0,
+      "environment_steps": 0,
+      "model_api_calls": 0,
+      "training_updates": 0
+    },
+    "checkpoint_counter_semantics": "The raw checkpoint_loads counter counts attempts; completed run loaded two checkpoints successfully, while the preserved initial mmap failure loaded none successfully.",
+    "peak_cuda_allocated_bytes": 4190128128,
+    "peak_cuda_reserved_bytes": 4288675840,
+    "analysis": {
+      "implementation": "Python standard library; saved JSON only",
+      "model_calls": 0,
+      "environment_steps": 0,
+      "api_calls": 0,
+      "weight_loads": 0
+    }
+  },
+  "limits": [
+    "Mixed outputs may be physically inconsistent or outside model training support. Identify Value input dependence, not semantic attribution of a realized physical scene.",
+    "Truth components are researcher diagnostics, not a deployable repair.",
+    "Large visual MSE and actual task loss remain distinct measurements.",
+    "The earlier direct text-to-action-entry selectivity failure, failed30-root expansion gate and coupling null remain unchanged.",
+    "Cannot infer a new external writer, universal Goal invariance, effective Bus-Cut/Control-Cut or fulfilled paper objective.",
+    "Native Value is a discounted behavior-return proxy, not a calibrated success probability; fixed candidate seeds31/32 describe one realization.",
+    "Each selection is joined to a previously executed original-Goal continuation. No new closed-loop task or recovery episode occurred in this diagnostic.",
+    "Bidirectional flags follow the frozen strict ordering definitions. A tie is explicitly tie-driven and cannot establish either directional pattern.",
+    "Slot5 MSE is an error in the encoded proprio representation, not a parsed physical-state distance. All-slot MSE is descriptive only.",
+    "All contrasts reuse one post-hoc root and its two candidates; no independent statistical sample, ASR, confidence interval, universal invariance, or complete causal mediation is inferred."
+  ],
+  "csv": "reports/cosmos_future_modality_factorial_decision_20261016.csv",
+  "reproduce": "python scripts/analyze_cosmos_future_modality_factorial.py --verify-only"
+}

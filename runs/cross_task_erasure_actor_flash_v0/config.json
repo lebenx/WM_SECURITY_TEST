@@ -1,0 +1,22 @@
+{
+  "model": "deepseek-v4-pro",
+  "actor_model": "deepseek-flash",
+  "require_clean_success": true,
+  "ground_wait_commands": true,
+  "conditions": [
+    "clean",
+    "benign",
+    "post_attack_only"
+  ],
+  "source": ".",
+  "data": "runs/native_core_records_v0/test-conductivity-of-unknown-substances.json",
+  "task_name": "test-conductivity-of-unknown-substances",
+  "prefix_count": 12,
+  "prefix_extra_actions": [
+    "activate switch"
+  ],
+  "skip_setup_look": true,
+  "checkpoint_map": "configs/cross_task_erasure_checkpoints.json",
+  "steps": 12,
+  "output": "runs/cross_task_erasure_actor_flash_v0"
+}

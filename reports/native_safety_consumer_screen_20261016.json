@@ -1,0 +1,173 @@
+{
+  "schema_version": 1,
+  "date_local": "2026-10-16",
+  "created_at_utc": "2026-10-15T16:19:02.138891+00:00",
+  "status": "source_screen_complete_no_new_task_experiment",
+  "decision": "native_safety_consumer_confirmed_no_go_for_security_harm_claim_or_experiment_expansion",
+  "goal_status": "active_unachieved",
+  "question": "Does a materially different existing native forecast consumer support a controlled, low-cost test with independent actual consequences?",
+  "source_summary": "runs/safedreamer_source_screen_20261016/summary.json",
+  "source_provenance": "runs/safedreamer_source_screen_20261016/provenance.json",
+  "independent_review": "reports/safedreamer_source_review_20261016.json",
+  "protected_semantic_contract": {
+    "physical_prediction": "Only when physical state or belief, complete timed action sequence, exogenous law, prediction endpoint and physical event are fixed is a preference-only Goal excluded from physical transition semantics.",
+    "legitimate_goal_effects": "Goal may alter later policy, planned actions, reward, task failure and policy-specific risk; these are not counterexamples to a fixed-action physical invariance contract.",
+    "carrier_scope": "SafeDreamer is a stochastic native safety-cost consumer, not an independently qualified Goal-Swap interface. No separate permissible Goal writer was established by this screen."
+  },
+  "existing_carrier_time_and_execution_screen": [
+    {
+      "model": "Cosmos / AlphaBrain",
+      "decision": "no_new_qualified_interface",
+      "finding": "Current adapter disables RoPE FPS modulation; inspected positional paths do not use the supplied FPS. Changing executed chunk length changes the actual control sequence. Current execution stops on real environment success, not forecast-declared success.",
+      "source_paths": [
+        "scripts/cosmos_policy_native_inference.py",
+        "vendor/AlphaBrain/AlphaBrain/model/modules/world_model/cosmos/official_dit/minimal_v4_dit.py"
+      ]
+    },
+    {
+      "model": "DINO / JEPA-WM",
+      "decision": "no_new_qualified_interface",
+      "finding": "Each planning call re-encodes actual observations; steps_left changes the prediction horizon. Chunk and success-stop changes alter the execution contract rather than preserving full timed controls and forecast endpoint. Prior objective/reward mismatch remains a separate measured limitation.",
+      "source_paths": [
+        "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py",
+        "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py"
+      ]
+    },
+    {
+      "model": "TD-MPC2",
+      "decision": "no_new_qualified_interface",
+      "finding": "The current adapter sets episodic=False, so the proposed predicted-terminal route is absent. Native control is sampled from scored elites; action repeat changes physical duration. The previously tested warm-start operation had no measured harm and is not reopened.",
+      "source_paths": [
+        "src/wm_security/tdmpc_native.py",
+        "vendor/tdmpc2/tdmpc2/tdmpc2.py"
+      ]
+    }
+  ],
+  "safedreamer": {
+    "repository": "https://github.com/PKU-Alignment/SafeDreamer",
+    "source_revision": "529221f02b54d5093e304d877eb2aaf6da63a9ff",
+    "source_scope": "Four pinned code/config files plus complete 89-entry repository tree and official checkpoint metadata. Source blobs were checked against that tree once; no complete entry-point/runtime qualification.",
+    "native_path": "Agent eval uses the configured CCEPlanner output. Imagined RSSM trajectories feed reward/cost scoring, candidate selection and the executed first action of a smoothed elite mean.",
+    "vector": {
+      "checkpoint_metadata_bytes": 26564352,
+      "checkpoint_loaded": false,
+      "config": "osrp_vector / SafetyPointGoal1-v0; use_cost=False; cost_limit=0",
+      "cost": "Decoder geometric hazard counts 0..8 per frame, summed over H+1 states including the initial state; nonnegative and no 1000/H scaling.",
+      "gate": "Strict cost<0 is impossible in this checked configuration; safe_count=0 and the cost-minimizing fallback is selected.",
+      "conclusion": "No-Go for using this small released configuration to test a safe-count reward/cost mode switch. Not a measured Clean failure or a statement about runtime overrides."
+    },
+    "ordinary_osrp": {
+      "checkpoint_metadata_bytes": 391867080,
+      "checkpoint_loaded": false,
+      "config": "osrp / SafetyPointGoal1-v0; use_cost=True; cost_limit=2; H15; Gaussian candidates500; actor mixture0; elites50; iterations6",
+      "cost": "A single sampled latent trajectory per candidate; sum of cost_head.mean()[1:] over H future states, multiplied by 1000/H. This is not bootstrapped cost_ret or a Monte Carlo quantile. The symlog_disc(-20,20) head allows signed means.",
+      "gate": "If fewer than50 candidate costs are below2, rank the entire batch by negative cost; otherwise rank the safe-indexed candidates by reward.",
+      "conclusion": "A native stochastic forecast safety gate exists in source. Checkpoint compatibility, Clean task capability and actual safety-cost consequences remain unmeasured."
+    },
+    "implementation_confounds": [
+      "Fixed-size nonzero without a validity mask pads index0. When 50<=safe_count<N, this can duplicate an unsafe candidate0 in the reward branch; even safe candidate0 changes multiplicities. Source possibility only, not observed unsafe execution.",
+      "CCE executes .1*old_mean+.9*elite_mean first action, with no separate future/cost check of that aggregate in the inspected method. Safe individual candidates do not certify their mean; the mean is not thereby proven unsafe."
+    ],
+    "permission_and_control": [
+      "The sampler is an internal RSSM operation; no external restricted forecast-noise writer was established.",
+      "Changing a global seed also changes posterior and action proposals, violating protected-input controls.",
+      "A forecast-only sampler hook would be an added researcher or supply-chain interface. It must preserve each candidate full temporal and cross-coordinate forecast law, not only scalar marginals.",
+      "Later native CEM proposals depend on earlier selected elites. Identical candidate sets across all rounds cannot be claimed simply by fixing the initial RNG."
+    ],
+    "novelty": "Native safe-count switching is a useful consumer distinction, not by itself a new sampling mechanism. Existing coupling ideas, ordinary padding defects and nonconvex mean execution must be separated before a systems-security contribution can be assessed.",
+    "published_assets": "Official Hugging Face metadata confirms matched Vector and ordinary OSRP files. No weights were downloaded or strict-loaded; published performance is not a local result.",
+    "primary_urls": [
+      "https://github.com/PKU-Alignment/SafeDreamer/tree/529221f02b54d5093e304d877eb2aaf6da63a9ff",
+      "https://huggingface.co/Weidong-Huang/SafeDreamer/tree/80ef19ee7a7a8a105489100c1dc6e1681df2c97b"
+    ]
+  },
+  "go_no_go": {
+    "go": "Retain the pinned native safety-consumer path and matching official asset metadata as a resource lead.",
+    "no_go": "No new task pilot, model setup, weight download or GPU expansion from this screen alone. Do not substitute the Vector configuration for ordinary OSRP or label source caveats as security harm.",
+    "reopening_requirements": [
+      "A precise, materially distinct mechanism and scoped controllable interface.",
+      "Disentangle padding and unverified aggregate execution from the proposed mechanism.",
+      "One unchanged native Clean qualification before claiming task damage; actual safety cost must come from the environment.",
+      "Freeze candidate/proposal and randomness controls appropriate to the stated native or added diagnostic."
+    ],
+    "not_proven": [
+      "Real task damage in SafeDreamer",
+      "Effective selective defense",
+      "External low-trust reachability",
+      "New mechanism or independent generalization",
+      "Completion of the research Goal"
+    ],
+    "prior_results_preserved": "Cosmos single-root Goal-Swap harm and true-future ranking restoration remain local evidence; the 30-root expansion gate and later coupling/action-route negatives remain failed. TD-MPC2 nullspace, strong-CEM and GenSafeNav fixed-candidate negatives remain unchanged."
+  },
+  "activity": {
+    "new_model_task_experiments": 0,
+    "checkpoint_downloads": 0,
+    "pretrained_model_loads": 0,
+    "neural_forwards": 0,
+    "model_api_calls": 0,
+    "environment_steps": 0,
+    "training_updates": 0,
+    "gpu_jobs": 0,
+    "new_operator_executions": 0,
+    "public_source_and_metadata_access": true,
+    "source_code_config_files": 4,
+    "source_code_config_bytes": 90158
+  },
+  "statistical_scope": "No new empirical task samples, effect estimate, ASR or statistical test. Deterministic source implications are not independent task replications.",
+  "next_action": "Seek a materially different qualified causal interface using current resources; retain ordinary OSRP as conditional lead without automatically reviving archived sampling or irrelevant-option hypotheses.",
+  "runtime_and_mechanism_followup": {
+    "completed_at_utc": "2026-10-15T16:28:00.921941+00:00",
+    "previous_goal_turn_classification": {
+      "classification": "progress",
+      "basis": "Pinned safety-consumer source, configuration exclusion, independent review and asset metadata changed which configurations could be tested; no core security claim was established."
+    },
+    "runtime_summary": "runs/safedreamer_runtime_screen_20261016/summary.json",
+    "experiment_selection": {
+      "candidate": "Shared versus independent complete RSSM random streams under ordinary OSRP, with initial posterior and action proposals protected.",
+      "decision": "not_selected_no_runtime_setup_or_clean_launch",
+      "reason": "This is a transfer of existing cross-candidate sampling coupling, not a new mechanism. Native safe-count switching supplies a distinct consumer, but an episode-level two-arm comparison would conflate that gate with ordinary selection, zero-index padding and unvalidated elite-mean execution.",
+      "decisive_prediction_required": "Actual cost increase is mediated by the batch safety-mode switch: on the same forecasts and reward/cost scores, a matched intervention that fixes only the switch removes that increase, after separately resolving padding and aggregate execution. This is a required identification design, not an executed or frozen protocol.",
+      "fairness_boundary": "No theorem or native probability-safety guarantee was shown to be violated. The program counts alternative candidates, not Monte Carlo particles estimating one action safety probability.",
+      "permission_boundary": "An added restricted imagined-noise sampler may be a legitimate research threat model; lack of a deployed permission is not by itself the reason for this stop.",
+      "preserved_prior_evidence": "All old coupling task outcomes and failed strong-controller/generalization gates stay unchanged. No new seed/task selection or alternate threshold is introduced."
+    },
+    "new_resource_findings": [
+      "The official evaluation entry constructs the chosen defaults+osrp+CLI configuration before loading only the agent variable tree. Its load method has no explicit strict parameter-key/shape check and does not restore configuration; compatibility remains untested, not disproven.",
+      "The inspected native reset chain does not pass config.seed to the physical environment. A first-reset seed adapter or exact state snapshots would need explicit verification before paired comparisons.",
+      "Actual safety_gymnasium reward/cost are returned by step and summed through repeat5 and episode logging. They can supply independent true utility; full replay traces and exact inner physical-step counts are not supplied by the stock evaluator.",
+      "Driver rows attach the newly chosen next action to the observation/reward just returned from the previous action. Future task recording must preserve this time alignment rather than assigning reward to the same row action.",
+      "Native eval renders1024x1024 and downsamples model inputs, and invokes report_eval on each entire episode. Replacing rendering may change pixels; disabling report-only inference would require a declared adapter and separate accounting.",
+      "Bounded package metadata inspection found only a much newer JAX/jaxlib in one reusable environment and no complete installed Safety-Gymnasium/TFP/Optax stack. No package was imported, installed or empirically shown incompatible."
+    ],
+    "existing_execution_contract_screen": [
+      {
+        "model": "TD-MPC2",
+        "source": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+        "finding": "Native evaluation returns a weighted sampled scored elite action; do not misdescribe it as unscored elite-mean execution."
+      },
+      {
+        "model": "DINO",
+        "source": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+        "finding": "Native planner unrolls the updated mean then returns its prefix. The mean need not be one of the final ranked candidates; no new restricted writer was found beyond existing alias/coupling/ordinary objective issues."
+      },
+      {
+        "model": "Cosmos",
+        "source": "scripts/cosmos_policy_native_inference.py",
+        "finding": "Candidate action latent remains bound through Future and Value; conditioned prefix and finiteness assertions exclude the proposed unsupported row-unbinding story in this inspected adapter."
+      }
+    ],
+    "activity": {
+      "source_document_fetches": 11,
+      "weights_downloaded": 0,
+      "packages_installed": 0,
+      "model_api_calls": 0,
+      "model_calls": 0,
+      "environment_steps": 0,
+      "training_updates": 0,
+      "new_operator_probes": 0
+    },
+    "retrieval_limits": "Root additionally attempted to read the SafeDreamer paper from OpenReview/arXiv; browser challenge, missing HTML and oversized PDF prevented full-text access through those calls. No new novelty conclusion is inferred from failed fetches or search snippets.",
+    "next_action": "Stop automatic SafeDreamer setup and further same-candidate source audits. Reopen only with a specified causal experiment that improves on archived sampling evidence, or a materially different qualified mechanism. These are scientific selection conditions, not a request for user permission or an external blocker.",
+    "claim_status": "No new security mechanism, task harm, defense, independent generalization or completed research Goal."
+  }
+}

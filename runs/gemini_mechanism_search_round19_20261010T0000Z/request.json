@@ -1,0 +1,10 @@
+{
+  "task": "strict mechanism review after actor-restored native_full falsification",
+  "carrier": "official TD-MPC2 mt30-48M, native model.next and native horizon-3 MPC",
+  "threat": "attacker submits only authentic legal transitions from a source task; no observation/reward/weight edits",
+  "established_positive": "dynamics-only cheetah-run cascade can reduce held-out walker-run MPC returns on two seeds while one-step error is 0.922x random; temporal reverse and matched shuffle recover",
+  "new_causal_control": "after 80 native_full updates, restore the original actor parameters and evaluate only the adapted model with native MPC for 300 steps: cascade vs random is -4.6%/+8.2% on seeds31/32, reverse is +0.2%/+17.1%, shuffle is -2.3%/+13.1%, cascade one-step error ratio 0.993",
+  "rejected_families": ["ordinary continual-learning negative transfer", "latent drift/mode collapse", "uncertainty or ensemble identity manipulation", "CEM/MPPI sampling dispersion", "generic rollout compounding", "gradient-integrity or non-default gradient planner", "actor/value joint-update effect as planner-only mechanism"],
+  "constraints": ["must use released TD-MPC2 carrier and default native planner", "must be executable with authentic legal data and a <=120 second falsification gate", "must predict a selective effect that survives two seeds and restores or explains the dynamics-only cascade loss without changing clean/random performance", "do not propose an unavailable carrier or rename a rejected family"],
+  "output_schema": {"decision":"PROMOTE_ONE or REJECT_ALL", "novelty_score": "number 0-10", "candidate": "object or null", "rationale":"string", "minimal_gate":"string"}
+}

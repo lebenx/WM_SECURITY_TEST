@@ -1,0 +1,20 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "walker-walk-backwards",
+  "targets": [
+    "walker-walk-backwards",
+    "walker-walk"
+  ],
+  "source_seed": 21,
+  "eval_seed": 11,
+  "actions": 300,
+  "updates": 40,
+  "output": "runs/tdmpc_adaptation_screen_v1",
+  "source_policies": [
+    "mpc",
+    "random"
+  ],
+  "update_scope": "shared dynamics only",
+  "optimizer": "Adam, upstream lr, batch32, native3-step consistency objective",
+  "scope": "Researcher-defined continual adaptation of an offline pretrained model. No observation edits, learned adversarial policy, or attack claim."
+}

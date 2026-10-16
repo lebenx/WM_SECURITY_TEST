@@ -1,0 +1,143 @@
+{
+  "timestamp_utc": "2026-10-14T04:08:45.488680+00:00",
+  "status": "read_only_source_audit_completed",
+  "source_sha256": {
+    "scripts/pilot_worldagen_native_task_gate.py": "37fc400f1b6531a4036cbb47f7d1d75ebf85dce12f4631e53b17c6095c1cd317",
+    "scripts/pilot_worldagen_libero_closed_loop.py": "31d006225aa51a80349a1195c088fc920f032f881c3ef153377cd63f6f86d52f",
+    "scripts/pilot_worldagen_forecast_ttt_task.py": "ea6d6f8d0ace782bc568c6fde440239ab81767ad8f73a5106a29e99dd40c2742",
+    "vendor/WorldAgen/eval_libero.py": "64fec593b81c4327f864b00cb4f97520be3ffca05e88acb395dc7e92d0b65838",
+    "vendor/WorldAgen/utils/eval_utils_libero.py": "adc740ce44ae496504339c8c6618b62e7ca20f129bcfb435906f0c29ad89485b",
+    "vendor/WorldAgen/utils/arguments_utils.py": "c655144007205ae217214cc8e609cacf78a72aba4012a8d81195c3c467025512",
+    "vendor/WorldAgen/utils/calvin_data_utils.py": "a1a2da7fc2fa81502abfa157b54c0e6a2c4b0d4e0d1891a2dd1ed725c6e9fee2",
+    "vendor/WorldAgen/scripts/libero/eval_wo_ttt.sh": "dd21ee6ef3592b965a04550b625bf933a9953d6bdffd9c83aaa263a074196447",
+    "vendor/WorldAgen/utils/convert_libero_per_step.py": "be63a61e614e13fc6abbe4677658026fd0b650cfd3980e05b5ebbb8bf500a2fc",
+    "vendor/LIBERO/scripts/create_dataset.py": "6ff09687a6ca8cb5df16b828cce2326467099da2b4dd6e5af557644d3e60f37f"
+  },
+  "baseline": {
+    "source": "/home/xhj/WM_Security/runs/worldagen_native_task_gate_matched30_v1/summary.json",
+    "sha256": "7903e8ff85b02d17024a5678f327d45e58822fdfa3b27fb3fb589e106dfb6126",
+    "episodes": 30,
+    "successes": 19,
+    "success_rate": 0.6333333333333333,
+    "prespecified_minimum_successes": 21,
+    "gate_passed": false
+  },
+  "differences": [
+    {
+      "factor": "camera_render_size",
+      "local": 224,
+      "upstream_evaluator_default": 128,
+      "training_dataset_capture": 128,
+      "evidence": [
+        "vendor/WorldAgen/utils/arguments_utils.py:231",
+        "vendor/LIBERO/scripts/create_dataset.py:97",
+        "vendor/WorldAgen/scripts/libero/eval_wo_ttt.sh"
+      ],
+      "decision": "Highest-priority clean-only matched 30-episode ablation, change only camera size."
+    },
+    {
+      "factor": "orientation",
+      "local": "quaternion -> Euler xyz",
+      "upstream_evaluator": "quaternion -> Euler xyz",
+      "training_path": "LIBERO stores quaternion -> axis-angle; WorldAgen loader treats the three axis-angle entries as Euler and canonicalizes them",
+      "evidence": [
+        "vendor/WorldAgen/utils/eval_utils_libero.py:33",
+        "vendor/LIBERO/scripts/create_dataset.py:207",
+        "vendor/WorldAgen/utils/calvin_data_utils.py:1700"
+      ],
+      "decision": "Retain Euler for official-evaluator match. Training-codec alternative is a separately named later ablation, not an established correction."
+    },
+    {
+      "factor": "image_orientation",
+      "local": "raw environment RGB, no rotation",
+      "upstream_evaluation_and_training_conversion": "raw RGB; no 180-degree rotation at inspected path",
+      "evidence": [
+        "vendor/LIBERO/scripts/create_dataset.py:220",
+        "vendor/WorldAgen/utils/convert_libero_per_step.py:125",
+        "vendor/WorldAgen/utils/calvin_data_utils.py:1674",
+        "vendor/WorldAgen/utils/eval_utils_libero.py:274"
+      ],
+      "decision": "Retain current raw orientation; do not reuse old rotated-accuracy results."
+    },
+    {
+      "factor": "gripper",
+      "local": "binary command with gripper_width=False, 7-vector actions/state",
+      "upstream_shell": "gripper_width=True",
+      "upstream_wrapper": "still 7-vector actions/state",
+      "model": "gripper input Linear requires 2 features; True passes one scalar for the seven-dimensional native actions, incompatible as written",
+      "checkpoint_metadata": "epoch/model/optimizer/scheduler only; no saved training args to resolve semantics",
+      "evidence": [
+        "vendor/WorldAgen/models/model.py:185",
+        "vendor/WorldAgen/models/model.py:380",
+        "vendor/WorldAgen/utils/eval_utils_libero.py:101",
+        "vendor/WorldAgen/scripts/libero/eval_wo_ttt.sh:55"
+      ],
+      "decision": "Keep the validated binary one-hot codec; do not infer a width correction from contradictory shell flag."
+    },
+    {
+      "factor": "vision_precision",
+      "local": "FP32",
+      "upstream_shell": "BF16 vision encoder; other modules FP32",
+      "decision": "Lower-priority clean-only compatibility ablation after camera check."
+    },
+    {
+      "factor": "horizon_chunk_history",
+      "local": [
+        600,
+        3,
+        2
+      ],
+      "upstream": [
+        600,
+        3,
+        2
+      ],
+      "decision": "Matched; no change."
+    },
+    {
+      "factor": "settling",
+      "local": "5 zero-action steps then read settled observation; zeros float32",
+      "upstream": "5 zero-action steps but first observation remains stale; np.zeros float64",
+      "decision": "Current refreshed observation is intentional. Do not restore stale input merely to optimize task rate."
+    },
+    {
+      "factor": "executed_action_dtype",
+      "local": "float16 CPU numpy",
+      "upstream": "float16 CPU numpy",
+      "decision": "Matched. Replay must retain float16; float32 dispatch previously changed controller dynamics."
+    },
+    {
+      "factor": "seed_and_rng",
+      "local": "31; reset Python/NumPy/Torch per episode; seed environment before reset",
+      "upstream": "42; global seed at startup, Torch stream continues across episodes; environment reset then seeded",
+      "decision": "Keep current matched protocol for camera-only ablation. No seed selection."
+    },
+    {
+      "factor": "ensembling",
+      "upstream_shell": "flag enabled",
+      "inspected_code": "argument is declared but no consuming implementation found",
+      "decision": "No available ensembling behavior to reproduce."
+    },
+    {
+      "factor": "official_entrypoint_compatibility",
+      "upstream_eval_libero": "passes unsupported WorldAgen constructor arguments and omits other intended settings",
+      "decision": "Call current runner a checkpoint-matched adapter reusing native wrapper, not executable full official command reproduction."
+    }
+  ],
+  "cpu_ttt_audit": {
+    "no_hardcoded_cuda_model_compute_found_after_device_wrapper": true,
+    "model_device_override": "install_device_wrapper sets base.DEVICE and replaces only wrapper initializer; action/world methods unchanged",
+    "remaining_cuda_references": [
+      "gate.episode calls cuda.is_available and manual_seed_all; these are not GPU model computation",
+      "renderer is separate and receives render_gpu_device_id=0"
+    ],
+    "osmesa": {
+      "ctypes_find_library": null,
+      "ldconfig_entry_found": false,
+      "available_now": false,
+      "import_side_effect": "vendor/WorldAgen/utils/eval_utils_libero.py forcibly sets MUJOCO_GL and PYOPENGL_PLATFORM to egl; shell-only osmesa setting is overwritten"
+    },
+    "cpu_gpu_pairing": "CPU must have its own Frozen/CleanTTT baseline; no paired mixing with CUDA task results",
+    "inspection_only": "No CPU model inference performed by this audit."
+  }
+}

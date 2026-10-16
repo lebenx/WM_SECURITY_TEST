@@ -1,0 +1,12 @@
+{
+  "candidate": "trajectory-manifold imprinting / counterfactual support shaping",
+  "proposed_claim": "Under a shared action-conditioned world model, authentic source-task trajectories can selectively reshape the shared model's interpolation geometry around the source's visited state-action manifold, so a target task's unvisited action comparisons are ranked incorrectly after source exit even when target one-step latent error and actor are nearly unchanged; reverse-path and matched action-multiset controls remove the effect.",
+  "new_evidence": {
+    "native_horizon3": "cheetah-run ordered cascade -> walker-run MPC loss 19.1%/19.3% on seeds31/32; reverse loss 6.0%/0.5%; shuffled approximately no loss; one-step error ratio 0.922; dynamics-only, actor unchanged",
+    "one_step_training": "same legal source conditions but adaptation consistency window forced to 1 step: cascade loss 12.4%/16.0%; reverse 6.9%/3.6%; shuffled -0.1%/+1.1%; cascade one-step error ratio 1.011; actor unchanged",
+    "negative_mechanism_tests": "latent power/Jacobian non-normality not source-selective; A/B update commutator not cascade-specific; planner rank drop only one seed; actor-restored native_full loses the two-seed effect; Q-only adaptation gives no selective cascade harm; latent-projection short gate cascade return exceeds random and target power norm is unchanged"
+  },
+  "carrier": "official TD-MPC2 mt30-48M, authentic legal cheetah source, native walker-run MPC",
+  "known_boundary": "Do not call this generic non-IID negative transfer, occupancy shift, rollout compounding, SWAAP/TRAP/data poisoning, or ordinary dynamics misfit. Need a named mediator that can be measured and a useful intervention/defense.",
+  "required_output": {"decision":"PROMOTE_REFRAME or REJECT_ALL", "novelty_score":"0-10", "one_sentence_claim":"broad and qualified", "mediator":"specific measurable mechanism", "minimum_experiments":"strong multi-task plan", "defense":"nontrivial useful defense", "prior_art_boundary":"why distinct", "falsifier":"clear rejection condition"}
+}

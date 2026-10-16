@@ -1,0 +1,1320 @@
+{
+  "status": "completed",
+  "condition": "goal_proprio_servo",
+  "config": {
+    "path": "/home/xhj/WM_Security/configs/dino_metaworld_servo_baseline_v1.json",
+    "sha256": "84a6d527bf5cd6d10de946b5403d5f2e323435443fce7d1cf6cc838313e26a72"
+  },
+  "runner": {
+    "path": "/home/xhj/WM_Security/scripts/pilot_dino_metaworld_servo_baseline.py",
+    "sha256": "347f6d61ebce58da85139eb5ad48669e7d4500311d5448616c983e1723e8dc85"
+  },
+  "frozen_helper": {
+    "path": "/home/xhj/WM_Security/scripts/pilot_dino_metaworld_clean_gate.py",
+    "sha256": "8ffed3253abd228e6bcd165f88cfd220c33749fe6a6542d7330a62ffabf8b02b"
+  },
+  "source_summary": {
+    "path": "/home/xhj/WM_Security/runs/dino_metaworld_mujoco330_clean_v1/summary.json",
+    "sha256": "28f9c46ff0d0b6a61fd32a0ee291f533d62f8afcbf6b7f073d9819041d91dfc5"
+  },
+  "protocol": {
+    "task": "mw-reach",
+    "seeds": [
+      1,
+      2,
+      3
+    ],
+    "total_environment_steps": 100,
+    "warmup_zero_controls": 1,
+    "policy_controls": 99,
+    "query_elapsed_steps": [
+      1,
+      16,
+      31,
+      46,
+      61,
+      76,
+      91
+    ],
+    "hold_control_counts": [
+      15,
+      15,
+      15,
+      15,
+      15,
+      15,
+      9
+    ],
+    "policy_inputs": "Only raw float32 current and goal proprio vectors of shape (4,); xyz used, fourth entry ignored",
+    "policy": "a_xyz=clip(float32(5)*(goal_xyz-current_xyz),-1,1); a_gripper=0",
+    "gain": 5.0,
+    "gripper": 0.0,
+    "action_dtype": "float32",
+    "normalization": "None; raw environment actions, never action denormalization",
+    "feedback": "Read new proprio only at the seven registered query boundaries; latch the same action within each block",
+    "goal": "Unmodified native separate-expert final goal proprio already supplied to the Clean planner",
+    "privileged_policy_inputs": false,
+    "evaluator_only_fields": [
+      "task target",
+      "TCP",
+      "full state",
+      "expert actions",
+      "reward",
+      "success"
+    ],
+    "success": "Final native info.success at environment step100, checked against TCP-target distance<=0.05m",
+    "early_success_termination": false,
+    "setup": "Reuse frozen setup_episode; require every recorded setup array and initial/goal PNG hash exact to the corresponding Clean episode",
+    "renderer": "CPU OSMesa",
+    "mujoco": "3.3.0",
+    "model_loading": false,
+    "model_calls": 0,
+    "api_requests": 0,
+    "training_updates": 0,
+    "attempts_per_seed": 1,
+    "exception_rule": "Stop and preserve partial/error evidence; no replacement, retry, gain tuning or budget change"
+  },
+  "episodes": [
+    {
+      "seed": 1,
+      "status": "completed",
+      "decisions": [
+        {
+          "index": 1,
+          "elapsed_before": 1,
+          "current_proprio": [
+            0.004601670429110527,
+            0.6010369658470154,
+            0.1949342042207718,
+            1.0
+          ],
+          "goal_proprio": [
+            -0.09500855952501297,
+            0.8797524571418762,
+            0.18353219330310822,
+            0.9975108504295349
+          ],
+          "action": [
+            -0.49805116653442383,
+            1.0,
+            -0.05701005458831787,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 2,
+          "elapsed_before": 16,
+          "current_proprio": [
+            -0.06172868236899376,
+            0.7048527002334595,
+            0.19195203483104706,
+            0.9973503351211548
+          ],
+          "goal_proprio": [
+            -0.09500855952501297,
+            0.8797524571418762,
+            0.18353219330310822,
+            0.9975108504295349
+          ],
+          "action": [
+            -0.16639938950538635,
+            0.8744987845420837,
+            -0.042099207639694214,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 3,
+          "elapsed_before": 31,
+          "current_proprio": [
+            -0.08831968158483505,
+            0.8121594786643982,
+            0.19101516902446747,
+            0.9966370463371277
+          ],
+          "goal_proprio": [
+            -0.09500855952501297,
+            0.8797524571418762,
+            0.18353219330310822,
+            0.9975108504295349
+          ],
+          "action": [
+            -0.03344438970088959,
+            0.33796489238739014,
+            -0.037414878606796265,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 4,
+          "elapsed_before": 46,
+          "current_proprio": [
+            -0.09533283859491348,
+            0.8588918447494507,
+            0.1864655315876007,
+            0.9967358112335205
+          ],
+          "goal_proprio": [
+            -0.09500855952501297,
+            0.8797524571418762,
+            0.18353219330310822,
+            0.9975108504295349
+          ],
+          "action": [
+            0.0016213953495025635,
+            0.10430306196212769,
+            -0.014666691422462463,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 5,
+          "elapsed_before": 61,
+          "current_proprio": [
+            -0.09677117317914963,
+            0.8788893222808838,
+            0.18177498877048492,
+            0.9969555735588074
+          ],
+          "goal_proprio": [
+            -0.09500855952501297,
+            0.8797524571418762,
+            0.18353219330310822,
+            0.9975108504295349
+          ],
+          "action": [
+            0.008813068270683289,
+            0.004315674304962158,
+            0.008786022663116455,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 6,
+          "elapsed_before": 76,
+          "current_proprio": [
+            -0.09654796123504639,
+            0.8887432217597961,
+            0.18068726360797882,
+            0.9971804618835449
+          ],
+          "goal_proprio": [
+            -0.09500855952501297,
+            0.8797524571418762,
+            0.18353219330310822,
+            0.9975108504295349
+          ],
+          "action": [
+            0.007697008550167084,
+            -0.04495382308959961,
+            0.014224648475646973,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 7,
+          "elapsed_before": 91,
+          "current_proprio": [
+            -0.09668171405792236,
+            0.8932790160179138,
+            0.18182674050331116,
+            0.9973921179771423
+          ],
+          "goal_proprio": [
+            -0.09500855952501297,
+            0.8797524571418762,
+            0.18353219330310822,
+            0.9975108504295349
+          ],
+          "action": [
+            0.008365772664546967,
+            -0.06763279438018799,
+            0.00852726399898529,
+            0.0
+          ],
+          "executed_control_count": 9
+        }
+      ],
+      "setup": {
+        "seed": 1,
+        "episode_index": 0,
+        "elapsed_after_warmup": 1,
+        "initial_success": false,
+        "initial_reach_distance": 0.29353880618200795,
+        "warmup_reward_excluded_from_policy_return": 1.373423457145691,
+        "warmup_native_success": false,
+        "expert_final_success": true,
+        "expert_final_reach_distance": 0.04652329087426606,
+        "expert_steps": 100,
+        "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+        "expert_trace": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed1_servo/expert_trace.jsonl",
+          "sha256": "f72a1c7659e2383cb7f586a7242cdb01bc1e72c506ca2572dc65e5ab70f7fa56"
+        },
+        "arrays": {
+          "sim_qpos": {
+            "dtype": "<f8",
+            "shape": [
+              16
+            ],
+            "sha256": "f4b2d351c23cba22413bd8b28cac836a11e757aa7cf0a66365a98d1a4553a5c7"
+          },
+          "sim_qvel": {
+            "dtype": "<f8",
+            "shape": [
+              15
+            ],
+            "sha256": "dc5f3a164b4864fe8be7279c4bb2608ab5297b8438f8d0522004153f9b718c4a"
+          },
+          "sim_qacc_warmstart": {
+            "dtype": "<f8",
+            "shape": [
+              15
+            ],
+            "sha256": "4fb5b0b4d6f619407fa4b23385954b3e5d93ef1d4eb90b9dd7046d1fc98fa0e9"
+          },
+          "sim_ctrl": {
+            "dtype": "<f8",
+            "shape": [
+              2
+            ],
+            "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+          },
+          "sim_mocap_pos": {
+            "dtype": "<f8",
+            "shape": [
+              1,
+              3
+            ],
+            "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+          },
+          "sim_mocap_quat": {
+            "dtype": "<f8",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+          },
+          "sim_time": {
+            "dtype": "<f8",
+            "shape": [
+              1
+            ],
+            "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+          },
+          "target": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "bb463195df2957292418f6f00f6980b61e7437786f5dcc4e4fdc8bf2688e39c0"
+          },
+          "rand_vec": {
+            "dtype": "<f8",
+            "shape": [
+              6
+            ],
+            "sha256": "1493e8eadb85fc73ad0ed5722949c5f6aff0d9c0087becc4fe6b2eddb9d69ca3"
+          },
+          "tcp": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "5ccb57553a3c904336d44035afc428b35340f52c5b41a9784619d42950291afa"
+          },
+          "previous_observation": {
+            "dtype": "<f8",
+            "shape": [
+              18
+            ],
+            "sha256": "2797419c10b25be4407761d6352677cb813400670f32f8d683311211171e21ce"
+          },
+          "elapsed": {
+            "dtype": "<i8",
+            "shape": [
+              1
+            ],
+            "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+          },
+          "model_site_pos": {
+            "dtype": "<f8",
+            "shape": [
+              8,
+              3
+            ],
+            "sha256": "8069453e2d91f63deffdcb52a66ce13c28da5dd0137a45070f860a1b8bc403cc"
+          },
+          "initial_pixels": {
+            "dtype": "|u1",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "sha256": "b1a20bcce1981b1c2a4b18ca793d10e3ff58e727f9caac55b5f44e884ae0dd52"
+          },
+          "initial_proprio": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+          },
+          "initial_state": {
+            "dtype": "<f4",
+            "shape": [
+              39
+            ],
+            "sha256": "2c488c5cc44847d1c16010c6c2420b766d755baa30ae0b7964dd9b2d37fa1b20"
+          },
+          "goal_pixels": {
+            "dtype": "|u1",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "sha256": "3cb6be8110e2c1c7a2fe34babc343c40ff49b8300d507e8eb9cbb1f346cbfd20"
+          },
+          "goal_proprio": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "27491b1292a0f6515871e27ebeefd25c47485b487de21b382b78393cd6fa70b3"
+          },
+          "goal_state": {
+            "dtype": "<f4",
+            "shape": [
+              39
+            ],
+            "sha256": "de7cc5791b9f446b0a92be3089a94f63770dffb21cd21814667f433e3d97a635"
+          },
+          "expert_actions": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              100,
+              4
+            ],
+            "sha256": "812fc8cc1f16e85cc5df1df0d15cf494ec1ea21faea7460c3e7a8988344e480c"
+          },
+          "expert_final_tcp": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "f1b6debd36e82088ed519ccbb0421d0a77173072ef653a38b9e5c06fa9eef881"
+          },
+          "expert_target": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "bb463195df2957292418f6f00f6980b61e7437786f5dcc4e4fdc8bf2688e39c0"
+          }
+        },
+        "setup": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed1_servo/setup.npz",
+          "sha256": "dcc58a0410049250eb3ec0ac4f24bd6528b4294f99534f301cf1b66ec31acfde"
+        },
+        "initial_image": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed1_servo/initial.png",
+          "sha256": "cf9f05b207af47b94576d1046ace6dc7f2b8fce4cb0e6c018edd3507810dbdb5"
+        },
+        "goal_image": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed1_servo/goal.png",
+          "sha256": "38b1dec699d91d0df9def1b896dd81d8812d9b0e168c3a91c421e02b4d723a88"
+        }
+      },
+      "clean_setup_parity": {
+        "checks": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true
+        },
+        "all_exact": true
+      },
+      "decision_audit": {
+        "query_inputs_verified_from_setup_and_preceding_trace_state": true,
+        "all_99_actions_exact_to_registered_servo": true,
+        "decision_count": 7
+      },
+      "outcome": {
+        "final_success": false,
+        "ever_success": true,
+        "final_reach_distance": 0.05200451923051797,
+        "total_environment_steps": 100,
+        "policy_controls_executed": 99,
+        "reward_sum": 827.9089794158936,
+        "terminal_done": true,
+        "trace": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed1_servo/trace.jsonl",
+          "sha256": "5875a82debb0efe6efe1b887fcb227d72cde4c598f602930a6312e8fce9b1706"
+        }
+      },
+      "queries_file": {
+        "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed1_servo/decisions.json",
+        "sha256": "f0fb9152b2ec7d054dd621d1c960b2b372838aafc589e008d011024d5555142e"
+      }
+    },
+    {
+      "seed": 2,
+      "status": "completed",
+      "decisions": [
+        {
+          "index": 1,
+          "elapsed_before": 1,
+          "current_proprio": [
+            0.004601670429110527,
+            0.6010369658470154,
+            0.1949342042207718,
+            1.0
+          ],
+          "goal_proprio": [
+            0.031287603080272675,
+            0.8600308299064636,
+            0.08699662983417511,
+            0.9975119829177856
+          ],
+          "action": [
+            0.1334296613931656,
+            1.0,
+            -0.5396878719329834,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 2,
+          "elapsed_before": 16,
+          "current_proprio": [
+            0.012299327179789543,
+            0.7038957476615906,
+            0.13923399150371552,
+            0.997350811958313
+          ],
+          "goal_proprio": [
+            0.031287603080272675,
+            0.8600308299064636,
+            0.08699662983417511,
+            0.9975119829177856
+          ],
+          "action": [
+            0.09494137763977051,
+            0.7806754112243652,
+            -0.261186808347702,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 3,
+          "elapsed_before": 31,
+          "current_proprio": [
+            0.03183261305093765,
+            0.8008000254631042,
+            0.09977196156978607,
+            0.9966381192207336
+          ],
+          "goal_proprio": [
+            0.031287603080272675,
+            0.8600308299064636,
+            0.08699662983417511,
+            0.9975119829177856
+          ],
+          "action": [
+            -0.00272504985332489,
+            0.2961540222167969,
+            -0.06387665867805481,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 4,
+          "elapsed_before": 46,
+          "current_proprio": [
+            0.033336341381073,
+            0.8425673246383667,
+            0.09004276245832443,
+            0.9967370629310608
+          ],
+          "goal_proprio": [
+            0.031287603080272675,
+            0.8600308299064636,
+            0.08699662983417511,
+            0.9975119829177856
+          ],
+          "action": [
+            -0.010243691504001617,
+            0.08731752634048462,
+            -0.015230663120746613,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 5,
+          "elapsed_before": 61,
+          "current_proprio": [
+            0.031095771118998528,
+            0.8611855506896973,
+            0.08700953423976898,
+            0.9969567060470581
+          ],
+          "goal_proprio": [
+            0.031287603080272675,
+            0.8600308299064636,
+            0.08699662983417511,
+            0.9975119829177856
+          ],
+          "action": [
+            0.0009591598063707352,
+            -0.005773603916168213,
+            -6.452202796936035e-05,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 6,
+          "elapsed_before": 76,
+          "current_proprio": [
+            0.030978476628661156,
+            0.8690564036369324,
+            0.08556033670902252,
+            0.9971815347671509
+          ],
+          "goal_proprio": [
+            0.031287603080272675,
+            0.8600308299064636,
+            0.08699662983417511,
+            0.9975119829177856
+          ],
+          "action": [
+            0.0015456322580575943,
+            -0.04512786865234375,
+            0.0071814656257629395,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 7,
+          "elapsed_before": 91,
+          "current_proprio": [
+            0.03125441446900368,
+            0.8708379864692688,
+            0.08517391234636307,
+            0.9973931312561035
+          ],
+          "goal_proprio": [
+            0.031287603080272675,
+            0.8600308299064636,
+            0.08699662983417511,
+            0.9975119829177856
+          ],
+          "action": [
+            0.00016594305634498596,
+            -0.05403578281402588,
+            0.009113587439060211,
+            0.0
+          ],
+          "executed_control_count": 9
+        }
+      ],
+      "setup": {
+        "seed": 2,
+        "episode_index": 1,
+        "elapsed_after_warmup": 1,
+        "initial_success": false,
+        "initial_reach_distance": 0.26404075796801546,
+        "warmup_reward_excluded_from_policy_return": 1.6129664182662964,
+        "warmup_native_success": false,
+        "expert_final_success": true,
+        "expert_final_reach_distance": 0.04591312150967464,
+        "expert_steps": 100,
+        "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+        "expert_trace": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed2_servo/expert_trace.jsonl",
+          "sha256": "738e41f0ac863a90035a63f7435a2f472466d40622142cd499bab4b75a828790"
+        },
+        "arrays": {
+          "sim_qpos": {
+            "dtype": "<f8",
+            "shape": [
+              16
+            ],
+            "sha256": "415d1db2537ba1c83785a9b9690ffac665ab4934d596c4b84e80584b47390fe3"
+          },
+          "sim_qvel": {
+            "dtype": "<f8",
+            "shape": [
+              15
+            ],
+            "sha256": "fe2158cf79ed6f7264350d09aa3b00971ad304024101cdcdb8642cd2360f9b3e"
+          },
+          "sim_qacc_warmstart": {
+            "dtype": "<f8",
+            "shape": [
+              15
+            ],
+            "sha256": "8e2d1b4767d5e92159295972de7090418fe0de924c3c82e5e795948077a63e75"
+          },
+          "sim_ctrl": {
+            "dtype": "<f8",
+            "shape": [
+              2
+            ],
+            "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+          },
+          "sim_mocap_pos": {
+            "dtype": "<f8",
+            "shape": [
+              1,
+              3
+            ],
+            "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+          },
+          "sim_mocap_quat": {
+            "dtype": "<f8",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+          },
+          "sim_time": {
+            "dtype": "<f8",
+            "shape": [
+              1
+            ],
+            "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+          },
+          "target": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "609e40853da45986609a56f6f9d2d223a1d6a35f2cc80746b0354c387fe7840c"
+          },
+          "rand_vec": {
+            "dtype": "<f8",
+            "shape": [
+              6
+            ],
+            "sha256": "c3f3367a6816210caf2b2c8a14a3801c8ac4c19af14c7abedca7e320b1727792"
+          },
+          "tcp": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "5ccb57553a3c904336d44035afc428b35340f52c5b41a9784619d42950291afa"
+          },
+          "previous_observation": {
+            "dtype": "<f8",
+            "shape": [
+              18
+            ],
+            "sha256": "ef781785b570710e07ce2af7e1a2da323aeabc48bab63036076241cc5024b1ae"
+          },
+          "elapsed": {
+            "dtype": "<i8",
+            "shape": [
+              1
+            ],
+            "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+          },
+          "model_site_pos": {
+            "dtype": "<f8",
+            "shape": [
+              8,
+              3
+            ],
+            "sha256": "ea6f7dd2715600a26be5f4f345989ef319c589b026e4cc0f1f628b12cb04ec26"
+          },
+          "initial_pixels": {
+            "dtype": "|u1",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "sha256": "9ce68cafd7c093346bbe362cfe47ecf0861aab2d1c178a8a562b943b57f472f0"
+          },
+          "initial_proprio": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+          },
+          "initial_state": {
+            "dtype": "<f4",
+            "shape": [
+              39
+            ],
+            "sha256": "e475ce903da8745ad0d0d80c7715b0ca4dfcc7a1918fde43be13826ba2816cda"
+          },
+          "goal_pixels": {
+            "dtype": "|u1",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "sha256": "51af3abc9b5cd52db2900ca055d6bbed580d02651aaf8cfc9ea15e2b732fd24c"
+          },
+          "goal_proprio": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "f91374566de54884dc74ed5594c138bec40f32d25427cf6d4fe920856f0d62ee"
+          },
+          "goal_state": {
+            "dtype": "<f4",
+            "shape": [
+              39
+            ],
+            "sha256": "f8b803647a228833ca205d67e5eb8fd5666ec32b92438bb95e44ac3891260b21"
+          },
+          "expert_actions": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              100,
+              4
+            ],
+            "sha256": "0991b0e2fa8b66e54141c5adc9bd8050d78380c1131512a69fd188145e8c9570"
+          },
+          "expert_final_tcp": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "716fd4aa78e756275160de5c8f0fff63cc4377789b6cb8563f4cae9b4ef87500"
+          },
+          "expert_target": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "609e40853da45986609a56f6f9d2d223a1d6a35f2cc80746b0354c387fe7840c"
+          }
+        },
+        "setup": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed2_servo/setup.npz",
+          "sha256": "041a24eb50c083fec9b6c091404fedc7196cc5661c646a209f7e2b0fb89fa905"
+        },
+        "initial_image": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed2_servo/initial.png",
+          "sha256": "8ac6df1ad16c1854979acfd32add4f5becb003d526f1b21ee44ae9f8ac7a31a1"
+        },
+        "goal_image": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed2_servo/goal.png",
+          "sha256": "ac4dca0ce9a762eec8a3557568dc21b41e712ddf597108e2f082caac5fe391ed"
+        }
+      },
+      "clean_setup_parity": {
+        "checks": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true
+        },
+        "all_exact": true
+      },
+      "decision_audit": {
+        "query_inputs_verified_from_setup_and_preceding_trace_state": true,
+        "all_99_actions_exact_to_registered_servo": true,
+        "decision_count": 7
+      },
+      "outcome": {
+        "final_success": false,
+        "ever_success": true,
+        "final_reach_distance": 0.05048755050101128,
+        "total_environment_steps": 100,
+        "policy_controls_executed": 99,
+        "reward_sum": 849.622974395752,
+        "terminal_done": true,
+        "trace": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed2_servo/trace.jsonl",
+          "sha256": "7bd606054597193e2562c71274fd814005f9049a20569172f0763702f92b51dd"
+        }
+      },
+      "queries_file": {
+        "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed2_servo/decisions.json",
+        "sha256": "96e2decc8d54389a84386130291d2bc62aff541a83d9766d2dd9d4b59f85482b"
+      }
+    },
+    {
+      "seed": 3,
+      "status": "completed",
+      "decisions": [
+        {
+          "index": 1,
+          "elapsed_before": 1,
+          "current_proprio": [
+            0.004601670429110527,
+            0.6010369658470154,
+            0.1949342042207718,
+            1.0
+          ],
+          "goal_proprio": [
+            -0.07783933728933334,
+            0.845033586025238,
+            0.17805172502994537,
+            0.9975107312202454
+          ],
+          "action": [
+            -0.4122050404548645,
+            1.0,
+            -0.08441239595413208,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 2,
+          "elapsed_before": 16,
+          "current_proprio": [
+            -0.05153234302997589,
+            0.7049717307090759,
+            0.18890056014060974,
+            0.9973503351211548
+          ],
+          "goal_proprio": [
+            -0.07783933728933334,
+            0.845033586025238,
+            0.17805172502994537,
+            0.9975107312202454
+          ],
+          "action": [
+            -0.13153496384620667,
+            0.7003092765808105,
+            -0.05424417555332184,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 3,
+          "elapsed_before": 31,
+          "current_proprio": [
+            -0.07284887135028839,
+            0.7991386651992798,
+            0.18397711217403412,
+            0.9966370463371277
+          ],
+          "goal_proprio": [
+            -0.07783933728933334,
+            0.845033586025238,
+            0.17805172502994537,
+            0.9975107312202454
+          ],
+          "action": [
+            -0.024952329695224762,
+            0.22947460412979126,
+            -0.029626935720443726,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 4,
+          "elapsed_before": 46,
+          "current_proprio": [
+            -0.07922554016113281,
+            0.8388015627861023,
+            0.17942030727863312,
+            0.996735692024231
+          ],
+          "goal_proprio": [
+            -0.07783933728933334,
+            0.845033586025238,
+            0.17805172502994537,
+            0.9975107312202454
+          ],
+          "action": [
+            0.006931014358997345,
+            0.03116011619567871,
+            -0.006842911243438721,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 5,
+          "elapsed_before": 61,
+          "current_proprio": [
+            -0.08020450174808502,
+            0.8538079857826233,
+            0.17588184773921967,
+            0.996955394744873
+          ],
+          "goal_proprio": [
+            -0.07783933728933334,
+            0.845033586025238,
+            0.17805172502994537,
+            0.9975107312202454
+          ],
+          "action": [
+            0.011825822293758392,
+            -0.04387199878692627,
+            0.01084938645362854,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 6,
+          "elapsed_before": 76,
+          "current_proprio": [
+            -0.07961680740118027,
+            0.85903400182724,
+            0.1749361753463745,
+            0.9971802830696106
+          ],
+          "goal_proprio": [
+            -0.07783933728933334,
+            0.845033586025238,
+            0.17805172502994537,
+            0.9975107312202454
+          ],
+          "action": [
+            0.00888735055923462,
+            -0.07000207901000977,
+            0.015577748417854309,
+            0.0
+          ],
+          "executed_control_count": 15
+        },
+        {
+          "index": 7,
+          "elapsed_before": 91,
+          "current_proprio": [
+            -0.0793977826833725,
+            0.8599275350570679,
+            0.17551381886005402,
+            0.9973919987678528
+          ],
+          "goal_proprio": [
+            -0.07783933728933334,
+            0.845033586025238,
+            0.17805172502994537,
+            0.9975107312202454
+          ],
+          "action": [
+            0.00779222697019577,
+            -0.07446974515914917,
+            0.012689530849456787,
+            0.0
+          ],
+          "executed_control_count": 9
+        }
+      ],
+      "setup": {
+        "seed": 3,
+        "episode_index": 2,
+        "elapsed_after_warmup": 1,
+        "initial_success": false,
+        "initial_reach_distance": 0.25329603051839034,
+        "warmup_reward_excluded_from_policy_return": 1.459843397140503,
+        "warmup_native_success": false,
+        "expert_final_success": true,
+        "expert_final_reach_distance": 0.04665744075993388,
+        "expert_steps": 100,
+        "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+        "expert_trace": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed3_servo/expert_trace.jsonl",
+          "sha256": "0c7696bb89e64fde7dc3427744d75b18d863d93158ce885f32416aeee431b59f"
+        },
+        "arrays": {
+          "sim_qpos": {
+            "dtype": "<f8",
+            "shape": [
+              16
+            ],
+            "sha256": "7f4e46b07564dfe0e18113b90808b853e4fbd038a1c15e42ffcb4f0f6e5e8143"
+          },
+          "sim_qvel": {
+            "dtype": "<f8",
+            "shape": [
+              15
+            ],
+            "sha256": "8df8ed03496cb2b2984fe730d20adfea1820c164abb40f77e1da468face3e4c6"
+          },
+          "sim_qacc_warmstart": {
+            "dtype": "<f8",
+            "shape": [
+              15
+            ],
+            "sha256": "dbdcabfea8c1bb33c23f83fc0a8a7df6a939956dbf0902816fe52a511c42ad77"
+          },
+          "sim_ctrl": {
+            "dtype": "<f8",
+            "shape": [
+              2
+            ],
+            "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+          },
+          "sim_mocap_pos": {
+            "dtype": "<f8",
+            "shape": [
+              1,
+              3
+            ],
+            "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+          },
+          "sim_mocap_quat": {
+            "dtype": "<f8",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+          },
+          "sim_time": {
+            "dtype": "<f8",
+            "shape": [
+              1
+            ],
+            "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+          },
+          "target": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "9b39d44a212610c3be4a68fafd012283abfb441ff1fb936017650db9f536e5b3"
+          },
+          "rand_vec": {
+            "dtype": "<f8",
+            "shape": [
+              6
+            ],
+            "sha256": "733c3bccf9709b0998da943d5762679f4a4927c0e78b01b25cd3e2dc6e4d48b3"
+          },
+          "tcp": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "5ccb57553a3c904336d44035afc428b35340f52c5b41a9784619d42950291afa"
+          },
+          "previous_observation": {
+            "dtype": "<f8",
+            "shape": [
+              18
+            ],
+            "sha256": "8e3dfffcb7dd2629d6a91732d0b4d700ddddd6fb8b5dbe34acf9aab9fdc6c656"
+          },
+          "elapsed": {
+            "dtype": "<i8",
+            "shape": [
+              1
+            ],
+            "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+          },
+          "model_site_pos": {
+            "dtype": "<f8",
+            "shape": [
+              8,
+              3
+            ],
+            "sha256": "916ba20c1096fe41fe8cd2eae274cf7e1e9451151af6ea35f9bccb720c3549fe"
+          },
+          "initial_pixels": {
+            "dtype": "|u1",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "sha256": "934ea22d25f781664b15d7065abc98d533131b7e383557581d937c650acc581c"
+          },
+          "initial_proprio": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+          },
+          "initial_state": {
+            "dtype": "<f4",
+            "shape": [
+              39
+            ],
+            "sha256": "7223e9e52f70595357c3af26784f9a0e3bde50ebf3956411991d2c50a47c5377"
+          },
+          "goal_pixels": {
+            "dtype": "|u1",
+            "shape": [
+              1,
+              3,
+              224,
+              224
+            ],
+            "sha256": "06c504fd8970436a17b7b360c074288c5fccc93d1e9d65f704e503d846a5ca97"
+          },
+          "goal_proprio": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              4
+            ],
+            "sha256": "154dbb261fb1c0fbabfcd75eb839edccc12d18fee8e846bf3fa74e2ddbb490fe"
+          },
+          "goal_state": {
+            "dtype": "<f4",
+            "shape": [
+              39
+            ],
+            "sha256": "cb15ed42d954285143ced3ce756e305c7ede3b1d546cefb950a27b35b1ac4448"
+          },
+          "expert_actions": {
+            "dtype": "<f4",
+            "shape": [
+              1,
+              100,
+              4
+            ],
+            "sha256": "0b4f6a3d37d037c9a65543b7e2cd418123c41bb4f310a5c692b620f8574e4be6"
+          },
+          "expert_final_tcp": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "5fd5c992fe5fbe2282ca59c3f6bd065c5f21c9011bc02b5db55c41ba99795341"
+          },
+          "expert_target": {
+            "dtype": "<f8",
+            "shape": [
+              3
+            ],
+            "sha256": "9b39d44a212610c3be4a68fafd012283abfb441ff1fb936017650db9f536e5b3"
+          }
+        },
+        "setup": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed3_servo/setup.npz",
+          "sha256": "cd060fd7a1098217b7dfc0948cc69e1805e2862545d08f64af2ab682346817f7"
+        },
+        "initial_image": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed3_servo/initial.png",
+          "sha256": "2c3764ea28d88129b831e287ce207295768a8e365ab02ef8955c1a202691fa13"
+        },
+        "goal_image": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed3_servo/goal.png",
+          "sha256": "8d7e47f311d717072c739580e42d3da963ee4c30a9c1e9c0d20952ff9dc4216a"
+        }
+      },
+      "clean_setup_parity": {
+        "checks": {
+          "all_setup_arrays_exact": true,
+          "initial_image_bytes_exact": true,
+          "goal_image_bytes_exact": true
+        },
+        "all_exact": true
+      },
+      "decision_audit": {
+        "query_inputs_verified_from_setup_and_preceding_trace_state": true,
+        "all_99_actions_exact_to_registered_servo": true,
+        "decision_count": 7
+      },
+      "outcome": {
+        "final_success": false,
+        "ever_success": true,
+        "final_reach_distance": 0.05278066930343554,
+        "total_environment_steps": 100,
+        "policy_controls_executed": 99,
+        "reward_sum": 850.871018409729,
+        "terminal_done": true,
+        "trace": {
+          "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed3_servo/trace.jsonl",
+          "sha256": "485f5a357f70a15e67c5f3ec52b97598da168b5d94f333e1c3b911b5447bbcc4"
+        }
+      },
+      "queries_file": {
+        "path": "/home/xhj/WM_Security/runs/dino_metaworld_servo_baseline_v1/seed3_servo/decisions.json",
+        "sha256": "94e5ea62733a944b7745e4c4b5b2c924f0a3e450c4c04e5df8f4795f3f9654bf"
+      }
+    }
+  ],
+  "comparison": {
+    "definition": {
+      "complete_panel_required": true,
+      "primary": "Paired final task success on all three fixed seeds",
+      "secondary": [
+        "final actual TCP-target distance",
+        "actual reward sum over 99 controls"
+      ],
+      "servo_covers_clean": "If every Clean-success seed also succeeds under servo and servo success count is no smaller, this panel supplies no observed additional normal-task success benefit for the learned WM planner over this comparator",
+      "clean_wins": "A Clean advantage is an advantage over this particular fixed controller, not isolated causal evidence for world forecasting",
+      "mixed": "Preserve discordant seeds and describe them without declaring a general ranking",
+      "incomplete": "No panel comparison verdict",
+      "scope": "Known three-seed development comparison; no population CI/significance, blind confirmation, universal WM-necessity claim, attack or defense claim",
+      "old_results": "All previous successful/failed resource gates and scientific conclusions remain unchanged"
+    },
+    "paired_results": [
+      {
+        "seed": 1,
+        "clean_final_success": true,
+        "servo_final_success": false,
+        "clean_final_distance": 0.049053514964798484,
+        "servo_final_distance": 0.05200451923051797,
+        "clean_return": 783.1317480802536,
+        "servo_return": 827.9089794158936
+      },
+      {
+        "seed": 2,
+        "clean_final_success": false,
+        "servo_final_success": false,
+        "clean_final_distance": 0.05929646946210589,
+        "servo_final_distance": 0.05048755050101128,
+        "clean_return": 796.651743888855,
+        "servo_return": 849.622974395752
+      },
+      {
+        "seed": 3,
+        "clean_final_success": true,
+        "servo_final_success": false,
+        "clean_final_distance": 0.03921047302590709,
+        "servo_final_distance": 0.05278066930343554,
+        "clean_return": 810.767254114151,
+        "servo_return": 850.871018409729
+      }
+    ],
+    "denominator": 3,
+    "clean_successes": 2,
+    "servo_successes": 0,
+    "servo_covers_clean_successes": false,
+    "no_observed_additional_wm_task_success_benefit_over_servo": false,
+    "forecast_causal_benefit_established": false
+  },
+  "model_calls": 0,
+  "model_loads": 0,
+  "api_requests": 0,
+  "training_updates": 0,
+  "cuda_initialized": false
+}

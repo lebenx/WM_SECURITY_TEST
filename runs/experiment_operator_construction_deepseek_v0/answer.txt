@@ -1,0 +1,80 @@
+### Candidate: transfer a program-level ambiguity-cover prior
+
+**(a) Contribution.** A possible contribution is a transfer mechanism that learns from source traces which *joint patterns of unresolved explanation pairs* are efficiently separated by one complete experiment program, then uses those patterns to construct recipient experiments without transferring source laws or actions; this is only a candidate, not an established method.
+
+**(b) Artifact, inputs, and update/execution.**  
+From each source trace, retain:
+
+- the executed complete programs \(p\);
+- their observed outcome vectors \(o(p)\);
+- the surviving explanation set \(H\);
+- an ambiguity graph \(G=(H,E)\), where \((h_i,h_j)\in E\) iff the two explanations agree on every program executed so far;
+- for each executed program, its separation set  
+  \[
+  S(p)=\{(h_i,h_j)\in E:o_{h_i}(p)\neq o_{h_j}(p)\}.
+  \]
+
+The learned artifact is a distribution over small incidence motifs
+\[
+M=\{(d,\;c,\;\rho)\},
+\]
+where \(d\) is an ambiguity-graph neighborhood descriptor, \(c\) is the observed cost of a program that separates several incident edges jointly, and \(\rho\) is the empirical probability that such joint separation remains valid after extending the partial history. It contains no source equation, action identity, or source outcome.
+
+Recipient inputs are its current candidate explanations \(H_t\), available executable programs \(\mathcal P_t\), predicted outcomes for those explanations, execution costs, and the current trace.
+
+A concrete update/execution procedure is:
+
+```text
+UPDATE(trace, candidate explanations H):
+    E := {(hi,hj): hi,hj agree on every observed complete program}
+    for each observed program p:
+        S[p] := {(hi,hj) in E: hi(p) != hj(p)}
+    append local graph descriptors of (E, {S[p]}) and measured cost(p)
+    update motif counts and residual-separation probabilities rho
+
+EXECUTE(H, programs P, artifact A, budget B):
+    construct E from the recipient trace
+    for each p in P:
+        S[p] := {(hi,hj) in E: hi(p) != hj(p)}
+        score[p] := sum over motifs m matched by (E,S[p])
+                         rho[m] * |S[p] ∩ E_m| / cost(p)
+    choose a subset Q of programs with total cost <= B by greedy
+        marginal score per cost, stopping when no positive marginal remains
+    execute Q, update the recipient trace, and recompute E
+```
+
+**(c) Explicit example.**  
+Suppose the source trace leaves explanations \(a,b,c,d\) ambiguous, with unresolved edges
+\[
+E=\{ab,ac,bd,cd\}.
+\]
+Two source programs cost one unit each:
+\[
+S(p_1)=\{ab,ac\},\qquad S(p_2)=\{bd,cd\}.
+\]
+The artifact records a “two disjoint-pair blocks” motif: one program can often cover both edges incident to one explanation, at cost \(1\).
+
+In the recipient, four candidate explanations \(u,v,w,x\) produce candidate programs
+\[
+S(q_1)=\{uv,uw\},\quad S(q_2)=\{vx,vw\},\quad S(q_3)=\{ux,vx\},
+\]
+each costing \(1\). The transferred computation selects \(q_1,q_2\), covering four edges for cost \(2\), rather than selecting an arbitrary single disagreement test. The charge is explicit: two recipient program executions and all source executions used to estimate the motif; no source action or law is reused.
+
+**(d) Closest standard operation and exact difference.**  
+The closest operation is version-space splitting or batch active learning: select experiments whose predicted outcomes partition the surviving hypotheses. The proposed difference is that it transfers a *program-level edge-incidence prior* learned from source traces and optimizes joint coverage of ambiguity edges rather than single-test disagreement.
+
+However, a standard recipient-only baseline given the same candidate explanations, predicted outcomes, program costs, and recipient traces can compute every \(S(q)\) and perform the same weighted set-cover calculation. If it is allowed to use the same graph descriptors or tune the same coverage objective, it exactly subsumes this operation. Thus the source artifact is not presently a defensible novelty claim; it is at most a restricted transfer prior whose value must be demonstrated under limited recipient data or restricted computation.
+
+**(e) Decisive native test.**  
+Use native Alchemy with source and target potion-rule families and the same candidate-world generator. Compare:
+
+1. the proposed source-motif transfer;
+2. recipient-only greedy version-space set cover using identical candidate worlds, predicted outcomes, costs, and history;
+3. native exhaustive ideal lookahead.
+
+Give all methods the same initial recipient traces and a fixed execution budget, then measure worlds remaining after the budget across many matched source/target seeds. The candidate is invalidated before training if either:
+
+- the recipient-only baseline matches or beats transfer, including in the low-data regime; or
+- the transferred motifs cannot be defined without manually aligning source and target explanation identities.
+
+The latter issue is fundamental: without a principled cross-environment correspondence between ambiguity structures, this proposal reduces either to ordinary recipient-side version-space splitting or to an unprovided alignment method.

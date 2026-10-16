@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status_at_write": "frozen_before_execution",
+  "question": "Does a fixed conservative expansion of uncertainty inputs to a pretrained navigation policy worsen independently measured physical consequences of its action, despite containing every original prediction set?",
+  "scope": "Added consumer-input defense stress test. Not a native alpha-setting evaluation, attack, new safety theorem, or full shadow-policy task evaluation.",
+  "native_runner": "scripts/probe_gensafenav_feedback_selection.py:run",
+  "native_reference": "runs/gensafenav_feedback_selection_gate_20261015",
+  "source_revision": "01baf926a5c77c1a4ab28635658eb014ef4f1767",
+  "fixed_run": {
+    "case": 0,
+    "seed": 42,
+    "device": "cpu",
+    "wall_seconds": 120,
+    "max_physical_episodes": 1,
+    "max_physical_steps": 202,
+    "max_shadow_actor_calls": 202,
+    "delta_meters": 0.1,
+    "radius_upper_clip_meters": 1.0,
+    "horizons": [1, 2, 3, 4, 5]
+  },
+  "conditions": {
+    "native": "Unmodified native forecast, calibrator, recurrent policy, controls and physical trajectory.",
+    "expanded_shadow": "At every same original physical state, copy the full original actor input and its pre-call recurrent state. A sorted row is eligible exactly when its index is below detected_human_num (the native actor's attention prefix mask) AND at least one of its five original conformity radii is positive. Never use visible_masks directly: the wrapper leaves that field unsorted while spatial rows are sorted. In eligible rows, replace all five radii by min(1, q+0.1); leave all other rows bitwise unchanged. All other inputs, weights and masks remain identical. Restore pre-call Python/NumPy/Torch CPU RNG for this call, then restore the post-native-call RNG and module buffers. Discard shadow recurrent outputs. No shadow observation enters the factual trajectory.",
+    "zero_control_baseline": "Physical-only full braking action with zero velocity, scored against the same true human motions and goal. No extra actor or forecaster call. This is a risk/progress comparator, not a verified defense."
+  },
+  "independent_consequences": {
+    "preconditions": "Native robot.visible=False and holonomic dynamics. Assert all humans holonomic and fixed radius during a physical transition, robot/environment/human time_step all equal0.25, and every original/alternative motion endpoint finite.",
+    "action_decoder": "Use the native robot.policy.clip_action on a separate copy, then robot.compute_position for the actual 0.25-second duration.",
+    "human_motion": "Retain original Human object references, positions and actual radii before each native step. Read the same objects after the real step, including objects replaced in the environment slots after movement. Never connect an old position to a replacement Human position.",
+    "swept_clearance": "Pre-lifecycle swept clearance of original humans over [t,t+0.25]: exact minimum over the normalized-time relative line segment for each robot-human pair, minus their actual radii. Take the minimum across humans. Native, shadow and braking actions use the same physically executed human movements, independently of model forecasts. This does not assert equivalence of subsequent goal changes/replacements, which can depend on robot position.",
+    "sampled_clearance": "Also report physical pre/post distances of continuing original objects; report replacements separately.",
+    "native_validation": "The decoded native-action endpoint must match the actual robot endpoint within 1e-8 meters. The native control trace, terminal success and 119-step count must reproduce the previous case0 run within 1e-6 action/return tolerance. All119 before-and-after full snapshot dictionaries must match the reference exactly, including physical positions, velocities, goals, lifetimes and recorded calibration state.",
+    "utility": "One-step true goal-distance reduction and physical safety geometry for each action. Only the factual policy has a measured whole-task success, collision flag and cumulative reward. No shadow complete-task success/return claim."
+  },
+  "gate": {
+    "prerequisite": "Exact native task reproduction and all nesting, state/RNG isolation and endpoint checks pass.",
+    "collision_signal": "At least one same-state step where the native swept clearance is nonnegative and expanded-shadow swept clearance is negative.",
+    "diagnostic_clearance_only": "Report every paired clearance including reductions, but clearance reduction without a new physical overlap does not qualify further expansion.",
+    "no_signal": "If no new swept overlap, no more seeds, cases, delta values, horizon subsets or later chosen roots. Stop this candidate's current fixed pilot. Action disagreement alone does not pass.",
+    "statistical_unit": "One native episode, with correlated per-step counterfactuals. No population ASR, independent-n confidence interval or p-value."
+  },
+  "limitations": [
+    "A larger uncertainty set need not yield the same action, or a pointwise safer realized trajectory, even for an exact robust planner. This pilot probes actual consumer behavior and does not assert such a universal monotonicity theorem.",
+    "This expansion is an added wrapper. Native alpha is fixed0.1; lowering it would not ensure nested radii because DtACI mixes randomized adaptive experts.",
+    "Native calibration time/identity behavior is retained. The intervention does not repair or exploit those earlier audited issues.",
+    "Native environment collision/termination is evaluated before the action. Swept overlap is an independent physical metric and must not be renamed the native Collision event.",
+    "No complete expanded trajectory is executed. Subsequent states, visibility, feedback, random draws and task success under expanded decisions remain unmeasured.",
+    "Existing entity-binding audit reports zero-valued rejected forecast rows. The consumer-only native attention-prefix plus any-positive-radius eligibility gate leaves zero/rejected placeholders unchanged. The zero-person dummy prefix count1 is excluded by its all-zero radius. Valid inputs can still include native stationary placeholder forecasts, so this is not a GST-only inference claim. Source: reports/gensafenav_entity_binding_audit_20261016.json.",
+    "CBF/CRC filters with nested accepted action sets already exist; a simple safety shield is not a novel contribution."
+  ],
+  "model_api_calls": 0,
+  "neural_training_updates": 0,
+  "gpu_requested": false
+}

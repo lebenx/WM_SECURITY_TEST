@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-10",
+  "status": "screen_only_rejected_novelty_and_no_controller_gate",
+  "candidate_claim_cn": "在物理端点完全等价的动作别名之间，世界模型仍将动作标签拆分为不同后继，从而可能形成可利用的动作等价性破坏。",
+  "scope": "WAV MiniGrid released checkpoints, one-step OOD diagnostic only",
+  "diagnostic": {
+    "states": 128,
+    "oracle": "MiniGridPhysicsOracle; exact next endpoint means grid state plus carried object",
+    "alias_groups": 151,
+    "models": {
+      "pretrained_base_world_model.pth": {"split_groups": 143, "split_rate": 0.9470},
+      "wm_WAV_afs_test.pth": {"split_groups": 142, "split_rate": 0.9404},
+      "wm_Hard-Oracle_afs_test.pth": {"split_groups": 141, "split_rate": 0.9338},
+      "wm_Random_afs_test.pth": {"split_groups": 146, "split_rate": 0.9669}
+    }
+  },
+  "review": {
+    "source": "runs/gemini_wav_alias_review_20261010T0000Z/assessment.json",
+    "decision": "reject",
+    "novelty_score_0_10": 2,
+    "confidence": 0.95,
+    "reason": "The diagnostic is a standard OOD action-equivalence/generalization failure and overlaps action-semantic mismatch and bisimulation/quotient-MDP theory. It does not yet show an attacker operation or native controller task harm.",
+    "alternatives": [
+      "Recurrent belief hijacking via legal action prefixes",
+      "Phantom attractor injection in long-horizon imagination"
+    ]
+  },
+  "decision": "Keep as an implementation diagnostic only. Do not claim action-alias security, do not scale GPU work, and do not promote the two review alternatives without a distinct causal operation that survives the existing branch/provenance/trajectory-order screens."
+}

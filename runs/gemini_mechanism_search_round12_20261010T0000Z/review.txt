@@ -1,0 +1,52 @@
+```json
+{
+  "candidates": [
+    {
+      "name": "Recurrent Latent Deadlock via Invertible Contraction Poisoning",
+      "score": 5.4,
+      "attack_operation": "Inject legal sequences of maximum-torque alternating controls that exploit leaky-integrator dynamics in DreamerV3 GRU/RSSM, driving recurrent hidden state into an extreme spectral radius contraction zone where state sensitivity d(h_t)/d(a_t) drops below epsilon.",
+      "invariant": "Post-adaptation recurrent transition Jacobian ||dh_{t+1}/da_t|| on clean tasks must drop by >80% while clean 1-step prediction loss on the attack trajectory remains within 1.05x of baseline.",
+      "released_carrier": "small recurrent DreamerV3 codebase without a released checkpoint",
+      "exact_short_gate": "Train 2-layer GRU transition model on 10k steps of pendulum/cartpole; adapt 500 steps on legal high-frequency oscillation sequence; measure Spectral Norm of GRU recurrent weights and 1-step latent action-Jacobian variance on nominal validation rollouts.",
+      "positive_controls": [
+        "Identical action curriculum applied to deterministic MLP (TD-MPC2 dynamic carrier) where recurrent hidden state is absent",
+        "Passive white-noise action sequences with matching energy spectra"
+      ],
+      "nearest_prior": "Vanishing gradient poisoning in RNNs / Reservoir computing dynamics trapping (e.g., Echo State saturation attacks).",
+      "why_not_generic": "Specifically targets recurrent memory updates dh/da rather than rollout compounding or static representation SimNorm shifts.",
+      "decision": "REJECT"
+    },
+    {
+      "name": "Gaussian Ensemble Disagreement Quenching via Orthogonal Hyperplane Saturation",
+      "score": 4.8,
+      "attack_operation": "Provide truthful, dynamically valid trajectories along extreme linear subspace boundaries to force PETS/MBRL-Lib diagonal Gaussian ensemble variance head logvar to collapse toward minimum clamp across shared state directions, blinding TS-LIS/CEM uncertainty penalization.",
+      "invariant": "Epistemic uncertainty (inter-model variance between the 5 PETS MLPs) on OOD evaluation states drops by >60%, converting optimistic exploration/robust planning into fatal overconfidence.",
+      "released_carrier": "MBRL-Lib/PETS (diagonal Gaussian MLP)",
+      "exact_short_gate": "Run 5-model ensemble on HalfCheetah-v4; adapt for 200 epochs on 20 legal edge-saturation trajectories; verify planner selects fatal out-of-distribution transitions due to artificial epistemic confidence.",
+      "positive_controls": [
+        "Ensemble trained with deterministic heads (no epistemic disagreement mechanism)",
+        "Trajectories with identical state coverage but interior-simplex distribution"
+      ],
+      "nearest_prior": "Epistemic uncertainty spoofing in Bayesian Deep Learning (e.g., deterministic ensemble boundary collapse).",
+      "why_not_generic": "Directly attacks the epistemic planner selection rule (TS-LIS / variance penalty in PETS) rather than dynamics transfer or rollout error.",
+      "decision": "REJECT"
+    },
+    {
+      "name": "SimNorm Simplex Degeneracy via Directional Mass Depletion",
+      "score": 4.2,
+      "attack_operation": "Provide legal zero-action or drift trajectories that concentrate TD-MPC2 latent representations into a low-dimensional boundary of the l1-simplex (SimNorm), causing subsequent multi-task latent transitions to collapse coordinate rank.",
+      "invariant": "Effective rank of latent state matrix z_t over clean benchmark tasks drops below rank threshold (e.g., rank < 8 out of 512) after dynamics fine-tuning on legitimate passive sequences.",
+      "released_carrier": "TD-MPC2 mt30-48M (latent deterministic dynamics)",
+      "exact_short_gate": "Feed 100 episodes of truthful passive/null actions from mt30; adapt dynamics head for 200 gradient steps; compute SVD entropy of latent state embeddings on walker-walk validation rollouts.",
+      "positive_controls": [
+        "Unnormalized latent carrier (standard LayerNorm instead of SimNorm)",
+        "Random permutation of action order preserving action marginals"
+      ],
+      "nearest_prior": "Representation collapse under SimNorm / dimensional collapse in self-supervised latent dynamics.",
+      "why_not_generic": "Isolates the SimNorm normalization geometry specifically implemented in TD-MPC2.",
+      "decision": "REJECT"
+    }
+  ],
+  "verdict": "REJECT_ALL"
+}
+```

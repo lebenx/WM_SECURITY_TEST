@@ -1,0 +1,110 @@
+{
+  "scientific_knowledge": [
+    {
+      "measurement": "Crystal 1 (uuid: 13162) is installed in activated crystal reactor (uuid: 8549). Crystal 2 (uuid: 21559) is installed in activated crystal reactor (uuid: 51739).",
+      "step": 1
+    },
+    {
+      "measurement": "Crystal 3 (uuid: 24678) was on table (uuid: 57306), then picked up, installed into Crystal Reactor #3 (uuid: 33120), later removed, and is currently in the agent's inventory.",
+      "step": 61
+    },
+    {
+      "measurement": "Spectrometer (uuid: 24266) on table (uuid: 58937) was used on Crystal 3 twice. Both readings were identical: Channel 1 = 57.38, Channel 5 = 19.67, all other channels 0.00.",
+      "step": 58
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) has allowable frequency range 0-10000 Hz. It was set to 5738 Hz, 1967 Hz, 7705 Hz, and other frequencies, but remained uncalibrated each time. It currently reports 7705 Hz.",
+      "step": 81
+    },
+    {
+      "measurement": "The generator core (uuid: 11878) is currently 33% activated.",
+      "step": 1
+    },
+    {
+      "measurement": "Using Crystal Reactor #3 (uuid: 33120) on Quantum Crystal 3 (uuid: 24678) opens the reactor dialog instead of installing the crystal. The crystal remains in the agent's inventory.",
+      "step": 62
+    },
+    {
+      "hypothesis": "If a crystal is analyzed with the spectrometer while in inventory or directly in front of the agent, then the spectrometer outputs stable channel values for that crystal.",
+      "status": "confirmed",
+      "step": 58,
+      "supporting evidence": "Crystal 3 was analyzed twice and produced identical readings: Channel 1 = 57.38, Channel 5 = 19.67."
+    },
+    {
+      "hypothesis": "If Crystal Reactor #3 (uuid: 33120) is set to 5738 Hz, 1967 Hz, or 7705 Hz, then it will activate and increase generator core activation.",
+      "status": "rejected",
+      "step": 81,
+      "supporting evidence": "All tested frequencies failed; reactor remained uncalibrated with no activation."
+    },
+    {
+      "hypothesis": "If the correct frequency for Crystal Reactor #3 is a simple arithmetic combination of the two non-zero spectrometer channels (5738 and 1967), then the sum (7705 Hz) has been rejected and other combinations such as difference (3771 Hz), product, or ratio should be tested.",
+      "status": "pending",
+      "step": 81,
+      "supporting evidence": "The sum candidate 7705 Hz was tested and the reactor did not activate. The individual scaled values 5738 Hz and 1967 Hz also failed."
+    },
+    {
+      "hypothesis": "If Crystal 3 is not installed by using it on the reactor, then the correct sequence may require setting the reactor frequency via the dialog first, then installing the crystal, or using a different action such as PUT or ACTIVATE.",
+      "status": "pending",
+      "step": 61,
+      "supporting evidence": "Using Crystal 3 on the reactor opened the dialog and left the crystal in inventory; the reactor remained uncalibrated."
+    },
+    {
+      "hypothesis": "If the reactor dialog is open, then the crystal cannot be installed until the dialog is exited and the correct frequency is set via the dialog options.",
+      "status": "pending",
+      "step": 62,
+      "supporting evidence": "USE actions with the reactor and crystal opened the dialog and did not install the crystal."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) was set to 7705 Hz, and Quantum Crystal 3 (uuid: 24678) was used on it. The reactor dialog opened and the crystal remained in the agent's inventory; the reactor did not activate.",
+      "step": 82
+    },
+    {
+      "hypothesis": "If the correct frequency for Crystal Reactor #3 is not 7705 Hz, then the crystal will not install and the reactor will not activate until the correct frequency is set.",
+      "status": "pending",
+      "step": 82,
+      "supporting evidence": "At 7705 Hz, using the crystal on the reactor opened the dialog and did not install the crystal or activate the reactor."
+    },
+    {
+      "hypothesis": "If the crystal is not installed by using it on the reactor, then the correct installation action may be PUT or ACTIVATE after setting the correct frequency, or the frequency must be correct before installation is allowed.",
+      "status": "pending",
+      "step": 82,
+      "supporting evidence": "USE actions with the crystal and reactor opened the dialog and left the crystal in inventory."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) was set to 7705 Hz, and using Quantum Crystal 3 (uuid: 24678) on it did not install the crystal or activate the reactor. The reactor dialog opened instead, and the crystal remained in the agent's inventory.",
+      "step": 83
+    },
+    {
+      "hypothesis": "If the correct frequency for Crystal Reactor #3 is the difference of the two scaled spectrometer channels (5738 - 1967 = 3771 Hz), then setting the reactor to 3771 Hz and installing Quantum Crystal 3 will activate the reactor.",
+      "status": "pending",
+      "step": 83,
+      "supporting evidence": "The sum candidate 7705 Hz was tested and rejected. The individual scaled values 5738 Hz and 1967 Hz also failed. The difference candidate has not yet been tested."
+    },
+    {
+      "hypothesis": "If the crystal cannot be installed by using it on the reactor while the reactor dialog is open, then the correct sequence is to first set the frequency via the dialog, exit the dialog, and then use the crystal on the reactor.",
+      "status": "pending",
+      "step": 83,
+      "supporting evidence": "Using the crystal on the reactor while the dialog was open opened the dialog again and did not install the crystal."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) currently reports 7705 Hz in its dialog. The dialog is open and offers options to increase or decrease frequency by 1000, 100, 10, or 1 Hz, or exit.",
+      "step": 84
+    },
+    {
+      "hypothesis": "If the correct frequency for Crystal Reactor #3 is the difference of the two scaled spectrometer channels (5738 - 1967 = 3771 Hz), then setting the reactor to 3771 Hz and installing Quantum Crystal 3 will activate the reactor.",
+      "status": "pending",
+      "step": 84,
+      "supporting evidence": "The sum candidate 7705 Hz was tested and rejected. The individual scaled values 5738 Hz and 1967 Hz also failed. The difference candidate has not yet been tested."
+    },
+    {
+      "measurement": "Crystal Reactor #3 (uuid: 33120) was decreased by 1000 Hz from 7705 Hz to 6705 Hz via dialog option 5. The dialog remains open and the reactor still reports no crystal present.",
+      "step": 85
+    },
+    {
+      "hypothesis": "If the correct frequency for Crystal Reactor #3 is the difference of the two scaled spectrometer channels (5738 - 1967 = 3771 Hz), then setting the reactor to 3771 Hz and installing Quantum Crystal 3 will activate the reactor.",
+      "status": "pending",
+      "step": 85,
+      "supporting evidence": "The reactor is currently being adjusted toward 3771 Hz. It is at 6705 Hz after one 1000 Hz decrease from 7705 Hz. The difference candidate has not yet been reached or tested."
+    }
+  ]
+}

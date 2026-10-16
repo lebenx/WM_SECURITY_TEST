@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-09",
+  "status": "rejected_no_planner_specific_native_task_harm",
+  "hypothesis": "A legal high-frequency action curriculum can alter long-horizon counterfactual rollout geometry while preserving one-step transition behavior and non-planning policy control.",
+  "operation": "150 authentic alternating +/-1 actuator actions in walker-walk-backwards, followed by 40 upstream native full updates; no transition edits or label changes.",
+  "controls": [
+    "clean victim-only",
+    "native MPC source trajectory",
+    "equal-range white-noise legal source trajectory"
+  ],
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "source_task": "walker-walk-backwards",
+  "victim_task": "walker-walk",
+  "results": {
+    "clean": 973.1397757679224,
+    "native_mpc_source": 966.4923420082778,
+    "high_frequency_dither": 973.3516429532319,
+    "equal_rms_white_noise": 975.173863844946
+  },
+  "source_one_step_consistency_error": {
+    "native_mpc_source": 0.00015361225814558566,
+    "high_frequency_dither": 0.0007569870795123279,
+    "equal_rms_white_noise": 0.0006466541672125459
+  },
+  "comparison": {
+    "dither_drop_vs_clean": -0.2118671853095293,
+    "dither_drop_vs_white": 1.822220891714096,
+    "dither_drop_vs_native_source": -6.859300944954157,
+    "gate_passed": false
+  },
+  "api_requests": 0,
+  "gpu_work": "Short CUDA adaptation and four 500-step native MPC episodes, about 113 seconds.",
+  "novelty_status": "No accepted claim. The legal high-frequency curriculum did not reduce native planning return and does not establish a planner-specific temporal-gradient attack.",
+  "decision_cn": "高频合法动作没有造成规划器专属损害：dither 组 walker 回报 973.35，洁净 973.14，等能量白噪声 975.17；相对白噪声仅高频组低 1.82 分，未达到 100 分门槛。退役该候选，不运行确认回合。",
+  "source": "runs/tdmpc_temporal_gradient_dither_v0/summary.json"
+}

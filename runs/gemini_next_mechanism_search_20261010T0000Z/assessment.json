@@ -1,0 +1,70 @@
+{
+  "status": "success",
+  "model": "gemini-3.8-flash",
+  "requests": 1,
+  "elapsed_s": 21.19856527680531,
+  "response": {
+    "screened_mechanisms": [
+      {
+        "name": "Phase-Locked Cross-Attention Entrainment",
+        "mechanism": "Exploiting temporal self-attention in world models to lock hidden states to sub-harmonic frequencies, leaving multi-step autoregression blind to high-frequency dynamics while preserving 1-step validation loss.",
+        "fatal_flaw": "Requires attention-based world models (e.g., IRIS or TransDreamer); official TD-MPC2 is an MLP/SimNorm architecture, making it structurally incompatible without changing carrier."
+      },
+      {
+        "name": "Orthogonal Subspace Drift (Latent Geometry Warping)",
+        "mechanism": "Injecting sequences that silently rotate unconstrained null-space latent dimensions orthogonal to task rewards, triggering geometric drift only under iterative closed-loop shooting.",
+        "fatal_flaw": "Functionally identical to rollout compounding and rank degradation; easily mitigated by layer normalization or spectral normalization already present in modern carriers."
+      },
+      {
+        "name": "Contractive-Expansive Planning Basin Trap (Contractive Manifold Decoy)",
+        "mechanism": "A pure legal action trajectory creates a locally hyper-contractive latent basin during planning horizon t in [1, H-1] that masks a boundary-violating explosive eigenvalue at step H, making MPPI/CEM converge to suboptimal locally invariant dynamics.",
+        "fatal_flaw": "None. Directly targets the optimization landscape of sampling-based MPC without altering observation/reward channels or violating low 1-step loss."
+      }
+    ],
+    "selected_candidate": {
+      "broad_claim_cn": "在严格遵守环境交互合法性且不修改观测与奖励的前提下，攻击者通过纯动作交互注入局部超压缩流形诱饵，可诱导基于采样的模型预测控制（如MPPI/CEM）在短预测期内陷入收敛伪吸引子，从而在保持单步与短程验证误差近乎零的同时致使闭环长程规划崩溃。",
+      "novelty_score": 7.3,
+      "threat_model": "Interaction-only supply-chain / shared-environment exploration poisoning: Attacker interacts with the real environment legally (generating purely valid state-action-next_state transitions added to a shared buffer or pretraining corpus). Attacker cannot modify the reward function, observation pipeline, model architecture, training losses, or planner code.",
+      "exact_legal_operation": "Attacker executes open-loop periodic control cycles a_t = A * sin(omega * t) in specific boundary-adjacent regions to generate dense, low-action-variance, low-entropy state sequences where true physical recovery exists, but the induced latent dynamics form an artificially contractive basin (Jacobian singular values sigma_i << 1 for t < H, but expanding sharply at t = H).",
+      "preserved_invariants": [
+        "1-step next-latent and next-observation MSE strictly below baseline clean validation threshold (< 1e-3)",
+        "Latent representation norm and SimNorm statistics strictly within training empirical distribution",
+        "Action sequence strictly within legal bounded action box [-1, 1]",
+        "Reward and termination labels are generated entirely by the ground-truth environment engine"
+      ],
+      "mechanism": "TD-MPC2 uses CEM/MPPI sampling in latent space. When a policy samples trajectories within a region where local Jacobian dynamics are engineered to be uniformly contractive (trace(J) << 0) over steps 1..H-1, candidate trajectories under Gaussian noise perturbations collapse exponentially toward the mean trajectory. This drastically compresses the empirical covariance of the CEM proposals, falsely signaling low planning uncertainty and rapid convergence. However, the dynamics manifold is non-linear and terminates in an unmodeled boundary barrier at step H. Because the planner's proposal distribution collapsed prematurely due to artificial contractivity, it fails to explore corrective actions, causing real-world executive failure when executed in closed loop.",
+      "closest_prior_papers": [
+        {
+          "title": "Adversarial Attacks on Model-Based Regret Minimization / Model-Based RL",
+          "url": "https://arxiv.org/abs/2006.14170"
+        },
+        {
+          "title": "TD-MPC2: Scalable Robust Local World Models for Continuous Control",
+          "url": "https://arxiv.org/abs/2310.16828"
+        },
+        {
+          "title": "Deceptive Dynamics: Poisoning Model-Based Reinforcement Learning via State-Transition Alteration",
+          "url": "https://arxiv.org/abs/2206.02701"
+        }
+      ],
+      "why_distinct": "Prior poisoning works in MBRL either inject synthetic/corrupted observation transitions, flip reward signals, or degrade general prediction accuracy across the state space. This mechanism uses 100% physically valid environment transitions to specifically target the optimization geometry (covariance convergence) of the derivative-free planner (CEM/MPPI) via contractive Jacobian eigenvalues, while maintaining superior 1-step and multi-step predictive validation scores.",
+      "short_gate": {
+        "carrier": "TD-MPC2 (official PyTorch implementation, default 5M/48M configuration on DMControl Walker-Run / Hopper-Hop)",
+        "budget": "Single RTX 4090, 4 hours runtime",
+        "protocol": [
+          "1. Collect 500 legal interaction episodes with contractive-inducing sinusoidal actions on DMControl Walker-Run.",
+          "2. Train TD-MPC2 world model on mixed buffer (10% trap data, 90% clean data).",
+          "3. Evaluate: Compute 1-step validation loss L_val, CEM sampled trajectory entropy H_cem over iterations 1..N, and closed-loop cumulative return R_eval across 10 evaluation seeds."
+        ]
+      },
+      "matched_controls": [
+        "Clean Control: TD-MPC2 trained on 100% clean exploration transitions.",
+        "Entropy-Matched Control: 10% injected transitions generated by random Gaussian walk with matched action norm and state coverage, but lacking phase-locked contractive dynamics.",
+        "Direct Noise Control: 10% transitions injected from high-frequency dithering actions."
+      ],
+      "causal_intervention": "Artificially clamp the minimum proposal covariance in TD-MPC2's MPPI/CEM planning loop (setting sigma_min >= 0.25). If the failure is caused by the contractive basin trap, this intervention will break premature optimization convergence and recover >= 70% of the lost task return without retraining the world model.",
+      "defense_hypothesis": "Ensemble disagreement in multi-step Jacobian contraction rates (e.g., measuring log(det(J_t)) divergence across latent heads) or enforcing an entropy floor in the derivative-free action sampling distribution eliminates the trap with < 3% return degradation on clean tasks.",
+      "reject_if": "The injected data either (a) increases 1-step predictive loss by > 5% relative to the clean baseline, or (b) the drop in closed-loop return across seeds 11-15 is not statistically significant (p > 0.05 under two-sided Welch's t-test) compared to the entropy-matched random control, or (c) the failure persists when switching from CEM to an exact gradient-based planner (e.g., standard backpropagation through the world model)."
+    }
+  }
+}

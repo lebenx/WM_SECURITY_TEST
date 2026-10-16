@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-09",
+  "status": "native_dynamics_reliance_baselines_completed",
+  "source": "runs/tdmpc_dynamics_reliance_v0/summary.json",
+  "script": "scripts/probe_tdmpc_dynamics_reliance.py",
+  "report_note_cn": "新增三类原生 TD-MPC2 任务的因果基线：每类固定 seed31，完整规划、动力学忽略动作、仅策略网络各运行一个500步回合，共9回合4500步。行走得分975.51→80.22，仅策略500.25；接球994→718，仅策略996；到点972→946，仅策略973。忽略动作只改变推演中 model.next 接收的动作，真实动作、奖励/价值/策略/编码模块和全部权重保持不变。结果确认行走与接球适合继续检验动力学破坏，到点可作稳健性对照；这不是已实现的投毒、隐蔽攻击或新颖机制。全程约138.2秒，仅冻结模型推理，无训练和API调用。每任务只有一个种子，不能据此宣称总体效应或论文规模已达成。",
+  "effects": [
+    {
+      "task": "walker-walk",
+      "native_return": 975.5114962868392,
+      "clean_gate_passed": true,
+      "action_blind_return": 80.22138382680714,
+      "action_blind_return_drop": 895.2901124600321,
+      "native_prior_return": 500.24581863731146,
+      "mpc_advantage_over_prior": 475.2656776495278
+    },
+    {
+      "task": "reacher-easy",
+      "native_return": 972.0,
+      "clean_gate_passed": true,
+      "action_blind_return": 946.0,
+      "action_blind_return_drop": 26.0,
+      "native_prior_return": 973.0,
+      "mpc_advantage_over_prior": -1.0
+    },
+    {
+      "task": "cup-catch",
+      "native_return": 994.0,
+      "clean_gate_passed": true,
+      "action_blind_return": 718.0,
+      "action_blind_return_drop": 276.0,
+      "native_prior_return": 996.0,
+      "mpc_advantage_over_prior": -2.0
+    }
+  ],
+  "native_environment_steps": 4500,
+  "episodes": 9,
+  "seeds_per_task": 1,
+  "intervention": "Call the original learned dynamics with zero actions in all imagination/proposal rollouts; keep actual executed actions and all learned modules unchanged.",
+  "model_digest": "ed703fcb518e49a48c1a7379c1f9a3b9b6d1edeee82e6cea679e528b324ca4fe",
+  "model_weights_unchanged": true,
+  "elapsed_s": 138.2006795750931,
+  "training_updates": 0,
+  "api_requests": 0,
+  "gpu_training": false,
+  "gpu_work": "Frozen inference only",
+  "accepted_security_claim": null,
+  "scope": "Native causal ablation and policy-only baselines, one seed per task. No poisoning realization or stealth criterion tested; no publication-scale replication or novel mechanism.",
+  "next_requirement": "Develop a substantively new security operation and test it in the now measured native decision loop. Use walker-walk as a planning-dependent task and cup-catch as a task with a strong policy-only comparator; retain reacher-easy as a robustness control. Do not present action deletion, ordinary source-distribution routing, self-generated triggers, or non-normal rollout amplification as a new main mechanism. Preserve the existing broad novelty and multiple-core-task objective; obtain causal attack/defense evidence before long GPU training."
+}

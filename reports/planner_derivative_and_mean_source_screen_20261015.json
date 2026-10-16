@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "status": "completed_bounded_source_screen_no_new_security_candidate",
+  "research_goal_status": "active_unachieved",
+  "method": "Codex source inspection and mathematical scope check; no external-model ideation or review.",
+  "checks": [
+    {
+      "id": "lewm_equal_forward_changed_derivative",
+      "hypothesis": "An allowed input operation could preserve the complete deterministic forecast/cost function while changing the action derivative used by native gradient planning.",
+      "source_paths": [
+        "vendor/le-wm/config/eval/solver/adam.yaml",
+        "vendor/le-wm/jepa.py",
+        "vendor/le-wm/eval.py",
+        "reports/research_archive/models.json",
+        "configs/world_model_gradient_security.json"
+      ],
+      "source_findings": [
+        "The optional Adam configuration names stable_worldmodel.solver.GradientSolver, AdamW, 30 steps, 100 samples and learning rate 0.1.",
+        "Action encoding, autoregressive prediction and terminal latent MSE retain a differentiable action path. The clone/detach of initial encoded observations does not detach subsequent candidate actions.",
+        "The actual solver implementation and a qualified local LeWM checkpoint/Clean run were not established by this inspection. Default task configurations use CEM. No end-to-end backward or planning run was performed."
+      ],
+      "mathematical_boundary": "If two differentiable deterministic scalar costs agree on an action neighborhood, their action derivatives agree there. Equality only at a finite set of cached actions does not establish equality of the functions. Custom backward or detach-based derivative replacement grants control over the backward program and does not, by itself, identify a new restricted input attack.",
+      "decision": "Do not launch a LeWM gradient experiment on this hypothesis. A reachable restricted operation, compatible competent controller and distinction from archived gradient mechanisms remain missing.",
+      "scope": "Rejects this proposed justification, not gradient-based planning research in general."
+    },
+    {
+      "id": "final_elite_mean_approval",
+      "hypothesis": "CEM's final elite average can be executed without the same acceptance decision applied to sampled candidates.",
+      "source_paths": [
+        "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py",
+        "vendor/nano-world-model/src/planning/cem_planner.py",
+        "reports/dino_fixed_forecast_geometry_scope_20261015.json",
+        "reports/mbrl_action_mean_coupling_decision_20261015.json"
+      ],
+      "source_findings": [
+        "DINO forecasts the newly updated mean on every CEM iteration and saves predicted_best_encs. The code then returns its prefix without scoring and accepting/rejecting that forecast. It is incorrect to say this mean is never forecast.",
+        "NanoWM returns the final elite mean without an additional final-mean rollout. Earlier means enter the next iteration as candidate zero. Its recorded final_loss is the last iteration's best sampled loss, not necessarily the returned mean's cost.",
+        "Existing final-mean caches do not provide the real outcomes of all final elites, so they cannot establish that safe elites were averaged into a dangerous action."
+      ],
+      "decision": "Do not treat ordinary multimodal averaging risk as a new security mechanism without a distinct constrained intervention. Preserve the existing strong-CEM CartPole return tie of 200/200; no new task experiment is justified by these source differences alone.",
+      "scope": "Source semantics only. No claim that final-mean synthesis is always safe or that a two-returned-mean diagnostic reconstructs the complete native candidate bank."
+    }
+  ],
+  "activity": {
+    "model_forwards": 0,
+    "environment_steps": 0,
+    "model_api_calls": 0,
+    "training_updates": 0,
+    "weight_downloads": 0,
+    "checkpoint_hashes": 0
+  }
+}

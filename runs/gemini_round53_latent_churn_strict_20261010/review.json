@@ -1,0 +1,27 @@
+{
+  "verdict": "REJECT",
+  "score": 3,
+  "distinctness_analysis": "The proposal repackages known dynamics adversarial attacks and CEM covariance pinching under the moniker of 'non-action-aligned curvature poisoning'. The claim that deterministic actor execution stays intact while MPPI/CEM fails due to covariance collapse is essentially a restatement of trajectory variance starvation / gradient flattening in the planning landscape. Furthermore, your repair ('spectral dynamics normalization plus covariance floor') directly betrays the premise: covariance floor is the standard, well-studied baseline for preventing covariance pinching in sampling planners, and spectral normalization on latent dynamics is standard Lipschitz regularization. No fundamentally new interaction topology is isolated.",
+  "fatal_flaws": [
+    "Rebranding: Latent curvature poisoning that breaks sampling-based planning while preserving reconstruction is functionally indistinguishable from high-frequency adversarial perturbations inducing planning-landscape roughness.",
+    "Repair triviality: Using a covariance floor directly resolves the nominal failure mode by definition, confirming the failure is basic CEM premature convergence rather than a novel topological phase transition."
+  ],
+  "alternative_candidates": [
+    {
+      "name": "Latent Horizon Shortcut Collusion (Temporal Consistency Poisoning)",
+      "mechanism": "Exploiting TD-MPC2's multi-step latent consistency loss by injecting transitions where latent state skips intermediate velocity manifolds, forcing the learned latent prior to overestimate rollout reachability without altering one-step autoencoding error.",
+      "carrier": "TD-MPC2 official repository, DMControl humanoid-run"
+    },
+    {
+      "name": "Task-Embedding Cross-Talk Bleed in Multi-Task TD-MPC2",
+      "mechanism": "Poisoning the shared task-token projection with orthogonal gradients such that single-task evaluations suffer cross-policy interference exclusively during warm-start elite selection, while leaving frozen-task checkpoints unaffected.",
+      "carrier": "TD-MPC2 official repository (multi-task 30-task benchmark)"
+    }
+  ],
+  "pilot_test": {
+    "carrier_setup": "TD-MPC2 official PyTorch repo on DMControl humanoid-run, single GPU, 50k steps.",
+    "procedure": "Inject 1.5% perturbation to train dynamics. Track both: (1) Spectral norm of the latent Hessian with respect to actions and (2) CEM elite variance over rollout steps H=1..5.",
+    "runtime_hours": 1.8,
+    "decisive_falsifier": "Falsified if the deterministic actor performance drops by >15% (showing it is simple model corruption, not planner-specific) OR if the poisoned dynamics show >10% rollout reconstruction error drift, indicating it violates the bounded one-step/reconstruction premise."
+  }
+}

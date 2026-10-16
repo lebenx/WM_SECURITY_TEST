@@ -1,0 +1,163 @@
+{
+  "status": "completed_alphabrain_fixed_latent_goal_swap",
+  "runtime_backend": "native_transformer_engine",
+  "checkpoint": "models/AlphaBrain/cosmos_policy_libero/model.safetensors",
+  "task_pairs": [
+    {
+      "task_a": "open the top drawer and put the bowl inside",
+      "task_b": "pick up the black bowl from table center and place it on the plate",
+      "per_slot_mean_abs_delta": [
+        0.008085042238235474,
+        0.008046411909162998,
+        0.008069992065429688,
+        0.008078434504568577,
+        0.008263591676950455,
+        0.008318696171045303,
+        0.00841543823480606,
+        0.008406751789152622,
+        0.00861351191997528
+      ],
+      "future_wrist_delta": 0.00841543823480606,
+      "future_primary_delta": 0.008406751789152622,
+      "all_prediction_slots_nonzero": true,
+      "relative_output_l2": 0.007285594940185547
+    },
+    {
+      "task_a": "pick up the ketchup and place it in the basket",
+      "task_b": "pick up the black bowl on the cookie box and place it on the plate",
+      "per_slot_mean_abs_delta": [
+        0.00840516947209835,
+        0.008509219624102116,
+        0.008497229777276516,
+        0.008512916043400764,
+        0.008646711707115173,
+        0.00886385515332222,
+        0.008925210684537888,
+        0.009217096492648125,
+        0.008740322664380074
+      ],
+      "future_wrist_delta": 0.008925210684537888,
+      "future_primary_delta": 0.009217096492648125,
+      "all_prediction_slots_nonzero": true,
+      "relative_output_l2": 0.007630517240613699
+    },
+    {
+      "task_a": "put both moka pots on the stove",
+      "task_b": "pick up the orange juice and place it in the basket",
+      "per_slot_mean_abs_delta": [
+        0.01060150284320116,
+        0.01063678227365017,
+        0.010940087027847767,
+        0.010906168259680271,
+        0.01011810451745987,
+        0.010319451801478863,
+        0.010562107898294926,
+        0.010315620340406895,
+        0.009842641651630402
+      ],
+      "future_wrist_delta": 0.010562107898294926,
+      "future_primary_delta": 0.010315620340406895,
+      "all_prediction_slots_nonzero": true,
+      "relative_output_l2": 0.00904666818678379
+    }
+  ],
+  "fixed_latent_shape": [
+    1,
+    16,
+    9,
+    28,
+    28
+  ],
+  "condition_slots_fixed": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "prediction_slots": {
+    "action": 4,
+    "future_proprio": 5,
+    "future_wrist": 6,
+    "future_primary": 7,
+    "value": 8
+  },
+  "all_pairs_prediction_slots_nonzero": true,
+  "direct_text_cut_only_pair": {
+    "task_a": "open the top drawer and put the bowl inside",
+    "task_b": "pick up the black bowl from table center and place it on the plate",
+    "per_slot_mean_abs_delta": [
+      0.004795690067112446,
+      0.004751420579850674,
+      0.00478917732834816,
+      0.0049558826722204685,
+      0.007113356608897448,
+      0.005118666682392359,
+      0.004932744894176722,
+      0.005109129007905722,
+      0.007258475758135319
+    ],
+    "future_world_delta_mean": 0.005053513217717409,
+    "all_future_world_slots_nonzero": true,
+    "policy_delta_mean": 0.007185916416347027
+  },
+  "no_goal_zero_context_diagnostic": {
+    "native_per_slot_mean_abs_delta": [
+      0.017332345247268677,
+      0.016148539260029793,
+      0.015949854627251625,
+      0.01632862351834774,
+      0.01573280058801174,
+      0.0156778022646904,
+      0.01571044698357582,
+      0.015525242313742638,
+      0.01677432842552662
+    ],
+    "native_future_world_delta_mean": 0.015637829899787903,
+    "native_policy_delta_mean": 0.01625356450676918,
+    "repair_per_slot_mean_abs_delta": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.01390001829713583,
+      0.0,
+      0.0,
+      0.0,
+      0.014495985582470894
+    ],
+    "repair_future_world_delta_max": 0.0,
+    "repair_policy_delta_mean": 0.014198001474142075,
+    "repair_future_world_exact_zero": true,
+    "interpretation": "diagnostic zero T5 context; not a released training condition"
+  },
+  "matched_repair_pair": {
+    "task_a": "open the top drawer and put the bowl inside",
+    "task_b": "pick up the black bowl from table center and place it on the plate",
+    "cut_world_slots": [
+      5,
+      6,
+      7
+    ],
+    "cut_policy_slots": [
+      4,
+      8
+    ],
+    "per_slot_mean_abs_delta": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.006737214978784323,
+      0.0,
+      0.0,
+      0.0,
+      0.007098833564668894
+    ],
+    "future_world_delta_max": 0.0,
+    "policy_delta_mean": 0.006918024271726608,
+    "future_world_exact_zero": true,
+    "relative_output_l2": 0.0029842639341950417
+  },
+  "peak_vram_bytes": 7842137600,
+  "scope": "fixed latent one-step DiT output with a matched row-wise repair; no image decode, environment step, or task-level harm"
+}

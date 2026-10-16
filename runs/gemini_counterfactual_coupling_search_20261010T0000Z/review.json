@@ -1,0 +1,16 @@
+{
+  "verdict": "REJECT",
+  "novelty_score": 4.5,
+  "one_sentence_claim": "A truthful action-only contributor breaks joint counterfactual coupling across branches while preserving one-step branch marginals, inducing planner failure via inconsistent branch comparison.",
+  "threat_operation": "Injecting legally valid action sequences across overlapping multi-agent or shared-environment trajectories to induce latent non-identifiability / spurious branch dependency without perturbing individual marginal predictive distributions.",
+  "invariant": "Joint counterfactual consistency / conditional cross-branch invariance under intervened action sequences from shared latent initializations.",
+  "released_carrier": "None",
+  "exact_short_gate": "TD-MPC2 (common/world_model.py, WorldModel.forward) and MBRL-Lib/PETS (mbrl/models/gaussian_mlp.py) parameterize transitions as deterministic functions z_{t+1} = T(z_t, a_t) or independent diagonal Gaussian marginals p(s_{t+1}|s_t, a_t). In both codebases, conditioning on identical z_t / s_t strictly forces p(s_{t+1}|s_t, a) to be identical regardless of whether another branch a' was evaluated; the architectures lack cross-branch covariance heads or joint multi-action distribution modeling. Evaluating cross-branch counterfactual discrepancy reduces to evaluating individual marginal errors.",
+  "positive_controls": [
+    "Matched permutation control: Shuffle action sequences across branches to isolate joint dependence from marginal frequency shifts.",
+    "Decoupled transition baseline: Fit independent models per discrete action branch to demonstrate identical marginal degradation without joint latent coupling."
+  ],
+  "nearest_prior_art": "Pearl's causal ladder / Counterfactual Consistency in MBRL (e.g., ACID, CoCo, and structural causal model identifiability literature)",
+  "why_not_generic": "It targets the failure of counterfactual ranking rather than single-step prediction loss, but collapses back into generic model underfitting/misspecification in standard architectures.",
+  "decision": "Reject. The proposal cannot clear Novelty >= 7.0 for two structural reasons: First, standard world models (TD-MPC2, PETS, Dreamer) evaluate transition dynamics factorized point-wise per action (z_{t+1} = f(z_t, a)); by mathematical construction, if the one-step marginals p(s_{t+1}|s_t, a) are individually calibrated and consistent for all a, the joint counterfactual distribution over branches given identical s_t is trivially fixed and cannot be selectively desynchronized without perturbing either the marginals or the shared state encoder. Second, in repositories lacking structural causal graphs or joint multi-branch heads, breaking 'counterfactual coupling' without altering single-step marginals is either mathematically impossible or identical to generic epistemic uncertainty / out-of-distribution generalization error under branch-selection planners. No repository carrier supports a two-minute gate demonstrating this divergence."
+}

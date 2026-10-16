@@ -1,0 +1,18 @@
+Novelty Score: 3/10
+
+Status: Vague umbrella term rather than a legitimate unifying mechanism. The claim packages disparate phenomena—out-of-distribution sequence compounding under policy shift, causal leakage through policy-conditioned inputs, and non-associative operator error—under the heading of "loss of causal compositional integrity." The empirical evidence explicitly refutes the stated structural mechanism: the action commutator diagnostic fails to show any selective increase under the cascade compared to random controls (e.g., walker-run at 0.762 cascade vs 0.862 random). The failure modes observed are consistent with standard covariate shift along unrolled search trajectories rather than an attack on counterfactual compositionality.
+
+Nearest Prior: Multi-step auto-regressive exposure bias / compounding error under distribution shift (e.g., Venkatraman et al., 2015; Asadi et al., 2019 on Lipschitz bounds in multi-step model rollouts) combined with goal-conditioning leakage in modular policies (e.g., policy-environment confounding in offline RL, Kumar et al., 2020).
+
+Distinguishing Mathematical Invariant:
+To distinguish this claim from standard distribution shift and compounding one-step errors, the multi-step latent transition operator $T_a: \mathcal{Z} \to \mathcal{Z}$ must exhibit path-dependent non-commutativity or non-associativity strictly on counterfactual sequences that cannot be bounded by the accumulation of single-step local errors. Formally, for a sequence of actions $\tau = (a_1, \dots, a_H)$, the composition defect must violate the accumulation bound:
+$$\left\| T_{a_H} \circ \dots \circ T_{a_1}(z) - T_{\tau}^*(z) \right\| > \sum_{t=1}^H L^{H-t} \epsilon(z_t, a_t)$$
+where $\epsilon(z, a) = \|T_a(z) - T^*_a(z)\|$ is the local single-step error, $L$ is the local Lipschitz constant of $T$, and this violation must hold exclusively for unobserved action permutations while holding equality on observed support. 
+
+Smallest Falsifying Experiment:
+Using the official TD-MPC2 mt30-48M checkpoint, isolate a sequence of two actions $(a_1, a_2)$ in the held-out walker-run task. Construct an open-loop rollout test comparing the model's predicted trajectory for the sequence $(a_1, a_2)$ against the step-by-step composition:
+1. $z_1 = T(z_0, a_1)$
+2. $z_2 = T(z_1, a_2)$
+Evaluate the multi-step counterfactual difference:
+$$\Delta_{\text{comp}} = \| T(T(z_0, a_1), a_2) - z_2^* \|$$
+Falsification condition: If the growth of $\Delta_{\text{comp}}$ normalized by the local one-step validation errors ($\epsilon_1 + \epsilon_2$) is statistically indistinguishable (or smaller) in the adapted source model compared to a cleanly trained baseline model across identical counterfactual action pairs $(a_1, a_2)$, the hypothesis that adaptation selectively corrupted counterfactual compositional operators is falsified. Standard compounding rollout error accounts entirely for the downstream planning degradation.

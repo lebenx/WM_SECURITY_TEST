@@ -1,0 +1,36 @@
+{
+  "checkpoint": "models/tdmpc2/mt30-48M.pt",
+  "updates": 300,
+  "eval_steps": 300,
+  "output": "runs/tdmpc_non_normal_causal_dose300_v0",
+  "arm": [
+    [
+      "cascade11",
+      "runs/tdmpc_non_normal_gate_walker_run_dose300_v0/cascade_source.pt",
+      "walker-run",
+      11
+    ],
+    [
+      "cascade12",
+      "runs/tdmpc_non_normal_gate_walker_run_seed22_dose300_v0/cascade_source.pt",
+      "walker-run",
+      12
+    ],
+    [
+      "random11",
+      "runs/tdmpc_non_normal_gate_walker_run_dose300_v0/random_source.pt",
+      "walker-run",
+      11
+    ],
+    [
+      "random12",
+      "runs/tdmpc_non_normal_gate_walker_run_seed22_dose300_v0/random_source.pt",
+      "walker-run",
+      12
+    ]
+  ],
+  "operation": "Replay the exact saved legal source trajectory and 300 dynamics-only native updates from the non-normal gate.",
+  "causal_intervention": "Replace native MPPI deployment with the unchanged learned actor (prior) after adaptation.",
+  "gate": "Cascade MPC harm must disappear or materially shrink under prior while random-control and clean actor returns remain stable.",
+  "api_requests": 0
+}

@@ -1,0 +1,14 @@
+{
+  "source": "runs/cosmos_first_query_truth_inference_20261015",
+  "output": "runs/cosmos_cached_decode_gate_20261016",
+  "candidates": [0, 1],
+  "order": ["truth", "clean", "swap"],
+  "future_pixel_indices": {"wrist": 21, "primary": 25},
+  "restored_placeholder_latent_indices": [0, 1, 4, 5],
+  "latent_shape": [1, 16, 9, 28, 28],
+  "budgets": {"vae_loads": 1, "vae_decodes": 6, "vae_encodes": 0, "policy_calls": 0, "future_calls": 0, "value_calls": 0, "environment_steps": 0, "api_calls": 0},
+  "resources": {"gpu_index": 0, "minimum_free_mib": 6144, "memory_fraction": 0.25, "hard_wall_seconds": 180},
+  "question": "Are cached future latents physically interpretable after the native VAE decode, calibrated against the same decoder applied to encoded measured futures?",
+  "scope": "One post-hoc known harmful root, two candidates. Decode/observation-readout calibration only, not new harm, style/content isolation, state reconstruction, defense or generalization.",
+  "decision_rule": "Inspect truth reconstruction before attributing physical facts to predictions. Record image errors descriptively; do not convert pixel or latent differences into physical state error or attack success. No retuning, new seed/root, extra model or full episode is authorized by this gate."
+}

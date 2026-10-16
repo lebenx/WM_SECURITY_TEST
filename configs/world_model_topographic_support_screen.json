@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-10",
+  "candidate_id": "H_topographic_horizon_categorical_support",
+  "candidate_claim_cn": "合法的近零回报边界轨迹可能让 TD-MPC2 的离散 reward 支持在原生想象 horizon 中变平，从而在不显著增加一步动力学误差的情况下削弱 MPPI。",
+  "source_review": "runs/gemini_mechanism_search_round7_20261010T0000Z/review.txt",
+  "carrier": "official TD-MPC2 mt30-48M; native full update; unchanged native MPPI and actor",
+  "protocol": {
+    "source_task": "cheetah-run",
+    "target_task": "walker-run",
+    "source_modes": ["random", "steady"],
+    "updates": 40,
+    "evaluation_seeds": [41, 42],
+    "native_horizon": 3,
+    "entropy_probe": "Fixed validation states and common random legal actions; entropy of categorical reward logits at imagined depths 0,1,2.",
+    "gate": "steady must reduce MPC return on both seeds, entropy ratio >=1.10, one-step error <=1.05x random, and actor delta within 5%."
+  },
+  "run": "runs/tdmpc_topographic_entropy_gate_v0/status.json",
+  "results": {
+    "seed_41": {
+      "steady_mpc": 303.9752670824528,
+      "random_mpc": 367.0783879160881,
+      "loss_vs_random": 0.17190639087164217,
+      "entropy_ratio": 0.9757070136241357,
+      "one_step_error_ratio": 0.9975506058666417,
+      "actor_delta": 4.309243848547339,
+      "passed": false
+    },
+    "seed_42": {
+      "steady_mpc": 353.72185599803925,
+      "random_mpc": 388.3637511432171,
+      "loss_vs_random": 0.089199610013044,
+      "entropy_ratio": 0.9757070136241357,
+      "one_step_error_ratio": 0.9975506058666417,
+      "actor_delta": 44.76386022288352,
+      "passed": false
+    }
+  },
+  "decision": "rejected_native_horizon_gate_and_entropy_direction",
+  "interpretation": "The one-seed return decrease did not replicate at the required magnitude, and the measured categorical reward entropy decreased rather than increased. The long-horizon version would require a non-native planner change, so no scale-up.",
+  "api_requests": 0,
+  "gpu_work": "124.997 seconds bounded CUDA inference and 40-update adaptation screen; no long training"
+}

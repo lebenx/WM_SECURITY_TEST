@@ -1,0 +1,100 @@
+{
+  "id": "cosmos_quaternion_gauge_screen_v1",
+  "registered_before": "Any learned-forward or task test of quaternion sign flip in this project",
+  "status": "preregistered_single_initial_state_development_gate",
+  "fixed_protocol": {
+    "suite": "libero_goal",
+    "task_id": 0,
+    "init_id": 0,
+    "seed": 31,
+    "environment_seed": 0,
+    "max_steps": 300,
+    "settle_steps": 10,
+    "goal": "open the middle drawer of the cabinet",
+    "cuda_memory_fraction": 0.28,
+    "candidate_seeds": [
+      31,
+      32
+    ]
+  },
+  "planned_episodes": [
+    {
+      "best_of_n": 1,
+      "condition": "clean"
+    },
+    {
+      "best_of_n": 2,
+      "condition": "clean"
+    },
+    {
+      "best_of_n": 1,
+      "condition": "sign_flip"
+    },
+    {
+      "best_of_n": 2,
+      "condition": "sign_flip"
+    },
+    {
+      "best_of_n": 1,
+      "condition": "sign_flip_then_x_canonical"
+    },
+    {
+      "best_of_n": 2,
+      "condition": "sign_flip_then_x_canonical"
+    },
+    {
+      "best_of_n": 1,
+      "condition": "clean_x_canonical"
+    },
+    {
+      "best_of_n": 2,
+      "condition": "clean_x_canonical"
+    }
+  ],
+  "source_sha256": {
+    "scripts/pilot_cosmos_quaternion_gauge_task.py": "f201407ad1036d5c436693d764625d2804885548787c6b80abfe0d360c89a8a6",
+    "scripts/pilot_cosmos_policy_native_task_gate.py": "357d1247de2131fad362cb44d86933779b8f702d9e5cf4c1437e509d83bf4a94",
+    "scripts/cosmos_policy_native_inference.py": "6875d60e8e4d31b5df49ccc9a17d04067f0d5968d9d57b1361b5c50be88068cf",
+    "scripts/cosmos_counterfactual_replay.py": "4f09405a0d8cfb499e8e7c91843d42f5ee4ee758746c68683858f4f648f03ae6",
+    "scripts/pilot_cosmos_policy_branch_offload_task_gate.py": "1b5d91660ae6b0c592ef4b212c04bca5ed03c608738946de076fad70e9fb69d9"
+  },
+  "references": {
+    "1": {
+      "episode": "runs/cosmos_policy_native_task_gate_clean_n1_v1/libero_goal_task00_init00_clean.json",
+      "artifact_sha256": {
+        "runs/cosmos_policy_native_task_gate_clean_n1_v1/libero_goal_task00_init00_clean.json": "a9eb4d8514268c02ce4716373a657d72206fb6f47649572816c4723d93e37f33",
+        "runs/cosmos_policy_native_task_gate_clean_n1_v1/libero_goal_task00_init00_clean.jsonl": "716d65978821012b881c5b8215c05df21120dff8f7985fd8438fafcdc8de9305",
+        "runs/cosmos_policy_native_task_gate_clean_n1_v1/libero_goal_task00_init00_clean_chunks.jsonl": "b9c8d4b7996035250274736bac53649bff47e7911f09aada864d2f616e81681a",
+        "runs/cosmos_policy_native_task_gate_clean_n1_v1/libero_goal_task00_init00_clean_initial.png": "120fa47d37a27690a7da0cb4ad513900bdd13b86539b6a73bcd67d0aabf3230a",
+        "runs/cosmos_policy_native_task_gate_clean_n1_v1/libero_goal_task00_init00_clean_final.png": "278311ce7864e16a68d54cf87c0adafb7e393ec9986ce62784d60cee1392e79f",
+        "runs/cosmos_policy_native_task_gate_clean_n1_v1/libero_goal_task00_init00_clean_states.npz": "eea9b7367bf524b80cbe5e10ae6d324bebdf51586d1a3b65803d4ca87c91d4bd"
+      }
+    },
+    "2": {
+      "episode": "runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json",
+      "artifact_sha256": {
+        "runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.json": "e8528a0dca6df8c64113c133492ae561224180ed4f44b95ec39180c0cb2af70d",
+        "runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean.jsonl": "64d75f0f564a6a9f09c37904f0330b9482fa75b63fa62b437e1931251a3b4f39",
+        "runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean_chunks.jsonl": "9112545e6a1db30e4dc0882cd8c59086d5839b277aa8172f85117b6cc5ede0d2",
+        "runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean_initial.png": "120fa47d37a27690a7da0cb4ad513900bdd13b86539b6a73bcd67d0aabf3230a",
+        "runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean_final.png": "8df54a63fb4637b1f19d0449f96e5b89ea1dcf9a0cdda4a2c3eb9290cc9b99f9",
+        "runs/cosmos_policy_native_task_gate_clean_n2_v1/libero_goal_task00_init00_clean_states.npz": "7df624aec9b97c08e90a367a81d27b615ba50d28aa85e4e8922f048eb834fda3"
+      }
+    }
+  },
+  "intervention": "Copy the model input observation; negate all four xyzw quaternion coordinates only. Never normalize. Leave simulator/controller, images, position, gripper, Goal and all weights untouched. Native proposal/future/value read the same transformed observation.",
+  "canonicalization": "First nonzero coordinate in fixed x,y,z,w order must be positive; tie order fixed before outcomes. Applies equally to clean and flipped input.",
+  "training_support_limit": "Official quaternion x min=0.2902947962284088 max=0.9999998807907104; negative-sign representation lies outside this training range. This is physically equivalent representation robustness, not a small numerical or in-support perturbation.",
+  "stop_rule": "Run exactly these eight episodes unless a technical/clean-equivalence gate fails. No expansion if no task harm or N1/N2 share OOD failure. No adaptive sign schedule or initial-state selection.",
+  "promotion_rule": "Only if N2 clean and sign_flip_then_x_canonical succeed, N2 sign_flip fails, and N1 sign_flip succeeds: Go only to a separate fixed-candidate forecast/direct-value attribution test. N1/N2 difference alone does not prove future mediation.",
+  "success_source": "Native LIBERO check_success, first success or done stop, max300 physical controls.",
+  "clean_equivalence": "Compare entire native trace, all candidate scores/selected actions and future RMS, initial/final simulator arrays, and PNGs against pre-existing successful N1/N2 Task0 Init0.",
+  "clean_cost": "Actually execute clean_x_canonical under each N and compare success and steps to the executed clean arm.",
+  "scope": [
+    "One initial state, eight paired arms; no independent validation, CI, population claim or established novelty.",
+    "Input-channel write permission is assumed; no deployed remote exploit demonstrated.",
+    "Published torch compatibility backend, not full Transformer Engine kernel parity."
+  ],
+  "training_updates": 0,
+  "api_requests": 0
+}
