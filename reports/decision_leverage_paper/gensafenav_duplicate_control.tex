@@ -1,0 +1,52 @@
+\subsection{Duplicate removal before versus after joint forecasting}
+R007 tests a restricted, researcher-added tracker-to-forecaster interface.
+At each eligible GST call, we copy the lowest-index complete observed
+trajectory into the lowest-index slot with no observed history, using
+temporary tensors. Original valid histories, physical pedestrians, task,
+weights, and direct current-state actor inputs are protected. The destination
+slot need not denote the absence of a physical pedestrian. After the single
+GST forward, we remove the duplicate output by restoring its invalid mask
+and future XY values. The native consumer does not use its remaining
+uncertainty channels, which are not claimed restored. Changes to forecasts
+for other entities can still reach the actor.
+
+Three complete case-0, seed-42 CPU episodes compare the original inputs,
+this single duplicate with output removal, and exact removal before GST.
+The last arm restores the original input tensor before forecasting; it is
+a controlled reversal of this exact operation, not a general defense.
+The inherited native evaluation settings are the same as in R006.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lrrcc}
+\toprule
+Condition & Physical return & Controls & Success & Collision \\
+\midrule
+Original & 30.185066415 & 119 & Yes & No \\
+Duplicate, remove output & 30.087496792 & 102 & Yes & No \\
+Remove before GST & 30.185066415 & 119 & Yes & No \\
+\bottomrule
+\end{tabular}
+\caption{R007 complete physical episodes. All three have zero cumulative
+environment cost. The duplicate arm reaches the goal sooner; its small
+return decrease is not a material-harm result.}
+\end{table}
+
+The duplicate arm contains 98 eligible, actually consumed interventions.
+At the first common eligible call, original history inputs and direct actor
+current-state fields agree, while forecast XY for original valid entities
+changes by up to $0.0095983$. This is a local influence diagnostic, not a
+forecast-to-truth error or an attack-success metric. Full-episode return
+changes by $-0.0975696$ ($-0.3232\%$), below the precommitted loss threshold
+of $1.5092533$; neither collision nor loss of success occurs. Thus the
+registered material-harm gate fails. Pre-GST removal reproduces the entire
+original physical trace, actor observations, resets, forecasts, and outcome
+exactly, but recovery alone cannot turn the failed harm gate into a positive.
+
+The test completes in 27.11 seconds, with 340 physical controls and 343 GST
+calls including three post-terminal reset predictions, without API calls or
+training. We close this fixed operation without changing the source rule,
+duplicate count, task, or seed. This single reused case establishes neither
+external attacker access nor a shared three-system security mechanism.
+The execution snapshot, per-call tensors and complete physical records are
+in \artifact{runs/gensafenav_forecast_track_duplicate_v1/}.

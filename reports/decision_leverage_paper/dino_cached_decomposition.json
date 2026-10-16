@@ -1,0 +1,671 @@
+{
+  "schema_version": 1,
+  "status": "verified_cached_development_banks",
+  "numerical_conventions": {
+    "native_goal_cost": "CPU FP32 native terminal visual MSE + 0.1 * proprio MSE; exact to recorded costs",
+    "forecast_error": "FP64 reduction of FP32 forecast minus actual future encoding; distinct from goal distance",
+    "utility": "Python double sum of actual independent replay rewards",
+    "selection": "argmin native score, exact ties choose lowest index"
+  },
+  "banks": [
+    {
+      "bank_id": "seed1_five_historical_prefixes",
+      "physical_seed": 1,
+      "independent_development_roots": 1,
+      "candidate_names": [
+        "native_seed1_prefix",
+        "native_seed2_prefix",
+        "native_seed3_prefix",
+        "zero_request_roundtrip",
+        "seed1_xyz_sign_reversal_roundtrip"
+      ],
+      "action_commitment_controls": 30,
+      "native_execution_prefix_controls": 15,
+      "native_full_cem": false,
+      "true_future_native_costs": [
+        1.5170127153396606,
+        1.461045265197754,
+        1.5205891132354736,
+        2.3136017322540283,
+        2.9398908615112305
+      ],
+      "true_future_proxy_selected": 1,
+      "utilities": [
+        {
+          "terminal_reward": 7.989218711853027,
+          "cumulative_reward": 110.1521805524826,
+          "negative_terminal_distance": -0.09875076719367057,
+          "terminal_success": 0,
+          "ever_success": 0,
+          "first_success_control": null
+        },
+        {
+          "terminal_reward": 1.8297232389450073,
+          "cumulative_reward": 47.77828586101532,
+          "negative_terminal_distance": -0.25534155076118015,
+          "terminal_success": 0,
+          "ever_success": 0,
+          "first_success_control": null
+        },
+        {
+          "terminal_reward": 7.699375629425049,
+          "cumulative_reward": 109.05741345882416,
+          "negative_terminal_distance": -0.10311855346181165,
+          "terminal_success": 0,
+          "ever_success": 0,
+          "first_success_control": null
+        },
+        {
+          "terminal_reward": 1.39305579662323,
+          "cumulative_reward": 41.632548689842224,
+          "negative_terminal_distance": -0.2915413014790292,
+          "terminal_success": 0,
+          "ever_success": 0,
+          "first_success_control": null
+        },
+        {
+          "terminal_reward": 0.48128002882003784,
+          "cumulative_reward": 24.230171352624893,
+          "negative_terminal_distance": -0.4821569704071686,
+          "terminal_success": 0,
+          "ever_success": 0,
+          "first_success_control": null
+        }
+      ],
+      "conditions": {
+        "original": {
+          "costs": [
+            0.8195656538009644,
+            1.3444838523864746,
+            0.7811169028282166,
+            2.303743362426758,
+            2.9246826171875
+          ],
+          "ranking": [
+            2,
+            0,
+            1,
+            3,
+            4
+          ],
+          "selected": 2,
+          "terminal_forecast_mse": {
+            "visual": [
+              1.4073261733828852,
+              1.291254557812073,
+              1.1176999650960788,
+              0.3122602238230216,
+              0.5166087336828202
+            ],
+            "proprio": [
+              0.0009214085186254166,
+              0.0010111971597699131,
+              0.0005437141223889252,
+              2.6587301344515518e-05,
+              1.2560427480463903e-05
+            ],
+            "weighted": [
+              1.4074183142347478,
+              1.2913556775280501,
+              1.1177543365083178,
+              0.31226288255315604,
+              0.5166099897255683
+            ]
+          },
+          "metrics": {
+            "terminal_reward": {
+              "Lev": 7.5079386830329895,
+              "Mis": 6.15949547290802,
+              "Pred": -5.8696523904800415,
+              "regret": 0.2898430824279785,
+              "selected_utility": 7.699375629425049,
+              "true_future_proxy_selected_utility": 1.8297232389450073,
+              "best_recorded_utility": 7.989218711853027,
+              "worst_recorded_utility": 0.48128002882003784
+            },
+            "cumulative_reward": {
+              "Lev": 85.92200919985771,
+              "Mis": 62.373894691467285,
+              "Pred": -61.27912759780884,
+              "regret": 1.0947670936584473,
+              "selected_utility": 109.05741345882416,
+              "true_future_proxy_selected_utility": 47.77828586101532,
+              "best_recorded_utility": 110.1521805524826,
+              "worst_recorded_utility": 24.230171352624893
+            },
+            "negative_terminal_distance": {
+              "Lev": 0.38340620321349805,
+              "Mis": 0.15659078356750958,
+              "Pred": -0.1522229972993685,
+              "regret": 0.004367786268141077,
+              "selected_utility": -0.10311855346181165,
+              "true_future_proxy_selected_utility": -0.25534155076118015,
+              "best_recorded_utility": -0.09875076719367057,
+              "worst_recorded_utility": -0.4821569704071686
+            },
+            "terminal_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            },
+            "ever_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            }
+          }
+        },
+        "inflated_saturated_xyz": {
+          "costs": [
+            1.3296587467193604,
+            1.399619221687317,
+            1.157383680343628,
+            2.303743362426758,
+            2.7280466556549072
+          ],
+          "ranking": [
+            2,
+            0,
+            1,
+            3,
+            4
+          ],
+          "selected": 2,
+          "terminal_forecast_mse": {
+            "visual": [
+              0.5883349666057903,
+              0.9199946603017947,
+              0.7159840971047625,
+              0.3122602238230216,
+              0.906217077810176
+            ],
+            "proprio": [
+              6.449833065568925e-05,
+              5.1754699130087e-05,
+              3.936854674578801e-05,
+              2.6587301344515518e-05,
+              0.0011900977522056265
+            ],
+            "weighted": [
+              0.5883414164388558,
+              0.9199998357717076,
+              0.7159880339594371,
+              0.31226288255315604,
+              0.9063360875853966
+            ]
+          },
+          "metrics": {
+            "terminal_reward": {
+              "Lev": 7.5079386830329895,
+              "Mis": 6.15949547290802,
+              "Pred": -5.8696523904800415,
+              "regret": 0.2898430824279785,
+              "selected_utility": 7.699375629425049,
+              "true_future_proxy_selected_utility": 1.8297232389450073,
+              "best_recorded_utility": 7.989218711853027,
+              "worst_recorded_utility": 0.48128002882003784
+            },
+            "cumulative_reward": {
+              "Lev": 85.92200919985771,
+              "Mis": 62.373894691467285,
+              "Pred": -61.27912759780884,
+              "regret": 1.0947670936584473,
+              "selected_utility": 109.05741345882416,
+              "true_future_proxy_selected_utility": 47.77828586101532,
+              "best_recorded_utility": 110.1521805524826,
+              "worst_recorded_utility": 24.230171352624893
+            },
+            "negative_terminal_distance": {
+              "Lev": 0.38340620321349805,
+              "Mis": 0.15659078356750958,
+              "Pred": -0.1522229972993685,
+              "regret": 0.004367786268141077,
+              "selected_utility": -0.10311855346181165,
+              "true_future_proxy_selected_utility": -0.25534155076118015,
+              "best_recorded_utility": -0.09875076719367057,
+              "worst_recorded_utility": -0.4821569704071686
+            },
+            "terminal_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            },
+            "ever_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            }
+          }
+        },
+        "canonical_saturated_xyz": {
+          "costs": [
+            1.4290595054626465,
+            1.3023985624313354,
+            1.3681632280349731,
+            2.303743362426758,
+            2.8567841053009033
+          ],
+          "ranking": [
+            1,
+            2,
+            0,
+            3,
+            4
+          ],
+          "selected": 1,
+          "terminal_forecast_mse": {
+            "visual": [
+              0.44534751525975685,
+              0.4852615535333338,
+              0.44884536232960764,
+              0.3122602238230216,
+              0.4441819775816483
+            ],
+            "proprio": [
+              9.914334052409253e-06,
+              1.0985453062735312e-05,
+              7.3119827753909704e-06,
+              2.6587301344515518e-05,
+              1.3899061116131667e-05
+            ],
+            "weighted": [
+              0.4453485066931621,
+              0.48526265207864006,
+              0.4488460935278852,
+              0.31226288255315604,
+              0.4441833674877599
+            ]
+          },
+          "metrics": {
+            "terminal_reward": {
+              "Lev": 7.5079386830329895,
+              "Mis": 6.15949547290802,
+              "Pred": 0.0,
+              "regret": 6.15949547290802,
+              "selected_utility": 1.8297232389450073,
+              "true_future_proxy_selected_utility": 1.8297232389450073,
+              "best_recorded_utility": 7.989218711853027,
+              "worst_recorded_utility": 0.48128002882003784
+            },
+            "cumulative_reward": {
+              "Lev": 85.92200919985771,
+              "Mis": 62.373894691467285,
+              "Pred": 0.0,
+              "regret": 62.373894691467285,
+              "selected_utility": 47.77828586101532,
+              "true_future_proxy_selected_utility": 47.77828586101532,
+              "best_recorded_utility": 110.1521805524826,
+              "worst_recorded_utility": 24.230171352624893
+            },
+            "negative_terminal_distance": {
+              "Lev": 0.38340620321349805,
+              "Mis": 0.15659078356750958,
+              "Pred": 0.0,
+              "regret": 0.15659078356750958,
+              "selected_utility": -0.25534155076118015,
+              "true_future_proxy_selected_utility": -0.25534155076118015,
+              "best_recorded_utility": -0.09875076719367057,
+              "worst_recorded_utility": -0.4821569704071686
+            },
+            "terminal_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            },
+            "ever_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            }
+          }
+        }
+      },
+      "paired_contrasts": {
+        "inflated_saturated_xyz": {
+          "terminal_forecast_error_delta_per_candidate": [
+            -0.819076897795892,
+            -0.3713558417563425,
+            -0.4017663025488807,
+            0.0,
+            0.38972609785982837
+          ],
+          "mean_terminal_forecast_error_delta": -0.24049458884825733,
+          "every_candidate_error_nonincreasing": false,
+          "at_least_one_candidate_error_strictly_lower": true,
+          "selected_action_changed": false,
+          "selected_real_utility_delta": {
+            "terminal_reward": 0.0,
+            "cumulative_reward": 0.0,
+            "negative_terminal_distance": 0.0,
+            "terminal_success": 0,
+            "ever_success": 0
+          },
+          "fidelity_improves_and_terminal_reward_declines": false
+        },
+        "canonical_saturated_xyz": {
+          "terminal_forecast_error_delta_per_candidate": [
+            -0.9620698075415857,
+            -0.8060930254494101,
+            -0.6689082429804326,
+            0.0,
+            -0.07242662223780838
+          ],
+          "mean_terminal_forecast_error_delta": -0.5018995396418473,
+          "every_candidate_error_nonincreasing": true,
+          "at_least_one_candidate_error_strictly_lower": true,
+          "selected_action_changed": true,
+          "selected_real_utility_delta": {
+            "terminal_reward": -5.8696523904800415,
+            "cumulative_reward": -61.27912759780884,
+            "negative_terminal_distance": -0.1522229972993685,
+            "terminal_success": 0,
+            "ever_success": 0
+          },
+          "fidelity_improves_and_terminal_reward_declines": true
+        }
+      },
+      "selection_scope": "A new ranker on historical trajectory prefixes, including no-op and sign reversal; development root and known failed original Clean competence gate. Not a native CEM candidate/elite bank."
+    },
+    {
+      "bank_id": "seed4_two_posthoc_returned_means",
+      "physical_seed": 4,
+      "independent_development_roots": 1,
+      "candidate_names": [
+        "clean_identity_copy",
+        "canonical_request"
+      ],
+      "action_commitment_controls": 30,
+      "native_execution_prefix_controls": 15,
+      "native_full_cem": false,
+      "true_future_native_costs": [
+        1.7012925148010254,
+        1.3794702291488647
+      ],
+      "true_future_proxy_selected": 1,
+      "utilities": [
+        {
+          "terminal_reward": 5.2479071617126465,
+          "cumulative_reward": 95.84182262420654,
+          "negative_terminal_distance": -0.14261315432355678,
+          "terminal_success": 0,
+          "ever_success": 0,
+          "first_success_control": null
+        },
+        {
+          "terminal_reward": 3.347029447555542,
+          "cumulative_reward": 76.03699398040771,
+          "negative_terminal_distance": -0.18721491785066868,
+          "terminal_success": 0,
+          "ever_success": 0,
+          "first_success_control": null
+        }
+      ],
+      "conditions": {
+        "original": {
+          "costs": [
+            0.8484280705451965,
+            1.1141307353973389
+          ],
+          "ranking": [
+            0,
+            1
+          ],
+          "selected": 0,
+          "terminal_forecast_mse": {
+            "visual": [
+              1.565480552608351,
+              0.958512544589262
+            ],
+            "proprio": [
+              0.001421214212109208,
+              0.00016552323619609658
+            ],
+            "weighted": [
+              1.565622674029562,
+              0.9585290969128817
+            ]
+          },
+          "metrics": {
+            "terminal_reward": {
+              "Lev": 1.9008777141571045,
+              "Mis": 1.9008777141571045,
+              "Pred": -1.9008777141571045,
+              "regret": 0.0,
+              "selected_utility": 5.2479071617126465,
+              "true_future_proxy_selected_utility": 3.347029447555542,
+              "best_recorded_utility": 5.2479071617126465,
+              "worst_recorded_utility": 3.347029447555542
+            },
+            "cumulative_reward": {
+              "Lev": 19.804828643798828,
+              "Mis": 19.804828643798828,
+              "Pred": -19.804828643798828,
+              "regret": 0.0,
+              "selected_utility": 95.84182262420654,
+              "true_future_proxy_selected_utility": 76.03699398040771,
+              "best_recorded_utility": 95.84182262420654,
+              "worst_recorded_utility": 76.03699398040771
+            },
+            "negative_terminal_distance": {
+              "Lev": 0.0446017635271119,
+              "Mis": 0.0446017635271119,
+              "Pred": -0.0446017635271119,
+              "regret": 0.0,
+              "selected_utility": -0.14261315432355678,
+              "true_future_proxy_selected_utility": -0.18721491785066868,
+              "best_recorded_utility": -0.14261315432355678,
+              "worst_recorded_utility": -0.18721491785066868
+            },
+            "terminal_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            },
+            "ever_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            }
+          }
+        },
+        "canonical": {
+          "costs": [
+            1.5804330110549927,
+            1.2356951236724854
+          ],
+          "ranking": [
+            1,
+            0
+          ],
+          "selected": 1,
+          "terminal_forecast_mse": {
+            "visual": [
+              0.5292003197230474,
+              0.45830130008413056
+            ],
+            "proprio": [
+              9.499337962042771e-05,
+              2.103638370105636e-05
+            ],
+            "weighted": [
+              0.5292098190610094,
+              0.45830340372250067
+            ]
+          },
+          "metrics": {
+            "terminal_reward": {
+              "Lev": 1.9008777141571045,
+              "Mis": 1.9008777141571045,
+              "Pred": 0.0,
+              "regret": 1.9008777141571045,
+              "selected_utility": 3.347029447555542,
+              "true_future_proxy_selected_utility": 3.347029447555542,
+              "best_recorded_utility": 5.2479071617126465,
+              "worst_recorded_utility": 3.347029447555542
+            },
+            "cumulative_reward": {
+              "Lev": 19.804828643798828,
+              "Mis": 19.804828643798828,
+              "Pred": 0.0,
+              "regret": 19.804828643798828,
+              "selected_utility": 76.03699398040771,
+              "true_future_proxy_selected_utility": 76.03699398040771,
+              "best_recorded_utility": 95.84182262420654,
+              "worst_recorded_utility": 76.03699398040771
+            },
+            "negative_terminal_distance": {
+              "Lev": 0.0446017635271119,
+              "Mis": 0.0446017635271119,
+              "Pred": 0.0,
+              "regret": 0.0446017635271119,
+              "selected_utility": -0.18721491785066868,
+              "true_future_proxy_selected_utility": -0.18721491785066868,
+              "best_recorded_utility": -0.14261315432355678,
+              "worst_recorded_utility": -0.18721491785066868
+            },
+            "terminal_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            },
+            "ever_success": {
+              "Lev": 0,
+              "Mis": 0,
+              "Pred": 0,
+              "regret": 0,
+              "selected_utility": 0,
+              "true_future_proxy_selected_utility": 0,
+              "best_recorded_utility": 0,
+              "worst_recorded_utility": 0
+            }
+          }
+        }
+      },
+      "paired_contrasts": {
+        "canonical": {
+          "terminal_forecast_error_delta_per_candidate": [
+            -1.0364128549685527,
+            -0.500225693190381
+          ],
+          "mean_terminal_forecast_error_delta": -0.7683192740794669,
+          "every_candidate_error_nonincreasing": true,
+          "at_least_one_candidate_error_strictly_lower": true,
+          "selected_action_changed": true,
+          "selected_real_utility_delta": {
+            "terminal_reward": -1.9008777141571045,
+            "cumulative_reward": -19.804828643798828,
+            "negative_terminal_distance": -0.0446017635271119,
+            "terminal_success": 0,
+            "ever_success": 0
+          },
+          "fidelity_improves_and_terminal_reward_declines": true
+        }
+      },
+      "selection_scope": "Post-hoc two full returned CEM means from one root; the fixed-bank argmin is an added diagnostic, not native CEM. No population confirmation."
+    }
+  ],
+  "pooling": "No pooled estimator, CI, p-value or independent population rate: distinct development banks, candidate selection histories and runtime protocols.",
+  "claims": {
+    "local_paired_fidelity_utility_reversal": true,
+    "independent_confirmatory_p1": false,
+    "native_full_cem_oracle_result": false,
+    "success_rate_degradation": false
+  },
+  "activity": {
+    "models": 0,
+    "encoders": 0,
+    "environment_steps": 0,
+    "checkpoints": 0,
+    "api_calls": 0,
+    "cuda_initialized": false
+  },
+  "source_sha256": {
+    "runs/dino_action_saturation_gate_20261015/summary.json": "d982cc2f548aa62a98fd045abaa0d12c1d6d8e772946484e84172505bf440b9a",
+    "runs/dino_action_saturation_exploratory_20261015/summary.json": "c89607f327dd4caba9952f2e573a283640bd76b76a813d24794fcb1d24d1e510",
+    "runs/dino_action_saturation_exploratory_20261015/oracle_objective_analysis.json": "e7f098bab009f73bf690672f404bec46019c6010872c8b3838856d9f28617922",
+    "configs/dino_action_saturation_gate_20261015.json": "bd610a06e3751d80a140d11760932fb1292b251e462c9bff65e1cfebb4d7cbf2",
+    "runs/dino_action_saturation_gate_20261015/forecasts_and_encodings.npz": "dab868c44acd36a3eec1a3c6eb249e4d16e6d1a247d769bb2a49b72006032e66",
+    "runs/dino_action_saturation_exploratory_20261015/condition_forecasts.npz": "e8845424619f2830b5db2f7f5e239556ede89fa2159e72b5b4b5c25e62abca86",
+    "runs/dino_action_saturation_gate_20261015/frozen_bank.npz": "cd1511d402cb9e3922703c2a7c1300df650c072945f1c83d9fc6654c0fb2fc15",
+    "runs/dino_action_saturation_gate_20261015/candidate0/original/trace.jsonl": "e074571bb4c4ee42e3d6f685de91131ef0a35c1c5e06c99055e43c6144485d80",
+    "runs/dino_action_saturation_gate_20261015/candidate0/ground_truth.npz": "f9301482e5d358f8f5ec028be382844d7ecfe3ffb0e00ff105e06b4777a043e4",
+    "runs/dino_action_saturation_gate_20261015/candidate0/inflated_saturated_xyz/trace.jsonl": "96d10d0878849926934a5b57a1ab41caad36e87b28d3765422655750c8439ee3",
+    "runs/dino_action_saturation_gate_20261015/candidate0/canonical_saturated_xyz/trace.jsonl": "bb3756a68780879aa5e0027e53e10251d13dcc3d45aea47a80a203a52c719077",
+    "runs/dino_action_saturation_gate_20261015/candidate1/original/trace.jsonl": "48ed6535c97795b045be99933b2838994100b916f7c770e818b0102f55b4b3df",
+    "runs/dino_action_saturation_gate_20261015/candidate1/ground_truth.npz": "ab3310fce082cd03a28f6c71fd9a594f48204d3225f36f3f77672c5d9bdf81ab",
+    "runs/dino_action_saturation_gate_20261015/candidate1/inflated_saturated_xyz/trace.jsonl": "68132ec9a75c62d20376914a4d6a4892029a7a352cd38e62d256fec43c689a24",
+    "runs/dino_action_saturation_gate_20261015/candidate1/canonical_saturated_xyz/trace.jsonl": "7675404014d95ebb936d5d9575bd3dfbf22caa073848fa7307481d41e29a8eca",
+    "runs/dino_action_saturation_gate_20261015/candidate2/original/trace.jsonl": "5206965d399f80173b61be61c0fa492551e5efa5b69ad29dfdb4bfd4fbf1d3b4",
+    "runs/dino_action_saturation_gate_20261015/candidate2/ground_truth.npz": "27ebf1af3dcaeb5361b08b7d3dc72d7165f9abdb825d274f516e403491ef12fc",
+    "runs/dino_action_saturation_gate_20261015/candidate2/inflated_saturated_xyz/trace.jsonl": "21e9e980ce0f58858c3abf742cbf5b61b969d307df4df31d915e16c886b0b68d",
+    "runs/dino_action_saturation_gate_20261015/candidate2/canonical_saturated_xyz/trace.jsonl": "688f9b88f2c08ad80b02263a0ffa8ac3588cdaac56ccc425d5c31f9fb577c5a9",
+    "runs/dino_action_saturation_gate_20261015/candidate3/original/trace.jsonl": "33d01b0ff7ef44a174fd8f1e08f14005b32b8a17d3a596be14570b9582a33d92",
+    "runs/dino_action_saturation_gate_20261015/candidate3/ground_truth.npz": "c7d3f08639122eec02cfb2b1775067945625dc6fd4c7ded5218e75da5e6950b1",
+    "runs/dino_action_saturation_gate_20261015/candidate3/inflated_saturated_xyz/trace.jsonl": "24bf42924c469f5de03add34667785841ab48e3681b1596845b724cf88b9d4b0",
+    "runs/dino_action_saturation_gate_20261015/candidate3/canonical_saturated_xyz/trace.jsonl": "103716f45891b25790bc8c83360df3855a3cf182c003b29abfa6a8aab37bd129",
+    "runs/dino_action_saturation_gate_20261015/candidate4/original/trace.jsonl": "785d20f7252d4160148041df9f34de27670c0d7577d7946c0f74bfdad5885a1c",
+    "runs/dino_action_saturation_gate_20261015/candidate4/ground_truth.npz": "fa869bf6aa16ca329aade5b7b9408c9d3e46ca8681c15dc0b035d990799c9fb2",
+    "runs/dino_action_saturation_gate_20261015/candidate4/inflated_saturated_xyz/trace.jsonl": "1a913ae93c8a078891613d4174189b908567f64c982bcdf34fe90e87b3893d88",
+    "runs/dino_action_saturation_gate_20261015/candidate4/canonical_saturated_xyz/trace.jsonl": "d6955dc850735a22d845b68cc762f859646e549b2b249a9b51e43d326c4b3a03",
+    "runs/dino_first_query_terminal_truth_20261015/summary.json": "8f07dab1978b8e484d710a291e7cae4ffefe4b4c1f5bc48e7fff6b21386cb18a",
+    "reports/dino_first_query_two_mean_ranking_20261015.json": "b4f50e76d3eb5d6ce00f1a3e8c67993c6ad180e2b3a9f8cef0a6384a46a98238",
+    "runs/dino_first_query_full_horizon_20261015/summary.json": "1cdcf79345038285733efec9f3a5c79d645f10b70dff82893d72adff529e3109",
+    "configs/dino_native_alias_pair_20261015.json": "b5582059fe37588165bc2ff14c0339d7fc0b355147de87792907cb3d1c832148",
+    "runs/dino_first_query_full_horizon_20261015/physical_actions.npz": "6eec204d3cee0985a46dc079551c4b132742615fb58867c3ffafe40435e40a69",
+    "runs/dino_first_query_terminal_truth_20261015/clean_identity_copy_control30.npz": "32eb2c7aabc927b20c4732794cf300021275f73bb5aebf1f4567c9634c24faa4",
+    "runs/dino_native_alias_pair_20261015/clean_identity_copy/goal_encoding.npz": "1a72f6ac99142d8c7a959e3411dc1cdcc6be0af039f8ee8d1d2c00f65a133638",
+    "runs/dino_native_alias_forecast_gpu_20261015/clean_identity_copy_query1.npz": "48eef144d71b417b13c8bacae58bc5683758d03a2f1acf2cbdc25e08cd58b172",
+    "runs/dino_native_alias_pair_20261015/clean_identity_copy/query1_forecast_cache.npz": "f85f6756d8b3f9630e5836ba4ac41529802f512003585754f3d07fb4452ea424",
+    "runs/dino_first_query_full_horizon_20261015/clean_identity_copy/trace.jsonl": "aac672e81a967d50d803dbf6c823a14b2a933def1dc91333151a541ef3ff0cb5",
+    "runs/dino_first_query_terminal_truth_20261015/canonical_request_control30.npz": "b57631e75565c324abe218181aac5732d9362278f6035c79680071973a63a925",
+    "runs/dino_native_alias_pair_20261015/canonical_request/goal_encoding.npz": "1a72f6ac99142d8c7a959e3411dc1cdcc6be0af039f8ee8d1d2c00f65a133638",
+    "runs/dino_native_alias_forecast_gpu_20261015/canonical_request_query1.npz": "68feabf3ea24d365e87a989c911b1e6c8c5be4b9f21b9ed381b4d33da7f821db",
+    "runs/dino_native_alias_pair_20261015/canonical_request/query1_forecast_cache.npz": "989f98d4412a2abebe0f8093b03507a9aa88851986c92db728ffe6c2a62fe93f",
+    "runs/dino_first_query_full_horizon_20261015/canonical_request/trace.jsonl": "1138fd77da888819d04c6b76c2b7b7c8df2e87824c7fe31b729c0d1a2dd0387f"
+  }
+}

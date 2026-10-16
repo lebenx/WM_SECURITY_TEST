@@ -2021,6 +2021,18 @@
         "python_version_recorded_in_pyvenv_cfg": "3.11.13",
         "includes_system_site_packages": "false",
         "health": "filesystem metadata only; no interpreter/package import test in this archive"
+      },
+      {
+        "path": ".venv-gensafenav",
+        "python_version_recorded_in_pyvenv_cfg": "3.11.13",
+        "includes_system_site_packages": "false",
+        "health": "Filesystem metadata only; no interpreter or package import test performed by this archive update."
+      },
+      {
+        "path": ".venv-safedreamer",
+        "python_version_recorded_in_pyvenv_cfg": null,
+        "includes_system_site_packages": "false",
+        "health": "Filesystem metadata only; no interpreter or package import test performed by this archive update."
       }
     ],
     "core_bindings": [
@@ -2107,20 +2119,39 @@
       "DINO_WM",
       "FACT",
       "JEPA_WM",
+      "SafeDreamer",
       "WorldAgen",
       "mosim",
       "nanowm_pointmaze",
       "nanowm_sd_vae",
       "tdmpc2"
     ],
-    "vendor_top_level_directories_covered": 44,
+    "vendor_top_level_directories_covered": 45,
     "detailed_model_entries": 14,
     "not_exhaustive_claim": "This maps every current models/, checkpoints/ and vendor/ top-level directory, plus selected reusable run-local models. It is not an exhaustive checkpoint search across all run/cache trees.",
     "checkpoints_top_level_directories_observed": [
       "clip"
     ],
     "remote_resource_lead_entries": 7,
-    "remote_resource_lead_scope": "Separately listed source/resource leads; not counted as downloaded local models or validated Clean capability."
+    "remote_resource_lead_scope": "Separately listed source/resource leads; not counted as downloaded local models or validated Clean capability.",
+    "previous_filesystem_summary": {
+      "models_top_level_directories_observed": [
+        "A2World",
+        "AlphaBrain",
+        "CosmosPolicy",
+        "DINO_WM",
+        "FACT",
+        "JEPA_WM",
+        "WorldAgen",
+        "mosim",
+        "nanowm_pointmaze",
+        "nanowm_sd_vae",
+        "tdmpc2"
+      ],
+      "vendor_top_level_directories_covered": 44,
+      "detailed_model_entries": 14
+    },
+    "latest_reuse_recipes": "reports/research_archive/resource_recipes.json"
   },
   "additional_checkpoint_resources": [
     {
@@ -2759,5 +2790,11 @@
       "native_clean_measured": false,
       "decision": "Inspected explicit recurrent state path does not provide imagined-query writeback into factual actor state."
     }
-  ]
+  ],
+  "archive_current_resource_notes": {
+    "source": "reports/research_archive/resource_recipes.json",
+    "safedreamer": "Legacy remote_resource_leads grouping is historical: local released checkpoint and native first query exist; a complete Clean task remains untested. Use the SafeDreamer recipe for current readiness.",
+    "external_dino_cache": "DINO/JEPA also require an external Torch Hub cache indexed in resource_recipes, absent from the repository-local external artifact manifest.",
+    "restore_limits": "Environment names are insufficient: some runners borrow packages from another environment; consult per-model recipes."
+  }
 }

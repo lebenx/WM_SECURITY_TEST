@@ -1,0 +1,71 @@
+\subsection{TD-MPC2: separating proposal and scoring consumers}
+\label{sec:tdmpc-consumer-factorial}
+We test a different explanation for an existing development-case return gap:
+can a dynamics update cause harm primarily by changing the policy proposals,
+so that restoring the scoring path cannot recover performance?
+We reuse two saved dynamics modules fitted from the random-source ($R$) and
+cascade-source ($C$) \texttt{cheetah-run} trajectories at source seed 23.
+$R$ is an adapted comparison model, neither the original pretrained Clean
+model nor an oracle for physical outcomes. No new fitting is performed.
+
+The native TD-MPC2 planner uses dynamics both to generate 24 policy-prior
+trajectories and to evaluate its 512 candidates. We independently assign
+$R$ or $C$ to these two consumers, preserving the native horizon 3,
+six optimization iterations, 64 elites, stochastic action selection,
+normalization, and all other original model weights.
+The scoring route includes imagined-state reward readouts and terminal
+policy/$Q$ evaluation; it is not a direct forecast-distance score.
+Each arm executes one complete 500-control \texttt{walker-run} episode from
+seed 31, with the same initial state and reset random streams.
+Later states, proposal populations, and optimizer warm starts may diverge
+as endogenous consequences of the intervention.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lccr}
+\toprule
+Arm & Proposal dynamics & Scoring dynamics & Actual episode return \\
+\midrule
+$RR$ & $R$ & $R$ & 612.082555 \\
+$CC$ & $C$ & $C$ & 495.216321 \\
+$CR$ & $C$ & $R$ & 674.885888 \\
+$RC$ & $R$ & $C$ & 553.538964 \\
+\bottomrule
+\end{tabular}
+\caption{One reused TD-MPC2 development case. Returns are sums of actual
+500-control environment rewards, not planner value estimates.}
+\label{tab:tdmpc-consumer-factorial}
+\end{table}
+
+Both $RR$ and $CC$ exactly reproduce the saved observations, actions,
+per-control rewards, and complete returns. At the common first query,
+all arms share the 24 prior first actions and all 488 Gaussian candidate
+trajectories exactly; prior continuation actions can differ. Recording these
+already-generated candidates preserves both CPU and CUDA random states and
+adds no model evaluation.
+
+The preregistered condition fails. Writing
+$G=J_{RR}-J_{CC}=116.866234$, it requires both
+$J_{RR}-J_{CR}\geq G/2$ and $J_{RC}-J_{CC}\geq G/2$.
+Instead, $J_{CR}$ exceeds $J_{RR}$ by $62.803333$, while the second contrast
+recovers $49.9055\%$ of $G$.
+In particular, retaining $C$ proposals and restoring only $R$ scoring raises
+return from $495.216321$ to $674.885888$.
+The factorial interaction
+$J_{CC}-J_{CR}-J_{RC}+J_{RR}=-121.125975$ also precludes an additive
+allocation of the original loss to the two routes.
+This counterexample does not support the proposed claim that damaged
+proposal coverage prevents scoring-path recovery in this case.
+It does not measure the physical quality of every candidate, demonstrate
+improved forecast accuracy, or establish an attack, a defense, or a
+population effect. The fixed gate is closed without a seed or threshold sweep.
+
+SWAAP already describes poisoned world-model adaptation and the use of
+TD-MPC2 dynamics for both policy-guided proposals and candidate evaluation
+\cite{hu2026swaap}. Our distinction is the inference-time factorial separation
+of these consumers, not a first demonstration of model poisoning or proposal
+dependence. Here that separation contradicts the registered proposal-dominant
+explanation. Results and the launch receipt are in
+\artifact{runs/tdmpc_proposal_scoring_factorial_v1/summary.json} and
+\artifact{runs/tdmpc_proposal_scoring_factorial_v1/launcher.json}; all four
+physical traces and the common-first-population captures are retained.

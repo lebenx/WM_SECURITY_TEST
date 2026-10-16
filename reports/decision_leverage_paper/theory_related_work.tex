@@ -1,0 +1,243 @@
+% Include this file once, then call the two macros where desired.
+% Requires amsmath and amssymb. Uses only standard \cite commands.
+\newcommand{\DecisionLeverageTheory}{%
+\section{A finite-support decision audit}
+\label{sec:decision-audit}
+
+\paragraph{The object being audited.}
+An audit context $x$ fixes a physical root state, task goal, executable
+candidate bank $\mathcal A_x=\{a_1,\ldots,a_K\}$, horizon, continuation
+policy, observation encoding, and utility definition. A candidate may be
+an action chunk; its continuation must be the same under every comparison.
+Let $u_k=U(x,a_k)$ be its utility measured by environment execution.
+Higher utility is better, so a cost is negated before applying the definitions.
+Success, return, terminal reward, and time-to-completion are distinct
+utilities and receive separate audits. Initially, $u_k$ denotes a fixed
+cached outcome; the extension to expected outcomes is given below.
+
+The model supplies forecasts $\widehat z=(\widehat z_1,\ldots,\widehat z_K)$.
+A frozen scoring and selection rule $\sigma$ produces a distribution
+$p=\sigma(\widehat z)$ on the bank; deterministic selection is a point mass.
+We write $U(p)=\sum_k p_k u_k$. The audited intervention may replace the
+forecast supplied to this selector. It must not change the task goal,
+candidate actions, root state, scoring parameters, continuation policy,
+utility implementation, or the coupling of random streams. A system whose
+native policy does not consume forecasts can be studied only through a
+separately identified, added planner. Neither kind of audit establishes an
+adversarial attack without a specified feasible intervention and observed
+utility loss.
+
+\subsection{Leverage and baseline-relative harmful headroom}
+Define
+\begin{align}
+ u_{\max}&=\max_k u_k, &u_{\min}&=\min_k u_k,\nonumber\\
+ \mathrm{Lev}(x)&=u_{\max}-u_{\min}, &
+ H_b(x)&=U(p_b)-u_{\min},
+ \label{eq:leverage}
+\end{align}
+where $p_b$ is the baseline selector. The first quantity is the width of
+the feasible utility interval. The second is the maximum loss relative to
+this baseline when unrestricted selection within the recorded bank is
+allowed; a constrained intervention can attain less.
+
+\paragraph{Proposition 1 (finite-support bound).}
+For any two distributions $p,q$ on the same bank,
+\begin{equation}
+ |U(p)-U(q)|\leq \mathrm{Lev}(x)\,\mathrm{TV}(p,q)
+ \leq\mathrm{Lev}(x),\qquad
+ U(p_b)-U(q)\leq H_b(x),
+ \label{eq:bound}
+\end{equation}
+where $\mathrm{TV}(p,q)=\tfrac12\sum_k|p_k-q_k|$.
+For a panel with nonnegative weights $w_x$ summing to one, the corresponding
+aggregate upper bounds are the weighted sums of these bounds.
+
+\paragraph{Proof.}
+Subtract $u_{\min}$ from every utility; the difference of expectations is
+unchanged because both distributions sum to one. On coordinates with
+$p_k>q_k$, the positive contribution is at most
+$(u_{\max}-u_{\min})\sum_{p_k>q_k}(p_k-q_k)$; negative contributions
+cannot increase it. This sum is $\mathrm{TV}(p,q)$. Interchanging $p$ and
+$q$ gives the absolute bound. Every expectation is at least $u_{\min}$,
+which gives the baseline bound. Nonnegative weighted summation preserves
+the inequalities. Selecting an extreme-utility candidate attains the
+interval endpoints when unrestricted selection is permitted.\hfill$\square$
+
+These inequalities are elementary consequences of finite support, not a
+new robustness theorem. Their use is to check whether an interface can
+exhibit a practically meaningful effect before spending model calls.
+They require real branch outcomes, and are therefore not free to compute
+when the cache does not yet exist. A deterministic top-choice flip is
+necessary for a utility change on this bank, but a flip between equal-utility
+candidates has zero effect. Changes in lower ranking positions are weaker
+evidence still. A bound violation calls for checking candidate coverage,
+continuations, replay randomness, and utility definitions; it does not
+refute the finite-support identity. A small bound on one bank is not a
+guarantee about unrecorded actions, later replanning, or other states.
+
+\paragraph{Averaging actions is not randomizing over actions.}
+If a planner executes an elite mean $\bar a=\sum_k w_k a_k$, its utility is
+$U(x,\bar a)$, not $\sum_k w_k U(x,a_k)$. For example, the constructed
+utility $U(a)=a^2$ gives utility one for both recorded actions $-1$ and $1$,
+but zero for their mean. Thus their recorded leverage is zero while the
+unrecorded mean loses one unit. The actual mean must be replayed and
+included in the support; changes in an adaptive CEM search distribution
+are also outside a frozen-bank bound unless their outputs are covered.
+
+\subsection{A signed true-future comparison}
+Let $z^\star$ be the encoding of the real future for each recorded
+candidate, at the same prediction horizon and with identical preprocessing.
+Keep the scorer and tie-breaking rule fixed and define
+$p^\star=\sigma(z^\star)$. Then
+\begin{align}
+ \mathrm{Reg}(x)&=u_{\max}-U(p),\nonumber\\
+ \mathrm{Mis}(x)&=u_{\max}-U(p^\star),\nonumber\\
+ \mathrm{Pred}(x)&=U(p^\star)-U(p),\nonumber\\
+ \mathrm{Reg}(x)&=\mathrm{Mis}(x)+\mathrm{Pred}(x).
+ \label{eq:decomposition}
+\end{align}
+The identity follows by adding and subtracting $U(p^\star)$.
+$\mathrm{Mis}\geq0$ is the residual regret of the frozen
+representation--scorer--selector interface when supplied encoded true
+futures. It need not be solely a scorer-weight defect: lossy representations,
+horizon mismatch, utility-proxy mismatch, ties, and an approximate selection
+rule can all contribute. Encoded true futures do not provide a perfect
+physical state representation or the optimal full-horizon planner.
+
+In contrast, $\mathrm{Pred}$ is signed. A negative value means that model
+forecasts select a higher-utility candidate than true-future substitution
+does. It can reflect compensating errors. The two terms must not be
+presented as nonnegative shares of an error budget. The algebra alone also
+does not identify causal mediation through a complete native planner:
+it is a controlled replacement comparison at a declared frozen interface.
+True futures are an offline diagnostic and cannot be used as an available
+deployment input or as labels for a test-set-trained defense.
+
+\paragraph{Two constructed examples clarify the claims.}
+Take two actions with utilities $(1,0)$ and a selector maximizing $-z_k$.
+If the true features are $(0,1)$ but the model predicts $(1,0)$, then
+$\mathrm{Mis}=0$ and $\mathrm{Pred}=1$: prediction error causes regret
+despite a correctly ordered true-future proxy. Objective mismatch is
+therefore not a necessary condition for predictive error to harm decisions.
+Conversely, if the true features are $(1,0)$ and the model predicts
+$(0,1)$, then $\mathrm{Mis}=1$, $\mathrm{Pred}=-1$, and
+$\mathrm{Reg}=0$. Replacing the forecast with the truth reduces its squared
+prediction error to zero but decreases utility. These are mathematical
+counterexamples, not experimental results from any audited model.
+
+\paragraph{Forecast error is different from goal cost.}
+Forecast error compares $\widehat z_k$ with the real consequence
+$z_k^\star$ of the \emph{same} action. Distance between an encoded outcome
+and a desired goal is a planning cost, even when both quantities are called
+visual MSE. A lower goal distance together with lower task return
+demonstrates proxy disagreement; it does not establish improved predictive
+fidelity. In particular, $\mathrm{Mis}>0$ alone does not prove the hypothesis
+that improving forecasts makes decisions worse.
+
+\subsection{Uncertainty and identifiable follow-up tests}
+For a stochastic environment, replace $u_k$ by
+$\mu_k=\mathbb E[U(x,a_k)]$ to obtain a population statement for the
+\emph{fixed} bank and continuation. A single replay only supplies a realized
+outcome; its empirical extrema do not bound these expectations. If
+simultaneous intervals $[\ell_k,r_k]$ cover all $\mu_k$ with probability
+at least $1-\alpha$, then on this event
+\begin{equation}
+ \mathrm{Lev}_{\mu}\leq\max_k r_k-\min_k\ell_k,
+ \qquad
+ H_{b,\mu}\leq\sum_k p_{b,k}r_k-\min_k\ell_k.
+ \label{eq:uncertain-bound}
+\end{equation}
+For bounded returns in $[A,B]$ and $n_k$ independent replications per
+candidate, one elementary construction uses sample means plus or minus
+$(B-A)\sqrt{\log(2K/\alpha)/(2n_k)}$, clipped to $[A,B]$.
+This follows from Hoeffding's inequality~\cite{hoeffding1963bounds} and a
+union bound. The within-arm
+independence assumption is necessary; shared random numbers across arms
+do not themselves invalidate the union bound. Reusing one realized future
+both as an oracle selector input and its evaluation can yield a clairvoyant
+choice; it is not the expected performance of an implementable policy.
+Scoring an expected latent is also generally different from averaging
+scores of stochastic futures.
+
+A fidelity--utility reversal test must compare two specified forecast
+inputs on identical candidates, show an improvement under a preregistered
+forecast-error metric, and measure a decrease in independently evaluated
+selected-action utility. An offline interpolation toward true futures can
+test that interface property, but cannot claim a deployable accuracy
+improvement. Establishing positive mean $\mathrm{Mis}$ is a separate test
+of residual regret. Establishing that scorer repair outperforms forecast
+repair requires a direct, paired comparison of held-out utilities under
+both interventions, together with their unmodified controls. The identity
+does not predict which feasible repair will win. Calibration roots,
+model or metric selection, and final evaluation roots must be separated.
+Independent episode or initial-state clusters, rather than candidates or
+multiple roots from the same episode, determine the sampling unit. Thirty
+roots is a possible design size, not a guarantee of power; uncertainty and
+minimum detectable effect depend on variability and the sampling design.
+}
+
+\newcommand{\DecisionLeverageRelatedWork}{%
+\section{Related work and contribution boundary}
+\label{sec:related-work}
+
+\paragraph{Prediction quality and decision quality.}
+Lambert et al.~\cite{lambert2020mismatch} identify objective mismatch in
+model-based reinforcement learning and empirically show that one-step
+prediction likelihood need not track downstream control performance.
+Consequently, better prediction together with worse control is not a new
+principle or discovery of this study.
+Smart Predict-then-Optimize measures errors through the decisions they
+induce rather than through a prediction loss alone~\cite{elmachtoub2022spo}.
+Value-aware model learning and value equivalence adapt environment models
+to their downstream value calculations~\cite{farahmand2017vaml,grimm2020value}.
+TEMPO incorporates task-aware sample weighting into model
+training~\cite{yuan2023tempo}. These precedents rule out treating the
+general distinction between predictive accuracy and control utility as
+our novelty. We instead operationalize a finite-support audit for frozen
+interfaces and existing branch-replay artifacts, then examine a fixed additive
+forecast correction and its horizon-dependent effect in a native CEM query.
+
+\paragraph{Objective proxies.}
+Pan et al.~\cite{pan2022misspecification} study cases in which stronger
+optimization of a proxy accompanies lower true reward. Our true-future
+comparison concerns a frozen planning proxy and a specified candidate
+bank, and does not establish deliberate reward hacking. The residual
+regret in Eq.~\eqref{eq:decomposition} also includes representation and
+selection limitations. Adding and subtracting an oracle-interface utility
+is an accounting identity, rather than a new causal identification theorem.
+
+\paragraph{Model exploitation and security claims.}
+Bhamidipaty et al.~\cite{bhamidipaty2026exploitable} define model exploitation
+through opposite policy orderings under model and environment dynamics
+(Section 2.2), and explicitly discuss an optimizer producing such behavior
+without an external adversary (Section 1). This is close prior work for
+interpreting ordering disagreements. Our goal-feature scorer is not itself
+an estimate of task return, so proxy disagreement should not be conflated
+with their transition-model definition. Neither an ordering reversal nor
+the generic prediction--control mismatch establishes a new security mechanism.
+Such a claim would additionally need a specified feasible external intervention
+and measured real-utility consequences under that intervention.
+
+\paragraph{Visual world-model planning.}
+DINO-WM plans toward goal features using an action-conditioned latent
+predictor~\cite{zhou2024dinowm}. Cosmos Policy jointly represents actions,
+future observations, and values, and uses their predictions for
+planning~\cite{kim2026cosmos}. Their different consumers motivate checking
+the actual action-selection interface before interpreting forecast changes.
+CF-JEPA separates controllable and uncontrollable latent components,
+whereas Dueling World Models centers predictions across actions to expose
+an action-dependent channel~\cite{byrd2026cfjepa,li2026dueling}.
+
+The publicly available LENS submission abstract describes a frozen-model
+planning metric derived from real/predicted action-response agreement and
+prediction accuracy, including a fixed-candidate, fixed-prediction ranking
+comparison~\cite{anonymous2026lens}. This directly overlaps the idea of
+reweighting latent directions to improve action rankings. We verified its
+official abstract and submission metadata, but could not access its full
+text; its reported performance is not evidence from our experiments.
+Consequently, we make no priority claim for latent reweighting, forecast
+versus decision evaluation, or oracle subtraction. The contribution sought
+here is a reproducible interface audit with explicit support, replay
+provenance, and claim-specific evidence. Its empirical scope is determined
+by the audited results, not by the number of model repositories archived.
+}

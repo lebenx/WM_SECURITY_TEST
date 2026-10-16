@@ -99,10 +99,10 @@ def pad_obs(obs, cfg):
     return torch.nn.functional.pad(obs, (0, cfg.obs_shape['state'][0] - obs.shape[0]))
 
 
-def load_agent(checkpoint, seed=1):
+def load_agent(checkpoint, seed=1, *, verify_checkpoint=True):
     checkpoint = Path(checkpoint)
-    sha = hashlib.sha256(checkpoint.read_bytes()).hexdigest()
-    if sha != EXPECTED_SHA256:
+    sha = hashlib.sha256(checkpoint.read_bytes()).hexdigest() if verify_checkpoint else None
+    if verify_checkpoint and sha != EXPECTED_SHA256:
         raise ValueError('This pilot expects the verified official mt30-48M checkpoint.')
     source = torch.load(checkpoint, map_location='cpu', weights_only=False)
     raw = yaml.safe_load((UPSTREAM / 'config.yaml').read_text())
@@ -156,6 +156,7 @@ def load_agent(checkpoint, seed=1):
         'upstream': 'https://github.com/nicklashansen/tdmpc2',
         'commit': subprocess.check_output(['git', '-C', str(UPSTREAM.parent), 'rev-parse', 'HEAD'], text=True).strip(),
         'checkpoint': str(checkpoint), 'sha256': sha,
+        'checkpoint_hash_checked': verify_checkpoint,
         'model_metadata': dict(source['metadata'], tasks=list(source['metadata']['tasks'])),
         'packages': {k: importlib.metadata.version(k) for k in ['torch', 'tensordict', 'dm-control', 'mujoco', 'gymnasium']},
         'planner': {'horizon': cfg.horizon, 'num_samples': cfg.num_samples,

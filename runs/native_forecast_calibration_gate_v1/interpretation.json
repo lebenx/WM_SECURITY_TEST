@@ -1,0 +1,52 @@
+{
+  "status": "post_run_interpretation_of_pre_outcome_tightened_rule",
+  "criterion_timing": "Parent added H15 cumulative-return decrease after executable launch, before any target replay outcome; executable and experiment were not changed.",
+  "strict_joint_gate": {
+    "forecast_MSE_decreases": true,
+    "H15_terminal_reward_decreases": true,
+    "H15_cumulative_return_decreases": true,
+    "passed": true
+  },
+  "deltas": {
+    "forecast_MSE": -0.3823833265154991,
+    "H15_terminal_reward": -0.28239941596984863,
+    "H15_cumulative_return": -1.9064321517944336,
+    "H30_terminal_reward": 2.167320728302002,
+    "H30_cumulative_return": 1.794370174407959
+  },
+  "limitations": [
+    "One root, descriptive exploratory diagnostic; no independent population inference.",
+    "Added forecast calibration adapter, not an established native external attack surface.",
+    "Later CEM populations change endogenously; only first populations are identical.",
+    "Both branches have false success at both horizons.",
+    "H30 effects reverse the H15 loss: longer open-loop reward and return improve.",
+    "H15 is the native execution prefix; H30 continues the committed open-loop mean instead of native replanning.",
+    "No refit, retry, seed search, parameter tuning or further experiment."
+  ],
+  "execution_evidence": {
+    "exit_code": 0,
+    "elapsed_seconds": 75.54622678103624,
+    "sampled_process_peak_mib": 5668,
+    "checks": {
+      "first_populations_identical": true,
+      "native_returned_prefix_exact": true,
+      "context_unchanged": true,
+      "same_root_each_replay": true,
+      "action_and_forecast_committed_before_replay": true,
+      "fixed_saved_bias_no_refit": true
+    },
+    "actual_activity": {
+      "native_query_calls": 2,
+      "cost_calls": 30,
+      "unroll_calls": 61,
+      "predictor_forwards": 366,
+      "encode_calls": 10,
+      "expert_setup_controls": 100,
+      "root_warmup_controls": 1,
+      "replay_controls": 60,
+      "api_calls": 0,
+      "network_attempts": 0,
+      "training_updates": 0
+    }
+  }
+}

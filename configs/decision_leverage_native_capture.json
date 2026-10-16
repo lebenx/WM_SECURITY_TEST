@@ -1,0 +1,95 @@
+{
+  "schema_version": 1,
+  "status": "frozen_before_single_query_calibration",
+  "out_dir": "runs/decision_leverage_native_cem_calibration",
+  "physical_seed": 3000,
+  "native_local_seed": 1,
+  "calls": 1,
+  "purpose": "Observe the unmodified GC_Agent first CEM query; preserve actual optimization semantics before planning true-utility follow-up. This is engineering calibration only.",
+  "native_config": {
+    "num_samples": 300,
+    "iterations": 15,
+    "num_elites": 10,
+    "horizon": 6,
+    "num_act_stepped": 3,
+    "frameskip": 5,
+    "action_dim": 20,
+    "momentum_mean": 0.0,
+    "momentum_std": 0.0,
+    "max_norms": null,
+    "objective_alpha": 0.1,
+    "terminal_objective": true
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "device": "cuda:0",
+    "minimum_start_free_mib": 8192,
+    "wall_limit_seconds": 180,
+    "allocator_cap_gib": 7,
+    "process_vram_budget_mib": 8192,
+    "allocator_headroom_note": "7GiB allocator cap leaves1GiB for nonallocator context. Process memory sampled at preflight/setup/every iteration; no claim of continuous exact process maximum.",
+    "threads": 4,
+    "no_api": true,
+    "no_network": true,
+    "no_training": true,
+    "no_microbatching": true,
+    "no_retry": true,
+    "no_seed_replacement": true,
+    "no_old_gate_resume": true
+  },
+  "source_design_checks": {
+    "GC_Agent": "set_goal native encoding; act native context encoding then native plan; returned CPU prefix unchanged.",
+    "CEMPlanner": "15 rounds of300 samples; topk10 costs; mean/std update with zero momentum; candidate0 includes prior mean; native extra unroll of each mean; return first3 of final6 macroactions.",
+    "observer": "Wrap only planner.cost_function, call bound original exactly once, return the same tensor object. Copies/hash/writes and same-GPU topk+mean only; no new RNG draws.",
+    "live_invariants": [
+      "input actions/context/goal unmodified during every cost call",
+      "wrapper+cost do not consume global or local RNG",
+      "next native candidate0 equals prior independently reconstructed same-GPU elite mean",
+      "final native _prev_mean equals independently reconstructed final elite mean",
+      "agent returned prefix equals _prev_mean[:3]",
+      "physical root state unchanged; no candidate steps",
+      "original planner.unroll/objective bindings preserved"
+    ],
+    "excluded_claims": [
+      "No uninstrumented duplicate query was run; numerical equivalence is checked through transparent delegation and live invariants rather than a second stochastic rollout.",
+      "Recorded internal proposals/elites are not the native executed action set.",
+      "No candidate/mean utility or true-future bank measured.",
+      "No forecast correction, alias transformation, attack, defense or E1 completion."
+    ]
+  },
+  "explicit_environment_controls": {
+    "expert_goal_setup": 100,
+    "root_warmup": 1,
+    "candidate_or_policy_execution": 0,
+    "note": "Environment-constructor internal stepping is not instrumented."
+  },
+  "checkpoints": [
+    {
+      "path": "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar",
+      "sha256": "eab6e241f732db986f98ad224115ed7949ab4ff3f6cc8bc8f95b273cdb9e5d13"
+    },
+    {
+      "path": "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "sha256": "b938bf1bc15cd2ec0feacfe3a1bb553fe8ea9ca46a7e1d8d00217f29aef60cd9"
+    }
+  ],
+  "source_sha256": {
+    "scripts/capture_decision_leverage_native_cem.py": "b9ad271e856621988471767f1bf14f9d0b317b26863b3bf27b1287ba687907e0",
+    "scripts/pilot_dino_metaworld_clean_gate.py": "8ffed3253abd228e6bcd165f88cfd220c33749fe6a6542d7330a62ffabf8b02b",
+    "vendor/jepa-wms/evals/simu_env_planning/planning/gc_agent.py": "f0a1ccb99b70b69d166aa94f83717ba7a468a6ad3a77a4940a1856dbefb2b9dc",
+    "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py": "6b673d10b30cd66d07b09daa7b96397f367f49387c443731b6d7d2fd148cc0e3",
+    "vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py": "db8b8a4bac7b7cb6486bc09f6bed7501a73152c0e529abbb57e0454fd93d853f",
+    "vendor/jepa-wms/evals/simu_env_planning/planning/plan_evaluator.py": "7a81a47af6eeea6b024b10d65115cdef96650621b0d60339aaad0a161d9b2ee0",
+    "vendor/jepa-wms/evals/simu_env_planning/envs/metaworld.py": "e7799e33ccea099e1a479d5f130dbc060cceb1d8f488facb01cf2578f025ca42",
+    "vendor/jepa-wms/app/vjepa_wm/modelcustom/simu_env_planning/vit_enc_preds.py": "2a4e30a3beef4c1168679b08ec12b61a5b51d4a9d3b7a040391bebf9026c61a4",
+    "vendor/jepa-wms/configs/evals/simu_env_planning/mw/dino-wm/reach_L2_cem_sourcexp_H6_nas3_ctxt2_r224_alpha0.1_ep48_decode.yaml": "968aca1ae415a73be6d9ba72d8269c9422d513cc248dcc5f26b234618955b621"
+  },
+  "capture_files": [
+    "15 iteration NPZ files containing actions, costs, GPU topk indices and GPU elite means",
+    "final_native_output.npz with last300 samples,10elites,6-macro mean and3-macro prefix",
+    "native_mean_forecasts.npz from existing native mean-unroll outputs only",
+    "original goal/context encodings and fresh setup/integration metadata",
+    "initial/final local CUDA and CPU generator states plus global Torch states",
+    "launched code/protocol snapshots, hashes and summary"
+  ]
+}

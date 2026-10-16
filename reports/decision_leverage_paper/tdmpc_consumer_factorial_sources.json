@@ -1,0 +1,150 @@
+{
+  "status": "manuscript_section_from_completed_recorded_factorial",
+  "section": "reports/decision_leverage_paper/tdmpc_consumer_factorial.tex",
+  "primary_source": "runs/tdmpc_proposal_scoring_factorial_v1/summary.json",
+  "runner": "scripts/run_tdmpc_proposal_scoring_factorial.py",
+  "launched_runner": "runs/tdmpc_proposal_scoring_factorial_v1/launched_script.py",
+  "launch_receipt": "runs/tdmpc_proposal_scoring_factorial_v1/launcher.json",
+  "result_status": "completed_native_consumer_factorial",
+  "native_source_paths": {
+    "proposal_and_scoring_calls": "vendor/tdmpc2/tdmpc2/tdmpc2.py",
+    "fixed_head_dynamics_interface": "vendor/tdmpc2/tdmpc2/common/world_model.py",
+    "actual_episode_driver": "src/wm_security/tdmpc_native.py"
+  },
+  "cached_dynamics": {
+    "R": "runs/tdmpc_frozen_head_loss_control_20261015/consistency_random/dynamics.pt",
+    "C": "runs/tdmpc_frozen_head_loss_control_20261015/consistency_cascade/dynamics.pt"
+  },
+  "historical_controls": "runs/tdmpc_frozen_head_loss_control_20261015/summary.json",
+  "real_returns": {
+    "RR": 612.082555025816,
+    "CC": 495.2163214981556,
+    "CR": 674.8858879804611,
+    "RC": 553.538963958621
+  },
+  "primary_gate": {
+    "original_gap": 116.86623352766037,
+    "proposal_only_loss_RR_minus_CR": -62.80333295464516,
+    "proposal_restoration_gain_RC_minus_CC": 58.32264246046543,
+    "proposal_loss_fraction": -0.5373950289908215,
+    "proposal_restoration_fraction": 0.4990546944140319,
+    "passed": false
+  },
+  "factorial_effects": {
+    "sign_convention": "Switch the named route from R to C; negative means lower true episode return.",
+    "proposal_switch_with_R_scorer": 62.80333295464516,
+    "proposal_switch_with_C_scorer": -58.32264246046543,
+    "scorer_switch_with_R_proposal": -58.54359106719494,
+    "scorer_switch_with_C_proposal": -179.66956648230553,
+    "average_proposal_switch_effect": 2.240345247089863,
+    "average_scorer_switch_effect": -119.10657877475023,
+    "interaction_CC_minus_CR_minus_RC_plus_RR": -121.12597541511059,
+    "total_switch_CC_minus_RR": -116.86623352766037,
+    "interpretation": "Descriptive2x2 consumer intervention; trajectory/population changes are endogenous. Interaction prevents treating route effects as independent causal shares."
+  },
+  "exact_checks": {
+    "RR": {
+      "historical_exact_checks": {
+        "obs": true,
+        "action": true,
+        "reward": true,
+        "return": true,
+        "steps": true
+      },
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    },
+    "CC": {
+      "historical_exact_checks": {
+        "obs": true,
+        "action": true,
+        "reward": true,
+        "return": true,
+        "steps": true
+      },
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    },
+    "CR": {
+      "historical_exact_checks": null,
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    },
+    "RC": {
+      "historical_exact_checks": null,
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    }
+  },
+  "per_arm_artifacts": {
+    "RR": {
+      "actual_trace": "runs/tdmpc_proposal_scoring_factorial_v1/RR/evaluation.pt",
+      "first_query_population": "runs/tdmpc_proposal_scoring_factorial_v1/RR/first_query_candidate_bank.pt"
+    },
+    "CC": {
+      "actual_trace": "runs/tdmpc_proposal_scoring_factorial_v1/CC/evaluation.pt",
+      "first_query_population": "runs/tdmpc_proposal_scoring_factorial_v1/CC/first_query_candidate_bank.pt"
+    },
+    "CR": {
+      "actual_trace": "runs/tdmpc_proposal_scoring_factorial_v1/CR/evaluation.pt",
+      "first_query_population": "runs/tdmpc_proposal_scoring_factorial_v1/CR/first_query_candidate_bank.pt"
+    },
+    "RC": {
+      "actual_trace": "runs/tdmpc_proposal_scoring_factorial_v1/RC/evaluation.pt",
+      "first_query_population": "runs/tdmpc_proposal_scoring_factorial_v1/RC/first_query_candidate_bank.pt"
+    }
+  },
+  "activity": {
+    "native_load_agent_calls": 1,
+    "adapted_dynamics_loads": 2,
+    "physical_evaluation_controls": 2000,
+    "optimizer_updates": 0,
+    "source_environment_steps": 0,
+    "api_calls": 0,
+    "network_attempts": 0
+  },
+  "worker_elapsed_seconds": 89.45505496900296,
+  "manuscript_operations": {
+    "new_model_calls": 0,
+    "new_environment_steps": 0,
+    "api_calls": 0,
+    "repository_hash_audits": 0
+  },
+  "scope": "One reused source23/walker-run seed31 diagnostic. R is random-source adapted dynamics, not original Clean or a truth oracle. Scoring includes terminal policy/Q. No candidate-coverage proof or forecast-fidelity measurement."
+}

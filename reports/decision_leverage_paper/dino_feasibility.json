@@ -1,0 +1,221 @@
+{
+  "schema_version": 1,
+  "status": "completed_source_cache_and_resource_audit_new_experiments_unexecuted",
+  "protocol": "configs/decision_leverage_dino_e1.json",
+  "cache_recomputation": "reports/decision_leverage_paper/dino_cached_decomposition.json",
+  "cache_csv": "reports/decision_leverage_paper/dino_cached_decomposition.csv",
+  "scientific_corrections": [
+    "Mis>0 does not imply that reducing forecast error lowers utility. It only shows true-future proxy mismatch. Require paired forecasts with measured fidelity change and selected real utility change.",
+    "The attachment values1.7012/1.3795 are true-outcome visual distances to goal, not forecast errors. Actual paired forecast errors were independently recomputed.",
+    "Pred can be negative: forecast errors can cancel proxy misspecification on a fixed finite bank. This is not a causal mediation fraction.",
+    "A native CEM output is an elite mean prefix; the reported10elites are internal samples. An argmin over sampled candidates is an added ranker.",
+    "Candidate utility bounds do not bound unknown action averages or changed candidates/continuation, even if actions are averaged convexly.",
+    "Both native objective components prefer the lower-utility seed4 outcome. No nonnegative visual/proprio reweighting can reverse this true-future two-candidate order.",
+    "Two heterogeneous, mutually motivated development banks do not support a pooled independent confirmation or population attack success rate."
+  ],
+  "native_forecast_action_path": {
+    "participates": true,
+    "path": [
+      "GC_Agent.act",
+      "CEMPlanner.plan",
+      "Planner.cost_function",
+      "model.unroll",
+      "ReprTargetDistMPCObjective",
+      "torch.topk10",
+      "elite mean",
+      "first3macro output then real execution"
+    ],
+    "anchors": {
+      "cost_function": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:48",
+      "elite_selection": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:311",
+      "mean_update": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:317",
+      "returned_prefix": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py:332",
+      "objective": "vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py:133"
+    },
+    "goal_in_forecast": "The audited fixed-action DINO forecast branch has context+actions; goal is used in the objective, so Goal-Swap forecast contamination is not the claimed mechanism."
+  },
+  "cache_independent_root_inventory": [
+    {
+      "source": "dino_action_saturation_gate/exploratory",
+      "physical_seed": 1,
+      "candidate_count": 5,
+      "complete_truth_horizon_controls": 30,
+      "paired_forecasts": true,
+      "qualifies_new_independent_confirmation": false,
+      "scope": "Existing development new-ranker bank. All candidates execute atseed1 despite source action traces fromseeds1/2/3."
+    },
+    {
+      "source": "dino_native_alias_pair plus full_horizon+terminal_truth",
+      "physical_seed": 4,
+      "candidate_count": 2,
+      "complete_truth_horizon_controls": 30,
+      "paired_forecasts": true,
+      "qualifies_new_independent_confirmation": false,
+      "scope": "Two post-hoc returned means from the same original root. Full nativepair is a differentclosedloop comparison, not this bank."
+    },
+    {
+      "source": "dino_native_alias_forecast_gpu",
+      "physical_seed": 4,
+      "queries": 14,
+      "trajectory_origins": 2,
+      "independent_initial_roots": 1,
+      "scope": "Queries2..7 originate from diverged trajectories. They are not paired candidatebanks at equal state or14independentroots; observed consequences usually15controls vs30score horizon."
+    },
+    {
+      "source": "dino_metaworld_mujoco330_clean_v1",
+      "physical_seeds": [
+        1,
+        2,
+        3
+      ],
+      "native_episodes_completed": 3,
+      "paired_canonical_or_true_future_bank": false,
+      "scope": "Real Clean/noop utility exists, but full CEM proposals/encodings were not cached. Cannot turn these into P1 pairs without new simulation/inference."
+    },
+    {
+      "source": "dino_native_alias_recovery",
+      "physical_seed": 4,
+      "independent_initial_roots": 1,
+      "scope": "Reuses the seed4 root; not another independentroot."
+    }
+  ],
+  "existing_local_reversal": {
+    "five_candidate": {
+      "mean_terminal_mse_delta": -0.5018995396418473,
+      "terminal_reward_delta": -5.8696523904800415,
+      "cumulative_reward_delta": -61.27912759780884
+    },
+    "two_candidate": {
+      "mean_terminal_mse_delta": -0.7683192740794669,
+      "terminal_reward_delta": -1.9008777141571045,
+      "cumulative_reward_delta": -19.804828643798828
+    },
+    "both_success_metrics_tied": true,
+    "population_statistics": null
+  },
+  "resources": [
+    {
+      "path": "models/DINO_WM/mw_dino-wm.pth.tar",
+      "exists": true,
+      "bytes": 280902699,
+      "loaded_in_this_audit": false
+    },
+    {
+      "path": "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth",
+      "exists": true,
+      "bytes": 88283115,
+      "loaded_in_this_audit": false
+    },
+    {
+      "path": ".venv-jepa-native/bin/python",
+      "exists": true,
+      "bytes": 23756024,
+      "loaded_in_this_audit": false
+    },
+    {
+      "path": ".deps/dino_mujoco330/mujoco/__init__.py",
+      "exists": true,
+      "bytes": 6062,
+      "loaded_in_this_audit": false
+    },
+    {
+      "path": ".deps/osmesa/usr/lib/x86_64-linux-gnu/libOSMesa.so.8",
+      "exists": true,
+      "bytes": 15565176,
+      "loaded_in_this_audit": false
+    }
+  ],
+  "read_only_gpu_snapshot": {
+    "model": "NVIDIA GeForce RTX4090",
+    "total_mib": 24564,
+    "used_mib": 13723,
+    "utilization_percent": 100,
+    "interpretation": "Point-in-time query in thisaudit, not a reservation. No process stopped or started. Requery before any later launch."
+  },
+  "runtime_evidence": {
+    "CPU_fixedbank": {
+      "source": "runs/dino_action_saturation_gate_20261015/summary.json",
+      "seconds": 49.96383093899931,
+      "environment_steps": 450,
+      "encodes": 8,
+      "unrolls": 1
+    },
+    "CPU_forecast_only": {
+      "source": "runs/dino_action_saturation_exploratory_20261015/summary.json",
+      "seconds": 20.229858518985566,
+      "unrolls": 3
+    },
+    "CPU_two_mean_replay": {
+      "source": "reports/dino_first_query_terminal_truth_decision_20261015.json",
+      "seconds": 8.770975599996746,
+      "environment_steps": 60
+    },
+    "GPU_two_mean_truth_encode": {
+      "source": "runs/dino_first_query_terminal_truth_20261015/summary.json",
+      "seconds": 8.679799505043775,
+      "encodes": 5,
+      "peak_allocated_bytes": 212688384,
+      "peak_reserved_bytes": 222298112
+    },
+    "GPU_native_pair": {
+      "source": "runs/dino_native_alias_pair_20261015/summary.json",
+      "seconds": 1540.6004746769904,
+      "unrolls": 420,
+      "policy_controls": 198,
+      "peak_allocated_bytes": 5160986112,
+      "peak_reserved_bytes": 5370806272
+    }
+  },
+  "minimum_next_experiment": {
+    "proposed": "New calibrationroot1000, fixedfiveactions,150CPUenvironmentcontrols plus expert100/warmup1; ONE originalCPUforecast and8encodes, followedby fixedlambda offline actualfuturefeature substitution. No aliasunrolls.",
+    "utility_only_stage": "Can replay150controls and save milestones onCPU without loading modelweights. This generates independentactualconsequences but not P1 evidence until matched forecasts+encodingsexist.",
+    "new_root_timing": "Not measured; historical runs motivate180s bounded calibration, not an asserted runtime.",
+    "after_calibration": "Freeze implementedrunner and finalconfirmatoryprotocol hashes before30roots1001..1030; calibration adjustments only engineering, never outcome-drivencandidate/metric/seedtuning.",
+    "native_single_query_option": "One separately labeled newroot3000 nativequery with last300candidate tensor/cost logging,10eliteindices andreturnedmean. Fullbatch5GiBhistoricalallocatorpeak; microbatchrequiresnumericalcalibration.",
+    "primary_counterfactual": "Originalprediction -> actualfutureencoding with unchangedscore/candidates. Futuretruth is oracle diagnostic information, not a deployable defense. Lambda0,.25,.5,.75,1 fixed before newroot execution.",
+    "runner": "scripts/run_decision_leverage_dino_cpu.py"
+  },
+  "reviewable_code_entry_points": {
+    "setup": "scripts/pilot_dino_metaworld_clean_gate.py:184",
+    "snapshot": "scripts/probe_dino_action_saturation_gate.py:131",
+    "load_model": "scripts/pilot_dino_metaworld_clean_gate.py:126",
+    "forecast_encoding_template": "scripts/probe_dino_action_saturation_gate.py:277",
+    "native_query_instrumentation": "scripts/pilot_dino_native_alias_pair.py:255",
+    "warning": "Do not invoke oldrun_forecasts directly: it embeds the closed competence-gate stop rule andfixed5-bank counts."
+  },
+  "source_sha256": {
+    "scripts/dino_cached_decomposition.py": "54904948eb894d4ba80a28d8926c0a1c52b9d78cd692a9f5730ac0fa6b1c049b",
+    "scripts/pilot_dino_metaworld_clean_gate.py": "8ffed3253abd228e6bcd165f88cfd220c33749fe6a6542d7330a62ffabf8b02b",
+    "scripts/probe_dino_action_saturation_gate.py": "4f79473776edf6431d5a2be1291c0b1084fe69246edff7d79dc17c6ff3242024",
+    "scripts/analyze_dino_true_future_objective.py": "d113838b2b7ecf3f3fea6850f977b25aab3360e1aa419c4a040a6cb63e652893",
+    "vendor/jepa-wms/evals/simu_env_planning/planning/planning/planner.py": "6b673d10b30cd66d07b09daa7b96397f367f49387c443731b6d7d2fd148cc0e3",
+    "vendor/jepa-wms/evals/simu_env_planning/planning/planning/objectives.py": "db8b8a4bac7b7cb6486bc09f6bed7501a73152c0e529abbb57e0454fd93d853f"
+  },
+  "activity_this_audit": {
+    "model_calls": 0,
+    "encodes": 0,
+    "environment_steps": 0,
+    "checkpoint_loads": 0,
+    "api_calls": 0,
+    "gpu_allocations": 0,
+    "new_results": "Only deterministiccache-derivedJSON/CSV."
+  },
+  "go_no_go": {
+    "cached_local_counterexample": "GO as bounded developmental finite-bank evidence",
+    "prospective_P1_confirmed": "NO: unexecuted and noindependentconfirmationcache",
+    "CPU_calibration_feasible": "GO boundednewprotocolengineeringtest, subject to actualruntime/invarianceverification",
+    "native_full_CEM_truth_claim": "NO: fullcandidate/meantruthnotavailable",
+    "exclusive_GPU_needed": "No for fixedbankCPUcalibration; do not requestexclusiveGPU based on sourceavailability."
+  },
+  "protocol_sha256": "109b58ef07cb20f7c64555161864c94b7477caf2e74d905bc0eb5c0573d242ec",
+  "new_runtime_followup": {
+    "status": "calibration_executed_and_independently_verified",
+    "source": "reports/decision_leverage_paper/prospective_pilot_audit.json",
+    "confirmation_status": "completed_30_registered_roots",
+    "confirmation_receipt": "runs/decision_leverage_dino_cpu_confirmatory/summary.json",
+    "note": "Original audit execution counters describe only audit activity. Actual newexperimentactivity is in run receipts; do not read prior unexecuted protocolmetadata as currentstate.",
+    "analysis": "reports/decision_leverage_paper/prospective_dino.json",
+    "result_scope": "Offline oracle-feature correction on a fixed transferred five-action bank; not a security mechanism or fullnative CEM.",
+    "statistical_result": "Mean terminalreward delta -1.5423932949701944; paired95%CI[-2.4387877961993216,-0.7155605924129489];11degradations,18ties,1improvement. Frozen offlineP1 criterion met."
+  }
+}

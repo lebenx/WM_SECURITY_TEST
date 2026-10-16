@@ -1,0 +1,37 @@
+\subsection{A complete-person ordering control in GenSafeNav}
+R006 tests an explicitly added representation boundary at a learned forecast
+consumer. After native prediction and feedback processing, we reverse the
+visible prefix of person rows presented to the pretrained GenSafeNav actor.
+Each person's current position, all forecast coordinates, and conformity
+features move together; padding, visibility count, robot inputs, physical
+entities, and all weights are unchanged. Inverse-permutation checks verify
+that no feature values or associations are lost. This differs from assigning
+one person's prediction to another person.
+
+We reuse the existing case-0, seed-42 CPU protocol, including zero
+conformity/cost noise, collision penalty $-20$, deterministic actor actions,
+the CPU device bridge, and the existing native feedback indexing behavior.
+Each arm retains its own normal aggregated recurrent state. The episodes
+share exactly the same initial physical snapshot; later states and predictions
+may diverge as consequences of different controls. No forecast-equivariance
+claim is tested by the actor-only intervention.
+
+Both complete episodes reach the goal after 119 physical controls, with no
+collision and zero cumulative environment cost. Raw physical returns are
+$30.185066414951063$ and $30.185057268439166$, a difference of
+$-9.1465\times10^{-6}$. The registered material-loss condition---a new
+collision, lost success, or at least $5\%$ return loss---is false.
+The separate numerical no-effect conjunction is also false: although
+terminal category, step count, and the $10^{-4}$ return tolerance agree,
+the maximum paired nominal action-coordinate difference is $0.0014961064$,
+exceeding the precommitted $10^{-5}$ action tolerance. We retain this failed
+check and do not relabel the experiment as exact permutation invariance.
+
+The pair completes in 17.67 seconds on CPU with 238 physical controls,
+238 actor calls and 240 GST calls, including the native post-terminal
+autoreset predictions. There is no training or model-API call. This fixed
+intervention is closed without changing the permutation, case, seed, or
+tolerances. It provides one bounded no-material-loss control, not a general
+robustness theorem, proof of numerical equivalence, or validation of a common
+security mechanism across systems. Full physical and presentation traces
+are retained under \artifact{runs/gensafenav_person_row_permutation_v1/}.

@@ -1,0 +1,86 @@
+论文阅读与复现入口
+
+研究Goal已按用户要求暂停，当前仅归档和上传；R008脚本已准备但未运行，不自动启动。
+
+英文正文：main.pdf
+可编辑源码：main.tex、theory_related_work.tex、references.bib
+题目：Forecast Accuracy, Decision Leverage, and Objective Mismatch in World-Model Planning
+中文题意：世界模型规划中的预测精度、决策空间与目标代理失配。
+
+这份稿件围绕原方案形成了完整论文结构，但不把待执行实验写成结果。
+已有结果包括历史真实环境回放、缓存复算及已完成的30个独立重置初态oracle确认实验，并补入R003、R004三阶段、R005路径交叉、R006行人整行置换和R007预测输入重复轨迹检验。
+源码与main.pdf均已纳入这些完整native episode结果；本次缓存内编译成功，当前PDF为23页。R007位于第17页，编译成功且已核对PDF提取文字中的表格与数值。历史R005/R006页面的目视核对记录保留。
+当前不能宣称七系统独立复现、普适攻击机制、有效新防御或顶会投稿就绪。
+
+已经落实的工作
+1. E0缓存面板：Cosmos的30初态、60真实续接逐条验证；DINO五候选开发库；WorldAgen修正后三步局部效用诊断。
+2. DINO两个不同开发初态（seed1与seed4）从原始特征及真实trace重新计算。它们协议异质、经过开发选择，不能合并为独立确认样本。
+3. Cosmos：固定首选择成功数范围[28,30]，原生29；相对原生最多新增1个失败。该范围仅限原候选及续接。
+4. DINO seed4：两候选预测误差均下降，选中动作30步真实return从95.841823降为76.036994；真实未来评分也选较低回报动作。两条回放均未成功。
+5. 新权重族分析：在这个seed4真实未来库上，visual与proprio项都偏好较低回报动作；任何非负非零加权都不能修复该排序。
+6. 理论明确区分总效用跨度、相对基线的损害空间、可负的预测项和因果归因。CEM均值必须作为单独动作回放。
+7. 在此前相关工作与模型来源核验基础上，补入Lambert等L4DC2020的Objective Mismatch in Model-based Reinforcement Learning，以及Bhamidipaty等2026的Imperfect World Models are Exploitable。前者明确预测质量与控制表现可以不一致；后者§2.2讨论模型/真实环境下的策略排序反转，§1明确优化器自身可产生exploitation。预测更准、控制变差或排序反转均不能单独作为本稿的新安全机制。LENS仍仅核验官方摘要及元数据，全文未取得。
+8. 新30根确认：原预测与真实未来评分所选动作的平均终点reward为6.300613与4.758220，差值-1.542393，配对95%区间[-2.438788,-0.715561]。11根下降、18根持平、1根改善。该结果支持固定五动作库中的离线诊断；固定candidate0/2的平均reward更高，不能称为强原生规划器攻击。
+9. R003原生精英均值检验为negative：seed3000上均值的H15终点reward为3.690524，位于十个精英的[3.538413,3.887301]之内，未满足低于全部精英的预设条件。真实执行11条15-control前缀；不换seed搜索。
+10. R004 phase1：只用开发seed1的五候选预测残差拟合一个按horizon变化、与candidate无关的加法bias，保存后再评估。它不读取评估真值或utility来修正预测，也不提供统计calibration保证。复用原30roots的平均六时点forecast-to-truth MSE从0.777127降至0.511728，终点MSE从0.974129降至0.636567；所选终点reward从6.300613降至5.895755，return从109.127186降至103.668100。4降25平1升、5次选择翻转；属于exploratory，不能算新的独立确认。candidate平均误差降低不等于每个candidate都改善，physical-zero candidate3反而在全部30roots误差上升。
+11. R004 phase2：seed3001单根、两次完整原生CEM query，接入同一冻结bias。首轮population相同，后续population内生变化。B2返回均值上的六时点forecast MSE从1.361239降至0.978856。H15原生前缀reward 3.013245→2.730845、return 29.943025→28.036593；H30开环续接则reward 5.231756→7.399076、return 98.235031→100.029401。必须同时报告相反方向；两条分支两个horizon均未成功。H15累计return条件在launch后、target replay结果出来前加入，不能写成完全prelaunch注册。该阶段只测单次query，完整episode另见phase3。
+12. R004 phase3：重用同一已检查seed3001，完成两条原生100-env-step episode（warmup1+policy99，done_at_succ=False），共14次原生query、198个policy controls，首query逐项复现phase2。完整累计return 747.432862→760.171563，差值+12.738701；预设持续return损失条件为FALSE，关闭此固定gate。final success false→true、ever success true→true、final distance 0.052013→0.046815；但首次成功72→97，保留该相反指标，不能替换primary。原生重规划H30累计return 112.651169→107.150320仍下降，到H45检查点方向反转；这与phase2 H30开环98.235031→100.029401是不同续接。单个旧root的探索性episode不能当作独立确认；初query MSE改善不等于完整episode预测精度已测。worker实际343.45秒、采样process峰值5710MiB。
+
+13. R005：同一TD-MPC2 source23/task walker-run/seed31，交叉既有random-source参考动力学R与cascade-source动力学C在proposal/scoring两条原生路径上的使用。每臂完整500步真实环境return：RR612.082555、CC495.216321、CR674.885888、RC553.538964。RR/CC逐项精确复现历史轨迹；所有臂首轮24条prior首动作及488条Gaussian候选相同。只换proposal反而增益62.803333；仅恢复proposal恢复49.9055%，未达预设50%；仅恢复scoring增益179.669566。两个预设必要条件均未通过，关闭proposal主导损害解释，不换seed/阈值。R不是原始clean或oracle；scoring包含预测reward与terminal pi/Q；未测预测精度，也未证明外部攻击或缺失好动作覆盖。90.679秒、2000controls、零训练/API。小节tdmpc_consumer_factorial.tex；来源tdmpc_consumer_factorial_sources.json。
+
+14. R006：同一GenSafeNav case0/seed42，完整行人当前位置/未来坐标/conformity整行反转有效前缀，padding与实体关联不变。两臂均119步ReachGoal，无collision，cost0；实际物理return30.185066414951063→30.185057268439166，差值-9.1465e-6，没有达到实际损害标准。但最大名义action坐标差0.0014961064超过预设1e-5，因此严格数值无效应判据不通过，不能说完全不变。关闭固定置换，不改seed/置换/容差。17.667秒CPU，238真实controls、238actor calls、240GST calls（含终止后reset），无API/训练。
+
+R007已完成三臂完整CPU回合，结果已加入当前23页PDF，并保存于runs/gensafenav_forecast_track_duplicate_v1/及根目录账本。clean/duplicate/pre-GST-dedup真实return为30.185066415/30.087496792/30.185066415，均成功且零碰撞、cost0；步数119/102/119。干预下降0.3232%，未达到预设5%损害门槛，且更早到达目标。预GST去重完整恢复成立，仍不能称攻击成功。固定干预关闭，不调剂量/对象/种子。失败后三源分析已完成，未形成新的跨系统安全机制。R008只定位已有TD-MPC2损害的奖励/末端评价通道；脚本编译和帮助命令通过，但未运行，研究暂停。不能把局部控制数量当作跨三系统机制证据。
+
+关键量的区分
+forecast-to-truth MSE衡量同一动作预测与实际未来的特征误差；future-to-goal距离只是规划代理成本，不能称为预测精度。
+加法bias是可在推理时计算的残差修正，不是统计校准或概率覆盖保证。
+新增adapter是明确实验接口；第三方预测服务发布权限仍是待验证集成假设，不是已发现的native漏洞。
+
+尚需完成的研究证据
+E1：新增固定候选排序器的冻结30根确认已完成，见prospective_dino.json；oracle误差归零是干预构造的结果，不是已实现可部署预测改进。
+原生CEM：R003与R004 phase2记录了原生均值及真实回放；phase3补齐同一旧root完整replanning episode，primary return改善，持续损失gate已关闭。仍缺新的独立roots、任务族及跨系统机制证据，不能把前缀损失替代整段episode结果。
+E2：已有Cosmos对照说明有限支持一致性，但不能把集合边界当成新的攻击机制或种群鲁棒性保证。
+E3：已有可计算的固定bias修正探索，但评分器修复、该修正在新独立roots上的确认及公平的两类修复对照尚未建立。
+E4：未参与开发的任务族或系统上的独立泛化尚未建立。
+这些缺口决定研究Goal仍处于进行中，不能仅因PDF存在就判定完成。
+最新Goal进一步要求跨至少三个真实预训练系统的条件性安全机制。本稿的诊断结果尚不满足该要求，根目录CLAIM.md、IDEAS.md、CLOSED.md、ASSETS.md记录当前状态。
+
+从项目根目录核对现有结果（不运行模型、环境或API）
+  python scripts/compute_decision_leverage_panel.py --verify-only
+  python -m unittest discover -s tests -p 'test_decision_leverage_panel.py' -v
+  .venv-jepa-native/bin/python scripts/dino_cached_decomposition.py --verify-only
+  python scripts/analyze_decision_objective_reweighting.py --verify-only
+  python scripts/analyze_cosmos_first_query_truth.py --verify-only
+
+图与论文构建
+  python scripts/plot_decision_leverage_paper.py
+  cd reports/decision_leverage_paper
+  tectonic --only-cached --keep-logs main.tex
+
+数据文件
+panel_results.json / panel_*.csv：有限支持面板、原始来源、排除原因及逐root数据。
+dino_cached_decomposition.json / .csv：两个开发库的精确预测/目标评分/真实效用分解。
+objective_reweighting.json：非负权重族结论、数值例与来源hash。
+decision_diagnostics.sources.json：图表数值与来源hash。
+literature_audit.json：已核验文献和原方案逻辑修正。
+dino_feasibility.json：资源、原生接口、可行性边界。
+configs/decision_leverage_dino_e1.json（相对项目根目录）：阅读时不要把规划字段当成已执行结果。
+prospective_dino.json及prospective_dino_*.csv：30根确认的冻结统计、逐根效用和全部预设插值条件。
+runs/cem_elite_mean_utility_gate_v1/summary.json（相对项目根目录）：R003完整negative结果与原生mean/elite前缀回放。
+reports/forecast_residual_calibration.json及runs/forecast_residual_calibration_v1/fit_commitment.json（相对项目根目录）：R004 phase1冻结bias、全部30复用roots及固定动作基线。
+runs/native_forecast_calibration_gate_v1/summary.json和interpretation.json（相对项目根目录）：R004 phase2实际H15/H30结果、预设条件及其追加时间。
+runs/native_forecast_calibration_episode_v1/summary.json及raw/calibrated下的result.json、trace.jsonl（相对项目根目录）：R004 phase3完整99-control策略episode，primary持续return损失为阴性。
+native_calibration_episode.pdf / .png / .svg / .sources.json：完整episode累计return及与首plan开环30-control续接的差别。
+runs/tdmpc_proposal_scoring_factorial_v1/summary.json、results.csv、launcher.json及四臂evaluation.pt：R005完整500步路径交叉实验；first_query_candidate_bank.pt保留共享首轮候选检查。
+runs/gensafenav_person_row_permutation_v1/summary.json、launcher.json及两臂physical_steps.jsonl/presented_rows.jsonl：R006实际两条完整轨迹；gensafenav_person_row_control_sources.json由原始物理trace复算。
+verification.json：保留此前12页版本的核验记录，不是本轮更新稿的最新证明；本轮未重复整套hash审计。
+
+本次构建记录
+执行一次tectonic --only-cached --keep-intermediates --keep-logs main.tex，退出码0，生成23页PDF（177395字节）。
+实际警告：main.tex第268–279行段落Underfull hbox（badness1097）；inputenc被UTF-8引擎忽略；enumitem的Negative labelwidth；Tectonic检查main.bbl变化时报告internal consistency problem，并在6次内部重跑后停止。日志未见undefined references/citations或Overfull。新R006正文所在第16页已目视核对。
+
+版本与权限
+本目录来自当前本地工作区；不能假定已同步到GitHub main。
+本轮归档工作不调用Gemini，也不需要API凭据；Gemini仍只用于已定义的实验。
+完整checkpoint和运行环境不是本文档附件的一部分，单凭论文PDF不能重新执行全部模型实验。

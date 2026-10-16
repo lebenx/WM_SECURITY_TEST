@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "status": "completed_cache_only_component_dominance_audit",
+  "source": "reports/dino_first_query_native_objective_decomposition_20261015.json",
+  "source_sha256": "e2cf177c50f8e9a8a9e2fdc18fa96cce2343e1effa2716c5f55b44cefd3ac871",
+  "scope": "One post-hoc DINO two-returned-mean bank; same root as the archived H30 truth diagnostic.",
+  "statistical_units": {
+    "independent_roots": 1,
+    "fixed_candidates": 2,
+    "new_roots": 0,
+    "confidence_interval": null
+  },
+  "candidate_order": [
+    "clean_identity_copy",
+    "canonical_request"
+  ],
+  "true_future_component_costs": [
+    {
+      "candidate": "clean_identity_copy",
+      "visual_mse": 1.7011786699295044,
+      "proprio_embedding_mse": 0.0011385276447981596
+    },
+    {
+      "candidate": "canonical_request",
+      "visual_mse": 1.3794617652893066,
+      "proprio_embedding_mse": 8.485875150654465e-05
+    }
+  ],
+  "candidate1_minus_candidate0_components": {
+    "visual_mse": -0.32171690464019775,
+    "proprio_embedding_mse": -0.001053668893291615
+  },
+  "candidate1_minus_candidate0_real_utility": {
+    "cumulative_native_reward": -19.804828643798828,
+    "terminal_native_reward": -1.9008777141571045
+  },
+  "illustrative_weight_grid_not_a_fitted_hyperparameter_search": [
+    {
+      "visual_weight": 1.0,
+      "proprio_weight": 0.0,
+      "costs_float64_from_stored_fp32_components": [
+        1.7011786699295044,
+        1.3794617652893066
+      ],
+      "selected_candidate_index": 1
+    },
+    {
+      "visual_weight": 1.0,
+      "proprio_weight": 0.0001,
+      "costs_float64_from_stored_fp32_components": [
+        1.701178783782269,
+        1.3794617737751818
+      ],
+      "selected_candidate_index": 1
+    },
+    {
+      "visual_weight": 1.0,
+      "proprio_weight": 0.1,
+      "costs_float64_from_stored_fp32_components": [
+        1.7012925226939841,
+        1.3794702511644572
+      ],
+      "selected_candidate_index": 1
+    },
+    {
+      "visual_weight": 1.0,
+      "proprio_weight": 1.0,
+      "costs_float64_from_stored_fp32_components": [
+        1.7023171975743026,
+        1.3795466240408132
+      ],
+      "selected_candidate_index": 1
+    },
+    {
+      "visual_weight": 1.0,
+      "proprio_weight": 10.0,
+      "costs_float64_from_stored_fp32_components": [
+        1.712563946377486,
+        1.380310352804372
+      ],
+      "selected_candidate_index": 1
+    },
+    {
+      "visual_weight": 1.0,
+      "proprio_weight": 1000.0,
+      "costs_float64_from_stored_fp32_components": [
+        2.839706314727664,
+        1.4643205167958513
+      ],
+      "selected_candidate_index": 1
+    },
+    {
+      "visual_weight": 1.0,
+      "proprio_weight": 1000000.0,
+      "costs_float64_from_stored_fp32_components": [
+        1140.228823468089,
+        86.23821327183396
+      ],
+      "selected_candidate_index": 1
+    }
+  ],
+  "all_nonnegative_nonzero_weights_statement": {
+    "equation": "C1-C0 = w_visual * delta_visual + w_proprio * delta_proprio < 0",
+    "assumptions": "Real arithmetic; w_visual>=0, w_proprio>=0, at least one strictly positive; the archived feature components and candidate support are unchanged.",
+    "conclusion": "Every such weighted sum prefers candidate1, the lower-return and lower-terminal-reward branch. Raising the proprio weight alone cannot correct this true-future ordering.",
+    "degenerate_exception": "Both weights zero make all candidates tie; tie-breaking then supplies the choice, not objective calibration. Extreme finite-precision underflow/overflow is not a substantive repair."
+  },
+  "limits": [
+    "This concerns oracle-encoded future costs on this fixed bank, not every model-predicted cost or all states.",
+    "It does not establish that all scorer-side changes fail; different features, rewards, or nonlinear scorers are outside this weight family.",
+    "It is not a comparison of trained or deployed defenses, and does not test P3 on held-out roots.",
+    "No weight is selected using test utility; the all-weights statement follows from both component differences being strictly negative."
+  ],
+  "activity": {
+    "model_calls": 0,
+    "environment_steps": 0,
+    "api_calls": 0,
+    "gpu_calls": 0,
+    "training_updates": 0
+  }
+}

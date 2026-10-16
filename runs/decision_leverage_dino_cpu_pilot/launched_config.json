@@ -1,0 +1,287 @@
+{
+  "schema_version": 1,
+  "status": "specified_before_engineering_calibration_confirmatory_launch_not_yet_frozen",
+  "research_objective": "Prospective decision-leverage and true-future proxy-mismatch diagnostics, distinct from the closed alias attack gate.",
+  "execution_status": {
+    "new_root_environment_steps": 0,
+    "new_root_model_calls": 0,
+    "new_root_results": null,
+    "runner_implemented": false,
+    "note": "No newroot result from this audit. Only seed1000 engineering calibration is currently scheduled; the implemented runner and confirmatory protocol hashes must be frozen before seeds1001..1030."
+  },
+  "priority": "CPU fixed-bank prospective panel first; separately instrument one native CEM query only after resource calibration.",
+  "source_bank": {
+    "file": "runs/dino_action_saturation_gate_20261015/frozen_bank.npz",
+    "sha256": "cd1511d402cb9e3922703c2a7c1300df650c072945f1c83d9fc6654c0fb2fc15",
+    "normalized_key": "normalized",
+    "original_axis0": 0,
+    "raw_key": "requested_physical",
+    "count": 5,
+    "origin": "Three historical 30-control prefixes from development seeds1/2/3, physical zero and sign-reversal roundtrip; no retraining, no fresh CEM needed.",
+    "candidate_order": [
+      "native_seed1_prefix",
+      "native_seed2_prefix",
+      "native_seed3_prefix",
+      "zero_request_roundtrip",
+      "seed1_xyz_sign_reversal_roundtrip"
+    ],
+    "scope": "Added fixed-bank argmin selector using the native encoder, world model and objective. Not the native adaptive CEM policy."
+  },
+  "root_partition": {
+    "development_physical_seeds": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "engineering_calibration_physical_seeds": [
+      1000
+    ],
+    "confirmatory_physical_seeds": [
+      1001,
+      1002,
+      1003,
+      1004,
+      1005,
+      1006,
+      1007,
+      1008,
+      1009,
+      1010,
+      1011,
+      1012,
+      1013,
+      1014,
+      1015,
+      1016,
+      1017,
+      1018,
+      1019,
+      1020,
+      1021,
+      1022,
+      1023,
+      1024,
+      1025,
+      1026,
+      1027,
+      1028,
+      1029,
+      1030
+    ],
+    "optional_scorer_training_physical_seeds": [
+      2001,
+      2002,
+      2003,
+      2004,
+      2005,
+      2006,
+      2007,
+      2008,
+      2009,
+      2010,
+      2011,
+      2012,
+      2013,
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022,
+      2023,
+      2024,
+      2025,
+      2026,
+      2027,
+      2028,
+      2029,
+      2030
+    ],
+    "optional_scorer_validation_physical_seeds": [
+      2101,
+      2102,
+      2103,
+      2104,
+      2105,
+      2106,
+      2107,
+      2108,
+      2109,
+      2110
+    ],
+    "unit": "One independently seeded fresh MetaWorld reach task/root after native one-control warmup. Multiple candidates, representations, horizons and CEM seeds at that root are paired measurements, not independent n.",
+    "sampling": "Use every listed root once. No replacement for triviality, failure, adverse direction or low leverage. Audit duplicate physical-state+goal hashes.",
+    "training_membership": "Not known to be outside the model training data. Seeds are unused by this project, not proof of pretraining holdout.",
+    "calibration_use": "Engineering validation only. Do not select candidate bank, representation magnitude, metric, weights, or root set by calibration utility."
+  },
+  "environment": {
+    "task": "MetaWorld reach; native reward_function_version v2 with audited MuJoCo3.3.0 overlay",
+    "root_setup": "pilot_dino_metaworld_clean_gate.setup_episode(cfg,seed,directory); cfg_for(...,cpu). One separate expert goal episode of100 controls and one root warmup, shared unchanged across representations.",
+    "restore": "Fresh setup.npz -> probe_dino_action_saturation_gate.reconstruct_and_snapshot. Complete integration state, model sites, relevant raw/wrapper fields and RNG. Verify root rendered pixels, proprio and integration exactly before each candidate.",
+    "horizon_controls": 30,
+    "native_policy_execution_controls_before_replan": 15,
+    "capture_offsets": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      30
+    ],
+    "real_utility": "Actual replay rewards and reach distance from the simulator. Encoder/forecast scores never stand in for utility.",
+    "commitment_scope": "Open-loop30-control finite-bank comparison; report15-control prefix separately, do not call it full native closed-loop performance."
+  },
+  "conditions": [
+    "original",
+    "oracle_interpolation_lambda_0.25",
+    "oracle_interpolation_lambda_0.5",
+    "oracle_interpolation_lambda_0.75",
+    "actual_future_oracle"
+  ],
+  "condition_definition": {
+    "original": "One unchanged normalized frozen-bank forecast per root.",
+    "actual_future_oracle": "Replace all six predictedfuture features with native encodings of independently replayed actual observations at5,10,15,20,25,30 controls. Original context prefix and original goal unchanged. This is offline diagnostic information, unavailable to deployment.",
+    "oracle_interpolation": "For each frozen candidate and eachfuturetimepoint, use (1-lambda)*predicted_feature+lambda*actual_feature with lambda=[0,0.25,0.5,0.75,1]. Preserve the original context. No selection of lambda from outcomes. Lambda0 andlambda1 must exactly equal cached prediction andtruth endpoints; intermediate mixturemay lieoff the learnedfeaturemanifold.",
+    "oracle_information_boundary": "True futures are used only for diagnostic counterfactual score evaluation after candidateactions, originalforecast and objective are frozen. Real utility is always the corresponding originalaction simulator replay. No causal-deploymentdefense or independently improvedworldmodelclaim.",
+    "secondary_historical_alias": "Canonical/inflated representations remain cached historicalcomparisons only. This newexperiment does not execute alias forecasts or resurrect the failedaliasgate.",
+    "invariants": [
+      "All five candidateidentities and executed physicalactions fixed across all lambdaarms.",
+      "Context, tasktarget, originalgoal, scorer alpha0.1, horizon and FP32 reductionbatch shape identical.",
+      "Original forecast is generated independently of the replay utility/trueencodings. Candidate actions must already be hash-frozen.",
+      "Model evalmode, no gradients, no dropout, unchanged checkpoint; mixing consumes no RNG.",
+      "Futureencoding alignment excludes initialcontext from error metrics and uses actual5-step milestones.",
+      "Do not exclude low-competence or trivialroots: all scheduled roots retained.",
+      "The truefuturearm is an offline diagnosis of the same finitebank, not an executable agent."
+    ]
+  },
+  "metrics": {
+    "native_objective": "CPU FP32 final visual-feature MSE to original goal +0.1*final proprio-feature MSE; sum_all_diffs=False; preserve fixed batch shape.",
+    "forecast_fidelity_primary": "Mean over five candidates of FP64 terminalweightedfeatureMSE between each arm and actualfuture. Use identicalnativeembeddingdimensions/alpha0.1; distinct from distance togoal.",
+    "real_utility_primary": "Terminal native reward after30 controls (aligned to terminal score).",
+    "real_utility_secondary": [
+      "Sum of30 native rewards",
+      "Negative terminal TCP-to-original-task-target distance",
+      "Terminal success",
+      "Ever success",
+      "First success control or null",
+      "15-control native-execution-prefix versions"
+    ],
+    "decomposition": "a_star=argmax_k U(k), a_truth=argmin_k score(true_future_k), a_pred=argmin_k score(predicted_future_k). Lev=maxU-minU; Mis=U(a_star)-U(a_truth); Pred=U(a_truth)-U(a_pred); regret=Mis+Pred. Report signed Pred; never force it nonnegative.",
+    "ties": "argmin exact scalar ties -> smallest original candidate index. Log exact multiplicity and score margin; no post-result tolerance search.",
+    "baselines": [
+      "always-candidate0",
+      "always-candidate1",
+      "each other fixed candidate",
+      "uniform selector expected utility computed exactly across candidates",
+      "physical zero candidate3",
+      "best fixed candidate selected only on separate scorer-training roots, if those roots are executed",
+      "per-root true-utility best candidate as explicitly nondeployable upper reference"
+    ],
+    "best_fixed_warning": "Best candidate chosen using confirmatory outcomes is an oracle descriptive comparator only, not held-out baseline."
+  },
+  "statistics": {
+    "independent_sample_size": 30,
+    "primary_pair": "actual_future_oracle minus original at each root",
+    "root_statistics": [
+      "delta_terminal_forecast_error_oracle_minus_original",
+      "delta_selected_terminal_reward_oracle_minus_original",
+      "Mis_terminal_reward",
+      "Pred_original_terminal_reward",
+      "terminalreward oracle-reversalevent",
+      "fixedlambda dose-response utility andfidelity, descriptive only"
+    ],
+    "resampling": "Paired bootstrap over entire roots only,10000 resamples, NumPy default_rng seed2026101601. Keep all candidates and arms of each sampled root together. Percentile95% two-sided CI for descriptive estimates; primary P1 uses95% one-sided upper bounds.",
+    "p1_confirmatory_rule": "Primary hypothesis: actual-future substitution lowers mean selectedterminalreward in this fixedbank diagnostic. Require root-paired one-sided95% bootstrap upperbound for mean delta_selected_terminal_reward<0 and strictly reduced mean forecast error. Oracle error=0 byconstruction, so itserror decrease is an algebraic/manipulationcheck, not an independent statisticaldiscovery. Report both metrics and never claim a deployableforecaster improved. Mis>0 alone is insufficient.",
+    "mis_rule": "Mis>0 (or positive mean CI) supports perfect-future proxy mismatch only; not P1. Pred<0 supports beneficial forecast error relative to this oracle proxy on the fixed bank.",
+    "event_rate": "Report root-level count/30 and Wilson95% CI; no candidate-level binomial n, no multiplicative horizons/seeds.",
+    "multiplicity": "One primary comparison: actual-future oracle versus original, terminalreward. Preset lambda grid and all secondarymetrics descriptive; no choose-best-lambda significance or testendpointretuning.",
+    "missingness": "Preserve all scheduled roots and failures. No replacement. Fewer than30 complete paired roots -> incomplete preregistered test, with partial descriptive estimates and explicit denominator; no hidden complete-case confirmation.",
+    "power": "30 is a fixed first panel size, not a guaranteed power calculation. Small effects or many ties can leave P1 unresolved."
+  },
+  "runtime": {
+    "interpreter": ".venv-jepa-native/bin/python",
+    "device": "cpu",
+    "threads": 4,
+    "no_network": true,
+    "no_training": true,
+    "no_dependency_installation": true,
+    "one_model_load_per_process": true,
+    "calibration_wall_limit_seconds": 180,
+    "panel_wall_limit_seconds": 3600,
+    "maximum_confirmatory_roots": 30,
+    "explicit_controls_per_root": {
+      "expert_setup": 100,
+      "warmup": 1,
+      "candidate_bank": 150
+    },
+    "unrolls_per_root": 1,
+    "encode_calls_per_root": 8,
+    "model_cache": "Reuse existing local checkpoints. Block unexpected checkpoint paths and network attempts.",
+    "stop": "One calibration attempt. If root restoration, shape, precision or invariance fails, retain error and repair implementation before any confirmatory root. On panel timeout/OOM/invalid root stop, preserve partial run; no automatic retry or batch/seed change.",
+    "historical_time_basis": "OldCPUrun:450controls+8encodes+1unroll=49.963830939s. This150-control/1unroll root protocol has not been timed before the registered calibration. No linear extrapolation presented as a measurement."
+  },
+  "native_cem_followup": {
+    "status": "unexecuted_separate_experiment",
+    "calibration_seed": 3000,
+    "calls": 1,
+    "native_config": {
+      "samples": 300,
+      "iterations": 15,
+      "elites": 10,
+      "horizon": 6,
+      "num_act_stepped": 3,
+      "frameskip": 5,
+      "momentum_mean": 0.0,
+      "momentum_std": 0.0
+    },
+    "instrumentation": "Wrap planner.cost_function, copy and persist only the finaliteration300 original actions and returned native costs; return costs unchanged. Record unchanged goal/context, initial/final local CEM generator states, full returned _prev_mean and returned first3 macros. Reconstruct topk on identical device, assert elite mean matches returned full mean. No additional unroll or RNG consumption to log.",
+    "reported_action_semantics": "Native CEM returns prefix of final elite mean, not an argmin candidate or10-action set. Internal candidates/10elites are optimization internals. A ranker over those actions is a separately labeled system.",
+    "microbatch": "Do not microbatch as silently equivalent native execution. Mathematical independence does not guarantee identical GPU FP32 costs/topk. A separately recorded same300-input fullbatch versus microbatch calibration must compare cost errors, exact elite membership and returned mean. If any elite/mean differs, label adapted planner and do not reuse native conclusions.",
+    "estimated_resource_evidence": {
+      "historical_fullbatch_peak_allocated_bytes": 5160986112,
+      "historical_fullbatch_peak_reserved_bytes": 5370806272,
+      "historical_first_H6_query_seconds": [
+        30.031886095996015,
+        31.997998590988573,
+        101.38628266999149,
+        143.66588151600445
+      ],
+      "scope": "Measured on shared GPU in prior runs; not a current performance or total VRAM guarantee."
+    },
+    "truth_cost": "Truth for all300 proposals would require9000 simulator controls at one root plus encodes; scoring only10elites cannot reproduce perfect-forecast selection among300. Replayed mean actions are additionally needed for any elite-mean oracle comparison.",
+    "bound_scope": "Finite-candidate utility range does not bound unrecorded elite means: environment dynamics/reward are nonlinear, even if mean actions are in the action convex hull."
+  },
+  "output_requirements": [
+    "launched config and runner snapshot withSHA256",
+    "root setup/full restore metadata and hashes",
+    "immutable action bank and per-root original goal/context",
+    "candidate30-control trace and milestone pixels/proprio",
+    "cached forecasts and true encodings",
+    "per-root JSON metrics plus longform CSV",
+    "root-level paired summary and bootstrap inputs/seeds",
+    "activity counters and actual timing/memory",
+    "explicit protocol exclusions, missing roots, null results and adaptations",
+    "Exact lambda0/1 endpoint identity and forecasterror scaling check; intermediate FP32rounding reported ratherthan claimedexact algebra"
+  ],
+  "validation_command": ".venv-jepa-native/bin/python scripts/dino_cached_decomposition.py --verify-only",
+  "validation_command_scope": "Existing development-cache verifier only; does not execute this prospective protocol.",
+  "version_notes": [
+    "Initial design retained canonical contrast; before any newrootexecution rootowner chose actualfutureoracle as primary, keeping oldaliascomparisons historical. No results motivated this change."
+  ],
+  "oracle_feature_interpolation": {
+    "lambdas": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "preserve_context": true,
+    "endpoint_assignment": "Exact original future forlambda0; exact actualfutureencoding forlambda1; intermediateFP32linear interpolation.",
+    "deployment_status": "offline_oracle_diagnostic_only"
+  }
+}

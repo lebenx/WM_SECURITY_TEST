@@ -1,5 +1,7 @@
 # 指令条件世界模型的共享动作因果总线：研究报告
 
+> **历史研究报告，正文中的旧主张已被后续专项审计限制或替代。** 下文原样保留研究过程，其中“当前主张”、旧预测/规划结果及 novelty 7/10 自评不代表当前结论，也不能直接复用于论文。当前支持范围以[证据索引](research_archive/evidence.json)、[物理不变性规范](../configs/goal_bus_physical_invariance_spec.json)和对应专项审计为准；从[研究知识库](research_archive/index.html)查找可复用代码、结果及失败记录。归档告示不构成实验复现或旧结论重新验证。
+
 ## 摘要
 
 论文式主稿草案见[goal-bus paper draft](goal_bus_paper_draft_cn.md)。

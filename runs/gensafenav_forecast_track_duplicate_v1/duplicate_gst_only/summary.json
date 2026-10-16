@@ -1,0 +1,96 @@
+{
+  "status": "completed_native_episode",
+  "_started": 349259.617346647,
+  "activity": {
+    "actor_calls": 102,
+    "gst_calls": 103,
+    "physical_steps": 102,
+    "physical_resets": 2,
+    "actor_calls_completed": 102,
+    "gst_calls_completed": 103,
+    "physical_steps_completed": 102,
+    "checkpoint_loads": 2,
+    "checkpoint_loads_completed": 2,
+    "actual_robot_controls": 102,
+    "talk2env_calls": 103,
+    "post_terminal_talk2env_calls": 1
+  },
+  "arm": "duplicate_gst_only",
+  "network_attempts": 0,
+  "api_calls": 0,
+  "training_updates": 0,
+  "hook_calls": 103,
+  "actor_captures": 102,
+  "scope": "R007 tracker-to-forecast boundary; fixed single duplicate; original entity set consumed by actor; CPU case0/seed42.",
+  "invalid_output_restoration": "Restore only consumer-used mu_xy=-999 and mask=0. Sigma/correlation are not consumed by the native wrapper and are not claimed restored.",
+  "dedup_scope": "Controlled exact duplicate removal restores the saved unused slot before GST; not a generic deployed defense.",
+  "compatibility_adapters": [
+    {
+      "source": "rl/networks/network_utils.py:AddBias.__init__",
+      "condition": "CPU and saved config.policy.constant_std",
+      "change": "Unregistered constant bias uses configured device instead of hard-coded cuda; unchanged values, shape, dtype, non-Parameter status, forward and deterministic mean action.",
+      "native_source_modified": false
+    }
+  ],
+  "runtime": {
+    "python": "/home/xhj/WM_Security/.venv-gensafenav/bin/python",
+    "torch": "2.2.0+cu121",
+    "numpy": "1.26.4",
+    "device": "cpu"
+  },
+  "scientific_settings": {
+    "actor": "trained_models/Ours_GST/checkpoints/05207.pt",
+    "gst": "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+    "seed": 42,
+    "test_case": 0,
+    "time_step": 0.25,
+    "time_limit": 50,
+    "horizons": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "known_native_time_join_bug_preserved": true,
+    "shadow_calibration_feeds_actor": false,
+    "device_adaptation": "Only saved GST device made consistent with actor backend",
+    "pred_interval": 1
+  },
+  "weights": {
+    "trained_models/Ours_GST/checkpoints/05207.pt": 10026423,
+    "gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt": 827916
+  },
+  "checkpoint_load_paths": [
+    "/home/xhj/WM_Security/vendor/GenSafeNav/gst_updated/results/100-gumbel_social_transformer-faster_lstm-lr_0.001-init_temp_0.5-edge_head_0-ebd_64-snl_1-snh_8-seed_1000_rand/sj/checkpoint/epoch_100.pt",
+    "/home/xhj/WM_Security/vendor/GenSafeNav/trained_models/Ours_GST/checkpoints/05207.pt"
+  ],
+  "initial_case_selection": {
+    "test_case": 0,
+    "case_counter": {
+      "train": 0,
+      "test": 0,
+      "val": 0
+    },
+    "thisSeed": 42,
+    "explicit_headless_case_selection": true
+  },
+  "strict_actor_load_passed": true,
+  "actor_training_mode": true,
+  "outcome": {
+    "terminal": "ReachGoal",
+    "success": true,
+    "collision": false,
+    "timeout": false,
+    "return": 30.087496710941195,
+    "steps": 102
+  },
+  "physical_return": 30.087496791744247,
+  "physical_cost": 0.0,
+  "physical_terminal": "ReachGoal",
+  "eligible_actor_consumed_calls": 98,
+  "injected_actor_consumed_calls": 98,
+  "first_eligible_actor_consumed_call": 5,
+  "post_terminal_forecast_calls_excluded_from_gate": 1,
+  "wall_seconds": 7.497713941964321
+}

@@ -1,0 +1,386 @@
+{
+  "status": "completed_native_consumer_factorial",
+  "registration": "IDEAS.md:R005",
+  "pid": 601845,
+  "started_at_utc": "2026-10-16T05:34:42.877700+00:00",
+  "question": "Does the existing conditional source-update loss pass mainly through the native policy-proposal dynamics consumer?",
+  "warning": "Single reused development source/task/seed; path-intervention diagnostic, not a new external attack or population claim. R is a fixed random-source dynamics comparator, not a true-value oracle. Route effects alone do not prove that beneficial actions were absent from the finite proposal bank.",
+  "source_dynamics": {
+    "R": "runs/tdmpc_frozen_head_loss_control_20261015/consistency_random/dynamics.pt",
+    "C": "runs/tdmpc_frozen_head_loss_control_20261015/consistency_cascade/dynamics.pt"
+  },
+  "task": "walker-run",
+  "task_id": 2,
+  "evaluation_seed": 31,
+  "arm_order": [
+    "RR",
+    "CC",
+    "CR",
+    "RC"
+  ],
+  "arm_definition": "First letter selects dynamics for native policy proposals; second selects dynamics inside _estimate_value. All other original weights are identical and frozen.",
+  "native": {
+    "horizon": 3,
+    "num_samples": 512,
+    "iterations": 6,
+    "num_elites": 64,
+    "num_pi_trajs": 24,
+    "eval_mode": false,
+    "compile": false,
+    "controls_per_arm": 500
+  },
+  "protected": "Original plan/model.next bodies, reward/Q/actor/encoder/task embedding weights, task, state reset, random-seed reset, candidate algorithm, MPPI warm start and action mask. Candidate values, later populations and physical states can change endogenously.",
+  "primary_rule": "Both RR/CC exactly reproduce historical trajectories and returns; G=J_RR-J_CC>0; J_RR-J_CR>=0.5G AND J_RC-J_CC>=0.5G. Otherwise close without new seeds, thresholds or training.",
+  "runtime": {
+    "hard_wall_seconds": 300,
+    "worker_signal_seconds": 290,
+    "allocator_cap_gib": 4,
+    "minimum_startup_free_mib": 4096,
+    "sampled_process_budget_mib": 6144,
+    "retries": 0
+  },
+  "activity": {
+    "native_load_agent_calls": 1,
+    "adapted_dynamics_loads": 2,
+    "physical_evaluation_controls": 2000,
+    "optimizer_updates": 0,
+    "source_environment_steps": 0,
+    "api_calls": 0,
+    "network_attempts": 0
+  },
+  "arms": {
+    "RR": {
+      "id": "RR",
+      "status": "completed",
+      "proposal_dynamics": "R",
+      "scoring_dynamics": "R",
+      "physical_controls_recorded": 500,
+      "calls": {
+        "proposal_next": 1000,
+        "scoring_next": 9000,
+        "estimate_value": 3000
+      },
+      "route": "proposal",
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "first_query_prior_tail_diagnostic": {
+        "scope": "Future steps1..2 of24 policy-prior trajectories at the shared physical first query; descriptive only.",
+        "exact_to_RR": true,
+        "changed_scalar_count": 0,
+        "max_absolute_difference": 0.0,
+        "mean_absolute_difference": 0.0,
+        "new_rng_draws": 0,
+        "extra_model_calls": 0
+      },
+      "evaluation_progress": {
+        "step": 500,
+        "return": 612.082555025816
+      },
+      "evaluation": {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 612.082555025816,
+        "full_episode": true,
+        "wall_seconds": 19.55199458898278
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "historical_exact_checks": {
+        "obs": true,
+        "action": true,
+        "reward": true,
+        "return": true,
+        "steps": true
+      }
+    },
+    "CC": {
+      "id": "CC",
+      "status": "completed",
+      "proposal_dynamics": "C",
+      "scoring_dynamics": "C",
+      "physical_controls_recorded": 500,
+      "calls": {
+        "proposal_next": 1000,
+        "scoring_next": 9000,
+        "estimate_value": 3000
+      },
+      "route": "proposal",
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "first_query_prior_tail_diagnostic": {
+        "scope": "Future steps1..2 of24 policy-prior trajectories at the shared physical first query; descriptive only.",
+        "exact_to_RR": false,
+        "changed_scalar_count": 19,
+        "max_absolute_difference": 0.37611180543899536,
+        "mean_absolute_difference": 0.002670123940333724,
+        "new_rng_draws": 0,
+        "extra_model_calls": 0
+      },
+      "evaluation_progress": {
+        "step": 500,
+        "return": 495.2163214981556
+      },
+      "evaluation": {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 495.2163214981556,
+        "full_episode": true,
+        "wall_seconds": 19.72059341100976
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "historical_exact_checks": {
+        "obs": true,
+        "action": true,
+        "reward": true,
+        "return": true,
+        "steps": true
+      }
+    },
+    "CR": {
+      "id": "CR",
+      "status": "completed",
+      "proposal_dynamics": "C",
+      "scoring_dynamics": "R",
+      "physical_controls_recorded": 500,
+      "calls": {
+        "proposal_next": 1000,
+        "scoring_next": 9000,
+        "estimate_value": 3000
+      },
+      "route": "proposal",
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "first_query_prior_tail_diagnostic": {
+        "scope": "Future steps1..2 of24 policy-prior trajectories at the shared physical first query; descriptive only.",
+        "exact_to_RR": false,
+        "changed_scalar_count": 19,
+        "max_absolute_difference": 0.37611180543899536,
+        "mean_absolute_difference": 0.002670123940333724,
+        "new_rng_draws": 0,
+        "extra_model_calls": 0
+      },
+      "evaluation_progress": {
+        "step": 500,
+        "return": 674.8858879804611
+      },
+      "evaluation": {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 674.8858879804611,
+        "full_episode": true,
+        "wall_seconds": 19.50501358998008
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    },
+    "RC": {
+      "id": "RC",
+      "status": "completed",
+      "proposal_dynamics": "R",
+      "scoring_dynamics": "C",
+      "physical_controls_recorded": 500,
+      "calls": {
+        "proposal_next": 1000,
+        "scoring_next": 9000,
+        "estimate_value": 3000
+      },
+      "route": "proposal",
+      "frozen_before": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      },
+      "first_query_population_checks": {
+        "prior_first_actions_exact_to_RR": true,
+        "all488_gaussian_trajectories_exact_to_RR": true,
+        "capture_preserves_cpu_rng": true,
+        "capture_preserves_cuda_rng": true,
+        "same_proposal_pair_full_bank_exact": true
+      },
+      "first_query_prior_tail_diagnostic": {
+        "scope": "Future steps1..2 of24 policy-prior trajectories at the shared physical first query; descriptive only.",
+        "exact_to_RR": true,
+        "changed_scalar_count": 0,
+        "max_absolute_difference": 0.0,
+        "mean_absolute_difference": 0.0,
+        "new_rng_draws": 0,
+        "extra_model_calls": 0
+      },
+      "evaluation_progress": {
+        "step": 500,
+        "return": 553.538963958621
+      },
+      "evaluation": {
+        "task": "walker-run",
+        "task_id": 2,
+        "seed": 31,
+        "policy": "mpc",
+        "steps": 500,
+        "return": 553.538963958621,
+        "full_episode": true,
+        "wall_seconds": 19.59207144699758
+      },
+      "frozen_after": {
+        "non_dynamics_state_entries_checked": 70,
+        "exact": true
+      }
+    }
+  },
+  "sampled_process_peak_mib": 1048,
+  "elapsed_seconds": 89.45505496900296,
+  "gpu_at_start": {
+    "index": 0,
+    "free_mib": 24041,
+    "total_mib": 24564,
+    "uuid": "GPU-5e6f1afb-d1c8-f7ac-9f06-fd6d3622ec5b"
+  },
+  "provenance": {
+    "upstream": "https://github.com/nicklashansen/tdmpc2",
+    "commit": "e9f59321933cbc8e11a002b842adc7d4ffae8ff1",
+    "checkpoint": "/home/xhj/WM_Security/models/tdmpc2/mt30-48M.pt",
+    "sha256": "bacb9ae1891a9b03dc3942a287080beb573220ea9d0263c5efd7a94a5c2ec419",
+    "model_metadata": {
+      "task": "mt30",
+      "tasks": [
+        "walker-stand",
+        "walker-walk",
+        "walker-run",
+        "cheetah-run",
+        "reacher-easy",
+        "reacher-hard",
+        "acrobot-swingup",
+        "pendulum-swingup",
+        "cartpole-balance",
+        "cartpole-balance-sparse",
+        "cartpole-swingup",
+        "cartpole-swingup-sparse",
+        "cup-catch",
+        "finger-spin",
+        "finger-turn-easy",
+        "finger-turn-hard",
+        "fish-swim",
+        "hopper-stand",
+        "hopper-hop",
+        "walker-walk-backwards",
+        "walker-run-backwards",
+        "cheetah-run-backwards",
+        "cheetah-run-front",
+        "cheetah-run-back",
+        "cheetah-jump",
+        "hopper-hop-backwards",
+        "reacher-three-easy",
+        "reacher-three-hard",
+        "cup-spin",
+        "pendulum-spin"
+      ],
+      "seed": 1,
+      "model_size": 48,
+      "num_enc_layers": 4,
+      "enc_dim": 1792,
+      "mlp_dim": 1792,
+      "latent_dim": 768,
+      "task_dim": 64,
+      "num_q": 5,
+      "dropout": 0.01,
+      "simnorm_dim": 8,
+      "num_bins": 101,
+      "vmin": -10,
+      "vmax": 10,
+      "algorithm": "tdmpc2",
+      "author": "Nicklas Hansen",
+      "date": "2023-08-13"
+    },
+    "packages": {
+      "torch": "2.13.0",
+      "tensordict": "0.14.1",
+      "dm-control": "1.0.48",
+      "mujoco": "3.15.0",
+      "gymnasium": "1.3.0"
+    },
+    "planner": {
+      "horizon": 3,
+      "num_samples": 512,
+      "iterations": 6,
+      "num_elites": 64,
+      "num_pi_trajs": 24,
+      "eval_mode": false,
+      "compile": false
+    },
+    "float32_matmul_precision": "high",
+    "checkpoint_q_conversion_max_abs_error": 1.52587890625e-05,
+    "adapter": "Upstream MPC/model/wrappers; Gymnasium Env inheritance bridge; TensorDict to_module preserve_module_state=False restores upstream historical registration semantics; bridge removed TensorDict state-dict metadata keys around upstream checkpoint conversion; selected tasks retain original task IDs and full padding/action masks."
+  },
+  "analysis": {
+    "returns": {
+      "RR": 612.082555025816,
+      "CC": 495.2163214981556,
+      "CR": 674.8858879804611,
+      "RC": 553.538963958621
+    },
+    "original_gap": 116.86623352766037,
+    "proposal_only_loss_RR_minus_CR": -62.80333295464516,
+    "proposal_restoration_gain_RC_minus_CC": 58.32264246046543,
+    "proposal_loss_fraction": -0.5373950289908215,
+    "proposal_restoration_fraction": 0.4990546944140319,
+    "passed": false,
+    "statistics": "One reused source23/evaluation31 development case; descriptive, no bootstrap/ASR/population inference.",
+    "factorial_effects": {
+      "sign_convention": "Switch the named route from R to C; negative means lower true episode return.",
+      "proposal_switch_with_R_scorer": 62.80333295464516,
+      "proposal_switch_with_C_scorer": -58.32264246046543,
+      "scorer_switch_with_R_proposal": -58.54359106719494,
+      "scorer_switch_with_C_proposal": -179.66956648230553,
+      "average_proposal_switch_effect": 2.240345247089863,
+      "average_scorer_switch_effect": -119.10657877475023,
+      "interaction_CC_minus_CR_minus_RC_plus_RR": -121.12597541511059,
+      "total_switch_CC_minus_RR": -116.86623352766037,
+      "interpretation": "Descriptive2x2 consumer intervention; trajectory/population changes are endogenous. Interaction prevents treating route effects as independent causal shares."
+    }
+  },
+  "decision": "registered_route_condition_absent_close_no_sweep",
+  "peak_cuda_allocated_bytes": 589623808,
+  "peak_cuda_reserved_bytes": 616562688,
+  "finished_at_utc": "2026-10-16T05:36:12.332730+00:00"
+}

@@ -1,0 +1,622 @@
+{
+  "status": "completed_single_root_native_calibration_diagnostic",
+  "registration": "IDEAS.md:R004 phase2",
+  "pid": 594975,
+  "started_at_utc": "2026-10-16T04:53:49.306221+00:00",
+  "physical_seed": 3001,
+  "warning": "Single-root exploratory calibration diagnostic, NOT an attack. Added fixed adapter; external provider authority and novelty unproved. Later CEM populations change endogenously; this is not a fixed-population comparison.",
+  "native": {
+    "samples": 300,
+    "iterations": 15,
+    "elites": 10,
+    "horizon": 6,
+    "num_act_stepped": 3,
+    "controls_per_macro": 5,
+    "local_seed": 1
+  },
+  "calibrator": "runs/forecast_residual_calibration_v1/calibrator.npz",
+  "coefficient": 1.0,
+  "refit": false,
+  "primary_rule": "calibrated native mean H15 terminal reward < raw native mean H15 terminal reward AND mean B2 all-six-future weighted forecast MSE decreases",
+  "runtime": {
+    "wall_limit_seconds": 300,
+    "allocator_cap_gib": 7,
+    "sampled_process_budget_mib": 8192,
+    "microbatch": false,
+    "retries": 0,
+    "torch": "2.6.0+cu124",
+    "mujoco": "3.3.0",
+    "threads": 4,
+    "renderer": "osmesa",
+    "matmul_tf32": false,
+    "cudnn_tf32": true
+  },
+  "activity": {
+    "native_query_calls": 2,
+    "cost_calls": 30,
+    "unroll_calls": 61,
+    "predictor_forwards": 366,
+    "encode_calls": 10,
+    "expert_setup_controls": 100,
+    "root_warmup_controls": 1,
+    "replay_controls": 60,
+    "api_calls": 0,
+    "network_attempts": 0,
+    "training_updates": 0
+  },
+  "checkpoint_loads": {
+    "/home/xhj/.cache/torch/hub/checkpoints/dinov2_vits14_pretrain.pth": 1,
+    "/home/xhj/WM_Security/models/DINO_WM/mw_dino-wm.pth.tar": 1
+  },
+  "queries": {
+    "raw": {
+      "seconds": 25.118080143001862,
+      "cost_calls": 15,
+      "returned_prefix_exact": true,
+      "full_mean_exact_to_elites": true
+    },
+    "calibrated": {
+      "seconds": 25.269086476007942,
+      "cost_calls": 15,
+      "returned_prefix_exact": true,
+      "full_mean_exact_to_elites": true
+    }
+  },
+  "branches": [
+    {
+      "arm": "raw",
+      "h15": {
+        "terminal_reward": 3.013244867324829,
+        "cumulative_reward": 29.9430251121521,
+        "terminal_success": false,
+        "ever_success": false,
+        "terminal_distance": 0.20896016418803384
+      },
+      "h30": {
+        "terminal_reward": 5.23175573348999,
+        "cumulative_reward": 98.23503112792969,
+        "terminal_success": false,
+        "ever_success": false,
+        "terminal_distance": 0.1496605505148743
+      }
+    },
+    {
+      "arm": "calibrated",
+      "h15": {
+        "terminal_reward": 2.7308454513549805,
+        "cumulative_reward": 28.036592960357666,
+        "terminal_success": false,
+        "ever_success": false,
+        "terminal_distance": 0.22031823692465055
+      },
+      "h30": {
+        "terminal_reward": 7.399076461791992,
+        "cumulative_reward": 100.02940130233765,
+        "terminal_success": false,
+        "ever_success": false,
+        "terminal_distance": 0.11189318379536226
+      }
+    }
+  ],
+  "checks": {
+    "first_populations_identical": true,
+    "native_returned_prefix_exact": true,
+    "context_unchanged": true,
+    "same_root_each_replay": true,
+    "action_and_forecast_committed_before_replay": true,
+    "fixed_saved_bias_no_refit": true
+  },
+  "sampled_process_peak_mib": 5668,
+  "elapsed_seconds": 75.54622678103624,
+  "gpu_at_start": {
+    "memory.total": 24564,
+    "memory.free": 24041,
+    "memory.used": 41,
+    "utilization.gpu": 0
+  },
+  "model_load": {
+    "strict_loads": [
+      {
+        "class": "DinoVisionTransformer",
+        "loaded_tensors": 175,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ViTPredictor",
+        "loaded_tensors": 75,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      },
+      {
+        "class": "ProprioceptiveEmbedding",
+        "loaded_tensors": 2,
+        "missing": [],
+        "unexpected": []
+      }
+    ],
+    "parameters": 43360120,
+    "all_parameters_float32": true,
+    "model_action_dimension": 20,
+    "model_forward_calls": 0,
+    "normalization": {
+      "action_dim": 4,
+      "proprio_dim": 4,
+      "state_dim": 39,
+      "action_mean": [
+        0.005723577458411455,
+        0.15735651552677155,
+        -0.1396457850933075,
+        0.1998193860054016
+      ],
+      "action_std": [
+        0.7359239459037781,
+        0.73408043384552,
+        0.7182977199554443,
+        0.743205726146698
+      ],
+      "proprio_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929
+      ],
+      "proprio_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074
+      ],
+      "state_mean": [
+        -0.0029392109718173742,
+        0.6544238924980164,
+        0.15410053730010986,
+        0.6402314901351929,
+        0.008108077570796013,
+        0.6766929626464844,
+        0.09434457868337631,
+        0.3859776258468628,
+        -0.050619181245565414,
+        0.03434790298342705,
+        0.4750967025756836,
+        0.017891764640808105,
+        0.04413251578807831,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        -0.0029707495123147964,
+        0.6529995203018188,
+        0.1545131504535675,
+        0.6445063948631287,
+        0.008061803877353668,
+        0.6762475371360779,
+        0.09425390511751175,
+        0.3860057294368744,
+        -0.050728388130664825,
+        0.03427530452609062,
+        0.4753906726837158,
+        0.017830422148108482,
+        0.04414031654596329,
+        0.008904759772121906,
+        0.02380952425301075,
+        0.0,
+        0.0,
+        0.0,
+        0.015675902366638184,
+        0.7268462181091309,
+        0.12401046603918076
+      ],
+      "state_std": [
+        0.10431358963251114,
+        0.11230525374412537,
+        0.07981759309768677,
+        0.26138949394226074,
+        0.1050795242190361,
+        0.10192868858575821,
+        0.0880839079618454,
+        0.4468156695365906,
+        0.18397848308086395,
+        0.14911998808383942,
+        0.47220379114151,
+        0.06688503921031952,
+        0.16022595763206482,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.10383506864309311,
+        0.11242222785949707,
+        0.07946359366178513,
+        0.2625894844532013,
+        0.10486840456724167,
+        0.10173390805721283,
+        0.08810629695653915,
+        0.4467460811138153,
+        0.18375301361083984,
+        0.14870719611644745,
+        0.4721624553203583,
+        0.0666341558098793,
+        0.16022934019565582,
+        0.03222600743174553,
+        0.1524554044008255,
+        0.0,
+        0.0,
+        0.0,
+        0.14182789623737335,
+        0.12113576382398605,
+        0.09631838649511337
+      ]
+    }
+  },
+  "setup": {
+    "seed": 3001,
+    "episode_index": 3000,
+    "elapsed_after_warmup": 1,
+    "initial_success": false,
+    "initial_reach_distance": 0.31085913437846846,
+    "warmup_reward_excluded_from_policy_return": 1.3804153203964233,
+    "warmup_native_success": false,
+    "expert_final_success": true,
+    "expert_final_reach_distance": 0.044832861043904645,
+    "expert_steps": 100,
+    "goal_source": "native separate-env expert final image/proprio; expert controls are archived but never provided to CEM",
+    "expert_trace": {
+      "path": "/home/xhj/WM_Security/runs/native_forecast_calibration_gate_v1/setup/expert_trace.jsonl",
+      "sha256": "11b69b8d1dce14731ad44dfd216694252392de5222cacc30698e55545529d853"
+    },
+    "arrays": {
+      "sim_qpos": {
+        "dtype": "<f8",
+        "shape": [
+          16
+        ],
+        "sha256": "8ab63ce206114ac9077aa2523a3c9979210acccd834a687c62e4cadf4dc61e47"
+      },
+      "sim_qvel": {
+        "dtype": "<f8",
+        "shape": [
+          15
+        ],
+        "sha256": "2089446bd7d88e4a01a1ed784525c9ad5a19562af105e43ad573d0b32a4f099d"
+      },
+      "sim_qacc_warmstart": {
+        "dtype": "<f8",
+        "shape": [
+          15
+        ],
+        "sha256": "deb4ff20bb387ac583aef2e7b3323226db4cd2b044f623c3874ed1ad31a21393"
+      },
+      "sim_ctrl": {
+        "dtype": "<f8",
+        "shape": [
+          2
+        ],
+        "sha256": "8b200cebcece1e405f209babaa9c75e7fed7168ce5230d5923e96d7f9c78c67b"
+      },
+      "sim_mocap_pos": {
+        "dtype": "<f8",
+        "shape": [
+          1,
+          3
+        ],
+        "sha256": "fc63acccb3cde7c3996fe880157e1f084683037fc04533a44c506ea6978c8374"
+      },
+      "sim_mocap_quat": {
+        "dtype": "<f8",
+        "shape": [
+          1,
+          4
+        ],
+        "sha256": "1dfbc7ed340b87db292b8a69bb1f97047b2e9c3f7870626a1170036f72220df0"
+      },
+      "sim_time": {
+        "dtype": "<f8",
+        "shape": [
+          1
+        ],
+        "sha256": "6a4ae3c4470c5f86232d600a6bc468c681276ab7a364a3bb5e1ab296c5d353ed"
+      },
+      "target": {
+        "dtype": "<f8",
+        "shape": [
+          3
+        ],
+        "sha256": "741f85596c44e6d2980850c911749afc9a60a4d1c93c2e84e0f58d27985bfd54"
+      },
+      "rand_vec": {
+        "dtype": "<f8",
+        "shape": [
+          6
+        ],
+        "sha256": "7b446178e280ad0c48bd73d2daae60e67281f5bb723d09c3705810414a5ec0cd"
+      },
+      "tcp": {
+        "dtype": "<f8",
+        "shape": [
+          3
+        ],
+        "sha256": "5ccb57553a3c904336d44035afc428b35340f52c5b41a9784619d42950291afa"
+      },
+      "previous_observation": {
+        "dtype": "<f8",
+        "shape": [
+          18
+        ],
+        "sha256": "1476029ccc85b92c14c3ff226029bb78eec1ec4c9cc96faf58109ef7f3887f58"
+      },
+      "elapsed": {
+        "dtype": "<i8",
+        "shape": [
+          1
+        ],
+        "sha256": "5cb2684910dd1aba99d6385db74b86145b6913ac8f519cbe7a7b056b1dc1cd3f"
+      },
+      "model_site_pos": {
+        "dtype": "<f8",
+        "shape": [
+          8,
+          3
+        ],
+        "sha256": "f8088f224bca0c5dc094c7f4cad367246b4900e846b292c1690af082a3402831"
+      },
+      "initial_pixels": {
+        "dtype": "|u1",
+        "shape": [
+          1,
+          3,
+          224,
+          224
+        ],
+        "sha256": "517e15d4d75af29d3722bfc0edba0ca8f89467232237334adafcca53e9aff5d2"
+      },
+      "initial_proprio": {
+        "dtype": "<f4",
+        "shape": [
+          1,
+          4
+        ],
+        "sha256": "bb51c730d2597405176ded154c180afb72dc6cdf336632e6090a6e4861b174fa"
+      },
+      "initial_state": {
+        "dtype": "<f4",
+        "shape": [
+          39
+        ],
+        "sha256": "2b6c6d01a96383dfa5afd81a850700b9472cac4718b2128c0d2f63abc8ed7444"
+      },
+      "goal_pixels": {
+        "dtype": "|u1",
+        "shape": [
+          1,
+          3,
+          224,
+          224
+        ],
+        "sha256": "9d137169a704591c6296c64ac461bfa8d4caf2019071d5aaaab0a4ee87fa5ca9"
+      },
+      "goal_proprio": {
+        "dtype": "<f4",
+        "shape": [
+          1,
+          4
+        ],
+        "sha256": "e5c1156e497fd282858565ba5794a20e0818d61939e1a320959d7f3d4d50dda6"
+      },
+      "goal_state": {
+        "dtype": "<f4",
+        "shape": [
+          39
+        ],
+        "sha256": "7e87d647d091acf311241f2497f3b77e96375f0a8d0cf027cb5a2129133cca17"
+      },
+      "expert_actions": {
+        "dtype": "<f4",
+        "shape": [
+          1,
+          100,
+          4
+        ],
+        "sha256": "b73d7b20701491fdcae16e3a78352d7ccbf566ad410146b7402c8ea39bb55ab3"
+      },
+      "expert_final_tcp": {
+        "dtype": "<f8",
+        "shape": [
+          3
+        ],
+        "sha256": "170bc42ce52aded5235ea5c841ffb898700bf3e9b2ca0a628e8a5a35ef201d5b"
+      },
+      "expert_target": {
+        "dtype": "<f8",
+        "shape": [
+          3
+        ],
+        "sha256": "741f85596c44e6d2980850c911749afc9a60a4d1c93c2e84e0f58d27985bfd54"
+      }
+    },
+    "setup": {
+      "path": "/home/xhj/WM_Security/runs/native_forecast_calibration_gate_v1/setup/setup.npz",
+      "sha256": "c277dcb8a96000fb0386b6cfef0831845f57369c46c9599b974a717e154f66df"
+    },
+    "initial_image": {
+      "path": "/home/xhj/WM_Security/runs/native_forecast_calibration_gate_v1/setup/initial.png",
+      "sha256": "cb7a89063b829bf862eed4028bf625bdf188a5ce1fba0ac5402d2c5049ce0b44"
+    },
+    "goal_image": {
+      "path": "/home/xhj/WM_Security/runs/native_forecast_calibration_gate_v1/setup/goal.png",
+      "sha256": "9adf099e5a4b4a0b6232cbde3c606aafd45f635644e1ba082bdadc49a65c87eb"
+    }
+  },
+  "restore": {
+    "source": "fresh seed3001 full-integration root",
+    "integration_state_spec": "mjSTATE_INTEGRATION",
+    "integration_state_length": 276,
+    "raw_python_fields": [
+      "_did_see_sim_exception",
+      "_freeze_rand_vec",
+      "_last_rand_vec",
+      "_last_stable_obs",
+      "_np_random",
+      "_np_random_seed",
+      "_obs_obj_max_len",
+      "_partially_observable",
+      "_prev_obs",
+      "_set_task_called",
+      "_target_pos",
+      "action_rot_scale",
+      "action_scale",
+      "active_discrete_goal",
+      "camera_id",
+      "camera_name",
+      "curr_path_length",
+      "current_seed",
+      "discrete_goal_space",
+      "frame_skip",
+      "fullpath",
+      "goal",
+      "hand_high",
+      "hand_init_pos",
+      "hand_low",
+      "height",
+      "init_left_pad",
+      "init_qpos",
+      "init_qvel",
+      "init_right_pad",
+      "init_tcp",
+      "maxReachDist",
+      "mocap_high",
+      "mocap_low",
+      "num_resets",
+      "obj_init_angle",
+      "obj_init_pos",
+      "render_mode",
+      "reward_function_version",
+      "seeded_rand_vec",
+      "task_name",
+      "width"
+    ],
+    "wrapper_fields": [
+      {
+        "class": "PixelWrapper",
+        "fields": [
+          "_frames",
+          "_proprios"
+        ]
+      },
+      {
+        "class": "TensorWrapper",
+        "fields": []
+      },
+      {
+        "class": "TimeLimit",
+        "fields": [
+          "_elapsed_steps",
+          "_max_episode_steps"
+        ]
+      },
+      {
+        "class": "MetaWorldWrapper",
+        "fields": []
+      }
+    ],
+    "initial_pixels_and_proprio_exact": true,
+    "note": "MuJoCo derived fields recomputed by mj_forward; integration fields then restored exactly. Constructor may reset/simulate internally; no extra explicit reset/warmup is performed."
+  },
+  "forecast_errors": {
+    "raw": {
+      "weighted_horizon_candidate": [
+        [
+          0.5288554903578362,
+          0.509575181149239
+        ],
+        [
+          1.0695903848484942,
+          1.0765593919744532
+        ],
+        [
+          1.311256567579227,
+          1.3993611887159083
+        ],
+        [
+          1.4824048105927843,
+          1.5728149392419004
+        ],
+        [
+          1.6526667980712015,
+          1.8769102464400096
+        ],
+        [
+          1.8339750182655266,
+          2.0208975909551574
+        ]
+      ],
+      "mean_all_future_mse": 1.3612389673493117,
+      "mean_terminal_mse": 1.927436304610342
+    },
+    "calibrated": {
+      "weighted_horizon_candidate": [
+        [
+          0.3384831062016994,
+          0.31098990328240456
+        ],
+        [
+          0.8026200111295612,
+          0.699947492781103
+        ],
+        [
+          0.9175168786087733,
+          0.8912755196050961
+        ],
+        [
+          1.1732274216077407,
+          0.9508447775718512
+        ],
+        [
+          1.3404707309258697,
+          1.1827743177787082
+        ],
+        [
+          1.64026833979534,
+          1.4978491907176061
+        ]
+      ],
+      "mean_all_future_mse": 0.9788556408338126,
+      "mean_terminal_mse": 1.569058765256473
+    }
+  },
+  "utility_deltas_calibrated_minus_raw": {
+    "h15": {
+      "terminal_reward": -0.28239941596984863,
+      "cumulative_reward": -1.9064321517944336,
+      "terminal_success": 0,
+      "ever_success": 0,
+      "terminal_distance": 0.011358072736616709
+    },
+    "h30": {
+      "terminal_reward": 2.167320728302002,
+      "cumulative_reward": 1.794370174407959,
+      "terminal_success": 0,
+      "ever_success": 0,
+      "terminal_distance": -0.03776736671951206
+    }
+  },
+  "joint_gate": {
+    "forecast_error_decreases": true,
+    "native_H15_utility_decreases": true,
+    "passed": true,
+    "delta_mean_forecast_MSE": -0.3823833265154991,
+    "delta_H15_terminal_reward": -0.28239941596984863
+  },
+  "decision": "joint_condition_observed_no_security_claim",
+  "peak_cuda_allocated_bytes": 5120859648,
+  "peak_cuda_reserved_bytes": 5458886656,
+  "finished_at_utc": "2026-10-16T04:55:04.852421+00:00"
+}

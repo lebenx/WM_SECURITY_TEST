@@ -1,5 +1,7 @@
 # Goal-bus claim: related-work positioning
 
+> **Historical positioning memo; not the current novelty or evidence assessment.** The original text below is preserved, including its references to a "current claim" and its earlier Goal-invariance premise. Those statements are constrained or superseded by the [current evidence index](research_archive/evidence.json) and [physical-invariance specification](../configs/goal_bus_physical_invariance_spec.json). Consult the [literature registry](research_archive/papers.json) for each source's recorded reading scope and the [research knowledge base](research_archive/index.html) for current evidence and reusable assets. This archive notice neither rechecks the cited papers nor establishes a novelty score.
+
 This memo records the focused literature check used to position the current claim. It is a novelty boundary, not a claim that the mechanism is absent from every unpublished or newly posted paper.
 
 ## Closest architectural neighbors

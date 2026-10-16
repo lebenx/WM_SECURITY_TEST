@@ -1,0 +1,282 @@
+{
+  "schema_version": 1,
+  "status": "curated_reuse_contract_not_new_experimental_evidence",
+  "purpose": "将现有代码、数据和研究判断组织成可复用工作流；模板不表示对应实验已经执行。",
+  "source_precedence": [
+    "具体修正审计与对应原始结果；先核对其协议有效性",
+    "当前 evidence/mechanisms 证据卡及明确限制",
+    "研究进度 HTML 与知识库导航",
+    "历史设计、旧稿和旧配置中的预期结果"
+  ],
+  "workflows": [
+    {
+      "id": "start_from_claim",
+      "name": "从科学问题选择已有资产",
+      "steps": [
+        "先用 search 查机制、负结果和重新开启条件，确认没有重复已淘汰检验。",
+        "用 resource_recipes 选与具体决策路径匹配的模型；分别核对推理可用、正常任务能力和真实结果来源。",
+        "声明原生系统或新增 Planner、控制权限、保护输入和实际效用终点。",
+        "将候选、阈值、预算与止损条件写入新配置后才执行。"
+      ],
+      "source_paths": [
+        "reports/research_archive/mechanisms.json",
+        "reports/research_archive/resource_recipes.json",
+        "AGENTS.md"
+      ]
+    },
+    {
+      "id": "reuse_cached_evidence",
+      "name": "优先复算已有缓存",
+      "steps": [
+        "根据知识卡进入配置、原始运行目录、分析器和纠正报告。",
+        "先确认数据来源、动作/图像编码、真实状态与模型记忆是否完整。",
+        "分析输出写入新目录；已有记录保留，不将同一缓存的复算计作新独立样本。"
+      ],
+      "verified_read_only_example": "python scripts/analyze_cosmos_first_query_truth.py --verify-only",
+      "example_scope": "复算历史绑定、排名与效用，不运行模型/环境/API；此命令在本会话上传准备时已通过。",
+      "source_paths": [
+        "scripts/analyze_cosmos_first_query_truth.py",
+        "reports/cosmos_first_query_truth_decision_20261015.json"
+      ]
+    },
+    {
+      "id": "minimal_counterfactual_decision",
+      "name": "最小反事实决策实验契约",
+      "steps": [
+        "固定真实初态、原任务目标、候选集、外生噪声、评分标准和相关历史。",
+        "记录预测、排名、选中动作和独立环境回放效用；分清模型潜坐标与共同物理量。",
+        "比较 Clean、候选干预、针对机制的恢复和预算/位置匹配控制；不要把任何 cut 都当特异恢复。",
+        "固定样本不足时报告描述结果，不输出总体 ASR 或稳定泛化。"
+      ],
+      "execution_status": "methodological_template_not_claimed_as_a_new_experiment",
+      "source_paths": [
+        "configs/goal_bus_physical_invariance_spec.json",
+        "reports/cosmos_action_sender_decision_20261016.json",
+        "reports/dino_first_query_terminal_truth_decision_20261015.json"
+      ]
+    },
+    {
+      "id": "archive_after_run",
+      "name": "一次实验结束后的最小归档",
+      "steps": [
+        "保留配置、代码入口、上游 commit、运行命令、实际调用/步数、退出原因及输出目录。",
+        "把正常能力、局部损害、机制归因、泛化、资源状态分别登记；运行完成不等于主张成立。",
+        "更新机制、证据、模型或文献中实际受影响的卡片；标明保留、重构、停止及重新开启条件。",
+        "执行 research_archive.py build，再执行 check；查询对应模型/机制确认入口和原始路径可找到。"
+      ],
+      "source_paths": [
+        "scripts/research_archive.py",
+        "reports/research_archive/lessons.json"
+      ]
+    },
+    {
+      "id": "restore_on_new_machine",
+      "name": "在另一台机器恢复",
+      "steps": [
+        "克隆项目，按实验需要初始化固定版本子模块；不默认递归初始化所有上游依赖。",
+        "按模型配方、来源清单获取权重与外部缓存；本地生成权重还需原备份或重跑原实验。",
+        "重建实验特定环境，核对跨虚拟环境借用的包、仿真版本与原生预算。",
+        "先做对应加载/正常能力检查，再考虑新实验；不因 checkpoint 文件存在而宣称能力已验证。"
+      ],
+      "source_paths": [
+        "README.md",
+        "reproducibility/vendor_sources.json",
+        "reproducibility/external_artifacts.jsonl",
+        "reports/research_archive/resource_recipes.json"
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "id": "forecast_error",
+      "name": "Forecast Error",
+      "definition": "在明确预测对象、时域和共同坐标下，将预测与独立真实后果比较；记录 MSE/MAE 等确切定义、归一化、维度聚合方式和单位。",
+      "must_not_infer": "预测之间的 divergence 不是对真值的 error；任务条件 latent 不共享坐标时不能直接比较。",
+      "source_paths": [
+        "configs/goal_bus_physical_invariance_spec.json",
+        "reports/dino_first_query_terminal_truth_decision_20261015.json",
+        "reports/tdmpc_task_latent_contract_20261015.json"
+      ]
+    },
+    {
+      "id": "ranking_flip",
+      "name": "Action Ranking Flip Rate",
+      "definition": "在相同 root、候选动作、评分和配对随机性下，比较完整排序或 top-1；明确采用哪一种、平局规则和有效配对分母。",
+      "must_not_infer": "排名翻转没有自动证明任务损害；动作候选集合改变后不再是同一检验。",
+      "source_paths": [
+        "reports/cosmos_first_query_truth_decision_20261015.json",
+        "reports/worldevolver_truthful_coverage_decision_20261016.json"
+      ]
+    },
+    {
+      "id": "selected_utility",
+      "name": "Selected-Action Utility",
+      "definition": "选中动作在环境回放或独立真实后果上的效用；固定后续策略、执行时域和随机性。分别报告即时效用、固定续接效用与完整闭环回报。",
+      "must_not_infer": "模型预测分数不能充当实际效用；开环有限时域回放不能称完整任务成功率。",
+      "source_paths": [
+        "reports/dino_first_query_terminal_truth_decision_20261015.json",
+        "reports/worldevolver_truthful_coverage_decision_20261016.json"
+      ]
+    },
+    {
+      "id": "recovery_specificity",
+      "name": "恢复效用与机制特异性",
+      "definition": "在同一评价协议下分别报告 U_clean、U_intervention、U_recovery、U_matched_control；说明恢复所需权限、成本和条件。",
+      "must_not_infer": "输出恒等或任何干预都能恢复同样不构成目标路径的特异因果证据；分母为零时不算归一化恢复率。",
+      "source_paths": [
+        "reports/cosmos_action_sender_decision_20261016.json",
+        "reports/research_archive/evidence.json"
+      ]
+    },
+    {
+      "id": "success_return_risk",
+      "name": "任务成功、回报与风险",
+      "definition": "分别记录终态成功、曾经成功、累计回报、碰撞/失败等环境定义指标与暴露时长；明确阈值和终止规则。",
+      "must_not_infer": "回报下降不必然等于成功率下降；局部 clearance 变化不等于碰撞；基础 Clean 不足不能当攻击效果。",
+      "source_paths": [
+        "reports/cross_question_pilot_decision_20261016.json",
+        "reports/research_archive/resource_recipes.json"
+      ]
+    },
+    {
+      "id": "statistics_unit",
+      "name": "统计单位与不确定性",
+      "definition": "以独立初态、episode、task 等实际采样单位报告 n；同根多时刻、候选和随机生成不自动独立。配对设计保持配对，可用分组重采样/区间等适配方法。",
+      "must_not_infer": "开发态和挑选后的诊断不能替代独立测试；极少样本不承诺显著性或稳定 ASR；无功效的零结果不证明普遍不可能。",
+      "source_paths": [
+        "reports/research_archive/lessons.json",
+        "reports/lgwm_metadata_baseline_review_20261016.json"
+      ]
+    },
+    {
+      "id": "verifier_auc",
+      "name": "Verifier AUC 与配对可辨识性",
+      "definition": "记录正负类、训练/测试分割、同 donor 配对、未见类别处理及阈值冻结时间；报告 pooled AUC 与 donor 内排序的不同含义。",
+      "must_not_infer": "使用测试标签构造的可辨识性证人不是泛化模型；单个线性 head 代数限制不等于完整系统无效。",
+      "source_paths": [
+        "reports/lgwm_verifier_candidate_decision_20261016.json",
+        "reports/lgwm_pair_design_audit_20261016.json"
+      ]
+    },
+    {
+      "id": "resource_metrics",
+      "name": "资源与活动计数",
+      "definition": "分别记录实际模型调用、API 请求/失败、真实环境步数、模拟查询、训练步数、CPU/GPU时间与显存；下载、源码阅读和缓存分析单独计数。",
+      "must_not_infer": "资源准入未通过、模型成功加载或计划预算未执行，均不能记为效果实验。",
+      "source_paths": [
+        "reports/jepa_grasp_cached_batch_profile_decision_20261016.json",
+        "reports/research_archive/evidence.json"
+      ]
+    }
+  ],
+  "baselines": [
+    {
+      "id": "native_policy",
+      "name": "原生策略与动作先验",
+      "purpose": "确认正常任务能力及预测模块对最终决策的实际增益。保留原生规划预算和正确任务目标。",
+      "existing_example": "TD-MPC2 原生 MPC、actor prior 与 action-blind 对照；具体历史回报及任务差异见配方。",
+      "source_paths": [
+        "src/wm_security/tdmpc_native.py",
+        "reports/research_archive/resource_recipes.json"
+      ]
+    },
+    {
+      "id": "clean_sham_control",
+      "name": "Clean、sham 与匹配控制",
+      "purpose": "排除调用顺序、随机性、输入长度、切断数量和候选集变化等替代解释。",
+      "existing_example": "Cosmos sender 的同量控制限制特异性主张；WorldEvolver draft/sham/局部真值/全部真值固定面板为 null。",
+      "source_paths": [
+        "reports/cosmos_action_sender_decision_20261016.json",
+        "reports/worldevolver_truthful_coverage_decision_20261016.json"
+      ]
+    },
+    {
+      "id": "oracle_future",
+      "name": "独立真实未来替换",
+      "purpose": "诊断损害来自预测错误、预测消费者的评分代理，还是其他路径。",
+      "privilege": "此 oracle 需要独立真实未来，只是诊断上界，不是可部署防御。",
+      "existing_example": "DINO 的真实未来原生评分仍偏好低回报候选；Cosmos 单个开发态真实未来替换恢复排名，均需保留样本限制。",
+      "source_paths": [
+        "reports/dino_first_query_terminal_truth_decision_20261015.json",
+        "reports/cosmos_first_query_truth_decision_20261015.json"
+      ]
+    },
+    {
+      "id": "metadata_baselines",
+      "name": "简单元数据与结构性对照",
+      "purpose": "检验复杂机制是否被动作、任务来源、阶段或线性可加结构解释。",
+      "existing_example": "LGWM 三个冻结类别频率基线均未过预定 AUC 门；不能继续根据测试集调参挑胜者。",
+      "source_paths": [
+        "configs/lgwm_metadata_baseline_20261016.json",
+        "scripts/analyze_lgwm_metadata_baseline.py",
+        "reports/lgwm_verifier_candidate_decision_20261016.json"
+      ]
+    },
+    {
+      "id": "random_budget_control",
+      "name": "随机/非定向、预算匹配对照",
+      "purpose": "区分目标机制与普通扰动、负迁移、OOD 或训练成本。",
+      "execution_status": "generic_comparator_contract_consult_each_mechanism_for_actual_execution",
+      "source_paths": [
+        "reports/research_archive/mechanisms.json",
+        "reports/tdmpc_mechanism_reassessment_20261015.json"
+      ]
+    }
+  ],
+  "maintenance": [
+    {
+      "id": "commands",
+      "name": "维护与检索命令",
+      "commands": [
+        "python scripts/research_archive.py build",
+        "python scripts/research_archive.py check",
+        "python scripts/research_archive.py search \"GenSafeNav\" --registry resource_recipes",
+        "python scripts/research_archive.py search \"query\" --registry mechanisms --status no_harm",
+        "python scripts/research_archive.py find WorldAgen --area runs --limit 10"
+      ],
+      "meaning": "build 只索引文件元数据并重建导航，不加载权重、不执行实验、不调用 API；check 只校验知识库结构和配置覆盖。"
+    },
+    {
+      "id": "pending_queue",
+      "name": "待整理队列的含义",
+      "rules": [
+        "coverage.json 中无明确卡片引用的运行/文件仍被 assets.jsonl 与 runs.json 全量保留。",
+        "共享一个来源路径只用于导航，不自动说明文献支持机制或实验验证主张。",
+        "missing_literal_path_mentions 可能是历史删除文件、描述中的示例或拼接片段；人工核对后才能改科学记录。",
+        "元数据全量覆盖不意味着对每一个旧运行做过独立科学复核。"
+      ],
+      "source_paths": [
+        "reports/research_archive/coverage.json"
+      ]
+    },
+    {
+      "id": "storage_levels",
+      "name": "本机、Git 与可恢复性",
+      "rules": [
+        "git_tracked_path 仅表示本地 Git 索引记录了路径，不保证当前内容已提交或推送。",
+        "pinned_upstream_submodule 说明该文件位于固定版本上游目录；本地未跟踪生成文件不一定属于上游 commit。",
+        "local_only_path 仍在本机，克隆项目不会自动恢复。",
+        "外部缓存只登记位置和来源；不复制、读取或归档私人凭据。",
+        "资产清单不是完整备份；新生成权重与昂贵实验缓存应在保留来源的同时安排独立备份。"
+      ],
+      "source_paths": [
+        "reproducibility/external_artifacts.jsonl",
+        "reports/research_archive/resource_recipes.json"
+      ]
+    }
+  ],
+  "new_record_required_fields": [
+    "id/name",
+    "question_and_falsifiable_hypothesis",
+    "model_and_native_or_added_consumer",
+    "attacker_or_defender_capabilities",
+    "protected_inputs",
+    "config/code/upstream_revision",
+    "run_and_actual_activity_counts",
+    "truth_source/metric/horizon/independent_unit",
+    "clean_and_strong_baselines",
+    "observed_effect/mechanism/generality_separately",
+    "failure_type_and_reopen_condition",
+    "source_paths_and_limitations"
+  ]
+}
